@@ -88,7 +88,9 @@ Copy the example config into your **content** repository (not into
 folio-assistant) and adjust it for your content type:
 
 ```sh
-cp harness.config.example.json /path/to/your/content-repo/harness.config.json
+# The DESTINATION is named for your instance -- `my-folio.config.json`, not a
+# fixed word. The example file keeps its own name: that is what it is called.
+cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-derive-content\n"
-"POT-Creation-Date: 2026-09-19T10:47:34.742Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.489Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,37 +14,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/ingest-derive-content.bpmn:126
+#: skills/workflows/ingest-derive-content.bpmn:127
 #. Diagram element documentation
 msgid "A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:112
+#: skills/workflows/ingest-derive-content.bpmn:113
 #. Diagram label
 msgid "All kinds done"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:62
+#: skills/workflows/ingest-derive-content.bpmn:63
 #. Diagram label
 msgid "Archive → greppable contents manifest"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:51
+#: skills/workflows/ingest-derive-content.bpmn:52
 #. Diagram label
 msgid "Assets in hand"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:120
+#: skills/workflows/ingest-derive-content.bpmn:121
 #. Diagram label
 msgid "Cite the author of every narrative"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:130
+#: skills/workflows/ingest-derive-content.bpmn:131
 #. Diagram label
 msgid "Derived"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:72
+#: skills/workflows/ingest-derive-content.bpmn:73
 #. Diagram label
 msgid "File info, sizes, hashes, timestamps, mimetype"
 msgstr ""
@@ -64,47 +64,52 @@ msgstr ""
 msgid "Ingestion subprocess — derive content from the assets"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:82
+#: skills/workflows/ingest-derive-content.bpmn:83
 #. Diagram label
 msgid "Narrative description per image, localized"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:98
+#: skills/workflows/ingest-derive-content.bpmn:99
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:88
+#: skills/workflows/ingest-derive-content.bpmn:89
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:108
+#: skills/workflows/ingest-derive-content.bpmn:109
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:78
+#: skills/workflows/ingest-derive-content.bpmn:79
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:68
+#: skills/workflows/ingest-derive-content.bpmn:69
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data."
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:54
+#: skills/workflows/ingest-derive-content.bpmn:55
 #. Diagram label
 msgid "Per asset kind"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:102
+#: skills/workflows/ingest-derive-content.bpmn:103
 #. Diagram label
 msgid "Sheet names, headers, shape, narrative"
 msgstr ""
 
-#: skills/workflows/ingest-derive-content.bpmn:92
+#: skills/workflows/ingest-derive-content.bpmn:39
+#. Diagram element documentation
+msgid "The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material."
+msgstr ""
+
+#: skills/workflows/ingest-derive-content.bpmn:93
 #. Diagram label
 msgid "Transcribe and translate audio"
 msgstr ""

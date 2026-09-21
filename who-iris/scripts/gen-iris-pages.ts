@@ -426,7 +426,31 @@ function banner(): string {
   return BANNER;
 }
 
-function page(title: string, crumbs: { label: string; href?: string }[], body: string): string {
+/**
+ * One replica page.
+ *
+ * `side` is not decoration: the two sides are MOUNTED AT DIFFERENT ROUTES —
+ * `who-iris/library/` at `/who-iris/` and `who-iris/docs/` at
+ * `/docs/who-iris/` — so a relative link written on one side and rendered on
+ * the other resolves to a path that does not exist. Both sides carried exactly
+ * that, and both 404ed on the deployed site: the shared chrome's
+ * `community-list.html` from every docs page, and the landing page's
+ * `ingestion-notes.html` from `/who-iris/`. The comment below anticipated it
+ * in 2026-09-21 — *"linking across two mount points … breaks the first time
+ * either route moves"* — and the links were written anyway.
+ *
+ * Nothing here composes a cross-mount path to replace them. **The harness rail
+ * is the cross-mount navigation** (`◆ who-iris`, `D docs`, `L library`), and
+ * it is injected at mount time by the layer that knows the routes. A generator
+ * that composed `../../who-iris/` would be this instance holding a second copy
+ * of the mount table, free to disagree with it.
+ */
+function page(
+  title: string,
+  crumbs: { label: string; href?: string }[],
+  body: string,
+  side: "library" | "docs",
+): string {
   const crumbHtml = crumbs
     .map((c, i) =>
       i === crumbs.length - 1
@@ -733,7 +757,9 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   failing at a line far from the mistake.)
 -->
 <nav class="main"><div class="wrap">
-  <a href="community-list.html">Communities &amp; Collections</a>
+  ${side === "library"
+    ? `<a href="community-list.html">Communities &amp; Collections</a>`
+    : `<span>Communities &amp; Collections</span>`}
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
@@ -1262,8 +1288,6 @@ ${submissions}
   <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
       <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
       (${communities.length} communities, ${collections.length} collections)</li>
-  <li><a href="ingestion-notes.html">Ingestion notes</a> &mdash; what ingesting these
-      documents cost, generated from the skill that records it</li>
 ${collections
   .map((c) => `  <li><a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a> &mdash; collection</li>`)
   .join("\n")}
@@ -1703,12 +1727,12 @@ function main(): number {
   // keyed on the bare name can hold only one of them.
   files.set(
     "library/index.html",
-    page("who-iris", [{ label: "Home" }], landingPage(all)),
+    page("who-iris", [{ label: "Home" }], landingPage(all), "library"),
   );
 
   files.set(
     "docs/index.html",
-    page("who-iris — documentation", [{ label: "Documentation" }], docsIndex()),
+    page("who-iris — documentation", [{ label: "Documentation" }], docsIndex(), "docs"),
   );
 
   files.set(
@@ -1717,6 +1741,7 @@ function main(): number {
       "From this catalogue to somebody else's portal",
       [{ label: "Documentation", href: "index.html" }, { label: "KG to portal" }],
       kgToPortal(all),
+      "docs",
     ),
   );
 
@@ -1726,25 +1751,26 @@ function main(): number {
       "What ingesting these documents cost",
       [{ label: "Documentation", href: "index.html" }, { label: "Ingestion notes" }],
       ingestionNotes(requirementsFromSkill(readFileSync(SKILL, "utf-8")), all),
+      "docs",
     ),
   );
 
   files.set(
     "library/community-list.html",
-    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all)),
+    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "library"),
   );
 
   for (const c of all.filter((n) => n.flavour === "collection")) {
     files.set(
       `library/collection-${slug(c.id)}.html`,
-      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all)),
+      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "library"),
     );
   }
 
   for (const n of all.filter((x) => x.flavour === "item")) {
     files.set(
       `library/item-${slug(n.id)}.html`,
-      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all)),
+      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "library"),
     );
   }
 

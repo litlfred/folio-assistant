@@ -102,7 +102,7 @@
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
-import { declarationPathIn } from "../schemas/cat-harness.js";
+import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type RailLink } from "./lib/harness-rail.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -150,6 +150,15 @@ export interface Mountable {
   kind: string;
   dir: string;
   instanceRoot: boolean;
+  /**
+   * The directory's declared visualiser, repo-relative, when it has one.
+   *
+   * `coverage.visualiser` on the declaring entry, normalised through
+   * `visualisationsOf` so a bare string and a list of visualisations reach
+   * here the same shape. Absent when the directory declares none, which is a
+   * real answer and the common one.
+   */
+  visualiser?: string;
 }
 
 /**
@@ -226,6 +235,77 @@ export function toRootFor(route: string, fileUnder: string): string {
 }
 
 /**
+ * Where the Jekyll-built pages come from, repo-relative — e.g. `cat-harness/docs`.
+ *
+ * Read off the built instance's own declaration (its non-repository-scoped
+ * `docs` directory) rather than written down here. The workflows pass that
+ * same directory as Jekyll's `source:`, so a page committed at
+ * `<prefix>/x/y/index.html` is published at `/x/y/`; hardcoding the prefix
+ * would be a second copy of a fact the declaration already carries, free to
+ * disagree with it the day the directory moves.
+ *
+ * `undefined` when the built instance declares no docs directory. That is the
+ * third state and it is not the same as "the visualiser does not resolve" —
+ * the caller reports it and falls back, rather than treating an unanswerable
+ * question as a no.
+ */
+export function publishedDocsPrefix(repo: string, built: string): string | undefined {
+  const decl = declarationPathIn(join(repo, built));
+  if (decl === undefined || !existsSync(decl)) return undefined;
+  let d: { directories?: { path?: string; graphKinds?: string[]; scope?: string }[] };
+  try {
+    d = JSON.parse(readFileSync(decl, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const entry = (d.directories ?? []).find(
+    (x) => x.path && x.scope !== "repository" && (x.graphKinds ?? []).includes("docs"),
+  );
+  return entry === undefined ? undefined : join(built, entry.path!);
+}
+
+/**
+ * A declared visualiser's URL on the built site, relative to the site root.
+ *
+ * **This is what the rail's per-kind link should point at, and pointing it at
+ * the mount route instead is the defect this function exists for.** The owner,
+ * looking at the deployed rail: *"clicking on doc/ or library/ under who-iris
+ * navbar did nothing … under library/ the 3 assets listed. are those
+ * interfaces not done?"* They were done. `/library/who-iris/` mounts
+ * `who-iris/library/` verbatim, and that directory's `index.html` is the IRIS
+ * replica home — the very page `/who-iris/` already serves. So the link
+ * navigated correctly to a byte-identical document, which is indistinguishable
+ * from a link that did nothing.
+ *
+ * The library visualiser that DOES list the three materialized items is
+ * declared on that directory as `coverage.visualiser` and published by Jekyll
+ * at `/cat-harness/library/who-iris/`. It is not copied to the mount route:
+ * its own `fetch` of the L1 projection is written relative to where it sits,
+ * so a copy two segments shallower would reach past the site root and report a
+ * corpus it could not load.
+ *
+ * `undefined` when the declared path does not sit under the published tree —
+ * a visualiser that exists but is not published is a finding, and the caller
+ * names it rather than quietly linking somewhere else.
+ *
+ * @param visualiser  repo-relative path from `coverage.visualiser`
+ * @param docsPrefix  what `publishedDocsPrefix` returned
+ */
+export function visualiserHref(visualiser: string, docsPrefix: string): string | undefined {
+  const path = visualiser.replace(/\\/g, "/");
+  const prefix = `${docsPrefix.replace(/\/+$/, "")}/`;
+  if (!path.startsWith(prefix)) return undefined;
+  const rest = path.slice(prefix.length);
+  if (rest === "") return undefined;
+  // An index is the directory's front door, so it addresses as the directory.
+  // Any other file addresses as itself — appending a slash to `a/b.html` would
+  // invent a directory that is not there.
+  if (rest === "index.html") return "";
+  if (rest.endsWith("/index.html")) return `${rest.slice(0, -"index.html".length)}`;
+  return rest;
+}
+
+/**
  * Inject the harness rail into every mounted HTML page.
  *
  * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
@@ -244,10 +324,11 @@ export function toRootFor(route: string, fileUnder: string): string {
  * rail links pointed at a directory that does not exist. Caught by resolving
  * every emitted href against the built tree, not by reading the code.
  */
-function injectRails<T extends { name: string; kind: string; route: string }>(
+function injectRails<T extends { name: string; kind: string; route: string; visualiser?: string }>(
   siteAbs: string,
   mounts: readonly T[],
-): { injected: number; skipped: string[] } {
+  docsPrefix: string | undefined,
+): { injected: number; skipped: string[]; unpublished: { route: string; visualiser: string }[] } {
   const byInstance = new Map<string, T[]>();
   for (const m of mounts) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
 
@@ -268,6 +349,29 @@ function injectRails<T extends { name: string; kind: string; route: string }>(
   let injected = 0;
   const skipped: string[] = [];
 
+  /**
+   * Where a kind's link goes: its DECLARED visualiser when that visualiser is
+   * published, and the mount route otherwise.
+   *
+   * Computed once per mount rather than per file, because the answer does not
+   * depend on the page — only `toRoot` does.
+   */
+  const unpublished: { route: string; visualiser: string }[] = [];
+  const target = new Map<string, string>();
+  for (const o of mounts) {
+    if (o.route === o.name) continue; // the instance's own themed root is itself
+    if (o.visualiser === undefined || docsPrefix === undefined) continue;
+    const href = visualiserHref(o.visualiser, docsPrefix);
+    if (href === undefined) {
+      // Declared, and not under the published tree. Named rather than silently
+      // falling back to the mount route, which is how `/library/who-iris/`
+      // came to look like a dead link in the first place.
+      unpublished.push({ route: o.route, visualiser: o.visualiser });
+      continue;
+    }
+    target.set(o.route, href);
+  }
+
   for (const m of mounts) {
     const mountAbs = join(siteAbs, m.route);
 
@@ -276,12 +380,17 @@ function injectRails<T extends { name: string; kind: string; route: string }>(
       // Every route this instance answers at, so the rail can move between
       // them -- the owner's "with who-iris and then link to docs on side in
       // navbar". Rebuilt per file because `toRoot` is per file.
-      const links: RailLink[] = (byInstance.get(m.name) ?? []).map((o) => ({
-        href: `${toRoot}/${o.route}/`,
-        label: o.route === o.name ? o.name : o.kind,
-        icon: o.route === o.name ? "◆" : o.kind.slice(0, 1).toUpperCase(),
-        current: o.route === m.route,
-      }));
+      const links: RailLink[] = (byInstance.get(m.name) ?? []).map((o) => {
+        const visual = target.get(o.route);
+        return {
+          href: `${toRoot}/${visual ?? `${o.route}/`}`,
+          label: o.route === o.name ? o.name : o.kind,
+          icon: o.route === o.name ? "◆" : o.kind.slice(0, 1).toUpperCase(),
+          // A link that goes somewhere OTHER than this mount is never the
+          // current page, whatever route the page was copied to.
+          current: visual === undefined && o.route === m.route,
+        };
+      });
 
       const before = readFileSync(file, "utf-8");
       const after = injectRail(before, { instance: m.name, toRoot, links });
@@ -293,7 +402,7 @@ function injectRails<T extends { name: string; kind: string; route: string }>(
       injected++;
     }
   }
-  return { injected, skipped };
+  return { injected, skipped, unpublished };
 }
 
 function mountable(): Mountable[] {
@@ -303,7 +412,17 @@ function mountable(): Mountable[] {
     const decl = declarationPathIn(join(REPO, e.name));
     if (decl === undefined) continue;
     if (!existsSync(decl)) continue;
-    let d: { name?: string; directories?: { path?: string; graphKinds?: string[]; instanceRoot?: boolean }[] };
+    let d: {
+      name?: string;
+      directories?: {
+        id?: string;
+        path?: string;
+        graphKinds?: string[];
+        instanceRoot?: boolean;
+        composed?: boolean;
+        coverage?: Parameters<typeof visualisationsOf>[0];
+      }[];
+    };
     try {
       d = JSON.parse(readFileSync(decl, "utf-8"));
     } catch {
@@ -313,11 +432,34 @@ function mountable(): Mountable[] {
     }
     for (const entry of d.directories ?? []) {
       if (!entry.path) continue;
+      // COMPOSED directories belong to Jekyll, not to this script.
+      //
+      // `compose-docs.ts` lays them into the Jekyll SOURCE at
+      // `_docs/<instance>/`, so mounting the same directory into `_site`
+      // afterwards would publish two documents at one URL -- the composed page
+      // and the raw source -- with the later copy winning by timing.
+      //
+      // Skipped by DECLARATION rather than by shape. Today a composed
+      // directory holds `index.md` and the `index.html` floor below would drop
+      // it anyway; that is a coincidence of one file extension, and a
+      // composed directory that happened to carry an `index.html` would be
+      // double-published while looking fine.
+      if (entry.composed === true) continue;
       const abs = join(REPO, e.name, entry.path);
       if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
       if (!existsSync(join(abs, "index.html"))) continue;
+      // The directory's own declared visualiser, if it has one. Read here
+      // rather than re-derived later: the declaration is the only place that
+      // knows, and a second answer is free to disagree with it.
+      const visualiser = visualisationsOf(entry.coverage, entry.id ?? entry.path)[0]?.ref;
       for (const kind of entry.graphKinds ?? []) {
-        out.push({ name: d.name ?? e.name, kind, dir: abs, instanceRoot: entry.instanceRoot === true });
+        out.push({
+          name: d.name ?? e.name,
+          kind,
+          dir: abs,
+          instanceRoot: entry.instanceRoot === true,
+          ...(visualiser === undefined ? {} : { visualiser }),
+        });
       }
     }
   }
@@ -377,7 +519,10 @@ function main(): number {
   // guessed: the workflows pass `source: ./cat-harness/docs`, and a script
   // that inferred "the first one" would silently double-publish the day the
   // root instance changes.
-  const built = arg("built", "cat-harness");
+  // Non-optional: `arg` returns `string | undefined` even with a fallback, and
+  // an undefined instance name would make `publishedDocsPrefix` unanswerable
+  // for a reason that is a typing artefact rather than a fact about the repo.
+  const built = arg("built", "cat-harness") ?? "cat-harness";
 
   const found = mountable().filter((m) => {
     if (m.name === built && m.kind === "docs") {
@@ -413,7 +558,24 @@ function main(): number {
   //
   // Injected AFTER the copy, never into the committed source, so an instance's
   // own gate still checks the page its generator produced.
-  const railed = injectRails(siteAbs, mounts);
+  const docsPrefix = publishedDocsPrefix(REPO, built);
+  if (docsPrefix === undefined) {
+    // Could-not-determine, said out loud. Every per-kind rail link falls back
+    // to its mount route, which is correct for a directory that declares no
+    // visualiser and WRONG for one that does — so this is a finding, not a
+    // quiet default.
+    console.error(
+      `  ? ${built} declares no docs directory, so no visualiser can be addressed. ` +
+        `Rail links fall back to mount routes.`,
+    );
+  }
+  const railed = injectRails(siteAbs, mounts, docsPrefix);
+  for (const u of railed.unpublished) {
+    console.error(
+      `  ? /${u.route}/ declares the visualiser ${u.visualiser}, which is not under ` +
+        `${docsPrefix}/ and therefore is not published. The rail links the mount route instead.`,
+    );
+  }
 
   if (mounts.length === 0 && refused.length === 0) {
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");

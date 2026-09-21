@@ -422,7 +422,7 @@
       "id": "cat-harness",
       "path": "skills/",
       "dependents": "skip",
-      "description": "Skill packages \u2014 the authored instruction bodies an Actor performs a Task from. TWO SUBDIRECTORIES ARE DECLARED SEPARATELY as of 2026-09-21 and are no longer this entry's to describe: `roles/` is `scenarios` and `workflows/` is `workflows`. What remains here beside the packages is `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them) and `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows). Audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `cat-harness` while the path is `skills/` \u2014 ids are stable across a relocation, paths are not.",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` \u2014 ids are stable across a relocation, paths are not.",
       "graphKinds": [
         "skills"
       ]
@@ -683,15 +683,6 @@
       "description": "The gettext side of translation \u2014 one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates \u2014 renderable content, differing by a field \u2014 and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
       "graphKinds": [
         "translation-sources"
-      ]
-    },
-    {
-      "id": "cat-harness-src",
-      "path": "src/skills/",
-      "dependents": "skip",
-      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse \u2014 committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
-      "graphKinds": [
-        "skills"
       ]
     },
     {

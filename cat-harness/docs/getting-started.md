@@ -240,14 +240,15 @@ script and the table cannot drift.
 ## 8. Make the landing page yours
 
 Your site's home page opens with your instance's **own** description, drawn
-inside your **own** backdrop. Both come from one file — the declaration at
+inside your **own** backdrop. Both come from one file — `<name>.json` at
 the repository root — and nothing about the platform's grumpy cat is written
 into the template. Change the file; the page follows.
 
 ### The markdown node you edit
 
 ```jsonc
-// harness.json
+// <name>.json -- the DECLARATION. Every key below is one of its top-level
+// fields, which is what settles this label: it is not the folio config.
 {
   "title": "My Folio",              // the left sidebar's heading
   "description": "One line.\nAnother line.",   // ← the landing markdown

@@ -43,7 +43,7 @@ not, do not.
 | | |
 |---|---|
 | **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
-| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |
+| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
 | **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
 | **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
 
@@ -54,9 +54,9 @@ not, do not.
 ## Harness instances
 
 This repository holds several **instances**, each declaring its own
-`folio-assistant.config.json`. Every one has two entry points on purpose: a **README** saying
-what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
-the first rather than restating it.
+`<instance>.json`. Every one has two entry points on purpose: a **README**
+saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second
+augments the first rather than restating it.
 
 The table is generated from the declarations themselves by `bun run
 readme:sync`; it is not a list anybody keeps. Add an instance and it appears;
@@ -249,7 +249,7 @@ content/my-guidance-note/            the document
 content/schema/                      builder shim — the one place the platform path is written
 uploads/                             source PDFs, for offline citation verification
 library/                             ingested source documents (read-only reference)
-harness.config.json                    selects the adapter
+<name>.config.json                   selects the adapter
 AGENTS.md                            agent guidance, tailored to your content type
 CLAUDE.md · GEMINI.md                thin stubs pointing at AGENTS.md
 .mcp.json                            wires folio-assistant as an MCP server
@@ -298,7 +298,7 @@ in a repo you are not sure about.
 
 Choose `document` unless the folio will actually carry formal mathematics —
 `paper` adds two large toolchains. Switching later is a one-line change to
-`harness.config.json`; going from `paper` to `document` additionally means
+`<name>.config.json`; going from `paper` to `document` additionally means
 removing the math blocks, which `content_profile_check` lists for you.
 
 ➡️ Full walk-throughs:

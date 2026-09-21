@@ -63,11 +63,13 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_GettingStarted_LaneSet">
       <bpmn:lane id="Lane_User" name="User (person)">
+        <bpmn:documentation>Answers the one question Gateway_Intent cannot compute for itself — "ask" is one of five outcomes decisions/folio-intent.dmn can return — and, only on the overlay path, three further questions a repo scan cannot answer on its own: what to import, where it goes, and who does the importing.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_AskToStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AskIntent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ConfirmImport</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Onboarding agent (system)">
+        <bpmn:documentation>Every write in this diagram belongs to this lane, and each sits behind the non-relaxable read-first gate: nothing is created or scaffolded until Gateway_Intent has classified what was actually asked for, which is what stands between this lane and writing over somebody's existing project.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_DetectModality</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadFacts</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Intent</bpmn:flowNodeRef>
@@ -77,9 +79,11 @@
         <bpmn:flowNodeRef>Task_Scaffold</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan (beans)">
+        <bpmn:documentation>Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Publish" name="Publish — GitHub Pages">
+        <bpmn:documentation>Derives the URL and holds the three-way report that follows it: "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_PagesBootstrap</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Live</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReportUrl</bpmn:flowNodeRef>
@@ -105,7 +109,7 @@ modality">
 
     <bpmn:serviceTask id="Task_ReadFacts" name="Read the repository
 facts">
-      <bpmn:documentation>Mechanical, read-only: is there a harness.config.json, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.</bpmn:documentation>
+      <bpmn:documentation>Mechanical, read-only: does a `&lt;name&gt;.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:policy relaxable="false" />
         <folio:skill ref="getting-started" />
@@ -182,7 +186,7 @@ authoring">
 
     <bpmn:serviceTask id="Task_Scaffold" name="Scaffold the folio
 (folio_init)">
-      <bpmn:documentation>content/, uploads/, library/, the first manifests, harness.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present.</bpmn:documentation>
+      <bpmn:documentation>content/, uploads/, library/, the first manifests, &lt;slug&gt;.json and &lt;slug&gt;.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="getting-started" />
       </bpmn:extensionElements>
@@ -204,7 +208,7 @@ authoring">
 
     <bpmn:serviceTask id="Task_PagesBootstrap" name="Start the Pages build
 and derive the URL">
-      <bpmn:documentation>scripts/pages-bootstrap.ts: derive the site URL from the git remote or harness.config.json, report whether a publish workflow exists, and optionally probe until the site answers.</bpmn:documentation>
+      <bpmn:documentation>scripts/pages-bootstrap.ts: derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists, and optionally probe until the site answers.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="getting-started" />
       </bpmn:extensionElements>

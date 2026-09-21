@@ -302,6 +302,17 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
+      # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
+      # and NONE documented, so the defined-terms index #596 asks for would
+      # have shipped 157 labels with no definitions. Three axes, because a
+      # glossary term needs all three: a name, a definition, and both
+      # extractable for translation. An activity in NO lane is reported
+      # UNDETERMINED rather than counted as passing, and zero diagrams is a
+      # finding rather than a clean run (`6tkl`).
+      - name: swimlane definitions
+        run: bun run check:lane-documentation
+
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
       # move, including the onboarding guide its own banner calls the place to

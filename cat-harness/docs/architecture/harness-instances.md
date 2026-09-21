@@ -29,7 +29,7 @@ the others is incomplete rather than minimal:
 
 | clause | what it obliges | where it is declared |
 |---|---|---|
-| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | the declaration — [directory conventions](../../skills/folio-core/directory-conventions.md) |
+| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | `<name>.json` — [directory conventions](../../skills/folio-core/directory-conventions.md) |
 | *builds visualisations for it* | a declared subgraph a reader cannot see is a subgraph nobody checks | the renderer, per subgraph |
 | *describes the tools* | a Tool is a KG node, not a shell string somebody remembers | `tools/` |
 

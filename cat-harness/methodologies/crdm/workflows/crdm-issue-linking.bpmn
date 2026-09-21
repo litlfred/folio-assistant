@@ -13,6 +13,7 @@
     <bpmn:documentation>Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CRDM_Issue">
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Process_CRDM_Issue</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ScanIssues</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Issue</bpmn:flowNodeRef>

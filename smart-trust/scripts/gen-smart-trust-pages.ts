@@ -181,38 +181,68 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 @media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
 `;
 
+/**
+ * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
+ *
+ * ## Why this stopped emitting finished HTML
+ *
+ * Owner, 2026-09-21: *"i want the input/page(s)/ content to be rendered
+ * viajustthedocs pipeline. use metadataetc fro IG publisher to populate the
+ * variables jekyl processes."*
+ *
+ * These pages were `<!doctype html>` documents with their own `<head>`,
+ * copied into `_site` AFTER Jekyll by `mount-instance-docs.ts` — so they
+ * inherited **nothing**: no sidebar, no language bar, no QA badges, no search.
+ * `hw9g` had to inject a navigation rail into them precisely because the
+ * pipeline never saw them. Composed instead, they are ordinary folio pages and
+ * the rail is unnecessary here (it stays necessary for `who-iris`, which is a
+ * deliberate replica of somebody else's site).
+ *
+ * ## The body is still HTML, and that is the MVP line
+ *
+ * kramdown passes raw HTML through, so front matter alone converts these into
+ * real pages without rewriting every emitter in one go. What that buys is the
+ * chrome; what it does not buy is markdown semantics — no automatic heading
+ * anchors, no table-of-contents, and `{{ }}` in a body would be read as Liquid.
+ * Converting each body to markdown is the parity work the owner asked to be
+ * taken "until rendering parity-ish", and it can now happen page by page
+ * against a site that already renders.
+ *
+ * ## Titles and description come from the INDEX
+ *
+ * "use metadata … to populate the variables jekyl processes" — `title` and
+ * `description` are the index's own, never typed here, which is the same rule
+ * the rest of this generator follows.
+ */
 function shell(title: string, description: string, body: string, depth = 0): string {
-  const root = depth === 0 ? "." : "..";
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)}</title>
-<meta name="description" content="${esc(description)}">
-<style>${CSS}</style>
-</head>
-<body>
-<header class="top"><div class="wrap">
-  <h1><a href="${root}/index.html">WHO SMART Trust — artefact index</a></h1>
-  <span class="sub">smart.who.int.trust · reconstructed, not authored</span>
-</div></header>
-<div class="banner"><div class="wrap">
-  Generated from <code>smart-trust/fhir-artifact-index/index.json</code> by
-  <code>smart-trust:pages</code>. Not a WHO site, and not the published IG &mdash;
-  the IG itself is at
-  <a href="https://worldhealthorganization.github.io/smart-trust/">worldhealthorganization.github.io/smart-trust</a>.
-</div></div>
-<main><div class="wrap">
-${body}
-</div></main>
-<footer><div class="wrap">
-  Every figure and link on this page is read out of the artefact index; nothing here is hand-written.
-  Regenerate with <code>bun run smart-trust:pages</code>.
-</div></footer>
-</body>
-</html>
-`;
+  const fm = [
+    "---",
+    `title: ${yamlScalar(title)}`,
+    `description: ${yamlScalar(description)}`,
+    // `nav_exclude` on the artefact pages: 674 artefacts would bury the
+    // sidebar's real structure under one instance's leaves. The index page is
+    // the front door and stays listed.
+    ...(depth === 0 ? [] : ["nav_exclude: true"]),
+    "---",
+    "",
+  ].join("\n");
+  // The stylesheet rides INSIDE the page rather than in a `<head>` this file
+  // no longer owns. just-the-docs supplies the chrome; these classes (`lede`,
+  // `mono`, `back`, the census tables) are the BODY's own and it still needs
+  // them. Dropping it was the first draft, and it would have quietly unstyled
+  // every table on 20 pages while lint reported only an unused variable.
+  return `${fm}<style>${CSS}</style>\n${body}\n`;
+}
+
+/**
+ * A YAML scalar that survives a colon, a quote or a leading dash in a title.
+ *
+ * Front matter is parsed before anything else reads the page, so an unquoted
+ * `Foo: bar` does not render wrong — it fails the BUILD, with an error naming
+ * YAML rather than the artefact whose name carried the colon.
+ */
+function yamlScalar(v: string): string {
+  return `"${v.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
 }
 
 function repLinks(a: FhirArtifact): string {
@@ -452,10 +482,15 @@ if (!parsed.success) {
 const ix = parsed.data;
 
 const pages = new Map<string, string>();
-pages.set("index.html", indexPage(ix));
+// WRITTEN AS `.md`, LINKED AS `.html` — and the mismatch is correct. Jekyll
+// renders `index.md` to `index.html`, so every in-page href above keeps
+// pointing at the URL that will exist. Writing `.html` here instead would ask
+// Jekyll to copy the file verbatim, which is the behaviour this change exists
+// to stop.
+pages.set("index.md", indexPage(ix));
 for (const a of ix.artifacts) {
   if (!a.dak) continue;
-  pages.set(join("artifact", `${pageName(a)}.html`), artifactPage(ix, a));
+  pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
 }
 
 function committed(): Map<string, string> {

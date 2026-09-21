@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jut3
 title: 'SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-09-21T19:10:00Z
+updated_at: 2026-09-21T19:04:59Z
 parent: folio-assistant-yj32
 ---
 
