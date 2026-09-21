@@ -60,7 +60,7 @@ advice about sequencing; each is a state the graph is in.
 ### 1. Declare in place
 
 The sub-graph is declared **where it already sits**. Still inside the
-repository, still connected, nothing moved. `<name>.json` gains a directory
+repository, still connected, nothing moved. The declaration gains a directory
 entry with its `graphs[]` kinds; a sub-graph that owns its own layout gains a
 nested declaration (`beans/beans.json`, `todos/todos.json`) whose paths resolve
 against its own directory, **so the whole graph relocates by moving one
@@ -84,7 +84,7 @@ skill is about it.
 ### 3. Isolate
 
 The sub-graph carries its own declaration, its own namespace, its own published
-artefact. `cat-bootstrap/` is the demonstrated case: its own `<name>.json`, its
+artefact. `cat-bootstrap/` is the demonstrated case: its own declaration, its
 own `bs:` namespace, its own graph document.
 
 ### 4. Extract

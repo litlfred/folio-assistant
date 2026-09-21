@@ -223,7 +223,7 @@ possible.
 layer is a property of its graph KIND; an asset's is a property of its ROLE,
 in `ASSET_ROLES`, because an asset has no kind. A per-asset `layer` would be
 eleven instances answering one question, and `check:asset-roles` rejects it —
-asked of the raw `<name>.json`, since `KgAssetSchema` strips an unknown key
+asked of the raw declaration, since `KgAssetSchema` strips an unknown key
 without a word.
 
 **Creation at INITIALISATION is not a process write.** A `context` asset that

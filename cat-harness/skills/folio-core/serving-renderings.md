@@ -26,13 +26,13 @@ per-repository: after the split, `folio-assist-core` depending on
 <base>/<stub>/                   the viewer                 text/html
 ```
 
-So `…/folio-assistant/cat-harness.jsonld` is the *cat-harness* instance's
+So `…/folio-assistant/harness.jsonld` is the *cat-harness* instance's
 rendering, served from a tree whose root happens to be `folio-assistant`. A
 consumer asking for one instance's graph must not be handed another's because
 the paths collided.
 
 **They sit at the base, not in a subdirectory.** An instance's repository IS its
-declaration that it holds a graph — `<name>.json` at the root says which
+declaration that it holds a graph — the declaration at the root says which
 graphs are here — so there is nothing left for a `kg/` segment to distinguish it
 from, and the stub is already doing the separating that a directory would have
 been doing. The renderings lived under `kg/` until 2026-09-19 and were moved.

@@ -100,9 +100,10 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
-import { cpSync, existsSync, readFileSync, readdirSync, statSync } from "fs";
+import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import { declarationPathIn } from "../schemas/cat-harness.js";
+import { injectRail, type RailLink } from "./lib/harness-rail.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -198,6 +199,101 @@ export function withRoutes<T extends Mountable>(
     return [byKind, { ...m, route: m.name }];
   });
   return { candidates, undetermined };
+}
+
+/**
+ * How many `..` a mounted page needs to reach the site root.
+ *
+ * The mount's route depth PLUS the file's own depth beneath it, and getting
+ * that wrong is the defect this function exists to name. The first version
+ * used the route depth alone and argued for it — `/library/who-iris/` is two
+ * segments deep whatever directory it was copied from, which is true of the
+ * mount's INDEX and false of every page below. `smart-trust/` mounts one deep
+ * and holds `artifact/*.html` one deeper, so 57 of 188 rail links pointed at a
+ * directory that does not exist.
+ *
+ * EXPORTED so the test binds to this expression rather than restating it. The
+ * first test did restate it, and when the bug was planted back into the caller
+ * that test went on passing — it was documenting the arithmetic while guarding
+ * nothing. Only the integration check over the built tree caught it.
+ *
+ * @param route      the mount's route, e.g. `library/who-iris`
+ * @param fileUnder  the file's path beneath the mount, e.g. `artifact/x.html`
+ */
+export function toRootFor(route: string, fileUnder: string): string {
+  const under = fileUnder.includes("/") ? fileUnder.split("/").length - 1 : 0;
+  return new Array(route.split("/").length + under).fill("..").join("/");
+}
+
+/**
+ * Inject the harness rail into every mounted HTML page.
+ *
+ * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
+ * that declares a third renderable kind gets a third entry with no edit here,
+ * and an instance whose route changes cannot end up with a rail pointing at
+ * the old one. That is the same rule `mountable()` follows one function down,
+ * and for the same reason its own comment gives — a hardcoded list is the
+ * `check:declared-assets` defect.
+ *
+ * `toRoot` is the route's depth PLUS the file's own depth below the mount, and
+ * getting that wrong is the defect this comment replaces. The first version
+ * used the route depth alone and argued for it — `/library/who-iris/` is two
+ * segments deep whatever directory it was copied from, which is true of the
+ * mount's INDEX and false of every page beneath it. `smart-trust/` mounts one
+ * segment deep and contains `artifact/*.html` one deeper again, so 57 of 188
+ * rail links pointed at a directory that does not exist. Caught by resolving
+ * every emitted href against the built tree, not by reading the code.
+ */
+function injectRails<T extends { name: string; kind: string; route: string }>(
+  siteAbs: string,
+  mounts: readonly T[],
+): { injected: number; skipped: string[] } {
+  const byInstance = new Map<string, T[]>();
+  for (const m of mounts) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
+
+  const htmlUnder = (dir: string): string[] => {
+    const out: string[] = [];
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        if (e.name.startsWith(".")) continue;
+        const p = join(d, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (e.name.endsWith(".html")) out.push(p);
+      }
+    };
+    if (existsSync(dir)) walk(dir);
+    return out;
+  };
+
+  let injected = 0;
+  const skipped: string[] = [];
+
+  for (const m of mounts) {
+    const mountAbs = join(siteAbs, m.route);
+
+    for (const file of htmlUnder(mountAbs)) {
+      const toRoot = toRootFor(m.route, file.slice(mountAbs.length + 1));
+      // Every route this instance answers at, so the rail can move between
+      // them -- the owner's "with who-iris and then link to docs on side in
+      // navbar". Rebuilt per file because `toRoot` is per file.
+      const links: RailLink[] = (byInstance.get(m.name) ?? []).map((o) => ({
+        href: `${toRoot}/${o.route}/`,
+        label: o.route === o.name ? o.name : o.kind,
+        icon: o.route === o.name ? "◆" : o.kind.slice(0, 1).toUpperCase(),
+        current: o.route === m.route,
+      }));
+
+      const before = readFileSync(file, "utf-8");
+      const after = injectRail(before, { instance: m.name, toRoot, links });
+      if (after === undefined) {
+        skipped.push(file.slice(siteAbs.length + 1));
+        continue;
+      }
+      writeFileSync(file, after);
+      injected++;
+    }
+  }
+  return { injected, skipped };
 }
 
 function mountable(): Mountable[] {
@@ -306,11 +402,31 @@ function main(): number {
     cpSync(m.dir, join(siteAbs, m.route), { recursive: true });
   }
 
+  // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
+  //
+  // These directories are copied verbatim and deliberately not run through
+  // Jekyll (see the note above), so they inherit no `side-bar` — measured on
+  // the published site: the root `index.html` has one, `/who-iris/` and
+  // `/smart-trust/` have none. The rail is injected here rather than emitted
+  // by each instance's generator because it is the HARNESS's navigation: one
+  // implementation, and a new instance gets it without writing any.
+  //
+  // Injected AFTER the copy, never into the committed source, so an instance's
+  // own gate still checks the page its generator produced.
+  const railed = injectRails(siteAbs, mounts);
+
   if (mounts.length === 0 && refused.length === 0) {
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");
     return 0;
   }
-  console.log(`mount-instance-docs: ${mounts.length} mount(s)`);
+  console.log(`mount-instance-docs: ${mounts.length} mount(s), harness rail on ${railed.injected} page(s)`);
+  if (railed.skipped.length) {
+    // Named, never summed into a total. A page with no <body> is not a page
+    // this rail belongs on, and a count alone could not be told from a bug.
+    console.log(`  ${railed.skipped.length} file(s) took no rail (no <body> — fragment, stub or html by extension only):`);
+    for (const f of railed.skipped.slice(0, 5)) console.log(`      ${f}`);
+    if (railed.skipped.length > 5) console.log(`      … and ${railed.skipped.length - 5} more`);
+  }
   for (const m of mounts) {
     console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
   }

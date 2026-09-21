@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T17:43:09Z
-updated_at: 2026-09-21T19:40:00Z
+updated_at: 2026-09-21T18:22:21Z
 parent: folio-assistant-vke6
 ---
 
@@ -60,92 +60,155 @@ cleared is a gate that is red on arrival.
 
 ## Done when
 
-- [x] The 83 files say the right thing, `directory-conventions.md:454`'s
+- [ ] The 83 files say the right thing, `directory-conventions.md:454`'s
       substantive claim included.
 - [x] The two generated files are REGENERATED, never hand-edited.
 - [x] All four baseline entries removed, and `check:declaration-claims` green
-      with an empty backlog.
+      with an empty backlog. **The gate reported all four STALE and failed until
+      they were gone** — the shrink rule working, not merely declared.
 - [ ] A decision recorded on whether `check:declaration-filename` now extends
-      to markdown, with the backlog cleared so it can. **The blocker is gone —
-      this is now only the owner's call**, put to them on
-      [#768](https://github.com/litlfred/folio-assistant/issues/768).
+      to markdown, with the backlog cleared so it can.
 
-*Recorded by session_01AYHimvYMmf8h8e9fFN6dW5 while closing `hrv2`. Worked by
-session_017MEZnJxx7WeekiNCabx4hx, PR
-[#769](https://github.com/litlfred/folio-assistant/pull/769).*
+*Not started. Recorded by session_01AYHimvYMmf8h8e9fFN6dW5 while closing `hrv2`.*
 
 ---
 
-## Summary of changes — 2026-09-21
+## 2026-09-21 — 71 of 78 done, **7 held deliberately**, and the count was wrong
 
-**123 current-path mentions → 1**, and the one left is `kg-export` quoting the
-argument it retires. What remains repo-wide is records: 309 in `beans/`, 23
-under `fsh-guts/` and `memory/`, 4 historical.
+### The measurement in this bean's own header is wrong; do not quote it
 
-`check:declaration-claims` is green with an **empty** baseline — the finished
-state, not a disabled one. The file is kept: a new contradiction fails whether
-or not anything is listed.
+| | |
+|---|---|
+| this bean said | 162 occurrences, 83 files |
+| naive grep on today's head | 152 / 78 — main had moved |
+| **boundary-correct** | **78 authored occurrences in 41 files**, plus 68 generated mirrors that follow |
 
-### The bean's own worked example was wrong, and it mattered
+The gap is the substring collision: **`cat-harness.json` contains
+`harness.json`**, and so does `harness.jsonld`. I fixed exactly that defect in
+the YAML checker this morning (`jijc`), then made it again with `grep` an hour
+later. The corrected count uses the same left-boundary rule.
 
-`vzur` says `directory-conventions.md:454` is false in substance because *"the
-declaration **is** stub-named"*. It is not. `artefactStub()` is `stub ?? name`
-and the declaration is spelled by `instanceDeclarationFilename(name)` — the
-file is named for the instance's `name`, the published artefacts for its
-`stub`. The line's claim was still TRUE; only its filename was stale.
+### What was done
 
-They coincide for every instance in the tree, which is why it reads as
-stub-naming: of fifteen declarations only `cat-harness` sets `stub` at all,
-and it sets it equal to its `name`. **A coincidence in the data is not the
-rule** — an instance declaring a differing `stub` would publish
-`<stub>.jsonld` beside a `<name>.json`.
+**Pass A — 16 qualified paths** (`cat-harness/harness.json` →
+`cat-harness/cat-harness.json`), each verified to exist on disk.
+
+**Pass B — 50 generic references**, by PHRASE rather than token swap.
+
+**Pass B damaged the prose, and that is worth recording rather than hiding.** A
+blanket phrase pass produced 10 broken lines — *"The cause is one segment. the
+declaration declares…"*, *"declaration: the declaration at the repository
+root"*, *"from the instance's / the declaration and read from"*. Found by
+scanning for the damage classes, and each repaired by hand. **This repository
+already knew:** *"a blanket migration cannot tell a literal that IS the code
+from a literal DESCRIBING code"* (`jijc`). The same trap, one file type over.
+
+**9 more by hand** — table cells, the layout diagram, `instance-kinds`'s
+`ls -d */harness.json` command (which returns nothing now), and
+`directory-conventions.md:7`, the opening sentence of the conventions skill.
+
+**The rule written into that sentence was CHECKED, not assumed.** I was about
+to write *"named after the instance"*. `findDeclarationFile` matches on
+`name === stem`, and `cat-harness.ts` explicitly warns against *"deriving a
+declaration's location from a directory name"*. Measured across 12
+declarations: `name` always equals the stem; `stub` is **absent on 11 of 12**.
+So it is `name`-named, and *"NOT stub-named"* was right in substance all along
+— only the filename was stale.
+
+### The 7 held, and why
+
+Three of them are the same **argument that lost**, stated in three places:
+
+> *"The declaration file itself is deliberately NOT stub-named. It stays
+> `harness.json`, exactly as smart-base's config stays `dak.json`. A consumer
+> bootstrapping into a repository it knows nothing about needs one fixed
+> name… Renaming it per-repo fails silently."*
+> — `kg-export.md:233`, and again at `directory-conventions.md:454` and
+> `migration-plan.md:185`
+
+The REPLACE ruling overturned it. The declaration IS per-repo-named now, and
+`findDeclarationFile` answers the old objection by scanning for a `*.json`
+whose `name` matches its stem. **Rewriting that is recording that the owner's
+own architectural decision reversed, and why the objection no longer bites.**
+That is the owner's to author, not an agent's to slip into a 41-file diff.
+
+The other four are narrower judgement calls:
+`directory-conventions.md:47` and `kg-navigation.md:47` (a quotation about
+which layer names things), `docs/getting-started.md:250` (a `// harness.json`
+label on a JSONC block whose contents look like a FOLIO config, not a
+declaration — naming it wrongly would be the `hrv2` defect again), and
+`create-sticky-note.md:89`.
+
+### Still open
+
+The last Done-when — whether `check:declaration-filename` extends to markdown
+— stays open **by this bean's own rule: clear the backlog first.** 7 remain,
+so the gate would be red on arrival. It is unblocked the moment the owner
+settles the three above.
+
+`bun run gates` — 93 of 93.
+
+---
+
+## 2026-09-21, later — a second session worked this in parallel, and the overlap is the finding
+
+Session `017MEZnJxx7WeekiNCabx4hx` (PR
+[#769](https://github.com/litlfred/folio-assistant/pull/769)) was clearing the
+same backlog while #780 was open, and neither saw the other until the merge.
+**80 conflicting files.** Everything above is #780's and stands; this records
+only what the second pass adds, and where the two disagreed.
 
 ### The gate was counting less and reporting the same tick
 
-`check:declaration-claims` matched a filename as `[A-Za-z0-9._/-]+\.json` — no
-angle brackets. A generic skill has to write `<name>.json`, so every sentence
-fixed that way fell OUT of the corpus: **5 claims → 3** as the backlog was
-cleared, each disappearance reading as a fix. That is the `/`-character
-near-miss #767 recorded, arriving for real one character over.
+**This is the one that matters, because it makes the work above partly
+invisible.** `check:declaration-claims` matched a filename as
+`[A-Za-z0-9._/-]+\.json` — no angle brackets. Both sessions correctly wrote
+`<name>.json` in generic skills, and **every such sentence fell OUT of the
+gate's corpus**: it went 5 claims → 3 as the backlog was cleared, each
+disappearance reading as a fix.
 
-A placeholder is now a THIRD state — counted, reported, never a contradiction
-— with five tests, including one asserting it cannot mask a wrong concrete
-name beside it. Corpus back to 5: 2 generic, 3 concrete.
+That is precisely the near-miss `hrv2` recorded about the `/` character,
+arriving for real one character over — and it lands hardest on #780, whose 50
+generic replacements are the bulk of the newly-invisible prose.
 
-### Three arguments a rename does not fix
+A placeholder is now a **third state** — counted, reported, never a
+contradiction — rather than folded into agreement, so "fix the gate by making
+the sentence vague" cannot work. Five tests, including one asserting a
+placeholder does not mask a wrong concrete name beside it.
 
-`kg-export` and `migration-plan` both argued FOR the old name in the same
-terms — a consumer needs **one fixed filename to open first**. Substituting
-into that leaves an argument for fixedness illustrated by a name that is not
-fixed. The concern was discovery and the split answered it:
-`findDeclarationFile()` never computes a name from a directory (the failure
-`migration-plan` warned of by name) but scans for a `*.json` whose stem equals
-the `name` inside it, throwing on two rather than picking one.
+### Where the two sessions disagreed: the 7 held
 
-`fsh-guts` was stale twice in one sentence — *"declares nine graph kinds and
-none of them renders"* is 19 kinds across 34 directories, and `folio` is among
-them. No count replaces it.
+#780 held 7 deliberately, three of them the **argument that lost** in
+`kg-export.md:233`, `directory-conventions.md:454` and `migration-plan.md:185`,
+on the ground that *"recording that the owner's own architectural decision
+reversed … is the owner's to author, not an agent's to slip into a 41-file
+diff."*
 
-### A measurement had moved under the prose
+The second session rewrote all three before seeing that. **The merge keeps
+#780's held versions** — the more conservative call, and the one already
+reviewed. The rewrites are not discarded: they are on #769 for the owner to
+accept or drop, which is what #780 asked for.
 
-`domain-fencing` quotes `readDeclaredFolioProfile()`, so fixing its filename
-meant re-running it — and it no longer reproduces. `findContentRepoRoot()`
-returns `cat-harness/`, not `cat-harness/folio/`, and the profile resolves to
-`document` from both roots. #727 gave `cat-harness` a config of its own; a
-defect closed by a side effect, with nothing recording it had been.
+Both sessions independently reached the **same substantive conclusion** about
+`directory-conventions.md:454`, from different evidence: `artefactStub()` is
+`stub ?? name` while the declaration is spelled by
+`instanceDeclarationFilename(name)`, so *"NOT stub-named"* was right all along
+and only the filename was stale. #780 measured 12 declarations, the second
+session 15; `stub` is set on exactly one, equal to its `name`.
 
-**The consequence is not thereby established**: 235 sidecars still carry
-`detangler-archimedean-wall` verdicts written under the old behaviour, and
-whether a fresh run still emits them was not measured. Bean `zq3f`.
+### What the second pass adds beyond the prose
 
-### Also fixed
-
-Twelve BPMN/DMN documentation strings (a file class the sweep did not count),
-two stale doc comments in `schemas/cat-harness.ts`, four agent-memory entries,
-and three things that were wrong rather than misnamed: `instance-kinds`
-measured the corpus with a glob that now matches nothing, `installation`
-copied the example config to a fixed destination name, and
-`serving-renderings` called this instance's rendering `harness.jsonld` three
-lines under a table saying artefacts are `<stub>.jsonld`.
-
-`bun run gates` — 93 of 93.
+- **Twelve BPMN/DMN documentation strings** across ten diagrams — a file class
+  neither sweep counted, `folio-intent.dmn` among them.
+- **Two stale doc comments** in `schemas/cat-harness.ts`: `findDeclarationFile`
+  said it scans `*.config.json` when it scans `.json`.
+- **An executable test that was wrong, not misnamed.** `getting-started.md`
+  used `test -f harness.config.json` for folio-ness; since the split, presence
+  alone is the `harness` membership and a folio is a `<name>.config.json`
+  **declaring a `contentType`** (`folioMarkerFilename` says so). The DMN input
+  it quotes said the same and is fixed with it.
+- **A measurement that had moved under the prose.** `domain-fencing` quotes
+  `readDeclaredFolioProfile()`, so fixing its filename meant re-running it —
+  and it no longer reproduces. Bean `zq3f`: the resolver was fixed by a side
+  effect of #727, but 235 sidecars still carry verdicts from the old
+  behaviour, and **a fixed resolver is not a fixed verdict**.

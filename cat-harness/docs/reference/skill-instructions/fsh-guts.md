@@ -27,16 +27,10 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-Most of what an instance declares does not render, and **no count is given
-here**: `cat-harness/cat-harness.json` is the list, and the number in this
-sentence was `nine` until 2026-09-21, by which point it was 19 kinds across 34
-directories. That makes `renderable: false` look like a weak signal, and for
-most it is: `tools`, `schemas`, `beans` and the rest are graphs a **tool**
-reads, and there was never a page to make of them.
-
-`folio` is the counterexample and it is declared here too, so *"none of them
-renders"* — what this paragraph said alongside the stale count — was never
-going to stay true. The distinction below does not rest on it.
+The declaration declares nine graph kinds and none of them renders. That makes
+`renderable: false` look like a weak signal, and for the others it is: `tools`,
+`schemas`, `beans` and the rest are graphs a **tool** reads, and there was
+never a page to make of them.
 
 **`fsh-guts` is the one whose contents COULD be rendered and deliberately are
 not.** It exists so that something can be kept without being published. That
