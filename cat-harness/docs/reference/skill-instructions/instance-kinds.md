@@ -262,8 +262,19 @@ only where the terms resolve.
 | edited this or any skill | `bun run check:skills` |
 | anything | `bun run gates` |
 
-`bun run gates` derives its list from the CI workflow, so it cannot drift from
-what CI actually runs. A hand-picked subset of the gate set is not the gate set.
+`bun run gates` is the one to run, and it is stronger than "a list someone
+maintains" in two distinct ways worth knowing before you trust it (bean `j2w4`):
+
+1. **Its gate list is derived**, from `.github/workflows/code-quality-gates.yml`,
+   so it cannot drift from that workflow.
+2. **Every OTHER workflow is scanned too**, and any `bun` step CI runs that the
+   local set does not is reported on every run — unless it carries a declared
+   exemption with a **reason** (`covered-by`, `ci-only`, `no-folio`). *"It is
+   slow"* and *"it usually passes"* are not reasons.
+
+The second half is what makes the first safe to rely on, and it was added
+because a CI failure went red on a gate the local runner had just passed. A
+hand-picked subset of the gate set is not the gate set.
 
 ## Related
 
