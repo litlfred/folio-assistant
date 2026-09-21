@@ -430,6 +430,7 @@ export const RULES: Rule[] = [
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
+      "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
@@ -809,10 +810,12 @@ export const RULES: Rule[] = [
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
+      "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
+      "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
@@ -1012,6 +1015,18 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Counts every prefix the CONTENT `@context` binds against the published
+      // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
+      // reason `check-voices.ts` is: its subject is content. It reads
+      // `CONTENT_CONTEXT` from `schemas/jsonld.ts` — core by the `schemas/`
+      // prefix — and walks documents a FOLIO produces.
+      //
+      // Calling it harness would buy a wrong-direction edge for nothing, which
+      // is the mistake `check-context-emission`'s own sibling made earlier the
+      // same day: `ns-export.ts` IS harness, and importing SKOS_NS from
+      // `jsonld.ts` was refused. The difference is the subject, not the
+      // filename — a script is not automatically tooling-side.
+      "scripts/check-context-emission.ts",
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two

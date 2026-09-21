@@ -59,7 +59,9 @@ import {
   ASSET_ROLE_PURPOSE,
   INSTANCE_README_ROLE,
   instanceRootsIn,
+  isExemptFrom,
   readDeclaration,
+  siteDirFor,
   repoRootFor,
   instanceRootFor,
   owesVisualiser,
@@ -109,6 +111,8 @@ export interface InstanceCoverage {
   readme?: { severity: Severity; detail: string };
   /** The instance-level `agent-instructions` finding — the AGENT half of the same pair. */
   agentInstructions?: { severity: Severity; detail: string };
+  /** The instance-level `docs/` finding — does it have documentation OF ITS OWN? */
+  ownDocs?: { severity: Severity; detail: string };
   /** Waivers honoured, with the reason each one gave. */
   exempted: Array<{ directory: string; criterion: Criterion; reason: string }>;
   reason?: string;
@@ -243,6 +247,85 @@ export function assetRoleFinding(
   return undefined;
 }
 
+/**
+ * Does this instance have documentation OF ITS OWN, at `<instance>/docs/`?
+ *
+ * A DIRECTORY question, which is why it is not another `assetRoleFinding`:
+ * README and `agent-instructions` are declared assets, and this is a tree.
+ *
+ * ## What it asks, and what it deliberately does not
+ *
+ * The owner, 2026-09-20, settling what a subject page under a handler means:
+ *
+ * > `<base>/cat-harness/docs/` is where all harness user documentation is… so
+ * > documentation at `<base>/cat-harness/docs/who-iris/` is more documentation
+ * > ABOUT iris, how it is ingested etc. **not the iris content**. source
+ * > content is repo root `who-iris/docs`.
+ *
+ * Two different things, and an axis that conflated them would pass a
+ * repository where half the documentation is missing. This asks only the
+ * first: the instance's own source tree. A handler's rendering of a subject
+ * is not the subject having documentation.
+ *
+ * ## Minor, and NOT in the `--strict` gate — on purpose
+ *
+ * Measured 2026-09-21 across the 12 instances discovery finds: **2 have a
+ * `docs/`**. A check that fires on ten of twelve subjects on the day it lands
+ * is one people learn to skim, and this repository's own rule is that a check
+ * firing on every one of its subjects is a check that is wrong. It reports and
+ * ranks; the count is meant to fall first. That is the staging `2krx` asked
+ * for, for the same reason.
+ *
+ * @param root      the instance root
+ * @param decl      its declaration, already parsed
+ * @returns the finding, or `undefined` when it has `docs/` or is exempt
+ */
+export function ownDocsFinding(
+  root: string,
+  decl: Pick<CatHarnessDeclaration, "renderExemption"> | undefined,
+): { severity: Severity; detail: string } | undefined {
+  // An exemption is read from the DECLARATION, never from a name literal in
+  // this file — the rule `isExemptFrom` exists for, and the one that stopped
+  // cat-bootstrap's visualiser exemption dying to a rename.
+  if (decl !== undefined && isExemptFrom(decl, "own-docs")) return undefined;
+  // `siteDirFor` rather than the string, and it is not merely to dodge the
+  // literal: an instance's own documentation IS its site root. The first
+  // draft hardcoded `"docs"` and two guards objected — `check:declared-paths`
+  // ("a DIRECTORY the declaration already answers") and the site-root test,
+  // which forbids the literal because getting that string wrong once
+  // unignored 3,080 files. Both were right, and the resolver is the answer
+  // to both rather than an exemption from either.
+  //
+  // It also supplies the third state for free: `siteDirFor` THROWS when it
+  // cannot determine a site root, and "unreadable" is not "has no
+  // documentation". An instance that will not resolve has not been shown to
+  // lack docs; it has been shown to be undeterminable, which is a different
+  // answer and belongs in `verdict`, not here.
+  let siteDir: string;
+  try {
+    siteDir = siteDirFor(root);
+  } catch {
+    // NOT `undefined`. Returning nothing here would mean "has documentation",
+    // and an instance whose site root cannot be resolved has not been shown to
+    // have any — it has been shown to be undeterminable. The first draft
+    // returned undefined and the tests caught it, which is the three-state
+    // rule this file states elsewhere being broken in the act of citing it.
+    return {
+      severity: "minor",
+      detail:
+        "site root could not be determined, so whether it has `docs/` of its " +
+        "own is UNKNOWN — not a finding that it lacks documentation",
+    };
+  }
+  if (existsSync(resolve(root, siteDir))) return undefined;
+  return {
+    severity: "minor",
+    detail:
+      "has no `docs/` of its own — a reader entering this instance has its " +
+      "README and nothing beneath it",
+  };
+}
+
 export function auditInstance(root: string): InstanceCoverage {
   const instance = root.split("/").pop() ?? root;
   let decl: CatHarnessDeclaration | undefined;
@@ -348,7 +431,17 @@ export function auditInstance(root: string): InstanceCoverage {
   const isRoot = resolve(root) === resolve(repoRootFor(root));
   const readme = readmeFinding(root, decl, isRoot);
   const agentInstructions = agentInstructionsFinding(root, decl, isRoot);
-  return { instance, verdict: "checked", declared: dirs.length, findings, exempted, readme, agentInstructions };
+  const ownDocs = ownDocsFinding(root, decl);
+  return {
+    instance,
+    verdict: "checked",
+    declared: dirs.length,
+    findings,
+    exempted,
+    readme,
+    agentInstructions,
+    ownDocs,
+  };
 }
 
 export function auditAll(repoRoot: string): InstanceCoverage[] {
@@ -375,6 +468,12 @@ export function formatReport(rs: InstanceCoverage[]): string {
     if (r.readme !== undefined) {
       out.push(`      ✗ ${r.instance} / readme: ${r.readme.detail}`);
     }
+    // A DIFFERENT glyph, because this one is advisory and the two above gate
+    // under `--strict`. Printing them alike would invite a reader to treat a
+    // backlog item and a defect as the same thing.
+    if (r.ownDocs !== undefined) {
+      out.push(`      · ${r.instance} / own-docs: ${r.ownDocs.detail}`);
+    }
     for (const f of r.findings.filter((x) => x.severity === "major")) {
       out.push(`      ✗ ${f.directory} / ${f.criterion}: ${f.detail}`);
     }
@@ -385,6 +484,14 @@ export function formatReport(rs: InstanceCoverage[]): string {
 
   const noReadme = rs.filter((r) => r.readme !== undefined).length;
   const noAgents = rs.filter((r) => r.agentInstructions !== undefined).length;
+  // Counted and reported as its OWN axis. It was argued for on the grounds
+  // that the README and docs sets were disjoint; measured 2026-09-21 they are
+  // not — every instance now declares a README, so docs is a strict subset.
+  // The axes stay separate anyway, for the reason that survives the
+  // measurement: they are different questions. "Can a reader enter this
+  // instance" and "is there anything to read once inside" do not collapse into
+  // one number just because one set happens to contain the other.
+  const noOwnDocs = rs.filter((r) => r.ownDocs !== undefined).length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;
   const all = rs.flatMap((r) => r.findings);
   const major = all.filter((f) => f.severity === "major").length;
@@ -400,6 +507,16 @@ export function formatReport(rs: InstanceCoverage[]): string {
   if (noAgents) {
     out.push(
       `${noAgents} instance(s) have no \`AGENTS.md\` OF THEIR OWN — readable by a person, mute to an agent.`,
+    );
+  }
+  if (noOwnDocs) {
+    // ADVISORY, and it says so in the line itself rather than only in a
+    // comment nobody reading the output will see. On the day this landed it
+    // fired on 10 of 12, and a reader who does not know that is entitled to
+    // read it as 10 defects.
+    out.push(
+      `${noOwnDocs} instance(s) have no \`docs/\` OF THEIR OWN — advisory, not gated: ` +
+        "the count is meant to fall before this is held to.",
     );
   }
   if (undet) {
