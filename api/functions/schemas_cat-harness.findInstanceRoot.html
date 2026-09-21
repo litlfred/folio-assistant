@@ -17,7 +17,7 @@
 <div class="tsd-signature tsd-anchor-link" id="findinstanceroot"><span class="tsd-kind-call-signature">findInstanceRoot</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">start</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#findinstanceroot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>The instance directory a module inside it belongs to — the nearest enclosing
-directory carrying a <a href="../variables/schemas_cat-harness.DECLARATION_FILENAME.html" class="tsd-kind-variable">DECLARATION_FILENAME</a>.</p>
+directory carrying a declaration — see <a href="schemas_cat-harness.findDeclarationFile.html" class="tsd-kind-function">findDeclarationFile</a>.</p>
 <h2 id="why-a-walk-rather-than" class="tsd-anchor-link">Why a walk rather than <code>process.cwd()</code><a href="#why-a-walk-rather-than" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>Nine scripts under <code>scripts/</code> and <code>content/pipeline/</code> read this instance's
 declaration and got the root from the working directory. That was never a
@@ -43,7 +43,7 @@ is the throwing form for callers that cannot continue without one.</p>
 <li><span><span class="tsd-kind-parameter">start</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3a4a74e9b888b203753336add9a7cd70a3d0e344/cat-harness/schemas/cat-harness.ts#L2593">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2593</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c5d745a5a5c16ae8306b071fef3d1e11ed122d57/cat-harness/schemas/cat-harness.ts#L2797">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2797</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

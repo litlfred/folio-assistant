@@ -24,19 +24,30 @@ than merely stated.</p>
 <p>Two are registered here — <code>harness</code> and <code>folio</code> — because they are the two
 this layer owns.</p>
 <h2 id="they-are-not-the-same-type-and-this-repository-is-the-proof" class="tsd-anchor-link">They are NOT the same type, and this repository is the proof<a href="#they-are-not-the-same-type-and-this-repository-is-the-proof" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p><code>harness.json</code> says <em>this is an instance</em>: a name, a stub, the directories
-it holds. <code>harness.config.json</code> says <em>this authors folio content</em>: it
-carries <code>contentType</code>, and <code>folio_init</code> writes it.</p>
-<pre><code><span class="hl-0">                    </span><span class="hl-7">harness</span><span class="hl-0">.</span><span class="hl-7">json</span><span class="hl-0">   </span><span class="hl-7">harness</span><span class="hl-0">.</span><span class="hl-7">config</span><span class="hl-0">.</span><span class="hl-7">json</span><br/><span class="hl-0">  </span><span class="hl-7">cat</span><span class="hl-0">-</span><span class="hl-7">harness</span><span class="hl-0">/           </span><span class="hl-7">yes</span><span class="hl-0">              </span><span class="hl-5">NO</span><br/><span class="hl-0">  </span><span class="hl-7">the</span><span class="hl-0"> </span><span class="hl-7">repository</span><span class="hl-0"> </span><span class="hl-7">root</span><span class="hl-0">    </span><span class="hl-7">yes</span><span class="hl-0">              </span><span class="hl-7">yes</span>
+<p><code>harness</code> says <em>this is an instance</em>: a name, a stub, the directories it
+holds. <code>folio</code> says <em>this authors folio content</em>: it carries <code>contentType</code>,
+and <code>folio_init</code> writes it.</p>
+<pre><code><span class="hl-0">                       </span><span class="hl-7">declared</span><span class="hl-0">   </span><span class="hl-7">contentType</span><br/><span class="hl-0">  </span><span class="hl-7">cat</span><span class="hl-0">-</span><span class="hl-7">harness</span><span class="hl-0">/            </span><span class="hl-7">yes</span><span class="hl-0">         </span><span class="hl-5">NO</span><br/><span class="hl-0">  </span><span class="hl-7">the</span><span class="hl-0"> </span><span class="hl-7">repository</span><span class="hl-0"> </span><span class="hl-7">root</span><span class="hl-0">     </span><span class="hl-7">yes</span><span class="hl-0">         </span><span class="hl-7">yes</span>
 </code><button>Copy</button></pre>
 
 <p>So <code>cat-harness/</code> is a harness and is <strong>not</strong> a folio — which is exactly
 right, and is the platform-not-content rule <code>AGENTS.md</code> opens with, showing
-up as a measurable fact about two files rather than as a slogan.</p>
+up as a measurable fact rather than as a slogan.</p>
+<h2 id="one-file-now-states-both-so-the-discriminator-moved-inside-it" class="tsd-anchor-link">ONE FILE now states both, so the DISCRIMINATOR MOVED INSIDE IT<a href="#one-file-now-states-both-so-the-discriminator-moved-inside-it" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>This table used to have <code>harness.json</code> and <code>harness.config.json</code> as its
+columns, and the two memberships were simply two files. <code>harness.json</code> was
+excised on 2026-09-21 — both are <code>&lt;name&gt;.config.json</code> — and for a few
+minutes that made <strong>every declared instance a folio</strong>, because one marker
+answered both questions.</p>
+<p>The distinction survived the merge by moving from the FILENAME into the
+CONTENT: <code>folioMarkerFilename</code> returns the file only when it declares a
+<code>contentType</code>, which is what this type's own summary always said it meant.
+A bare <code>{&quot;name&quot;:&quot;x&quot;}</code> is an instance and not a folio, exactly as before.</p>
 <p>This is also what <code>isFolio</code> in <code>folio-intent.dmn</code> has always meant. That
 input is documented as <em>&quot;harness.config.json exists in the working
 directory&quot;</em> — so it was never &quot;is this an instance&quot;, it is one membership of
-the set, and <code>getting-started.md</code> now says so.</p>
+the set, and <code>getting-started.md</code> now says so. The file it names has been
+renamed twice since; the question it asks has not changed.</p>
 <h2 id="and-are-not-here-and-the-partition-gate-is-why" class="tsd-anchor-link"><code>dak</code> and <code>sushi</code> are NOT here, and the partition gate is why<a href="#and-are-not-here-and-the-partition-gate-is-why" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>They were, for about ten minutes, under a comment saying <em>&quot;registering a
 type is not claiming it … when a WHO adapter becomes its own layer, those
@@ -76,7 +87,7 @@ detects nothing.</p>
 <div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
 <details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h3>On This Page</h3></summary>
-<div class="tsd-accordion-details"><a href="#they-are-not-the-same-type-and-this-repository-is-the-proof"><span>They are <wbr/>NOT the same type, and this repository is the proof</span></a><a href="#and-are-not-here-and-the-partition-gate-is-why"><span> and  are <wbr/>NOT here, and the partition gate is why</span></a>
+<div class="tsd-accordion-details"><a href="#they-are-not-the-same-type-and-this-repository-is-the-proof"><span>They are <wbr/>NOT the same type, and this repository is the proof</span></a><a href="#one-file-now-states-both-so-the-discriminator-moved-inside-it"><span>ONE <wbr/>FILE now states both, so the <wbr/>DISCRIMINATOR <wbr/>MOVED <wbr/>INSIDE <wbr/>IT</span></a><a href="#and-are-not-here-and-the-partition-gate-is-why"><span> and  are <wbr/>NOT here, and the partition gate is why</span></a>
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Variables</summary>
 <div><a href="#harness_type"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>HARNESS_<wbr/>TYPE</span></a></div></details>
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>

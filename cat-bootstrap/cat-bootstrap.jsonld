@@ -1184,7 +1184,9 @@
         "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#skill/discussion",
         "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#skill/log-message"
       ],
-      "bindsLane": []
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/Initiator"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/knowledge-graph-data-store",
@@ -1198,7 +1200,9 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": []
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/logger",
@@ -1212,7 +1216,9 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": []
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/Logger"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/requestor",
@@ -1226,7 +1232,9 @@
       ],
       "judgementOnly": true,
       "hasSkill": [],
-      "bindsLane": []
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#role/Requestor"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#skill/cat-bootstrap-graph-emission",
@@ -1234,9 +1242,6 @@
       "name": "cat-bootstrap-graph-emission",
       "title": "Emitting cat-bootstrap's own graph",
       "description": "How cat-bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. cat-bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/render"
-      ],
       "instructionsPath": "render/cat-bootstrap-graph-emission.md",
       "instructionLines": 89,
       "hasInstructions": true,
@@ -1249,9 +1254,6 @@
       "name": "cat-bootstrap-graph-publication",
       "title": "Publishing cat-bootstrap's graph",
       "description": "Where cat-bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/render"
-      ],
       "instructionsPath": "render/cat-bootstrap-graph-publication.md",
       "instructionLines": 103,
       "hasInstructions": true,
@@ -1264,9 +1266,6 @@
       "name": "cat-bootstrap-kg-navigation",
       "title": "Reading a knowledge graph before you have anything",
       "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill cat-bootstrap hands you, because the second step of the handoff cannot be followed without it.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/skills"
-      ],
       "instructionsPath": "skills/cat-bootstrap-kg-navigation.md",
       "instructionLines": 83,
       "hasInstructions": true,
@@ -1279,9 +1278,6 @@
       "name": "confirm-harness",
       "title": "Which harness, and where",
       "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/skills"
-      ],
       "instructionsPath": "skills/confirm-harness.md",
       "instructionLines": 59,
       "hasInstructions": true,
@@ -1293,9 +1289,6 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "discussion",
       "title": "discussion — settling what an agent cannot read off disk",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/skills"
-      ],
       "instructionsPath": "skills/discussion.md",
       "instructionLines": 107,
       "hasInstructions": true,
@@ -1308,9 +1301,6 @@
       "name": "log-message",
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/skills"
-      ],
       "instructionsPath": "skills/log-message.md",
       "instructionLines": 93,
       "hasInstructions": true,
@@ -1323,9 +1313,6 @@
       "name": "root-readme",
       "title": "The root README, and the one fact it must carry",
       "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-bootstrap/cat-bootstrap.jsonld#package/skills"
-      ],
       "instructionsPath": "skills/root-readme.md",
       "instructionLines": 82,
       "hasInstructions": true,

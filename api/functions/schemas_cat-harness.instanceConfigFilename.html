@@ -8,7 +8,7 @@
 <div class="col-content">
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb" aria-label="Breadcrumb">
-<li><a href="../modules/schemas_folio-config.html">schemas/folio-config</a></li>
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
 <li><a href="" aria-current="page">instanceConfigFilename</a></li></ul>
 <h1>Function instanceConfigFilename</h1></div>
 <section class="tsd-panel">
@@ -16,49 +16,11 @@
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="instanceconfigfilename"><span class="tsd-kind-call-signature">instanceConfigFilename</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#instanceconfigfilename" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>The names this file has had, and why it is now one PER INSTANCE.</p>
-<p><code>folio.config.json</code> (to 2026-09-18) described the wrong thing: the file
-configures the HARNESS — adapter selection, the skills directory, the
-viewer, simulators, translation, the two work-plan stores — not the folio's
-content. <code>harness.config.json</code> (to 2026-09-20) fixed the noun and kept a
-flaw the split exposed: <strong>one global filename in a checkout that holds
-several instances.</strong></p>
-<p>The owner's ruling, 2026-09-20:</p>
-<blockquote>
-<p>&quot;mv to root at <code>cat-harness.config.json</code> as will all instantiated
-instances (not just materialized KGs). <code>root/</code> is where instantiation is
-tracked.&quot;</p>
-</blockquote>
-<p>So the file stays at the INSTANTIATION ROOT — the checkout, where instances
-are tracked — and takes the instance's own name. This checkout already
-holds <code>cat-harness</code> and <code>bootstrap</code>, with <code>folio-assist-core</code> arriving; one
-filename between them could only ever configure one.</p>
-<h2 id="two-roots-and-they-were-never-the-same-question-bean-" class="tsd-anchor-link">Two roots, and they were never the same question (bean <code>zkgs</code>)<a href="#two-roots-and-they-were-never-the-same-question-bean-" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<table>
-<thead>
-<tr>
-<th>question</th>
-<th>root</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>where is the folio's CONTENT</td>
-<td>nearest declared folio directory — <code>findContentRepoRoot()</code></td>
-</tr>
-<tr>
-<td>where is this instance INSTANTIATED</td>
-<td>the checkout root, holding <code>&lt;name&gt;.config.json</code></td>
-</tr>
-</tbody>
-</table>
-<p><code>zkgs</code> is what happens when one walk answers both: <code>findContentRepoRoot()</code>
-stopped at <code>cat-harness/</code> while the config sat one level up, so nothing
-read it. <code>readDeclaredFolioProfile()</code> returned the THIRD state on a
-repository that had declared <code>document</code>, which the config's own comment
-says &quot;runs every criterion, and the paper adapter's LaTeX-shaped axes fire
-<code>critical</code> on prose that never reaches pdflatex&quot; — and the sidecars proved
-it was happening.</p>
+<div class="tsd-comment tsd-typography"><p>The declaration filename for an instance of this name.</p>
+<p>Defined HERE and re-exported by <code>schemas/harness-config.ts</code>, which is where
+it used to live — that module imports this one, so the dependency only runs
+one way and the alternative was two functions spelling one filename. One
+speller, or the config and the declaration drift apart at the first rename.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -66,7 +28,7 @@ it was happening.</p>
 <li><span><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3a4a74e9b888b203753336add9a7cd70a3d0e344/cat-harness/schemas/harness-config.ts#L315">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:315</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c5d745a5a5c16ae8306b071fef3d1e11ed122d57/cat-harness/schemas/cat-harness.ts#L124">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:124</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -78,10 +40,7 @@ it was happening.</p>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
-<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
-<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
-<h3>On This Page</h3></summary>
-<div class="tsd-accordion-details"><a href="#two-roots-and-they-were-never-the-same-question-bean-"><span>Two roots, and they were never the same question (bean )</span></a></div></details></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

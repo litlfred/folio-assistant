@@ -509,6 +509,23 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/portable-path.test.ts",
+      "instance": "cat-harness",
+      "name": "portable-path.test",
+      "graphNode": "undeclared",
+      "summary": "The rules a checkout relies on — a filename that is legal here and illegal",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/portable-path.ts",
+      "instance": "cat-harness",
+      "name": "portable-path",
+      "graphNode": "none",
+      "reason": "a predicate and an encoder over path strings, not a schema",
+      "summary": "Path segments a checkout can actually create — on every filesystem, not only",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/precision-scalar.ts",
       "instance": "cat-harness",
       "name": "precision-scalar",
@@ -940,6 +957,14 @@
       "name": "extraction",
       "graphNode": "schema",
       "summary": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "instance": "folio-assistant-core",
+      "name": "fhir-artifact-index",
+      "graphNode": "schema",
+      "summary": "The artefact index of a published FHIR Implementation Guide.",
       "isTest": false
     },
     {
@@ -14986,6 +15011,25 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/portable-path.ts#UnportableReason",
+      "name": "UnportableReason",
+      "module": "cat-harness/schemas/portable-path.ts",
+      "kind": "type-alias",
+      "doc": "Why a segment cannot be created, in words a committer can act on.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "empty",
+        "reserved-character",
+        "reserved-device-name",
+        "trailing-dot-or-space"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/precision-scalar.ts#precisionScalar",
       "name": "precisionScalar",
       "module": "cat-harness/schemas/precision-scalar.ts",
@@ -28699,6 +28743,622 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakApiState",
+      "name": "DakApiState",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlay",
+      "name": "DakOverlay",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "name": "DakOverlaySchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The DAK API overlay — the JSON Schema / JSON-LD surface, where one exists.",
+      "fields": [
+        {
+          "name": "schema",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.schema.json` — the JSON Schema for this artefact."
+        },
+        {
+          "name": "displays",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.displays.json` — display strings, keyed by code."
+        },
+        {
+          "name": "openapi",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc."
+        },
+        {
+          "name": "jsonld",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`."
+        },
+        {
+          "name": "codeCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of codes, for a ValueSet."
+        },
+        {
+          "name": "propertyCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of properties, for a logical model."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifact",
+      "name": "FhirArtifact",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndex",
+      "name": "FhirArtifactIndex",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "name": "FhirArtifactIndexSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_INDEX_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Instance id — the directory this index lives in, e.g. `smart-trust`."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "packageId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "NPM-style package id, e.g. `smart.who.int.trust`."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fhirVersion",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "canonicalBase",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`."
+        },
+        {
+          "name": "builtAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription."
+        },
+        {
+          "name": "source",
+          "type": "IgSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "IndexProvenanceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dakApi",
+          "type": "z.enum(DAK_API_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contexts",
+          "type": "z.array(JsonLdContextSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "artifacts",
+          "type": "z.array(FhirArtifactSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DAK_API_STATES",
+        "FHIR_ARTIFACT_INDEX_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "name": "FhirArtifactSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One artefact of the IG.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_SCHEMA_TAG).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not."
+        },
+        {
+          "name": "resourceType",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FHIR canonical URL. Absent for examples and instances; see the doc above."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "category",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
+        },
+        {
+          "name": "published",
+          "type": "PublishedFormatsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dak",
+          "type": "DakOverlaySchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "FHIR_ARTIFACT_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSource",
+      "name": "IgSource",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceKind",
+      "name": "IgSourceKind",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "name": "IgSourceSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum(IG_SOURCE_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The URI the artefacts are published AT — what a `published` URL is resolved against."
+        },
+        {
+          "name": "revision",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Git revision of the branch read, when the source was a checkout. Absent means not established."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When the source was read. An index with no read date cannot be told from a current one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_SOURCE_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenance",
+      "name": "IndexProvenance",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "name": "IndexProvenanceSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "Which published file each part of the index came out of.",
+      "fields": [
+        {
+          "name": "packageManifest",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.manifest.json` — package id, version, FHIR version, build date."
+        },
+        {
+          "name": "canonicals",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`canonicals.json` — the spine for anything with a canonical URL."
+        },
+        {
+          "name": "packageIndex",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc."
+        },
+        {
+          "name": "artifactsHtml",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`artifacts.html` — the ONLY source of an artefact's editorial category."
+        },
+        {
+          "name": "dakEnumerations",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The DAK API enumeration schemas, when present."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContext",
+      "name": "JsonLdContext",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "name": "JsonLdContextSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A JSON-LD context the IG publishes for its own consumers.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "representation",
+          "type": "RepresentationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "binds",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Canonical URLs of the artefacts whose terms this context binds, where that could be established."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormats",
+      "name": "PublishedFormats",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "name": "PublishedFormatsSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The representations the IG publisher emits for every artefact.",
+      "fields": [
+        {
+          "name": "json",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "xml",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "ttl",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "html",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#Representation",
+      "name": "Representation",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "name": "RepresentationSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One published representation of one artefact.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "localPath",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Instance-relative path, present iff these bytes were materialised."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/library-ref.ts#LibraryRef",
       "name": "LibraryRef",
       "module": "folio-assistant-core/schemas/library-ref.ts",
@@ -33602,6 +34262,134 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "displays",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "jsonld",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "openapi",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "schema",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "via": "artifacts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "via": "contexts",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "via": "dak",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "via": "published",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "representation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "html",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "json",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "ttl",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "xml",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
