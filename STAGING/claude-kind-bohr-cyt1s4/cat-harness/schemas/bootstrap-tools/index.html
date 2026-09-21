@@ -198,7 +198,7 @@ var DATA_HREF = "../../../assets/schemas/index.json";
 /* The SUBJECT this page is scoped to, or "" for the handler's whole view.
    One projection serves every page — a second JSON per subject would be the
    same facts written N+1 times, free to disagree once one is regenerated. */
-var SCOPE = "cat-bootstrap-tools";
+var SCOPE = "bootstrap-tools";
 function inScope(d){ return !SCOPE || d.instance === SCOPE; }
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skills — cat-bootstrap-render · docs-auto</title>
+<title>Processes — methodology-crdm-workflows · docs-auto</title>
 <style>
   :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
   @media (prefers-color-scheme: dark) {
@@ -81,8 +81,8 @@ if(document.readyState!=='loading')go();else document.addEventListener('DOMConte
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
 })();</script>
 <div class="wrap">
-<h1>Skills <span class="p">cat-bootstrap-render</span></h1>
-<p class="lede">Derived: every skill markdown file, with the description it declares in its own front matter. Sub-graph <code>cat-bootstrap/render</code>.</p>
+<h1>Processes <span class="p">methodology-crdm-workflows</span></h1>
+<p class="lede">Derived: every BPMN process, with its own documentation, its lanes, and the skills its activities name. Sub-graph <code>cat-harness/methodologies/crdm/workflows</code>.</p>
 
 <div class="note">
   <strong>This is an index, not the documentation.</strong> It says what exists and what each
@@ -92,25 +92,44 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><strong>cat-bootstrap-render</strong> <span class="p">cat-bootstrap/render</span> <span class="n">2</span></li>
-<li><a href="../cat-harness/">cat-harness</a> <span class="p">cat-harness/skills</span> <span class="n">213</span></li>
-<li><a href="../kg-navigation/">kg-navigation</a> <span class="p">kg-navigation/skills</span> <span class="n">1</span></li>
-<li><a href="../large-datasets-skills/">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">1</span></li>
-<li><a href="../methodology-crdm/">methodology-crdm</a> <span class="p">cat-harness/methodologies/crdm</span> <span class="n">3</span></li>
-<li><a href="../methodology-raci/">methodology-raci</a> <span class="p">cat-harness/methodologies/raci</span> <span class="n">1</span></li>
-<li><a href="../who-iris-skills/">who-iris-skills</a> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
+<li><a href="../cat-harness-workflows/">cat-harness-workflows</a> <span class="p">cat-harness/skills/workflows</span> <span class="n">50</span></li>
+<li><strong>methodology-crdm-workflows</strong> <span class="p">cat-harness/methodologies/crdm/workflows</span> <span class="n">8</span></li>
 </ul>
 
 <table>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-emission.md"><code>cat-bootstrap-graph-emission</code></a><br><span class="p">cat-bootstrap/render/cat-bootstrap-graph-emission.md</span></td>
-  <td>How cat-bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-close.bpmn"><code>CRDM close-out</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-close.bpmn</span></td>
+  <td>The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-publication.md"><code>cat-bootstrap-graph-publication</code></a><br><span class="p">cat-bootstrap/render/cat-bootstrap-graph-publication.md</span></td>
-  <td>Where cat-bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-data-model.bpmn"><code>CRDM data model</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-data-model.bpmn</span></td>
+  <td>Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-data-model</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-deliver.bpmn"><code>CRDM Phase 6 — implement, MVP, acceptance</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-deliver.bpmn</span></td>
+  <td>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, delivery-summary, feature-staging, prepare-merge</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-issue-linking.bpmn"><code>CRDM — link the work to an issue</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-issue-linking.bpmn</span></td>
+  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-needs.bpmn"><code>CRDM Phase 1 — needs</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-needs.bpmn</span></td>
+  <td>Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-requirements-definition.bpmn"><code>CRDM Phases 2–4 — BPA and requirements</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-requirements-definition.bpmn</span></td>
+  <td>Map the current workflow, then define the requirements and the impact they carry, and loop until approved.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> bpmn-authoring, content-graph, crdm-requirements-workflow, decision-comparison</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn"><code>CRDM requirements</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn</span></td>
+  <td>The CRDM requirements process, decomposed.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-detect, crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/workflows/crdm-signoff.bpmn"><code>CRDM Phase 5 — beans and sign-off</code></a><br><span class="p">cat-harness/methodologies/crdm/workflows/crdm-signoff.bpmn</span></td>
+  <td>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit, kg-contribution-offer, placement, todo-manager</div></td>
 </tr>
 </tbody>
 </table>
@@ -118,7 +137,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <script>
 /* The sub-graph this page indexes. Read by orphanSubjectPages() to establish
    ownership before pruning — the same line the viewer generators emit. */
-var SCOPE = "cat-bootstrap-render";
+var SCOPE = "methodology-crdm-workflows";
 </script>
 </body>
 </html>

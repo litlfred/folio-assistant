@@ -4698,17 +4698,75 @@
     }, sweepIcon + " " + sweepLabel);
     container.appendChild(sweepBadge);
 
-    // Unverified translation warning — auto-injected on translated pages
+    /* Unverified translation notice — ONE LINE, opening to the detail.
+     *
+     * Owner, 2026-09-21, on a translated page: *"should be a slim one line
+     * '⚠️ Unverified translation — This page has been translated
+     * automatically and has not been reviewed by a subject-matter expert.'
+     * which then can open to the full trnslation QA report."*
+     *
+     * It was four lines of banner above the page title — the warning, the
+     * source, and two tool names a reader cannot run from a browser. On a
+     * translated page that is the first thing between the reader and the
+     * content they came for, every page, permanently.
+     *
+     * ## `role="alert"` is gone, and that is not a downgrade
+     *
+     * An alert demands immediate announcement and is for something that has
+     * just happened. This is a standing property of the page, true before
+     * the reader arrived and still true when they leave. As a `<summary>`
+     * it is in the tab order, states its own expanded/collapsed state, and
+     * can be returned to — which an alert that fires once cannot.
+     *
+     * ## "The full report" is the EXISTING panel, not a second one
+     *
+     * The page already carries a Translation QA badge that opens a panel
+     * over the real sidecar. Restating its contents here would be a second
+     * answer to one question, free to disagree — the defect this file warns
+     * about in several other places. So the drawer holds the two facts that
+     * are NOT in that panel (which file this translates, and how to sign it
+     * off) and a control that opens the panel itself.
+     *
+     * The badge is looked up AT CLICK TIME, not here: it is built further
+     * down this same function, so it does not exist yet. When there is no
+     * badge — a page with no projection — the control is not drawn at all
+     * rather than drawn dead (`pb04`).
+     */
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("div", { class: "fa-translation-warning", role: "alert" });
-      warning.innerHTML =
+      var warning = el("details", { class: "fa-translation-warning" });
+      var warnSummary = el("summary", { class: "fa-translation-warning__line" });
+      warnSummary.innerHTML =
         "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
-        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
+        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert.";
+      warning.appendChild(warnSummary);
+
+      var warnBody = el("div", { class: "fa-translation-warning__body" });
+      warnBody.innerHTML =
         (meta.translationSource
-          ? "<br><strong>Source:</strong> " + meta.translationSource + " (English)"
+          ? "<p><strong>Source:</strong> " + meta.translationSource + " (English)</p>"
           : "") +
-        "<br><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
-        "or use <code>translation_validate</code> to check for staleness and coverage.";
+        "<p><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
+        "or use <code>translation_validate</code> to check for staleness and coverage.</p>";
+      warning.appendChild(warnBody);
+
+      if (meta.translationQa && meta.translationQa.src) {
+        var openReport = el("button", {
+          type: "button",
+          class: "fa-translation-warning__report",
+        }, "Open the translation QA report");
+        openReport.addEventListener("click", function () {
+          var badge = document.querySelector('.fa-qa-badge[data-qa-family="translation"]');
+          // Absent is a real state and is REPORTED, not swallowed: a button
+          // that silently does nothing is worse than one that is not there,
+          // and this path is only reachable if the badge failed to build
+          // after `translationQa.src` promised it.
+          if (badge) badge.click();
+          else console.warn("docs-ui: no translation QA badge to open; the page declared a " +
+                            "projection at " + meta.translationQa.src + " but no badge was built.");
+        });
+        warnBody.appendChild(openReport);
+      }
+
       var mainContent = document.querySelector(".main-content, #main-content");
       if (mainContent && mainContent.firstChild) {
         mainContent.insertBefore(warning, mainContent.firstChild);
