@@ -147,14 +147,14 @@
     {
       "id": "folio-assistant-0jtj",
       "title": "LINEAR FLOOR: the tile listing is the artefact and the board is an overlay over it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:46:31Z",
-      "updatedAt": "2026-09-20T21:46:31Z",
+      "updatedAt": "2026-09-21T10:51:15Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R4 + R8. Unit 5 of 10.\n\nThe owner: *\"this dymanic moving state is overlayed, its an 'extra'. on stndard\nfolio just simple tile based listing.\"* and, from the original ask, *\"but ALWAYS\ncollapsable to linearly rendablee/just the docs.\"*\n\n**This is an accessibility floor, not a fallback.** A board that cannot be read\nlinearly cannot be ",
       "file": "beans/defs/folio-assistant-0jtj--linear-floor-the-tile-listing-is-the-artefact-and.md"
     },
@@ -3393,6 +3393,20 @@
       "file": "beans/defs/folio-assistant-ovkk--the-context-declares-19-terms-the-graph-uses-53-34.md"
     },
     {
+      "id": "folio-assistant-owt6",
+      "title": "NAVBAR DIVIDERS: harness tiles read as a dashboard; they should read as the tabbed dividers of one giant folio",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:50:42Z",
+      "updatedAt": "2026-09-21T10:50:42Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner feedback, 2026-09-21, on the deployed staging preview, with a screenshot of the sidebar and a reference photo of a ring-bound notebook with coloured index dividers.\n\n> those are too much like a dashboard, i want them to be more like diverders. as\n> if you are opening a giant tabbed folio, but the tabs are oriented hoizontally.\n\n",
+      "file": "beans/defs/folio-assistant-owt6--navbar-dividers-harness-tiles-read-as-a-dashboard.md"
+    },
+    {
       "id": "folio-assistant-p5wm",
       "title": "GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio",
       "status": "in-progress",
@@ -3505,6 +3519,20 @@
       "updatedAt": "2026-09-20T08:48:04Z",
       "preview": "Route B of `folio-assistant-3lbz` (`fsh-guts/proposals/zod-schemas-as-tools.md`),\nauthorised by the owner as \"route B y\".\n\n## What was asked, and what was built\n\nThe proposal's route B reads naturally as **one Tool node per gate** — 43 of\nthem. What landed is **one parameterised node**, `gates`, and that deviation is\nthe substance of this bean rather than a shortcut taken under it.\n\nThree reasons,",
       "file": "beans/defs/folio-assistant-ppkm--route-b-bind-the-derived-gates-as-tool-nodes-so-a.md"
+    },
+    {
+      "id": "folio-assistant-prc5",
+      "title": "BROKEN IMAGE: a harness tile renders a missing-image placeholder, and two tiles are both titled folio-assistant",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T10:50:42Z",
+      "updatedAt": "2026-09-21T10:50:42Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — owner, 2026-09-21: *\"broken image on LHS navbar\"*, with a screenshot.\n\nTwo defects visible in the same screenshot, and they may share a cause:\n\n1. **A broken image.** The topmost tile renders the browser's missing-image\n   placeholder (`?`) where its mark should be. `harness-tiles.ts` resolves an\n   icon and `nav_footer_custom.html` e",
+      "file": "beans/defs/folio-assistant-prc5--broken-image-a-harness-tile-renders-a-missing-imag.md"
     },
     {
       "id": "folio-assistant-pve3",
@@ -3847,14 +3875,14 @@
     {
       "id": "folio-assistant-sd8x",
       "title": "BOARD SKILLS + BPMN: author the disciplines as skills and the processes as executable diagrams",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:47:28Z",
-      "updatedAt": "2026-09-21T10:09:45Z",
+      "updatedAt": "2026-09-21T10:34:27Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — the owner's *\"do all the skills and bpmn workflows\"*.\n\nNine implementation units above carry the code. This one carries the part that is\neasy to skip and is the reason the others will still make sense in a month: **every\nprocess here is BPMN, and the diagrams are executable.** A behaviour that exists\nonly in `docs-ui.js` is a behaviou",
       "file": "beans/defs/folio-assistant-sd8x--board-skills-bpmn-author-the-disciplines-as-skills.md"
     },

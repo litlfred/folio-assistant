@@ -106,6 +106,39 @@ Targets are at least the tile size. And the board is ALWAYS collapsible to a
 linear, tile-based listing — a board that cannot be read linearly cannot be
 read by a screen reader, printed, or translated.
 
+### The listing is the ARTEFACT and the board is the overlay
+
+Which is stronger than "collapsible to", and the difference is measurable.
+Owner: *"this dymanic moving state is overlayed, its an 'extra'. on stndard
+folio just simple tile based listing."*
+
+So the floor must be correct **with no JavaScript at all**, not merely correct
+when the board is toggled off. Those are different claims and the second one
+was true here while the first was false: measured 2026-09-21, every note on an
+ordinary page was built by `docs-ui.js` from a `fetch` of
+`assets/todos/index.json`, so a reader with JavaScript off got no note, no
+count, and no hint that notes existed. That is not a degraded board — it is an
+absent artefact.
+
+Three things follow, and each one is a thing to check rather than to intend:
+
+**Document order, never the board's order.** The board may stack by BPMN
+subprocess depth; the floor does not, because document order is the property a
+screen reader and a printout depend on. A floor that reordered would be a
+second answer to "what comes next".
+
+**Collapsed, never removed.** When the board mounts it moves the listing into a
+disclosure so the page is not showing the same notes twice. It does not delete
+it, hide it from assistive technology, or `display: none` it — bean `l4zi`
+again, one layer out: a listing the board removed would have no way back while
+the board is open.
+
+**Assert against the SERVED HTML.** A test that reads the DOM passes in exactly
+the case this rule exists to catch, because the board built that DOM. The
+assertion has to be on bytes the server sent — in this instance, a browser
+context with `javaScriptEnabled: false` over the same renderer the generator
+writes with.
+
 ## Not this skill
 
 The layout layer and why a note carries no coordinates:
