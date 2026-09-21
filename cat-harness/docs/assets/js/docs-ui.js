@@ -3057,6 +3057,39 @@
       }
     }
 
+    // A HAND-AUTHORED page has no generator to write its badge into the
+    // markup, so it is built here from the paths `head_custom.html` published.
+    // Those paths are STRUCTURE — `_data/translation-qa-pages.json` says a
+    // projection exists, never what it found — so this badge is emitted only
+    // where there is something to open, and `paintQaBadges` (which runs right
+    // after `mountTranslationBadges`) fetches its state from the same
+    // `qa-index.json` every other badge uses.
+    //
+    // Deliberately identical markup to the generated one, down to the
+    // `fa-qa-pending` class and the `…` glyph: one badge, one painter, one
+    // panel. A second shape here would be a second set of states to keep in
+    // step with the first.
+    var tq = meta.translationQa;
+    if (tq && tq.src && tq.index && !document.querySelector(".fa-page-qa-badges")) {
+      var tqBadge = el("button", {
+        type: "button",
+        class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
+        "data-qa-family": "translation",
+        "data-qa-key": tq.key || "page.translation",
+        "data-qa-label": "Translation QA",
+        "data-qa-noun": "page",
+        "data-qa-src": tq.src,
+        "data-qa-index": tq.index,
+        "aria-expanded": "false",
+        "aria-busy": "true",
+        title: "Translation QA: loading the verdict…",
+        "aria-label": "Translation QA: loading the verdict…"
+      });
+      tqBadge.appendChild(el("span", { class: "fa-qa-tag" }, "TR"));
+      tqBadge.appendChild(el("span", { class: "fa-qa-glyph", "aria-hidden": "true" }, "…"));
+      container.appendChild(tqBadge);
+    }
+
     // The page-level QA badges the generator emitted under the h1 join this
     // row rather than standing as a second one. They are SERVER-rendered,
     // because whether a page's blocks carry any translation verdict is

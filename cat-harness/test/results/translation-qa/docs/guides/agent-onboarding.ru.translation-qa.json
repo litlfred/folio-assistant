@@ -1,0 +1,96 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/agent-onboarding",
+  "block": "Agent onboarding",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/guides/agent-onboarding.md"
+  },
+  "po": "translations/ru/agent-onboarding.po",
+  "source_hashes": {
+    "md": "68377b6e4537",
+    "po": "049bb38e22b7"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "049bb38e22b7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.479Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "translated": 80,
+          "total": 86,
+          "pct": 93
+        },
+        "notes": "6 of 86 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "049bb38e22b7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.486Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "TOC — absent from: \"Содержание\""
+          }
+        ],
+        "metrics": {
+          "checked": 80,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "68377b6e4537",
+          "po": "049bb38e22b7"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.492Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "metrics": {
+          "echoed": 0,
+          "translated": 80
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-21T11:55:00.494Z"
+}

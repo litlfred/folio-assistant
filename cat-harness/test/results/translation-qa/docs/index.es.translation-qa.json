@@ -1,0 +1,104 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:es/index",
+  "block": "Home",
+  "locale": "es",
+  "paths": {
+    "md": "docs/index.md"
+  },
+  "po": "translations/es/index.po",
+  "source_hashes": {
+    "md": "9b2dbc77a5f8",
+    "po": "a6d7fc74d1b7"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "a6d7fc74d1b7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.639Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "translated": 36,
+          "total": 43,
+          "pct": 84
+        },
+        "notes": "7 of 43 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "a6d7fc74d1b7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.646Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "WHO — absent from: \"Un marco de habilidades de agente independiente del contenido para la autoría de\""
+          },
+          {
+            "text": "WHO — absent from: \"Kits de adaptación digital (DAK) de las Directrices SMART de la OMS\""
+          },
+          {
+            "text": "WHO — absent from: \"Guías de implementación SMART de la OMS\""
+          }
+        ],
+        "metrics": {
+          "checked": 36,
+          "missing": 3,
+          "missing_strict": 0,
+          "missing_acronyms": 3
+        },
+        "notes": "3 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "a6d7fc74d1b7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.652Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 36
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-21T11:55:00.654Z"
+}

@@ -3239,6 +3239,20 @@
       "file": "beans/defs/folio-assistant-n2s1--practice-graph-detanglement-and-extraction-as-a-na.md"
     },
     {
+      "id": "folio-assistant-n7vv",
+      "title": "BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T11:38:02Z",
+      "updatedAt": "2026-09-21T11:38:02Z",
+      "preview": "Seen directly while verifying PR #691 against the real generated page: the badge row under a title renders a dark-brown 2/6 languages chip and a dark-green Swept 8/289 chip next to a correctly themed light TR chip, on a light page.\n\nfa-lang-coverage-badge and fa-sweep-badge are built in mountTranslationBadges with inline colour literals (#78350f, #14532d, #1e293b, #e2e8f0). Contrast WITHIN each ch",
+      "file": "beans/defs/folio-assistant-n7vv--badge-palette-the-coverage-and-sweep-badges-are-in.md"
+    },
+    {
       "id": "folio-assistant-nba0",
       "title": "QA scoping: automated:false criteria bypass BOTH the adapter and profile gates",
       "status": "todo",
@@ -3537,14 +3551,14 @@
     {
       "id": "folio-assistant-pp93",
       "title": "TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T11:23:21Z",
-      "updatedAt": "2026-09-21T11:23:21Z",
+      "updatedAt": "2026-09-21T11:46:25Z",
       "preview": "The page-level translation roll-up (PR #691, issue #687) reaches the 12 generated pages, whose blocks can carry translation sidecars.\n\nThe 5 hand-authored translated pages — docs/{ar,es,fr,ru,zh}/index.md — get the corrected counts and the language bar, but no TR panel: their source docs/index.md carries no block triples, so there is nothing to roll up.\n\n## Done when\n\n- (docs page, locale) pairs a",
       "file": "beans/defs/folio-assistant-pp93--translated-pages-have-no-tr-panel-the-roll-up-is-o.md"
     },

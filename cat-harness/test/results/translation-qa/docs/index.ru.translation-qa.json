@@ -1,0 +1,104 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/index",
+  "block": "Home",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/index.md"
+  },
+  "po": "translations/ru/index.po",
+  "source_hashes": {
+    "md": "9b2dbc77a5f8",
+    "po": "548d66c1a73a"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "548d66c1a73a"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.616Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "translated": 36,
+          "total": 43,
+          "pct": 84
+        },
+        "notes": "7 of 43 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "548d66c1a73a"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.623Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "WHO — absent from: \"Не зависящий от контента фреймворк навыков агента для создания строгого контента\""
+          },
+          {
+            "text": "WHO — absent from: \"Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines\""
+          },
+          {
+            "text": "WHO — absent from: \"Руководства по реализации ВОЗ SMART Guidelines\""
+          }
+        ],
+        "metrics": {
+          "checked": 36,
+          "missing": 3,
+          "missing_strict": 0,
+          "missing_acronyms": 3
+        },
+        "notes": "3 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "548d66c1a73a"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.629Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 36
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-21T11:55:00.630Z"
+}

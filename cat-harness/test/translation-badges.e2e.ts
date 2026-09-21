@@ -46,6 +46,7 @@ const QA_SRC_URL = "/assets/qa/harness/page.translation.json";
 
 interface Meta {
   lang: string;
+  translationQa?: { key: string; src: string; index: string } | null;
   availableLocales?: string[];
   supportedLocales?: string[];
   sweep?: Record<string, unknown>;
@@ -293,5 +294,91 @@ test.describe("the page-level translation badge joins the badge row", () => {
     await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
     await expect(page.locator(".fa-qa-chip.fa-qa-block")).toHaveText("sec:harness-overview");
     await expect(page.locator(".fa-qa-chip.fa-qa-locale")).toHaveText("fr");
+  });
+});
+
+test.describe("a hand-authored page builds its own TR badge", () => {
+  // The bean-`pp93` case. A generated page has its badge written into the
+  // markup; `docs/fr/index.md` has no generator, so `docs-ui.js` builds one
+  // from the paths `head_custom.html` publishes — but ONLY where a projection
+  // exists, which `_data/translation-qa-pages.json` says and the page does not
+  // guess. A badge emitted unconditionally would 404 and paint `unknown`,
+  // "could not determine", which is a different answer from "not swept".
+  const tq = {
+    key: "page.translation",
+    src: QA_SRC_URL,
+    index: QA_INDEX_URL,
+  };
+  const index = {
+    badges: {
+      "page.translation": {
+        state: "warn",
+        counts: { fail: 0, warn: 14, pass: 1, na: 0, unknown: 5 },
+      },
+    },
+  };
+
+  test("with a projection, the badge appears and paints", async ({ page }) => {
+    await serve(
+      page,
+      { lang: "fr", availableLocales: ["ar", "zh", "en", "fr", "ru", "es"], translationQa: tq },
+      { index },
+    );
+    const b = page.locator('.fa-qa-badge[data-qa-key="page.translation"]');
+    await expect(b).toHaveCount(1);
+    await expect(b).toHaveClass(/fa-qa-warn/);
+    // In the badge row, not loose in the page.
+    await expect(page.locator(".fa-translation-badges .fa-qa-badge")).toHaveCount(1);
+  });
+
+  test("with NO projection, no badge at all — not a broken one", async ({ page }) => {
+    await serve(page, { lang: "en", availableLocales: [] }, { index });
+    await expect(page.locator(".fa-qa-badge")).toHaveCount(0);
+  });
+
+  test("it does not double up when the generator already emitted one", async ({ page }) => {
+    // A generated page carries `fa-page-qa-badges` in its markup AND would get
+    // `translationQa` from the same front-matter lookup. Two badges for one
+    // subject is two controls that can disagree about one verdict.
+    await serve(
+      page,
+      { lang: "en", availableLocales: ["en", "fr"], translationQa: tq },
+      { body: PAGE_BADGE, index },
+    );
+    await expect(page.locator('.fa-qa-badge[data-qa-key="page.translation"]')).toHaveCount(1);
+  });
+
+  test("the panel opens on a per-locale roll-up", async ({ page }) => {
+    const projection = {
+      $schema: "qa-witness/v1",
+      family: "translation",
+      subject: "index — translations",
+      sidecars: ["test/results/translation-qa/docs/index.fr.translation-qa.json"],
+      state: "warn",
+      counts: { fail: 0, warn: 2, pass: 0, na: 0, unknown: 0 },
+      criteria: [
+        {
+          id: "translation-coverage",
+          result: "warn",
+          locale: "ar",
+          metrics: { translated: 36, total: 43, pct: 84 },
+          witnesses: [{ kind: "script", id: "x", freshness: "fresh" }],
+        },
+        {
+          id: "translation-coverage",
+          result: "warn",
+          locale: "fr",
+          metrics: { translated: 36, total: 43, pct: 84 },
+          witnesses: [{ kind: "script", id: "x", freshness: "fresh" }],
+        },
+      ],
+    };
+    await serve(
+      page,
+      { lang: "fr", availableLocales: ["ar", "zh", "en", "fr", "ru", "es"], translationQa: tq },
+      { index, projection },
+    );
+    await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
+    await expect(page.locator(".fa-qa-chip.fa-qa-locale")).toHaveCount(2);
   });
 });

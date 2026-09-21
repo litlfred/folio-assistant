@@ -1,0 +1,122 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/index",
+  "block": "Home",
+  "locale": "ar",
+  "paths": {
+    "md": "docs/index.md"
+  },
+  "po": "translations/ar/index.po",
+  "source_hashes": {
+    "md": "9b2dbc77a5f8",
+    "po": "3ffef16e37c9"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "3ffef16e37c9"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.538Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "translated": 36,
+          "total": 43,
+          "pct": 84
+        },
+        "notes": "7 of 43 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "3ffef16e37c9"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.546Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "WHO — absent from: \"إطار عمل لمهارات الوكيل غير المرتبط بمحتوى محدد لتأليف محتوى دقيق باستخدام نموذج\""
+          },
+          {
+            "text": "LLM — absent from: \"إن folio-assistant هو المنصة — وهو لا يحتوي على المحتوى بحد ذاته. بل يوفر المهار\""
+          },
+          {
+            "text": "WHO — absent from: \"حزم التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART\""
+          },
+          {
+            "text": "WHO — absent from: \"أدلة تطبيق إرشادات منظمة الصحة العالمية SMART\""
+          },
+          {
+            "text": "LLM — absent from: \"البدء — توصيل خادم MCP بنموذجك اللغوي وتشغيل مهاراتك الأولى.\""
+          },
+          {
+            "text": "LLM — absent from: \"درس تعليمي: كتابة ورقة بحثية باستخدام folio-assistant — دليل تطبيقي كامل مدفوع ب\""
+          },
+          {
+            "text": "LLM — absent from: \"توجيه الوكيل — تدريب تمهيدي لوكيل الذكاء الاصطناعي عند دمجه في ملف المحتوى: الخط\""
+          },
+          {
+            "text": "LLM — absent from: \"المهارات والأدوار — جميع المهارات والأدوار، وكيفية عملها مع النموذج اللغوي الكبي\""
+          },
+          {
+            "text": "API — absent from: \"مرجع واجهة برمجة تطبيقات TypeScript — نموذج كائنات المحتوى (Block وChapter وPape\""
+          }
+        ],
+        "metrics": {
+          "checked": 36,
+          "missing": 9,
+          "missing_strict": 0,
+          "missing_acronyms": 9
+        },
+        "notes": "9 acronym(s) from the source do not appear verbatim in the translation. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart, which is why it warns. A glossary would settle it."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "9b2dbc77a5f8",
+          "po": "3ffef16e37c9"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "e4076bc0cf43",
+          "script_commit_sha": "346217d8ca4a896b4b93e7d87129a012a4bad485"
+        },
+        "reviewed_at": "2026-09-21T11:55:00.553Z",
+        "reviewed_sha": "b5b1226a31e9bad863e57355af80331d136b8648",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 36
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-21T11:55:00.555Z"
+}

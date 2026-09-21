@@ -62,7 +62,7 @@ import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts"
 import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
-import { existingBlockQaPath } from "./qa-paths.ts";
+import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
 
 /** The QA sidecar families a subject can carry. */
 export const QA_FAMILIES = ["block", "translation", "script", "kg"] as const;
@@ -305,12 +305,33 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
       return path ? [path] : [];
     }
     case "translation": {
-      if (!existsSync(dir)) return [];
-      const re = new RegExp(`^${escapeRe(stem)}\\.([a-z]{2,3}(?:-[A-Za-z0-9]+)*)\\.translation-qa\\.json$`);
-      return readdirSync(dir)
-        .filter((f) => re.test(f))
-        .sort()
-        .map((f) => join(dir, f));
+      // TWO trees, scanned in the order `qa-paths.ts` fixes: the results tree
+      // that sweeps write to, then the legacy sibling a downstream folio still
+      // carries. Unlike `block` above, several sidecars here are genuinely
+      // different data — one verdict per LOCALE — so the whole set is returned
+      // rather than the first that exists.
+      //
+      // The two trees are merged BY LOCALE, not concatenated: a folio
+      // mid-migration has `fr` in both places, the same verdict written twice,
+      // and concatenating would project it as two witnesses of one criterion —
+      // a checker appearing to have ruled twice on one text, which is the
+      // "sidecar grows a history of one checker arguing with itself" defect
+      // bean `oja4` already paid for. First tree wins per locale, so the
+      // results-tree copy supersedes the sibling exactly as it does for blocks.
+      const subjectRoot = join(dir, stem);
+      const re = new RegExp(
+        `^${escapeRe(stem)}\\.([a-z]{2,3}(?:-[A-Za-z0-9]+)*)\\.translation-qa\\.json$`,
+      );
+      const byLocale = new Map<string, string>();
+      const resultsDir = dirname(translationQaPath(repoRoot, subjectRoot, "xx"));
+      for (const d of [resultsDir, dir]) {
+        if (!existsSync(d)) continue;
+        for (const f of readdirSync(d).sort()) {
+          const m = re.exec(f);
+          if (m && !byLocale.has(m[1]!)) byLocale.set(m[1]!, join(d, f));
+        }
+      }
+      return [...byLocale.keys()].sort().map((l) => byLocale.get(l)!);
     }
     case "script":
       return [join(dir, "script-qa", `${stem}.script-qa.json`)].filter((p) => existsSync(p));
