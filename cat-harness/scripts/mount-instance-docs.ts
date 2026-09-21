@@ -207,7 +207,7 @@ function mountable(): Mountable[] {
     const decl = declarationPathIn(join(REPO, e.name));
     if (decl === undefined) continue;
     if (!existsSync(decl)) continue;
-    let d: { name?: string; directories?: { path?: string; graphs?: string[]; instanceRoot?: boolean }[] };
+    let d: { name?: string; directories?: { path?: string; graphKinds?: string[]; instanceRoot?: boolean }[] };
     try {
       d = JSON.parse(readFileSync(decl, "utf-8"));
     } catch {
@@ -220,7 +220,7 @@ function mountable(): Mountable[] {
       const abs = join(REPO, e.name, entry.path);
       if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
       if (!existsSync(join(abs, "index.html"))) continue;
-      for (const kind of entry.graphs ?? []) {
+      for (const kind of entry.graphKinds ?? []) {
         out.push({ name: d.name ?? e.name, kind, dir: abs, instanceRoot: entry.instanceRoot === true });
       }
     }

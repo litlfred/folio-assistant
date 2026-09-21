@@ -71,7 +71,7 @@ const check = process.argv.includes("--check");
  */
 export function boardsDir(_repoRoot: string, todoRoot: string = TODO_ROOT): string {
   const graph = parseTodoGraph(JSON.parse(readFileSync(join(todoRoot, TODO_GRAPH_FILE), "utf8")));
-  const entry = graph.directories.find((d) => (d.graphs ?? []).includes("boards"));
+  const entry = graph.directories.find((d) => (d.graphKinds ?? []).includes("boards"));
   if (entry === undefined) {
     throw new Error(
       `${todoRoot}/${TODO_GRAPH_FILE} declares no directory holding a \`boards\` graph. ` +

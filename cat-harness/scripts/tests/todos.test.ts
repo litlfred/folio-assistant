@@ -23,7 +23,7 @@ import { loadProcessModel } from "../../src/workflow/process-model.js";
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
     const d = readDeclaration(ROOT);
-    const entry = d?.directories?.find((x) => x.graphs?.includes("todos"));
+    const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
     expect(entry?.path).toBe("todos/");
   });
 

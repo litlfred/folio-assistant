@@ -101,7 +101,7 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
       // one kind can be scanned for it; one that holds several has to say
       // which file is which, and for `schemas/` that answer is `@graphNode`
       // on the `.ts`, not a guess about the `.md`.
-      .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
+      .filter((d) => d.graphKinds.length === 1 && d.graphKinds[0] === "cat-harness")
       .filter((d) => existsSync(d.absPath));
   } catch (err) {
     // NOT swallowed into an empty list, and the reason is measured.

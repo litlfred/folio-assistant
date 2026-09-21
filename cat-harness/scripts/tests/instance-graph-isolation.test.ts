@@ -56,7 +56,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     writeFileSync(join(root, "stray", "x.bpmn"), "<x/>");
     writeDeclaration(root, JSON.stringify({
         name: "iso",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     const { nodes, notes } = await collectInstanceNodes(root, DOC, "", problems);
@@ -82,7 +82,7 @@ describe("discovery reads the declaration rather than the tree", () => {
     writeFileSync(join(root, "wf", "x.bpmn"), "<x/>");
     writeDeclaration(root, JSON.stringify({
         name: "iso2",
-        directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, "", problems);

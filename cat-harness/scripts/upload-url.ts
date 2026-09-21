@@ -71,7 +71,7 @@ export type UploadTarget =
 export function queueRepoRelative(root: string): string | undefined {
   const decl = readDeclaration(root);
   const entry = (decl?.directories ?? []).find((d: ContentDirectory) =>
-    d.graphs.includes(UPLOADS_GRAPH_KIND),
+    d.graphKinds.includes(UPLOADS_GRAPH_KIND),
   );
   if (!entry) return undefined;
   const abs = resolve(rootForScope(root, entry.scope), entry.path);

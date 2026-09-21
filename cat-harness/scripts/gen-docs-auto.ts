@@ -185,7 +185,7 @@ function walk(dir: string, pred: (name: string) => boolean): string[] {
  */
 export function declaredDirectories(graph: string): Array<{ id: string; absPath: string; path: string }> {
   return resolveDirectories([{ name: "(local)", root: ROOT, own: true }])
-    .filter((d) => (d.graphs ?? []).includes(graph))
+    .filter((d) => (d.graphKinds ?? []).includes(graph))
     .map((d) => ({ id: d.id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") }))
     .filter((d) => existsSync(d.absPath))
     .sort((a, b) => a.id.localeCompare(b.id, "en"));

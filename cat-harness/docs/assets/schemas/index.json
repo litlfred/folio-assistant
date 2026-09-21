@@ -5368,7 +5368,7 @@
           "array": false
         },
         {
-          "name": "graphs",
+          "name": "graphKinds",
           "type": "GraphKind[]",
           "optional": false,
           "array": true
@@ -5583,7 +5583,7 @@
           "doc": "Which root `path` is relative to. Absent means this instance's."
         },
         {
-          "name": "graphs",
+          "name": "graphKinds",
           "type": "GraphKind[]",
           "optional": false,
           "array": true,
@@ -5623,7 +5623,7 @@
           "array": false
         },
         {
-          "name": "graphs",
+          "name": "graphKinds",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -5809,7 +5809,7 @@
           "doc": "Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates."
         },
         {
-          "name": "graphs",
+          "name": "graphKinds",
           "type": "GraphKind[]",
           "optional": false,
           "array": true,
@@ -5847,7 +5847,7 @@
           "array": false
         },
         {
-          "name": "graphs",
+          "name": "graphKinds",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -29852,7 +29852,7 @@
     {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
       "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
-      "via": "graphs",
+      "via": "graphKinds",
       "kind": "field",
       "optional": false,
       "array": true
@@ -29876,7 +29876,7 @@
     {
       "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
       "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
-      "via": "graphs",
+      "via": "graphKinds",
       "kind": "field",
       "optional": false,
       "array": true
@@ -29916,7 +29916,7 @@
     {
       "from": "cat-harness/schemas/cat-harness.ts#RemoteGraph",
       "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
-      "via": "graphs",
+      "via": "graphKinds",
       "kind": "field",
       "optional": false,
       "array": true

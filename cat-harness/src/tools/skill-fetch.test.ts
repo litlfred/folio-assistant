@@ -20,7 +20,7 @@ function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
   const root = mkdtempSync(join(tmpdir(), "pkgs-"));
   writeDeclaration(root, JSON.stringify({
       name: "t",
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
     }));
   for (const [name, body] of Object.entries(pkgs)) {
     mkdirSync(join(root, kgPath, name), { recursive: true });
@@ -148,7 +148,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
     writeDeclaration(join(repo, "sibling"), JSON.stringify({
         name: "sibling",
-        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
@@ -160,8 +160,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
         directories: [
-          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphs: ["cat-harness"], scope: "repository" },
-          { id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] },
+          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] },
         ],
       }));
 
@@ -196,7 +196,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
 
@@ -226,7 +226,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
           id: `d${i}`,
           path,
           dependents: "reproduce",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       }));
     const found = discoverLocalPackages(inst);
@@ -244,7 +244,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(inst, "kg", "s.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     expect(Object.keys(discoverLocalPackages(inst))).toEqual(["inst"]);
     rmSync(repo, { recursive: true, force: true });

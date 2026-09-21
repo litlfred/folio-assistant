@@ -56,7 +56,7 @@
       "id": "cat-harness",
       "path": "skills/",
       "dependents": "skip",
-      "graphs": [
+      "graphKinds": [
         "cat-harness"
       ]
     },
@@ -65,7 +65,7 @@
       "path": "workflows/",
       "dependents": "skip",
       "description": "The cat-bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace cat-bootstrap's skills with its workflows.",
-      "graphs": [
+      "graphKinds": [
         "cat-harness"
       ]
     },
@@ -74,7 +74,7 @@
       "path": "render/",
       "dependents": "skip",
       "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `cat-bootstrap-graph-emission` (what the document contains and the four properties it holds) and `cat-bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace cat-bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about cat-bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`.",
-      "graphs": [
+      "graphKinds": [
         "cat-harness"
       ]
     }

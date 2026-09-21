@@ -1568,7 +1568,7 @@ export interface GraphNodeDirectory extends KgNodeLabels {
    * `graph: "kg"` here and `kinds: ["bean-defs"]` there, two spellings of one
    * concept.
    */
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
 }
 
 /**
@@ -1812,7 +1812,29 @@ export type DependentMaterialisation = z.infer<typeof DependentMaterialisationSc
  * one, so the shape is still declared once — which is the property
  * `bean-graph.ts` and `todo-graph.ts` were reusing it for.
  */
-export const GraphNodeDirectorySchema = z.object({
+/**
+ * Accept the pre-2026-09-21 spelling `graphs` where `graphKinds` is absent.
+ *
+ * An in-tree declaration is migrated by the same commit that renames the
+ * field; a DOWNSTREAM one is not, and `readDeclaration` throws on a
+ * present-but-unreadable declaration rather than falling back. Without this an
+ * unmigrated folio would stop resolving its own directories — the breakage
+ * `GRAPH_KIND_ALIASES` exists to prevent one layer down, for exactly the same
+ * kind of rename.
+ *
+ * Deliberately NOT a merge: if a declaration carries both, `graphKinds` wins
+ * and the legacy key is ignored, because two spellings that disagree is the
+ * one case where guessing which is current would be worse than either answer.
+ */
+function acceptLegacyGraphsKey(v: unknown): unknown {
+  if (typeof v !== "object" || v === null) return v;
+  const o = v as Record<string, unknown>;
+  if (o.graphKinds !== undefined || o.graphs === undefined) return v;
+  const { graphs, ...rest } = o;
+  return { ...rest, graphKinds: graphs };
+}
+
+const GraphNodeDirectoryShape = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,
@@ -1820,9 +1842,20 @@ export const GraphNodeDirectorySchema = z.object({
   // A closed enum would have to be built at module load, which is before core
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
-  graphs: z.array(z.string().min(1)).min(1),
+  //
+  // NAMED `graphKinds` SINCE 2026-09-21, AND THE OLD NAME WAS THE CONFLATION.
+  // The field lists KINDS, never graphs: `{ path: "voices/", graphKinds: ["voices"] }`
+  // says the graph here is OF KIND `voices`, but read literally it asserts the
+  // directory IS the voices graph — and `cat-harness` is declared by 22
+  // directories, so twenty-two of them each claimed to be the one cat-harness
+  // graph. That is why `GraphKind` read as redundant beside it: the type was
+  // honest and the data was not.
+  graphKinds: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
 });
+
+/** The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical. */
+export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape);
 
 /**
  * What makes a declared subgraph REACHABLE — and the reasons it may not need
@@ -1932,7 +1965,7 @@ export const SubgraphCoverageSchema = z.object({
 });
 export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 
-export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
+const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /**
@@ -1995,6 +2028,9 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
    */
   theme: z.string().min(1).optional(),
 });
+
+/** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
+export const ContentDirectorySchema = z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape);
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
 // omission. A first draft of PR #351 added one, required on a
@@ -2069,14 +2105,14 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // the rule "every entry carries one" free of an exception nobody would
   // remember — and if either ever loses that scope, the classification it
   // already has is the right one.
-  { id: "tools", path: "tools/", dependents: "skip", graphs: ["tools"] },
-  { id: "schemas", path: "schemas/", dependents: "skip", graphs: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", dependents: "skip", graphs: ["cat-harness"] },
-  { id: "beans", path: "beans/", dependents: "reproduce", graphs: ["beans"] },
-  { id: "todos", path: "todos/", dependents: "reproduce", graphs: ["todos"] },
-  { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
-  { id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] },
-  { id: "voices", path: "voices/", dependents: "reproduce", graphs: ["voices"] },
+  { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
+  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
+  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["cat-harness"] },
+  { id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] },
+  { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
+  { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
+  { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+  { id: "voices", path: "voices/", dependents: "reproduce", graphKinds: ["voices"] },
 ];
 
 /**
@@ -2354,14 +2390,14 @@ export interface RemoteGraph extends KgNodeLabels {
   /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
   url: string;
   /** Which parts of the knowledge graph live there. */
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
 }
 
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
     url: z.string().url(),
-    graphs: z.array(z.string().min(1)).min(1),
+    graphKinds: z.array(z.string().min(1)).min(1),
     ...kgNodeLabelShape,
   })
   // STRICT, and that is the point rather than tidiness: without it a stray
@@ -3283,8 +3319,8 @@ export function isPublishedSchemaModule(modulePath: string): boolean {
  * part of the graph, so an "all" test would publish a directory that holds
  * both `kg` and `fsh-guts`, naming the trashcan's path in the process.
  */
-export function isPublishedDirectory(d: { graphs?: readonly string[] }): boolean {
-  return (d.graphs ?? []).every(isPublishedGraphKind);
+export function isPublishedDirectory(d: { graphKinds?: readonly string[] }): boolean {
+  return (d.graphKinds ?? []).every(isPublishedGraphKind);
 }
 
 /**
@@ -3462,7 +3498,7 @@ export function readDeclaration(
   // vocabulary is open: the set of valid kinds is whatever has been registered
   // by the time the declaration is read, not what existed at module load.
   for (const dir of parsed.data.directories) {
-    for (const g of dir.graphs) {
+    for (const g of dir.graphKinds) {
       if (!registry.has(g)) {
         throw new Error(
           `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
@@ -3528,13 +3564,13 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
       // type stays a string, several become a list. A type the registry does
       // not know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphs === undefined && e["@type"] !== undefined) {
+      if (e.graphKinds === undefined && e["@type"] !== undefined) {
         const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
         const kinds = types
           .filter((t): t is string => typeof t === "string")
           .map((t) => registry.forType(t))
           .filter((k): k is string => k !== undefined);
-        if (kinds.length > 0) e.graphs = kinds;
+        if (kinds.length > 0) e.graphKinds = kinds;
       }
       delete e["@type"];
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
@@ -4018,7 +4054,7 @@ export function workPlanGraphsIn(
     }
     if (decl === undefined) continue;
     const kinds = [
-      ...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? [])),
+      ...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? [])),
     ].filter((k) => registry.get(k)?.recordsWork === true);
     if (kinds.length > 0) plan.push({ instance: decl.name ?? root, kinds: kinds.sort() });
   }
@@ -4133,7 +4169,7 @@ export const KG_GRAPH_KIND = "cat-harness";
  * scanned for it; one holding several has to say which file is which.
  */
 export function isKgOnlyDirectory(d: ContentDirectory): boolean {
-  return d.graphs.length === 1 && d.graphs[0] === KG_GRAPH_KIND;
+  return d.graphKinds.length === 1 && d.graphKinds[0] === KG_GRAPH_KIND;
 }
 
 /**
@@ -4473,7 +4509,7 @@ export function renderableDirectories(
 ): ResolvedDirectory[] {
   // Renderable if ANY declared graph is: a directory holding a folio plus
   // something else still renders.
-  return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
+  return dirs.filter((d) => d.graphKinds.some((g) => isRenderable(g, registry)));
 }
 
 /**
@@ -4574,7 +4610,7 @@ function matchingDirectories(
   registry: GraphKindRegistry,
 ): ResolvedDirectory[] {
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
-    d.graphs.includes(graph as GraphKind),
+    d.graphKinds.includes(graph as GraphKind),
   );
 }
 
@@ -4799,7 +4835,7 @@ export function instanceDirectoryForGraph(
  */
 export interface DeclaredGraph extends KgNodeLabels {
   id: string;
-  graphs: GraphKind[];
+  graphKinds: GraphKind[];
   declaredBy: string;
   /** Set iff the graph is HERE. */
   absPath?: string;
@@ -4878,7 +4914,7 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphs.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
+      const types = d.graphKinds.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
       return {
         "@id": `#${d.id}`,
         // One type stays a string, several become a list — JSON-LD permits
@@ -4916,7 +4952,7 @@ export function toJsonLd(
  * declaration's own contents belong beside the declaration reader anyway.
  *
  * Follows NESTED declarations, which is the part a plain read of
- * `directories[].graphs` misses: `beans/beans.json` is what says `bean-defs`
+ * `directories[].graphKinds` misses: `beans/beans.json` is what says `bean-defs`
  * and `workflow-state` exist, and an instance that owns them would otherwise
  * be reported as not owning them.
  */
@@ -4927,7 +4963,7 @@ export function declaredKinds(
 ): Set<string> {
   const kinds = new Set<string>();
   for (const d of decl.directories ?? []) {
-    for (const g of d.graphs ?? []) kinds.add(g);
+    for (const g of d.graphKinds ?? []) kinds.add(g);
     // The nested declaration, if the directory carries one — how `beans/` says
     // what its inner nodes are without `harness.json` restating them.
     //
@@ -4945,7 +4981,7 @@ export function declaredKinds(
     // whose kind declares no filename is unmigrated, not broken, and an
     // instance that never relocates behaves exactly as before.
     const dirName = basename(d.path.replace(/\/+$/, ""));
-    const declared = (d.graphs ?? [])
+    const declared = (d.graphKinds ?? [])
       .map((g) => registry.get(g)?.declarationFile)
       .filter((f): f is string => typeof f === "string");
     for (const candidate of [...declared, `${dirName}.json`, "graph.json"]) {
@@ -4953,10 +4989,10 @@ export function declaredKinds(
       if (!existsSync(p)) continue;
       try {
         const nested = JSON.parse(readFileSync(p, "utf-8")) as {
-          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
+          directories?: Array<{ graphKinds?: string[]; kinds?: string[] }>;
         };
         for (const nd of nested.directories ?? []) {
-          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+          for (const g of [...(nd.graphKinds ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
         }
       } catch {
         // A nested file that will not parse is not this check's finding to

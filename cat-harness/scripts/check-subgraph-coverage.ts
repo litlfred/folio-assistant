@@ -413,7 +413,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
         // is the existence claim.
         const unmetObligation =
           criterion === "serialisations" ||
-          (criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g)));
+          (criterion === "visualiser" && dir.graphKinds.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
@@ -424,7 +424,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
                 `schema.json at its own URL, and this one is excused nothing`
               : unmetObligation
-                ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                ? `no visualiser declared, and ${dir.graphKinds.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
                   `an instance renders what it declares`
                 : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });

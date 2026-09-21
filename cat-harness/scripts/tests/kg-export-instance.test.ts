@@ -106,7 +106,7 @@ describe("what was not looked for is not reported as clean", () => {
     writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
     writeDeclaration(root, JSON.stringify({
         name: "noflows",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
@@ -156,7 +156,7 @@ describe("what was not looked for is not reported as clean", () => {
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);

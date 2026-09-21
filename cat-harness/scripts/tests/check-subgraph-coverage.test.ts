@@ -43,7 +43,7 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
  */
 function instance(
   coverage: unknown,
-  opts: { name?: string; realTargets?: string[]; graphs?: string[] } = {},
+  opts: { name?: string; realTargets?: string[]; graphKinds?: string[] } = {},
 ): { root: string; cleanup: () => void } {
   const base = mkdtempSync(join(tmpdir(), "coverage-"));
   const root = join(base, opts.name ?? "inst");
@@ -60,7 +60,7 @@ function instance(
           id: "thing",
           path: "thing/",
           dependents: "reproduce",
-          graphs: opts.graphs ?? ["cat-harness"],
+          graphKinds: opts.graphKinds ?? ["cat-harness"],
           ...(coverage === undefined ? {} : { coverage }),
         },
       ],
@@ -251,7 +251,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
   it("a kind that OWES a visualiser and has none is MAJOR", () => {
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphs: ["beans"] },
+      { realTargets: ["doc.md"], graphKinds: ["beans"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -265,7 +265,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // unmet obligation would demand a second rendering of the same thing.
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphs: ["docs"] },
+      { realTargets: ["doc.md"], graphKinds: ["docs"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -285,7 +285,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     for (const kind of ["beans", "fsh-guts"]) {
       const { root, cleanup } = instance(
         { docs: "doc.md", skill: "some-skill" },
-        { realTargets: ["doc.md"], graphs: [kind] },
+        { realTargets: ["doc.md"], graphKinds: [kind] },
       );
       const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
       expect({ kind, severity: viz[0]?.severity }).toEqual({ kind, severity: "major" });
@@ -341,7 +341,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // would pass all four tests above.
     const { root, cleanup } = instance(
       { visualiser: "viz.html", docs: "doc.md", skill: "some-skill", serialisations: "thing.jsonld" },
-      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphs: ["beans"] },
+      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphKinds: ["beans"] },
     );
     expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toHaveLength(0);
     cleanup();
@@ -577,7 +577,7 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
             id: "thing",
             path: "thing/",
             dependents: "reproduce",
-            graphs: ["cat-harness"],
+            graphKinds: ["cat-harness"],
             coverage: { visualiser: "viz.html" },
           },
         ],

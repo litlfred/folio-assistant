@@ -124,7 +124,7 @@ if (diagrams.length === 0) {
  */
 function translationsRoot(): string {
   const d = resolveDirectories([{ name: "(local)", root, own: true }]).find((x) =>
-    x.graphs.includes("translation-sources"),
+    x.graphKinds.includes("translation-sources"),
   );
   // declared-path-literal: the base case for an instance that declares
   // nothing. Reading a declaration to learn the fallback for having no

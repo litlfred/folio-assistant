@@ -1323,7 +1323,7 @@ async function collectProcesses(
   // named "a declared-but-ABSENT directory is reported" passed while its
   // fixture created the directory.
   for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
-    if (!d.graphs.includes("cat-harness")) continue;
+    if (!d.graphKinds.includes("cat-harness")) continue;
     if (!existsSync(d.absPath)) {
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }
@@ -1537,7 +1537,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
  *
  * ## Why this did not exist until 2026-09-19
  *
- * `harness.json` has declared `schemas/` with `graphs: ["schemas", "kg"]`
+ * `harness.json` has declared `schemas/` with `graphKinds: ["schemas", "kg"]`
  * since Phase 0.3, and the export produced **zero** nodes of that kind —
  * measured on `814b693e`, 11 node types and none a schema. So the instance's
  * own declaration promised a graph nothing backed: a consumer resolving the
@@ -1664,7 +1664,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   //
   // Reuses `declaredKinds` rather than re-deriving: it already follows the
   // NESTED declarations (`beans/beans.json` naming `bean-defs` and
-  // `workflow-state`), which a plain read of `directories[].graphs` misses —
+  // `workflow-state`), which a plain read of `directories[].graphKinds` misses —
   // and missing them here would drop kinds the instance really does own.
   //
   // Falls back to the full set when there is no declaration, because an
@@ -1749,7 +1749,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       directories?: Array<{
         id: string;
         path: string;
-        graphs?: string[];
+        graphKinds?: string[];
         title?: string;
         description?: string;
       }>;
@@ -1761,7 +1761,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
-      const kinds = x.graphs ?? [];
+      const kinds = x.graphKinds ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
         "@type": termIri("Directory"),

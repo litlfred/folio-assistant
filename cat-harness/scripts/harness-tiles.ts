@@ -275,7 +275,7 @@ function tileFor(
   instanceDir: string,
 ): HarnessTile {
   const dirs = decl.directories ?? [];
-  const kinds = [...new Set(dirs.flatMap((d) => d.graphs ?? []))].sort();
+  const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
   // CANDIDATES FROM THE DECLARATION, presence checked on disk. Both pages a

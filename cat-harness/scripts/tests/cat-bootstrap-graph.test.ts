@@ -153,8 +153,8 @@ describe("what it contains, and what it admits it did not look at", () => {
       .map((n) => String(n["name"]));
     const declared = new Set(
       (JSON.parse(readFileSync(declarationPathIn(CAT_BOOTSTRAP)!, "utf-8")) as {
-        directories?: Array<{ graphs?: string[] }>;
-      }).directories?.flatMap((d) => d.graphs ?? []) ?? [],
+        directories?: Array<{ graphKinds?: string[] }>;
+      }).directories?.flatMap((d) => d.graphKinds ?? []) ?? [],
     );
     expect(kinds.length).toBeGreaterThan(0); // not vacuous
     for (const k of kinds) expect([...declared]).toContain(k);

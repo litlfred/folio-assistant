@@ -502,7 +502,7 @@ const instancesSection: ReadmeSection = {
       // picking one would be this file choosing on the instance's behalf.
       const dirs = (kind: string): Array<{ path: string; scope?: string }> =>
         (decl.directories ?? [])
-          .filter((d) => (d.graphs ?? []).includes(kind))
+          .filter((d) => (d.graphKinds ?? []).includes(kind))
           .map((d) => ({ path: d.path, scope: d.scope }));
 
       const agents = asset(AGENT_INSTRUCTIONS_ROLE);

@@ -59,7 +59,7 @@ function giveOwnSite(repo: string, name: string): void {
 
 const host = (extra: Record<string, unknown> = {}) => ({
   name: "host",
-  directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
+  directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
   ...extra,
 });
 
@@ -159,7 +159,7 @@ describe("the ORDER is the declared dependency stack, bottom to top", () => {
 describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
   test("a declared graph with a published page becomes a link", () => {
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "lib", path: "library/", graphs: ["library"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] } },
       ["host/library/who"],
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
@@ -172,7 +172,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
     // satisfy "not linked" and hide the gap.
     const f = fixture({
       host: host(),
-      who: { name: "who", directories: [{ id: "lib", path: "library/", graphs: ["library"] }] },
+      who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([{ kind: "library" }]);
@@ -197,7 +197,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
   test("a sibling gets NO page at the elided path — that namespace is the owner's", () => {
     // `/beans/` is the host's. A sibling declaring a `beans` graph must not
     // pick up the host's page as though it were its own.
-    const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] } }, [
+    const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] } }, [
       "beans",
     ]);
     expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans" }]);
@@ -212,8 +212,8 @@ describe("the stats are DERIVED, so they cannot disagree with the tile", () => {
         who: {
           name: "who",
           directories: [
-            { id: "lib", path: "library/", graphs: ["library"] },
-            { id: "sch", path: "schemas/", graphs: ["schemas"] },
+            { id: "lib", path: "library/", graphKinds: ["library"] },
+            { id: "sch", path: "schemas/", graphKinds: ["schemas"] },
           ],
         },
       },
@@ -234,8 +234,8 @@ describe("the stats are DERIVED, so they cannot disagree with the tile", () => {
     const f = fixture({
       host: host({
         directories: [
-          { id: "a", path: "a/", graphs: ["beans"] },
-          { id: "b", path: "b/", graphs: ["beans"] },
+          { id: "a", path: "a/", graphKinds: ["beans"] },
+          { id: "b", path: "b/", graphKinds: ["beans"] },
         ],
       }),
     });
@@ -293,7 +293,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     // Owner, 2026-09-21: "cliking shoud go to folio view, not the schema
     // viweer", and `mount-instance-docs`: "who-iris themed at `/who-iris/`".
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     giveOwnSite(f.repo, "who");
@@ -303,7 +303,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
 
   test("an instance WITHOUT its own docs/ falls back to a viewer, and says so", () => {
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
@@ -324,7 +324,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     // The defect the owner reported: the first version took whichever viewer
     // sorted first, which for a schemas-only instance is the schema viewer.
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     giveOwnSite(f.repo, "who");
@@ -339,7 +339,7 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
   /** An instance declaring an icon at a path under its own site directory. */
   const withIcon = (name: string, extra: Record<string, unknown> = {}) => ({
     name,
-    directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
+    directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
     icon: "mark",
     // The site directory is read from the DECLARATION, not from disk: this
     // runs before the fixture has written anything, and hardcoding the default
@@ -386,7 +386,7 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
     const f = fixture({
       host: {
         name: "host",
-        directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
+        directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
         icon: "mark",
         images: [{ id: "mark", src: "elsewhere/mark.svg", title: "M" }],
       },
@@ -403,8 +403,8 @@ describe("a LABEL identifies its subject, or it is not a label", () => {
     // repository root acting as an instance, and `cat-harness`, whose declared
     // title is the product's name. Both linked `/`.
     const f = fixture({
-      host: { name: "host", title: "Shared", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
-      other: { name: "other", title: "Shared", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+      host: { name: "host", title: "Shared", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
+      other: { name: "other", title: "Shared", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
     });
     const labels = tilesOf(f).map((t) => t.label);
     expect(new Set(labels).size).toBe(labels.length);
@@ -424,8 +424,8 @@ describe("a LABEL identifies its subject, or it is not a label", () => {
 
   test("`name (name)` is never emitted — it says nothing twice", () => {
     const f = fixture({
-      host: { name: "host", title: "host", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
-      other: { name: "other", title: "host", directories: [{ id: "b", path: "b/", graphs: ["beans"] }] },
+      host: { name: "host", title: "host", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
+      other: { name: "other", title: "host", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
     });
     const labels = tilesOf(f).map((t) => t.label);
     expect(labels).toContain("host");
