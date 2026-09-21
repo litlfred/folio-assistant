@@ -2089,14 +2089,14 @@
     {
       "id": "folio-assistant-frq2",
       "title": "RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository's behaviour",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:46:25Z",
-      "updatedAt": "2026-09-20T22:49:46Z",
+      "updatedAt": "2026-09-21T05:17:40Z",
       "preview": "Found while establishing the ground for bean `dhvf` (instance versioning,\nissue #592). Not that bean's to fix, but a versioning scheme built on this\nrelease path would inherit all of it.\n\n## Measured 2026-09-20 on branch `claude/sharp-ptolemy-6qxh77`\n\n### 1. `release-please` is passed config files that are not in the repository\n\n`.github/workflows/release-please.yml` ends with:\n\n```yaml\nconfig-fil",
       "file": "beans/defs/folio-assistant-frq2--release-path-release-please-names-config-files-tha.md"
     },
@@ -3239,6 +3239,20 @@
       "updatedAt": "2026-09-20T04:03:21Z",
       "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `cat-bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `cat-bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of boots",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
+    },
+    {
+      "id": "folio-assistant-py74",
+      "title": "QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T23:09:04Z",
+      "updatedAt": "2026-09-20T23:09:04Z",
+      "preview": "`<base>/qa/` says \"declared and nothing publishes a projection for it yet\" over **592 committed JSON files**. A reader was attempted 2026-09-20 and STOPPED at the measurement, deliberately.\n\n## What the graph actually holds\n\n| schema | files | where a verdict lives |\n|---|---|---|\n| `kg-qa/v1` | 316 | `criteria` as a DICT keyed by criterion id, plus `totals` |\n| `qa-witness/v1` | 134 | `state` (to",
+      "file": "beans/defs/folio-assistant-py74--qa-projection-six-schemas-three-incompatible-verdi.md"
     },
     {
       "id": "folio-assistant-q0tc",
