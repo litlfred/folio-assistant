@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T18:27:37.854Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ca70e87d4c871a9633f58b8053a5142304fb8822",
-  "sourceCommitSha": "ca70e87d4c871a9633f58b8053a5142304fb8822",
-  "sourceCommitAt": "2026-09-21T18:25:55Z",
+  "generatedAt": "2026-09-21T18:40:04.390Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e516c95b9ce9a4a43ce31937766f8b8d082ac1c6",
+  "sourceCommitSha": "e516c95b9ce9a4a43ce31937766f8b8d082ac1c6",
+  "sourceCommitAt": "2026-09-21T18:38:16Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 221,
@@ -276,7 +276,7 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 89,
+    "Schema": 90,
     "GraphKind": 24,
     "Directory": 32,
     "Asset": 3
@@ -2402,12 +2402,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "staging-review",
       "title": "Staging review — before/after comparison",
-      "description": "Staging preview and before/after comparison for content review. Provides before (MAIN) and after (STAGING) URLs for rendered content so reviewers can visually compare changes. Used by CRDM feature development workflow and content authoring review sessions.",
+      "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 289,
+      "instructionLines": 388,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33377,6 +33377,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/detangle-sidecar",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "detangle-sidecar",
+      "title": "The durable record of a detangle measurement — what is pinned, and what is not.",
+      "module": "../detangle/schemas/detangle-sidecar.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/detangle-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/detangle-sidecar"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#schema/detangle",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "detangle",
@@ -34981,8 +34990,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "cf6252b46dfd3c328fc02ca7155fc5f16d12cf44",
+    "sha": "d618207a1f836abd3e9886bf75179956a389fbc0",
     "pr": "762/merge",
-    "run": "35638345240"
+    "run": "35639684218"
   }
 }
