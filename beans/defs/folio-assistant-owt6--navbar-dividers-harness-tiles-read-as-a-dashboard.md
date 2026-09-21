@@ -1,11 +1,11 @@
 ---
 # folio-assistant-owt6
 title: 'NAVBAR DIVIDERS: harness tiles read as a dashboard; they should read as the tabbed dividers of one giant folio'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T10:50:42Z
-updated_at: 2026-09-21T10:50:42Z
+updated_at: 2026-09-21T11:12:46Z
 parent: folio-assistant-6lb8
 ---
 
@@ -38,7 +38,35 @@ So the ask is not "smaller tiles". It is a different object:
 
 ## Done when
 
-- [ ] one horizontal tab per instantiated harness, themed, in reverse dependency order
-- [ ] the stack reads as sections of one folio — measured by looking at it, not by a class name
-- [ ] the counts/viewers are relocated rather than deleted, or a reason is recorded for dropping them
-- [ ] still full width, still clickable to the folio view, still collapsible (the four fixes already shipped)
+- [x] one horizontal tab per instantiated harness, themed, in reverse dependency order
+- [x] the stack reads as sections of one folio — measured by looking at it, not by a class name
+- [x] the counts/viewers are relocated rather than deleted, or a reason is recorded for dropping them
+- [x] still full width, still clickable to the folio view, still collapsible (the four fixes already shipped)
+
+## What landed, 2026-09-21
+
+The owner settled the one open question — where the counts and the viewer
+links go — by choosing **inside the section it opens**. So this is two changes
+that only make sense together:
+
+**The sidebar became purely navigational.** `.fa-harness-tab` is a horizontal
+tab: a themed left edge, a label, and a position. No counts, no glyphs, no
+viewer sub-list. The STAGGER is what makes it a stack rather than four coloured
+bars — each tab is inset a little further from the right than the one above,
+capped at five steps, and `--fa-tab-i` comes from the GENERATED order so the
+offsetting presents a fact rather than inventing one. The floor carries a
+dashed edge, which is `cat-bootstrap`'s own declared render exemption being
+styled rather than asserted.
+
+**`harness_details.html` is where the data went.** One anchored section per
+instantiated harness — `#harness-<name>` — carrying the description, the stats
+as a real `<dl>`, the viewer links, and the FINDINGS, which the tiles had been
+computing and nothing had been showing. It is included from `index.md` because
+both instantiated harnesses here resolve their folio view to the site root.
+
+**The limit, and it is the falsifier named in the opening brief.** An instance
+that generates its own docs — `who-iris` — publishes a page this build does not
+write, so the section cannot follow its tab there. That is reported by
+`harness-tiles.ts` as a finding rather than papered over with an invented page.
+
+`bun run gates --all` — 86/86, 209 e2e.

@@ -1,0 +1,90 @@
+{%- comment -%}
+  WHAT EACH HARNESS HOLDS — the counts and the viewers, on the page the
+  sidebar tab opens.
+
+  Owner, 2026-09-21, having seen the fat tiles: *"those are too much like a
+  dashboard, i want them to be more like diverders"*, and, asked where the
+  counts and viewer links should go rather than be dropped: **inside the
+  section it opens**. So the sidebar became purely navigational and this is
+  the other half of that move. Nothing was deleted.
+
+  ANCHORED per instance — `#harness-<name>` — so a tab can point at a section
+  rather than only at a page. Both instantiated harnesses in this repository
+  resolve their folio view to the site root, which is why this is included
+  from `index.md`; an instance that generates its own docs publishes its own
+  page, and `harness-tiles.ts` reports that as a finding rather than this
+  template guessing.
+
+  Every value is GENERATED into `docs/_data/harness.json` and gated by
+  `docs:harness:check`. This template decides nothing.
+{%- endcomment -%}
+{%- assign tiles = site.data.harness.harnesses -%}
+{%- assign instantiated = tiles | where: "instantiated", true -%}
+{%- if instantiated.size > 0 -%}
+<section class="fa-harness-sections" id="harnesses">
+  <h2 id="harnesses-heading">What each harness holds</h2>
+  <p class="fa-harness-sections__lead">
+    One section per instantiated harness, in the same order as the dividers in
+    the sidebar — the floor last.
+  </p>
+  {%- for t in instantiated -%}
+  <section class="fa-harness-section" id="harness-{{ t.name }}"
+           style="--fa-tile-tone: {{ t.tone }}">
+    <h3 class="fa-harness-section__title" id="harness-{{ t.name }}-heading">
+      {%- if t.href -%}
+      <a href="{{ t.href | relative_url }}">{{ t.label | default: t.title }}</a>
+      {%- else -%}
+      {{ t.label | default: t.title }}
+      {%- endif -%}
+    </h3>
+    {%- if t.description and t.description != "" -%}
+    <p class="fa-harness-section__description">{{ t.description }}</p>
+    {%- endif -%}
+    {%- if t.stats.size > 0 -%}
+    <dl class="fa-harness-section__stats">
+      {%- for s in t.stats -%}
+      <div class="fa-harness-section__stat" data-fa-stat="{{ s.id }}">
+        <dt>{{ s.label }}</dt>
+        <dd>{{ s.value }}</dd>
+      </div>
+      {%- endfor -%}
+    </dl>
+    {%- endif -%}
+    {%- assign open = t.visualisations | where_exp: "v", "v.path" -%}
+    {%- comment -%}
+      The viewers, which are NOT the same thing as the tab's target and the
+      split is the owner's: `/who-iris/` is who-iris presenting itself,
+      `/library/who-iris/` is the cat-harness handler's default rendering of
+      its library. The tab opens the first; these reach the second.
+    {%- endcomment -%}
+    {%- if open.size > 0 -%}
+    <ul class="fa-harness-section__viewers">
+      {%- for v in open -%}
+      <li><a href="{{ v.path | relative_url }}">{{ v.kind }}</a></li>
+      {%- endfor -%}
+    </ul>
+    {%- else -%}
+    <p class="fa-harness-section__gap">Nothing published to open yet.</p>
+    {%- endif -%}
+    {%- comment -%}
+      THE FINDINGS, shown rather than kept in the data file. Each one names
+      something a reader can act on — a graph declared with no viewer, a
+      viewer published for a graph nobody declared, an icon that cannot be
+      turned into a published path. Hiding them would make "declared and not
+      rendered" and "rendered and not declared" both invisible, which is the
+      state they were in before `harness-tiles.ts` reported them at all.
+    {%- endcomment -%}
+    {%- if t.findings.size > 0 -%}
+    <details class="fa-harness-section__findings">
+      <summary>Gaps in this instance's declaration ({{ t.findings.size }})</summary>
+      <ul>
+        {%- for f in t.findings -%}
+        <li>{{ f }}</li>
+        {%- endfor -%}
+      </ul>
+    </details>
+    {%- endif -%}
+  </section>
+  {%- endfor -%}
+</section>
+{%- endif -%}
