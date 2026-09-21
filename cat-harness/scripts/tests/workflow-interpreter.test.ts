@@ -265,3 +265,87 @@ describe("instance state survives the process it was made in", () => {
     rmSync(repo, { recursive: true, force: true });
   });
 });
+
+describe("a committed instance records its diagram REPO-RELATIVELY — bean `chq5`", () => {
+  // `beans/workflows/` is committed precisely so a sibling session sees the
+  // same position, and `loadProcessModel` keeps whatever path its caller
+  // passed. `crdm--issue-607-kg-to-cdn-portal.json` and its two children were
+  // found carrying `/home/user/folio-assistant/...`, which resolves on one
+  // container and nowhere else — against a sibling instance that recorded the
+  // same diagram relatively.
+
+  /** The smallest instance shape `saveInstance` will write. */
+  const inst = (source: string, children?: Record<string, unknown>) =>
+    ({
+      id: "t--subject",
+      processId: "Process_T",
+      source,
+      subject: "subject",
+      tokens: [],
+      arrivals: {},
+      history: [],
+      status: "running",
+      startedAt: "2026-09-21T00:00:00.000Z",
+      updatedAt: "2026-09-21T00:00:00.000Z",
+      ...(children ? { children } : {}),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any;
+
+  test("an absolute path inside the repo is written relative", () => {
+    const repo = mkdtempSync(join(tmpdir(), "wf-rel-"));
+    saveInstance(repo, inst(join(repo, "cat-harness/workflows/x.bpmn")));
+    expect(loadInstance(repo, "t--subject")?.source).toBe("cat-harness/workflows/x.bpmn");
+    rmSync(repo, { recursive: true, force: true });
+  });
+
+  test("CHILDREN are normalised too — the defect was one field deeper", () => {
+    // A fix applied only at the top level would have left every child carrying
+    // the absolute path, which is where the real corpus had two of its three.
+    const repo = mkdtempSync(join(tmpdir(), "wf-rel-"));
+    saveInstance(
+      repo,
+      inst(join(repo, "a/parent.bpmn"), {
+        Call_One: inst(join(repo, "a/one.bpmn"), {
+          Call_Deep: inst(join(repo, "a/deep.bpmn")),
+        }),
+      }),
+    );
+    const back = loadInstance(repo, "t--subject");
+    expect(back?.source).toBe("a/parent.bpmn");
+    expect(back?.children?.Call_One?.source).toBe("a/one.bpmn");
+    expect(back?.children?.Call_One?.children?.Call_Deep?.source).toBe("a/deep.bpmn");
+    rmSync(repo, { recursive: true, force: true });
+  });
+
+  test("an already-relative path is left exactly as it is", () => {
+    const repo = mkdtempSync(join(tmpdir(), "wf-rel-"));
+    saveInstance(repo, inst("cat-harness/workflows/x.bpmn"));
+    expect(loadInstance(repo, "t--subject")?.source).toBe("cat-harness/workflows/x.bpmn");
+    rmSync(repo, { recursive: true, force: true });
+  });
+
+  test("a path OUTSIDE the repository is left alone, not turned into ../..", () => {
+    // `relative()` would make it a run of `../` — a path that resolves
+    // somewhere, differently on every machine, and looks deliberate. An
+    // absolute path at least fails honestly and says whose checkout it is.
+    const repo = mkdtempSync(join(tmpdir(), "wf-rel-"));
+    const outside = resolve("/etc/elsewhere/x.bpmn");
+    saveInstance(repo, inst(outside));
+    const back = loadInstance(repo, "t--subject");
+    expect(back?.source).toBe(outside);
+    expect(back?.source).not.toContain("..");
+    rmSync(repo, { recursive: true, force: true });
+  });
+
+  test("normalising on WRITE repairs a file that was already wrong", () => {
+    // The same principle `$schema` follows here: a file from before the rule
+    // gains it the next time anything touches it, so no migration is needed.
+    const repo = mkdtempSync(join(tmpdir(), "wf-rel-"));
+    saveInstance(repo, inst(join(repo, "a/parent.bpmn")));
+    const loaded = loadInstance(repo, "t--subject")!;
+    // Re-save what came back; it must stay relative and stay stable.
+    saveInstance(repo, loaded);
+    expect(loadInstance(repo, "t--subject")?.source).toBe("a/parent.bpmn");
+    rmSync(repo, { recursive: true, force: true });
+  });
+});
