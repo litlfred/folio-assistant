@@ -1,10 +1,11 @@
 ---
 # folio-assistant-qgpo
 title: A workflow must publish every foreign document its own graph links into
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T18:27:04Z
-updated_at: 2026-09-21T18:27:04Z
+updated_at: 2026-09-21T19:22:32Z
 parent: folio-assistant-vke6
 ---
 
