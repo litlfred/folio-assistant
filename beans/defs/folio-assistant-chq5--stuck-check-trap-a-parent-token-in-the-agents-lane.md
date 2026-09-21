@@ -1,0 +1,116 @@
+---
+# folio-assistant-chq5
+title: 'STUCK-CHECK TRAP: a parent token in the agent''s lane, a live position two lanes away — and one instance commits an absolute path'
+status: todo
+type: task
+priority: normal
+created_at: 2026-09-21T11:10:26Z
+updated_at: 2026-09-21T11:12:15Z
+parent: folio-assistant-yj32
+---
+
+Found 2026-09-21 while measuring `v49e`'s join. **This bean was written once
+with the opposite conclusion and rewritten after a roast.** The wrong version
+is kept below as the worked example, because the mistake it made is precisely
+the mistake the check this bean asks for would make.
+
+## What is actually true
+
+Two `running` CRDM instances. **Both are waiting on a human, correctly.**
+
+| instance | parent token | LIVE position | lane | last step |
+|---|---|---|---|---|
+| `crdm--folio-assistant-6lb8` | `Call_Signoff` | `Call_Signoff` → **`BA_Signoff`** | BA / Feature Requestor | 13.4h |
+| `crdm--issue-607-kg-to-cdn-portal` | `Call_Needs` | `Call_Needs` → **`S_ConfirmNeeds`** | Stakeholders | 5.0h |
+
+Instance 1's agent finished `A_CreateBeans` and handed off. Instance 2's
+`BA_ReviewNeeds` was taken 5h ago, so it is moving — on the human side.
+
+**Nothing is stalled. Nothing is abandoned.** The process is doing exactly what
+its diagram says.
+
+## THE FINDING: a stuck-check keyed on the parent token gets this exactly backwards
+
+That is not hypothetical — it is what I did, in full, before the roast:
+
+1. Read the parent's `tokens`: `["Call_Signoff"]`, `["Call_Needs"]`.
+2. Read the parent's lanes: both call activities sit in **`Lane_Agent`**.
+3. Concluded: *the agent is sitting on an enabled step; this is an agent-side
+   stall of 13.6 hours.*
+
+Every step was true. The conclusion was **the opposite of the truth**, because
+a call activity's lane says who *invokes* the subprocess, not who holds the
+token once inside it. The live position was two lanes away, in
+`BA / Feature Requestor` and `Stakeholders`.
+
+> **A "where is this process breaking down" check MUST recurse into `children`.
+> The parent token is the name of a door, not a location.**
+
+`v49e` names *"a step enabled but not taken"* as its first interesting state.
+On this corpus, the naive reading of that phrase produces a false positive on
+**2 of 2** instances — every instance there is.
+
+## And the second-order error, which is about method not BPMN
+
+I established "the subprocess was never entered" from `children` — having
+printed it with `json.dumps(ch)[:600]`. The truncation cut after `Call_Issue`.
+Instance 1 in fact carries **five** children including a running `Call_Signoff`.
+
+**Concluding absence from truncated output.** The fix is not "be careful"; it
+is that a check must assert over parsed structure, never over a rendered
+prefix of it.
+
+## Facts worth keeping, all independent of the wrong conclusion
+
+### `updatedAt` and last-step-taken are two different facts
+
+Instance 2: last *parent* history entry 13.6h ago, `updatedAt` **5.0h** ago.
+Neither is wrong — the child advanced and the parent was rewritten. A finding
+keyed on either alone misreads it, in opposite directions.
+
+### A committed instance carries a MACHINE-SPECIFIC absolute path
+
+| instance | `source` |
+|---|---|
+| `crdm--folio-assistant-6lb8` | `cat-harness/methodologies/…` — relative |
+| `crdm--issue-607-kg-to-cdn-portal` | **`/home/user/folio-assistant/cat-harness/…`** — absolute |
+
+Its children carry it too. `beans/workflows/` is committed **precisely so a
+sibling session sees the same position**; an absolute path resolves on one
+container and nowhere else, which defeats the reason the graph is committed.
+Unrelated to everything above, and the clearest defect here.
+
+### `beanFindings`' premise is timestamped; its conclusion is not
+
+`scripts/beans.ts` documents why two of `v49e`'s three stuck states are
+missing: the store *"was **empty** when this was written"*. That is correctly
+scoped past tense and is **not** stale — an earlier draft of this bean accused
+it of being so, wrongly. What no longer holds is the present-tense sentence
+after it: *"their absence is the honest answer rather than an oversight."*
+There is data on both sides of the join now.
+
+### The clock trap, already paid for in that same file
+
+> `emit(..., "data")` gates the projection on EXACT CONTENT, so anything
+> computed against the clock changes the file on every run and the staleness
+> gate fires forever.
+
+So an age must be the **client's** arithmetic over published timestamps, never
+a build-time `Date.now()`.
+
+## Done when
+
+- [ ] Any stuck-state check recurses into `children` and reports the LIVE
+      position, with the lane that actually holds the token
+- [ ] Waiting-on-a-human is a first-class outcome, not a stall — on this corpus
+      it is 2 of 2, so a check that cannot say it is useless here
+- [ ] `updatedAt` and last-step-taken are reported as two facts
+- [ ] Age is the client's arithmetic, never build-time
+- [ ] `source` is instance-relative in committed state; the absolute path in
+      `crdm--issue-607-kg-to-cdn-portal` and its children is repaired, and
+      whatever wrote it stops doing so
+
+## Not in scope
+
+The `v49e` visualiser. The owner beaned that up explicitly rather than starting
+it.
