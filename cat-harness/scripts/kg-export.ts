@@ -41,13 +41,13 @@
  * @module scripts/kg-export
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative, resolve } from "node:path";
+import { join, dirname, isAbsolute, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, type CatHarnessDeclaration, declaredAssets, declaredGraphs, declaredKinds, instanceConfigFilename, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -2075,6 +2075,57 @@ function commitIri(remote: string | undefined, sha: string): string | undefined 
   return `https://${host}/${path}/commit/${sha}`;
 }
 
+/**
+ * Is this instance published as part of THIS repository's site?
+ *
+ * A path-boundary comparison rather than `startsWith`, which would call
+ * `/repo-other` a child of `/repo`.
+ */
+function insideThisRepo(instance: string): boolean {
+  const rel = relative(repoRootFor(ROOT), resolve(instance));
+  return rel === "" || (!rel.startsWith("..") && !isAbsolute(rel));
+}
+
+/**
+ * The base every `@id` in this instance's document is minted against.
+ *
+ * ## The base belongs to the PUBLICATION, not to the instance
+ *
+ * `skillHome` already works this way and has since `pve3`: when this document
+ * links into a sibling instance's graph it mints the target with
+ * `exportIdentity({ baseUrl: base, ... })` — *this* export's base, because
+ * that is where the sibling's document is actually served from. So a nested
+ * instance's own document must name itself the same way, or the `@id` a
+ * consumer follows and the `@id` it arrives at are derived by two different
+ * rules and are free to disagree.
+ *
+ * They did disagree. `gn4l` gave `exportIdentity` an `instanceRoot` and let
+ * the base follow it, which is right for a separate repository and wrong for
+ * an instance that has no site of its own. Measured 2026-09-21: **one** of
+ * thirteen instances here declares a `canonicalUrl` — `cat-harness`, the one
+ * this exporter lives in — so every other instance would have failed the
+ * moment it was published. `cat-bootstrap` was simply the first one
+ * `docs-site.yml` tried, and it took the Pages deploy down for seven runs.
+ *
+ * ## An instance OUTSIDE this repository keeps the third state
+ *
+ * There the fallback would be a guess: a sibling checkout is published, if at
+ * all, somewhere this repository cannot know. It gets a document-relative
+ * `@id` and a reported problem, exactly as before — the same rule `makeIri`
+ * follows, that an absent link beats one which looks dereferenceable and
+ * 404s.
+ */
+function publicationBase(instance: string, decl: CatHarnessDeclaration | undefined): string {
+  const own = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  if (own !== "") return own;
+  if (!insideThisRepo(instance)) return "";
+  // Read directly rather than recursing: this instance is the host, so it
+  // has nowhere further to inherit from, and a cycle is impossible by
+  // construction rather than by a guard somebody can delete.
+  const host = readDeclaration(ROOT);
+  return (host?.canonicalUrl ?? "").replace(/\/+$/, "");
+}
+
 export function exportIdentity(opts: ExportOptions = {}): {
   stub: string;
   docIri: string;
@@ -2101,7 +2152,7 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // there would throw on exactly the instances this parameter exists for.
   const pkg = JSON.parse(readFileSync(join(repoRootFor(ROOT), "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
-  const canonicalBase = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const canonicalBase = publicationBase(instance, decl);
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
@@ -2138,9 +2189,25 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   if (!docIri.startsWith("http")) {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
+    //
+    // The file is NAMED rather than described. It used to read "harness.json",
+    // a filename retired by #695 — and because it is prose,
+    // `check:declaration-filename` counts it without failing it, so the one
+    // message a reader sees when this goes wrong was the one place still
+    // sending them to a file that does not exist.
+    //
+    // Resolved, never composed: `declarationPathIn` reports the file actually
+    // read, and only when there is none does this fall back to the name one
+    // WOULD have — which is itself built from the constant.
+    const instanceRoot = opts.instanceRoot ?? ROOT;
+    const declFile =
+      declarationPathIn(instanceRoot) ??
+      join(instanceRoot, instanceConfigFilename(stub));
     problems.push(
-      "no canonicalUrl in harness.json and no --base-url given: " +
-        "@id values are document-relative and will not dereference",
+      `no canonicalUrl in ${relative(repoRootFor(ROOT), declFile)} and no --base-url given: ` +
+        "@id values are document-relative and will not dereference. An instance " +
+        "inside this repository inherits the host instance's base; one outside it " +
+        "must declare its own.",
     );
   }
 
@@ -2315,7 +2382,27 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // the published document and renders it — so removing them needs the viewer
   // pointed at the published result first, and a half-moved field would take
   // the viewer's panel with it.
-  const resultPath = writeQaResult(ROOT, "kg-export", buildQaResult({
+  // ── ONE SIDECAR PER SUBJECT, because the stem is the only thing keeping
+  //    two instances' findings apart ─────────────────────────────────────
+  //
+  // The stem was the constant `"kg-export"`, so EVERY instance's export wrote
+  // the same committed file and the last writer won. Measured 2026-09-21: one
+  // `--instance ./cat-bootstrap` run replaced this instance's committed result
+  // wholesale — `subject.id` flipped from `cat-harness.jsonld` to
+  // `cat-bootstrap.jsonld` and the findings with it, in a file whose whole
+  // purpose is saying what was found about WHICH graph.
+  //
+  // Invisible while one document was ever built, and it stayed invisible in CI
+  // because the deploy does not commit the sidecar. It surfaced the moment a
+  // gate ran the deploy's own commands from a checkout.
+  //
+  // Same rule the `kg-qa` tree already follows — a sidecar mirrors its
+  // subject's path "because flat would collide". The HOST keeps the bare stem
+  // so its committed path is unchanged; a foreign instance is qualified by its
+  // own stub.
+  const hostStub = artefactStub(readDeclaration(ROOT)!);
+  const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
+  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     subject: { kind: "graph", id: `${stub}.jsonld` },
