@@ -149,6 +149,35 @@ export interface GraphKindDef {
    */
   renderable: boolean;
   /**
+   * Does a graph of this kind record WORK — something somebody is partway
+   * through, that an arriving agent could pick up?
+   *
+   * The question the owner asked for, 2026-09-20:
+   *
+   * > tell them to determine if active KG (beans/tods) or static (point to
+   * > process on determining context)
+   *
+   * **Narrower than `holds: "state"`, and the difference was measured rather
+   * than assumed.** The first attempt read "declares any state graph", which
+   * made the repository root and `who-iris` ACTIVE on `uploads` alone — an
+   * ingestion queue is live state and is not work anybody is partway through.
+   * An agent told "this KG is active" on that basis arrives, looks for
+   * something to prioritise, and finds a directory of unprocessed files.
+   *
+   * Only meaningful for `holds: "state"` kinds: content and context record no
+   * position by definition. Optional in the type and REQUIRED by
+   * `check:graph-kind-work` for every state kind, which is how a new kind
+   * cannot ship undecided without the type gaining a field that is nonsense
+   * for the other three layers.
+   *
+   * Note what this does NOT collapse. `beans` is the agent work plan and
+   * `todos` is a PERSON's outstanding work — the vocabulary keeps them apart
+   * deliberately and `AGENTS.md` forbids a second work plan. Both record
+   * work, so both answer this question `true`; that is the point of asking
+   * "records work" rather than "is the work plan".
+   */
+  recordsWork?: boolean;
+  /**
    * Does a graph of this kind say what the instance **IS**, or where something
    * **GOT TO**?
    *
@@ -491,6 +520,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // Detached from the artefact it judges it says nothing — which is the
     // state test, and it is why the sidecar tree MIRRORS each subject's path.
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
       "families (`block`, `kg`, `translation`), projected for the docs site from the " +
@@ -525,6 +555,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // against thresholds. A report is evidence about an instance, never part
     // of it.
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "Repository health reports — one `health-report/v1` document per sweep, carrying every check's " +
       "three-state verdict, the thresholds it applied and the basis each threshold was chosen on. " +
@@ -547,6 +578,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // ON from WHERE IT GOT TO — both are records about content, neither is
     // content.
     holds: "state",
+    recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
       "Its inner directories are declared by `beans/beans.json`.",
@@ -566,6 +598,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // What is being worked on. A bean names a change to something; it is not
     // the something.
     holds: "state",
+    recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
@@ -577,6 +610,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // the `cat-harness` graph. It cannot be read at all without the diagram it
     // references.
     holds: "state",
+    recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     // The kind's own reader, wired 2026-09-20. `skill` is a property of the
     // KIND rather than of a directory because a `workflow-state` graph is read
     // the same way wherever it sits — and it was absent while the skill it
@@ -601,6 +635,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // A person's outstanding items. Outstanding is the word that settles it —
     // an item records a position, not a fact.
     holds: "state",
+    recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
@@ -611,6 +646,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     // As `todos`.
     holds: "state",
+    recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
@@ -630,6 +666,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // already says these files are NOT L1 and read as absent to every corpus
     // consumer: the file is on disk and the content does not exist yet.
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
@@ -739,6 +776,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // As `todos`, plus a submitter's identity — which makes it more obviously
     // a record OF something rather than the something.
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
@@ -810,6 +848,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("SessionStateGraph"),
     renderable: false,
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     skill: "session-context",
     schema: "schemas/session-context.ts",
     summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
@@ -849,6 +888,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("IssueMarkGraph"),
     renderable: false,
     holds: "state",
+    recordsWork: false, // live state, but nothing anybody is partway through
     schema: "src/issue-watch/seen-comments.ts",
     summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
   },
@@ -1179,7 +1219,24 @@ export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defau
  * step performs in passing. Those are the writes this predicate is about.
  */
 export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
-  return graphLayer(kind, registry) === "state";
+  const layer = graphLayer(kind, registry);
+  return layer === undefined ? false : layerIsWritable(layer);
+}
+
+/**
+ * THE rule, in one place: only `state` is written by a running step.
+ *
+ * Extracted when declared ASSETS gained a layer (bean `7syd`), because the
+ * alternative was a second `=== "state"` in {@link processMayWriteAsset} —
+ * and the promise {@link processMayWrite} already made, that a fourth layer is
+ * one edit rather than a search, is only true while there is one site to edit.
+ *
+ * It takes a {@link GraphLayer} and not a kind on purpose: a declared asset
+ * has a layer and no graph kind, so a kind-shaped rule could not have been
+ * reused and would have been copied instead.
+ */
+export function layerIsWritable(layer: GraphLayer): boolean {
+  return layer === "state";
 }
 
 /** Every registered kind on one side of the line, sorted. */
@@ -2030,7 +2087,20 @@ export const RemoteGraphSchema = z
  * subgraph nobody can look at, and a process nobody can look at. Closed, so a
  * declaration cannot excuse itself from an obligation nobody has defined.
  */
-export const RENDER_OBLIGATIONS = ["visualiser", "workflow-visualiser"] as const;
+export const RENDER_OBLIGATIONS = [
+  "visualiser",
+  "workflow-visualiser",
+  /**
+   * The instance's OWN `docs/` — its source documentation, at
+   * `<instance>/docs/`, as against a handler's rendering of it.
+   *
+   * Added 2026-09-21 for bean `op30`, and it reuses this mechanism rather than
+   * minting a second opt-out because the requirements are identical: an
+   * exemption needs a REASON, and a reason with no substitute is a hole. The
+   * `owes` field already refuses the hole.
+   */
+  "own-docs",
+] as const;
 export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
 
 /**
@@ -3291,9 +3361,41 @@ export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
 export const INSTANCE_README_ROLE = "instance-readme";
 
 /**
- * What each asset role is FOR — one line, declared once.
+ * How a declared asset REACHES the agent that needs it.
  *
- * ## Why the purpose lives on the ROLE and not on the asset
+ * Two values, and the line between them is mechanical rather than a matter of
+ * taste. **`injected`** is spliced into a prompt, so it pays the harness's
+ * budget — `MEMORY.md`'s first 200 lines, *with the overflow dropped
+ * silently*. **`file`** is opened by a reader, so nothing truncates it.
+ *
+ * That is why `AGENTS.md` may be long and a memory entry may not, and it is
+ * the reason the rule is worth declaring rather than describing: a rule in
+ * prose cannot be asked, and `agent-memory.md` carried this one as a table for
+ * a day with nothing able to check it.
+ */
+export type AssetDelivery = "file" | "injected";
+
+/** What a declared asset ROLE means — asked once, for every instance. */
+export interface AssetRoleDef {
+  /** What this artefact is FOR — one line. */
+  purpose: string;
+  /**
+   * Which {@link GraphLayer} the role's file belongs to.
+   *
+   * **REQUIRED, for {@link GraphKindDef.holds}'s reason.** An optional field
+   * would make "did not say" indistinguishable from `content`, and the whole
+   * point of declaring it is that a step writing to a `context` asset is a
+   * DEFECT rather than an update. `tsc` refuses a role that does not say.
+   */
+  layer: GraphLayer;
+  /** {@link AssetDelivery} — and required, so a new role decides it at the keyboard. */
+  delivery: AssetDelivery;
+}
+
+/**
+ * What each asset role is, declared once — purpose, layer and delivery.
+ *
+ * ## Why this lives on the ROLE and not on the asset
  *
  * The owner, 2026-09-20, on `AGENTS.md`:
  *
@@ -3309,7 +3411,26 @@ export const INSTANCE_README_ROLE = "instance-readme";
  * It was tried the other way first. A `purpose` key was written into
  * `cat-harness/harness.json` and {@link KgAssetSchema} silently stripped it,
  * which is worse than absent: the declaration read as if it carried a purpose
- * and no consumer ever saw one.
+ * and no consumer ever saw one. {@link strayAssetRoleKeys} is what now catches
+ * that, because the stripping is silent by design and will stay that way.
+ *
+ * ## Why one table and not three maps
+ *
+ * `purpose`, `layer` and `delivery` were nearly added as three
+ * `Record<string, …>` constants side by side. Three maps keyed on the same
+ * thing is a shape where one gains a key the others lack and nothing says so —
+ * a role with a purpose and no layer would read as governed, and
+ * `assetRoleLayer` would return `undefined` for a role this layer plainly
+ * owns. One record of objects makes that state unrepresentable.
+ *
+ * ## Both are `context`, and the owner said so in those words
+ *
+ * > its static content at process runtime and treated as an asset like
+ * > memories
+ *
+ * That is {@link GraphLayer | `context`} word for word — READ at session
+ * start, never written by a running process — and it is the same layer agent
+ * memory holds, which is what *"like memories"* asks for. Bean `7syd`.
  *
  * ## The two that matter, and the line between them
  *
@@ -3328,24 +3449,221 @@ export const INSTANCE_README_ROLE = "instance-readme";
  * `cat-bootstrap-initialization` is cat-bootstrap's, and a purpose invented
  * for it here would be the platform speaking for a layer it does not own.
  */
-export const ASSET_ROLE_PURPOSE: Readonly<Record<string, string>> = {
-  [INSTANCE_README_ROLE]:
-    "What this instance IS, for a reader — its entry point, and the human half of the pair.",
-  [AGENT_INSTRUCTIONS_ROLE]:
-    "What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.",
+export const ASSET_ROLES: Readonly<Record<string, AssetRoleDef>> = {
+  [INSTANCE_README_ROLE]: {
+    purpose:
+      "What this instance IS, for a reader — its entry point, and the human half of the pair.",
+    layer: "context",
+    delivery: "file",
+  },
+  [AGENT_INSTRUCTIONS_ROLE]: {
+    purpose:
+      "What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.",
+    layer: "context",
+    delivery: "file",
+  },
 };
 
 /**
- * The roles EVERY instance is expected to declare.
- *
- * Both, not one: an instance with a README and no `AGENTS.md` is readable by a
- * person and mute to an agent, and the reverse leaves a reader with
- * instructions to follow and nothing saying what they are in. Measured
- * 2026-09-20: ten of eleven instances declared `instance-readme` and **two**
- * declared `agent-instructions`, which is the gap `check:subgraph-coverage`
- * could not see because it only ever asked about the README.
+ * What a role's asset is for, or `undefined` for a role this layer does not
+ * govern. The accessor exists so a caller reads {@link ASSET_ROLES} through
+ * one door, as the graph-kind registry is read through `get`.
  */
+export function assetRolePurpose(role: string): string | undefined {
+  return ASSET_ROLES[role]?.purpose;
+}
+
+/**
+ * Which layer a role's asset belongs to, or `undefined` for an ungoverned role.
+ *
+ * `undefined` is the THIRD STATE and is never to be read as a permissive
+ * default: it means nobody here has classified this role, not that the file is
+ * free for a process to rewrite. {@link processMayWriteAsset} preserves it for
+ * exactly that reason.
+ */
+export function assetRoleLayer(role: string): GraphLayer | undefined {
+  return ASSET_ROLES[role]?.layer;
+}
+
+/** How a role's asset reaches its reader, or `undefined` for an ungoverned role. */
+export function assetRoleDelivery(role: string): AssetDelivery | undefined {
+  return ASSET_ROLES[role]?.delivery;
+}
+
+/**
+ * May a running process WRITE a declared asset of this role?
+ *
+ * `undefined` when the role is not one this layer governs — *could not
+ * determine*, which a caller must not render as either answer. A gate treats
+ * it as a finding; a consumer that needs a decision asks the layer that owns
+ * the role.
+ *
+ * The rule itself is {@link layerIsWritable}, shared with
+ * {@link processMayWrite} so that assets and graphs cannot come to disagree
+ * about what `context` permits. Two predicates spelling `=== "state"`
+ * separately is how one of them survives a fourth layer being added.
+ */
+export function processMayWriteAsset(role: string): boolean | undefined {
+  const layer = assetRoleLayer(role);
+  return layer === undefined ? undefined : layerIsWritable(layer);
+}
+
+/**
+ * Asset declarations carrying a key that the ROLE already answers.
+ *
+ * {@link KgAssetSchema} is a non-strict `z.object`, so an unknown key is
+ * dropped without a word — and that is not a defect to fix here, because the
+ * schema is also how a downstream instance carries a key this layer has not
+ * learned about yet. What it costs is recorded above: a `purpose` written into
+ * `cat-harness/harness.json` read as if it carried one, and no consumer ever
+ * saw it.
+ *
+ * So the finding is raised against the RAW declaration rather than the parsed
+ * one — after parsing, the evidence is gone. Returns one entry per offending
+ * key, with the instance root and the asset id, because "some instance has a
+ * stray key" is not something anybody can act on.
+ */
+export function strayAssetRoleKeys(
+  root: string,
+): Array<{ root: string; asset: string; key: string }> {
+  const p = join(root, DECLARATION_FILENAME);
+  if (!existsSync(p)) return [];
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf8"));
+  } catch {
+    // A declaration that will not parse is a finding somebody else already
+    // raises loudly; reporting it a second time here would send a reader to
+    // the wrong check. It is NOT silently clean either — `readDeclaration`
+    // throws on it, so no caller reaches a verdict through this path.
+    return [];
+  }
+  const assets = (raw as { assets?: unknown })?.assets;
+  if (!Array.isArray(assets)) return [];
+  const out: Array<{ root: string; asset: string; key: string }> = [];
+  for (const a of assets) {
+    if (typeof a !== "object" || a === null) continue;
+    const rec = a as Record<string, unknown>;
+    const id = typeof rec.id === "string" ? rec.id : typeof rec.src === "string" ? rec.src : "<unnamed>";
+    for (const key of ROLE_OWNED_ASSET_KEYS) {
+      if (key in rec) out.push({ root, asset: id, key });
+    }
+  }
+  return out;
+}
+
+/**
+ * The keys an asset may NOT restate, because {@link ASSET_ROLES} answers them.
+ *
+ * Derived from the interface rather than typed out, so adding a field to
+ * {@link AssetRoleDef} cannot leave this list behind — the failure this whole
+ * mechanism exists to catch, reproduced one level up.
+ */
+export const ROLE_OWNED_ASSET_KEYS = [
+  "purpose",
+  "layer",
+  "delivery",
+] as const satisfies readonly (keyof AssetRoleDef)[];
+
 export const REQUIRED_ASSET_ROLES = [INSTANCE_README_ROLE, AGENT_INSTRUCTIONS_ROLE] as const;
+
+/**
+ * Is this checkout an ACTIVE knowledge graph, or a static one?
+ *
+ * The question an arriving agent asks before anything else, and the owner's
+ * own framing (2026-09-20):
+ *
+ * > tell them to determine if active KG (beans/tods) or static (point to
+ * > process on determining context)
+ *
+ * **ACTIVE** means somebody has work recorded here that an arriving agent
+ * could pick up: beans, todos, or a BPMN instance mid-flight. **STATIC**
+ * means the graph is there to be read.
+ *
+ * ## Asked of the REPOSITORY, not of one instance
+ *
+ * Measured 2026-09-21: the root instance declares no work-plan graph and
+ * `cat-harness` declares `beans` and `todos` at `scope: "repository"`. So a
+ * person standing at the repository root plainly has a work plan while the
+ * root instance alone scores static. The question is about the checkout —
+ * "is there work recorded anywhere I can see" — and answering it per instance
+ * gets it wrong for the one place a reader actually stands.
+ *
+ * ## Derived, never listed
+ *
+ * The set is read from {@link GraphKindDef.recordsWork}, so adding a graph
+ * kind forces the decision at the kind rather than requiring somebody to
+ * remember a list here. A hardcoded set would be a list pretending to be a
+ * rule — the shape this repository keeps paying for.
+ */
+export function workPlanGraphsIn(
+  repoRoot: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { plan: Array<{ instance: string; kinds: string[] }>; unreadable: string[] } {
+  const plan: Array<{ instance: string; kinds: string[] }> = [];
+  const unreadable: string[] = [];
+  for (const root of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(root, registry);
+    } catch {
+      // REPORTED, never skipped. An unreadable declaration is "could not
+      // determine", and swallowing it renders STATIC — which would send an
+      // agent past a work plan nobody could parse, telling it there is
+      // nothing here. The first draft of this function did exactly that.
+      unreadable.push(root);
+      continue;
+    }
+    if (decl === undefined) continue;
+    const kinds = [
+      ...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? [])),
+    ].filter((k) => registry.get(k)?.recordsWork === true);
+    if (kinds.length > 0) plan.push({ instance: decl.name ?? root, kinds: kinds.sort() });
+  }
+  return { plan, unreadable };
+}
+
+/**
+ * {@link workPlanGraphsIn} as the answer an arriving agent needs — and it has
+ * THREE values, not two.
+ *
+ * `undefined` is "could not determine": some declaration in this checkout did
+ * not parse, so the absence of a work plan is unproven. A boolean would
+ * collapse that into `false` and tell the agent there is nothing here.
+ */
+export function isActiveKg(
+  repoRoot: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean | undefined {
+  const { plan, unreadable } = workPlanGraphsIn(repoRoot, registry);
+  if (plan.length > 0) return true;
+  return unreadable.length > 0 ? undefined : false;
+}
+
+/**
+ * State kinds that have not said whether they record work.
+ *
+ * Empty is the contract, enforced by `check:graph-kind-work`. The field is
+ * optional in the TYPE because it is meaningless for `content`, `context` and
+ * `derived` — a required field would force three layers to answer a question
+ * that does not apply to them — so the "cannot ship undecided" property lives
+ * in a gate instead, which is how this repository handles the same shape
+ * elsewhere.
+ */
+export function undecidedWorkKinds(
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  // `names()` then `get()`, because the registry is not iterable — it exposes
+  // `has`/`get`/`names` so that a deprecated kind spelling resolves in exactly
+  // one place. Iterating its private map would bypass that.
+  return registry
+    .names()
+    .filter((name) => {
+      const def = registry.get(name);
+      return def?.holds === "state" && def.recordsWork === undefined;
+    })
+    .sort();
+}
 
 /**
  * Where a declared asset of this role actually is, or `undefined` if the

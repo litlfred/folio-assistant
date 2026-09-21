@@ -111,7 +111,22 @@ for **every** harness, which is why you can be sent to one nobody has written
 yet: you do not need to know what `f-a-sci` or `smart-guidelines` *is*, only
 that it keeps its instructions where every harness does.
 
-**6. The story ends**, one of the two ways its acceptance names.
+**6. You leave a README at the root, if there is none.** The repository now IS
+an instance of something and nothing at its top says so — which is the one file
+a person, and a cold agent, opens first.
+[`skills/root-readme.md`](skills/root-readme.md) says what it carries: a link
+to the harness, and the **overall** install status across every location. Two
+things and no more; the harness's own `readme_sync` fills the rest once it is
+installed. A README that already exists is **never** replaced — the link and
+status go in a marker pair beside what its author wrote.
+
+That write looks like a rule violation and is not. `instance-readme` declares
+`layer: context` — read at session start, never written by a running process —
+and **initialisation is not process runtime**: the rule governs a process
+operating on an instance that exists, and this is the act that brings one into
+being. A `context` asset that does not exist yet has to come from somewhere.
+
+**7. The story ends**, one of the two ways its acceptance names.
 
 ---
 
@@ -129,6 +144,7 @@ that it keeps its instructions where every harness does.
 | **FR-5** | A repository whose root already carries a `harness.json` is **logged and ended**, never re-initialised. |
 | **FR-6** | Anything that does not resolve is reported and stops the process; nothing is worked around. |
 | **FR-7** | This directory contains no executable code, so FR-1 cannot quietly stop being true. |
+| **FR-8** | A successful install leaves a root `README.md` naming the harness and the overall install status — created when absent, and **never** replacing one that exists. |
 
 ### FR-5, expanded — the likeliest failure
 
@@ -201,6 +217,7 @@ and it is not this file.
 | [`skills/confirm-harness.md`](skills/confirm-harness.md) | asking *which* harness |
 | [`skills/discussion.md`](skills/discussion.md) | running the discussion process |
 | [`skills/log-message.md`](skills/log-message.md) | running the log-message process |
+| [`skills/root-readme.md`](skills/root-readme.md) | writing the root README when there is none — the link, the install status, and why this write is not the one the `context` layer forbids |
 | [`skills/discussion.input.schema.json`](skills/discussion.input.schema.json) | the occasion for asking, as data |
 | [`skills/discussion.output.schema.json`](skills/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
 | [`skills/roles/roles.json`](skills/roles/roles.json) | the four personas of §1 |

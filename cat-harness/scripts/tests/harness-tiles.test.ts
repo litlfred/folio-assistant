@@ -45,6 +45,17 @@ function fixture(
   return { repo, names: Object.keys(instances).filter((n) => n !== "").sort() };
 }
 
+/**
+ * Give an instance its own site directory — what `folioRoot` looks for.
+ *
+ * The path is READ from that instance's declaration rather than written here.
+ * `site-dir-single-answer.test.ts` guards that rule across the whole tree, and
+ * it caught this helper's first version hardcoding the default.
+ */
+function giveOwnSite(repo: string, name: string): void {
+  mkdirSync(join(repo, name, siteDirFor(join(repo, name))), { recursive: true });
+}
+
 const host = (extra: Record<string, unknown> = {}) => ({
   name: "host",
   directories: [{ id: "beans", path: "beans/", graphs: ["beans"] }],
@@ -76,7 +87,11 @@ describe("the ORDER is the declared dependency stack, bottom to top", () => {
     expect(tilesOf(f).map((t) => t.name)).toEqual(["host", "a"]);
   });
 
-  test("an instance that declares NO needs is undetermined, sits above the spine, and says so", () => {
+  test("an instance that declares NO needs sits BELOW the spine's head, and says so", () => {
+    // Owner, 2026-09-21: "in reverse dep order (so bootsrap on bottom,
+    // folio-asst, on top)". The first version put the whole unplaced group
+    // above the spine, which left the most derived instance eighth from the
+    // top — both endpoints of that sentence were wrong.
     // Absent is not `[]`. A node that needs nothing is free to sort first in
     // `flattenDependencies`, which would put an unlabelled instance on the
     // floor beside the bootstrap — asserting something nobody declared.
@@ -86,7 +101,7 @@ describe("the ORDER is the declared dependency stack, bottom to top", () => {
       loose: { name: "loose", directories: [] },
     });
     const tiles = tilesOf(f);
-    expect(tiles.map((t) => t.name)).toEqual(["loose", "top", "host"]);
+    expect(tiles.map((t) => t.name)).toEqual(["top", "loose", "host"]);
     expect(tiles.find((t) => t.name === "loose")!.findings.join(" ")).toContain("alphabetical rather than derived");
   });
 
@@ -269,5 +284,52 @@ describe("a repository with nothing to show", () => {
     const f = fixture({ host: host() });
     mkdirSync(join(f.repo, "not-an-instance"), { recursive: true });
     expect(harnessTiles(f.repo, join(f.repo, "host"), ["host", "not-an-instance"])).toHaveLength(1);
+  });
+});
+
+describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
+  test("an instance with its own docs/ links to its themed root", () => {
+    // Owner, 2026-09-21: "cliking shoud go to folio view, not the schema
+    // viweer", and `mount-instance-docs`: "who-iris themed at `/who-iris/`".
+    const f = fixture(
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      ["host/schemas/who"],
+    );
+    giveOwnSite(f.repo, "who");
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect({ href: who.href, kind: who.hrefKind }).toEqual({ href: "/who/", kind: "folio" });
+  });
+
+  test("an instance WITHOUT its own docs/ falls back to a viewer, and says so", () => {
+    const f = fixture(
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      ["host/schemas/who"],
+    );
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.hrefKind).toBe("viewer");
+    expect(who.findings.join(" ")).toContain("rather than the instance's own themed root");
+  });
+
+  test("an instance with neither is NOT a link", () => {
+    // `pb04`: a dead link invites a click and then reads as "this site is
+    // broken". No target is a better answer than a guessed one.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.href).toBeUndefined();
+    expect(who.hrefKind).toBeUndefined();
+  });
+
+  test("the folio view WINS over a viewer that also exists", () => {
+    // The defect the owner reported: the first version took whichever viewer
+    // sorted first, which for a schemas-only instance is the schema viewer.
+    const f = fixture(
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphs: ["schemas"] }] } },
+      ["host/schemas/who"],
+    );
+    giveOwnSite(f.repo, "who");
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.href).toBe("/who/");
+    // ...and the viewer is still reachable, listed rather than dropped.
+    expect(who.visualisations.filter((v) => v.path).map((v) => v.path)).toEqual(["/host/schemas/who/"]);
   });
 });

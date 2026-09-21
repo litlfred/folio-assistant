@@ -93,6 +93,18 @@ each location">
       <bpmn:extensionElements><folio:skill ref="cat-bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
+    <bpmn:task id="A_WriteRootReadme" name="Write the root README,
+if it is not there">
+      <bpmn:documentation>The repository now IS an instance of something, and nothing at its root says so. A person landing on the checkout — or an agent that arrives before it has found any declaration — reads README.md first, and until this step there was no guarantee one existed.
+
+It carries two things and no more: a LINK to the harness that was installed, and the OVERALL install status across every location A_Install touched. Not one line per location buried in a log — the status a reader wants is "is this repository set up, and as what".
+
+WHEN ABSENT, never replacing. A repository that already has a README has one somebody wrote, and overwriting it would destroy authored content to state a fact that belongs in a generated region. Where a README is already there, the link and status go in a marker pair the harness's own readme_sync maintains.
+
+WRITING IT IS NOT A PROCESS WRITE. `instance-readme` declares `layer: context` — read at session start, never written by a running process — and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being. See the harness's content-context-and-state-graphs, which states it.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="root-readme"/></bpmn:extensionElements>
+    </bpmn:task>
+
     <bpmn:callActivity id="A_LogFailure" name="Log the failure" calledElement="Process_LogMessage">
       <bpmn:documentation>Both failure paths pass through here, so "logged as failed" is a step somebody performs rather than an adjective on an end event. The end event said the process ended logged; nothing said who logged it or with what.
 
@@ -120,22 +132,23 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
     <bpmn:sequenceFlow id="SF_IH_8" name="no" sourceRef="GW_InstructionsFound" targetRef="A_LogFailure"/>
     <bpmn:sequenceFlow id="SF_IH_9" name="yes" sourceRef="GW_InstructionsFound" targetRef="A_LogInstallStart"/>
     <bpmn:sequenceFlow id="SF_IH_10" sourceRef="A_LogInstallStart" targetRef="A_Install"/>
-    <bpmn:sequenceFlow id="SF_IH_11" sourceRef="A_Install" targetRef="End_Installed"/>
+    <bpmn:sequenceFlow id="SF_IH_11" sourceRef="A_Install" targetRef="A_WriteRootReadme"/>
+    <bpmn:sequenceFlow id="SF_IH_16" sourceRef="A_WriteRootReadme" targetRef="End_Installed"/>
     <bpmn:sequenceFlow id="SF_IH_12" sourceRef="A_LogFailure" targetRef="End_Failed"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_InitializeHarness">
     <bpmndi:BPMNPlane id="Plane_Process_InitializeHarness" bpmnElement="Collaboration_Process_InitializeHarness">
       <bpmndi:BPMNShape id="Shape_Participant_Process_InitializeHarness" bpmnElement="Participant_Process_InitializeHarness" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="2860" height="720"/>
+        <dc:Bounds x="140" y="80" width="3050" height="720"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Initiator" bpmnElement="Lane_Initiator" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="2830" height="240"/>
+        <dc:Bounds x="170" y="80" width="3020" height="240"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">
-        <dc:Bounds x="170" y="320" width="2830" height="240"/>
+        <dc:Bounds x="170" y="320" width="3020" height="240"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_DataStore" bpmnElement="Lane_DataStore" isHorizontal="true">
-        <dc:Bounds x="170" y="560" width="2830" height="240"/>
+        <dc:Bounds x="170" y="560" width="3020" height="240"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_InitializeHarness" bpmnElement="Start_InitializeHarness">
         <dc:Bounds x="182" y="182" width="36" height="36"/>
@@ -170,14 +183,17 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       <bpmndi:BPMNShape id="Shape_A_Install" bpmnElement="A_Install">
         <dc:Bounds x="2025" y="160" width="150" height="80"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_WriteRootReadme" bpmnElement="A_WriteRootReadme">
+        <dc:Bounds x="2215" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Installed" bpmnElement="End_Installed">
-        <dc:Bounds x="2272" y="182" width="36" height="36"/>
+        <dc:Bounds x="2462" y="182" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_LogFailure" bpmnElement="A_LogFailure">
-        <dc:Bounds x="2405" y="160" width="150" height="80"/>
+        <dc:Bounds x="2595" y="160" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Failed" bpmnElement="End_Failed">
-        <dc:Bounds x="2652" y="182" width="36" height="36"/>
+        <dc:Bounds x="2842" y="182" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_IH_1" bpmnElement="SF_IH_1">
         <di:waypoint x="218" y="200"/>
@@ -199,7 +215,7 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_5" bpmnElement="SF_IH_5">
         <di:waypoint x="985" y="200"/>
-        <di:waypoint x="2405" y="200"/>
+        <di:waypoint x="2595" y="200"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_6" bpmnElement="SF_IH_6">
         <di:waypoint x="960" y="225"/>
@@ -213,7 +229,7 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_14" bpmnElement="SF_IH_14">
         <di:waypoint x="1365" y="200"/>
-        <di:waypoint x="2405" y="200"/>
+        <di:waypoint x="2595" y="200"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_15" bpmnElement="SF_IH_15">
         <di:waypoint x="1340" y="225"/>
@@ -227,7 +243,7 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_8" bpmnElement="SF_IH_8">
         <di:waypoint x="1745" y="200"/>
-        <di:waypoint x="2405" y="200"/>
+        <di:waypoint x="2595" y="200"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_9" bpmnElement="SF_IH_9">
         <di:waypoint x="1745" y="200"/>
@@ -239,11 +255,15 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_11" bpmnElement="SF_IH_11">
         <di:waypoint x="2175" y="200"/>
-        <di:waypoint x="2272" y="200"/>
+        <di:waypoint x="2215" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_16" bpmnElement="SF_IH_16">
+        <di:waypoint x="2365" y="200"/>
+        <di:waypoint x="2462" y="200"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_12" bpmnElement="SF_IH_12">
-        <di:waypoint x="2555" y="200"/>
-        <di:waypoint x="2652" y="200"/>
+        <di:waypoint x="2745" y="200"/>
+        <di:waypoint x="2842" y="200"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
