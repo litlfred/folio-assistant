@@ -1056,6 +1056,18 @@ decides it.</p>
       <td>no</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">boards</code></td>
+      <td><strong>harness</strong></td>
+      <td>boards — one file each, <code class="language-plaintext highlighter-rouge">"$schema": "folio-board/v1"</code>. A board is a <strong>diagram OF</strong> a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — <em>“treat it like OMG specs and BPMN layout. relationship first, visualiztion alter.”</em></td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">board-positions</code></td>
+      <td><strong>harness</strong></td>
+      <td>where each note sits on each board — <code class="language-plaintext highlighter-rouge">board-positions.json</code>, keyed by board then by note id, in board units. The <strong>Diagram Interchange</strong> half: it points at notes and is never pointed back at, which is why a note carries no <code class="language-plaintext highlighter-rouge">x</code>, <code class="language-plaintext highlighter-rouge">y</code>, <code class="language-plaintext highlighter-rouge">board</code> or <code class="language-plaintext highlighter-rouge">position</code>. <code class="language-plaintext highlighter-rouge">state</code> rather than <code class="language-plaintext highlighter-rouge">content</code>, because a running process writes it every time somebody moves a note.</td>
+      <td>no</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">todo-items</code></td>
       <td><strong>harness</strong></td>
       <td>todo nodes — one file each, <code class="language-plaintext highlighter-rouge">"$schema": "folio-todo/v1"</code>. Authored by people, and by agents on their behalf.</td>
