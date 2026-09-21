@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-21T09:54:35Z
+updated_at: 2026-09-21T10:06:19Z
 parent: folio-assistant-0lmb
 ---
 
@@ -353,3 +353,32 @@ docs-auto level above a leaf lands on a bare directory.
 - §5 the KG viewer.
 - The declared-but-unbuilt types: `glossary`, `index`, `index/bpmn`,
   `index/dmn`, `index/tasks`, `index/roles`.
+
+
+## The docs-auto level pages — done, same session
+
+The finding recorded above is fixed. `gen-docs-auto.ts` now writes an index at
+**every level above a built type**, derived from the types actually built:
+`/cat-harness/docs-auto/` and `/cat-harness/docs-auto/index/` had none, so any
+link to them landed on a bare directory.
+
+- **Derived, never listed.** The children of a level come from the built type
+  ids by splitting on `/`. A type added to `TYPES` appears the day it builds; a
+  level with nothing under it gets **no page at all** rather than an empty one,
+  which is the same absent-rather-than-stubbed rule already on `TYPES` — an
+  empty list and a complete list look identical.
+- **Each level page names ITSELF** in the same `var SCOPE` line every other
+  page here emits, so ownership is read off the file by the one pruner rather
+  than assumed from the path. A level page that got this wrong would be
+  unprunable forever and nothing else would say so.
+- **The shared stylesheet was extracted** to `PAGE_CSS` rather than copied into
+  the second renderer. Two copies of one stylesheet is two answers to what this
+  looks like, and the copy nobody edits is the one a reader meets first.
+
+§4(a)'s landing page gets its `docs-auto` link back, and the comment explaining
+its absence is replaced by one recording why it was briefly missing.
+
+5 tests added: every level has an index, each names itself, links are relative
+(and never absolute from a base this generator does not know), an empty level
+renders a stated absence, and a level counts a type's items while saying what a
+nested level holds.
