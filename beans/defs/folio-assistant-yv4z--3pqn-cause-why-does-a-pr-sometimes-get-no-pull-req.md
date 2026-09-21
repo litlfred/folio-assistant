@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yv4z
 title: '3pqn cause: why does a PR sometimes get NO pull_request-event run at all?'
-status: todo
+status: in-progress
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-21T05:40:33Z
+updated_at: 2026-09-21T14:06:54Z
 parent: folio-assistant-1xhc
 ---
 
@@ -127,3 +127,14 @@ event arrived for **`5f80b5cd`** — the very head `check:head-has-run` had
 reported as having *"NO workflow run of any kind"* and attributed to a dropped
 event. That head did not merely acquire runs late; it **finished** them. Both
 heads in this occurrence lagged, and the tool was wrong about both.
+
+---
+
+*Claimed 2026-09-21T14:0xZ by session_01AYHimvYMmf8h8e9fFN6dW5.* **This claim is pushed BEFORE the work**, not after it.
+
+Two beans were duplicated in this session today (`yl5w`, `lps0`) because a claim
+is branch-local and invisible to siblings until a commit carrying it exists on
+the forge. `bean-coordination` states that limit; what today measured is that
+running the pre-claim check faithfully does not close it — both times the check
+was clean and a sibling was already mid-build. Pushing the claim first is the
+one mitigation a single session can apply.
