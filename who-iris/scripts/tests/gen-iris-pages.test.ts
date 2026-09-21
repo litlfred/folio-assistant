@@ -19,6 +19,8 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
+import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
+
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const DOCS = join(INSTANCE, "docs");
@@ -57,13 +59,213 @@ describe("rendered lists are in a deterministic order", () => {
     expect(itemOrderIn("community-list.html")).toEqual(expected);
   });
 
-  it("index.html lists items in the same order", () => {
-    // The two pages that were stale in CI. If they ever disagree with each
-    // other, one of them is rendering from an unsorted copy again.
+  it("index.html is ordered by ACCESSION, which today coincides with id order", () => {
+    // **This assertion is nearly vacuous and says so.** `index.html` became
+    // the IRIS home replica and now orders Recent Submissions by
+    // `dc.date.accessioned`, descending — a different key from
+    // `community-list.html`'s catalogue-id order. On the current three items
+    // the two agree by coincidence (2020 > 2014 > 2012 happens to match
+    // 18892cf3 < 63e14c27 < b08c6c19), and a fourth item can break that
+    // without anything being wrong.
+    //
+    // Kept, because the coincidence is worth KNOWING about: the day it breaks,
+    // this fails and points at the real ratchet rather than leaving somebody to
+    // discover that two pages they assumed agreed never had to. The live
+    // ordering ratchet is "recent submissions are ordered, and the order is
+    // total" below, which asserts against `recentOrder` itself.
     expect(itemOrderIn("index.html")).toEqual(expected);
   });
 
-  it("both pages agree with each other, not merely with the sort", () => {
-    expect(itemOrderIn("index.html")).toEqual(itemOrderIn("community-list.html"));
+  it("both pages are each internally deterministic", () => {
+    // What the CI failure was actually about: a page rendering a list from an
+    // unsorted copy. Asserted per page against its OWN key, not by comparing
+    // the two, now that they sort on different ones.
+    expect(itemOrderIn("community-list.html")).toEqual(expected);
+    expect(new Set(itemOrderIn("index.html")).size).toBe(itemOrderIn("index.html").length);
+  });
+});
+
+describe("the generator owns its filenames, and prunes only those", () => {
+  it("every .html committed under docs/ is one the generator would write", () => {
+    // The orphan guard, asserted against the COMMITTED tree rather than a
+    // temp dir. Re-keying two items on 2026-09-20 left
+    // `item-item-local-*.html` behind — nine files where seven were wanted,
+    // two of them serving a record the catalogue no longer describes, and
+    // `--check` was blind because it only inspected what it was about to
+    // write. This fails if that recurs.
+    const html = readdirSync(DOCS).filter((f) => f.endsWith(".html"));
+    expect(html.length).toBeGreaterThan(3);
+    const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
+    const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
+    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", "kg-to-portal.html", ...items, ...colls]);
+    expect(html.filter((f) => !wanted.has(f))).toEqual([]);
+    expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
+  });
+
+  it("OWNED matches what the generator emits", () => {
+    for (const f of readdirSync(DOCS).filter((f) => f.endsWith(".html"))) {
+      expect(OWNED.test(f)).toBe(true);
+    }
+  });
+
+  it("OWNED spares what the generator did NOT write", () => {
+    // The other half, and the one that makes pruning safe to run at all:
+    // `deletion-requires-confirmation` is about artefacts an agent did not
+    // create, so the pattern must not reach them. Checked by name rather than
+    // by deleting anything.
+    for (const f of ["hand-authored.html", ".nojekyll", "README.md", "assets", "index.json"]) {
+      expect(OWNED.test(f)).toBe(false);
+    }
+  });
+});
+
+describe("ingestion-notes is a projection of the skill, not a copy of it", () => {
+  const SKILL = readFileSync(join(INSTANCE, "skills", "iris-dspace.md"), "utf-8");
+
+  it("every requirement in the skill reaches the page", () => {
+    // The point of generating the page: a requirement added to the skill and
+    // not visible on the page would be a finding captured where nobody who
+    // needs it is looking, which is the failure the page exists to prevent.
+    const page = readFileSync(join(DOCS, "ingestion-notes.html"), "utf-8");
+    const reqs = requirementsFromSkill(SKILL);
+    expect(reqs.length).toBeGreaterThan(10);
+    for (const r of reqs) expect(page).toContain(`>${r.id}</th>`);
+    expect(page).toContain(`<strong>${reqs.length}</strong>`);
+  });
+
+  it("refuses rather than rendering an empty table when the source moves", () => {
+    // A projection that quietly produces nothing when its source is renamed
+    // reports "0 findings", which is indistinguishable from "no problems" and
+    // is a lie. It throws instead, and the gate goes red.
+    expect(() => requirementsFromSkill("# a skill with no requirements table\n")).toThrow(
+      /no .* rows found/,
+    );
+  });
+
+  it("ids are unique and the numbering has no gaps", () => {
+    const ids = requirementsFromSkill(SKILL).map((r) => r.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids).toEqual(ids.map((_, i) => `R${i + 1}`));
+  });
+});
+
+describe("the IRIS home replica", () => {
+  const home = readFileSync(join(DOCS, "index.html"), "utf-8");
+
+  it("carries no WHO emblem and no photograph", () => {
+    // The instruction this page exists under: a replica carrying the real mark
+    // is indistinguishable from the real site at a glance. Checked by name
+    // because the capture ships `who_logo.svg` and it is one copy-paste away.
+    expect(home).not.toContain("who_logo");
+    expect(home).not.toContain(".jpg");
+    expect(home.toLowerCase()).not.toContain("emblem.svg");
+  });
+
+  it("shows a cover for every item whose cover is committed", () => {
+    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
+    expect(covers.length).toBeGreaterThan(0);
+    for (const c of covers) expect(home).toContain(`assets/covers/${c}`);
+  });
+
+  it("reserves each cover's box rather than guessing it", () => {
+    // Every <img> carries width AND height, from the bitstream's declared
+    // pixel dimensions. A missing height is a reflow when the bytes arrive,
+    // and the three covers have three different aspects so no default works.
+    const imgs = [...home.matchAll(/<img[^>]*>/g)].map((m) => m[0]);
+    expect(imgs.length).toBeGreaterThan(0);
+    for (const tag of imgs) {
+      expect(tag).toMatch(/width="\d+"/);
+      expect(tag).toMatch(/height="\d+"/);
+      expect(tag).toMatch(/alt="[^"]+"/);
+    }
+  });
+
+  it("states the upstream item count it was given, not a remembered one", () => {
+    // The search placeholder is transcribed from the capture -- 273559, no
+    // separators, exactly as IRIS prints it -- and it is where this catalogue's
+    // item count came from at all.
+    const cat = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf-8"));
+    expect(home).toContain(`repository&rsquo;s ${cat.totalItemsUpstream} items`);
+    expect(home).toContain(cat.totalItemsUpstream.toLocaleString("en-US"));
+    expect(home).toContain(cat.totalFilesUpstream.toLocaleString("en-US"));
+  });
+
+  it("the banner's node count is computed, not written down", () => {
+    // It was three literals and one of them went stale the moment a node was
+    // added. Asserted against the tree rather than against the generator.
+    const n = readdirSync(NODES).filter((f) => f.endsWith(".json")).length;
+    expect(home).toContain(`${n} nodes`);
+  });
+
+  it("the search box is inert and says so", () => {
+    expect(home).toContain("<button type=\"button\" disabled>");
+    expect(home).toContain("Disabled.");
+  });
+});
+
+describe("recent submissions are ordered, and the order is total", () => {
+  const items = sortedIds().filter((id) => id.startsWith("item/"));
+
+  it("there is more than one item to order", () => {
+    expect(items.length).toBeGreaterThan(1);
+  });
+
+  it("the order does not depend on the input order", () => {
+    // Same argument as the list-order ratchet above: readdir order already
+    // produced a generator emitting different bytes from identical inputs
+    // once. A sort with ties is that defect with a smaller blast radius.
+    const all = readdirSync(NODES)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(join(NODES, f), "utf-8")))
+      .filter((n) => n.flavour === "item");
+    const a = recentOrder(all).map((n) => n.id);
+    const b = recentOrder(all.slice().reverse()).map((n) => n.id);
+    expect(a).toEqual(b);
+  });
+
+  it("the page lists them in that order", () => {
+    const all = readdirSync(NODES)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(join(NODES, f), "utf-8")))
+      .filter((n) => n.flavour === "item");
+    expect(itemOrderIn("index.html")).toEqual(recentOrder(all).map((n) => slug(n.id)));
+  });
+});
+
+describe("the KG-to-portal page keeps its claims honest", () => {
+  const page = readFileSync(join(DOCS, "kg-to-portal.html"), "utf-8");
+
+  it("inlines the architecture drawing rather than linking across mount routes", () => {
+    // These pages are served from BOTH `/who-iris/` and `/docs/who-iris/`, so
+    // a relative path to a file outside this directory resolves under one and
+    // 404s under the other. Inlined, there is no path to be wrong.
+    expect(page).toContain("<svg");
+    expect(page).toContain("GDHCN");
+    expect(page).not.toContain("cat-harness/docs/assets");
+  });
+
+  it("does not claim a stage this instance has not built", () => {
+    // The page's whole value is that it says where who-iris actually is.
+    // Package, sign and verify are not built here, and a page that quietly
+    // promoted one would be the `xom7` shape: it looks exactly like a working
+    // pipeline from in here.
+    for (const s of ["Package", "Sign", "Verify"]) {
+      const row = new RegExp(`<strong>${s}</strong>[\\s\\S]{0,600}?</tr>`);
+      const m = row.exec(page);
+      expect(m).not.toBeNull();
+      expect(m![0]).toContain("not built");
+    }
+  });
+
+  it("states the upstream figures from the catalogue, not from prose", () => {
+    const cat = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf-8"));
+    expect(page).toContain(cat.totalItemsUpstream.toLocaleString("en-US"));
+    expect(page).toContain(cat.totalFilesUpstream.toLocaleString("en-US"));
+  });
+
+  it("says readers are not measured rather than inventing a count", () => {
+    // Traffic is bytes x requests and nothing here counts requests. An
+    // invented reader count would make every cost figure under it fiction.
+    expect(page).toContain("not measured");
   });
 });

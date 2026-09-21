@@ -414,6 +414,7 @@ export const RULES: Rule[] = [
       "scripts/gen-bootstrap-schemas.ts",
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
