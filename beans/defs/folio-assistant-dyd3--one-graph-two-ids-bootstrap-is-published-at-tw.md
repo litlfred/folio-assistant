@@ -89,3 +89,17 @@ kept.
 The guard the "Do not" wanted is real and is now a test rather than a
 sentence: the surviving publisher writes the path the `@id` names, and a
 second publisher re-appearing fails.
+
+## Landed on
+
+Issue #809, PR #810 (draft), branch `claude/sharp-ptolemy-6qxh77-dyd3`.
+
+## One thing NOT settled, deliberately
+
+`gen-bootstrap-graph.ts` was kept on the owner's choice, and keeping it has a
+cost that the choice did not turn on because it was not measured yet: the two
+builders agree on `@id` and disagree on **74 of the 88 nodes**, so its tests
+now assert properties of a document nobody serves. Said outright in its module
+doc and in `code-quality-gates.yml` rather than left for a reader to discover.
+Whether a second builder in that position earns its place is a separate
+question and belongs to whoever asks it.
