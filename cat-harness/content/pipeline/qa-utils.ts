@@ -367,6 +367,21 @@ export function computeCriterionScriptHashes(
    * a re-scoping, which is the whole point of the field, so pass it.
    */
   def?: Parameters<typeof criterionDefHash>[0],
+  /**
+   * What the sidecar should RECORD as `source_file`, when that differs from
+   * the path the bytes are read at. Defaults to `sourceFile`.
+   *
+   * They differ for a CONTRIBUTED checker: the bytes live in the contributing
+   * instance, so `repoRoot`/`sourceFile` point there, while the recorded label
+   * is `<contributor>/<sourceFile>`. Without it two instances holding the same
+   * relative path would write the same `source_file` into different sidecars,
+   * and a reader could not tell whose checker a verdict came from.
+   *
+   * `script_commit_sha` deliberately still uses `sourceFile` against
+   * `repoRoot`: it is a git pathspec, and git must be asked about the file
+   * that actually exists.
+   */
+  recordAs?: string,
 ): CriterionScriptHashes {
   const absSource = join(repoRoot, sourceFile);
   // Hash extra inputs with their repo-relative labels (NOT
@@ -380,7 +395,7 @@ export function computeCriterionScriptHashes(
   }));
   return {
     criterion_id: criterionId,
-    source_file: sourceFile,
+    source_file: recordAs ?? sourceFile,
     // Prefer the per-criterion closure hash; fall back to the whole file when
     // the criterion cannot be located or its closure cannot be trusted. The
     // fallback over-invalidates (churn) rather than under-invalidating (stale

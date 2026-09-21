@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS for the same reason as `check-ci-health` above: its subject
+      // is this repository's own deploy workflow — which commands it runs
+      // and whether they succeed — and it reads no folio content at all.
+      // It builds an instance's KG the way `kg-export` (already harness,
+      // below) does, one instance at a time (issue #720).
+      "scripts/check-published-instance-exports.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -176,6 +182,12 @@ export const RULES: Rule[] = [
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      // ...and the signals themselves, lifted out of it by bean `xfoh` so the
+      // patterns could be checked against the skill prose they transcribe.
+      // Same side as its runner, and harness by subject too: whether a request
+      // is a PLATFORM capability change is a question about the platform, and a
+      // folio that never asks for one still needs the answer to be "no".
+      "src/crdm/detect-signals.ts",         // ...the patterns, checked against the skill
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
       "src/tools/stakeholder-map.ts",        // ...as an MCP tool
 
@@ -209,6 +221,19 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      // Beside its sibling, and HARNESS rather than core — the opposite
+      // classification to `gen-default-boards.ts`, for the reason that entry
+      // records: what settles it is what a module is ABOUT. That one produces
+      // folio content (a board); this one reads instance DECLARATIONS and
+      // answers a question about the machinery — which directories an instance
+      // says it renders. Its only import is `schemas/cat-harness.ts`, which is
+      // harness, so the direction is flat rather than upward.
+      //
+      // Classified core first, on the reasoning that a tile is something a
+      // reader sees. `check:partition` answered with a wrong-direction edge
+      // from `sync-docs-harness.ts`, which is harness and calls it — the
+      // import was right and the classification was wrong.
+      "scripts/graph-tiles.ts",              // every declared visualisation → its tile
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
       // Same question, same answer: it projects the PLATFORM's own term
       // vocabulary — every class and property hanging off `FOLIO_NS` — and
@@ -707,6 +732,12 @@ export const RULES: Rule[] = [
       // tree's own filenames, which is a fact about the checkout and not about
       // any folio's material.
       "scripts/check-portable-paths.ts",
+      // The CI-wiring gate, and harness by the same argument one line up: it
+      // reads this repository's own `.github/workflows/` and grades whether a
+      // path-filtered workflow rebuilds when the scripts it runs change. That
+      // is a fact about the checkout's build wiring, not about any folio's
+      // material — it imports `repoRootFor` and nothing else.
+      "scripts/check-workflow-script-paths.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge

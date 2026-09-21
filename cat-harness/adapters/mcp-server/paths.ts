@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoriesForGraph, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
+import { deferResolution, directoriesForGraph, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -47,7 +47,10 @@ export const folioDirOf = folioDirDeferred(REPO_ROOT, import.meta.url);
 // yet, and the ingestion queue must be creatable before anything is in it.
 // The declared `uploads` graph — the ingestion queue, before anything is L1.
 // Write-target fallback, as above.
-export const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
+export const UPLOADS_DIR = deferResolution(
+  () => directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads"),
+  { moduleUrl: import.meta.url, what: "its uploads directory", under: REPO_ROOT },
+);
 
 // EVERY declared library, not the first — the graph tools read all of them.
 //
@@ -94,7 +97,15 @@ export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 // `beans/`. Same write-target fallback as above.
 // `REPO_ROOT` is `findContentRepoRoot()` — a FOLIO's root, not this instance's.
 // The `repoRootFor` sweep sent the fallback to that folio's PARENT.
-export const TODOS_DIR = directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos");
+// NOTHING IMPORTS THIS. Found while converting it (bean `tdu3`): the only
+// other mention in the tree was the gate's own allow-list entry naming it.
+// Deferred rather than deleted — an unused export is a judgement about
+// intent, not a defect this bean is entitled to settle, and a module-scope
+// throw is worth removing either way.
+export const TODOS_DIR = deferResolution(
+  () => directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos"),
+  { moduleUrl: import.meta.url, what: "its todos directory", under: REPO_ROOT },
+);
 
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */

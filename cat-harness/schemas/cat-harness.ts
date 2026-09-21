@@ -102,26 +102,70 @@ import { StickyContributionSchema, type StickyContribution } from "./sticky-cont
  * disagree — and {@link findDeclarationFile} checks exactly that rather than
  * trusting either half.
  *
- * ## What tells a declaration from a plain config
+ * ## What tells a declaration from a plain config — the NAME, then the SUFFIX
  *
- * **A `name` field.** Both live at the repository root, and both end
- * `.config.json`, so the discriminator has to be inside. A file carrying
- * `name` declares an instance; one without it configures the checkout it sits
- * in. `cat-harness.config.json` at the root is the second kind, which is why
- * it is left where it is: it is an INSTANTIATION marker, which is the half of
- * the owner's sentence that stays.
+ * **A `name` field**, and since 2026-09-21 the suffix as well.
+ *
+ * Until then both ended `.config.json`, so the only discriminator was inside
+ * the file: carrying `name` made it a declaration, lacking one made it a
+ * config. That worked and was still the thing `b5f0` §1 warned about — two
+ * different schemas, with two different readers, sharing one filename shape
+ * and told apart only by which directory they sat in.
+ *
+ * The owner reversed §1's REPLACE ruling on 2026-09-21 and took its other
+ * option, the one `b5f0` recorded as *"`<name>.json` + `<name>.config.json`
+ * would at least pair them"*:
+ *
+ * | file | schema | reader |
+ * |---|---|---|
+ * | `<name>.json` in the instance | {@link CatHarnessDeclarationSchema} | `readDeclaration` |
+ * | `<name>.config.json` at the instantiation root | `HarnessConfigSchema` | `readHarnessConfig` |
+ *
+ * The `name` check STAYS rather than being replaced by the suffix.
+ * {@link findDeclarationFile} still requires the filename stem to equal the
+ * declared `name`, which is what makes a declaration self-identifying: a
+ * consumer opening a repository it has never seen scans, parses, and takes the
+ * file that agrees with itself. That is the property migration-plan I.8 asked
+ * for, and it is the reason the suffix could move at all — nothing here
+ * derives a filename from a DIRECTORY name, so a clone renamed on disk still
+ * resolves.
  */
-export const DECLARATION_SUFFIX = ".config.json";
+export const DECLARATION_SUFFIX = ".json";
 
 /**
- * The declaration filename for an instance of this name.
+ * The suffix of an instantiation root's CONFIG, as against its declaration.
+ *
+ * These were ONE suffix until 2026-09-21, because the declaration had been
+ * folded into the config. The owner's reversal separates them again, so there
+ * are now two things to spell and they must not be spelled by one constant:
+ * composing a config path from {@link DECLARATION_SUFFIX} produced
+ * `cat-harness.json` for a file that is `cat-harness.config.json`, and
+ * `check:instance-config` reported all three real configs as orphans.
+ */
+export const CONFIG_SUFFIX = ".config.json";
+
+/**
+ * The CONFIG filename for an instance of this name — `<name>.config.json`.
  *
  * Defined HERE and re-exported by `schemas/harness-config.ts`, which is where
  * it used to live — that module imports this one, so the dependency only runs
- * one way and the alternative was two functions spelling one filename. One
- * speller, or the config and the declaration drift apart at the first rename.
+ * one way. The rationale was "one speller, or the config and the declaration
+ * drift apart at the first rename"; that still holds, but the thing being
+ * spelled once is now each filename rather than both, and the pair below is
+ * what keeps them from drifting.
  */
 export function instanceConfigFilename(name: string): string {
+  return `${name}${CONFIG_SUFFIX}`;
+}
+
+/**
+ * The DECLARATION filename for an instance of this name — `<name>.json`.
+ *
+ * Its sibling above spells the config. Both exist so that neither is composed
+ * at a call site: a literal `${name}.json` is the thing that survives a
+ * suffix change and then resolves to nothing.
+ */
+export function instanceDeclarationFilename(name: string): string {
   return `${name}${DECLARATION_SUFFIX}`;
 }
 
@@ -164,7 +208,24 @@ export function findDeclarationFile(dir: string): string | undefined {
       // reports a clean run. It cannot be matched on `name` (there is no
       // parse), so it is collected separately and `readDeclaration` throws on
       // it rather than returning `undefined`.
-      broken.push(entry);
+      //
+      // BUT ONLY WHEN IT COULD PLAUSIBLY BE THIS INSTANCE'S. The suffix was
+      // `.config.json` until 2026-09-21, which made "unparseable file with
+      // this suffix" a near-certain broken declaration. A bare `.json` makes
+      // it near-certainly NOT one: a malformed `folio/landing.json` — a
+      // landing sticky, nothing to do with declarations — was reported as a
+      // broken declaration and took `readDeclaration` down with it.
+      //
+      // The two admissible signals, neither of which is used for RESOLUTION:
+      // a sibling `<stem>.config.json`, which is the pairing the split
+      // created, or a stem equal to the directory's own name. Matching the
+      // directory here does NOT reintroduce what migration-plan I.8 warned
+      // about — that is about deriving a declaration's location from a
+      // directory name, and resolution still goes only through a file
+      // agreeing with its own `name`. This is error REPORTING: the cost of
+      // being wrong is a worse message, not a missed instance.
+      const plausible = stem === basename(dir) || entries.includes(`${stem}${CONFIG_SUFFIX}`);
+      if (plausible) broken.push(entry);
       continue;
     }
     if ((raw as { name?: unknown })?.name === stem) found.push(entry);
@@ -1852,6 +1913,96 @@ export const GraphNodeDirectorySchema = z.object({
  * no reason is a silence list, and the next person cannot tell a considered
  * waiver from a shrug. So the value is the reason, and the axis prints it.
  */
+/**
+ * ONE visualisation of a subgraph — where it is rendered, and what to call it.
+ *
+ * The owner, 2026-09-20, correcting the framing of the question put to them:
+ *
+ * > its not a function of nodes, its a function of a harness watching a
+ * > directort in repo root/ … if harness declares visaluzers, those should
+ * > have tile. defaults to theme, but new can be changed. harness can declare
+ * > >= 1 visualiztion (which then has a title)
+ *
+ * So a directory may be rendered more than once — a library as a shelf and as
+ * a map are two visualisations of one graph — and each needs a name, because a
+ * tile that says only "library" cannot say which of the two it opens.
+ *
+ * ## Every field but `ref` is optional, and that is the inheritance rule
+ *
+ * A visualisation that states only where it is rendered is **complete rather
+ * than invalid** — the same rule `semantic-zoom.ts` encodes and for the same
+ * reason. `title` falls back to the directory's id, `surfaces` to both, `theme`
+ * to the directory's, `hidden` to false. Requiring any of them would make every
+ * existing declaration in this repository invalid on the commit that added the
+ * field, which is the cost `dependents` already charged once.
+ */
+export const VisualisationSchema = z.object({
+  /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
+  ref: z.string().min(1),
+  /** What a tile calls it. Absent falls back to the directory's id. */
+  title: z.string().min(1).optional(),
+  /**
+   * Where its tile appears. Absent means BOTH.
+   *
+   * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
+   * declared once and says where it shows — never two registries free to
+   * disagree about what a tile is.
+   */
+  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  /**
+   * Whether this tile starts out of frame. Absent means shown.
+   *
+   * Q9: *declared default, reader may override.* The folio says which tiles
+   * start hidden; a reader's own hiding is theirs alone and is committed
+   * nowhere — which is `reader-filter.ts`'s rule on another surface.
+   */
+  hidden: z.boolean().optional(),
+  /** The tile's theme. Absent means the directory's, then the instance's. */
+  theme: z.string().min(1).optional(),
+});
+export type Visualisation = z.infer<typeof VisualisationSchema>;
+
+/**
+ * What `coverage.visualiser` accepts: one path, or several visualisations.
+ *
+ * **A bare string still parses**, and that is the whole shape of this change.
+ * 27 declared paths in this repository are bare strings today; a widening that
+ * cost each of them an edit would be a required-field change wearing an
+ * optional one's clothes, and every concurrent branch would pay for it.
+ */
+export const VisualiserDeclarationSchema = z.union([
+  z.string().min(1),
+  z.array(VisualisationSchema).nonempty(),
+]);
+export type VisualiserDeclaration = z.infer<typeof VisualiserDeclarationSchema>;
+
+/**
+ * Every visualisation a directory declares, normalised.
+ *
+ * The ONE place a bare string becomes a list, so no consumer has to know that
+ * the field has two shapes — which is this repository's standing rule: *a
+ * downstream consumer must never have to string-manipulate, re-derive, or
+ * assume a rule in order to use what we publish.*
+ *
+ * `[]` for a directory that declares none. That is a real answer and a
+ * different one from "declares a visualiser that does not resolve", which is
+ * `flh4`'s distinction and is checked elsewhere.
+ */
+export function visualisationsOf(
+  coverage: SubgraphCoverage | undefined,
+  directoryId: string,
+): Array<Visualisation & { title: string }> {
+  const v = coverage?.visualiser;
+  if (v === undefined) return [];
+  const list: Visualisation[] = typeof v === "string" ? [{ ref: v }] : v;
+  return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
+}
+
+/** Does this visualisation's tile appear on this surface? Absent means both. */
+export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+  return v.surfaces === undefined || v.surfaces.includes(surface);
+}
+
 export const SubgraphCoverageSchema = z.object({
   /**
    * The page that renders this subgraph, **relative to the REPOSITORY root**
@@ -1876,7 +2027,7 @@ export const SubgraphCoverageSchema = z.object({
    * 27 declared paths resolve against it today, so this comment records the
    * behaviour rather than changing it.
    */
-  visualiser: z.string().min(1).optional(),
+  visualiser: VisualiserDeclarationSchema.optional(),
   /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
   docs: z.string().min(1).optional(),
   /** The skill that governs it, by NAME rather than by path, so no base applies. */
@@ -4701,19 +4852,72 @@ export function folioDir(root: string): string {
  * of surfacing as an unrelated binding's dead zone three thousand lines away.
  */
 export function folioDirDeferred(root: string, moduleUrl: string): () => string {
-  let value: string | undefined;
+  return deferResolution(() => folioDir(root), {
+    moduleUrl,
+    what: "its folio directory",
+    under: resolve(root),
+  });
+}
+
+/**
+ * The same deferral, for any module-scope value whose computation can throw on
+ * a declaration.
+ *
+ * ## Why this exists beside {@link folioDirDeferred} rather than instead of it
+ *
+ * `folioDir` was the whole hazard until 2026-09-21, and the gate was written
+ * to match a call in FIRST position — `const X = folioDir(...)`. Widening it
+ * found twelve more sites the anchored pattern could not see, and they are not
+ * a different defect:
+ *
+ * ```ts
+ * const LEDGER_PATH = join(folioDir(REPO_ROOT), "bib-qa-verifications.json");
+ * const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
+ * ```
+ *
+ * The throwing call is nested, so no wrapper around `folioDir` alone reaches
+ * it. What has to be deferred is the WHOLE expression. And two more resolvers
+ * throw for the same reason — `directoryForGraph` and `directoriesForGraph`,
+ * measured against a directory holding `{ not json` — so a second
+ * function-specific wrapper would already be a third.
+ *
+ * `folioDirDeferred` keeps its name and its message: it is called from twenty
+ * modules, and its wording is the thing a reader meets when the failure
+ * arrives. It is now a thin call to this.
+ *
+ * ## Same contract, one generalisation
+ *
+ * Resolution stays at LOAD, for the reason on `folioDirDeferred`: several
+ * resolvers read `process.cwd()` transitively, and moving the computation to
+ * first use would let a `process.chdir` change the answer — while memoising on
+ * first use would be worse, making the value depend on whichever caller ran
+ * first. Only the throw moves.
+ *
+ * Generic in the value because not every one is a string:
+ * `q-usage-audit.ts` resolves `string[]`.
+ */
+export function deferResolution<T>(
+  compute: () => T,
+  context: { moduleUrl: string; what: string; under: string },
+): () => T {
+  let value: T | undefined;
+  let ok = false;
   let failure: unknown;
   try {
-    value = folioDir(root);
+    value = compute();
+    ok = true;
   } catch (e) {
     failure = e;
   }
   return () => {
-    if (value !== undefined) return value;
+    // `ok` rather than `value !== undefined`: a resolver may legitimately
+    // return `undefined`, and treating that as a failure would raise this
+    // error over a value that resolved perfectly well.
+    if (ok) return value as T;
     throw new Error(
-      `${moduleUrl} could not resolve its folio directory when it loaded, and this is the ` +
-        `first use of that value. The declaration under ${resolve(root)} is what failed: ` +
-        `${failure instanceof Error ? failure.message : String(failure)}`,
+      `${context.moduleUrl} could not resolve ${context.what} when it loaded, and this is ` +
+        `the first use of that value. The declaration under ${context.under} is what ` +
+        `failed: ${failure instanceof Error ? failure.message : String(failure)}`,
       { cause: failure },
     );
   };

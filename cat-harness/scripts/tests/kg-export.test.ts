@@ -22,8 +22,9 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
-import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
@@ -304,9 +305,31 @@ describe("kg export", () => {
     expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
-    // The declaration is read from a fixed filename, whatever the stub is.
-    expect(findDeclarationFile(join(import.meta.dir, "../..")) !== undefined).toBe(true);
-    expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+    // THE OTHER HALF OF THIS TEST WAS REVERSED BY THE OWNER, 2026-09-21, and
+    // the reasoning is worth keeping rather than just the new assertion.
+    //
+    // It read: the declaration is at a FIXED filename, whatever the stub is —
+    // and asserted `<stub>.json` must NOT exist. Migration-plan I.8's argument
+    // was that a fixed name is what lets a consumer open a repo it has never
+    // seen, because "a resolver deriving it from the DIRECTORY finds nothing
+    // when the repo is cloned elsewhere".
+    //
+    // That argument is about deriving a filename from the DIRECTORY, and no
+    // resolver here does. `findDeclarationFile` scans, parses, and takes the
+    // file whose stem equals its own declared `name` — so a declaration is
+    // SELF-IDENTIFYING and a clone renamed on disk still resolves. The
+    // property I.8 wanted is preserved by the check rather than by the
+    // constant, which is what made the suffix free to move.
+    //
+    // So `<name>.json` exists now, deliberately, and what is asserted is the
+    // self-agreement that replaced the fixed name.
+    const declFile = findDeclarationFile(join(import.meta.dir, "../.."));
+    expect(declFile).toBe(`${readDeclaration(join(import.meta.dir, "../.."))!.name}.json`);
+    // ...and the stub does NOT name it. The stub names published ARTEFACTS;
+    // the declaration is named for the instance. They are equal here only
+    // because cat-harness's stub is its own name, so asserting on the stub
+    // would pass for the wrong reason in any instance that sets one.
+    expect(declFile).not.toBe(`${stub}.config.json`);
   });
 
   test("EVERY declared instance exports at an absolute IRI — the base is the SITE's, not the instance's", () => {
@@ -337,6 +360,52 @@ describe("kg export", () => {
       .map((instanceRoot) => ({ at: relative_(instanceRoot), iri: exportIdentity({ instanceRoot }).docIri }))
       .filter((r) => !r.iri.startsWith("http"));
     expect(notAbsolute).toEqual([]);
+  });
+
+  test("an instance OUTSIDE this repository gets no base — the boundary, not a prefix", () => {
+    // The defect the first version of this fallback shipped (#718, mine). It
+    // inherited the host's `canonicalUrl` for ANY instance declaring none,
+    // with no condition, so exporting a directory in /tmp minted
+    // `<this site>/outside.jsonld` — a URL that will never resolve, claiming a
+    // document this repository does not publish, and reported as no problem.
+    //
+    // `cat-bootstrap` inherits because this repository PUBLISHES it. A path in
+    // /tmp is not published here, so the honest answer is the third state.
+    // That distinction is the whole of `publicationBase`; #725 wrote it, then
+    // dropped it on merge because my fallback had already hidden the symptom.
+    const outside = mkdtempSync(join(tmpdir(), "kg-export-outside-"));
+    try {
+      writeFileSync(join(outside, "outside.json"), JSON.stringify({ name: "outside", graphs: [] }));
+      const id = exportIdentity({ instanceRoot: outside });
+      expect(id.publishedHere).toBe(false);
+      // Document-relative, NOT a fabricated absolute one.
+      expect(id.docIri.startsWith("http")).toBe(false);
+      expect(id.base).toBe("");
+    } finally {
+      rmSync(outside, { recursive: true, force: true });
+    }
+  });
+
+  test("a sibling directory whose name merely EXTENDS the repo root is outside it", () => {
+    // `startsWith(repoRoot)` calls `/repo-other` a child of `/repo`. It is the
+    // obvious way to write the boundary and it is wrong, so the test plants
+    // exactly that string rather than trusting the implementation reads
+    // carefully. No file is created: `exportIdentity` answers this from the
+    // path alone, which is the point — the comparison must not depend on what
+    // happens to exist.
+    const repoRoot = repoRootFor(join(import.meta.dir, "../.."));
+    const sibling = `${repoRoot}-other`;
+    expect(exportIdentity({ instanceRoot: sibling }).publishedHere).toBe(false);
+  });
+
+  test("an instance INSIDE the repository still inherits — the fallback is narrowed, not removed", () => {
+    // The other side of the boundary, and the case `40fl` exists for. Asserted
+    // here as well as through `buildExport` below, because a narrowing is
+    // exactly the change that silently takes the good case with it.
+    const boot = join(repoRootFor(join(import.meta.dir, "../..")), "cat-bootstrap");
+    const id = exportIdentity({ instanceRoot: boot });
+    expect(id.publishedHere).toBe(true);
+    expect(id.docIri).toBe(`${BASE}/cat-bootstrap.jsonld`);
   });
 
   test("a foreign instance's export reports no unread source — the publish step exits 0", async () => {

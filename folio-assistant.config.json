@@ -1,47 +1,13 @@
 {
-  "_comment": "THE REPOSITORY ROOT \u2014 its DECLARATION and its INSTANTIATION, in one file. Merged 2026-09-21 on the owner's instruction: \"Excise harness.json.. only <harness-stub>.config.json makes instantiation at root of repo\". Until then the root said itself TWICE \u2014 `harness.json` carried the declaration (name, directories, assets, needs) and this file carried the instantiation marker plus `contentType`, with nothing tying the two together and no overlap in content to make the split legible. A reader had to know which question each file answered.\n\nWHAT MAKES THIS A DECLARATION rather than a plain config is the `name` field, and the FILENAME STEM MUST EQUAL IT \u2014 `findDeclarationFile` checks exactly that rather than trusting either half, which is the property the old fixed `harness.json` could not have: a constant filename cannot carry a name, so the declared name inside was free to be anything.\n\nITS SIBLINGS AT THIS ROOT ARE NOT DECLARATIONS. `cat-harness.config.json` and `cat-bootstrap.config.json` carry no `name`; they are instantiation markers for harnesses this checkout instantiates, per the owner (2026-09-21): 'only the instiatiated harnesses (not all dependent ones) in teh folio... so repo root has <harness>.config.json', and 'boot strap, cat harness and folioasistant should be instantaited'. Each of those instances ALSO carries its own `<name>.config.json` inside its own directory, which is where its declaration lives. Two files with the same name in two places, and the location says which job it is doing.\n\nPRIOR TEXT OF THE DECLARATION HALF, kept because it records why the root is its own instance: IT IS `folio-assistant`, NOT `folio-assistant-checkout`, AND THAT IS A REVERSAL WITH A REASON. Commit e619a58c renamed this to `-checkout` to break a real collision: the root and `cat-harness/harness.json` BOTH declared `folio-assistant`, `resolveDirectories` keys `declaredBy` on the declared name, and a directory was attributable to the wrong instance while reading correctly. That fix and this branch's fix were written independently against the same defect, from opposite ends \u2014 the other side renamed the HARNESS LAYER to `cat-harness` (owner, 2026-09-20: \"cat-harness, folio-assistant-core, folio-assistant are distinct instances/schemas\"), which names all three and leaves `folio-assistant` free. Applying both would have been belt and braces with a cost: no instance answers to the name the owner gave, and the repository is `litlfred/folio-assistant`. So the suffix goes and the layer rename stays. The COLLISION is not what was being traded away \u2014 e619a58c's real contribution was the uniqueness test in `cat-harness/scripts/tests/check-undeclared-files.test.ts`, which is untouched, runs over the real declarations, and fails if any two share a name again. Re-adding the suffix without fi\n\nPRIOR TEXT OF THE CONFIG HALF: THE REPOSITORY ROOT, declared as an INSTANTIATED harness. Owner, 2026-09-21: 'only the instiatiated harnesses (not all dependent ones) in teh folio... so repo root has <harness>.config.json', and then '4 and boot strap, cat harness and folioasistant should be instantaited'. The presence of this file at the instantiation root is what makes `folio-assistant` an instantiated harness rather than a dependency, and it is what the LHS navbar's harness tiles filter on. `harness.json` says what an instance DECLARES; this says that the instance is instantiated HERE. Two different facts, which is why the navbar could not be derived from the declarations alone. `check:instance-config` verifies the filename names a declared instance; `cat-harness.config.json` beside it is the platform layer's own.",
-  "name": "folio-assistant",
-  "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+  "_comment": "THE REPOSITORY ROOT, declared as an INSTANTIATED harness. The presence of a `<name>.config.json` at the instantiation root is what makes `folio-assistant` an instantiated harness rather than a dependency, and it is what the LHS navbar's harness tiles filter on. Its sibling `folio-assistant.json` says what the instance DECLARES; this says the instance is instantiated HERE and how it is configured. Two different facts, which is why the navbar could not be derived from the declarations alone — and, since 2026-09-21, two different filenames rather than two files sharing one shape. `check:instance-config` verifies the filename names a declared instance.",
   "contentType": "document",
-  "directories": [
-    {
-      "id": "uploads",
-      "path": "uploads/",
-      "dependents": "reproduce",
-      "description": "The incoming queue of the document-ingestion pipeline for THIS checkout \u2014 raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
-      "graphs": [
-        "uploads"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "library-ingestion"
+  "_dependencies_comment": "THE FIRST DEPENDENCY EDGE IN THIS REPOSITORY, added 2026-09-21 for bean rfev. It is what makes `loadContributions` reach folio-assistant-sci's `contributes` module, and so what gives ContributionRegistry its first real contributor -- until then every reference to it outside its own file was a test. It lives in the CONFIG half rather than the declaration (#727 split them): a declaration says what an instance IS, and a dependency is what this folio USES, which `readHarnessConfig` is what reads. `path` is relative to this root and the instance is a sibling directory here, which is the pre-split arrangement: after the cut it becomes a package and only this entry changes. NOT a list of every instance in the checkout -- an instance is declared here when this folio DEPENDS on what it contributes, which is a different question from whether it exists.",
+  "dependencies": {
+    "folioAssistant": [
+      {
+        "name": "folio-assistant-sci",
+        "path": "folio-assistant-sci"
       }
-    }
-  ],
-  "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` \u2014 so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
-  "assets": [
-    {
-      "id": "agent-instructions",
-      "src": "AGENTS.md",
-      "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 folio-assistant",
-      "description": "The file every cold agent reads first, and the rules that bind in EVERY layer of this checkout. A layer's own AGENTS.md augments it and never restates it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED \u2014 'it was copied at init' is not an answer. This provenance sits here rather than on cat-harness's because THIS is the file cat-bootstrap copies at initialisation; cat-harness's own is authored in place and carries no source.",
-      "source": {
-        "instance": "litlfred/folio-assistant",
-        "path": "cat-bootstrap/AGENTS.md"
-      }
-    },
-    {
-      "id": "instance-readme",
-      "src": "README.md",
-      "role": "instance-readme",
-      "title": "folio-assistant",
-      "description": "The repository's reader-facing entry point, and the INDEX over every instance in it: its `cat-harness:instances` section is generated from the declarations themselves, giving each instance both an agent entry (AGENTS.md, memories) and a human one (README, docs). Generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
-    }
-  ],
-  "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",
-  "needs": [
-    "folio-assistant-core"
-  ]
+    ]
+  }
 }

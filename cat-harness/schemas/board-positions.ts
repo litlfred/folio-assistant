@@ -281,3 +281,42 @@ export function unplace(doc: BoardPositions, board: string, note: string): Board
   delete next[note];
   return sortPositions({ ...doc, boards: { ...doc.boards, [board]: next } });
 }
+
+/**
+ * Move a note that is already placed, by a delta.
+ *
+ * ## Why a delta rather than a new absolute position
+ *
+ * Because the gesture is a move, and `place(doc, board, note, {x: was.x + dx,
+ * …})` makes every caller read the current position first. A caller that reads
+ * and writes is a caller that can be wrong about which document it read from —
+ * and this one already carries the rule that a note appears at most once per
+ * board, which is easier to keep when nobody outside this module composes
+ * coordinates.
+ *
+ * ## A note that is NOT placed is not moved
+ *
+ * `undefined` rather than a throw, and rather than placing it at the delta as
+ * though the origin were its position. "Move it from where it is" has no
+ * answer for a note that is nowhere, and answering anyway would put it
+ * somewhere nobody chose. A caller that wants it placed calls {@link place},
+ * which is a different act with a different name.
+ *
+ * ## It touches the LAYER and nothing else
+ *
+ * The same one-way arrow the module opens with: `folio → board → position →
+ * note`. Moving a note edits where it was drawn and cannot edit what it says —
+ * structurally, because this module imports nothing from the content graph and
+ * has no note to reach.
+ */
+export function moveBy(
+  doc: BoardPositions,
+  board: string,
+  note: string,
+  dx: number,
+  dy: number,
+): BoardPositions | undefined {
+  const was = positionOf(doc, board, note);
+  if (was === undefined) return undefined;
+  return place(doc, board, note, { x: was.x + dx, y: was.y + dy });
+}

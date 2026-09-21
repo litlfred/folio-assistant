@@ -22,7 +22,7 @@
  * @module content/pipeline/validate-references-human-review
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDir, deferResolution} from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { createHash } from "crypto";
@@ -58,7 +58,11 @@ interface ReviewSidecar {
 // `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
 // not exist, and one the folio's symlinked embedding resolves to even when the
 // pipeline is run from the content repo.
-const SIDECAR_PATH = join(folioDir(findContentRepoRoot()),  "schema", "references.review.json");
+const SIDECAR_PATH = deferResolution(() => join(folioDir(findContentRepoRoot()),  "schema", "references.review.json"), {
+  moduleUrl: import.meta.url,
+  what: "SIDECAR_PATH",
+  under: findContentRepoRoot(),
+});
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a
@@ -89,8 +93,8 @@ export function entryHash(entry: CSLData): string {
 }
 
 function loadSidecar(): ReviewSidecar {
-  if (!existsSync(SIDECAR_PATH)) return { reviews: {} };
-  const raw = JSON.parse(readFileSync(SIDECAR_PATH, "utf-8"));
+  if (!existsSync(SIDECAR_PATH())) return { reviews: {} };
+  const raw = JSON.parse(readFileSync(SIDECAR_PATH(), "utf-8"));
   return { _meta: raw._meta, reviews: raw.reviews ?? {} };
 }
 

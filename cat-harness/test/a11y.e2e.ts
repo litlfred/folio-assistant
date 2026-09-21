@@ -290,6 +290,14 @@ test.describe("accessibility — the docs-site UI", () => {
       // The search field is the new control and the one most likely to fail
       // contrast: it lands on an opaque sidebar panel it was not styled for.
       ["the search view", ["Search"]],
+      // THE VIEW THIS LOOP DID NOT OPEN, and the gap is the whole of `rptk`'s
+      // second half. `buildLanguageBar()` kept the inline literals the
+      // per-page bar was fixed for -- an unavailable tab at `opacity:0.5`
+      // composited to 1.39:1, the current tab to 3.67:1 -- for two days after
+      // the scope came off the run above, because a page-wide axe pass only
+      // measures what is ON the page, and this bar is behind a tile nobody
+      // clicked. Three of four tiles checked is not the tiles checked.
+      ["the language view", ["Language"]],
     ] as const) {
       test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
         const ctx = await browser.newContext({ colorScheme });

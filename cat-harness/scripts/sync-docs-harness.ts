@@ -32,6 +32,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
+import { graphTiles } from "./graph-tiles.js";
 import { harnessTiles } from "./harness-tiles.js";
 import { siteLinks } from "./site-links.js";
 
@@ -184,6 +185,11 @@ const payload = {
   // The directory list is read HERE and passed in, so `harness-tiles.ts` takes
   // its candidates from an argument and can be tested against a fixture
   // without a filesystem walk.
+  /* THE GRAPH TILES, derived from the visualiser obligation rather than from a
+   * second list. One array for BOTH surfaces — Q11: a tile is declared once
+   * and says where it shows, never two registries free to disagree about what
+   * a tile is. The navbar and the board filter this by `surfaces`. */
+  tiles: graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
   harnesses: harnessTiles(
     REPO_ROOT,
     ROOT,

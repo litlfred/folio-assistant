@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T11:14:16Z
-updated_at: 2026-09-21T12:37:17Z
+updated_at: 2026-09-21T15:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -108,3 +108,73 @@ that throws while evaluating produces exactly the confusing symptom above. A
 lazy accessor would remove the class. Not done here because it is a pattern
 change across a dozen files with no current failure driving it, and this bean
 is about the reporting defect.
+
+---
+
+## A second session worked this independently — what it adds, and one correction
+
+Session `017MEZnJxx7WeekiNCabx4hx` reached the same conclusion from the other
+end, unaware of PR #707 until merging main. Recorded here rather than dropped,
+because the two measurements disagree on a number and the disagreement is
+instructive.
+
+### The two cycle counts are both right, over different graphs
+
+| | graph | result |
+|---|---|---|
+| PR #707 | every import edge, `import type` included | **2** strongly-connected components |
+| this session | RUNTIME edges only — type-only specifiers and type-only clauses erased | **0** cycles, over 1108 resolved edges |
+
+Neither needs retracting, and checking which is which took one look at the two
+components #707 names:
+
+- `schemas/constraints.ts` → `schemas/types.ts` is `import type { Block }`.
+- `_folio-chapter-profiles.qou.ts` → `qa-checkers-q-usage.ts` is
+  `import type { QRegime }`.
+
+Both are **erased at runtime**, so each pair is one-directional once the types
+are gone. The type-level cycles are real and TypeScript resolves them; the
+runtime module graph has none. Same conclusion about
+`qa-checkers-extended.ts` from both, by different routes.
+
+### A defect in the runtime measurement, found by comparing
+
+The zero was very nearly a vacuous one. The second session's resolver treats a
+specifier with an unknown extension as already-resolved, so
+`import … from "./_folio-chapter-profiles.qou"` never tried
+`_folio-chapter-profiles.qou.ts` and the edge was **dropped** — then dismissed
+in the drop audit as "a `.qou` data path", which it is not: it is a module, and
+that is the very edge #707's second component runs through. The conclusion
+survives only because the reverse edge is type-only. **Had it been a value
+import, a real cycle would have been reported as zero** — the exact failure the
+drop audit exists to catch, passed over by a wrong guess about one entry in it.
+
+### What this session adds — the failure is cached
+
+`readModule` makes a half-built namespace a third state instead of a false
+"exports neither". Orthogonal to it, `loadCheckerModule` stops discovery
+reaching that namespace at all: **a second dynamic import of a module whose
+evaluation threw does not throw again** — it resolves with the half-built
+namespace. Eight lines, Bun 1.3.11, no cycle:
+
+```ts
+// boom.ts:  export const BEFORE = 1; const _ = explode(); export const AFTER = {};
+await import("./boom.ts");             // REJECTS: "top-level failure"
+const mod = await import("./boom.ts"); // RESOLVES
+Object.keys(mod);                      // THROWS: Cannot access 'AFTER' before initialization
+```
+
+The single-import case rejects correctly, which is why one import proves
+nothing — and is why this was missed until the fixture imported twice.
+
+Caching the failure keeps the **cause**. Without it the first criterion reports
+`cold-chain-guidance.config.json is not valid JSON` and every sibling criterion
+sharing that file reports "module did not finish evaluating" — the symptom
+`readModule` rightly declines to guess past. One broken checker module is one
+finding, stated once, in the words of the thing that actually failed.
+
+Pinned by `checker-module-load-failure.test.ts` against a fixture that throws,
+with two fixture files rather than one: a module registry is keyed by path, so
+once any test in the process has imported the broken fixture twice, every later
+`import()` of it resolves with the stale namespace and a cache test sharing it
+would be testing the registry instead.

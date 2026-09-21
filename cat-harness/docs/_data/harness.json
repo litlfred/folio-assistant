@@ -90,6 +90,152 @@
       "url": "https://github.com/litlfred/folio-assistant"
     }
   ],
+  "tiles": [
+    {
+      "id": "agent-skills-library",
+      "directory": "agent-skills-library",
+      "title": "agent-skills-library",
+      "ref": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/library/agent-skills/",
+      "hidden": false
+    },
+    {
+      "id": "beans",
+      "directory": "beans",
+      "title": "beans",
+      "ref": "cat-harness/docs/beans/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/beans/",
+      "hidden": false
+    },
+    {
+      "id": "cat-bootstrap-tools-schemas",
+      "directory": "cat-bootstrap-tools-schemas",
+      "title": "cat-bootstrap-tools-schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/cat-bootstrap-tools/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
+      "hidden": false
+    },
+    {
+      "id": "detangle-schemas",
+      "directory": "detangle-schemas",
+      "title": "detangle-schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/schemas/detangle/",
+      "hidden": false
+    },
+    {
+      "id": "folio-assist-core-schemas",
+      "directory": "folio-assist-core-schemas",
+      "title": "folio-assist-core-schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/schemas/folio-assistant-core/",
+      "hidden": false
+    },
+    {
+      "id": "folio-assistant-sci-library",
+      "directory": "folio-assistant-sci-library",
+      "title": "folio-assistant-sci-library",
+      "ref": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/library/folio-assistant-sci/",
+      "hidden": false
+    },
+    {
+      "id": "large-datasets-schemas",
+      "directory": "large-datasets-schemas",
+      "title": "large-datasets-schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/schemas/large-datasets/",
+      "hidden": false
+    },
+    {
+      "id": "library",
+      "directory": "library",
+      "title": "library",
+      "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/library/cat-harness/",
+      "hidden": false
+    },
+    {
+      "id": "schemas",
+      "directory": "schemas",
+      "title": "schemas",
+      "ref": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/schemas/cat-harness/",
+      "hidden": false
+    },
+    {
+      "id": "todos",
+      "directory": "todos",
+      "title": "todos",
+      "ref": "cat-harness/docs/todos/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/todos/",
+      "hidden": false
+    },
+    {
+      "id": "uploads",
+      "directory": "uploads",
+      "title": "uploads",
+      "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/library/cat-harness/",
+      "hidden": false
+    },
+    {
+      "id": "who-iris-library",
+      "directory": "who-iris-library",
+      "title": "who-iris-library",
+      "ref": "cat-harness/docs/cat-harness/library/who-iris/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/library/who-iris/",
+      "hidden": false
+    }
+  ],
   "harnesses": [
     {
       "name": "smart-trust",
@@ -105,16 +251,18 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/smart-trust/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -124,11 +272,14 @@
       ],
       "visualisations": [
         {
+          "kind": "docs"
+        },
+        {
           "kind": "fhir-artifact-index"
         }
       ],
       "findings": [
-        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — docs, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
     },
@@ -237,12 +388,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -255,12 +406,15 @@
           "kind": "cat-harness"
         },
         {
+          "kind": "qa"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/detangle/"
         }
       ],
       "findings": [
-        "detangle: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "detangle: declares 2 graph(s) with no published viewer — cat-harness, qa. Declared and not rendered is a gap, not a dead link.",
         "detangle: no avatar declared for this instance — showing the generic mark.",
         "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
         "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."

@@ -109,6 +109,42 @@ export interface QaCheckerContribution {
   criterion: string;
   /** The checker itself. */
   check: (paths: CheckerPaths) => CheckerResult;
+  /**
+   * The file that DEFINES `check`, relative to the contributor's own root.
+   *
+   * ## Why a function is not enough, and why this is required
+   *
+   * The sweep does not re-run a criterion whose verdict is still fresh, and
+   * freshness is `script_hash` — `computeCriterionScriptHashes` reads the
+   * bytes at the criterion's resolved source file and hashes the checker's
+   * closure within them. A checker handed over as a bare function has no
+   * bytes to hash, so its hash is `""`, and
+   * `qa-criteria-registry.ts` records exactly what that costs:
+   *
+   * > a criterion pointed at a file that does not contain its checker NEVER
+   * > INVALIDATES. Its verdicts stay "fresh" forever, and editing the real
+   * > checker changes nothing.
+   *
+   * Eleven criteria were measured in that state on 2026-09-18, found only
+   * because a fix to a checker did not change its verdict. A wrong `pass` is
+   * believed; a verdict that cannot go stale is worse, because nothing about
+   * it ever looks wrong.
+   *
+   * So it is **required**, not optional. Optional would make "no source file"
+   * a state a contributor can enter by omission — which is the same state,
+   * reached more quietly.
+   *
+   * ## Why relative to the CONTRIBUTOR's root
+   *
+   * A contributed checker lives in another repository, and
+   * `computeCriterionScriptHashes` resolves against a single `repoRoot`. The
+   * registry pairs this with the contributor's root, pinned by
+   * `loadContributions` from the dependency entry rather than taken from the
+   * module — the same reason `name` is pinned there. A relative path also
+   * keeps the recorded `source_file` label portable across checkouts, which
+   * is why that field is relative in the first place.
+   */
+  sourceFile: string;
 }
 
 /**
@@ -162,6 +198,16 @@ export interface RendererContribution {
 export interface FolioContribution {
   /** The contributing instance's name, as declared in the dependency entry. */
   name: string;
+  /**
+   * The contributing instance's root directory, absolute.
+   *
+   * Pinned by `loadContributions` from the dependency entry, for the same
+   * reason `name` is: a contributor that could name its own root could point
+   * the sweep at bytes it does not own. Absent when nothing the contributor
+   * supplies needs a file resolved — a contribution carrying `qaCheckers`
+   * without it is refused.
+   */
+  root?: string;
   blockKinds?: BlockKindContribution[];
   adapter?: AdapterContribution;
   tools?: ToolContribution[];
@@ -188,6 +234,24 @@ export class ContributionCollisionError extends Error {
 
 // ── The registry ────────────────────────────────────────────────
 
+/**
+ * A registered checker, resolved: the function, and where its bytes live.
+ *
+ * `root` + `sourceFile` is what `computeCriterionScriptHashes` needs to read
+ * and hash; `label` is what goes into the sidecar's `source_file`, which is
+ * kept repo-relative-and-prefixed so a recorded verdict names its checker the
+ * same way on every checkout.
+ */
+export interface ContributedChecker {
+  check: (paths: CheckerPaths) => CheckerResult;
+  /** Relative to `root`. */
+  sourceFile: string;
+  /** The contributor's own root, absolute. */
+  root: string;
+  /** `<contributor>/<sourceFile>` — portable, and says whose checker it is. */
+  label: string;
+}
+
 interface KindEntry {
   adapter: string;
   contributor: string;
@@ -205,7 +269,7 @@ export class ContributionRegistry {
   private kinds = new Map<string, KindEntry>();
   private adapters = new Map<string, { module: string; contributor: string }>();
   private toolGroups = new Map<string, { register: (server: unknown) => void; contributor: string }>();
-  private checkers = new Map<string, { check: (paths: CheckerPaths) => CheckerResult; contributor: string }>();
+  private checkers = new Map<string, ContributedChecker & { contributor: string }>();
   private renderers = new Map<string, { renderer: RendererContribution; contributor: string }>();
 
   /**
@@ -255,12 +319,30 @@ export class ContributionRegistry {
     }
 
     for (const c of contribution.qaCheckers ?? []) {
+      // A checker whose bytes cannot be located is a checker whose verdicts
+      // can never go stale — see `QaCheckerContribution.sourceFile`. Refused
+      // at registration, where the contributor is still named, rather than
+      // discovered later as a criterion that simply stopped invalidating.
+      if (!contribution.root) {
+        throw new Error(
+          `contributor "${who}" supplies qaCheckers but no root, so ` +
+            `"${c.criterion}"'s source file cannot be resolved. A checker ` +
+            `whose bytes cannot be read is freshness-hashed as "", and a ` +
+            `verdict that can never go stale is worse than a wrong one.`,
+        );
+      }
       const existing = this.checkers.get(c.criterion);
       if (existing) {
         if (existing.contributor === who) continue; // diamond
         throw new ContributionCollisionError("checker", c.criterion, existing.contributor, who);
       }
-      this.checkers.set(c.criterion, { check: c.check, contributor: who });
+      this.checkers.set(c.criterion, {
+        check: c.check,
+        sourceFile: c.sourceFile,
+        root: contribution.root,
+        contributor: who,
+        label: `${who}/${c.sourceFile}`,
+      });
     }
 
     for (const r of contribution.renderers ?? []) {
@@ -315,9 +397,26 @@ export class ContributionRegistry {
     return this.checkers.get(criterion)?.check;
   }
 
+  /**
+   * The same checker with everything freshness needs: where its bytes are, and
+   * the portable label to record as `source_file`.
+   *
+   * Separate from {@link qaChecker} rather than replacing it, because a caller
+   * that only RUNS a checker should not have to know where it came from —
+   * and a caller that hashes one must not be able to forget.
+   */
+  qaCheckerEntry(criterion: string): ContributedChecker | undefined {
+    const e = this.checkers.get(criterion);
+    return e && { check: e.check, sourceFile: e.sourceFile, root: e.root, label: e.label };
+  }
+
   /** Every contributed checker, with the criterion it answers and who added it. */
-  contributedQaCheckers(): Array<{ criterion: string; contributor: string }> {
-    return [...this.checkers].map(([criterion, e]) => ({ criterion, contributor: e.contributor }));
+  contributedQaCheckers(): Array<{ criterion: string; contributor: string; label: string }> {
+    return [...this.checkers].map(([criterion, e]) => ({
+      criterion,
+      contributor: e.contributor,
+      label: e.label,
+    }));
   }
 
   /** Every contributed tool group name. */

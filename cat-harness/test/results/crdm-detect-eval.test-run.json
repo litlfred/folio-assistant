@@ -8,21 +8,22 @@
     ]
   },
   "process": {
-    "hash": "19afb2b23e80",
+    "hash": "08da3bc2ecc5",
     "inputs": [
+      "methodologies/crdm/crdm-detect.md",
       "scripts/eval-crdm-detect.ts",
-      "skills/folio-core/crdm-detect.md"
+      "src/crdm/detect-signals.ts"
     ]
   },
   "outcome": {
     "population": 27,
-    "truePositives": 12,
-    "falsePositives": 5,
-    "trueNegatives": 3,
-    "falseNegatives": 7,
-    "precision": 0.7059,
-    "recall": 0.6316,
-    "f1": 0.6667
+    "truePositives": 19,
+    "falsePositives": 3,
+    "trueNegatives": 5,
+    "falseNegatives": 0,
+    "precision": 0.8636,
+    "recall": 1,
+    "f1": 0.9268
   },
-  "updated_at": "2026-09-19T16:11:54.936Z"
+  "updated_at": "2026-09-21T16:23:41.878Z"
 }
