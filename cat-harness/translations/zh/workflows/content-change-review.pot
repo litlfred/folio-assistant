@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-change-review\n"
-"POT-Creation-Date: 2026-09-20T15:48:34.111Z\n"
+"POT-Creation-Date: 2026-09-21T19:02:57.449Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,129 +14,134 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/content-change-review.bpmn:137
+#: skills/workflows/content-change-review.bpmn:141
 #. Diagram element documentation
 msgid "Agent analyses the requested change: - Which content blocks are affected? - Are there downstream implications (indicators, referral logic, visit schedules)? - Will deterministic logic (CQL/DMN) need updating? skill: content-graph, integration-watcher"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:223
+#: skills/workflows/content-change-review.bpmn:227
 #. Diagram element documentation
 msgid "Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/<branch-slug>/ and comments the URL on the PR."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:153
+#: skills/workflows/content-change-review.bpmn:157
 #. Diagram element documentation
 msgid "Agent creates a feature branch from main. Branch naming: feature/<short-description> Opens a PR immediately (AGENTS.md: \"open the PR at the first commit\")."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:167
+#: skills/workflows/content-change-review.bpmn:171
 #. Diagram element documentation
 msgid "Agent modifies the relevant content blocks (.md files, block manifests). Validates each edit against the schema (content_validate). skill: content editing, block builders"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:237
+#: skills/workflows/content-change-review.bpmn:241
 #. Diagram element documentation
 msgid "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:197
+#: skills/workflows/content-change-review.bpmn:201
 #. Diagram element documentation
 msgid "Agent reviews downstream implications: - Will indicators need adjustment? - Will referral/follow-up for next visit be impacted? - Are translations affected (re-extract POT)? - Do Lean proofs still hold? skill: integration-watcher, translation-manager"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:307
+#: skills/workflows/content-change-review.bpmn:311
 #. Diagram label
 msgid "Approve and merge"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:192
+#: skills/workflows/content-change-review.bpmn:196
 #. Diagram label
 msgid "Assess downstream impact"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:66
+#: skills/workflows/content-change-review.bpmn:70
 #. Diagram element documentation
 msgid "Author describes the content change in natural language. Example: \"Update the immunization schedule to add a booster at 18 months.\""
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:98
+#: skills/workflows/content-change-review.bpmn:102
 #. Diagram element documentation
 msgid "Author provides feedback on what needs adjustment. Agent iterates on the feature branch."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:61
+#: skills/workflows/content-change-review.bpmn:65
 #. Diagram label
 msgid "Author requests content change"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:82
+#: skills/workflows/content-change-review.bpmn:86
 #. Diagram element documentation
 msgid "Author reviews the rendered feature branch at <pages-url>/STAGING/<branch-slug>/ and compares against the main site. The staging banner shows the commit SHA."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:110
+#: skills/workflows/content-change-review.bpmn:114
 #. Diagram element documentation
 msgid "Author submits the PR for formal review by the guidance review committee. The STAGING URL is the review surface."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:370
+#: skills/workflows/content-change-review.bpmn:374
 #. Diagram element documentation
 msgid "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:334
+#: skills/workflows/content-change-review.bpmn:338
 #. Diagram label
 msgid "Build staging site"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:323
+#: skills/workflows/content-change-review.bpmn:327
 #. Diagram label
 msgid "Change accepted"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:122
+#: skills/workflows/content-change-review.bpmn:126
 #. Diagram label
 msgid "Change submitted"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:288
+#: skills/workflows/content-change-review.bpmn:292
 #. Diagram label
 msgid "Changes approved?"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:46
+#: skills/workflows/content-change-review.bpmn:49
 #. Diagram label
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:365
+#: skills/workflows/content-change-review.bpmn:369
 #. Diagram label
 msgid "Comment staging URL on PR"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:218
+#: skills/workflows/content-change-review.bpmn:222
 #. Diagram label
 msgid "Commit, push, update PR"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:308
+#: skills/workflows/content-change-review.bpmn:312
 #. Diagram element documentation
 msgid "Committee approves the PR. Merge to main triggers: 1. docs-site.yml rebuilds the main site with the changes 2. feature-staging.yml cleanup job removes STAGING/<slug>/ 3. The rendered content on main now carries the merged commit SHA"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:295
+#: skills/workflows/content-change-review.bpmn:299
 #. Diagram element documentation
 msgid "Committee provides feedback. PR stays open. Author and agent iterate further."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:278
+#: skills/workflows/content-change-review.bpmn:282
 #. Diagram element documentation
 msgid "Committee reviews the agent's impact assessment: - Were all downstream effects identified? - Are the indicator changes acceptable? - Does the logic change match the narrative intent?"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:257
+#: skills/workflows/content-change-review.bpmn:261
 #. Diagram label
 msgid "Compare main vs staging"
+msgstr ""
+
+#: skills/workflows/content-change-review.bpmn:40
+#. Diagram element documentation
+msgid "Compares staged against main and judges the impact assessment, and — unusually for this role elsewhere in this corpus — is where the accept decision itself is made: Task_Approve triggers the merge and the rebuild, so a rejection routes back to Task_Iterate in the agent's lane rather than to the author."
 msgstr ""
 
 #: skills/workflows/content-change-review.bpmn:16
@@ -154,192 +159,207 @@ msgstr ""
 msgid "Content Change and Review Workflow"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:148
+#: skills/workflows/content-change-review.bpmn:152
 #. Diagram label
 msgid "Create feature branch"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:351
+#: skills/workflows/content-change-review.bpmn:355
 #. Diagram label
 msgid "Deploy to STAGING/<slug>/"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:460
+#: skills/workflows/content-change-review.bpmn:464
 #. Diagram label
 msgid "Deployment complete"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:65
+#: skills/workflows/content-change-review.bpmn:69
 #. Diagram label
 msgid "Describe the desired change"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:132
+#: skills/workflows/content-change-review.bpmn:136
 #. Diagram label
 msgid "Detect change scope & impact"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:428
+#: skills/workflows/content-change-review.bpmn:432
 #. Diagram element documentation
 msgid "docs-site.yml triggers on the merge commit to main, rebuilding the root of gh-pages with the accepted changes. The build SHA stamp now reflects the merged state."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:176
+#: skills/workflows/content-change-review.bpmn:180
 #. Diagram label
 msgid "Edit deterministic logic (if needed)"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:162
+#: skills/workflows/content-change-review.bpmn:166
 #. Diagram label
 msgid "Edit narrative content blocks"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:247
+#: skills/workflows/content-change-review.bpmn:251
 #. Diagram label
 msgid "Feature branch ready"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:339
+#: skills/workflows/content-change-review.bpmn:343
 #. Diagram element documentation
 msgid "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:385
+#: skills/workflows/content-change-review.bpmn:389
 #. Diagram element documentation
 msgid "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean 29ij, this is a task/workflow initiation. That is the whole reason it is an activity rather than a line of prose. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the claim. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. Claim rather than note: the watch is work in progress, and it is idempotent, so re-entering on a subsequent push does not duplicate it."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:25
+#: skills/workflows/content-change-review.bpmn:26
 #. Diagram label
 msgid "Folio-Assistant Agent"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:181
+#: skills/workflows/content-change-review.bpmn:185
 #. Diagram element documentation
 msgid "If the content change affects decision logic, indicators, or workflows: - Update CQL expressions - Update DMN decision tables - Adjust indicator definitions skill: dak-authoring, fhir-pipeline"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:232
+#: skills/workflows/content-change-review.bpmn:236
 #. Diagram label
 msgid "Iterate on author feedback"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:482
+#: skills/workflows/content-change-review.bpmn:17
+#. Diagram element documentation
+msgid "Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane."
+msgstr ""
+
+#: skills/workflows/content-change-review.bpmn:486
 #. Diagram label
 msgid "No"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:501
+#: skills/workflows/content-change-review.bpmn:505
 #. Diagram label
 msgid "No (iterate)"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:437
+#: skills/workflows/content-change-review.bpmn:441
 #. Diagram label
 msgid "Note the main-branch watch [watch]"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:210
+#: skills/workflows/content-change-review.bpmn:214
 #. Diagram element documentation
 msgid "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:378
+#: skills/workflows/content-change-review.bpmn:382
 #. Diagram label
 msgid "Open the branch-watch bean [watch]"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:209
+#: skills/workflows/content-change-review.bpmn:213
 #. Diagram label
 msgid "Options analysis how to absorb the impact"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:356
+#: skills/workflows/content-change-review.bpmn:27
+#. Diagram element documentation
+msgid "Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path."
+msgstr ""
+
+#: skills/workflows/content-change-review.bpmn:360
 #. Diagram element documentation
 msgid "peaceiris/actions-gh-pages deploys to gh-pages branch under STAGING/<branch-slug>/ with keep_files: true so other staging deployments and the main site are preserved."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:403
+#: skills/workflows/content-change-review.bpmn:407
 #. Diagram label
 msgid "PR merged?"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:252
+#: skills/workflows/content-change-review.bpmn:256
 #. Diagram label
 msgid "PR submitted for review"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:328
+#: skills/workflows/content-change-review.bpmn:332
 #. Diagram label
 msgid "Push to feature branch"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:423
+#: skills/workflows/content-change-review.bpmn:427
 #. Diagram label
 msgid "Rebuild main site"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:127
+#: skills/workflows/content-change-review.bpmn:131
 #. Diagram label
 msgid "Receive change request"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:409
+#: skills/workflows/content-change-review.bpmn:413
 #. Diagram label
 msgid "Remove STAGING/<slug>/"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:294
+#: skills/workflows/content-change-review.bpmn:298
 #. Diagram label
 msgid "Request changes"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:97
+#: skills/workflows/content-change-review.bpmn:101
 #. Diagram label
 msgid "Request further revisions"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:37
+#: skills/workflows/content-change-review.bpmn:39
 #. Diagram label
 msgid "Review Committee"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:262
+#: skills/workflows/content-change-review.bpmn:266
 #. Diagram element documentation
 msgid "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:273
+#: skills/workflows/content-change-review.bpmn:277
 #. Diagram label
 msgid "Review impact assessment"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:77
+#: skills/workflows/content-change-review.bpmn:81
 #. Diagram label
 msgid "Review staged rendering"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:91
+#: skills/workflows/content-change-review.bpmn:50
+#. Diagram element documentation
+msgid "Runs build, stage, comment and watch once per push, re-entering from Task_Iterate on every later revision rather than only the first. GW_Merged sits downstream of Task_Approve in the Reviewer's lane, so it is checking whether that approval actually resulted in a merge rather than deciding whether to approve one, and a \"No\" ends the pipeline quietly instead of looping back into review."
+msgstr ""
+
+#: skills/workflows/content-change-review.bpmn:95
 #. Diagram label
 msgid "Satisfied with changes?"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:444
+#: skills/workflows/content-change-review.bpmn:448
 #. Diagram element documentation
 msgid "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:109
+#: skills/workflows/content-change-review.bpmn:113
 #. Diagram label
 msgid "Submit to review committee"
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:414
+#: skills/workflows/content-change-review.bpmn:418
 #. Diagram element documentation
 msgid "When the PR is merged or closed, the cleanup job removes the STAGING/<slug>/ directory from gh-pages so stale previews don't accumulate."
 msgstr ""
 
-#: skills/workflows/content-change-review.bpmn:486
+#: skills/workflows/content-change-review.bpmn:490
 #. Diagram label
 msgid "Yes"
 msgstr ""

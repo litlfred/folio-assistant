@@ -68,13 +68,60 @@
  *   bun run cat-harness/scripts/check-lane-documentation.ts
  *   bun run cat-harness/scripts/check-lane-documentation.ts --json
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
+
+/**
+ * `decodeLabel` and the extractor's own filter, DUPLICATED on purpose.
+ *
+ * The originals are `content/pipeline/bpmn-translate.ts`, which is
+ * `folio-assist-core`; this module is `agentic-harness`, and
+ * `check:partition` refuses the edge because core depends on the harness
+ * rather than the other way round. That refusal is right — the alternative
+ * to a duplicate here is a cycle between two layers.
+ *
+ * **An unchecked duplicate would be the worse bug**, because the question this
+ * check asks is precisely "would the REAL extractor see this string": a copy
+ * that drifts answers a question nobody asked and reports green while a
+ * translator sees nothing. So `lane-extraction-parity.test.ts` asserts these
+ * two produce the same msgid set as `extractBpmn` over every diagram in the
+ * corpus, and fails the day either side moves.
+ *
+ * `AGENTS.md`: an unavoidable duplicate is fine while an unchecked one is not.
+ */
+function decodeLabel(raw: string): string {
+  return raw
+    .replace(/&#10;|&#xA;/gi, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const NAMED_COPY = new RegExp(
+  "<(?:bpmn:)?(?:process|lane|task|serviceTask|userTask|manualTask|scriptTask|" +
+    "sendTask|receiveTask|businessRuleTask|callActivity|subProcess|" +
+    "startEvent|endEvent|intermediateCatchEvent|intermediateThrowEvent|boundaryEvent|" +
+    "exclusiveGateway|parallelGateway|inclusiveGateway|eventBasedGateway|" +
+    "sequenceFlow|participant|collaboration)\\b[^>]*?\\sname=\"([^\"]*)\"",
+  "g",
+);
+
+const DOCUMENTATION_COPY = /<(?:bpmn:)?documentation>([\s\S]*?)<\/(?:bpmn:)?documentation>/g;
+
+/** The extractor's own guard: empty is not a string, and a bare id is not prose. */
+function isExtractable(msgid: string): boolean {
+  if (!msgid) return false;
+  return !(/^[A-Za-z_][A-Za-z0-9_]*$/.test(msgid) && /_/.test(msgid));
+}
 
 /** Activity elements whose containing lane a reader must be able to read. */
 const ACTIVITY =
@@ -120,18 +167,6 @@ export interface LaneReport {
   readonly orphans: OrphanActivity[];
 }
 
-/** The locale whose templates are read to answer the extraction question. */
-export function probeLocale(root: string): string | undefined {
-  try {
-    return readdirSync(join(root, "cat-harness", "translations"), { withFileTypes: true })
-      .filter((e) => e.isDirectory() && !e.name.startsWith("."))
-      .map((e) => e.name)
-      .sort()[0];
-  } catch {
-    return undefined;
-  }
-}
-
 function bpmnFiles(root: string): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
@@ -162,7 +197,6 @@ function bpmnFiles(root: string): string[] {
  */
 export function checkLanes(root = REPO): LaneReport {
   const files = bpmnFiles(root);
-  const locale = probeLocale(root);
   let activities = 0;
   const documented: string[] = [];
   const undocumented: LaneFinding[] = [];
@@ -170,21 +204,41 @@ export function checkLanes(root = REPO): LaneReport {
   const unextracted: LaneReport["unextracted"][number][] = [];
   const orphans: OrphanActivity[] = [];
 
-  /** The diagram's translation template for the probe locale, if there is one. */
-  const templateFor = (abs: string): string | undefined => {
-    if (locale === undefined) return undefined;
-    const stem = abs.slice(abs.lastIndexOf("/") + 1).replace(/\.bpmn$/, "");
-    const pot = join(root, "cat-harness", "translations", locale, "workflows", `${stem}.pot`);
-    try {
-      return statSync(pot).isFile() ? readFileSync(pot, "utf-8") : undefined;
-    } catch {
-      return undefined;
+  /**
+   * The msgids the EXTRACTOR produces for a diagram — not the bytes of a
+   * `.pot`.
+   *
+   * This asked `pot.includes(text)` until 2026-09-21, and it was wrong in the
+   * way a check must never be wrong: it reported 13 correctly-extracted lanes
+   * as missing. gettext wraps a long msgid across several quoted lines and
+   * escapes every `"` as `\"`, so a substring search for prose of any length,
+   * or prose containing a quotation mark, cannot match a template that
+   * contains it. A false finding is worse than no check — it fails CI on
+   * work that is right, and the next agent learns to disbelieve the report.
+   *
+   * Asking `extractBpmn` instead answers the question this family actually
+   * poses: would a translator ever SEE this string. That is independent of
+   * how a `.pot` is formatted, and it stays out of `translate-bpmn --check`'s
+   * territory, which owns whether the template on disk is current.
+   */
+  const msgidsFor = (xml: string, rel: string): Set<string> => {
+    void rel;
+    const out = new Set<string>();
+    for (const m of xml.matchAll(DOCUMENTATION_COPY)) {
+      const id = decodeLabel(m[1] ?? "");
+      if (isExtractable(id)) out.add(id);
     }
+    for (const m of xml.matchAll(NAMED_COPY)) {
+      const id = decodeLabel(m[1] ?? "");
+      if (isExtractable(id)) out.add(id);
+    }
+    return out;
   };
 
   for (const f of files) {
     const rel = relative(root, f);
     const s = readFileSync(f, "utf-8");
+    const msgids = msgidsFor(s, rel);
 
     // lane id -> { name, hasDoc, members }
     const lanes = new Map<string, { name: string | null; hasDoc: boolean; doc: string | null; members: Set<string> }>();
@@ -237,13 +291,13 @@ export function checkLanes(root = REPO): LaneReport {
       // finding about this lane — `translate-bpmn --check` owns "a diagram was
       // never extracted", and reporting it here too would make one defect
       // look like two.
-      const tpl = templateFor(f);
-      if (tpl !== undefined && named && !tpl.includes(`"${lane.name!}"`)) {
+      const tpl = msgids;
+      if (named && !tpl.has(decodeLabel(lane.name!))) {
         if (!unextracted.some((u) => u.file === rel && u.lane === lid && u.kind === "name")) {
           unextracted.push({ file: rel, lane: lid, text: lane.name!, kind: "name" });
         }
       }
-      if (tpl !== undefined && lane.hasDoc && lane.doc !== null && !tpl.includes(lane.doc)) {
+      if (lane.hasDoc && lane.doc !== null && !tpl.has(decodeLabel(lane.doc))) {
         if (!unextracted.some((u) => u.file === rel && u.lane === lid && u.kind === "documentation")) {
           unextracted.push({ file: rel, lane: lid, text: lane.doc.slice(0, 60), kind: "documentation" });
         }
@@ -287,7 +341,7 @@ if (import.meta.main) {
     console.log(`    UNNAMED                      ${r.unnamed.length}`);
     console.log(`    documented                   ${r.documented}`);
     console.log(`    UNDOCUMENTED                 ${r.undocumented.length}`);
-    console.log(`    strings NOT extracted        ${r.unextracted.length}${probeLocale(REPO) ? ` (probe locale ${probeLocale(REPO)})` : " (no locale to probe)"}`);
+    console.log(`    strings NOT extracted        ${r.unextracted.length}`);
     if (r.orphans.length > 0) console.log(`  activities in NO lane           ${r.orphans.length}  (undetermined)`);
   }
 
@@ -321,10 +375,15 @@ if (import.meta.main) {
         },
         "lane-string-not-extracted": {
           summary:
-            "A lane `name` or `<documentation>` absent from its diagram's translation template. This asks about " +
-            "EXTRACTION, never about a translation existing: catalogues here ship with an empty `msgstr` awaiting " +
-            "a person, and gating on that would be a gate on somebody else's unfinished work. A diagram with no " +
-            "template at all is `translate-bpmn --check`'s finding, not this one's.",
+            "A lane `name` or `<documentation>` the extractor does not produce a msgid for — so no translator " +
+            "could ever see it, in any locale. This asks about EXTRACTION, never about a translation existing: " +
+            "catalogues here ship with an empty `msgstr` awaiting a person, and gating on that would be a gate " +
+            "on somebody else's unfinished work. It asks `extractBpmn` rather than searching a `.pot`'s bytes, " +
+            "because gettext wraps a long msgid across quoted lines and escapes every `\"` — a substring search " +
+            "reported 13 correctly-extracted lanes as missing on 2026-09-21, and a false finding is worse than " +
+            "no check. WHETHER A TEMPLATE ON DISK CARRIES IT is a different question, owned by " +
+            "`translate-bpmn --check`; for the three `cat-bootstrap/` diagrams that check does not scan, it is " +
+            "bean `j28g` and awaits a ruling.",
           entries: r.unextracted,
         },
         "activity-outside-any-lane": {
@@ -347,5 +406,6 @@ if (import.meta.main) {
   if (r.undocumented.length > 0 || r.unnamed.length > 0 || r.unextracted.length > 0 || r.orphans.length > 0) {
     process.exit(1);
   }
-  console.log("\n✓ every task-containing lane has a name, a definition, and both extracted for translation");
+  console.log("\n✓ every task-containing lane has a name, a definition, and both are extractable");
+  console.log("  (whether a template on disk is CURRENT is `translate-bpmn --check`'s question, not this one's)");
 }

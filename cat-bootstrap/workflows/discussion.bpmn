@@ -22,6 +22,7 @@ PRECONDITION: the Initiator has read cat-bootstrap/README.md and has narrowed th
 NO folio:bean on any activity, and isExecutable is false, for the reasons `initialize-harness` gives: a bean is work-plan machinery and an engine is harness machinery, and an Initiator runs before either exists. This is data an Initiator reads.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_Discussion">
       <bpmn:lane id="Lane_Initiator" name="Initiator">
+        <bpmn:documentation>Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Discussion</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_NarrowCandidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_PutQuestion</bpmn:flowNodeRef>
@@ -32,6 +33,7 @@ NO folio:bean on any activity, and isExecutable is false, for the reasons `initi
         <bpmn:flowNodeRef>End_Unsettled</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Requestor" name="Requestor">
+        <bpmn:documentation>Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess.</bpmn:documentation>
         <bpmn:flowNodeRef>A_Answer</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

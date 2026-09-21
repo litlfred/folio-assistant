@@ -30,6 +30,7 @@
     <bpmn:documentation>The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_EvidenceRetrieval">
       <bpmn:lane id="Lane_Author" name="Author / guideline developer (person)">
+        <bpmn:documentation>Brackets the machine work rather than doing it: frames the PICO before Lane_Agent fans out across evidence classes, then is the only lane that grades what comes back and decides whether it is sufficient for a recommendation — retrieval and authority-checking are delegated, but the judgement that turns evidence into a claim never leaves this lane.</bpmn:documentation>
         <bpmn:flowNodeRef>StartEvent_Recommendation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewExisting</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_FramePico</bpmn:flowNodeRef>
@@ -39,6 +40,7 @@
         <bpmn:flowNodeRef>EndEvent_EvidenceAttached</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Evidence agent (system)">
+        <bpmn:documentation>The appraisal in the role's own description happens elsewhere in this diagram: this lane only fans out in parallel across the three evidence classes and joins the candidates, while grading is Lane_Author's call and authority is Lane_Trusted's — so what it owns here is coverage, not judgement.</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_RetrievalFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_L1Sources</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_L2L3Content</bpmn:flowNodeRef>
@@ -46,10 +48,12 @@
         <bpmn:flowNodeRef>Gateway_RetrievalJoin</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Trusted" name="Trusted registries and observatories (external)">
+        <bpmn:documentation>Task_VerifyAuthority and its gateway sit here rather than with Lane_Agent because the decision is not this instance's call — it is a readout of what the external API returns, and the moment that answer is uncertain or absent, Lane_WorkPlan opens a bean rather than this lane inventing a verdict.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_VerifyAuthority</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Authoritative</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared)">
+        <bpmn:documentation>Catches two different shortfalls at two different severities: an unverified citation is noted but the process continues into grading, while an insufficient body of evidence ends the process at its own event — so only the second is fatal, and both stay visible in the work plan rather than one being silently absorbed into the other.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_RecordUnverified</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RecordGap</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_GapRecorded</bpmn:flowNodeRef>

@@ -56,6 +56,7 @@
            a window because the reader said so. Mechanical, in the
            `role-model` sense. -->
       <bpmn:lane id="Lane_Renderer" name="Board renderer">
+        <bpmn:documentation>Acts and decides nothing: the start, the gateway and the end all sit in the reader's lane, so every node here is downstream of a choice somebody else made. That split is the point — a renderer that chose what to open would put layout in charge of what the folio asserts.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="board-renderer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_RenderAvatars</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Open</bpmn:flowNodeRef>
