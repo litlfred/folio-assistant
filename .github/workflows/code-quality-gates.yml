@@ -663,6 +663,13 @@ jobs:
           # the `xom7` shape one level along.
           bun run external-schemas:check
           bun run docs:harness:check
+          # The derived sub-graph indexes (bean `06e3`). Gated for the same
+          # reason every other generated artefact here is: an index that has
+          # drifted from the graph it claims to index is worse than none,
+          # because it reads as current. It also reports an ORPHAN -- a
+          # sub-graph page whose sub-graph now contributes nothing -- which is
+          # `ankg`'s helper doing its job in a third generator.
+          bun run docs:auto:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check
@@ -672,6 +679,22 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The cover thumbnails, checked against the sha256, byte count and
+          # PNG dimensions the catalogue nodes declare. The narrow half of
+          # `yl5w` this script owns: a `materialized` claim it makes is a claim
+          # it checks. It also refuses a THUMBNAIL that does not declare itself
+          # derived, so a cover we rasterised cannot read as one IRIS supplied.
+          #
+          # NO PDF BACKEND IS INSTALLED HERE AND NONE IS NEEDED. This job
+          # installs `ruff` and nothing else, and the first version of this
+          # gate re-rendered each cover through PyMuPDF -- so it threw
+          # `pymupdf is not installed` on every run and turned the branch red
+          # three times. Four of the five claims need no decoder: the bytes
+          # exist, their digest matches, their length matches, and their pixel
+          # dimensions are readable straight out of the PNG's IHDR chunk. Only
+          # "these bytes are what that PDF renders to" needs the backend, and
+          # `--check` says in its own output which of the two it ran.
+          bun run iris:covers:check
           bun run translation:block-qa:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.

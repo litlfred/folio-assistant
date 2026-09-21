@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ankg
 title: Subgraph viewer generators write but never prune — an orphan page answers to no declaration
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-20T21:02:36Z
-updated_at: 2026-09-20T21:02:36Z
+updated_at: 2026-09-20T22:49:45Z
 parent: folio-assistant-vke6
 ---
 
@@ -56,3 +57,49 @@ ownership is checkable rather than assumed from the directory it sits in.
 
 Any page the generators did not write. If ownership cannot be established from
 the file itself, it is reported and left, never deleted.
+
+## Summary of Changes
+
+Both viewer generators prune orphans they own. One shared helper,
+`orphanSubjectPages()` in `gen-schema-viz.ts`, used by `gen-library-viz.ts`
+too — the bean asked for `#607`'s shape to be reused rather than a third one
+written, so there is one implementation rather than a copy in each.
+
+**Ownership is READ, never assumed from the directory.** A subject directory
+is prunable only when its `index.html` declares itself the page for that very
+directory — `var SCOPE = "<dirname>";`, the line `viewerHtml` already emitted.
+Anything else comes back as `foreign`: reported, left in place, in both modes.
+That is `deletion-requires-confirmation` applied where it bites, and it is why
+"everything under the page dir that is not wanted" was not the rule.
+
+The data directory was never at risk: `viewerPlacement` puts it at
+`<site>/assets/<kind>/`, outside the page tree entirely.
+
+**`--check` now reports an orphan as a finding**, which it structurally could
+not before — `emit()` compares only the files it is about to write, so a file
+the generator no longer writes was outside what it looked at.
+
+### Verified by hand, the pair the bean asked for
+
+Reproduced the real case: planted `folio-assist-sci/index.html` carrying
+`var SCOPE = "folio-assist-sci";` beside a hand-authored `hand-authored/`.
+
+- `library:viz:check` → `✗ …/folio-assist-sci is an orphan` (counted stale,
+  exit 1) and `! …/hand-authored … left in place` (reported, not counted).
+- `library:viz` → pruned the orphan, left `hand-authored/` with its bytes
+  unchanged.
+- Re-ran clean afterwards.
+
+`scripts/tests/viewer-orphans.test.ts` pins nine cases, including the two the
+bean names, plus: a page whose `SCOPE` names a *different* subject is foreign
+rather than owned; a directory with no `index.html` is foreign; files beside
+the subject directories are ignored; and a never-written page tree is not a
+finding. The last pair is asserted against the **committed** tree, because a
+fixture passes on the day somebody re-keys a real subject.
+
+### One thing this does NOT cover, and it is now its own bean
+
+`state-visualizer.ts` has the same defect and **cannot take this fix** —
+bean `y90d`. Its dashboards carry no self-identifying marker, and it publishes
+at the SITE ROOT rather than under a page directory of its own, so "not
+declared" cannot mean "prunable" there. Checked rather than assumed.

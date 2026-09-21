@@ -125,6 +125,12 @@ export function pipeline(scratch: string): RenderStep[] {
     { id: "skill-docs", needs: ["readme"], fatal: false, label: "skill instruction pages", run: ["bun", "run", "cat-harness/scripts/gen-skill-docs.ts"] },
     { id: "docs-pages", needs: ["readme"], fatal: false, label: "content-backed docs pages", run: ["bun", "run", "cat-harness/scripts/gen-docs-pages.ts"] },
     { id: "bpmn", needs: ["readme"], fatal: false, label: "BPMN workflow diagrams", run: ["bun", "run", "render:bpmn"] },
+    // `needs: ["skill-docs"]` is a real edge and not alphabetical: docs-auto
+    // indexes the skill markdown, and a run that raced the generator writing
+    // it would index a directory mid-write. It is NOT fatal — a missing index
+    // costs one rendering, and the authored pages that reference it are what
+    // carry the meaning (bean `06e3`).
+    { id: "docs-auto", needs: ["skill-docs", "bpmn"], fatal: false, label: "derived sub-graph indexes", run: ["bun", "run", "docs:auto"] },
     // `needs: ["docs-pages"]`, and it is a REAL dependency rather than a
     // tidy-looking one: the state visualiser decides each graph's state by
     // asking whether `assets/<id>/index.json` is on disk, and `docs-pages` is
