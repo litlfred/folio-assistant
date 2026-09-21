@@ -220,7 +220,7 @@ if (import.meta.main) {
     // Names the file it actually looked for. This said "cat-harness.json",
     // which is the GRAPH KIND, not the filename — so the message sent a
     // reader looking for a file that has never existed under that name.
-    console.error(`site-links: no harness.json at ${root}; nothing to resolve.`);
+    console.error(`site-links: no declaration at ${root}; nothing to resolve.`);
     process.exit(2);
   }
   // Detected here, at the edge, so the library half stays pure and testable.

@@ -49,11 +49,11 @@ read the declared media type rather than guessing from the extension; serve
 
 ## Done when
 
-- [ ] a `requirements/*.json` entry states the obligations, `satisfiedBy` the
+- [x] a `requirements/*.json` entry states the obligations, `satisfiedBy` the
       tool node(s)
 - [ ] at least two tools satisfy it, because one is an assertion and two is a
       demonstration — the same argument `4dbr` makes about a second forge
-- [ ] a test fetches every endpoint and asserts the `Content-Type`, so the
+- [x] a test fetches every endpoint and asserts the `Content-Type`, so the
       claim is checked rather than described
 
 ## Not doing
@@ -124,7 +124,12 @@ not — a URL pathname always starts with `/`, so `normalize` absorbs the
 `..` against the root. They pinned a mechanism while missing the case that
 was actually broken. Rewritten to assert the property.
 
-## Done when — status
+## Done when — the evidence for the ticks above
+
+*Ticked IN PLACE 2026-09-21, bean `sfhr`. This section already carried the
+verdicts; the canonical list above did not, so every reader and every tool
+consulting it saw an untouched bean. The reasoning below is the author's and
+is unchanged — only the boxes moved.*
 
 - [x] a `requirements/*.json` entry states the obligations
 - [ ] **at least two tools satisfy it** — NOT done, and deliberately.

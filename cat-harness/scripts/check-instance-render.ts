@@ -160,7 +160,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
     return {
       name, root, verdict: "undetermined", declared: [], published: [], undeclared: [],
       nodeCount: 0, totalNodes: 0, omitted: [],
-      reasons: [`no harness.json at ${root} — nothing declares what this instance is`],
+      reasons: [`no declaration at ${root} — nothing declares what this instance is`],
     };
   }
 
@@ -290,7 +290,7 @@ if (import.meta.main) {
   const repoRoot = repoRootFor(instanceRootFor(import.meta.dir));
   const roots = instancesIn(repoRoot);
   if (roots.length === 0) {
-    console.error("No instance carries a harness.json. That is not a clean run — nothing was checked.");
+    console.error("No instance carries a declaration. That is not a clean run — nothing was checked.");
     process.exit(2);
   }
   const reports = await Promise.all(roots.map((r) => renderInstance(r)));

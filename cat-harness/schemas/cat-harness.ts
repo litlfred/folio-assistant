@@ -3648,8 +3648,8 @@ export function publicationLinkStyleConflict(
   if (host === undefined || linkStyle !== "pages") return undefined;
   if (host === "github-pages") return undefined;
   return (
-    `harness.json declares \`publication.host: "${host}"\`, but ` +
-    `harness.config.json sets \`readme.linkStyle: "pages"\`, which writes every ` +
+    `the declaration declares \`publication.host: "${host}"\`, but ` +
+    `the config sets \`readme.linkStyle: "pages"\`, which writes every ` +
     `published-artefact link against a GitHub Pages site this deployment says ` +
     `it does not publish to. Set \`linkStyle\` to \`blob\`, or correct the host.`
   );

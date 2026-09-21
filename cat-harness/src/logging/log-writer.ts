@@ -167,7 +167,7 @@ export function writeLogEntry(
       capture,
       eligibleForStore,
       unknownRefKinds,
-      reason: "no fsh-guts directory is declared in harness.json, so there is nowhere to log",
+      reason: "no fsh-guts directory is declared in the instance's `<name>.json`, so there is nowhere to log",
       entry,
     };
   }
