@@ -3093,6 +3093,31 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
+
+    /* THREE ON THE FACE, ONE THAT HOLDS THE REST — bean `qefk`, the owner:
+     * *"the todos controls are too clunky / take up too much real estate."*
+     * Asked how far to go and answered **"3+1"**.
+     *
+     * The split is by WHAT THE GESTURE DOES, not by how often it is used:
+     *
+     *   face      Pin, Discard, and Move once the card is floating
+     *             — the things you do to a card ON THE BOARD
+     *   behind    View, Edit — the things that LEAVE for the forge
+     *
+     * That keeps `pb04` intact. Its rule was that View and Edit are two acts
+     * and both must be present — *"a reader checking what a card says should
+     * not land in a text box, and one who wants to fix it should not have to
+     * find the button"*. Present is what it asked for; competing with a
+     * one-line summary is not. Both are still here, still keyboard-reachable,
+     * one keystroke further away.
+     *
+     * AND IT IS A `<details>`, not a scripted menu. The disclosure, the
+     * keyboard path, the Escape behaviour and the accessible name are the
+     * browser's; a hand-rolled popup would be four affordances to reimplement
+     * and four ways to get them wrong. It also degrades to "everything
+     * visible" with no JavaScript, which is `R4`'s floor rather than a
+     * convenience.
+     */
     // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
     // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
     // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
@@ -3138,6 +3163,26 @@
       discard.addEventListener("click", function () { onDiscard(todo); });
       tools.appendChild(discard);
     }
+
+    /* THE `⋯` DRAWER IS GONE, and this note is why rather than a silence.
+     *
+     * `main` answered `qefk` by collapsing View and Edit into a `<details>`
+     * on the card's face — the owner's *"3+1"*: three board gestures on the
+     * face, the two forge links one level in. That was the right shape for
+     * the instruction it had.
+     *
+     * The owner then went further, 2026-09-21: *"i want the [pencil] edit
+     * icon, (edit, view links can be below, not inside stick)"*. The links
+     * leave the card entirely, which is the same direction `qefk` was
+     * pointing and one step past the drawer. A drawer with nothing to hold
+     * is `pb04`'s failure in a new costume — an affordance that promises and
+     * delivers nothing — so it goes rather than staying as an empty control.
+     *
+     * WHAT SURVIVES IS THE SPLIT ITSELF, and it is main's: board gestures
+     * (Pin, Discard, Move) belong on the face because they act on the card;
+     * the forge links act on the FILE and now sit below it, in the cell.
+     * `buildSourceLinks` renders them and the slot places them.
+     */
 
     head.appendChild(tools);
 
@@ -3406,7 +3451,13 @@
           setMoveMode(card, on, live);
           moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
         });
-        tools.insertBefore(moveBtn, tools.firstChild);
+        // APPENDED, after the other board gestures. This used to insert
+        // before the `⋯` drawer, which no longer exists — the forge links
+        // moved out of the card altogether — so the face is Pin, Discard,
+        // Move and nothing else. `firstChild` was the version before that
+        // and put Move ahead of Pin, which reordered the row every time a
+        // card floated; appending keeps the order stable.
+        tools.appendChild(moveBtn);
       }
 
       wireMove(card, card.querySelector(".fa-sticky-head") || card, live);

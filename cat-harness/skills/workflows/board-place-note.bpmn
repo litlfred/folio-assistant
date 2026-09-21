@@ -40,6 +40,7 @@
 
     <bpmn:laneSet id="LaneSet_BoardPlaceNote">
       <bpmn:lane id="Lane_Author" name="Author">
+        <bpmn:documentation>Reached only on the `new sticky` branch of GW_Exists — dragging an existing card never re-enters this lane, because A_CreateNote is the one write to the folio and everything after it is positioning. Leaving out `x`, `y` and `board` here is what lets one note sit on several boards without this lane arbitrating between them; arbitration would make placement an authoring decision, which it is not.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Place</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Exists</bpmn:flowNodeRef>
@@ -48,6 +49,7 @@
       <!-- The layout layer. It is written every time and read by nothing
            that decides anything — losing it loses where, never what. -->
       <bpmn:lane id="Lane_Layer" name="Layout layer">
+        <bpmn:documentation>Every placement writes here, and nothing that decides anything reads it back — losing this graph loses WHERE a note sits, never WHAT it says. That asymmetry is why A_SweepOrphans cleans stray positions from this lane's own file rather than touching the note itself: the easy direction is removing a position whose note is gone, never removing a note because its position is.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Place</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_SweepOrphans</bpmn:flowNodeRef>

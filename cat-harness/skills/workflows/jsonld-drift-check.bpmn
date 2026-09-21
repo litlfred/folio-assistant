@@ -23,6 +23,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_JsonLdDrift">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against.</bpmn:documentation>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Drift</bpmn:flowNodeRef>

@@ -1232,3 +1232,98 @@ test.describe("todo backdrop art under a baseurl", () => {
     expect(resolved.twice).toBe(resolved.one);
   });
 });
+
+/* ── `qefk` — the face carries board gestures; the forge links are BELOW ──
+ *
+ * These three tests are `main`'s, rewritten rather than dropped.
+ *
+ * `main` answered *"the todos controls are too clunky / take up too much
+ * real estate"* with the owner's **"3+1"**: three board gestures on the
+ * card's face, View and Edit collapsed into a `⋯` drawer one level in. The
+ * owner then went one step further on 2026-09-21 — *"edit, view links can be
+ * below, not inside stick"* — so the links left the card entirely and the
+ * drawer had nothing to hold.
+ *
+ * WHAT SURVIVES IS MAIN'S SPLIT, which is the part that mattered: a gesture
+ * that acts on the CARD belongs on the card; a link that acts on the FILE
+ * does not. Only where the second group lives has changed, from a drawer
+ * inside to a caption below.
+ */
+test("a board sticky's face carries the board gestures, not the forge links", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const slot = page.locator(".fa-sticky-slot").first();
+  const card = slot.locator(".fa-sticky").first();
+  const tools = card.locator(".fa-sticky-tools");
+
+  // On the face.
+  await expect(tools.locator("> .fa-sticky-pin")).toHaveCount(1);
+  await expect(tools.locator("> .fa-sticky-discard")).toHaveCount(1);
+
+  // NOT IN THE CARD AT ALL now — stronger than main's assertion, which only
+  // held they were off the FACE. A descendant selector is the right one here
+  // precisely because it would catch a drawer sneaking back in.
+  await expect(card.locator("a.fa-sticky-view")).toHaveCount(0);
+  await expect(card.locator("a.fa-sticky-edit")).toHaveCount(0);
+
+  // ...and present, one level OUT, in the slot's caption row.
+  await expect(slot.locator(".fa-sticky-links a.fa-sticky-view")).toHaveCount(1);
+  await expect(slot.locator(".fa-sticky-links a.fa-sticky-edit")).toHaveCount(1);
+});
+
+test("the forge links need no drawer to reach — they are one Tab away", async ({ page }) => {
+  // This replaces main's "the drawer opens from the keyboard and names what
+  // it holds". The accessibility intent is preserved and is now cheaper to
+  // satisfy: with no drawer there is no disclosure to open, so the links are
+  // directly focusable and directly named. A control you do not have to open
+  // is strictly better than one that opens well.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const links = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-links");
+  const view = links.locator("a.fa-sticky-view");
+  const edit = links.locator("a.fa-sticky-edit");
+
+  // Visible without any prior gesture — the thing the drawer cost.
+  await expect(view).toBeVisible();
+  await expect(edit).toBeVisible();
+
+  // Icon-only, so the NAME must come from `aria-label`. Main's drawer test
+  // held the same line for its summary, and it matters more here: there is
+  // no visible text at all to fall back on.
+  await expect(view).toHaveAttribute("aria-label", /^View the source of .+/);
+  await expect(edit).toHaveAttribute("aria-label", /^Edit .+/);
+
+  // And a pointer user gets the same words on hover, which `aria-label`
+  // alone does not give them.
+  await expect(edit).toHaveAttribute("title", /Edit/);
+
+  await edit.focus();
+  await expect(edit).toBeFocused();
+});
+
+test("Move joins the face when the card floats, after the other board gestures", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+
+  const tools = page.locator(".fa-sticky-layer .fa-sticky .fa-sticky-tools");
+  const order = await tools.evaluate((el) =>
+    Array.from(el.children).map((c) => c.className));
+  const moveAt = order.findIndex((c) => c.includes("fa-sticky-move"));
+  expect(moveAt).toBeGreaterThan(-1);
+
+  // Main asserted Move came before the `⋯` drawer. With the drawer gone the
+  // invariant that is left is the one that actually caused the bug: Move
+  // must not jump to the FRONT. It used to go in at `firstChild`, which
+  // reordered the row every time a card floated.
+  expect(moveAt).toBeGreaterThan(0);
+
+  // The forge links are not on the floating card either — the slot keeps
+  // them, which is the whole reason the slot owns them rather than the card.
+  await expect(page.locator(".fa-sticky-layer a.fa-sticky-edit")).toHaveCount(0);
+});

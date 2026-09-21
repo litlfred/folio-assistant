@@ -382,7 +382,7 @@ defaultView: {
 ```
 
 The path is relative to the **folio's** root, and the directory is whatever
-that folio declares as `simulators.dir` in `harness.config.json` — not a
+that folio declares as `simulators.dir` in `<name>.config.json` — not a
 platform path. It read `folio-assistant/simulators/…` until 2026-09-19, when
 the simulators moved to the folio that owns them.
 

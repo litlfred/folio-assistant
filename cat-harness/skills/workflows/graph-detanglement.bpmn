@@ -16,6 +16,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_GraphDetanglement">
       <bpmn:lane id="Lane_Agent" name="Authoring agent">
+        <bpmn:documentation>Runs every stage up to the edge of authorisation — brief, declare, measure, move-and-remeasure, isolate — and Task_Propose is the last thing it does off its own judgement: reporting sizes and what would break, then waiting. Verification here is always by RE-RUNNING the measurement rather than by an assignment being locally reasonable, which is why Task_Move loops back to Task_Measure and not to the gate — a move that looks right is not yet a move that measured right.</bpmn:documentation>
         <!-- Bound EXPLICITLY rather than by name. "Authoring agent" is not in
              the role's `lanes` aliases, and the audit caught that on the first
              run — which is the cheap version of the near-miss
@@ -42,6 +43,7 @@
         <bpmn:flowNodeRef>End_Unknown</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Admin" name="Administrator">
+        <bpmn:documentation>Reached only after Declared, Detangled and Isolated have each independently cleared — so this lane is never asked to judge the measurement, only whether an already-clean extraction may proceed. Declining is not a refusal back to unknown: End_Declined leaves the sub-graph declared, detangled and isolated in place, which is a real outcome of this process and not merely the absence of one.</bpmn:documentation>
         <bpmn:extensionElements>
           <folio:role ref="administrator"/>
         </bpmn:extensionElements>
@@ -64,7 +66,7 @@
     </bpmn:task>
 
     <bpmn:task id="Task_Declare" name="1 &amp;#183; Declare in place&amp;#10;(nothing moves)">
-      <bpmn:documentation>A `harness.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
+      <bpmn:documentation>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>

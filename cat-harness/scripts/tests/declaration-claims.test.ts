@@ -85,3 +85,43 @@ describe("GUARD: two facts standing near each other are not a claim", () => {
     expect(claimsIn("declared in `x.json` as the `health` graph", "t.md", new Map())).toEqual([]);
   });
 });
+
+/**
+ * Bean `vzur`. A GENERIC skill has to write `<name>.json` — it describes any
+ * instance, so this repository's concrete filename would be the wrong thing to
+ * say. Until 2026-09-21 the filename pattern excluded `<` and `>`, so every
+ * such sentence fell OUT of the corpus: clearing the backlog took the check
+ * from 5 claims to 3, and each disappearance read as a fix.
+ */
+describe("a placeholder names a pattern — counted, never a contradiction", () => {
+  test("`<name>.json` is a claim, and agrees by construction", () => {
+    const r = claims("declared in `<name>.json` as the `health` graph\n");
+    expect(r).toHaveLength(1);
+    expect(r[0]!.placeholder).toBe(true);
+    expect(r[0]!.agrees).toBe(true);
+  });
+
+  test("`<instance>.json` and `<slug>.config.json` too", () => {
+    for (const f of ["<instance>.json", "<slug>.config.json"]) {
+      const r = claims(`declared in \`${f}\` as the \`health\` graph\n`);
+      expect(r).toHaveLength(1);
+      expect(r[0]!.placeholder).toBe(true);
+    }
+  });
+
+  test("a concrete filename is NOT a placeholder", () => {
+    expect(claims("declared in `cat-harness.json` as the `health` graph\n")[0]!.placeholder).toBe(false);
+  });
+
+  test("generalising does not MASK a wrong concrete name beside it", () => {
+    // The failure this guards is "fix the gate by making the sentence vague".
+    const r = claims("the `health` graph is in `<name>.json`, never in `harness.json`\n");
+    expect(r).toHaveLength(2);
+    expect(r.find((c) => c.claimed === "harness.json")!.agrees).toBe(false);
+    expect(r.find((c) => c.claimed === "<name>.json")!.placeholder).toBe(true);
+  });
+
+  test("a bare `<>` is not a placeholder, and not a filename either", () => {
+    expect(claims("declared in `<>.json` as the `health` graph\n")[0]!.placeholder).toBe(false);
+  });
+});

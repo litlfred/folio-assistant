@@ -273,18 +273,23 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
-  // The two entries below are declared kg directories that hold their skills
+  // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
-  // directory's DECLARED ID — `cat-bootstrap` and `cat-harness-src`, not
-  // `cat-bootstrap/skills` and `src/skills`.
+  // directory's DECLARED ID — `cat-bootstrap`, not `cat-bootstrap/skills`.
   //
   // #428 keyed them by repo-relative path, which works and has a short
-  // half-life: `harness.json` says on its own entry that "ids are stable
+  // half-life: the declaration says on its own entry that "ids are stable
   // across a relocation, paths are not", and this file had already paid for
   // that twice in one day — the basename was `cat-bootstrap` only until #422 moved
-  // those skills to `cat-bootstrap/skills/`. A path key breaks again at the
-  // `cat-harness/` move, which is the next step on bean `wggr` and would turn
-  // `src/skills` into `cat-harness/src/skills`.
+  // those skills to `cat-bootstrap/skills/`.
+  //
+  // `cat-harness-src` was a third such entry, for `src/skills/`, and is gone
+  // as of #760. That directory held ONE skill beside the `.ts` implementing
+  // it — a thing `skills/folio-core/` already does eight times over — and its
+  // only distinguishing property was that `discoverLocalPackages` named it
+  // `cat-harness` while the declaration gave that id to `skills/`: one name,
+  // two real directories. `corpus-grep` now sits in `folio-core` with its
+  // siblings and needs no category of its own.
   "cat-bootstrap": "CatBootstrap (read before anything else is known)",
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
@@ -293,7 +298,6 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // "how cat-bootstrap emits its graph" under "read before anything else is
   // known" would reasonably conclude they have to read it first. Bean `hfkl`.
   "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
-  "cat-harness-src": "Agent skills",
   // Two top-level named subgraphs, staged ahead of the split (#223) and both
   // keyed by DECLARED ID for the reason the comment above gives: their paths
   // will change at the `cat-harness/` move and their ids will not.

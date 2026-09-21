@@ -49,10 +49,12 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CRDM_DataModel">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
+        <bpmn:documentation>Confirms naming only — are these the entities meant — and stops there: Lane_Stakeholders asks the separate, operational question about cardinality next, and the two are kept apart on purpose, because collapsing them into one review is how a wrong cardinality ships invisibly.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ConfirmEntities</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Does the actual modelling — entities, relations, and the declaration that makes the model machine-readable rather than prose — and absorbs the entire cost of a revise: the gate loops back to A_Entities whichever confirmation failed, BA's or the stakeholders', so this lane cannot assume a cardinality objection leaves its entities untouched.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_DataModel</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Entities</bpmn:flowNodeRef>
@@ -62,6 +64,7 @@
         <bpmn:flowNodeRef>End_Process_CRDM_DataModel</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
+        <bpmn:documentation>Answers the operational half the BA cannot — not what a thing is but how many of it there really is — because that is knowable only to the people who run the process day to day. It is also the step this process's STRICT policy exists for: skipped under time pressure, a model looks finished without it, which is exactly how a hole where the exceptions live would ship unnoticed.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_ConfirmCardinality</bpmn:flowNodeRef>
       </bpmn:lane>

@@ -18,7 +18,7 @@ adds the wrong one:
 
 | | what it is | where it is declared |
 |---|---|---|
-| **instance kind** | what a repository *is* — `cat-harness`, `cat-bootstrap`, `who-iris`. It has a name, a prefix family, a declaration, and files it inherits from whatever it was bootstrapped off | a the declaration at the instance root |
+| **instance kind** | what a repository *is* — `cat-harness`, `cat-bootstrap`, `who-iris`. It has a name, a prefix family, a `<name>.json`, and files it inherits from whatever it was bootstrapped off | a `<name>.json` at the instance root |
 | **graph kind** | what a declared DIRECTORY holds — `tools`, `docs`, `beans`, `library`. A value in the graph-kind registry, with `renderable`, `holds` and a summary | `defaultGraphKinds` in `schemas/cat-harness.ts`, or a registration from a layer that owns it |
 
 An instance kind gets a **name**. A graph kind gets a **declaration**. This

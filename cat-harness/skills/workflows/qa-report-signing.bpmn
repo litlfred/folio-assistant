@@ -69,6 +69,7 @@
 
     <bpmn:laneSet id="LaneSet_QaReportSigning">
       <bpmn:lane id="Lane_Qa" name="Validation and QA (mechanical + agents)">
+        <bpmn:documentation>Owns everything except the act of signing: it builds the hashable run, computes the two facts — effectiveReach and whether the API is configured — that Gateway_SigningRoute's table reads rather than a hand-asserted choice, and after either route returns, records which one fired. The record is what lets a later reader know which trust assumption they are relying on without having to ask.</bpmn:documentation>
         <!-- Bound EXPLICITLY. `roles.json` matches a lane to a role by NAME,
              and this role already carries three aliases because three
              diagrams each spelled the lane differently. A fourth spelling
@@ -85,12 +86,14 @@
         <bpmn:flowNodeRef>End_Signed</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Api" name="Attestation service (API)">
+        <bpmn:documentation>Reached only from the DMN table's one row where both egress and a configured endpoint are true — everything else in Gateway_SigningRoute's table routes around this lane entirely, so its presence in a trace is itself already the answer to whether egress existed. It carries exactly one task and no branch of its own, because the routing decision was already made before this lane was entered.</bpmn:documentation>
         <bpmn:extensionElements>
           <folio:role ref="attestation-service" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ApiSign</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Human" name="Human signer">
+        <bpmn:documentation>Deleting this lane's role binding is not a documentation nicety: `check:fallback-roles` DERIVES the fallback role from whichever lane holds a task only a person can fill, so removing it turns that check red rather than merely undocumented. The gate that sends work here fires BEFORE any API attempt, never after one fails — an air-gapped host has no degraded mode to retry into, so this lane is a routing destination, not a retry path.</bpmn:documentation>
         <!-- The publication manager, because this lane's authority is
              release authorization — the permission it already holds. A
              `signer` role would have been a new name for a position that

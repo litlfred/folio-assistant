@@ -57,6 +57,7 @@
         <bpmn:flowNodeRef>End_Unchanged</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Renderer" name="Board renderer">
+        <bpmn:documentation>The order of its five tasks is load-bearing: the folio move lands before the layer update, so an interruption between the two leaves the semantic content already relocated rather than the presentation layer half-updated against a folio it no longer matches. On "no", the only action taken is to leave everything untouched — this process, unlike board-open-close, is strict, because a step that edits the folio and has not been confirmed must be refused rather than merely discouraged.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="board-renderer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Cancel</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_AskConfirm</bpmn:flowNodeRef>

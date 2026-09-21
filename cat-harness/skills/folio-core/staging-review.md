@@ -175,7 +175,7 @@ When reporting changes to the user:
 https://<owner>.github.io/<repo>/<path>
 ```
 
-Read from `harness.config.json` → `readme.pagesBaseUrl`, or construct from
+Read from `<name>.config.json` → `readme.pagesBaseUrl`, or construct from
 the repo's GitHub Pages URL.
 
 ### Staging (after)

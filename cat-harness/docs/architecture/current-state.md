@@ -165,7 +165,7 @@ as a number that will sit still.
 
 This is the most important finding on the page, and it cuts both ways.
 
-`harness.config.json` already declares cross-instance dependencies:
+`<name>.config.json` already declares cross-instance dependencies:
 
 ```jsonc
 "dependencies": {

@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO GDHCN Trust Network Participant - UAT — WHO SMART Trust artefact</title>
-<meta name="description" content="ValueSet/Participants-UAT in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.">
+---
+title: "WHO GDHCN Key Usage ValueSet — WHO SMART Trust artefact"
+description: "ValueSet/KeyUsage in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
+nav_exclude: true
+---
 <style>
 :root {
   --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
@@ -75,24 +73,11 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 .back { display: inline-block; margin-bottom: 8px; }
 @media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
 </style>
-</head>
-<body>
-<header class="top"><div class="wrap">
-  <h1><a href="../index.html">WHO SMART Trust — artefact index</a></h1>
-  <span class="sub">smart.who.int.trust · reconstructed, not authored</span>
-</div></header>
-<div class="banner"><div class="wrap">
-  Generated from <code>smart-trust/fhir-artifact-index/index.json</code> by
-  <code>smart-trust:pages</code>. Not a WHO site, and not the published IG &mdash;
-  the IG itself is at
-  <a href="https://worldhealthorganization.github.io/smart-trust/">worldhealthorganization.github.io/smart-trust</a>.
-</div></div>
-<main><div class="wrap">
 
 <a class="back" href="../index.html">&larr; all 674 artefacts</a>
-<h2 style="margin-top:6px">WHO GDHCN Trust Network Participant - UAT</h2>
-<p class="mono" style="color:var(--muted)">ValueSet/Participants-UAT</p>
-<p class="lede">ValueSet of GDHCN Trust Network Participants for User Acceptance Testing environment</p>
+<h2 style="margin-top:6px">WHO GDHCN Key Usage ValueSet</h2>
+<p class="mono" style="color:var(--muted)">ValueSet/KeyUsage</p>
+<p class="lede">ValueSet of codes for key usage codes for Production environment</p>
 <div class="grid">
   <div class="stat"><b>ValueSet</b><span>resource type</span></div>
   <div class="stat"><b>1.8.0</b><span>version</span></div>
@@ -102,8 +87,8 @@ footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86r
 
 <h3>Identity and bytes are different questions</h3>
 <table><tbody>
-<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/ValueSet/Participants-UAT</td></tr>
-<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.html">html</a></td></tr>
+<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/ValueSet/KeyUsage</td></tr>
+<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.html">html</a></td></tr>
 <tr><td>Materialization</td><td><span class="tag held">materialized</span> &mdash; working copy, regenerable by re-running the ingest</td></tr>
 </tbody></table>
 
@@ -115,30 +100,23 @@ rather than a gap in this index.</p>
 <tbody>
 <tr>
   <td>JSON Schema</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.schema.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-UAT.schema.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.schema.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-KeyUsage.schema.json</td>
 </tr>
 <tr>
   <td>Displays</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.displays.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.displays.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-UAT.displays.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.displays.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.displays.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-KeyUsage.displays.json</td>
 </tr>
 <tr>
   <td>OpenAPI</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Participants-UAT.openapi.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-UAT.openapi.json</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-KeyUsage.openapi.json</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-KeyUsage.openapi.json</td>
 </tr>
 <tr>
   <td>JSON-LD</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.jsonld">https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.jsonld</a></td>
-  <td class="mono">fhir-artifact-index/dak/ValueSet-Participants-UAT.jsonld</td>
+  <td><a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.jsonld">https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.jsonld</a></td>
+  <td class="mono">fhir-artifact-index/dak/ValueSet-KeyUsage.jsonld</td>
 </tr>
 </tbody></table>
 
-</div></main>
-<footer><div class="wrap">
-  Every figure and link on this page is read out of the artefact index; nothing here is hand-written.
-  Regenerate with <code>bun run smart-trust:pages</code>.
-</div></footer>
-</body>
-</html>

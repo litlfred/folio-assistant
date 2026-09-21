@@ -78,7 +78,7 @@ about the ones that differ. That path is opened by their answer, never assumed.
 
 ## The options are DERIVED, never invented
 
-The destinations are the graphs this instance declares, in the declaration —
+The destinations are the graphs this instance declares, in `<name>.json` —
 read at the time of asking, so an instance that adds a graph gets it in the
 offer without anybody editing this file. Never a list typed from memory: that
 is how an option set goes stale and starts offering a graph that moved.
