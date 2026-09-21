@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(120)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(95)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(120) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(95) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(120) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(95) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(120) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(95) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>One-Voice Audit | folio-assistant</title>
+<title>Incremental render | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="One-Voice Audit" />
+<meta property="og:title" content="Incremental render" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="One-Voice Audit" />
+<meta property="twitter:title" content="Incremental render" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -861,7 +861,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>One-Voice Audit</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Incremental render</span></li>
   </ol>
 </nav>
 
@@ -870,466 +870,374 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/one-voice-audit.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/one-voice-audit.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/incremental-render.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/incremental-render.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/one-voice-audit.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/incremental-render.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h2 id="the-voice-comes-from-the-role-not-from-this-file">
+<h1 id="incremental-render--the-cache-is-easy-the-cascade-is-the-work">
   
   
-    <a href="#the-voice-comes-from-the-role-not-from-this-file" class="anchor-heading" aria-labelledby="the-voice-comes-from-the-role-not-from-this-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The voice comes from the ROLE, not from this file
-  
-  
-</h2>
-    
-
-<p>Before writing or auditing a block, resolve its audience and read that role’s
-<code class="language-plaintext highlighter-rouge">persona</code>, <code class="language-plaintext highlighter-rouge">voice</code> and <code class="language-plaintext highlighter-rouge">useCases</code> in <code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code>.</p>
-
-<p><strong>A block sits in a lane; the lane is a role; the role is who the prose is
-for.</strong> The audience is not restated per block — copying it onto every block
-invites the two to disagree, and a per-block audience contradicting its lane
-is worse than none because it looks authoritative.</p>
-
-<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">readRoleGraph</span><span class="p">,</span> <span class="nx">roleForLane</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./schemas/role-graph</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">role</span> <span class="o">=</span> <span class="nx">roleForLane</span><span class="p">(</span><span class="nx">readRoleGraph</span><span class="p">(</span><span class="dl">"</span><span class="s2">skills</span><span class="dl">"</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nx">laneName</span><span class="p">,</span> <span class="nx">explicitRef</span><span class="p">);</span>
-<span class="nx">role</span><span class="p">?.</span><span class="nx">persona</span>   <span class="c1">// who this reader is</span>
-<span class="nx">role</span><span class="p">?.</span><span class="nx">voice</span>     <span class="c1">// the register to address them in</span>
-<span class="nx">role</span><span class="p">?.</span><span class="nx">useCases</span>  <span class="c1">// what they came to do</span>
-</code></pre></div></div>
-
-<p><strong>This file is the default, not the answer.</strong> Where a role declares a <code class="language-plaintext highlighter-rouge">voice</code>,
-that wins. The guidance here applies when no role has been resolved.</p>
-
-<p><strong>Why the role carries the voice rather than this file inferring it.</strong> Voice
-does not follow from persona: the same reader is addressed differently in a
-normative standard and in a tutorial. Naming it on the role is what lets the
-authoring agent and the QA agent judge against the <em>same</em> string — otherwise a
-voice finding is one agent’s taste against another’s, which is unreviewable.</p>
-
-<p><code class="language-plaintext highlighter-rouge">bun run kg:audit</code> reports a reader role missing any of the three
-(<code class="language-plaintext highlighter-rouge">role-has-persona</code>, <code class="language-plaintext highlighter-rouge">role-declares-voice</code>, <code class="language-plaintext highlighter-rouge">role-has-use-cases</code>). System,
-external and acted-upon roles are <code class="language-plaintext highlighter-rouge">n/a</code>: nothing in them reads prose.</p>
-<h1 id="one-voice-audit">
-  
-  
-    <a href="#one-voice-audit" class="anchor-heading" aria-labelledby="one-voice-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One-Voice Audit
+    <a href="#incremental-render--the-cache-is-easy-the-cascade-is-the-work" class="anchor-heading" aria-labelledby="incremental-render--the-cache-is-easy-the-cascade-is-the-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Incremental render — the cache is easy, the cascade is the work
   
   
 </h1>
     
-<h2 id="role">
-  
-  
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
-  
-  
-</h2>
-    
 
-<p>The project speaks with <strong>one voice</strong>: an authoritative, scholarly,
-third-person voice making claims about its subject matter.
-<strong>Scholarly voice is the default</strong> for both narrative <code class="language-plaintext highlighter-rouge">.md</code> AND proof
-bodies (formal-proof docstrings, expository comments) — exceptions
-require an explicit author marker (<code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code>
-on the block’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest, with a <code class="language-plaintext highlighter-rouge">notes</code> field on the QA report
-recording the rationale). Anything that breaks that voice is a
-violation. Common breakages:</p>
+<p>Owner, 2026-09-20, bean <code class="language-plaintext highlighter-rouge">9c34</code>:</p>
+
+<blockquote>
+  <p><em>“new skill for staging rendernig…. dont rerender the whole thing… if
+main render is not stale, copy that to staging render pipleine as cahche.
+trigger rerender only on assets that have changed and downstream depndent
+index.”</em></p>
+</blockquote>
+
+<p>Three steps. <strong>Only the third is hard</strong>, and it is the one that fails quietly:</p>
 
 <ol>
-  <li><strong>Status markers</strong> in body prose — <code class="language-plaintext highlighter-rouge">✅ Done</code>, <code class="language-plaintext highlighter-rouge">(TODO)</code>, <code class="language-plaintext highlighter-rouge">(TBD)</code>,
-<code class="language-plaintext highlighter-rouge">**Pending.**</code>, etc. These are work-tracker speech (content TODOs
-belong in the work-plan store, not in the published content).</li>
-  <li><strong>Emoji used as content</strong> — <code class="language-plaintext highlighter-rouge">✅</code>, <code class="language-plaintext highlighter-rouge">❌</code>, <code class="language-plaintext highlighter-rouge">⚠</code>, <code class="language-plaintext highlighter-rouge">🔧</code>, <code class="language-plaintext highlighter-rouge">🚧</code> outside of
-tables. Even in tables, these belong only when used as compact
-comparison markers (✓ matches / ✗ diverges); never as work status.</li>
-  <li><strong>First-person work tone</strong> — “we’ll add X”, “let me”, “needs more
-work”, “I’ll fix this”.</li>
-  <li><strong>Time-stamped notes</strong> — “as of 2025-…”, “after the recent push”,
-“in the current draft” — signals draft state, not paper authority.</li>
-  <li><strong>Unicode characters that don’t compile</strong> — <code class="language-plaintext highlighter-rouge">↦</code> U+21A6, <code class="language-plaintext highlighter-rouge">⁻</code> U+207B,
-<code class="language-plaintext highlighter-rouge">√</code> U+221A, <code class="language-plaintext highlighter-rouge">─</code> U+2500, <code class="language-plaintext highlighter-rouge">✅</code> U+2705, etc. — even when intended,
-they crash <code class="language-plaintext highlighter-rouge">pdflatex</code> unless mapped in the preamble.</li>
-  <li><strong>AI / status-update phrasing (LLM tells)</strong> — “Let me think about
-this”, “Here’s what I did”, “I’ll go ahead and”, “Note that we
-should”, “Great question”, repeated First/Second/Third bullet
-cadence, over-use of “essentially” / “comprehensive” / “leverage”
-/ “streamline” / “robust” / “delve into”.</li>
-  <li><strong>Non-scholarly default tone</strong> — block prose or proof docstring
-that drifts into lecturer cadence (“So what we’re going to do is
-…”), journalistic register (“In a surprising twist, …”), or
-second-person address (“You will see that …”) without explicit
-author opt-out.</li>
-  <li><strong>Block placement does not fit section/chapter</strong> — a block whose
-topic, kind, or register is incongruent with its surrounding
-section. Symptoms: a <code class="language-plaintext highlighter-rouge">definition</code> in a “Discussion” section, a
-<code class="language-plaintext highlighter-rouge">proposition</code> outside the chapter’s proof chain, a <code class="language-plaintext highlighter-rouge">prose</code> block
-that introduces a topic the chapter does not subsequently cover.</li>
-  <li><strong>Deprecated notation usage</strong> — any symbol or convention that the
-project’s notation register marks as deprecated, used in place of
-its canonical form. The notation register is the authoritative
-target; a deprecated symbol appearing in content is a defect unless
-the block explicitly discusses the deprecated form.</li>
-  <li><strong>Domain-boundary mismatch</strong> — if the project partitions its
-content into domains with declared boundaries (e.g. a generic vs.
-specialised treatment, separate model files), a block must not
-silently cross that boundary. A block on the generic side must not
-quietly specialise; a specialisation must declare itself. (Adapt
-the specific boundary rule to the project’s architecture; if the
-project has no such partition, this criterion is inert.)</li>
-  <li><strong>Hedging / “exposition simplifies” framing</strong> — the project
-derives its results from its established arguments. It does not
-need “structural argument” / “morally correct” / “essentially the
-X” / “heuristically” / “simplification for exposition” / “provides
-the mathematical framework” / “broadly speaking” / “loosely
-speaking” / “in some sense” / “conceptually analogous” patches as a
-substitute for the actual argument. These are signs that either
-(a) the argument IS in the content and the hedge is length cruft,
-or (b) the block is asserting an unsupported analogy and should be
-demoted to a remark with <code class="language-plaintext highlighter-rouge">interprets:</code> or removed. Prefer (a) —
-strip the hedge — unless the block author flags a real gap.
-Common phrases (case-insensitive, multi-word):
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">structural argument</code></li>
-      <li><code class="language-plaintext highlighter-rouge">morally correct</code>, <code class="language-plaintext highlighter-rouge">morally a</code>, <code class="language-plaintext highlighter-rouge">morally</code></li>
-      <li><code class="language-plaintext highlighter-rouge">essentially the</code>, <code class="language-plaintext highlighter-rouge">essentially a</code>, <code class="language-plaintext highlighter-rouge">essentially zero</code>,
-<code class="language-plaintext highlighter-rouge">essentially complete</code></li>
-      <li><code class="language-plaintext highlighter-rouge">heuristically (replaced|exploitable|the)</code></li>
-      <li><code class="language-plaintext highlighter-rouge">simplification for exposition</code>,
-<code class="language-plaintext highlighter-rouge">simplifies (the )?exposition</code>,
-<code class="language-plaintext highlighter-rouge">simplifies the paper</code></li>
-      <li><code class="language-plaintext highlighter-rouge">provides the (mathematical framework|natural setting|
-canonical duality)</code>, <code class="language-plaintext highlighter-rouge">provides a canonical (framework|
-duality|basis)</code>, <code class="language-plaintext highlighter-rouge">gives a canonical (functor|grading|
-ordering)</code></li>
-      <li><code class="language-plaintext highlighter-rouge">for context</code>, <code class="language-plaintext highlighter-rouge">by way of background</code>,
-<code class="language-plaintext highlighter-rouge">broadly speaking</code>, <code class="language-plaintext highlighter-rouge">loosely speaking</code>, <code class="language-plaintext highlighter-rouge">in some sense</code>,
-<code class="language-plaintext highlighter-rouge">conceptually analogous</code></li>
-      <li><code class="language-plaintext highlighter-rouge">amounts to</code>, <code class="language-plaintext highlighter-rouge">amount(s|ed) to</code>,
-<code class="language-plaintext highlighter-rouge">(reformulated|reformulation) as</code>
-Exceptions: (i) the phrase IS the canonical term of art and
-removing it changes the claim (e.g. “essentially surjective” as a
-category-theory term, “essentially zero” inside a results table);
-(ii) the block has an explicit
-<code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code> opt-out.</li>
-    </ul>
-  </li>
+  <li><strong>Seed</strong> — start from a previous render rather than from nothing.</li>
+  <li><strong>Re-render what changed</strong> — the steps whose inputs moved.</li>
+  <li><strong>Re-render what DEPENDS on them</strong> — and this is the whole bean.</li>
 </ol>
-<h2 id="when-to-use">
+<h2 id="why-step-3-is-the-bean">
   
   
-    <a href="#when-to-use" class="anchor-heading" aria-labelledby="when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use
-  
-  
-</h2>
-    
-
-<ul>
-  <li>As a sub-pass of <code class="language-plaintext highlighter-rouge">editor</code> whenever content is added or edited.</li>
-  <li>Before <code class="language-plaintext highlighter-rouge">prepare-merge</code> on any branch.</li>
-  <li>On demand: “audit one-voice”, “find status leaks”, “clean up
-TODO markers”.</li>
-  <li>As the <strong>adjudicator</strong> for the non-automated criteria
-(<code class="language-plaintext highlighter-rouge">voice-scholarly-default</code>, <code class="language-plaintext highlighter-rouge">voice-ai-slop</code>,
-<code class="language-plaintext highlighter-rouge">fit-section-chapter</code>) dispatched by
-<a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a>.
-When invoked in this mode, write a reviewer entry to the
-block’s sidecar <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> rather than (or in addition
-to) reporting in chat — see <em>§ QA report integration</em> below.</li>
-</ul>
-<h2 id="workflow">
-  
-  
-    <a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
+    <a href="#why-step-3-is-the-bean" class="anchor-heading" aria-labelledby="why-step-3-is-the-bean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why step 3 is the bean
   
   
 </h2>
     
-<h3 id="1-sweep-greps">
+
+<p>A page that was not re-rendered <strong>looks exactly like a page that was.</strong> There
+is no visible difference between a correct cache hit and a stale one, so an
+incremental render that gets the dependency graph wrong ships wrong pages and
+reports a clean build. That is the <code class="language-plaintext highlighter-rouge">xom7</code> shape — <em>a red workflow looks exactly
+like a green one from in here</em> — moved into the render.</p>
+
+<p>Everything below follows from taking that seriously.</p>
+<h2 id="the-two-edges-one-mechanism">
   
   
-    <a href="#1-sweep-greps" class="anchor-heading" aria-labelledby="1-sweep-greps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Sweep (greps)
+    <a href="#the-two-edges-one-mechanism" class="anchor-heading" aria-labelledby="the-two-edges-one-mechanism"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two edges, one mechanism
   
   
-</h3>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CONTENT</span><span class="o">=</span>content/&lt;paper&gt;
-
-<span class="c"># Status emoji + comparison markers in .md</span>
-<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"[✅❌⚠⏳🔧🚧☑☒]|✓|✗|★"</span> <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># Work-tracker words (case-insensitive, word-bounded)</span>
-<span class="nb">grep</span> <span class="nt">-rEni</span> <span class="s2">"</span><span class="se">\b</span><span class="s2">(todo|fixme|xxx|wip|to-do|tbd|in progress|pending review)</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
-  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># "Done" / "Completed" as status (avoid false positives like "is done")</span>
-<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"</span><span class="se">\*\*</span><span class="s2">Done</span><span class="se">\*\*</span><span class="s2">|</span><span class="se">\*\*</span><span class="s2">Completed</span><span class="se">\*\*</span><span class="s2">|</span><span class="se">\b</span><span class="s2">DONE</span><span class="se">\b</span><span class="s2">|</span><span class="se">\b</span><span class="s2">COMPLETED</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
-  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># First-person work tone</span>
-<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"</span><span class="se">\b</span><span class="s2">(we'll add|I'll add|let me|needs more work|note to self|we should fix)</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
-  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># Unicode chars that crash pdflatex (or render unreliably)</span>
-<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"↦|⁻|√|─|✅|·|²"</span> <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># Hedging / "essentially" / "morally" / "heuristically" (criterion 11)</span>
-<span class="nb">grep</span> <span class="nt">-rEni</span> <span class="se">\</span>
-  <span class="s2">"structural argument|</span><span class="se">\b</span><span class="s2">morally</span><span class="se">\b</span><span class="s2">|essentially (the |a |zero|complete|surjective|non-local)|heuristically (replaced|exploitable|the)|simplification for exposition|simplifies (the )?exposition|simplifies the paper|provides (the |a )(mathematical framework|natural setting|canonical (duality|basis|framework))|gives a canonical (functor|grading|ordering)|for context|by way of background|broadly speaking|loosely speaking|in some sense|conceptually analogous|amount(s|ed) to|(reformulated|reformulation) as"</span> <span class="se">\</span>
-  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
-
-<span class="c"># Section / subsection / chapter TITLE coherence (chapter-scoped —</span>
-<span class="c"># runs on chapter manifests, not blocks): auto-split " : &lt;tag&gt;"</span>
-<span class="c"># artifacts, trailing colons, over-long / compound titles. Hard</span>
-<span class="c"># defects exit 1; emits a per-chapter agent worklist.</span>
-bun run content/pipeline/qa-section-title-audit.ts
-</code></pre></div></div>
-<h3 id="2-triage-by-category">
-  
-  
-    <a href="#2-triage-by-category" class="anchor-heading" aria-labelledby="2-triage-by-category"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Triage by category
-  
-  
-</h3>
+</h2>
     
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Category</th>
-      <th>Examples</th>
-      <th>Fix pattern</th>
+      <th>edge</th>
+      <th>example</th>
+      <th>one change means</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>A. Status leak</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">✅ Done</code>, <code class="language-plaintext highlighter-rouge">(TODO)</code>, <code class="language-plaintext highlighter-rouge">(TBD)</code> (with no follow-up content)</td>
-      <td><strong>Delete.</strong> If the work item is still relevant, file it in the work-plan store.</td>
+      <td><strong>projection</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ingestion-notes.html</code> ← <code class="language-plaintext highlighter-rouge">iris-dspace.md</code></td>
+      <td>one source file → one page</td>
     </tr>
     <tr>
-      <td><strong>B. Comparison-table marker</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">✓</code> / <code class="language-plaintext highlighter-rouge">✗</code> in a results table (one cell wide, replaces redundant prose)</td>
-      <td><strong>Keep — but only in tables.</strong> ✓/✗ in body prose → replace with words (“matches”, “diverges”).</td>
-    </tr>
-    <tr>
-      <td><strong>C. Warning callout</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">⚠ *…*</code>, <code class="language-plaintext highlighter-rouge">**⚠ WARNING:**</code></td>
-      <td><strong>Replace</strong> with <code class="language-plaintext highlighter-rouge">**Caveat.**</code> or <code class="language-plaintext highlighter-rouge">**Warning.**</code> (no symbol).</td>
-    </tr>
-    <tr>
-      <td><strong>D. Star marker</strong> <code class="language-plaintext highlighter-rouge">★</code></td>
-      <td>“best fit”, “preferred”, “closure”</td>
-      <td><strong>Keep in tables when meaning is column-scoped.</strong> In body prose → replace with explicit word.</td>
-    </tr>
-    <tr>
-      <td><strong>E. Unicode crash</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">↦</code>, <code class="language-plaintext highlighter-rouge">⁻</code>, <code class="language-plaintext highlighter-rouge">√</code>, <code class="language-plaintext highlighter-rouge">─</code>, <code class="language-plaintext highlighter-rouge">✅</code>, <code class="language-plaintext highlighter-rouge">·</code>, <code class="language-plaintext highlighter-rouge">²</code></td>
-      <td>Replace with LaTeX command in math (<code class="language-plaintext highlighter-rouge">\mapsto</code>, <code class="language-plaintext highlighter-rouge">^{-1}</code>, <code class="language-plaintext highlighter-rouge">\sqrt{}</code>, <code class="language-plaintext highlighter-rouge">\cdot</code>, <code class="language-plaintext highlighter-rouge">^{2}</code>) or strip box-drawing comments. Add to preamble’s <code class="language-plaintext highlighter-rouge">\newunicodechar</code> list only if widely used.</td>
-    </tr>
-    <tr>
-      <td><strong>F. First-person work tone</strong></td>
-      <td>“we’ll add”, “I’ll fix”</td>
-      <td><strong>Rewrite in passive/scholarly voice.</strong> Often a sign the sentence shouldn’t exist at all.</td>
-    </tr>
-    <tr>
-      <td><strong>G. Hedging</strong></td>
-      <td>“structural argument”, “morally correct”, “essentially the X”, “heuristically”, “simplification for exposition”, “provides the mathematical framework”, “amounts to”</td>
-      <td><strong>Strip</strong> if the actual argument IS in the content (most cases). <strong>Demote</strong> to <code class="language-plaintext highlighter-rouge">remark</code> with <code class="language-plaintext highlighter-rouge">interprets:</code> if the block is asserting an unsupported analogy. <strong>Keep</strong> only if (i) the phrase is a term of art (e.g. <code class="language-plaintext highlighter-rouge">essentially surjective</code>) or (ii) the block has <code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code>.</td>
-    </tr>
-    <tr>
-      <td><strong>H. Banner-in-prose</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">&gt; **Status: theorem (sorry-free)...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Caveat (over-permissive...)...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Status (May 2026):...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Refined-framing note...**</code></td>
-      <td><strong>Migrate to <code class="language-plaintext highlighter-rouge">authorNotes</code> field</strong> on the block’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest. Author-tracking notes belong as metadata, not in scholarly prose. The render pipeline skips them by default; a <code class="language-plaintext highlighter-rouge">WITH_AUTHOR_NOTES=1</code> env var exposes them in working drafts. <strong>EXCEPTION:</strong> <code class="language-plaintext highlighter-rouge">**Theorem (conditional on [conj:X])**</code> banners that are STRUCTURAL parts of the theorem statement are not author notes — keep in prose.</td>
-    </tr>
-    <tr>
-      <td><strong>I. Audit-doc reference in content</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">docs/audits/...</code>, <code class="language-plaintext highlighter-rouge">[audit](../../../docs/audits/...)</code>, <code class="language-plaintext highlighter-rouge">per audit</code>, <code class="language-plaintext highlighter-rouge">see audit doc</code></td>
-      <td><strong>Remove.</strong> Published content must NOT reference internal audit documents. If the audit contains a result needed in the content, promote the result to a content block and cite that block instead. Empirical observations belong in audit docs only, never in published <code class="language-plaintext highlighter-rouge">.md</code> blocks.</td>
-    </tr>
-    <tr>
-      <td><strong>J. Empirical fit in scholarly prose</strong></td>
-      <td>“within X% of [reference value]”, “matches to Y ppm”, “≈ Z (close to…)”, “near-match”, “numerical observation”</td>
-      <td><strong>Remove from published content.</strong> Empirical comparisons are audit-doc material. Published content states the derived result; the audit doc records how well it matches experiment. <strong>EXCEPTION:</strong> a content block may state a result’s formal precision target if the block IS a proposition about precision.</td>
-    </tr>
-    <tr>
-      <td><strong>K. Title coherence</strong></td>
-      <td>section/subsection title ending in <code class="language-plaintext highlighter-rouge">" : vs"</code> / <code class="language-plaintext highlighter-rouge">" : generation"</code> / <code class="language-plaintext highlighter-rouge">" : characterisation"</code> / <code class="language-plaintext highlighter-rouge">" : comparison"</code>; a comma-list title of 3+ concepts; a title meaningless without its chapter</td>
-      <td><strong>Rewrite from the section’s story</strong> — read the section’s intro block, make it short + coherent against its responsible parent (project→chapter→section→subsection) and distinct from the sibling. Surfaced by <code class="language-plaintext highlighter-rouge">qa-section-title-audit.ts</code>; conventions in <code class="language-plaintext highlighter-rouge">one-voice-style-guide</code> §Title Conventions.</td>
+      <td><strong>index</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">community-list.html</code> ← every catalogue node</td>
+      <td>one <strong>member</strong> → the whole index</td>
     </tr>
   </tbody>
 </table></div>
-<h3 id="3-apply-mechanical-fixes">
-  
-  
-    <a href="#3-apply-mechanical-fixes" class="anchor-heading" aria-labelledby="3-apply-mechanical-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Apply mechanical fixes
-  
-  
-</h3>
-    
 
-<p>These are safe to do without author approval:</p>
+<p>The index edge is the one people forget: <strong>an index is derived from a SET, so
+it goes stale when a member changes even though the index file itself did
+not.</strong></p>
 
-<ul>
-  <li>Delete Category A status leaks.</li>
-  <li>Convert Category C warnings: <code class="language-plaintext highlighter-rouge">⚠ *X*</code> → <code class="language-plaintext highlighter-rouge">*Caveat: X*</code> or
-<code class="language-plaintext highlighter-rouge">**⚠ WARNING:** X</code> → <code class="language-plaintext highlighter-rouge">**Warning.** X</code>.</li>
-  <li>Fix Category E Unicode crashes (use LaTeX equivalents in math; strip
-box-drawing).</li>
-  <li>Replace clear-cut Category B/D markers in <strong>body prose</strong> (not
-tables) with words.</li>
-  <li>Remove Category I audit-doc references from published <code class="language-plaintext highlighter-rouge">.md</code> files.</li>
-  <li>Strip Category J empirical fits from scholarly prose (move to audit).</li>
-  <li>Migrate Category H banners to <code class="language-plaintext highlighter-rouge">authorNotes</code> field (extract banner
-text → push as <code class="language-plaintext highlighter-rouge">{ kind, date?, body }</code> entry on the block’s <code class="language-plaintext highlighter-rouge">.ts</code>
-manifest; remove blockquote from <code class="language-plaintext highlighter-rouge">.md</code>). Skip structural
-conditional-theorem banners — those are part of the statement.</li>
-</ul>
-<h3 id="4-kick-back-to-author-for-items-where">
-  
-  
-    <a href="#4-kick-back-to-author-for-items-where" class="anchor-heading" aria-labelledby="4-kick-back-to-author-for-items-where"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Kick back to author for items where:
-  
-  
-</h3>
-    
+<p>They differ in what a reader should expect and <strong>not</strong> in what the runner must
+do — if any declared input changed, the step re-runs, and the step’s own
+<code class="language-plaintext highlighter-rouge">--check</code> decides which outputs actually differ. So one declaration expresses
+both, and the distinction lives in what a human reads there.</p>
 
-<ul>
-  <li>A <code class="language-plaintext highlighter-rouge">TBD</code> marks a <strong>genuine open question</strong> — author knows the
-resolution. Skill must not unilaterally delete.</li>
-  <li>A table is so dense with <code class="language-plaintext highlighter-rouge">★</code>/<code class="language-plaintext highlighter-rouge">✓</code>/<code class="language-plaintext highlighter-rouge">✗</code> markers that replacing them
-with words would balloon the table; author should decide whether
-the compact markers are acceptable scholarly form for that table.</li>
-  <li>Status updates inside <strong>expository proofs</strong> (“We have shown…”,
-“It remains to verify…”) that look like work tracking but are
-actually proof structure — author judgement on tone.</li>
-</ul>
-
-<p>For each kickback, post a work-plan item with:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">targetLabel</code> of the affected block</li>
-  <li>A short description of the violation</li>
-  <li>Suggested fix or “needs author rewrite”</li>
-</ul>
-<h3 id="5-output">
+<p><strong>The downstream half needs no new mechanism.</strong> <code class="language-plaintext highlighter-rouge">needs</code> already orders the
+pipeline, and a step whose dependency re-ran must re-run too. One edge, two
+uses.</p>
+<h2 id="a-step-declares-graph-kinds-not-paths">
   
   
-    <a href="#5-output" class="anchor-heading" aria-labelledby="5-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Output
-  
-  
-</h3>
-    
-
-<p>Report back with:</p>
-<ul>
-  <li><strong>Fixed in this pass</strong> — file:line list of mechanical fixes applied</li>
-  <li><strong>Kicked back</strong> — work-plan entries created, requiring author attention</li>
-  <li><strong>Verified clean</strong> — files swept and clean</li>
-</ul>
-<h2 id="qa-report-integration">
-  
-  
-    <a href="#qa-report-integration" class="anchor-heading" aria-labelledby="qa-report-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA report integration
+    <a href="#a-step-declares-graph-kinds-not-paths" class="anchor-heading" aria-labelledby="a-step-declares-graph-kinds-not-paths"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A step declares GRAPH KINDS, not paths
   
   
 </h2>
     
 
-<p>The watcher persists every finding to the block’s sibling
-<code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> file (schema: <code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code>).
-Per-criterion staleness is keyed by SHA-256 prefix of the source
-files at audit time — when the <code class="language-plaintext highlighter-rouge">.md</code> (or <code class="language-plaintext highlighter-rouge">.ts</code> / proof file) is later
-edited, the recorded <code class="language-plaintext highlighter-rouge">field_hash</code> no longer matches, and the
-criterion is stale.</p>
-<h3 id="cli-primitives">
+<p><code class="language-plaintext highlighter-rouge">RenderStep</code> carries two ways to say what it reads, and the second is the one
+to use:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>what it names</th>
+      <th>when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inputs</code></td>
+      <td>repository-relative files or directories</td>
+      <td>a path that is not a declared graph — a config file, a script’s own fixtures</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inputGraphs</code></td>
+      <td>graph <strong>kinds</strong> from <code class="language-plaintext highlighter-rouge">harness.json</code> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">schemas</code>, …</td>
+      <td>anything the declaration already locates</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The first draft used <code class="language-plaintext highlighter-rouge">inputs</code> throughout and <code class="language-plaintext highlighter-rouge">check:declared-paths</code> rejected
+nine literals. <strong>It was right.</strong> A second answer to <em>where do the skills live</em>
+goes stale the moment a directory moves, and the failure is silent in the
+worst direction: the render goes on hashing a path that is not there, finds
+nothing, and reports the step unchanged. Under-declaration does not look like
+under-declaration.</p>
+<h3 id="the-subprocess-and-why-there-is-one">
   
   
-    <a href="#cli-primitives" class="anchor-heading" aria-labelledby="cli-primitives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CLI primitives
+    <a href="#the-subprocess-and-why-there-is-one" class="anchor-heading" aria-labelledby="the-subprocess-and-why-there-is-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The subprocess, and why there is one
   
   
 </h3>
     
 
-<ul>
-  <li>
-    <p><strong>Sweep</strong> — runs every automated criterion on a content root and
-writes / updates the sidecars:</p>
+<p><code class="language-plaintext highlighter-rouge">render-pipeline.ts</code> is in the <strong>harness</strong> layer. Resolving a graph kind means
+<code class="language-plaintext highlighter-rouge">readDeclaration</code>, which validates <strong>every</strong> kind in the declaration — and this
+repository declares a <code class="language-plaintext highlighter-rouge">folio</code> directory whose kind is registered by <strong>core</strong>,
+on the argument (written on <code class="language-plaintext highlighter-rouge">schemas/folio-graph-kind.ts</code>) that a layer which
+cannot render must not own the renderable kind. So the harness layer cannot
+resolve <em>any</em> kind in-process without importing core, which <code class="language-plaintext highlighter-rouge">check:partition</code>
+rejects.</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
-bun run pipeline/qa-sweep.ts &lt;paper&gt;/&lt;chapter&gt;
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Staleness map</strong> — reports which blocks have fresh / stale /
-missing audits per criterion:</p>
+<p>The three options were: spell the paths as literals (rejected, and rightly);
+import core (rejected, and rightly); or <strong>ask across the boundary the way the
+pipeline already asks every renderer it runs</strong> — by spawning one.
+<code class="language-plaintext highlighter-rouge">cat-harness/scripts/declared-dirs.ts</code> is that third option: core-layer, one
+line of JSON on stdout, <code class="language-plaintext highlighter-rouge">{graph: [dirs]}</code>.</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
-bun run pipeline/qa-staleness.ts &lt;paper&gt;/&lt;chapter&gt;
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>CI gate</strong> — fail the build if any block has critical findings
-or no sidecar:</p>
+<p><strong>A failure prints nothing to stdout and exits non-zero</strong>, so the caller cannot
+read <em>could not resolve</em> as <em>declares nothing</em> — the distinction this whole
+skill turns on. The pipeline reports it:</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run pipeline/qa-sweep.ts &lt;paper&gt; <span class="nt">--ci</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-<h3 id="multi-reviewer-writes-when-an-agent-adjudicates">
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">Graph kinds could not be resolved here, so every step that declared only
+graphs re-rendered: &lt;reason&gt;</code></p>
+</blockquote>
+
+<p>and every graph-declared step becomes undeclared, which always re-renders. Safe
+direction, <strong>said out loud</strong>. An earlier version of this was correct and
+silent — it degraded to a full render without a word, so the feature was inert
+(0 steps cached) and nothing in the output said why.</p>
+<h3 id="the-cost-a-graph-is-coarser-than-a-file-list">
   
   
-    <a href="#multi-reviewer-writes-when-an-agent-adjudicates" class="anchor-heading" aria-labelledby="multi-reviewer-writes-when-an-agent-adjudicates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-reviewer writes (when an agent adjudicates)
+    <a href="#the-cost-a-graph-is-coarser-than-a-file-list" class="anchor-heading" aria-labelledby="the-cost-a-graph-is-coarser-than-a-file-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cost: a graph is coarser than a file list
   
   
 </h3>
     
 
-<p>When invoked by the watcher for one of the non-automated criteria
-(<code class="language-plaintext highlighter-rouge">voice-scholarly-default</code>, <code class="language-plaintext highlighter-rouge">voice-ai-slop</code>, <code class="language-plaintext highlighter-rouge">fit-section-chapter</code>),
-<strong>append</strong> a new entry to the corresponding criterion’s array.
-<strong>Never delete</strong> prior entries. Reviewer identity must be
-<code class="language-plaintext highlighter-rouge">{ kind: "agent", id: "one-voice-audit", version: "&lt;model id&gt;" }</code>
-for agent runs and <code class="language-plaintext highlighter-rouge">{ kind: "human", id: "&lt;github-login&gt;" }</code> for
-manual adjudications.</p>
-
-<p>An entry’s shape:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"field_hash"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"md"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;12-char-sha&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;…&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"lean"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;…&gt;"</span><span class="w"> </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"fail"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"warn"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"n/a"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"critical"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"major"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"minor"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;file:line: verbatim quote&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"reviewer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"one-voice-audit"</span><span class="w"> </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"reviewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;ISO-8601 UTC&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"reviewed_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;main HEAD at audit time&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;rationale / context&gt;"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>The current verdict for a criterion is the most-recent entry whose
-<code class="language-plaintext highlighter-rouge">field_hash</code> matches the present source files. Human entries
-outrank agent entries; agent entries outrank script entries — but
-<em>only</em> when the higher-rank entry’s <code class="language-plaintext highlighter-rouge">field_hash</code> is still fresh.</p>
-<h2 id="cross-references">
+<p><code class="language-plaintext highlighter-rouge">kg-current</code> declares the whole <code class="language-plaintext highlighter-rouge">cat-harness</code> graph, so <strong>editing one skill
+re-renders all ten steps</strong> — where a literal file list would have re-rendered
+four. That is a real loss and it is the right trade: over-declaring costs
+needless runs, under-declaring ships stale pages that look fresh. A finer
+declaration is available whenever a step’s reads can be expressed without
+spelling a declared path.</p>
+<h2 id="hash-content-never-mtime">
   
   
-    <a href="#cross-references" class="anchor-heading" aria-labelledby="cross-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-references
+    <a href="#hash-content-never-mtime" class="anchor-heading" aria-labelledby="hash-content-never-mtime"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Hash content, never mtime
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">mtime</code> is the obvious shortcut and it is wrong twice: a fresh checkout
+rewrites every mtime, so CI would re-render everything; and a file touched but
+unchanged re-renders for nothing. Hash the <strong>content</strong>, and hash the <strong>path
+alongside it</strong> — moving a file is a change, and an index keyed on filenames
+notices.</p>
+
+<p>Sort before hashing, <strong>by codepoint</strong>. <code class="language-plaintext highlighter-rouge">readdirSync</code> order is not stable across
+machines, and <code class="language-plaintext highlighter-rouge">localeCompare</code> is ICU-dependent — a seed written on one machine
+would mismatch on another for no reason anybody could see. <code class="language-plaintext highlighter-rouge">byCodepoint</code> in
+<code class="language-plaintext highlighter-rouge">render-selection.ts</code> is the comparator, and it exists because the first draft
+used <code class="language-plaintext highlighter-rouge">localeCompare</code>.</p>
+<h2 id="could-not-determine-always-re-renders">
+  
+  
+    <a href="#could-not-determine-always-re-renders" class="anchor-heading" aria-labelledby="could-not-determine-always-re-renders"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Could-not-determine always re-renders
+  
+  
+</h2>
+    
+
+<p>Four states send a step to the “run it” pile, and <strong>none of them is an error</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>state</th>
+      <th>why it runs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inputs changed</td>
+      <td>the obvious one</td>
+    </tr>
+    <tr>
+      <td>something it <code class="language-plaintext highlighter-rouge">needs</code> re-ran</td>
+      <td>the cascade</td>
+    </tr>
+    <tr>
+      <td>the seed’s manifest does not mention it</td>
+      <td>absent is not fresh — it may never have run</td>
+    </tr>
+    <tr>
+      <td><strong>it declares no inputs</strong></td>
+      <td>it has not said what it reads, so nothing can be concluded</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>And three at the build level: <strong>no manifest at all</strong> is a full render; a
+manifest that is unparseable or carries the wrong schema tag is treated as
+absent; and <strong>graph kinds that could not be resolved</strong> turn every
+graph-declared step into the fourth row above. <strong>A corrupt manifest is never
+partially believed</strong> — half a cache is worse than none, because the half that
+is wrong is invisible.</p>
+
+<p>This is the repository’s standing rule applied to rendering: <em>could-not-check
+is never green.</em> Here it costs a re-render, which is the cheap direction.</p>
+<h2 id="under-declaring-is-the-dangerous-direction">
+  
+  
+    <a href="#under-declaring-is-the-dangerous-direction" class="anchor-heading" aria-labelledby="under-declaring-is-the-dangerous-direction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Under-declaring is the dangerous direction
+  
+  
+</h2>
+    
+
+<p>A step whose real input is not listed keeps a stale output <strong>and looks exactly
+like one that re-rendered</strong>. A step that over-declares costs one needless run.
+So when unsure, list it.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run render:order</code> names every step that declares no inputs, because those
+are the ceiling on how incremental a build can be — and a step that always
+re-renders should be a decision (<code class="language-plaintext highlighter-rouge">alwaysRun</code>, with a reason) rather than an
+omission nobody noticed.</p>
+<h2 id="measured-on-this-repository">
+  
+  
+    <a href="#measured-on-this-repository" class="anchor-heading" aria-labelledby="measured-on-this-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured, on this repository
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bun run render</code> over ten steps, 2026-09-21, after the move to <code class="language-plaintext highlighter-rouge">inputGraphs</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>build</th>
+      <th>wall</th>
+      <th>steps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>full, writing a seed</td>
+      <td><strong>3.9 s</strong></td>
+      <td>10 ran</td>
+    </tr>
+    <tr>
+      <td>seeded, nothing changed</td>
+      <td><strong>0.9 s</strong></td>
+      <td>2 ran, <strong>8 served from the seed</strong></td>
+    </tr>
+    <tr>
+      <td>seeded, one bean touched</td>
+      <td><strong>1.1 s</strong></td>
+      <td>4 ran, 6 served</td>
+    </tr>
+    <tr>
+      <td>seeded, one skill file touched</td>
+      <td><strong>3.8 s</strong></td>
+      <td>10 ran, <strong>0 served</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The last row is the coarseness above, measured rather than asserted: a skill
+edit moves the <code class="language-plaintext highlighter-rouge">cat-harness</code> graph, <code class="language-plaintext highlighter-rouge">kg-current</code> reads that graph, and
+everything <code class="language-plaintext highlighter-rouge">needs</code> its way back to <code class="language-plaintext highlighter-rouge">kg-current</code>. The bean row is what a
+narrower graph buys — <code class="language-plaintext highlighter-rouge">beans</code> reaches only <code class="language-plaintext highlighter-rouge">docs-pages</code> and <code class="language-plaintext highlighter-rouge">state-dashboards</code>.</p>
+
+<p>The two that always run are <code class="language-plaintext highlighter-rouge">bootstrap</code> (pending — nothing to cache yet) and
+<code class="language-plaintext highlighter-rouge">kg-dynamic</code> (<code class="language-plaintext highlighter-rouge">alwaysRun</code>: it exports the graph <em>after</em> stage 2 has
+contributed, so its input is that output rather than a source file).</p>
+
+<p><strong>Report the cached steps as cached, never as a pass.</strong> In this pipeline a
+“skip” already means <em>its input never rendered</em>, which is a much worse fact —
+so a served-from-seed step gets its own mark (<code class="language-plaintext highlighter-rouge">=</code>). And the counts must add
+up: the first draft reported <em>“10 ran … 8 served from the seed”</em>,
+double-counting eight of them, because the runner records a step as having run
+whenever the callback returned no error and a cached step returns no error by
+doing nothing. A build report that sums to more than its own steps is one
+nobody trusts the rest of.</p>
+<h2 id="usage">
+  
+  
+    <a href="#usage" class="anchor-heading" aria-labelledby="usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h2>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run render                                   <span class="c"># full</span>
+bun run render:order                             <span class="c"># order + which steps are cacheable</span>
+bun run render <span class="nt">--write-manifest</span> &lt;path&gt;           <span class="c"># full, and record the inputs</span>
+bun run render <span class="nt">--seed</span> &lt;path&gt;                     <span class="c"># incremental against that record</span>
+bun run render <span class="nt">--seed</span> &lt;old&gt; <span class="nt">--write-manifest</span> &lt;new&gt;
+</code></pre></div></div>
+<h2 id="not-built">
+  
+  
+    <a href="#not-built" class="anchor-heading" aria-labelledby="not-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not built
+  
+  
+</h2>
+    
+
+<p><strong>Seeding from the published render.</strong> The manifest and the selection are
+here; copying a previous build’s OUTPUT into place before the run is a
+deployment step and belongs with <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>. Until it exists, a
+seeded run skips steps whose inputs are unchanged but has nothing to serve —
+so use <code class="language-plaintext highlighter-rouge">--seed</code> only where the previous output is already in place.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2>
     
 
 <ul>
-  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a> —
-the watcher that drives this skill in audit-as-sidecar mode.</li>
-  <li><code class="language-plaintext highlighter-rouge">markdown-render-check</code> — catches Unicode crashes and <code class="language-plaintext highlighter-rouge">+</code>-bullet
-failures <em>before</em> push; complementary preventive skill.</li>
-  <li><code class="language-plaintext highlighter-rouge">readability-editing</code> — broader prose tightening; one-voice is a
-subset.</li>
-  <li><code class="language-plaintext highlighter-rouge">editor</code> — invokes this skill as a sub-pass on content changes.</li>
-  <li><code class="language-plaintext highlighter-rouge">proof-conciseness</code> — for trimming proofs that contain work-tracker
-language disguised as expository structure.</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/render-selection.ts</code> — the selection, the manifest, and the hash.</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/declared-dirs.ts</code> — the graph-kind resolver, and why it is a process.</li>
+  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — what a graph kind is
+and where <code class="language-plaintext highlighter-rouge">harness.json</code> declares it.</li>
+  <li><a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a> — the same third-state discipline one level out.</li>
+  <li>Bean <code class="language-plaintext highlighter-rouge">9c34</code>.</li>
 </ul>
 
           
