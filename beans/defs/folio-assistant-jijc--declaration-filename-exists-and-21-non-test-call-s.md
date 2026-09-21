@@ -98,14 +98,22 @@ header said "three".
 - [x] `check:declaration-filename` reports a non-test call site that builds the
       declaration path from a literal, with prose, fixtures, template
       construction and cross-instance sites each classified rather than lumped
-- [x] The 18 bypasses inside `cat-harness/` are routed through the constant
-- [ ] Wired into `code-quality-gates.yml` so it runs in CI
-- [ ] **Owner or `vke6`:** do the 2 cross-instance sites get the constant via a
-      declared dependency, or does core keep its own literal until the split?
-- [ ] **Judgement:** are the ~100 test fixtures pinned deliberately, or
-      migrated? Recorded here so a later reader knows the silence is a decision
-- [ ] The 2 workflow `.yml` files are handled by whatever does the rename;
+- [x] The bypasses inside `cat-harness/` are routed through the constant
+- [x] Wired into `code-quality-gates.yml` so it runs in CI
+- [x] **Owner ruled 2026-09-21:** the 2 cross-instance sites import the
+      constant through the dependency `folio-assistant-core` ALREADY declared
+      (`"needs": ["cat-harness"]`) — nothing new was created
+- [x] **Owner ruled 2026-09-21:** the test fixtures are migrated, not pinned —
+      112 sites across 36 files, 15 of them object keys
+- [ ] The 3 workflow `.yml` files are handled by whatever does the rename;
       they cannot import a constant and this check has no opinion on them
+
+*Ticked IN PLACE 2026-09-21. The rulings and what they cost are in the section
+below; this list is the one a reader and every tool consult, so it is the one
+that has to be true. An appended second copy is the `shadow-checklist` defect
+`sfhr` shipped a detector for — and that detector caught this bean while the
+copy was being written, which is the third time this session a check I built
+has found my own work.*
 
 *Issue link, recorded on creation.* **[#669](https://github.com/litlfred/folio-assistant/issues/669)** — shipped in [PR #657](https://github.com/litlfred/folio-assistant/pull/657).
 
@@ -113,3 +121,68 @@ Written in the same turn the issue was opened, rather than later. `oh78` exists
 because the session working it opened four issues from beans and carried none
 of the links back; this bean is its author's first chance to not repeat that,
 and `check:bean-issue-links` is the check that would otherwise have found it.
+
+---
+
+## OWNER RULINGS, 2026-09-21 — both open classes closed, both AGAINST the recommendation
+
+Asked with the trade-offs stated. The owner took the other option on both, and
+both are now done.
+
+### 1. Test fixtures — **migrate**, not pin
+
+112 sites across 36 files. My recommendation was to pin them, on the argument
+that a migrated fixture passes *vacuously* after a rename. The owner ruled
+migrate; the argument is recorded here rather than re-litigated, because it
+remains the thing to check if a future rename lands green and nobody believes
+it.
+
+**15 of the 112 were object KEYS**, not values —
+`repo({ "harness.json": '{"name":"x"}' })` in `content-type.test.ts` — and
+became computed keys, `[DECLARATION_FILENAME]:`. A value-only replace would
+have produced a syntax error on all 15.
+
+### 2. Cross-instance — **import it**, and the dependency was ALREADY declared
+
+I framed this as "core imports nothing from `cat-harness`, so this creates the
+first cross-instance dependency". **That framing was wrong and the declaration
+says so**: `folio-assistant-core/harness.json` already carries
+
+```json
+"needs": ["cat-harness"]
+```
+
+and `partition/instance-rules.ts` already states the direction — *"core reading
+harness is downward"*. So nothing was created. A declared dependency existed
+and the code simply was not using it. Both sites import the constant now, and
+`check:partition` reports **0 wrong-direction edges, 0 unassigned**.
+
+Worth keeping: *"nothing imports it"* and *"nothing may import it"* are
+different claims, and I reported the first as if it established the second.
+
+## Two defects this work produced, both caught by the repo's own gates
+
+**The migration script mistook a TERNARY COLON for an object key.** The regex
+was `"harness\.json"(\s*:)`, and
+
+```ts
+entry.name === "harness.json" ? "harness.json" : null
+```
+
+has a `:` after the second literal. It became `[DECLARATION_FILENAME]` — an
+array — and `tsc` produced four type errors on it. The typechecker caught what
+the regex could not; the same rule with no typed consumer would have shipped.
+
+**A blanket migration cannot tell a literal that IS the code from a literal
+DESCRIBING code.** `check-declaration-filename.test.ts` feeds fixture *source
+text* to the checker. Rewriting those literals left every detection test
+passing while asserting nothing — the checker looks for a string the fixtures
+no longer contained. Reverted, and the file now carries a header saying why its
+literals must stay literal.
+
+## The gate paid for itself before it was merged
+
+Merging 47 commits of `main` in brought **two new bypasses** —
+`harness-tiles.ts:205` and `compose-docs.ts:113` — written by other sessions
+while this bean was being worked. Exactly the regression the check exists to
+stop, caught within ten minutes of the merge. Both fixed.

@@ -406,3 +406,49 @@ makes the rename a day's work rather than a sweep of 121 files.
 
 *Recorded, not implemented. This bean belongs to another session; a ruling is
 evidence, and evidence is not a claim on the work.*
+
+## OWNER RULING, 2026-09-21 — §2 settled: **authored config a scaffolder seeds**
+
+Asked with the evidence rather than as an open question, because the code
+answers the literal half of it. §2 read:
+
+> Whether the merged file is process-WRITTEN at initialization. If it is, a
+> `.config.json` is `state` wearing a config's name.
+
+### What is measured
+
+**Two processes write the declaration**, so the literal answer is *yes*:
+
+| site | what it does |
+|---|---|
+| `scripts/init-folio.ts` | **creates** it when scaffolding a new folio |
+| `scripts/ensure-landing-sticky.ts:550` | `if (!already) writeFileSync(join(root, DECLARATION_FILENAME), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY))` — **repairs** it, adding a `folio` directory entry to an instance that does not declare one |
+
+### The ruling
+
+The owner chose **authored config that a scaffolder seeds**. The name stays as
+ruled in §1: `<name>.config.json`, not a `state`-flavoured name.
+
+The reason the literal *yes* does not carry the classification: **neither
+writer maintains the file.** `init-folio` creates it once and
+`ensure-landing-sticky` only fires on `!already` — both are create-or-repair,
+not a process keeping a value current. And the file is committed and heavily
+hand-authored: `folio-assistant-core/harness.json` carries a ~1,900-character
+`_comment` recording an owner ruling and a correction, which is not something a
+process writes.
+
+> **A process may CREATE or REPAIR the declaration. It never maintains it.**
+
+That is the rule this ruling establishes, and it is what keeps the `holds:
+content | context | state` axis honest: `state` is for a graph a running
+process keeps current, and a file whose content is prose an author wrote is not
+that, however it first arrived on disk.
+
+## Done when — added by this ruling
+
+- [ ] The create-or-repair rule is written into the skill that owns the
+      `holds` axis (`content-context-and-state-graphs`), not only here — a
+      rule that lives in one bean is a rule with no home
+- [ ] `ensure-landing-sticky`'s write is documented AS a repair at its call
+      site, so a later reader does not take it for maintenance and reclassify
+      the file

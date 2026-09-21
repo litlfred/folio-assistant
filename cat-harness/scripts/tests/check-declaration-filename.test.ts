@@ -13,6 +13,20 @@
  * earlier draft of this header said "three", which is the failure this
  * repository keeps paying for.
  *
+ * ## The literals in this file are DATA and must stay literal
+ *
+ * Every `"harness.json"` below sits inside a fixture's **source text** — the
+ * code this checker reads, not code this file executes. Substituting the
+ * constant into them makes each test feed the checker a string that no longer
+ * contains what the checker looks for, so the suite passes while asserting
+ * nothing.
+ *
+ * Stated because it already happened: the ~100-fixture migration the owner
+ * ruled on 2026-09-21 was run as a blanket replace and rewrote exactly these,
+ * silently gutting the four detection tests. **A blanket migration cannot tell
+ * a literal that IS the code from a literal DESCRIBING code**, and this is the
+ * file where the difference lives.
+ *
  * @module folio-assistant/scripts/tests/check-declaration-filename
  */
 

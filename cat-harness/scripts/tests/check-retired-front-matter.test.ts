@@ -18,6 +18,7 @@ import { describe, expect, test } from "bun:test";
 import { RETIRED, scan } from "../check-retired-front-matter.ts";
 import { parseFrontMatter } from "../../schemas/front-matter.ts";
 import { directoryForGraph, repoRootFor } from "../../schemas/cat-harness.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
@@ -37,7 +38,7 @@ function fixture(files: Record<string, string>, declare = true): string {
   const root = mkdtempSync(resolve(tmpdir(), "retired-fm-"));
   if (declare) {
     writeFileSync(
-      resolve(root, "harness.json"),
+      resolve(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "fixture",
         directories: [
