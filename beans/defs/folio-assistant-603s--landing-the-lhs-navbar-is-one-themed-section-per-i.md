@@ -115,7 +115,7 @@ Queued per the owner's standing instruction to queue rather than pivot.
 That makes the slot a **consequence of instantiating**, not a thing an instance
 may opt into. Measured against that (`b5f0` §6): the contribution seam already
 exists and already inverts ownership the right way
-(`schemas/sticky-contribution.ts`), and `cat-bootstrap/harness.json` declares its
+(`schemas/sticky-contribution.ts`), and `bootstrap/harness.json` declares its
 own card — but the **root** instance declares no `stickies` at all, and
 `grep -rln "navbar" cat-harness/schemas cat-harness/src` returns nothing.
 
@@ -168,7 +168,7 @@ review comment or a chat panel rather than rendering seven broken images the
 moment it leaves the repository.
 
 **Verified by looking, this session: all seven frame the cat's head and torso.
-None is on scenery.** The tightest are `cat-bootstrap` and `operations` (0.24)
+None is on scenery.** The tightest are `bootstrap` and `operations` (0.24)
 and they read best at 46px; `landing-card` (0.50) carries the most chest.
 
 It PRINTS and never gates, on purpose — it answers a question no assertion can
@@ -212,13 +212,13 @@ Owner, re-asserting the ask in narrower terms:
   declared hue.
 - 17 tests.
 
-**Measured on this repository: 11 instances, cat-bootstrap last.**
+**Measured on this repository: 11 instances, bootstrap last.**
 
 **Three decisions worth keeping**
 
 1. **"Bootstrap at bottom" is read from the DECLARATION, not from a name.**
-   `cat-bootstrap/harness.json` carries a `renderExemption` whose reason says
-   it in those words — *"cat-bootstrap IS the navbar footer"* — so the ordering
+   `bootstrap/harness.json` carries a `renderExemption` whose reason says
+   it in those words — *"bootstrap IS the navbar footer"* — so the ordering
    is `isExemptFrom(decl, "visualiser")`. It falls out correctly rather than by
    coincidence: an instance exempt from owing a visualiser is exactly an
    instance whose tile has nothing to open.
@@ -258,7 +258,7 @@ This bean records *"this bean's question 1, answered: `harness.json` is what
 names an instance"*, and `harness-tiles.ts` scans for that filename. The owner
 ruled **REPLACE** on `b5f0` — `<name>.config.json` becomes the single
 declaration and `harness.json` goes — reconfirmed and widened 2026-09-21 to
-cover `cat-bootstrap/` and the `folio-assistant-*` instances.
+cover `bootstrap/` and the `folio-assistant-*` instances.
 
 The scanner is repointed rather than defended. **Not edited here**: this is a
 sibling's bean, the ruling is recorded on `b5f0` where it was asked, and this

@@ -33,7 +33,7 @@ Scope confirmed by the owner the same day: ALL TWELVE declarations fold (not jus
 - [x] Discovery no longer looks for a fixed filename — `DECLARATION_FILENAME`
       is gone and `harness.json` is a RETIRED name the gate reports
 - [x] The root keeps its instantiation markers (`cat-harness.config.json`,
-      `cat-bootstrap.config.json` — no `name`, so not declarations)
+      `bootstrap.config.json` — no `name`, so not declarations)
 
 ## What the merge cost, and what it caught
 

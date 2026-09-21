@@ -36,12 +36,12 @@ describe("the default layout", () => {
 });
 
 describe("what it refuses", () => {
-  const ok = { id: "items", path: "items", graphs: ["todo-items"] };
+  const ok = { id: "items", path: "items", graphKinds: ["todo-items"] };
 
   test("an unknown graph kind is rejected, not accepted and ignored", () => {
     // A node whose kind nothing understands is a store nothing will read.
     expect(() =>
-      parseTodoGraph({ name: "x", directories: [{ id: "a", path: "a", graphs: ["no-such-kind"] }] }),
+      parseTodoGraph({ name: "x", directories: [{ id: "a", path: "a", graphKinds: ["no-such-kind"] }] }),
     ).toThrow(/unknown graph kind/);
   });
 
@@ -75,8 +75,8 @@ describe("what it deliberately allows", () => {
     const g = parseTodoGraph({
       name: "x",
       directories: [
-        { id: "fb-a", path: "feedback/a", graphs: ["todo-feedback"] },
-        { id: "fb-b", path: "feedback/b", graphs: ["todo-feedback"] },
+        { id: "fb-a", path: "feedback/a", graphKinds: ["todo-feedback"] },
+        { id: "fb-b", path: "feedback/b", graphKinds: ["todo-feedback"] },
       ],
     });
     expect(g.directories).toHaveLength(2);
@@ -87,7 +87,7 @@ describe("what it deliberately allows", () => {
     // the graph; the FILES say which they are (`$schema: folio-todo/v1`).
     const g = parseTodoGraph({
       name: "x",
-      directories: [{ id: "all", path: "all", graphs: ["todo-items", "todo-feedback"] }],
+      directories: [{ id: "all", path: "all", graphKinds: ["todo-items", "todo-feedback"] }],
     });
     expect(nodeOfKind(g, "todo-items")).toBe(nodeOfKind(g, "todo-feedback")!);
   });
@@ -97,7 +97,7 @@ describe("what it deliberately allows", () => {
     // holds `todos.json`, and a node claiming the same directory makes "which
     // files belong to which node" unanswerable.
     expect(() =>
-      parseTodoGraph({ name: "x", directories: [{ id: "root", path: ".", graphs: ["todo-items"] }] }),
+      parseTodoGraph({ name: "x", directories: [{ id: "root", path: ".", graphKinds: ["todo-items"] }] }),
     ).toThrow(/escapes the graph root/);
   });
 });

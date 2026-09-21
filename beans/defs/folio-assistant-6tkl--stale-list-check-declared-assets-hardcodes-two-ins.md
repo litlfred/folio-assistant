@@ -25,7 +25,7 @@ Four directories in this repository now carry a `harness.json`:
 | declaration | name | declares assets? |
 |---|---|---|
 | `cat-harness/harness.json` | `folio-assistant` | yes — checked |
-| `cat-bootstrap/harness.json` | `bootstrap` | yes — checked |
+| `bootstrap/harness.json` | `bootstrap` | yes — checked |
 | `folio-assist-core/harness.json` | `folio-assist-core` | **yes — NOT checked** |
 | `harness.json` (the root) | `folio-assistant-checkout` | no assets today |
 

@@ -185,7 +185,7 @@ written against the reading the owner did not take.***
 The Done-when here assumes a *config* file **beside** the declaration, with a
 separate resolver for the instantiation root. The owner ruled **REPLACE** on
 `b5f0`: one file per instantiation root, `<name>.config.json` absorbing
-`harness.json`. Reconfirmed 2026-09-21 and widened to `cat-bootstrap/` and the
+`harness.json`. Reconfirmed 2026-09-21 and widened to `bootstrap/` and the
 `folio-assistant-*` instances.
 
 The separate-resolver half of this bean survives the ruling — `findContentRepoRoot()`

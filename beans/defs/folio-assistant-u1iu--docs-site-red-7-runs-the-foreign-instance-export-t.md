@@ -1,6 +1,6 @@
 ---
 # folio-assistant-u1iu
-title: 'DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and cat-bootstrap declares none'
+title: 'DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and bootstrap declares none'
 status: completed
 type: bug
 priority: normal
@@ -17,7 +17,7 @@ Issue #720. Session: https://claude.ai/code/session_0136QLqnczLRAvFcqQKT588A
 |---|---|
 | Docs site on `main` | green at run 352 (#699, 11:49), **red 353–359** |
 | break arrived with | **#688** (12:01) — NOT the harness.json excision (#695, 12:19), which merged into an already-red workflow |
-| failing command | `kg-export.ts --instance ./cat-bootstrap` |
+| failing command | `kg-export.ts --instance ./bootstrap` |
 | reproduces locally | yes, **exit 1** |
 | workflows passing `--instance` | 1 (`docs-site.yml`); `feature-staging.yml` passes `--base-url` explicitly and never hit it |
 | `bun run gates` through all seven failures | **green** |
@@ -26,13 +26,13 @@ Issue #720. Session: https://claude.ai/code/session_0136QLqnczLRAvFcqQKT588A
 
 `#688` made the base follow `instanceRoot`. The base is a property of the
 PUBLICATION, not of the instance — and kg-export.ts already says so one
-function up: `kg-export.ts:1486` mints a link into cat-bootstrap's document
+function up: `kg-export.ts:1486` mints a link into bootstrap's document
 with `baseUrl: base`, its OWN. Two rules for one fact.
 
 Invisible on eleven instances because the two rules agree there. Visible on
-cat-bootstrap because it is the one instance that DELIBERATELY declares no
-site — its own declaration comment says "cat-bootstrap HAS NO SITE. This
-instance's canonicalUrl is cat-harness's site, not cat-bootstrap's." The
+bootstrap because it is the one instance that DELIBERATELY declares no
+site — its own declaration comment says "bootstrap HAS NO SITE. This
+instance's canonicalUrl is cat-harness's site, not bootstrap's." The
 configuration is right; the code's reading of it is not.
 
 ## Done when
@@ -51,16 +51,16 @@ workflow over: a red workflow looks exactly like a green one from a checkout.
 
 ## Deliberately NOT in this bean
 
-`docs-site.yml` publishes the bootstrap graph at `cat-bootstrap.jsonld` (site
-root); `feature-staging.yml` publishes it at `cat-bootstrap/cat-bootstrap.jsonld`.
+`docs-site.yml` publishes the bootstrap graph at `bootstrap.jsonld` (site
+root); `feature-staging.yml` publishes it at `bootstrap/bootstrap.jsonld`.
 Real divergence, separate bean, does not ride this fix.
 
 ## Found while gating, and fixed here because the gate cannot run without it
 
 **One QA sidecar served every instance.** `writeQaResult(ROOT, "kg-export", …)`
-used a CONSTANT stem, so `--instance ./cat-bootstrap` overwrote this
+used a CONSTANT stem, so `--instance ./bootstrap` overwrote this
 instance's committed result wholesale — `subject.id` flipped from
-`cat-harness.jsonld` to `cat-bootstrap.jsonld`, findings and all, in the one
+`cat-harness.jsonld` to `bootstrap.jsonld`, findings and all, in the one
 file whose purpose is saying what was found about WHICH graph.
 
 Invisible while one document was ever built, and invisible in CI because the
@@ -80,7 +80,7 @@ instance is qualified by its stub. Same rule the `kg-qa` tree already follows.
   **3 of 6 fail** — the 3 that stay green are the ones that should, since they
   assert behaviour the fix does not provide
 - `check-published-instance-exports.test.ts` 9 pass
-- the resulting `@id` is `https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld`,
+- the resulting `@id` is `https://litlfred.github.io/folio-assistant/bootstrap.jsonld`,
   byte-identical to the IRI cat-harness's own graph mints for it — checked
   from both ends rather than pinned to a literal
 
@@ -153,7 +153,7 @@ declaration rename landed beside it:
 
     check:published-instance-exports   exit 0
     host sidecar subject               cat-harness.jsonld
-    foreign sidecar subject            cat-bootstrap.jsonld
+    foreign sidecar subject            bootstrap.jsonld
     tree after a gate run              clean
 
 **What this bean is really a record of.** Half of it was a duplicate of `40fl`,

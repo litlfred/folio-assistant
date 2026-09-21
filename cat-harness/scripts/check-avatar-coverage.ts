@@ -90,7 +90,7 @@ export function requiredKinds(root: string = ROOT): { required: string[]; declar
   let declared: string[] = [];
   try {
     const d = readDeclaration(root);
-    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphs ?? []))];
+    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphKinds ?? []))];
   } catch {
     // An unreadable declaration is the instance's problem to fix, not this
     // check's to guess around; the registry half still reports.

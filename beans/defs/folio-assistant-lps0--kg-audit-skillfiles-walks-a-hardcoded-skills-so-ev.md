@@ -26,7 +26,7 @@ DIRECTLY, and none of their skills is audited:
 | `methodologies/raci/` | its own | **0** |
 | `src/skills/` | `corpus-grep` and siblings | **0** |
 | `theming/` (new, bean `1hvo`) | 6 | **0** |
-| `cat-bootstrap/skills/`, `cat-bootstrap/render/` | 6 | **0** (a different instance; see below) |
+| `bootstrap/skills/`, `bootstrap/render/` | 6 | **0** (a different instance; see below) |
 
 `methodologies/crdm/workflows/` DOES have sidecars, so the gap is specific to
 the SKILL walk rather than to the directory being unreachable — the process
@@ -68,7 +68,7 @@ read what it finds, then decide which findings are real.
 drifted apart in two days. This is a third reader of the same literal.
 
 And the naming mismatch is a fourth: `gen-skill-docs` keys a directly-held
-package by its DECLARED ID (`cat-harness-src`, `cat-bootstrap-render`) while
+package by its DECLARED ID (`cat-harness-src`, `bootstrap-render`) while
 `skill-fetch` keys it by the instance name or the basename (`folio-assistant`,
 `render`). Both are defensible; having both is the problem.
 
@@ -120,14 +120,14 @@ crdm-requirements-workflow   skill-is-brief   293 lines; p75 of the corpus is 27
 
 ### Another instance's roots are excluded, and that was not my call to make
 
-`kgRoots` resolves a DEPENDENCY's directories, so it returns `../cat-bootstrap/render`
+`kgRoots` resolves a DEPENDENCY's directories, so it returns `../bootstrap/render`
 and three more. Walking them is forbidden by `instance-graph-isolation.test.ts`,
 guarding a live 2026-09-19 leak of 88 references, and `unreadNestedInstances`'
 own finding text says *"do NOT declare its directories here"*.
 
 It would also break this audit's output: `sidecarPath` mirrors
 `dirname(join(root, subject.path))` under `test/results/kg-qa/`, so a `../`
-subject normalises to `test/results/cat-bootstrap/render` — **outside the
+subject normalises to `test/results/bootstrap/render` — **outside the
 results tree**, the escaping-path defect `chq5` fixed one store over. Simulated
 both cases before writing anything.
 
@@ -205,7 +205,7 @@ Main's record says 5 new sidecars; the withdrawn branch measured 6. Resolved on
 merging, and the answer is why `ownKgRoots` is the right function:
 
 **`kgDirectories` reaches OUTSIDE the instance.** The withdrawn walk used it and
-wrote five sidecars under an `_external/` mirror — `cat-bootstrap/render/`,
+wrote five sidecars under an `_external/` mirror — `bootstrap/render/`,
 `kg-navigation/`, `large-datasets/`, `who-iris/` — auditing **other instances'
 skills into this instance's tree**. `ownKgRoots` stays inside, which is what
 "own" is for: a nested instance's skills belong to that instance's own audit,
@@ -255,7 +255,7 @@ Over the 8 declared kg directories, matched on each record's authoritative
 
 | directory | `skill-fetch` | `kgDirectories` | |
 |---|---|---|---|
-| `cat-bootstrap/render` | `cat-bootstrap` | `cat-bootstrap-render` | diverge |
+| `bootstrap/render` | `bootstrap` | `bootstrap-render` | diverge |
 | `cat-harness/methodologies/raci` | `raci` | `methodology-raci` | diverge |
 | `cat-harness/methodologies/crdm` | `crdm` | `methodology-crdm` | diverge |
 | `cat-harness/src/skills` | `cat-harness` | `cat-harness-src` | diverge |

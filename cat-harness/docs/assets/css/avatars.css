@@ -38,7 +38,7 @@
   mask-composite: add;
 }
 
-.fa-avatar[data-fa-kind="cat-bootstrap"] {
+.fa-avatar[data-fa-kind="bootstrap"] {
   /* a seed germinating — the first thing, before anything else is known */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
@@ -48,6 +48,27 @@
 .fa-avatar[data-fa-kind="cat-harness"] {
   /* a framed face with ears — the harness the instance is held in */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9V6l3 2h10l3-2v3m0 0v9H4V9zM8 13h.01M16 13h.01M10 17h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="skills"] {
+  /* an open book — the instruction an Actor performs a Task from */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="workflows"] {
+  /* two nodes either side of a diamond — a process and the decision in it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="scenarios"] {
+  /* two figures — the Actors and the Roles they take on */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 11a3 3 0 100-6 3 3 0 000 6zm0 0c-2.5 0-4 1.5-4 4v4h8v-4c0-2.5-1.5-4-4-4zm8-6a2.5 2.5 0 110 5M17 12c2 0 3 1.5 3 3v4h-3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -264,8 +285,11 @@
 
 /* Light — the explicit choice, then the system default. */
 :root[data-fa-scheme="light"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 46% 34%); }
+  .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
+  .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
+  .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 46% 34%); }
+  .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
@@ -300,8 +324,11 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-fa-scheme="dark"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 46% 34%); }
+    .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
+    .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
+    .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 46% 34%); }
+    .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
@@ -337,8 +364,11 @@
 
 /* Dark — the explicit choice, then the system default. */
 :root[data-fa-scheme="dark"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 42% 72%); }
+  .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
+  .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
+  .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 42% 72%); }
+  .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
@@ -373,8 +403,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 42% 72%); }
+    .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
+    .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
+    .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 42% 72%); }
+    .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
@@ -412,8 +445,11 @@
  * lightness still clears the surface, because an unreadable discarded
  * item is a deleted one as far as a reader is concerned. */
 :root[data-fa-scheme="light"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
+  .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+  .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
+  .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
+  .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
@@ -447,8 +483,11 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-fa-scheme="dark"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
+    .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+    .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
+    .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
+    .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
@@ -482,8 +521,11 @@
 }
 
 :root[data-fa-scheme="dark"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
+  .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+  .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
+  .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
+  .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
@@ -517,8 +559,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
+    .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+    .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
+    .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
+    .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }

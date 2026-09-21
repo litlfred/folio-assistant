@@ -412,7 +412,7 @@ if (import.meta.main) {
       for (const d of decl.directories ?? []) {
         const dir = join(inst, d.path);
         if (dir === siteDir || dir.startsWith(siteDir + "/")) continue;
-        for (const kind of d.graphs ?? []) sources.push({ kind, instance: decl.name ?? basename(inst), dir });
+        for (const kind of d.graphKinds ?? []) sources.push({ kind, instance: decl.name ?? basename(inst), dir });
       }
     }
     const scan = scanLibraryRefs(sources, repo);

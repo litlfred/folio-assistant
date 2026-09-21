@@ -16,7 +16,7 @@ describes.
 ## What happened
 
 157 task-containing lanes, and exactly one resolves to no role: `Actor`, in
-`cat-bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
+`bootstrap/workflows/log-message.bpmn`. I had read `role-model.md`'s
 §"Adding a role", worked out the `actorKinds` and the `skills`, and was about
 to add it when the end of the file said:
 
@@ -85,7 +85,7 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
       definition, nobody wrote one" — #596 slice 2, which consumes
       `laneBinding`; not this bean
 - [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
-      `cat-bootstrap/skills/roles/roles.json` points at it rather than being
+      `bootstrap/skills/roles/roles.json` points at it rather than being
       the only record
 
 ## Investigated 2026-09-21 — the fix is aimed at the right layer, and the shape is settled
@@ -169,7 +169,7 @@ effect — the exact shape this flag exists to remove.
 
 ### Extracting it was not tidiness — it was the only way to test the case
 
-`log-message.bpmn` is in `cat-bootstrap`, a NESTED instance the root audit does
+`log-message.bpmn` is in `bootstrap`, a NESTED instance the root audit does
 not read (`7u3g`, and `instance-graph-isolation.test.ts` enforces it). And
 `kg-audit.ts` takes no root argument. So the rule was reachable only through a
 script that never sees its own subject — a rule nothing checks. As an exported
@@ -190,7 +190,7 @@ of hiding real defects, and four tests refuse it.
 
 ### The prose is now the rationale, not the record
 
-`cat-bootstrap/skills/roles/roles.json`'s `_lanes_comment` says so explicitly
+`bootstrap/skills/roles/roles.json`'s `_lanes_comment` says so explicitly
 and points at the declaration. It was the only record until today, and a fact
 that lives only in a comment is one `lane-binds-role` reports as `major` for
 ever.

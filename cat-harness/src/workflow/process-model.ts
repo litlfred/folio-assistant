@@ -243,7 +243,7 @@ export interface LaneDef {
    * would assert the opposite.
    *
    * Before this flag, that decision lived in a prose `_comment` inside
-   * `cat-bootstrap/skills/roles/roles.json` — which no tool reads, so
+   * `bootstrap/skills/roles/roles.json` — which no tool reads, so
    * "deliberately unbound" and "nobody got round to it" were the same thing
    * to every consumer. A declared answer and an absent one are different
    * facts, exactly as an empty `roles` list differs from a missing one.

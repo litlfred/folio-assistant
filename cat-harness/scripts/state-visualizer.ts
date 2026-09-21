@@ -351,7 +351,7 @@ export function declaredVisualiserFor(
 function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
   const out: StateGraph[] = [];
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphs ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
+    const kinds = (d.graphKinds ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
     if (kinds.length === 0) continue;
     out.push({
       id: d.id,

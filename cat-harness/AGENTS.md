@@ -62,5 +62,5 @@ for, and pays a budget for it. Maintaining both is one job —
 
 *A declared asset of this instance ([`cat-harness.json`](cat-harness.json), role
 `agent-instructions`). Authored here — it is not a copy of
-[`cat-bootstrap/AGENTS.md`](../cat-bootstrap/AGENTS.md); the repository root's
+[`bootstrap/AGENTS.md`](../bootstrap/AGENTS.md); the repository root's
 is. Issue #592.*
