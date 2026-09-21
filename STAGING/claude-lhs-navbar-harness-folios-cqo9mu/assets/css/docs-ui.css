@@ -2836,19 +2836,72 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * vocabulary beside `theme.ts`, which is the drift that file exists to end.
  * ───────────────────────────────────────────────────────────────────────── */
 
+/* THE THEME'S FOOTER IS NOT WHERE A TWELVE-ITEM NAVIGATION CAN LIVE.
+ *
+ * `nav_footer_custom.html` is just-the-docs' seam inside the sidebar, and it
+ * renders into `.site-footer`, which the theme styles:
+ *
+ *     .site-footer { position: absolute; bottom: 0; left: 0;
+ *                    padding: 1rem 2rem; width: 16.5rem;
+ *                    font-size: .6875rem !important; }
+ *
+ * Measured on the deployed preview, not guessed: the block is pinned to the
+ * bottom of a `position: fixed`, full-height column, so twelve fat tiles are
+ * laid out from the bottom edge — over the nav and off the top — and the owner
+ * reported exactly that ("i stil ldont see icons on left hand navbar"). The
+ * 2rem side padding inside a 16.5rem column is the other half of the report:
+ * "they should be full width of hte navbar".
+ *
+ * `:has()` scopes this to the footer that carries OUR block, so a future
+ * footer with ordinary footer content keeps the theme's layout. Returning the
+ * box to normal flow puts the tiles after the nav in the scrolling column,
+ * which is where a navigation list belongs.
+ */
+.site-footer:has(> .fa-harness-tiles) {
+  position: static;
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
+  /* The theme's `!important` has to be answered in kind. */
+  font-size: 0.75rem !important;
+}
+
 .fa-harness-tiles {
-  margin: 1.5rem 0 0.5rem;
+  width: 100%;
+  margin: 1rem 0 0;
   padding: 0.75rem 0 0;
   border-top: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.3));
 }
 
+/* The disclosure control. A summary is a button in everything but name, so it
+ * gets a button's target size — the same floor the tiles themselves take. */
 .fa-harness-tiles__heading {
-  margin: 0 0.75rem 0.5rem;
+  display: flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0;
+  cursor: pointer;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.7;
+}
+
+.fa-harness-tiles__heading:hover,
+.fa-harness-tiles__heading:focus-visible {
+  opacity: 1;
+}
+
+/* How many are behind the fold — a collapsed list that does not say how much
+ * it is hiding is a list a reader has to open to find out. */
+.fa-harness-tiles__count {
+  padding: 0 0.3125rem;
+  border-radius: 0.625rem;
+  background: var(--fa-rule, rgba(128, 128, 128, 0.25));
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
 }
 
 .fa-harness-tiles__list {
@@ -2863,7 +2916,11 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * book, and the reader is looking for one of them. */
   --fa-tile-ink: hsl(var(--fa-tile-tone, 0) 45% 35%);
   --fa-tile-surface: hsl(var(--fa-tile-tone, 0) 45% 96%);
-  margin: 0 0.5rem 0.375rem;
+  /* FULL WIDTH of the navbar — the owner's ask. A side margin on a sidebar
+   * item makes the target narrower than the column it sits in, and a narrower
+   * target is the thing this instance's declared low-dexterity profile is
+   * least able to afford. */
+  margin: 0 0 0.25rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2886,7 +2943,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * and a two-line one give the same target. */
   min-height: 2.75rem;
   padding: 0.4375rem 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: 0;
   background: var(--fa-tile-surface);
   color: var(--fa-tile-ink);
   text-decoration: none;
@@ -2970,7 +3027,7 @@ a.fa-harness-tile__body:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem 0.5rem;
-  margin: 0.1875rem 0 0 2.375rem;
+  margin: 0.1875rem 0 0.25rem 2.375rem;
   padding: 0;
   font-size: 0.6875rem;
   list-style: none;
@@ -2983,4 +3040,21 @@ a.fa-harness-tile__body:focus-visible {
   margin-top: 0.625rem;
   padding-top: 0.625rem;
   border-top: 1px dashed var(--fa-rule, rgba(128, 128, 128, 0.3));
+}
+
+/* The DEPENDENCY group — present, and visibly secondary.
+ *
+ * Owner, 2026-09-21: "only the instiatiated harnesses (not all dependent ones)
+ * in teh folio". The instantiated harnesses are the list; the ones that are
+ * merely here as dependencies keep a group of their own rather than
+ * disappearing, because making the distinction a disappearance would answer
+ * "where did who-iris go" with silence. Closed by default, and dimmer, so the
+ * column reads as one list with a footnote rather than two competing ones. */
+.fa-harness-tiles--deps {
+  margin-top: 0.25rem;
+  opacity: 0.75;
+}
+
+.fa-harness-tiles--deps .fa-harness-tile__body {
+  min-height: 2.25rem;
 }
