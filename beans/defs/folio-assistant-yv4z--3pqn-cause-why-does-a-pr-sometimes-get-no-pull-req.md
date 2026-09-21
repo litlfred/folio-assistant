@@ -216,3 +216,5 @@ the forge. `bean-coordination` states that limit; what today measured is that
 running the pre-claim check faithfully does not close it — both times the check
 was clean and a sibling was already mid-build. Pushing the claim first is the
 one mitigation a single session can apply.
+
+*Issue link, recorded on creation.* **[#723](https://github.com/litlfred/folio-assistant/issues/723)**
