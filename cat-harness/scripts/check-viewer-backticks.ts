@@ -45,55 +45,75 @@
  * census: a backtick before the opening (a doc comment, an import) is fine
  * and must stay fine, or the gate becomes something to work around.
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { join, relative, sep } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 
-/**
- * Generators whose page is one template literal. Each carries the warning.
- *
- * ## Why this is still a LIST, which is not the usual answer here
- *
- * Deriving it — every `.ts` whose source contains `return <backtick><!doctype
- * html>` — finds twelve files where this names five, and the extra ones are
- * not an oversight: {@link strayBacktick} REPORTS TWO OF THEM FALSELY.
- * Measured 2026-09-21 by running the detector over every candidate:
- *
- *     FINDING line 402   cat-harness/scripts/gen-docs-auto.ts
- *     FINDING line 365   cat-harness/scripts/dak-pdf.ts
- *
- * Both compile. Both findings are a nested template literal inside an
- * interpolation — `${scope ? <backtick> — ${esc(scope)}<backtick> : ""}` — and
- * the detector's rule is that the first unescaped backtick after the opening
- * closes the page. It does not follow `${…}`.
- *
- * So the four files it named were not a list of "the ones somebody
- * remembered": they are the ones that obey their own NO BACKTICKS warning
- * absolutely, which is exactly the condition that makes the naive scan sound.
- * The list encodes a precondition, and deriving it without teaching the
- * detector about nesting would trade a missed file for two false alarms —
- * worse, because an author who is told twice that correct code is wrong stops
- * reading the gate.
- *
- * **`gen-iris-pages.ts` is added because it meets that precondition**, checked
- * rather than assumed: the detector reports it clean today. It belongs here
- * because the trap caught it on 2026-09-21 — a backtick in a comment inside
- * the page template, for the third time in one session — and nothing was
- * watching the one generator outside `cat-harness/`.
- *
- * Making this derivable is bean-sized and is the real fix: teach
- * {@link strayBacktick} to skip a balanced `${…}`, then scan for the opener
- * and delete this array.
- */
-export const VIEWER_SOURCES = [
-  "cat-harness/scripts/gen-schema-viz.ts",
-  "cat-harness/scripts/gen-library-viz.ts",
-  "cat-harness/scripts/kg-viewer.ts",
-  "cat-harness/scripts/state-visualizer.ts",
-  "who-iris/scripts/gen-iris-pages.ts",
-];
+/** The line that opens a page template, and the only thing that selects a file. */
+export const PAGE_TEMPLATE_OPENER = /return\s+`<!doctype html>/i;
 
+/**
+ * Every source that builds a whole HTML page as one template literal.
+ *
+ * **Derived, and bean `57n3` is the reason it could not be before.** This was
+ * an array of four paths, and the honest note on it said so: deriving the set
+ * found twelve files, and the old detector reported two of them — both
+ * compiling — as defects, because it took the first unescaped backtick as the
+ * close and did not follow `${…}`. The array therefore encoded a
+ * PRECONDITION: its members obey their own NO BACKTICKS warning absolutely,
+ * which is what made the naive scan sound on them.
+ *
+ * {@link endOfTemplate} follows interpolations now, so the precondition is
+ * gone and the list with it. Measured after the fix: all seven generators
+ * report clean, and a backtick planted in a comment inside each one's page is
+ * still found — including in the two that could not be scanned at all before.
+ *
+ * **Tests are excluded by shape, and that is measured rather than tidy.**
+ * `scripts/tests/check-viewer-backticks.test.ts` carries a PLANTED stray at
+ * line 28 as a fixture; scanning it would fail the gate on its own evidence.
+ * The `.e2e.ts` files report clean today, so they are excluded for the other
+ * reason: a test is not a generator, and a gate that watches fixtures reports
+ * on pages nobody ships.
+ */
+export function viewerSources(root: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    let entries: string[];
+    try {
+      entries = readdirSync(dir).sort();
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      // Dot-prefixed on every segment, and `node_modules` because it is not
+      // this repository's code.
+      if (e.startsWith(".") || e === "node_modules") continue;
+      const p = join(dir, e);
+      let st;
+      try {
+        st = statSync(p);
+      } catch {
+        continue;
+      }
+      if (st.isDirectory()) {
+        walk(p);
+        continue;
+      }
+      if (!e.endsWith(".ts")) continue;
+      if (e.endsWith(".test.ts") || e.endsWith(".e2e.ts")) continue;
+      let src: string;
+      try {
+        src = readFileSync(p, "utf-8");
+      } catch {
+        continue;
+      }
+      if (PAGE_TEMPLATE_OPENER.test(src)) out.push(relative(root, p).split(sep).join("/"));
+    }
+  };
+  walk(root);
+  return out.sort();
+}
 export interface StrayBacktick {
   /** 1-based line of the backtick that closed the literal too early. */
   line: number;
@@ -108,24 +128,109 @@ export interface StrayBacktick {
  * without one is not a finding, because this list is a list of the generators
  * that have the trap, not of the files that must have it.
  */
+/**
+ * Index of the backtick that closes the template opened just before `from`,
+ * or `-1` when it never closes.
+ *
+ * **It follows `${…}`, and that is the whole of bean `57n3`.** The first
+ * version took the next unescaped backtick, full stop, which is right only
+ * for a file that obeys its own NO BACKTICKS warning absolutely. Two
+ * generators do not, legitimately:
+ *
+ *     <title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · docs-auto</title>
+ *
+ * The backticks there are inside an interpolation, which is CODE rather than
+ * page text, so they open and close a nested template and do not end this
+ * one. Reading them as the close reported two compiling files as defects.
+ *
+ * A backtick OUTSIDE an interpolation still closes the template, which is
+ * what keeps the trap caught: a backtick in a comment inside the page is
+ * ordinary text to the parser, and ending the literal there is exactly what
+ * goes wrong.
+ */
+function endOfTemplate(src: string, from: number): number {
+  for (let i = from; i < src.length; i++) {
+    const c = src[i];
+    if (c === "\\") {
+      i++;
+      continue;
+    }
+    if (c === "`") return i;
+    if (c === "$" && src[i + 1] === "{") {
+      const end = endOfInterpolation(src, i + 2);
+      if (end < 0) return -1;
+      i = end;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Index of the `}` closing an interpolation opened at `from`, or `-1`.
+ *
+ * Inside `${…}` the text is JavaScript, so a brace may be nested, a `}` may
+ * sit inside a string, and a backtick opens a template of its own. All three
+ * appear in the files this gate exists for — `${who ? \`…\` : "…"}` is one
+ * line of `dak-pdf.ts` — so none of them can be waved through.
+ */
+function endOfInterpolation(src: string, from: number): number {
+  let depth = 1;
+  for (let i = from; i < src.length; i++) {
+    const c = src[i];
+    if (c === "\\") {
+      i++;
+      continue;
+    }
+    if (c === "`") {
+      const end = endOfTemplate(src, i + 1);
+      if (end < 0) return -1;
+      i = end;
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      const end = endOfQuoted(src, i + 1, c);
+      if (end < 0) return -1;
+      i = end;
+      continue;
+    }
+    if (c === "{") depth++;
+    else if (c === "}") {
+      depth--;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+/** Index of the quote closing a string opened at `from`, or `-1`. */
+function endOfQuoted(src: string, from: number, quote: string): number {
+  for (let i = from; i < src.length; i++) {
+    if (src[i] === "\\") {
+      i++;
+      continue;
+    }
+    if (src[i] === quote) return i;
+    // An unterminated single-quoted string cannot span a line in valid TS, and
+    // treating a newline as the end keeps one typo from swallowing the file.
+    if (src[i] === "\n") return -1;
+  }
+  return -1;
+}
+
 export function strayBacktick(src: string): StrayBacktick | null {
   const open = /return\s+`<!doctype html>/i.exec(src);
   if (!open) return null;
-  let i = open.index + open[0].length;
 
-  // The first UNESCAPED backtick closes it. `\`` inside would be an escape;
-  // none of these files uses one, but skipping it costs a line and removing
-  // the need to think about it costs more.
-  for (; i < src.length; i++) {
-    if (src[i] === "\\") { i++; continue; }
-    if (src[i] === "`") break;
-  }
-  if (i >= src.length) return null;
+  const close = endOfTemplate(src, open.index + open[0].length);
+  // Never closed at all: the file does not parse for a different reason, and
+  // pointing at a backtick would be a guess. Could-not-determine, reported by
+  // the caller as no finding rather than as a clean bill.
+  if (close < 0) return null;
 
-  const before = src.slice(Math.max(0, i - 40), i);
+  const before = src.slice(Math.max(0, close - 40), close);
   if (/<\/html>\s*$/i.test(before)) return null;
 
-  const line = src.slice(0, i).split("\n").length;
+  const line = src.slice(0, close).split("\n").length;
   return { line, text: (src.split("\n")[line - 1] || "").trim() };
 }
 
@@ -134,15 +239,20 @@ function main(): void {
   const bad: string[] = [];
   let checked = 0;
 
-  for (const rel of VIEWER_SOURCES) {
-    let src: string;
-    try {
-      src = readFileSync(join(root, rel), "utf-8");
-    } catch {
-      // A generator that moved is a finding about THIS list, not a pass.
-      bad.push(`${rel}: not found — update VIEWER_SOURCES in check-viewer-backticks.ts`);
-      continue;
-    }
+  const sources = viewerSources(root);
+  // REPORTED, not counted. A generator that stops matching the opener drops
+  // out of a derived set in silence, which is the one way this can quietly
+  // stop watching something — so the set is printed and a reader can see a
+  // name go missing. A bare number could not show that.
+  if (sources.length === 0) {
+    console.error(
+      "✗ no source builds a page template — this repository has several, so the walk found nothing.\n" +
+        "  That is not a pass.",
+    );
+    process.exit(2);
+  }
+  for (const rel of sources) {
+    const src = readFileSync(join(root, rel), "utf-8");
     checked++;
     const hit = strayBacktick(src);
     if (hit) {
@@ -160,7 +270,8 @@ function main(): void {
     for (const b of bad) console.error(`  ${b}\n`);
     process.exit(1);
   }
-  console.log(`✓ ${checked} viewer page template(s) close where they should — no stray backtick.`);
+  console.log(`✓ ${checked} page template(s) close where they should — no stray backtick:`);
+  for (const rel of sources) console.log(`    ${rel}`);
 }
 
 if (import.meta.main) main();
