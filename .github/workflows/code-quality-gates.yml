@@ -597,6 +597,14 @@ jobs:
           # defect hid behind: PLATFORM meant the repo root in one test and
           # cat-harness/ in five siblings, in one directory.
           bun run check:anchor-names
+          # Bean `jijc`, under the owner's REPLACE ruling on `b5f0`:
+          # DECLARATION_FILENAME existed the whole time and 20 non-test call
+          # sites built the path from a literal instead, which is what turns
+          # the rename into a 121-file sweep. Prose, test fixtures, template
+          # construction and cross-instance sites are each CLASSIFIED and
+          # counted rather than failed -- and `docs/_data/harness.json` is a
+          # different file that must NOT be renamed.
+          bun run check:declaration-filename
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -628,6 +636,13 @@ jobs:
           bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A backtick inside a viewer's page template closes the string
+          # and turns the rest of the page into TypeScript. The compiler
+          # already refuses it, so this is about the MESSAGE: it names a
+          # token on the offending line and never mentions backticks, and
+          # four separate sessions have lost a build to that. Four in-file
+          # warnings did not stop it.
+          bun run check:viewer-backticks
           # One config per instance: `<name>.config.json` at the
           # instantiation root. This repository instantiates more than
           # one harness, so a single `harness.config.json` at the repo

@@ -49,6 +49,7 @@ import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.j
 import { termLayer } from "../schemas/vocabulary.js";
 import {
   BASE_GRAPH_KINDS,
+  DECLARATION_FILENAME,
   declaredAssets,
   declaredGraphs,
   declaredKinds,
@@ -1699,7 +1700,7 @@ function collectDeclaredAssets(doc: string, problems: string[], root: string = R
 }
 
 function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
-  const f = join(root, "harness.json");
+  const f = join(root, DECLARATION_FILENAME);
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {

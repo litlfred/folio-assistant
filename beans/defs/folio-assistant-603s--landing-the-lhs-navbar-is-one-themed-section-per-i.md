@@ -248,3 +248,19 @@ territory and is now visible rather than theoretical.
 - [ ] **The display panel** showing an instance's named display subgraphs.
 - [ ] **A tab for materialised local subgraphs and declared remote graphs**,
       and opening content indicating local or remote.
+
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **this bean's recorded answer to
+question 1 is superseded by an owner ruling.***
+
+This bean records *"this bean's question 1, answered: `harness.json` is what
+names an instance"*, and `harness-tiles.ts` scans for that filename. The owner
+ruled **REPLACE** on `b5f0` — `<name>.config.json` becomes the single
+declaration and `harness.json` goes — reconfirmed and widened 2026-09-21 to
+cover `cat-bootstrap/` and the `folio-assistant-*` instances.
+
+The scanner is repointed rather than defended. **Not edited here**: this is a
+sibling's bean, the ruling is recorded on `b5f0` where it was asked, and this
+note exists so the next agent reading question 1 does not implement against a
+superseded answer. The measured cost and the ordering are on `b5f0`.

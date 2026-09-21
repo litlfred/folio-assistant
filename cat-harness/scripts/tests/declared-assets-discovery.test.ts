@@ -28,7 +28,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { declaredInstances } from "../check-declared-assets.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = repoRootFor(resolve(import.meta.dir, "..", ".."));
 
@@ -69,7 +69,7 @@ describe("instances are discovered, not listed", () => {
     const root = mkdtempSync(join(tmpdir(), "assets-nested-"));
     mkdirSync(join(root, "sub"), { recursive: true });
     writeFileSync(
-      join(root, "sub", "harness.json"),
+      join(root, "sub", DECLARATION_FILENAME),
       JSON.stringify({ name: "sub", description: "d", directories: [] }),
     );
     expect(declaredInstances(root).map((p) => p.replace(root + "/", ""))).toContain("sub");

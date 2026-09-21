@@ -420,6 +420,9 @@ export const RULES: Rule[] = [
       // harness", and a page under `docs/` is exactly that.
       "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
       "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      // Guards the page template all four viewer generators build as one
+      // string literal; the generators are core, so its gate is too.
+      "scripts/check-viewer-backticks.ts",
       // Zod in `cat-bootstrap-tools` → JSON Schema in `cat-bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -556,6 +559,11 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Its subject is the harness's OWN declaration filename — which file
+      // names an instance — so it is harness by subject as well as by
+      // dependency: it imports `schemas/cat-harness.js` for the constant and
+      // nothing else, and a folio declares no instances. Bean `jijc`.
+      "scripts/check-declaration-filename.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",

@@ -46,6 +46,7 @@ import {
   queue,
   reviewer,
 } from "../narratives.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const AGENT = { kind: "agent" as const, id: "claude-code", model: "claude-opus-5" };
@@ -125,7 +126,7 @@ function repo(entries: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "narr-"));
   made.push(root);
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
   );
   for (const [slug, narrative] of Object.entries(entries)) {
@@ -266,7 +267,7 @@ describe("the queue shows exactly what is waiting on a person", () => {
   test("no library at all is an empty queue, not a crash", () => {
     const root = mkdtempSync(join(tmpdir(), "narr-none-"));
     made.push(root);
-    writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "x", directories: [] }));
+    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify({ name: "x", directories: [] }));
     expect(queue(root)).toEqual([]);
   });
 
@@ -350,7 +351,7 @@ function imagesRepo(): string {
   const root = mkdtempSync(join(tmpdir(), "narr-img-"));
   made.push(root);
   writeFileSync(
-    join(root, "harness.json"),
+    join(root, DECLARATION_FILENAME),
     JSON.stringify({ name: "fixture", directories: [{ id: "library", path: "library", dependents: "reproduce", graphs: ["library"] }] }),
   );
   mkdirSync(join(root, "library", "x"), { recursive: true });

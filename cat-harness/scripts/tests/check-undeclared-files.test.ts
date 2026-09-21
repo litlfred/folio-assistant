@@ -20,13 +20,14 @@ import {
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
 import "../../schemas/folio-graph-kind.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 /** A repository with one instance, which declares a repository-scoped directory. */
 function repo(): string {
   const root = mkdtempSync(join(tmpdir(), "undeclared-"));
   mkdirSync(join(root, "an-instance"), { recursive: true });
   writeFileSync(
-    join(root, "an-instance", "harness.json"),
+    join(root, "an-instance", DECLARATION_FILENAME),
     JSON.stringify(
       {
         name: "an-instance",
@@ -80,7 +81,7 @@ describe("the ROOT may itself be an instance", () => {
   function repoWithRootInstance(): string {
     const root = repo();
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify(
         { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
@@ -103,7 +104,7 @@ describe("the ROOT may itself be an instance", () => {
   });
 
   test("the root's own harness.json is accounted for", () => {
-    expect(accountedRootPaths(repoWithRootInstance()).get("harness.json")).toContain("own declaration");
+    expect(accountedRootPaths(repoWithRootInstance()).get(DECLARATION_FILENAME)).toContain("own declaration");
   });
 
   test("a root instance does NOT account for what it does not declare", () => {
@@ -129,7 +130,7 @@ describe("the ROOT may itself be an instance", () => {
     // BY ITSELF, and another declaration claiming its name does not unmake it.
     const root = repo();
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify(
         { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphs: ["uploads"] }] },
         null,
@@ -246,8 +247,8 @@ describe("this repository, as it stands", () => {
     // already fixed; this pins the property for whatever is declared next.
     const names = new Map<string, string[]>();
     for (const entry of readdirSync(REPO, { withFileTypes: true })) {
-      const rel = entry.isDirectory() ? join(entry.name, "harness.json") : null;
-      for (const p of [rel, entry.name === "harness.json" ? "harness.json" : null]) {
+      const rel = entry.isDirectory() ? join(entry.name, DECLARATION_FILENAME) : null;
+      for (const p of [rel, entry.name === DECLARATION_FILENAME ? DECLARATION_FILENAME : null]) {
         if (!p || !existsSync(join(REPO, p))) continue;
         const name = (JSON.parse(readFileSync(join(REPO, p), "utf-8")) as { name?: string }).name;
         if (name) names.set(name, [...(names.get(name) ?? []), p]);
@@ -331,7 +332,7 @@ describe("an instance's own declaration outranks another instance naming it", ()
     const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
     for (const [dir, decl] of Object.entries(byName)) {
       mkdirSync(join(root, dir), { recursive: true });
-      writeFileSync(join(root, dir, "harness.json"), JSON.stringify(decl, null, 2));
+      writeFileSync(join(root, dir, DECLARATION_FILENAME), JSON.stringify(decl, null, 2));
     }
     mkdirSync(join(root, secondName, "skills"), { recursive: true });
     writeFileSync(join(root, "package.json"), "{}");

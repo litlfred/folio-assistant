@@ -38,6 +38,7 @@ import {
 } from "../../schemas/cat-harness.js";
 import "../../schemas/folio-graph-kind.js";
 import { collect, formatReport, isClean } from "../check-asset-roles.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
@@ -161,7 +162,7 @@ describe("one table, and the keys an asset may not restate", () => {
   test("a stray key on an asset is reported, with the instance and the asset", () => {
     const root = mkdtempSync(join(tmpdir(), "asset-roles-"));
     writeFileSync(
-      join(root, "harness.json"),
+      join(root, DECLARATION_FILENAME),
       JSON.stringify({
         id: "probe",
         directories: [],
@@ -202,7 +203,7 @@ describe("one table, and the keys an asset may not restate", () => {
     // Reported loudly by `readDeclaration`, which throws; raising it a second
     // time here would send a reader to the wrong check.
     const root = mkdtempSync(join(tmpdir(), "asset-roles-bad-"));
-    writeFileSync(join(root, "harness.json"), "{ not json");
+    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json");
     expect(strayAssetRoleKeys(root)).toEqual([]);
   });
 

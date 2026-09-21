@@ -33,6 +33,7 @@
  * @module folio-assistant/scripts/check-bean-issue-links
  */
 
+import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -60,6 +61,26 @@ export const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
 /** `#123`, `issues/123`, or a full issue URL. Repo-qualified refs are kept whole. */
 const ISSUE_REF = /(?:issues\/(\d{1,6}))|(?:(?<![\w/])#(\d{1,6})\b)/g;
 
+/**
+ * The issue → bean direction, asked of the forge.
+ *
+ * `state` is three-valued on purpose. `unknown` is what a missing token, a
+ * rate limit or an unreachable API produces, and it is NEVER rendered as
+ * clean: a check that answers "no orphans" because it could not ask has
+ * asserted something about every issue in the repository on no evidence.
+ * That is the `dh4f` shape, and this check's own prose warned about it while
+ * the direction went unasked.
+ */
+export interface ReverseDirection {
+  state: "checked" | "unknown";
+  /** Open issues no open bean names. Empty when `unknown`. */
+  orphans: { number: number; title: string }[];
+  /** How many open issues were read. */
+  read: number;
+  /** Why it could not be asked. Set only when `unknown`. */
+  because?: string;
+}
+
 export interface BeanIssueReport {
   /** Issue number → the open beans naming it. */
   forward: Record<string, string[]>;
@@ -69,6 +90,8 @@ export interface BeanIssueReport {
   marksRead: number;
   /** Always present: what this check structurally cannot see. */
   undetermined: string;
+  /** The issue → bean direction. */
+  reverse: ReverseDirection;
 }
 
 /** Issue numbers this repository tracks a read-mark for. */
@@ -86,7 +109,65 @@ export function markedIssues(root: string): string[] {
   return [...new Set(out)].sort((a, b) => Number(a) - Number(b));
 }
 
-export function checkBeanIssueLinks(root: string = INSTANCE_ROOT): BeanIssueReport {
+/** `owner/repo` from the `origin` remote, or undefined when there is none. */
+export function originSlug(): string | undefined {
+  const url = spawnSync("git", ["remote", "get-url", "origin"], { encoding: "utf8" }).stdout?.trim();
+  const m = /github\.com[:/]([^/]+\/[^/.]+)/.exec(url ?? "");
+  return m?.[1];
+}
+
+/**
+ * Open issues, asked of GitHub.
+ *
+ * Pull requests are excluded: the REST issues endpoint returns them, and a PR
+ * is not an issue a bean should be expected to name. Measured on this
+ * repository, where the open PR count is a large fraction of the response.
+ */
+export async function fetchOpenIssues(): Promise<
+  { issues: { number: number; title: string }[] } | { because: string }
+> {
+  const slug = originSlug();
+  if (!slug) return { because: "no GitHub `origin` remote to ask about" };
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  const out: { number: number; title: string }[] = [];
+  try {
+    for (let page = 1; page <= 10; page++) {
+      const res = await fetch(
+        `https://api.github.com/repos/${slug}/issues?state=open&per_page=100&page=${page}`,
+        {
+          headers: {
+            accept: "application/vnd.github+json",
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          signal: AbortSignal.timeout(20_000),
+        },
+      );
+      if (!res.ok) {
+        return {
+          because:
+            `GitHub API returned ${res.status} for ${slug}` +
+            (res.status === 404 && !token
+              ? " — a private repo needs GITHUB_TOKEN or GH_TOKEN"
+              : res.status === 403
+                ? " — rate limited; set GITHUB_TOKEN to raise the limit"
+                : ""),
+        };
+      }
+      const body = (await res.json()) as { number: number; title: string; pull_request?: unknown }[];
+      if (body.length === 0) break;
+      for (const i of body) if (!i.pull_request) out.push({ number: i.number, title: i.title });
+      if (body.length < 100) break;
+    }
+  } catch (e) {
+    return { because: `could not reach the GitHub API: ${String(e).slice(0, 120)}` };
+  }
+  return { issues: out };
+}
+
+export function checkBeanIssueLinks(
+  root: string = INSTANCE_ROOT,
+  reverse?: ReverseDirection,
+): BeanIssueReport {
   const undetermined =
     "issue → bean for every OTHER issue needs the GitHub API and is NOT checked here; " +
     "read this as unknown, never as clean.";
@@ -106,7 +187,16 @@ export function checkBeanIssueLinks(root: string = INSTANCE_ROOT): BeanIssueRepo
     untracked: marks.filter((n) => !forward[n]),
     marksRead: marks.length,
     undetermined,
+    reverse: reverse ?? { state: "unknown", orphans: [], read: 0, because: "not asked" },
   };
+}
+
+/** Which open issues no open bean names. Pure: the caller does the asking. */
+export function orphanIssues(
+  forward: Record<string, string[]>,
+  issues: { number: number; title: string }[],
+): { number: number; title: string }[] {
+  return issues.filter((i) => !forward[String(i.number)]);
 }
 
 function formatReport(r: BeanIssueReport): string {
@@ -122,14 +212,45 @@ function formatReport(r: BeanIssueReport): string {
     out.push("  Name the issue in the bean that owns its subject, or open one. See");
     out.push("  skills/folio-core/issue-working.md §\"When the work has a BEAN and no issue\".");
   }
-  out.push(`  ? ${r.undetermined}`);
+  if (r.reverse.state === "unknown") {
+    // NOT a pass. The direction was the whole of this bean's second
+    // Done-when, and reporting silence as agreement is the defect the rest of
+    // this repository's checks are built to refuse.
+    out.push(`  ? issue → bean NOT checked — ${r.reverse.because}. Read as unknown, never as clean.`);
+  } else if (r.reverse.orphans.length === 0) {
+    out.push(`  ✓ every one of ${r.reverse.read} open issue(s) is named by an open bean`);
+  } else {
+    out.push(
+      `  · ${r.reverse.orphans.length} of ${r.reverse.read} open issue(s) are named by no open bean —` +
+        ` counted, not failed:`,
+    );
+    for (const o of r.reverse.orphans.slice(0, 10)) {
+      out.push(`      #${o.number}  ${o.title.slice(0, 70)}`);
+    }
+    if (r.reverse.orphans.length > 10) {
+      out.push(`      …and ${r.reverse.orphans.length - 10} more (\`--json\` lists them)`);
+    }
+    out.push("");
+    out.push("  An issue with no bean is not automatically a defect — somebody else's issue,");
+    out.push("  a question, a discussion. It IS the work plan not reaching it, which is what");
+    out.push("  `oh78` asked to be able to see. Failing on it would make this check a demand");
+    out.push("  that every issue in the repository become somebody's bean.");
+  }
   return out.join("\n");
 }
 
 if (import.meta.main) {
   let report: BeanIssueReport;
   try {
-    report = checkBeanIssueLinks();
+    // The forward direction first, so the reverse one's failure cannot cost
+    // the answer this check already had.
+    const dry = checkBeanIssueLinks();
+    const asked = process.argv.includes("--offline") ? { because: "--offline" } : await fetchOpenIssues();
+    const reverse: ReverseDirection =
+      "issues" in asked
+        ? { state: "checked", orphans: orphanIssues(dry.forward, asked.issues), read: asked.issues.length }
+        : { state: "unknown", orphans: [], read: 0, because: asked.because };
+    report = checkBeanIssueLinks(INSTANCE_ROOT, reverse);
   } catch (e) {
     console.error(`Could not check bean/issue links: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");

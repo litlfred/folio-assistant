@@ -71,6 +71,37 @@ Two consequences worth knowing before you write the declaration:
   rather than from a memorised path — which is why step 1 is the declaration
   and not a directory listing.
 
+## If you are creating a new instance KIND, not a new instance
+
+Everything above assumes you are making **another instance of an existing
+kind** — a `folio-assistant` instance, using this harness's vocabulary. Making
+a new *kind* is a different act, and it changes which of the files you inherit
+are yours.
+
+**The files you inherit that are POINTERS belong to you.** The first one is
+[`cat-bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/README.md)
+— the page an Initiator reads before it knows anything about the repository.
+It is written for *this* repository: it resolves 13 links into
+`../cat-harness/`, across 6 files, and every one of them is a **term
+definition** — what a role is, what a DAK block is, what a harness declaration
+is.
+
+Bootstrap a new instance kind that is not built on `cat-harness`, and your
+first reader gets a page whose every definition points into a harness they are
+not using. **Repointing it is expected**, not a modification of platform code:
+aim the links at whatever layer defines *your* vocabulary. Keep the
+user-scenario structure — persona, user scenario, business process, functional
+requirement — because that is the formalism the bootstrap process reads; change
+only where the terms resolve.
+
+Files that are a MECHANISM rather than a pointer are the opposite: they belong
+to the layer that ships them, and editing one is a platform change with every
+gate that implies.
+
+The naming rules, the prefix families, what a new graph kind must declare, and
+the test that usually says *"this is not a new kind"* are in the
+[`instance-kinds`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/instance-kinds.html) skill.
+
 ## If you cannot finish
 
 **Stop, and leave the repository un-initialised.** An unbootstrapped repository

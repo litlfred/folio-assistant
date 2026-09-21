@@ -29,6 +29,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { compose, docsLayers, mergeConfig, treeDigest } from "../compose-docs.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 import { parse as parseYaml } from "yaml";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
@@ -60,7 +61,7 @@ const layerDir = (root: string, id: string): string => {
 function fixture(base: Record<string, string>, overlay: Record<string, string>): string {
   const root = mkdtempSync(join(tmpdir(), "composedocs-"));
   mkdirSync(join(root, INSTANCE), { recursive: true });
-  writeFileSync(join(root, INSTANCE, "harness.json"), JSON.stringify({ name: INSTANCE, directories: ENTRIES }));
+  writeFileSync(join(root, INSTANCE, DECLARATION_FILENAME), JSON.stringify({ name: INSTANCE, directories: ENTRIES }));
   for (const [where, files] of [
     [layerDir(root, "docs"), base],
     [layerDir(root, "root-docs"), overlay],

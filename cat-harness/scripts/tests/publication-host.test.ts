@@ -20,6 +20,7 @@ import {
   publicationLinkStyleConflict,
   } from "../../schemas/cat-harness.ts";
 import { resolveHarnessConfigPath } from "../../schemas/harness-config.ts";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
@@ -28,7 +29,7 @@ const temps: string[] = [];
 function instance(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "publication-host-"));
   temps.push(dir);
-  writeFileSync(join(dir, "harness.json"), body);
+  writeFileSync(join(dir, DECLARATION_FILENAME), body);
   return dir;
 }
 

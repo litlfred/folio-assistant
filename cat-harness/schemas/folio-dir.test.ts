@@ -7,7 +7,7 @@
  *
  * @module schemas/folio-dir.test
  */
-import { folioDir } from "./cat-harness.js";
+import { DECLARATION_FILENAME, folioDir } from "./cat-harness.js";
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -23,7 +23,7 @@ import "./folio-graph-kind.js";
 function repo(declaration?: Record<string, unknown>): string {
   const root = mkdtempSync(join(tmpdir(), "folio-dir-"));
   if (declaration) {
-    writeFileSync(join(root, "harness.json"), JSON.stringify(declaration, null, 2));
+    writeFileSync(join(root, DECLARATION_FILENAME), JSON.stringify(declaration, null, 2));
   }
   return root;
 }
@@ -74,7 +74,7 @@ describe("folioDir", () => {
 
   test("a MALFORMED declaration throws rather than guessing", () => {
     const root = mkdtempSync(join(tmpdir(), "folio-dir-bad-"));
-    writeFileSync(join(root, "harness.json"), "{ not json at all");
+    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json at all");
     // The convention would be a plausible answer to a question that could not
     // be asked. A broken declaration is a fault, not a default.
     expect(() => folioDir(root)).toThrow();

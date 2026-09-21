@@ -54,7 +54,7 @@ export const RepositoryRefSchema = z.object({
       "Which part this repository plays. A flat list loses the distinction, and the distinction is the whole reason for determining them: it is where the new declaration lands.",
     ),
   note: z.string().optional(),
-});
+}).strict();
 export type RepositoryRef = z.infer<typeof RepositoryRefSchema>;
 
 /** Which unknowns the exchange is to settle. */
@@ -73,7 +73,7 @@ export const ParticipantSchema = z.object({
     .string()
     .optional()
     .describe("Session id, handle or name, where one is known. Absent is normal for a person."),
-});
+}).strict();
 export type Participant = z.infer<typeof ParticipantSchema>;
 
 /**
@@ -109,7 +109,7 @@ export const DiscussionInputSchema = z.object({
     .describe(
       "What the agent read to get this far, in one or two sentences. Lets the participant answer without re-establishing the situation.",
     ),
-});
+}).strict();
 export type DiscussionInput = z.infer<typeof DiscussionInputSchema>;
 
 /** One question put, and what came back. */
@@ -126,7 +126,7 @@ export const ExchangeEntrySchema = z.object({
       "The reply as received. Absent means the question was put and nothing came back, which is one route to `unsettled`.",
     ),
   at: z.string().datetime().optional(),
-});
+}).strict();
 export type ExchangeEntry = z.infer<typeof ExchangeEntrySchema>;
 
 /**
@@ -186,7 +186,7 @@ export const DiscussionOutputObjectSchema = z.object({
     .describe(
       "Required in substance when `outcome` is `unsettled`: what remains undetermined, so the next actor resumes rather than restarts.",
     ),
-});
+}).strict();
 
 /**
  * What the exchange determined: which harness, which repositories, on whose
