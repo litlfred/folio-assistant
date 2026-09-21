@@ -4085,14 +4085,14 @@
     {
       "id": "folio-assistant-qgpo",
       "title": "A workflow must publish every foreign document its own graph links into",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T18:27:04Z",
-      "updatedAt": "2026-09-21T18:27:04Z",
+      "updatedAt": "2026-09-21T20:44:25Z",
       "preview": "Found while closing `3jhq`, and deliberately not attempted there.\n\n## The gap, stated precisely\n\n`check:published-instance-exports` (from `u1iu`/#725, widened in `3jhq`) checks\nthat every `kg-export --instance` invocation a workflow runs **succeeds**. It\ndoes not check that a workflow publishes everything its own graph **links\ninto**.\n\nSo the defect `3jhq` was opened for would not be caught by the",
       "file": "beans/defs/folio-assistant-qgpo--a-workflow-must-publish-every-foreign-document-its.md"
     },
