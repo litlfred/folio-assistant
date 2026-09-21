@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld",
   "repository": "cat-bootstrap",
-  "generatedAt": "2026-09-21T20:11:39.831Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f96ab38458c2384949081ee8356bcf0bb5ec5724",
-  "sourceCommitSha": "f96ab38458c2384949081ee8356bcf0bb5ec5724",
-  "sourceCommitAt": "2026-09-21T20:08:42Z",
+  "generatedAt": "2026-09-21T20:30:35.760Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9ff6f70e436d07fb49372f4fa27a0867e2068242",
+  "sourceCommitSha": "9ff6f70e436d07fb49372f4fa27a0867e2068242",
+  "sourceCommitAt": "2026-09-21T20:28:42Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -770,6 +770,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#role/Initiator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/root-readme"
       ],
@@ -1308,7 +1309,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/cat-bootstrap-kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/confirm-harness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/log-message",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#skill/root-readme"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-bootstrap.jsonld#role/Initiator"
@@ -1422,8 +1424,8 @@
   ],
   "staging": {
     "branch": "claude/bean-8h42-layout",
-    "sha": "815b4865461f13476f1732b577e3f55dc381114c",
+    "sha": "2370c25ef46be0a839c2da05ab049ac37e71aedf",
     "pr": "773/merge",
-    "run": "35649232252"
+    "run": "35651318728"
   }
 }
