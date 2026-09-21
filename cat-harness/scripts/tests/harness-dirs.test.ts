@@ -259,7 +259,10 @@ describe("the config name — `<instance>.config.json`, and only that", () => {
     // declaration and the config together for exactly this reason.
     const root = scratchStore();
     try {
-      rmSync(declarationPathIn(root)!, { force: true });
+      // May be absent already — the point of the fixture is a directory that
+      // declares nothing, and `declarationPathIn` is `undefined` for one.
+      const declared = declarationPathIn(root);
+      if (declared !== undefined) rmSync(declared, { force: true });
       writeFileSync(join(root, "anything.config.json"), JSON.stringify({ contentType: "paper" }));
       expect(resolveHarnessConfigPath(root)).toBeUndefined();
       expect(readHarnessConfig(root)).toBeNull();

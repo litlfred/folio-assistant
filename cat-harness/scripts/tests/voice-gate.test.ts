@@ -11,7 +11,7 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
-import { existsSync, readFileSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 

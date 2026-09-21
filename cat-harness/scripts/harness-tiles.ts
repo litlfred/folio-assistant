@@ -196,7 +196,7 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   // literal, and it was right to: an instance may publish from anywhere, and
   // this function would have quietly answered "no folio view" for one that
   // did.
-  if (!findDeclarationFile(dir) !== undefined) return undefined;
+  if (findDeclarationFile(dir) === undefined) return undefined;
   return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 

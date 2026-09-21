@@ -7,7 +7,7 @@
  * text in another repo would cite evidence its own instance cannot resolve."*
  */
 import { describe, expect, it } from "bun:test";
-import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "fs";
+import { mkdirSync, mkdtempSync, readdirSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";

@@ -60,7 +60,7 @@
  * with findings.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { findDeclarationFile, instanceRootFor, readDeclaration, repoRootFor, rootForScope } from "../schemas/cat-harness.js";

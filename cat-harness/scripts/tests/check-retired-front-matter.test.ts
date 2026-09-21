@@ -17,7 +17,7 @@ import { describe, expect, test } from "bun:test";
 
 import { RETIRED, scan } from "../check-retired-front-matter.ts";
 import { parseFrontMatter } from "../../schemas/front-matter.ts";
-import { directoryForGraph, repoRootFor, declarationPathIn } from "../../schemas/cat-harness.ts";
+import { directoryForGraph, repoRootFor } from "../../schemas/cat-harness.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 

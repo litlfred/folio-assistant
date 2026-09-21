@@ -125,47 +125,47 @@
       "result": "fail",
       "findings": [
         {
-          "where": "agent-skills/harness.json",
+          "where": "agent-skills/agent-skills.config.json",
           "detail": "nested instance \"agent-skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "cat-bootstrap-tools/harness.json",
+          "where": "cat-bootstrap-tools/cat-bootstrap-tools.config.json",
           "detail": "nested instance \"cat-bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "cat-bootstrap/harness.json",
+          "where": "cat-bootstrap/cat-bootstrap.config.json",
           "detail": "nested instance \"cat-bootstrap\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "detangle/harness.json",
+          "where": "detangle/detangle.config.json",
           "detail": "nested instance \"detangle\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "folio-assistant-core/harness.json",
+          "where": "folio-assistant-core/folio-assistant-core.config.json",
           "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "folio-assistant-sci/harness.json",
+          "where": "folio-assistant-sci/folio-assistant-sci.config.json",
           "detail": "nested instance \"folio-assistant-sci\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "harness.json",
+          "where": "folio-assistant.config.json",
           "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "kg-navigation/harness.json",
+          "where": "kg-navigation/kg-navigation.config.json",
           "detail": "nested instance \"kg-navigation\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "large-datasets/harness.json",
+          "where": "large-datasets/large-datasets.config.json",
           "detail": "nested instance \"large-datasets\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "who-iris/harness.json",
+          "where": "who-iris/who-iris.config.json",
           "detail": "nested instance \"who-iris\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "who-style-guide/harness.json",
+          "where": "who-style-guide/who-style-guide.config.json",
           "detail": "nested instance \"who-style-guide\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         }
       ]
