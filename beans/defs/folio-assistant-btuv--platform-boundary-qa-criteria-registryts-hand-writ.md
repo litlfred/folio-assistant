@@ -1,11 +1,11 @@
 ---
 # folio-assistant-btuv
 title: 'PLATFORM BOUNDARY: qa-criteria-registry.ts hand-writes one criterion per VOICE, three of them WHO, restating another instance''s rules uncited'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-21T16:26:49Z
-updated_at: 2026-09-21T16:26:49Z
+updated_at: 2026-09-21T16:29:43Z
 parent: folio-assistant-vuip
 ---
 

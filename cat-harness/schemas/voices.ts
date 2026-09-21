@@ -346,6 +346,29 @@ export const VoiceProfileSchema = z.object({
     )
     .min(1, "a voice must name at least one source — ingested or a KG node"),
   rules: z.array(VoiceRuleSchema).min(1),
+
+  /**
+   * How severe a finding against THIS VOICE AS A WHOLE is, for the overlay
+   * criterion derived from it.
+   *
+   * ## It is declared because it is not derivable, and that was measured
+   *
+   * The obvious rule — take the worst rule's severity — is wrong. Against the
+   * four voices this repository shipped when the criteria were hand-written,
+   * it agrees twice and disagrees twice: `who-publication-design` carries two
+   * `critical` rules and its criterion was registered `major`, while `milnor`'s
+   * worst rule is `major` and its criterion was registered `minor`. So the
+   * overlay's weight is an editorial judgement about the voice, not a maximum
+   * over its rules, and deriving it would have silently re-graded two of four.
+   *
+   * ## Absent is a documented default, not unknown
+   *
+   * A voice that declares none gets `major` — the middle grade, and the one a
+   * reader can act on without it either blocking a build or being ignored.
+   * Stated here rather than at the call site so every consumer reads one
+   * answer. A voice that means something else says so.
+   */
+  overlaySeverity: z.enum(["critical", "major", "minor"]).optional(),
   /** Block kinds this voice audits. Absent means every kind the folio has. */
   appliesTo: z.array(z.string().min(1)).optional(),
   /**
