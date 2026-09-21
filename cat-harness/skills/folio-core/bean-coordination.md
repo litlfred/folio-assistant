@@ -250,6 +250,48 @@ Stopping because you are *blocked* is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
 [`bean-blocking.md`](bean-blocking.md).
 
+### Re-derive from the REMOTE, never from your checkout (STRICT)
+
+Obligation 1 says re-derive the evidence. **Where you read it from is part of
+the evidence**, and getting that wrong produces a finding that is confident,
+specific and false — which is worse than no finding, because it sends the next
+reader off to verify an accusation.
+
+**Two occurrences in one session, 2026-09-21, bean `pomp`.** Both were
+published before being caught: one to a commit message, a PR body AND an issue
+comment.
+
+| | the claim | what was true |
+|---|---|---|
+| 1 | *"`gen-iris-pages.ts` has no `OWNED`, no prune, no orphan code — checked rather than assumed"* | `OWNED` is at line 104; the prune runs at 1575–1601 |
+| 2 | *"`compose-docs.ts` is absent from main — a workflow step landed without its script, breaking every PR"* | the commit added the step, a 249-line script and a 209-line test together |
+
+Two causes, and they need different guards:
+
+**A branch older than the claim.** Grepping the working tree answers *"is this
+in MY base"*, which is a different question from *"does this exist"*. Occurrence
+1 grepped a checkout branched before the commit it was denying.
+
+> Ask the remote: `git show origin/main:<path>`, `git log origin/main -- <path>`.
+> Never `grep` over the checkout to prove an absence.
+
+**A fetch in the same compound command is not a barrier.** Occurrence 2 ran
+`git fetch -q origin main && git cat-file -e origin/main:<path>` — which looks
+airtight and is not, because sibling sessions merge every few minutes here. The
+ref was current when fetched and stale when read.
+
+> Fetch, then read in a **separate** command, and re-read before publishing.
+
+Neither guard catches the third case — a file that exists only on an open PR's
+head. When the claim is *"nobody has built this"*, check the open branches too;
+this session started building `ankg`, `s8nu` and a `viewer-prune` module that
+siblings had already landed or had in flight, **five times**, and the check that
+would have prevented each is one `git diff --name-only origin/main...<branch>`.
+
+**The cost is asymmetric, which is why this is STRICT.** A missed finding is a
+bean that stays open one more day. A false one about a sibling's work is a
+correction, a retraction, and a reader who now trusts the next finding less.
+
 ### When you cannot re-derive it yourself — `ready-to-close`
 
 Obligation 1 is the expensive one, and it is where the rule above stalls.
