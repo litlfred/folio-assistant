@@ -44,7 +44,7 @@ library through the declaration rather than through a path anyone wrote down.
 
 ## How it is reached
 
-`folio-assistant-sci.config.json` here declares `library/` under the conventional id, so this
+`folio-assistant-sci.json` here declares `library/` under the conventional id, so this
 instance's own tooling resolves it directly. `cat-harness/harness.json`
 additionally declares it as `folio-assistant-sci-library`, repository-scoped,
 because the consumers that scan libraries — `check:l1-complete`, the narrative

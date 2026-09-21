@@ -452,3 +452,70 @@ that, however it first arrived on disk.
 - [ ] `ensure-landing-sticky`'s write is documented AS a repair at its call
       site, so a later reader does not take it for maintenance and reclassify
       the file
+
+## §1 REVERSED, owner, 2026-09-21 — the OTHER option, `<name>.json` + `<name>.config.json`
+
+> "rename the stub need cat-harness.config.json and cat-harness/cat-harness.json,
+> same for folio-assistant (instance, declration)"
+> — and, when the conflict with the REPLACE ruling was put back to them, "1".
+
+**This bean asked the question and then recorded the wrong half as settled.**
+§1 offered two options and said the ruling *"does not decide this, because the
+question had not been asked when it was made"*. The 2026-09-20 ruling — `"1
+REPLACE"` — then answered it as MERGE, and `6n23`/#695 implemented that
+faithfully. The owner has now taken the option §1 itself described:
+
+> `<name>.json` + `<name>.config.json` **would at least pair them**.
+
+### Why the merge was worth reversing, in the terms §1 already used
+
+§1's own objection to `cat-harness.config.json` beside `harness.json` was that
+*"nothing in either name says which is which"*. The merge did not remove that;
+it **moved** it. After #695 the tree carried two different schemas, with two
+different readers, under one filename shape:
+
+    <root>/cat-harness.config.json             contentType, feedbackDir, skills
+                                               HarnessConfigSchema / readHarnessConfig
+    cat-harness/cat-harness.config.json        name, directories, stub, assets
+                                               CatHarnessDeclarationSchema / readDeclaration
+
+Told apart only by which directory they sat in. The split gives each its own
+name and the pair is legible without knowing where you are.
+
+### What made it cheap, and it was NOT this bean
+
+`#695` did the hard half. It replaced the fixed `DECLARATION_FILENAME` with a
+SUFFIX plus `findDeclarationFile`, which takes the file whose **filename stem
+equals its own declared `name`**. Moving the suffix was then one edit.
+
+That check is also what answered migration-plan I.8, whose objection had been
+the reason not to do this at all: *"a FIXED declaration filename is what lets a
+consumer open a repo it has never seen. A per-repo config name fails silently —
+a resolver deriving it from the DIRECTORY finds nothing when the repo is cloned
+elsewhere."* Nothing derives a filename from a directory. A declaration is
+SELF-IDENTIFYING, so a renamed clone still resolves, and `kg-export.test.ts`
+now asserts that property where it used to assert the fixed name.
+
+### The failure mode the change had, three times, in three places
+
+A bare `.json` suffix matches almost every file; `.config.json` matched almost
+none. Every defect this migration produced was that one shape:
+
+| where | what it claimed | cost |
+|---|---|---|
+| `content-types-base.ts` marker fallback | `dak.json` is a harness marker | a DAK repo reported as carrying a harness it has not got |
+| `check-undeclared-files.test.ts` | `tsconfig.json` is a declaration | JSONC comments threw a parse error |
+| `findDeclarationFile` broken-file path | a malformed `folio/landing.json` is a broken declaration | `readDeclaration` taken down by a landing sticky |
+
+**The suffix is not the discriminator; agreeing with your own `name` is.** Each
+was fixed by keying on `CONFIG_SUFFIX` or by going through
+`findDeclarationFile` — never by widening the guess.
+
+### Done
+
+12 declarations renamed; the ROOT's merged file split back into
+`folio-assistant.json` + `folio-assistant.config.json`; `CONFIG_SUFFIX` and
+`instanceDeclarationFilename` added so the two filenames have two spellers;
+`init-folio` and the test fixtures write two files again. 5172 unit tests,
+89 gates, 222 browser tests — all green.
+

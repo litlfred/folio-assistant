@@ -38,5 +38,5 @@ not been validated.
 
 ---
 
-*A declared asset of this instance ([`large-datasets.config.json`](large-datasets.config.json), role
+*A declared asset of this instance ([`large-datasets.json`](large-datasets.json), role
 `agent-instructions`). Issue #592.*
