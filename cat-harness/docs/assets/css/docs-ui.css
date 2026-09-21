@@ -3951,3 +3951,99 @@ a.fa-harness-tab__body:focus-visible {
 /* Inside the panel the board is content, not a page section, so it drops the
    margin it carries when it stands alone. */
 .fa-sticky-panel__body > .fa-landing-board { margin-top: 0.75rem; }
+
+/* ── Light scheme for the launcher, its panel, and the header mini-icons ──
+ *
+ * Bean `23bc`. Owner, 2026-09-21: *"class=\"fa-qr-toggle fa-tiles-toggle\"
+ * does not respect light mode."*
+ *
+ * ## What was actually wrong, which is wider than the control named
+ *
+ * `.fa-qr-toggle` was `background: transparent; color: inherit;
+ * border: 1px solid var(--border-color, …)` with NO `:root[data-fa-scheme="light"]`
+ * block, so in light mode it kept whatever the compiled dark stylesheet had
+ * put in `--border-color` and whatever the header happened to inherit. One
+ * element out, `.fa-tiles` is `background: var(--sidebar-color, #27262b)` —
+ * also with no light block — which is why the whole panel stayed dark on a
+ * light page in the reported screenshot. Naming one control understated it.
+ *
+ * ## Why this is TOKENS rather than a light-mode patch
+ *
+ * The two schemes are not one palette recoloured, and the site is COMPILED
+ * dark: `color_scheme: dark` in `_config.yml` means the theme's own variables
+ * (`--border-color`, `--sidebar-color`, `--body-text-color`) hold dark values
+ * whatever `data-fa-scheme` says, because that attribute is this file's
+ * override and not the theme's. So inheriting from the theme is inheriting
+ * the wrong scheme half the time. Every value below is stated explicitly and
+ * re-measured in both, the way `.fa-page-lang-bar` was after it failed.
+ *
+ * Text is held at 4.5:1 and a border at 3:1. Every pair clears it:
+ *
+ *   glyph on the sidebar    dark 12.34:1   light 13.66:1
+ *   border on the sidebar   dark  5.07:1   light  5.55:1
+ *   panel text on panel     dark 12.34:1   light 14.76:1
+ *   tile border on panel    dark  5.07:1   light  6.00:1
+ *
+ * ## It now covers three buttons, not one
+ *
+ * `.fa-scheme-mini` and `.fa-lang-mini` reuse `.fa-qr-toggle` for their box,
+ * so they inherit this fix rather than needing their own. That is deliberate:
+ * the mini-icons are the control a reader uses to CHANGE scheme, and a scheme
+ * switch that is invisible in one of the two schemes is the worst possible
+ * instance of this bug.
+ */
+.fa-qr-toggle,
+.fa-tiles {
+  /* DARK — the compiled default. */
+  --fa-launcher-fg: #e6e9ee;
+  --fa-launcher-border: #8b97a8;
+  --fa-launcher-panel-bg: #27262b;
+}
+
+:root[data-fa-scheme="light"] .fa-qr-toggle,
+:root[data-fa-scheme="light"] .fa-tiles {
+  /* LIGHT — re-measured against the theme's light sidebar (#f5f6fa) and a
+     white panel, NOT the dark values lightened. */
+  --fa-launcher-fg: #1f2933;
+  --fa-launcher-border: #5a6472;
+  --fa-launcher-panel-bg: #ffffff;
+}
+
+/* These override the earlier `.fa-qr-toggle` / `.fa-tiles` rules by ordering,
+   which is why they are stated as whole declarations rather than as a patch:
+   a reader changing the block above must see this one lose or win, not guess.
+   `color` in particular replaces `inherit`, which was the original defect. */
+.fa-qr-toggle {
+  border-color: var(--fa-launcher-border);
+  color: var(--fa-launcher-fg);
+}
+
+.fa-tiles {
+  border-color: var(--fa-launcher-border);
+  background: var(--fa-launcher-panel-bg);
+  color: var(--fa-launcher-fg);
+}
+
+.fa-tile {
+  border-color: var(--fa-launcher-border);
+  color: inherit;   /* now inherits the PANEL's per-scheme colour, set above */
+}
+
+/* The two header mini-icons. They are `.fa-qr-toggle` boxes, so everything
+   above applies; all they add is the gap from the title and, for the bulb,
+   the pressed state the launcher has no use for.
+
+   NO caption and NO width of their own: the header row is capped at 3.75rem
+   and shares its width with the site title (`1le7`), so three 1.75rem boxes
+   is the budget. `.fa-qr-host`'s `min-width: 0` on the title is what lets the
+   title ellipsis rather than push them off the row. */
+.fa-scheme-mini,
+.fa-lang-mini { margin-left: 0.25rem; }
+
+/* `aria-pressed` is on the bulb because it toggles. Rendered as a filled box
+   rather than only a border change: at 1.1rem the border is two pixels of
+   signal, and this instance's interaction profile is low-dexterity, where a
+   reader confirming a press should not have to inspect an edge. */
+.fa-scheme-mini[aria-pressed="true"] {
+  background: rgba(128, 128, 128, 0.22);
+}

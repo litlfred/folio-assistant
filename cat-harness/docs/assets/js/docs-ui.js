@@ -387,20 +387,82 @@
     return true;
   }
 
+  /* ── ONE scheme, TWO controls that must never disagree ─────────────────
+   *
+   * The light/dark switch now exists in two places: the Settings tile it has
+   * always had, and a mini-button in the header row (owner, 2026-09-21:
+   * *"can you put dark/light mode switch in mini-icon on top as well as
+   * language icon. to right of folio-asst, to left of the [3x3 checkboard]"*).
+   *
+   * Two buttons over one fact is how a control starts lying: press the header
+   * one and the tile still shows the old bulb, so the next reader to open
+   * Settings sees "Light" on a dark page. So NEITHER button owns the state.
+   * Each REGISTERS a painter here, one click path mutates, and every
+   * registered painter repaints. Adding a third control is one more
+   * `registerSchemePainter` call and no new coordination.
+   *
+   * This is the same rule the search field is moved rather than rebuilt for:
+   * a second copy that looks identical and disagrees is worse than no copy.
+   */
+  var schemePainters = [];
+  var schemeInitialised = false;
+
+  /**
+   * Apply the reader's STORED choice once, before any control paints.
+   *
+   * Idempotent, because both controls call it and either may mount first --
+   * and their order is not fixed: the tile is built lazily when Settings is
+   * first opened, while the header button mounts on load. `jtd.getTheme()`
+   * reflects the stylesheet the SERVER sent, which does not know what this
+   * reader picked last visit, so without this the page paints in the
+   * configured scheme and then flips.
+   */
+  function initScheme() {
+    if (schemeInitialised) return;
+    schemeInitialised = true;
+    var scheme = currentScheme();
+    if (storedScheme()) applyScheme(scheme);
+    else document.documentElement.setAttribute("data-fa-scheme", scheme);
+  }
+
+  /** Register a control's painter and paint it immediately, so it is never
+   *  briefly showing a scheme the page is not in. */
+  function registerSchemePainter(paint) {
+    initScheme();
+    schemePainters.push(paint);
+    paint(currentScheme());
+  }
+
+  /** The ONE mutation path. Every control calls this and none sets the
+   *  scheme itself. */
+  function toggleScheme() {
+    var next = currentScheme() === "light" ? "dark" : "light";
+    if (!applyScheme(next)) return;
+    try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
+    for (var i = 0; i < schemePainters.length; i++) schemePainters[i](next);
+
+    // No reload. Diagrams are pinned to Mermaid's LIGHT palette on a white
+    // card in both schemes (docs/_includes/mermaid_config.js), so nothing on
+    // the page needs re-rendering when the scheme changes. An earlier version
+    // reloaded here because the diagram palette followed the scheme; that
+    // coupling is gone and the reload went with it.
+  }
+
   /**
    * The light/dark control, as a tile.
    *
-   * The owner placed it "under settings" rather than in the top row, which is
-   * the right call and worth recording: it is the one control here a reader
-   * sets once and then never touches, so it costs a row of prime space for a
-   * single use. It keeps its own class so the e2e spec and any muscle memory
-   * in the stylesheet still find it.
+   * The owner originally placed it "under settings" rather than in the top
+   * row, and that reasoning still holds for the TILE: it is a control a
+   * reader sets once, so it does not earn prime space on its own. What
+   * changed 2026-09-21 is that the owner asked for a header mini-button TOO
+   * -- so this is no longer the only way in, and it keeps its class because
+   * the e2e spec and the stylesheet still find it by that name.
    */
   function buildThemeTile() {
     var btn = el("button", { type: "button", class: "fa-tile fa-theme-toggle" });
     var caption = el("span", { class: "fa-tile-caption" });
 
-    function paint(name) {
+    registerSchemePainter(function (name) {
       // The icon shows the scheme you are IN, not the one you would get. A
       // lit bulb for light, a struck-through one for dark. Labelling it with
       // the destination instead is the other convention and is a coin-flip
@@ -413,29 +475,34 @@
       btn.setAttribute("aria-label",
         name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
       btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
-    }
-
-    var scheme = currentScheme();
-    // Apply the stored choice even on first paint: `jtd.getTheme()` reflects
-    // the stylesheet the server sent, which does not know what this reader
-    // picked last visit.
-    if (storedScheme()) applyScheme(scheme);
-    else document.documentElement.setAttribute("data-fa-scheme", scheme);
-    paint(scheme);
-
-    btn.addEventListener("click", function () {
-      var next = currentScheme() === "light" ? "dark" : "light";
-      if (!applyScheme(next)) return;
-      try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
-      paint(next);
-
-      // No reload. Diagrams are pinned to Mermaid's LIGHT palette on a white
-      // card in both schemes (docs/_includes/mermaid_config.js), so nothing on
-      // the page needs re-rendering when the scheme changes. An earlier
-      // version reloaded here because the diagram palette followed the scheme;
-      // that coupling is gone and the reload went with it.
     });
 
+    btn.addEventListener("click", toggleScheme);
+    return btn;
+  }
+
+  /**
+   * The same switch as a HEADER MINI-BUTTON, beside the tiles launcher.
+   *
+   * No caption -- the header row is capped at 3.75rem and shares its width
+   * with the site title, which is the whole reason `1le7` collapsed four
+   * header icons into one launcher. Two icons come back here because the
+   * owner asked for them by name; the launcher stays, so the row is three
+   * rather than the six that decision was avoiding.
+   *
+   * The bulb alone therefore has to carry the state, which is why the
+   * `aria-label` is a sentence rather than a word: a reader who cannot see
+   * the glyph gets the same fact the tile's caption gives.
+   */
+  function buildSchemeMini() {
+    var btn = el("button", { type: "button", class: "fa-qr-toggle fa-scheme-mini" });
+    registerSchemePainter(function (name) {
+      btn.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      btn.setAttribute("aria-label",
+        name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
+      btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    });
+    btn.addEventListener("click", toggleScheme);
     return btn;
   }
 
@@ -1214,6 +1281,56 @@
       "aria-expanded": "false",
     });
     toggle.innerHTML = TILES_GLYPH; // static markup above, no input involved
+
+    /* ── Two mini-icons, between the title and the launcher ──────────────
+     *
+     * Owner, 2026-09-21: *"can you put dark/light mode switch in mini-icon on
+     * top as well as language icon. to right of folio-asst, to left of the
+     * [3x3 checkboard]"* — the checkerboard being this launcher, confirmed in
+     * the same exchange.
+     *
+     * ## This partly reverses `1le7`, deliberately and on the owner's word
+     *
+     * That bean collapsed FOUR header icons into one launcher because "that
+     * navbar is getting crowded", and the comment on `tileButton` below still
+     * refuses a dedicated search magnifier for exactly that reason. The two
+     * are not in conflict and the difference is worth stating, because the
+     * next reader will otherwise "fix" one of them:
+     *
+     *   - search was refused because it would save ONE PRESS on a control
+     *     reached twice a session, and the owner answered "search is two";
+     *   - these two were ASKED FOR by name.
+     *
+     * A row of three is not the row of six `1le7` was avoiding. If a fourth
+     * is ever proposed, that is the point to go back and ask.
+     *
+     * ## Language OPENS the launcher rather than duplicating its view
+     *
+     * The button presses the same `showView("language")` the tile does, so
+     * there is one language panel and one copy of its state. A second bar
+     * built here would look identical and drift — the failure this file's
+     * header calls out, and the reason the search field is MOVED rather than
+     * rebuilt. The mini-button is a shortcut INTO the panel, not a second
+     * panel.
+     */
+    host.appendChild(buildSchemeMini());
+
+    var langMini = el("button", {
+      type: "button",
+      class: "fa-qr-toggle fa-lang-mini",
+      "aria-label": "Language",
+    });
+    langMini.innerHTML = GLOBE_GLYPH;
+    langMini.addEventListener("click", function () {
+      // Open the launcher first: `showView` hides the grid and renders into
+      // the panel, which is invisible while the host is closed, so a reader
+      // pressing this on a closed launcher would otherwise get nothing and
+      // conclude the button is dead.
+      open(true);
+      showView("language", "Language", langMini);
+    });
+    host.appendChild(langMini);
+
     host.appendChild(toggle);
 
     var panel = el("div", {

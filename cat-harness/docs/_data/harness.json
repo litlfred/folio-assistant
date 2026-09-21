@@ -1,7 +1,7 @@
 {
   "_generated": "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
   "name": "cat-harness",
-  "title": "folio-assistant",
+  "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": {
     "src": "/assets/img/icons/cat-mark.svg",
@@ -550,15 +550,15 @@
     },
     {
       "name": "who-iris",
-      "title": "who-iris",
-      "label": "who-iris",
+      "title": "WHO IRIS",
+      "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
-      "instantiated": false,
+      "instantiated": true,
       "href": "/who-iris/",
       "hrefKind": "folio",
       "stats": [
@@ -646,8 +646,8 @@
     },
     {
       "name": "folio-assistant",
-      "title": "folio-assistant",
-      "label": "folio-assistant",
+      "title": "Folio Assistant",
+      "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
       "footer": false,
       "needs": [
@@ -685,8 +685,7 @@
       "findings": [
         "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark.",
-        "folio-assistant: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "folio-assistant: no avatar declared for this instance — showing the generic mark."
       ]
     },
     {
@@ -741,8 +740,8 @@
     },
     {
       "name": "cat-harness",
-      "title": "folio-assistant",
-      "label": "folio-assistant (cat-harness)",
+      "title": "C@T Harness",
+      "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
       "footer": false,
       "needs": [
@@ -843,14 +842,13 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link.",
-        "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
       "name": "cat-bootstrap",
-      "title": "cat-bootstrap",
-      "label": "cat-bootstrap",
+      "title": "Bootstrap",
+      "label": "Bootstrap",
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],

@@ -32,7 +32,12 @@ const names = () => ["agent-skills", "cat-bootstrap", "cat-harness", "detangle",
 describe("who owes a board", () => {
   test("the real checkout: the instantiated harnesses, minus the floor", () => {
     const owed = harnessesOwedABoard(REPO, names());
-    expect(owed).toEqual(["cat-harness", "folio-assistant"]);
+    // `who-iris` joined this set on 2026-09-21 (bean `zj6c`) when
+    // `who-iris.config.json` was written at the instantiation root — it
+    // "serves up a new landing page (the iris home page), and has its own
+    // docs", so it is a harness rather than a dependency. Nothing about the
+    // GENERATOR changed; one declaration did, which is the point.
+    expect(owed).toEqual(["cat-harness", "folio-assistant", "who-iris"]);
   });
 
   test("cat-bootstrap is excluded BY ITS DECLARATION, not by its name", () => {
@@ -47,10 +52,37 @@ describe("who owes a board", () => {
   });
 
   test("a DEPENDENCY is excluded too — instantiated is a different fact", () => {
-    // who-iris is present, declared, and not instantiated here. "Only the
-    // instiatiated harnesses (not all dependent ones)".
-    expect(existsSync(join(REPO, instanceConfigFilename("who-iris")))).toBe(false);
-    expect(harnessesOwedABoard(REPO, names())).not.toContain("who-iris");
+    // "Only the instiatiated harnesses (not all dependent ones)".
+    //
+    // THE SUBJECT IS DERIVED, not named. This test used to assert against
+    // `who-iris` specifically, and on 2026-09-21 who-iris was instantiated
+    // (bean `zj6c`) — so the test failed for a reason that had nothing to do
+    // with the rule it guards. Swapping in another hardcoded name would buy
+    // exactly one more instantiation before the same thing happened, and the
+    // sibling test two above already says why: "a checker naming one instance
+    // states a rule true only for the instance somebody remembered" (`hfkl`).
+    //
+    // So: take whichever candidate has no config at the root, and assert the
+    // rule against that. The set stays the fixed `names()` list, so this is
+    // still not a walk of the tree.
+    const candidates = names();
+    const dependencies = candidates.filter(
+      (n) => !existsSync(join(REPO, instanceConfigFilename(n))),
+    );
+
+    // NOT a vacuous pass. With every candidate instantiated there is nothing
+    // to test, and a green tick over zero subjects is the "could not
+    // determine rendered as clean" failure this repository holds as a rule.
+    // Fail loudly and say what to do instead.
+    expect(
+      dependencies.length,
+      `no candidate in [${candidates.join(", ")}] is a non-instantiated dependency, ` +
+        "so this test has no subject. Add a declared-but-not-instantiated instance to " +
+        "`names()` rather than deleting the test — the rule it guards is still real.",
+    ).toBeGreaterThan(0);
+
+    const owed = harnessesOwedABoard(REPO, candidates);
+    for (const dep of dependencies) expect(owed).not.toContain(dep);
   });
 
   test("the set is sorted, so it is a function of the declarations", () => {

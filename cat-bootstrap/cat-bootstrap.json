@@ -1,6 +1,8 @@
 {
   "_comment": "The cat-bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. An Initiator that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
   "name": "cat-bootstrap",
+  "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8.",
+  "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "assets": [
     {
