@@ -360,25 +360,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790030342">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790030342">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790030342">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790030342">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -392,10 +392,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790029548" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790030342" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -727,7 +727,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
   
@@ -1444,10 +1445,74 @@ four options put to them:</p>
   <tbody>
     <tr>
       <td><strong>R19b</strong></td>
-      <td>a thing renders as a <strong>tile</strong> iff the <strong>harness</strong> declares it (a visualiser); as an <strong>avatar</strong> iff the <strong>folio</strong> holds it (a note, a document, a materialised asset under <code class="language-plaintext highlighter-rouge">folio/</code>). A <strong>theme</strong> is how either one looks, never a third kind</td>
+      <td>a thing renders as a <strong>tile</strong> iff the <strong>harness</strong> declares it; as an <strong>avatar</strong> iff the <strong>folio</strong> holds it (a note, a document, a materialised asset under <code class="language-plaintext highlighter-rouge">folio/</code>). A <strong>theme</strong> is how either one looks, never a third kind</td>
+    </tr>
+    <tr>
+      <td><strong>R19c</strong></td>
+      <td>a tile is one of <strong>two kinds</strong>. A <strong>functional</strong> tile (a directory or sub-graph) is the visual interface to a <strong>skill</strong>, implemented by a <strong>tool</strong> chosen from potentially several — so it names the skill, never the tool. A <strong>content</strong> tile stands for a set of <strong>schema instances</strong></td>
     </tr>
   </tbody>
 </table></div>
+
+<p><strong>R19c is the owner’s correction to R19b, the same day</strong>, and it is recorded
+as its own requirement rather than folded in because R19b is still true and
+still insufficient:</p>
+
+<blockquote>
+  <p>content tiles = todos are schema instances. different from dir/sub-graph
+tiles = functional (they infact visual interfaces to skills implemented by
+some (potential choice of) tools)</p>
+</blockquote>
+
+<p><em>Who declared it</em> answers <strong>tile or avatar</strong> and stops. It does not say what a
+tile <strong>is</strong>, and the two kinds bind to different things, resolve different
+things when opened, and mean opposite things when empty:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>functional</strong></th>
+      <th><strong>content</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bound to</td>
+      <td>a <strong>skill</strong></td>
+      <td>a <strong>schema</strong></td>
+    </tr>
+    <tr>
+      <td>resolved on open</td>
+      <td>a <strong>tool</strong> implementing it</td>
+      <td>the <strong>instances</strong></td>
+    </tr>
+    <tr>
+      <td>empty means</td>
+      <td>a <strong>gap to report</strong> — a skill nothing implements is unreachable</td>
+      <td>a <strong>real state</strong> — “nothing outstanding” is not “broken”</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The operative half is “names the skill, never the tool.”</strong>
+<code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code> exists to make tools interchangeable — <em>“Two tools
+satisfying one skill — <code class="language-plaintext highlighter-rouge">beans-cli</code> and <code class="language-plaintext highlighter-rouge">beans-manual</code> — must declare the same
+input type, or ‘these are interchangeable’ is an assertion nothing can
+verify”</em> — so a tile bound to a tool breaks the moment the other tool is
+chosen. The choice is the point.</p>
+
+<p><strong>This is a shape the corpus already had</strong>, which is the argument for it:
+<code class="language-plaintext highlighter-rouge">VisualiserDeclarationSchema</code> takes <em>“one path, or several visualisations”</em>, so
+a sub-graph may be rendered more than one way exactly as a skill may be
+implemented more than one way. R19c names the two latitudes as the same
+latitude.</p>
+
+<p><strong>The empty asymmetry was already half-written too.</strong> <code class="language-plaintext highlighter-rouge">head_custom.html</code>
+records the content side — <em>“a board that opens empty is indistinguishable
+from a person with nothing outstanding, and those are opposite facts”</em> — while
+<code class="language-plaintext highlighter-rouge">pb04</code> covers the functional side: an affordance that promises and delivers
+nothing.</p>
 
 <p><strong>The provenance is kept rather than tidied away</strong>, the same as R15/R16: this
 is a rule recovered by argument and then ratified, not one written down at the
@@ -1781,7 +1846,8 @@ just not tied to the two moments named above.</p>
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
     

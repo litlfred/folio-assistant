@@ -360,25 +360,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790030342">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790030342">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790030342">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790030342">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -392,10 +392,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790029548" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790030342" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -727,7 +727,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
   
@@ -800,7 +801,7 @@ rewriting prose somebody has already reviewed.</p>
 
 <p>The active set is in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>:</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"voices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"who-editorial"</span><span class="p">,</span><span class="w"> </span><span class="s2">"who-guideline-development"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"voices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"active"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"milnor"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
 <p><strong>An empty or absent list means no voice, and that is a real answer.</strong> This
@@ -836,22 +837,33 @@ later pass.</li>
 </h2>
     
 
-<p>Three examples from the voices this instance ships, each chosen because the
-instinct is wrong:</p>
+<p><strong>Read your active voices before drafting, not at review.</strong> The rules worth
+knowing in advance are the ones where the instinct is wrong — where a writer
+who has never opened the voice will produce something fluent and against house
+style, and the fix ripples through every sentence built on it. A terminology
+rule is the cheapest to honour and the most tedious to retrofit.</p>
+
+<p>One worked example, from the only voice THIS instance ships:</p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">-ize</code>, not <code class="language-plaintext highlighter-rouge">-ise</code>.</strong> It is widely believed that WHO house style is <code class="language-plaintext highlighter-rouge">-ise</code>.
-The Editorial Style Manual says <code class="language-plaintext highlighter-rouge">-ize</code> is preferred, on the ground of the Greek
-root. A draft written on the assumption needs every <code class="language-plaintext highlighter-rouge">organisation</code> changed.</li>
-  <li><strong>Never “not recommended”.</strong> The WHO handbook names both readings — “no
-recommendation was made” and “do not implement” — and requires “we recommend
-against intervention X…”. A draft that reaches review with “not recommended”
-in a normative statement has an ambiguity in the one sentence readers will act
-on.</li>
   <li><strong>“Clearly” is fine in a mathematical block.</strong> The <code class="language-plaintext highlighter-rouge">milnor</code> voice measured
 fourteen uses of it in the exemplar paper, every one routing the reader away
 from a routine verification. Do not write around it to appease the checker.</li>
 </ul>
+
+<p>Two further examples stood here, both drawn from another instance’s voices, and
+they are gone because this is the PLATFORM. A voice’s rules belong to the
+instance that derived them, where each one carries the publication, page and
+verbatim quote it was read from. Restating a rule here reproduced it <strong>without
+its citation</strong>, in a subsystem whose whole argument is that a voice is auditable
+rather than asserted — and <code class="language-plaintext highlighter-rouge">check-voices.ts</code> exists because PR #210 shipped ten
+plausible rules with <code class="language-plaintext highlighter-rouge">source: null</code>, one of which asserted the opposite of what
+its own source says. The uncited copy is the one a reader meets first, and it is
+the one nothing can check.</p>
+
+<p>So: to learn which of your voices’ rules are counterintuitive, open the voices.
+<code class="language-plaintext highlighter-rouge">bun run check:voices</code> lists what this instance ships and how many rules each
+carries.</p>
 <h2 id="when-two-active-voices-disagree">
   
   
@@ -1109,7 +1121,8 @@ just not tied to the two moments named above.</p>
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
     

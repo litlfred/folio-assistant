@@ -360,25 +360,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/docs-ui.css?v=1790030342">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/work-plan.css?v=1790030342">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/themes.css?v=1790030342">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790029548">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/css/avatars.css?v=1790030342">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -392,10 +392,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","voices","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790029548" defer></script>
+<script src="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/assets/js/docs-ui.js?v=1790030342" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -727,7 +727,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
   
@@ -853,6 +854,19 @@ assist, copilot-pull-request-reviewer, codex, or human reviewers)
   <li>When you encounter a <strong>finding that contradicts another PR’s
 framing</strong> — write the disagreement up explicitly, post it to both
 PRs, and tag the author for resolution.</li>
+  <li><strong>A COLLISION — coordinate.</strong> A merge conflict caused by a
+sibling’s landed work is not merely a thing to resolve; it is the
+signal that two sessions are editing one subject. Resolve it AND
+coordinate. Owner, 2026-09-21: <em>“collision=coordinate”</em>.</li>
+  <li><strong>A POTENTIAL collision, seen in the beans — coordinate.</strong> Before
+you start a topic, and at each triage, scan for an <code class="language-plaintext highlighter-rouge">in-progress</code>
+bean whose scope overlaps yours. That is the cheapest collision to
+find, because it is the one found BEFORE either of you has written
+anything. Owner, same day: <em>“potential collision by looking at
+beans = coordinate”</em>. How to read a sibling’s state out of the
+store, and the boundary of that inference, is
+<a href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Where a sibling
+session is visible from” — not restated here.</li>
 </ul>
 <h2 id="inputs">
   
@@ -1082,6 +1096,102 @@ may pick up the partial results.</li>
 commits or comments that <strong>contradict</strong> your branch’s framing. Per
 §6: escalate inconsistent findings to the user. Do not silently
 adopt the sibling’s framing without an §6 conversation.</p>
+<h2 id="what-actually-reaches-a-sibling--measured-2026-09-21">
+  
+  
+    <a href="#what-actually-reaches-a-sibling--measured-2026-09-21" class="anchor-heading" aria-labelledby="what-actually-reaches-a-sibling--measured-2026-09-21"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What actually reaches a sibling — measured, 2026-09-21
+  
+  
+</h2>
+    
+
+<p><strong>Do not assume you can message a sibling session.</strong> Measured from a
+cloud session with eleven siblings live on one repository:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>channel</th>
+      <th>reaches a cloud sibling?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">list_sessions</code></td>
+      <td><strong>sees</strong> them — id, title, branch, task summary</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ListAgents</code></td>
+      <td><strong>no</strong> — “no other Claude session is running on this machine”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SendMessage</code></td>
+      <td><strong>no</strong> — the send is refused, target not reachable</td>
+    </tr>
+    <tr>
+      <td>a committed <strong>bean</strong></td>
+      <td>yes — every session reads the store at session start</td>
+    </tr>
+    <tr>
+      <td>a <strong>PR or issue</strong> comment</td>
+      <td>yes — to whoever looks, and it is durable</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>So <code class="language-plaintext highlighter-rouge">list_sessions</code> tells you WHO is working and on WHAT, and then the
+message has to travel through something committed. That asymmetry is
+worth knowing before you spend a turn on it: this list exists because
+a session read the sibling list, drafted a careful message, and
+discovered on the send that there was no channel.</p>
+
+<p>The practical order:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">list_sessions</code> (or the beans) to find WHO overlaps and how.</li>
+  <li>Write the coordination INTO the artefacts they will read — the
+bean, the PR body, the issue. A bean is the strongest, because
+<code class="language-plaintext highlighter-rouge">bean-coordination</code> §”The store on <code class="language-plaintext highlighter-rouge">main</code> is the one every sibling
+reads” makes it the one surface every session opens.</li>
+  <li>Only then consider a direct message, and only for a sibling
+<code class="language-plaintext highlighter-rouge">ListAgents</code> actually lists.</li>
+</ol>
+<h3 id="eleven-sessions-is-the-normal-case-not-the-exception">
+  
+  
+    <a href="#eleven-sessions-is-the-normal-case-not-the-exception" class="anchor-heading" aria-labelledby="eleven-sessions-is-the-normal-case-not-the-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Eleven sessions is the normal case, not the exception
+  
+  
+</h3>
+    
+
+<p>The same measurement: eleven sessions on <code class="language-plaintext highlighter-rouge">litlfred/folio-assistant</code>,
+each on its own branch, each merging <code class="language-plaintext highlighter-rouge">main</code> on a loop. One branch took
+<strong>four</strong> base merges in three hours, three of them conflicted. Main
+moved 109, 38, 20, 24 and 28 commits between them.</p>
+
+<p>A session that treats a conflict as an accident will treat all four as
+accidents. The rate IS the environment, and the thing to do about it
+is coordinate earlier, not merge harder.</p>
+<h3 id="the-worked-example-a-voice-landing-in-a-directory-being-deleted">
+  
+  
+    <a href="#the-worked-example-a-voice-landing-in-a-directory-being-deleted" class="anchor-heading" aria-labelledby="the-worked-example-a-voice-landing-in-a-directory-being-deleted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked example: a voice landing in a directory being deleted
+  
+  
+</h3>
+    
+
+<p>A branch migrated every voice from <code class="language-plaintext highlighter-rouge">&lt;instance&gt;/voices/</code> to
+<code class="language-plaintext highlighter-rouge">&lt;instance&gt;/skills/voices/</code>. Mid-flight, <code class="language-plaintext highlighter-rouge">main</code> landed a NEW voice in
+<code class="language-plaintext highlighter-rouge">cat-harness/voices/</code> — the directory the branch removes. Git’s rename
+detection then placed the new file inside another voice’s folder.</p>
+
+<p>Nothing was wrong with either piece of work. What was missing was that
+neither session knew about the other, and the beans said so the whole
+time: the migration’s bean was <code class="language-plaintext highlighter-rouge">in-progress</code> and names the directory.
+<strong>A bean scan by either session would have caught it before a line was
+written</strong>, which is exactly why the trigger above is worth having.</p>
 <h2 id="related-skills">
   
   
@@ -1092,6 +1202,9 @@ adopt the sibling’s framing without an §6 conversation.</p>
     
 
 <ul>
+  <li><code class="language-plaintext highlighter-rouge">bean-coordination</code> — the committed store siblings read, how to
+claim, and how far a sibling’s state can be inferred from it. The
+DETECTION half of this skill’s bean trigger lives there.</li>
   <li><code class="language-plaintext highlighter-rouge">delivery-summary</code> — what to post <strong>after</strong> a feature lands
 (one PR scope).</li>
   <li><code class="language-plaintext highlighter-rouge">watch</code> — passive monitoring of upstream branches.</li>
@@ -2088,7 +2201,8 @@ just not tied to the two moments named above.</p>
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">bootstrap-tools</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/detangle/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">detangle</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/library/folio-assistant-sci/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-sci</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 4"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">kg-navigation</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 5"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/large-datasets/"
-         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">who-style-guide</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">large-datasets</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 6"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/voices/who-style-guide/"
+         data-fa-href-kind="viewer"><span class="fa-harness-tab__label">who-style-guide</span></a></li><li class="fa-harness-tab" style="--fa-tile-tone: 0; --fa-tab-i: 7"><span class="fa-harness-tab__body fa-harness-tab__body--unlinked"><span class="fa-harness-tab__label">smart-immunizations</span></span></li><li class="fa-harness-tab" style="--fa-tile-tone: 212; --fa-tab-i: 8"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-lhs-navbar-harness-folios-cqo9mu/cat-harness/schemas/folio-assistant-core/"
          data-fa-href-kind="viewer"><span class="fa-harness-tab__label">folio-assistant-core</span></a></li></ul>
 </details>
     
