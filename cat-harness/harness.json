@@ -708,6 +708,16 @@
       ]
     },
     {
+      "id": "root-docs",
+      "path": "docs/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
+      "graphs": [
+        "docs"
+      ]
+    },
+    {
       "id": "folio-assist-core-schemas",
       "path": "folio-assistant-core/schemas/",
       "scope": "repository",

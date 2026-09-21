@@ -1,0 +1,38 @@
+# The repository root's documentation OVERLAY, managed by `cat-harness`.
+#
+# Declared in `cat-harness/harness.json` as `root-docs`, `scope: "repository"` —
+# the same mechanism by which that instance already declares `beans/`, `todos/`,
+# `memory/` and a dozen sibling instances' subdirectories at this level.
+#
+# Owner's ruling, 2026-09-21: "harness can have docs/ which then get listed
+# under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed
+# by cat-harness. other harness augment or overlay ontop of that (content and
+# behviors)".
+#
+# ## What goes here, and what does not
+#
+# This is the OVERLAY, not the documentation. The platform's pages live in
+# `cat-harness/docs/` and STAY there — the compose ruling means they are not
+# moved. A file placed here SHADOWS the page at the same path in the base
+# layer; a file at a path the base layer does not have is simply added.
+#
+#   - a page this repository says differently from the platform's -> here, at
+#     the same relative path as the one it replaces;
+#   - a page about the platform itself -> `cat-harness/docs/`, where it is;
+#   - another instance's own documentation -> that instance's `docs/`, listed
+#     under `cat-harness/docs/<harness>/` by `mount-instance-docs.ts`.
+#
+# ## Why this is a `.gitkeep` and not a README
+#
+# Because a `README.md` here would itself be composed into the published site,
+# and the property that makes wiring this into the LIVE publish path safe is
+# that an empty overlay produces a BYTE-IDENTICAL site. A dotfile is ignored by
+# Jekyll, so the proof stays clean. The same reason `todos/feedback/.gitkeep`
+# and `beans/workflows/.gitkeep` carry their prose this way.
+#
+# ## Why an empty declared directory is not `dh4f` here
+#
+# A declared directory nothing reads is this repository's most-paid-for defect.
+# This one IS read: the site build composes it over `cat-harness/docs/`. What it
+# contributes today is nothing VERIFIABLY — pinned by a test — rather than
+# nothing unnoticed.
