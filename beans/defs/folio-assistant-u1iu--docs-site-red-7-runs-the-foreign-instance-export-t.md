@@ -1,10 +1,11 @@
 ---
 # folio-assistant-u1iu
 title: 'DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and cat-bootstrap declares none'
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-21T14:03:27Z
-updated_at: 2026-09-21T14:03:27Z
+updated_at: 2026-09-21T16:42:02Z
 parent: folio-assistant-vke6
 ---
 
@@ -40,7 +41,7 @@ configuration is right; the code's reading of it is not.
 - [x] a gate runs the foreign export the way `docs-site.yml` runs it
 - [x] the gate is falsified — watched go red on the current code before the fix lands
 - [x] the error message stops naming the retired `harness.json`, resolved from the constant rather than retyped
-- [ ] docs-site observed GREEN on main after the merge, not assumed
+- [x] docs-site observed GREEN on main after the merge, not assumed
 
 ## The half that matters
 
@@ -123,3 +124,44 @@ absolute IRIs against THIS site for a document published elsewhere — the
 
 Raised rather than fixed: it is `40fl`'s code, it is latent, and the owner
 scoped this branch to the two unique parts. Bean `fgvp`.
+
+## Summary of Changes
+
+Merged as `0fc29b98cc` (PR #725) on the owner's "merge it".
+
+**The last box, closed on evidence.** `Docs site (GitHub Pages)` run **373**,
+head `0fc29b98cc` — `status: completed, conclusion: success`, read from the
+run itself rather than from a local exit code. That is what this box was for:
+the outage it tracks was invisible from a checkout, so a local green would
+have been the same mistake in the other direction.
+
+**What landed.**
+
+`check:published-instance-exports` reads the `kg-export.ts --instance <path>`
+invocations out of `docs-site.yml` and runs each the way the deploy runs it,
+with no `--base-url`. Derived rather than listed; finding none is exit 1.
+Watched go red on the pre-#718 tree first.
+
+`writeQaResult` no longer uses a constant stem. A foreign export was
+overwriting this instance's committed result wholesale — `subject.id` and
+findings together. Host keeps the bare stem, a foreign instance is qualified
+by its stub.
+
+**Verified on `main` AFTER the merge, in combination** — and this earned its
+keep. CI had run on `71c9fdd0f1`, before #732 and the `.config.json` → `.json`
+declaration rename landed beside it:
+
+    check:published-instance-exports   exit 0
+    host sidecar subject               cat-harness.jsonld
+    foreign sidecar subject            cat-bootstrap.jsonld
+    tree after a gate run              clean
+
+**What this bean is really a record of.** Half of it was a duplicate of `40fl`,
+and the section above says how that happened and what the narrow procedural
+gap is. The two gates that came out of the afternoon are complementary rather
+than redundant — `tyyc` asks whether a workflow would REBUILD, this asks
+whether its commands SUCCEED — and the outage needed both answers.
+
+Carried forward, not closed here: `fgvp` (the fallback's missing repo-boundary
+check, latent) and `3jhq` (two paths for one bootstrap graph, filed with what
+to measure rather than a fix).
