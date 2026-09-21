@@ -18,6 +18,78 @@ Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving
 visual content.
 
+## Signature — one optional string in, a reviewable list out
+
+Stated formally because this skill is invoked by other processes and by a
+person typing `/staging-review`, and a contract that lives in prose is one each
+caller re-derives.
+
+### Input
+
+| | |
+|---|---|
+| **type** | string |
+| **cardinality** | `0,1` — optional, and at most one |
+| **meaning** | what the reader wants to look at, **in their own words** |
+| **absent** | the whole preview: every page this branch changed |
+
+Keep the wording **verbatim** wherever the output echoes it. A request
+paraphrased by the agent is a different request, and the reader cannot tell
+which one the list was built for — the same rule
+[`goal-review`](goal-review.md) applies to a goal.
+
+The input **narrows**; it never adds. A reader who asks for "the navbar" gets
+the pages carrying it, not a page that merely mentions it. **If the ask matches
+nothing that changed, say so** rather than returning the whole preview as
+though it had been asked for — a list that silently ignores its input is worse
+than an empty one, because the reader believes it was answered.
+
+### Output
+
+Markdown, in this order. Every part is required; an absent part is stated, not
+dropped.
+
+1. **One line: where to start.** The single URL that best answers the input, or
+   the page with the most change behind it when there was no input. A reader
+   opens one thing first whether or not you choose it for them.
+2. **The comparison table** below — before (main), after (staging), and **what
+   to review there**.
+3. **What could not be checked**, as the third state below.
+
+### The third column is the one with value
+
+`What changed` must be phrased as **something to look at**, never as a
+restatement of the filename. Build it by mapping changed files to published
+surfaces:
+
+| what changed | which page | what to say |
+|---|---|---|
+| a stylesheet or client script | every page that loads it | the affordance that changed, and **the gesture to make** |
+| a template or include | the pages that include it | where on the page to look |
+| generated content | the page it generates | **what it was generated from** — a stale generator and a correct one look identical on the page |
+| a schema, a test, a gate | **none** | say so, and point at the diff |
+
+**Where a change is only visible after an interaction — a control behind a
+disclosure, a mode a reader turns on — say WHICH interaction.** A reviewer who
+cannot find the thing reports it as missing. That failure is on the record: a
+contrast defect survived two days behind a tile nobody clicked (bean `rptk`),
+because the gate that swept the page never opened the view.
+
+### The third state, here as everywhere
+
+"Could not determine" is never rendered as clean, and a change with no rendered
+surface is **not** a failure — it is the useful answer.
+
+| case | report it as |
+|---|---|
+| the preview has not deployed yet | not deployed, with the timing below — never a link to where it will be |
+| a changed page is absent from the publish ref | **a finding**: the build dropped it, or it is not a page |
+| the change has no rendered surface | reviewed in the diff, and say which files |
+
+The middle row is the most useful thing this skill can report, and composing
+its URL anyway would hide exactly that. See §"Before you report a staging URL
+as broken" — a URL is **looked up**, never composed.
+
 ## When to provide before/after URLs
 
 Provide before/after URLs in **every** interaction where:
