@@ -16,29 +16,15 @@
  */
 
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import {
-  AGENT_INSTRUCTIONS_ROLE,
-  ASSET_ROLES,
-  INSTANCE_README_ROLE,
-  REQUIRED_ASSET_ROLES,
-  ROLE_OWNED_ASSET_KEYS,
-  assetRoleDelivery,
-  assetRoleLayer,
-  assetRolePurpose,
-  declaredAssetPath,
-  graphLayer,
-  layerIsWritable,
-  processMayWrite,
-  processMayWriteAsset,
-  strayAssetRoleKeys,
-} from "../../schemas/cat-harness.js";
+import { AGENT_INSTRUCTIONS_ROLE, ASSET_ROLES, INSTANCE_README_ROLE, REQUIRED_ASSET_ROLES, ROLE_OWNED_ASSET_KEYS, assetRoleDelivery, assetRoleLayer, assetRolePurpose, declaredAssetPath, graphLayer, layerIsWritable, processMayWrite, processMayWriteAsset, strayAssetRoleKeys } from "../../schemas/cat-harness.js";
 import "../../schemas/folio-graph-kind.js";
 import { collect, formatReport, isClean } from "../check-asset-roles.js";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
@@ -161,17 +147,17 @@ describe("one table, and the keys an asset may not restate", () => {
 
   test("a stray key on an asset is reported, with the instance and the asset", () => {
     const root = mkdtempSync(join(tmpdir(), "asset-roles-"));
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
-        id: "probe",
+    writeDeclaration(root, JSON.stringify({
+        // `name`, not `id`: the filename stem must equal the declared name or
+        // discovery does not see the file at all. Under `harness.json` this
+        // fixture worked with neither, because the path was a constant.
+        name: "probe",
         directories: [],
         assets: [
           { id: "readme", src: "README.md", role: INSTANCE_README_ROLE, layer: "state" },
           { id: "agents", src: "AGENTS.md", role: AGENT_INSTRUCTIONS_ROLE },
         ],
-      }),
-    );
+      }));
     expect(strayAssetRoleKeys(root)).toEqual([{ root, asset: "readme", key: "layer" }]);
   });
 
@@ -203,7 +189,7 @@ describe("one table, and the keys an asset may not restate", () => {
     // Reported loudly by `readDeclaration`, which throws; raising it a second
     // time here would send a reader to the wrong check.
     const root = mkdtempSync(join(tmpdir(), "asset-roles-bad-"));
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json");
+    writeDeclaration(root, "{ not json", "broken");
     expect(strayAssetRoleKeys(root)).toEqual([]);
   });
 

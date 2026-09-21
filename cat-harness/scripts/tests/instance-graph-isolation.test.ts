@@ -15,7 +15,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { collectInstanceNodes } from "../kg-export.js";
-import { DECLARATION_FILENAME, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const BOOT = join(repoRootFor(ROOT), "cat-bootstrap");
@@ -53,13 +54,10 @@ describe("discovery reads the declaration rather than the tree", () => {
     mkdirSync(join(root, "skills"), { recursive: true });
     mkdirSync(join(root, "stray"), { recursive: true });
     writeFileSync(join(root, "stray", "x.bpmn"), "<x/>");
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "iso",
         directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-    );
+      }));
     const problems: string[] = [];
     const { nodes, notes } = await collectInstanceNodes(root, DOC, "", problems);
     rmSync(root, { recursive: true, force: true });
@@ -82,13 +80,10 @@ describe("discovery reads the declaration rather than the tree", () => {
     const root = mkdtempSync(join(tmpdir(), "iso2-"));
     mkdirSync(join(root, "wf"), { recursive: true });
     writeFileSync(join(root, "wf", "x.bpmn"), "<x/>");
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "iso2",
         directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphs: ["cat-harness"] }],
-      }),
-    );
+      }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, "", problems);
     rmSync(root, { recursive: true, force: true });

@@ -35,11 +35,7 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import {
-  DECLARATION_FILENAME,
-  repoRootFor,
-  directoryForGraph,
-} from "../schemas/cat-harness.ts";
+import { repoRootFor, directoryForGraph, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -136,7 +132,7 @@ export const RETIRED: Retired[] = [
  */
 function sweepRoots(instance: string, repo: string): string[] {
   const dirs: string[] = [];
-  const declaration = join(instance, DECLARATION_FILENAME);
+  const declaration = declarationPathIn(instance)!;
   if (existsSync(declaration)) {
     const decl = JSON.parse(readFileSync(declaration, "utf-8")) as {
       directories?: { path?: string; scope?: "repository" | "instance" }[];

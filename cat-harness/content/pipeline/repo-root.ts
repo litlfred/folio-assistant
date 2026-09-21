@@ -57,11 +57,30 @@ export function findContentRepoRoot(): string {
     ancestors.push(dir);
     dir = dirname(dir);
   }
+  // A CANDIDATE THAT CANNOT BE READ IS NOT A MATCH, AND NOT A CRASH. `folioDir`
+  // resolves through the instance's declaration and THROWS when it will not
+  // parse — which became reachable here on 2026-09-21: `harness.json` was
+  // excised, so a corrupt config is now a corrupt DECLARATION too, and one
+  // unreadable ancestor took down an entire `qa-sweep` that was not about it.
+  //
+  // This is a SEARCH. Skipping a candidate it cannot read is the same answer
+  // as skipping one that has no folio directory, and the function already ends
+  // in a declared fallback — so nothing is silently guessed that was not
+  // already being guessed.
+  const folioDirOf = (d: string): string | undefined => {
+    try {
+      return folioDir(d);
+    } catch {
+      return undefined;
+    }
+  };
   for (const d of ancestors) {
-    if (existsSync(join(d, "computations")) && existsSync(folioDir(d))) return d;
+    const f = folioDirOf(d);
+    if (f !== undefined && existsSync(join(d, "computations")) && existsSync(f)) return d;
   }
   for (const d of ancestors) {
-    if (existsSync(folioDir(d))) return d;
+    const f = folioDirOf(d);
+    if (f !== undefined && existsSync(f)) return d;
   }
   // Fallback: import-relative heuristic (two levels up from
   // content/pipeline/). Preserves behaviour when the walk-up finds nothing.

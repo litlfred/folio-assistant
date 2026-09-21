@@ -27,18 +27,11 @@ import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import {
-  graphLayer,
-  isContentGraph,
-  isContextGraph,
-  isDerivedGraph,
-  isStateGraph,
-  processMayWrite,
-  repoRootFor,
-} from "../../schemas/cat-harness.js";
+import { graphLayer, isContentGraph, isContextGraph, isDerivedGraph, isStateGraph, processMayWrite, repoRootFor } from "../../schemas/cat-harness.js";
 
 import { walkBlocks } from "../../content/pipeline/qa-utils.js";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A block manifest `walkBlocks` will admit without importing it. */
 const MANIFEST = 'import { prose } from "./builders";\nexport default prose({ label: "probe", body: "x" });\n';
@@ -53,17 +46,14 @@ const MANIFEST = 'import { prose } from "./builders";\nexport default prose({ la
 function fixture(): { root: string } {
   const root = mkdtempSync(join(tmpdir(), "sweep-scope-"));
   mkdirSync(join(root, ".git"), { recursive: true });
-  writeFileSync(
-    join(root, DECLARATION_FILENAME),
-    JSON.stringify({
+  writeDeclaration(root, JSON.stringify({
       name: "probe",
       description: "one content directory and one retired one",
       directories: [
         { id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] },
         { id: "fsh-guts", path: "fsh-guts/", dependents: "skip", graphs: ["fsh-guts"] },
       ],
-    }),
-  );
+    }));
   for (const d of ["folio", "fsh-guts"]) {
     mkdirSync(join(root, d), { recursive: true });
     writeFileSync(join(root, d, "probe.ts"), MANIFEST);
@@ -100,14 +90,11 @@ describe("a sweep walks content and skips what is declared retired", () => {
   test("an entry declaring NO graphs is walked — silence is not evidence of retirement", () => {
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-bare-"));
     mkdirSync(join(root, ".git"), { recursive: true });
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "an entry with no graphs",
         directories: [{ id: "odd", path: "odd/", dependents: "skip", graphs: [] }],
-      }),
-    );
+      }));
     mkdirSync(join(root, "odd"), { recursive: true });
     writeFileSync(join(root, "odd", "probe.ts"), MANIFEST);
     expect(walked(root)).toEqual(["odd/probe.ts"]);
@@ -119,7 +106,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
     // nothing, which is the failure this repository names most often.
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-bad-"));
     mkdirSync(join(root, ".git"), { recursive: true });
-    writeFileSync(join(root, DECLARATION_FILENAME), "{ not json at all");
+    writeDeclaration(root, "{ not json at all", "broken");
     mkdirSync(join(root, "folio"), { recursive: true });
     writeFileSync(join(root, "folio", "probe.ts"), MANIFEST);
     expect(walked(root)).toEqual(["folio/probe.ts"]);
@@ -136,14 +123,11 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     // bean `lr7h`, one file along.
     const { readDeclaration } = await import("../../schemas/cat-harness.js");
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-unknown-"));
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
         directories: [{ id: "x", path: "x/", dependents: "skip", graphs: ["totally-made-up"] }],
-      }),
-    );
+      }));
     expect(() => readDeclaration(root)).toThrow(/unknown graph kind/);
   });
 
@@ -152,14 +136,11 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     // fault must not become a total QA outage.
     const root = mkdtempSync(join(tmpdir(), "sweep-scope-unknown2-"));
     mkdirSync(join(root, ".git"), { recursive: true });
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
         directories: [{ id: "x", path: "x/", dependents: "skip", graphs: ["totally-made-up"] }],
-      }),
-    );
+      }));
     mkdirSync(join(root, "x"), { recursive: true });
     writeFileSync(join(root, "x", "probe.ts"), MANIFEST);
     expect(walked(root)).toEqual(["x/probe.ts"]);

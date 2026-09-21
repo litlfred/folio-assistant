@@ -36,7 +36,8 @@ import {
   planFor,
   usableOutlineEntries,
 } from "../ingest-document.ts";
-import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+import {  } from "../../schemas/cat-harness.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const made: string[] = [];
 afterEach(() => {
@@ -324,13 +325,10 @@ describe("L1 completeness", () => {
     const root = mkdtempSync(join(tmpdir(), "l1-empty-"));
     made.push(root);
     mkdirSync(join(root, "library"), { recursive: true });
-    writeFileSync(
-      join(root, DECLARATION_FILENAME),
-      JSON.stringify({
+    writeDeclaration(root, JSON.stringify({
         name: "t",
         directories: [{ id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] }],
-      }),
-    );
+      }));
     expect(checkAll(root)).toEqual([]);
   });
 

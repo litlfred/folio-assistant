@@ -53,7 +53,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { DECLARATION_FILENAME, directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { findDeclarationFile, directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 
 // `folio` registers on import, and reading the whole declaration refuses an
 // unregistered kind. Same import, same reason, as `agent-memory.ts`.
@@ -504,7 +504,7 @@ export function instanceRoots(repo: string): string[] {
   for (const name of readdirSync(repo)) {
     if (name.startsWith(".") || name === "node_modules") continue;
     try {
-      if (statSync(join(repo, name)).isDirectory() && existsSync(join(repo, name, DECLARATION_FILENAME))) {
+      if (statSync(join(repo, name)).isDirectory() && findDeclarationFile(join(repo, name)) !== undefined) {
         out.push(name);
       }
     } catch {
