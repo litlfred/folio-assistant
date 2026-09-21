@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T14:07:39Z
-updated_at: 2026-09-21T19:39:26Z
+updated_at: 2026-09-21T19:59:26Z
 parent: folio-assistant-vuip
 ---
 
@@ -146,3 +146,39 @@ leaving the page unreachable, which is what the measurement above found.
 - [x] the two-pages-one-stem collision is gone rather than contained
 
 98/98 gates.
+
+
+## 2026-09-21, later — a defect only a real Jekyll build could show
+
+The staging preview is unreachable from this session (the egress proxy blocks
+`litlfred.github.io`), and so is the remote theme, so the site was built
+locally against the `just-the-docs` GEM instead of the pinned remote theme —
+chrome differs, Liquid and kramdown do not.
+
+**The generated index emitted raw `<h3><code>kind</code></h3>` blocks.**
+kramdown passes block-level HTML through untouched and therefore assigns NO
+heading id, so the just-the-docs anchor-heading include fell back to the
+PAGE's id: all 22 kind headings rendered `href="#published-graphs"`, one
+anchor for every section, with `aria-labelledby` pointing at a heading that is
+not the one being labelled. Bean `gjli` is the standing rule.
+
+**The generator's own output looked right.** Nothing short of a build shows
+this — which is `continual-progress`'s measured claim, that a human cannot
+assess a rendered artefact from a description of it, turned on the agent that
+wrote it.
+
+Fixed by emitting MARKDOWN headings and lists rather than HTML, so kramdown
+assigns ids. Verified on a rebuild: **23 distinct anchors** (22 kinds + the
+page heading) where there had been one, 25 links, and the four routes render:
+
+| route | h1 |
+|---|---|
+| `/cat-harness/` | Published graphs |
+| `/cat-harness/voices/` | Voices |
+| `/platform.html` | The platform |
+| `/` | folio-assistant |
+
+`/cat-harness/index.html` is produced from `published-graphs.md`'s permalink,
+which is the thing the `kg` navbar tile targets — so that tile resolves. Home
+links to the platform page; the platform page carries 22 links back into the
+handler namespace.

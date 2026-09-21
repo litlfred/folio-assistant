@@ -30,158 +30,180 @@ A kind listed as **declared, not published** is one an instance declared and
 nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 "this does not exist" are different answers, and a gap says neither.
 
-<h3><code>beans</code></h3>
-<p class="fa-hx-dim">1 of 1 published.</p>
-<ul>
-  <li><a href="{{ '/beans/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-</ul>
+### `beans`
 
-<h3><code>cat-harness</code></h3>
-<p class="fa-hx-dim">0 of 7 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">cat-bootstrap</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">detangle</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">folio-assistant-core</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">kg-navigation</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">large-datasets</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">who-iris</span> — declared, not published</li>
-</ul>
+1 of 1 published.
+{: .fa-hx-dim }
 
-<h3><code>catalogue</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">who-iris</span> — declared, not published</li>
-</ul>
+- [folio-assistant (cat-harness)]({{ '/beans/' | relative_url }})
 
-<h3><code>docs</code></h3>
-<p class="fa-hx-dim">0 of 3 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">smart-trust</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">who-iris</span> — declared, not published</li>
-</ul>
+### `cat-harness`
 
-<h3><code>fhir-artifact-index</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">smart-trust</span> — declared, not published</li>
-</ul>
+0 of 7 published.
+{: .fa-hx-dim }
 
-<h3><code>folio</code></h3>
-<p class="fa-hx-dim">0 of 2 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">folio-assistant-core</span> — declared, not published</li>
-</ul>
+- cat-bootstrap — *declared, not published*
+- folio-assistant (cat-harness) — *declared, not published*
+- detangle — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- kg-navigation — *declared, not published*
+- large-datasets — *declared, not published*
+- who-iris — *declared, not published*
 
-<h3><code>fsh-guts</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+### `catalogue`
 
-<h3><code>health</code></h3>
-<p class="fa-hx-dim">1 of 1 published.</p>
-<ul>
-  <li><a href="{{ '/health/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-</ul>
+0 of 1 published.
+{: .fa-hx-dim }
 
-<h3><code>interaction</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+- who-iris — *declared, not published*
 
-<h3><code>issue-marks</code></h3>
-<p class="fa-hx-dim">1 of 1 published.</p>
-<ul>
-  <li><a href="{{ '/issue-marks/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-</ul>
+### `docs`
 
-<h3><code>library</code></h3>
-<p class="fa-hx-dim">4 of 4 published.</p>
-<ul>
-  <li><a href="{{ '/cat-harness/library/agent-skills/' | relative_url }}">agent-skills</a></li>
-  <li><a href="{{ '/cat-harness/library/cat-harness/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-  <li><a href="{{ '/cat-harness/library/folio-assistant-sci/' | relative_url }}">folio-assistant-sci</a></li>
-  <li><a href="{{ '/cat-harness/library/who-iris/' | relative_url }}">who-iris</a></li>
-</ul>
+0 of 3 published.
+{: .fa-hx-dim }
 
-<h3><code>memory</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+- folio-assistant (cat-harness) — *declared, not published*
+- smart-trust — *declared, not published*
+- who-iris — *declared, not published*
 
-<h3><code>methodology</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+### `fhir-artifact-index`
 
-<h3><code>qa</code></h3>
-<p class="fa-hx-dim">1 of 2 published.</p>
-<ul>
-  <li><a href="{{ '/qa/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-  <li><span class="fa-hx-dim">detangle</span> — declared, not published</li>
-</ul>
+0 of 1 published.
+{: .fa-hx-dim }
 
-<h3><code>schemas</code></h3>
-<p class="fa-hx-dim">5 of 5 published.</p>
-<ul>
-  <li><a href="{{ '/cat-harness/schemas/cat-bootstrap-tools/' | relative_url }}">cat-bootstrap-tools</a></li>
-  <li><a href="{{ '/cat-harness/schemas/cat-harness/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-  <li><a href="{{ '/cat-harness/schemas/detangle/' | relative_url }}">detangle</a></li>
-  <li><a href="{{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }}">folio-assistant-core</a></li>
-  <li><a href="{{ '/cat-harness/schemas/large-datasets/' | relative_url }}">large-datasets</a></li>
-</ul>
+- smart-trust — *declared, not published*
 
-<h3><code>themes</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">who-iris</span> — declared, not published</li>
-</ul>
+### `folio`
 
-<h3><code>todos</code></h3>
-<p class="fa-hx-dim">1 of 1 published.</p>
-<ul>
-  <li><a href="{{ '/todos/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-</ul>
+0 of 2 published.
+{: .fa-hx-dim }
 
-<h3><code>tools</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+- folio-assistant (cat-harness) — *declared, not published*
+- folio-assistant-core — *declared, not published*
 
-<h3><code>translation-sources</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+### `fsh-guts`
 
-<h3><code>uploads</code></h3>
-<p class="fa-hx-dim">1 of 3 published.</p>
-<ul>
-  <li><a href="{{ '/uploads/' | relative_url }}">folio-assistant (cat-harness)</a></li>
-  <li><span class="fa-hx-dim">folio-assistant</span> — declared, not published</li>
-  <li><span class="fa-hx-dim">who-iris</span> — declared, not published</li>
-</ul>
+0 of 1 published.
+{: .fa-hx-dim }
 
-<h3><code>voices</code></h3>
-<p class="fa-hx-dim">2 of 3 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">agent-skills</span> — declared, not published</li>
-  <li><a href="{{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }}">folio-assistant-sci</a></li>
-  <li><a href="{{ '/cat-harness/voices/who-style-guide/' | relative_url }}">who-style-guide</a></li>
-</ul>
+- folio-assistant (cat-harness) — *declared, not published*
 
-<h3><code>waiver</code></h3>
-<p class="fa-hx-dim">0 of 1 published.</p>
-<ul>
-  <li><span class="fa-hx-dim">folio-assistant (cat-harness)</span> — declared, not published</li>
-</ul>
+### `health`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [folio-assistant (cat-harness)]({{ '/health/' | relative_url }})
+
+### `interaction`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `issue-marks`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [folio-assistant (cat-harness)]({{ '/issue-marks/' | relative_url }})
+
+### `library`
+
+4 of 4 published.
+{: .fa-hx-dim }
+
+- [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
+- [folio-assistant (cat-harness)]({{ '/cat-harness/library/cat-harness/' | relative_url }})
+- [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
+- [who-iris]({{ '/cat-harness/library/who-iris/' | relative_url }})
+
+### `memory`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `methodology`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `qa`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- [folio-assistant (cat-harness)]({{ '/qa/' | relative_url }})
+- detangle — *declared, not published*
+
+### `schemas`
+
+5 of 5 published.
+{: .fa-hx-dim }
+
+- [cat-bootstrap-tools]({{ '/cat-harness/schemas/cat-bootstrap-tools/' | relative_url }})
+- [folio-assistant (cat-harness)]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
+- [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
+- [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})
+
+### `themes`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- who-iris — *declared, not published*
+
+### `todos`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [folio-assistant (cat-harness)]({{ '/todos/' | relative_url }})
+
+### `tools`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `translation-sources`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
+
+### `uploads`
+
+1 of 3 published.
+{: .fa-hx-dim }
+
+- [folio-assistant (cat-harness)]({{ '/uploads/' | relative_url }})
+- folio-assistant — *declared, not published*
+- who-iris — *declared, not published*
+
+### `voices`
+
+2 of 3 published.
+{: .fa-hx-dim }
+
+- agent-skills — *declared, not published*
+- [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
+- [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
+
+### `waiver`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant (cat-harness) — *declared, not published*
 
 ---
 

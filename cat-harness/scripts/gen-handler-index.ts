@@ -125,20 +125,25 @@ export function handlerIndexPage(handler: string, rows: readonly HandlerRow[]): 
     list.push(r);
   }
 
+  // MARKDOWN, not raw HTML blocks — and that distinction was measured rather
+  // than assumed. An earlier draft emitted `<h3><code>kind</code></h3>`, which
+  // kramdown passes through untouched and therefore assigns NO heading id. The
+  // just-the-docs anchor-heading include then fell back to the page's own id,
+  // so all 22 kind headings rendered `href="#published-graphs"` — one anchor
+  // for every section, and an `aria-labelledby` pointing at a heading that is
+  // not the one being labelled. A local Jekyll build is the only thing that
+  // shows it; the generator's own output looks right. Bean `gjli` is the
+  // standing rule ("ALL UI must follow accessibility guidelines").
   const sections = [...byKind.entries()].map(([kind, list]) => {
     const items = list
       .map((r) =>
         r.path === undefined
-          ? `  <li><span class="fa-hx-dim">${esc(r.label)}</span> — declared, not published</li>`
-          : `  <li><a href="{{ '${esc(r.path)}' | relative_url }}">${esc(r.label)}</a></li>`,
+          ? `- ${esc(r.label)} — *declared, not published*`
+          : `- [${esc(r.label)}]({{ '${esc(r.path)}' | relative_url }})`,
       )
       .join("\n");
     const published = list.filter((r) => r.path !== undefined).length;
-    return (
-      `<h3><code>${esc(kind)}</code></h3>\n` +
-      `<p class="fa-hx-dim">${published} of ${list.length} published.</p>\n` +
-      `<ul>\n${items}\n</ul>`
-    );
+    return `### \`${esc(kind)}\`\n\n${published} of ${list.length} published.\n{: .fa-hx-dim }\n\n${items}`;
   });
 
   return `---
