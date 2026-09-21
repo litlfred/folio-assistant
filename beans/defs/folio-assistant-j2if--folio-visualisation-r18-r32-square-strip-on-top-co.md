@@ -1,6 +1,6 @@
 ---
 # folio-assistant-j2if
-title: FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset's THREE states
+title: "FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset's THREE states"
 status: in-progress
 type: feature
 priority: normal
