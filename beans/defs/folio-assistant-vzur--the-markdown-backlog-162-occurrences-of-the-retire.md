@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vzur
 title: 'The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T17:43:09Z
-updated_at: 2026-09-21T17:43:09Z
+updated_at: 2026-09-21T18:22:21Z
 parent: folio-assistant-vke6
 ---
 
