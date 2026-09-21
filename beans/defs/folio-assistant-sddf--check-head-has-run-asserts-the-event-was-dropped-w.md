@@ -128,3 +128,62 @@ stood.
 | the conflicted case told to dispatch anyway | 1 |
 
 22 tests pass; the 14 already there are untouched. `bun run gates` 100/100.
+
+
+---
+
+## The sibling half had BOTH defects, and one stopped it working entirely
+
+Found 2026-09-21 by running `check:ci-health` rather than by looking for it:
+**`PRs without checks` had failed 5 consecutive times with no success in the
+window.** The workflow whose whole job is to find pull requests with no checks
+was itself failing, hourly, unnoticed — `1xhc` at full strength.
+
+`.github/workflows/pr-checks-present.yml` is the automated half of this same
+bean. Its own header says so: *"`check:head-has-run` answers this for one
+commit when somebody remembers to look; this is the half that looks when nobody
+does."* So it is in scope here rather than a separate topic.
+
+### 1. It fed `gh` a status word where a PR number belonged
+
+```
+no pull requests found for branch "no-run"
+##[error]Process completed with exit code 1.
+```
+
+The sweep prints `  ✗ #731   no-run   751: adopt spec-kit…`, and with awk's
+default field splitting that is `$1="✗"`, `$2="#731"`, `$3="no-run"`. The step
+read **`$3`**. Verified against real output rather than by counting columns:
+
+```
+OLD ($3): no-run
+NEW ($2): 731
+```
+
+**So the per-PR comment channel has never worked** — one of the two channels
+the owner explicitly chose on 2026-09-20. The tracking-issue step runs before
+it and succeeds, so the failure was invisible in the place people look.
+
+### 2. It broadcast the SAME unsafe advice, to PR authors
+
+Its comment body carried, verbatim, what this bean removed from the script:
+
+> Dispatch the workflow against this ref and read that run instead.
+
+Unconditional, posted onto the pull request. **Worse than the script's copy**,
+because the script printed it to whoever ran a command while this publishes it
+to the author of every affected PR.
+
+Now it asks `gh pr view --json mergeable` before advising, and only the
+`MERGEABLE` branch mentions dispatching at all. Rendered and checked for all
+three states, because the file's own comment warns that these lines sit inside
+a YAML block scalar and the dedent is load-bearing.
+
+### A live finding the bug was suppressing
+
+**PR #731 has no run on its head**, and `refs/pull/731/merge` is present — so
+it is mergeable, and its missing run is the genuine unexplained `3pqn` case
+rather than the conflict case. That is precisely the distinction
+`mergeStateForHead` was built to draw, confirmed against a real PR neither
+half was reporting.
+
