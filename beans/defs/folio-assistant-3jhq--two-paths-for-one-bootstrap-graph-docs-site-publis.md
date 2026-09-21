@@ -1,10 +1,11 @@
 ---
 # folio-assistant-3jhq
 title: 'TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes cat-bootstrap.jsonld at the site root, feature-staging at cat-bootstrap/cat-bootstrap.jsonld'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T14:16:21Z
-updated_at: 2026-09-21T14:16:21Z
+updated_at: 2026-09-21T18:16:42Z
 parent: folio-assistant-vke6
 ---
 
