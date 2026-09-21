@@ -75,6 +75,8 @@
  * ship first, and this module is that half.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+
+import type { LibraryRef } from "./library-refs.ts";
 import { basename, dirname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -136,6 +138,16 @@ export interface LibraryEntry {
   upload: UploadLink;
   /** The uploads queue holding it, when one does. */
   uploadInstance: string;
+  /**
+   * What references this slug, and from where — bean `jbx2`'s third ask.
+   *
+   * EMPTY IS A FINDING, not a blank: `library/` is L1 because every reference
+   * to a source resolves through it, so a slug nothing names is a slug that
+   * claim is not true of. Attached by the caller, because resolving which
+   * directories to scan needs the declaration; absent when nobody scanned,
+   * which is again not the same as empty.
+   */
+  referencedBy?: LibraryRef[];
 }
 
 /**
@@ -198,6 +210,14 @@ export interface LibraryGraph {
   entries: LibraryEntry[];
   uploads: UploadItem[];
   queues: UploadQueue[];
+  /**
+   * How the reference scan went, when one ran.
+   *
+   * Carried so a reader can tell "nothing references this" from "nothing
+   * looked". Absent means no scan; `unreadable` non-empty means the scan is
+   * incomplete and every zero below it is provisional.
+   */
+  refScan?: { filesRead: number; unreadable: string[] };
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
