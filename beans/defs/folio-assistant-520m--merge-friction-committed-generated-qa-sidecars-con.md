@@ -58,3 +58,45 @@ measured here is three merges in one session, not a broken invariant.
       because "regenerate on conflict" applied blindly would
 - [ ] whichever way it goes, the reason is written where the next agent
       resolving one of these will find it
+
+## 2026-09-21 — MEASURED, and it corrects this bean's own premise
+
+This bean said the conflicts "carried no information" — *"what conflicts is a
+hash both sides recomputed against their own tree"*. That is **wrong**, and the
+experiment is one command each:
+
+```sh
+bun run translation:block-qa && git status --porcelain   # empty
+bun run kg:audit              && git status --porcelain   # empty
+```
+
+**Both generators are idempotent.** A no-op re-run over an unchanged tree
+writes nothing, because `sameScriptVerdict` in `qa-utils.ts` keeps the existing
+entry verbatim when a re-run reproduces it, and deliberately ignores
+`reviewed_at`, `reviewed_sha` and `script_commit_sha` when deciding that.
+
+So the three `agent-onboarding.{ar,fr,ru}` conflicts were **real**: both sides
+genuinely changed those sidecars' inputs — this branch regenerated the POT for
+the `lrbx` TOC fix, main edited the guide — and `source_hashes` differs because
+the sources differed. The verdict being unchanged does not make the conflict
+empty; it makes it trivially resolvable.
+
+That kills option (b). The churn is not gratuitous restamping, so narrowing
+what a sidecar stores would remove information without removing a conflict.
+
+### And it quantifies the risk this bean flagged
+
+*"a strategy that cannot silently drop a REAL sidecar change, because
+regenerate-on-conflict applied blindly would"* — measured across all 630
+committed sidecars:
+
+| reviewer kind | entries |
+|---|---|
+| `script` | **5,883** |
+| `agent` | **13** (11 `block-qa/v1`, 2 `translation-qa/v1`) |
+
+Blind regeneration would be correct for 5,883 and would **destroy 13** — two of
+them in `translation-qa`, the family that churns most. The guard is not a
+judgement call, though: a non-script entry is self-identifying
+(`reviewer.kind !== "script"`), so any strategy can refuse exactly the files
+that carry one.
