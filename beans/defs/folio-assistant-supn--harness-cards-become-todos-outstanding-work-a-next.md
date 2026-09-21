@@ -93,3 +93,30 @@ instance — which is this bean's blocker exactly: where an instance reached in
 `initialize-harness.bpmn`, with `beans/workflows/` empty. **Whichever lands
 first should record the relation; the second consumes it.** Two surfaces
 computing process position independently is how they start disagreeing.
+
+---
+
+## RE-MEASURED 2026-09-21 — blocker 1 still holds, but not for the stated reason
+
+`beans/workflows/` is **no longer EMPTY**. It holds two committed instances,
+both `$schema: "folio-workflow-instance/v1"`:
+
+| instance | process | status | `bean` |
+|---|---|---|---|
+| `crdm--folio-assistant-6lb8` | `Process_CRDM` | running | `folio-assistant-6lb8` |
+| `crdm--issue-607-kg-to-cdn-portal` | `Process_CRDM` | running | `folio-assistant-xies` |
+
+**The blocker survives the correction, narrowed.** Neither instance is
+`initialize-harness.bpmn` — both are the CRDM requirements process. So *"where
+a harness got to in its initialization"* still has no answer, and this bean's
+conclusion is unchanged.
+
+But the REASON matters for whoever picks it up: the store works, the schema is
+real, and instances are being written and committed. What is missing is that
+nobody has run the initialisation process under the engine. That is a much
+smaller gap than "the data does not exist", and it fails differently — an
+`initialize-harness` instance would appear the first time one is started,
+without any new mechanism.
+
+Recorded rather than left, because a blocker stated more broadly than the
+evidence supports is one the next agent takes as impassable.

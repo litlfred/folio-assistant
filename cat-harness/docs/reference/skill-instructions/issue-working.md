@@ -89,6 +89,24 @@ After each round of implementation, post a summary on **the issue**, not only on
 the change proposal: what was accomplished, what remains, and links to the
 updated content for review.
 
+## Before you publish that something does not exist (STRICT)
+
+An issue comment is **published**, and a false claim in one costs more than a
+missing true one: it sends the next reader off to verify an accusation, and
+the correction never reaches everybody the original did.
+
+So before an issue comment, PR body or commit message asserts that a file, a
+function or somebody's cited precedent **does not exist**, re-read it from the
+remote — `git show origin/main:<path>` — in a command of its own, and check
+the open branches when the claim is *nobody has built this*.
+
+Grepping your checkout answers *"is this in my base"*, not *"does this exist"*,
+and a `git fetch` earlier in the same compound command is not a barrier when
+siblings merge every few minutes. Both failures happened in one session on
+2026-09-21, one of them in a comment accusing a bean of exactly this error:
+[`bean-coordination`](bean-coordination.md) §"Re-derive from the REMOTE" has
+the measurements and the two guards.
+
 ## When the work has a BEAN and no issue (STRICT)
 
 **Measured 2026-09-20, bean `oh78`.** 54 proposals merged in one four-hour

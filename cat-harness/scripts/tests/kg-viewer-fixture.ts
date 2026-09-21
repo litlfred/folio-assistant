@@ -50,7 +50,7 @@ import { dirname, join } from "node:path";
 
 import { viewerHtml } from "../kg-viewer.ts";
 import { UI_STRINGS, type LocaleCatalogue } from "../kg-viewer-strings.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { artefactStubFor, repoRootFor } from "../../schemas/cat-harness.js";
 
 /** Wrap in guillemets: a translation a reader of English can still check. */
 const pseudo = (s: string): string => "«" + s + "»";
@@ -120,11 +120,25 @@ export const FIXTURE_PAGE = "_kg/folio-assistant-i18n-fixture/index.html";
  * `_kg/` the rest of the suite generates into. A fixture with its own stub
  * would need its own graph, and would then be testing a document nothing else
  * has looked at.
+ *
+ * **It is now RESOLVED rather than spelled.** That paragraph was already the
+ * intent, and the line below still read `viewerHtml("folio-assistant", ...)`
+ * — so the stub was real only for as long as nobody changed it. The
+ * 2026-09-21 rename (issue #649) changed it, the export began writing
+ * `_kg/cat-harness.jsonld`, and this page went on fetching
+ * `../folio-assistant.jsonld`: four catalogue specs failed on a 404 that had
+ * nothing to do with catalogues. A comment asserting a value does not keep it
+ * true; reading it does.
+ *
+ * The fixture DIRECTORY keeps its own name. It only has to sit one level under
+ * `_kg/` for `../<stub>.jsonld` to resolve, so what it is called is
+ * independent of the stub — and naming it after the fixture is what tells a
+ * reader it is not a published artefact.
  */
 export function writeFixture(root: string): string {
   const out = join(root, FIXTURE_PAGE);
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, viewerHtml("folio-assistant", [FIXTURE_CATALOGUE]));
+  writeFileSync(out, viewerHtml(artefactStubFor(join(root, "cat-harness")), [FIXTURE_CATALOGUE]));
   return out;
 }
 
