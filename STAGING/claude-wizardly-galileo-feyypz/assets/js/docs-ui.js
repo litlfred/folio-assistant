@@ -2431,6 +2431,64 @@
     return { placed: placed, tagged: tagged };
   }
 
+  /* ═══ The linear floor ════════════════════════════════════════════════
+   *
+   * `_includes/generated/todo-listing.html` puts every note into the bytes the
+   * server sends, in document order. That listing is the ARTEFACT; the board
+   * is an overlay over it. Owner: "this dymanic moving state is overlayed, its
+   * an 'extra'. on stndard folio just simple tile based listing."
+   *
+   * ## Collapsed, never removed
+   *
+   * When the board is available this collapses the listing into a `<details>`
+   * so the page is not showing the same notes twice. It does NOT remove it,
+   * hide it from assistive technology, or set `display: none` on it, and the
+   * reason is bean `l4zi`: an action whose inverse is not reachable is not a
+   * toggle. A reader who cannot use the board — or who simply wants the
+   * printable list — reaches it by opening one disclosure, with the keyboard,
+   * from any page.
+   *
+   * ## Why this runs at mount rather than at page load
+   *
+   * The listing must stay OPEN when the board did not mount, and "did not
+   * mount" includes the two cases a reader cannot distinguish from the
+   * outside: the index failed to load, and this script never ran at all. Both
+   * leave the floor exactly as the server sent it, which is the correct
+   * result in both.
+   */
+  function collapseFloor(count) {
+    var floor = document.getElementById("fa-todo-listing");
+    if (!floor || floor.dataset.faCollapsed === "1") return;
+    floor.dataset.faCollapsed = "1";
+    var details = el("details", { class: "fa-todo-listing-details" });
+    var summary = el(
+      "summary",
+      { class: "fa-todo-listing-toggle" },
+      "Linear listing (" + count + ")",
+    );
+    details.appendChild(summary);
+    floor.parentNode.insertBefore(details, floor);
+    // MOVED, not copied: two copies of a note in one document is two answers
+    // to "how many are open", and a screen reader would read both.
+    details.appendChild(floor);
+
+    // PRINT. A printed page has no board, so the floor is the only listing
+    // there is — and a closed `<details>` cannot be revealed by a stylesheet
+    // in Chromium, which hides its contents with `content-visibility` on an
+    // internal slot. A `@media print` rule would look like it worked and
+    // print nothing, so the disclosure is opened here and put back after.
+    if (typeof window.addEventListener === "function") {
+      var wasOpen = false;
+      window.addEventListener("beforeprint", function () {
+        wasOpen = details.open;
+        details.open = true;
+      });
+      window.addEventListener("afterprint", function () {
+        details.open = wasOpen;
+      });
+    }
+  }
+
   /** Fetch, then mount the board and hand the launcher a way to open it. */
   function mountTodoStickies() {
     fetchTodoIndex(function (items) {
@@ -2439,6 +2497,7 @@
       var board = mountTodoBoard(items);
       if (!board) return;
       mountPageStickies(items, board);
+      collapseFloor(items.length);
       window.__faTodoBoard = board;
       document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
     });
@@ -3055,6 +3114,39 @@
       if (mainContent && mainContent.firstChild) {
         mainContent.insertBefore(warning, mainContent.firstChild);
       }
+    }
+
+    // A HAND-AUTHORED page has no generator to write its badge into the
+    // markup, so it is built here from the paths `head_custom.html` published.
+    // Those paths are STRUCTURE — `_data/translation-qa-pages.json` says a
+    // projection exists, never what it found — so this badge is emitted only
+    // where there is something to open, and `paintQaBadges` (which runs right
+    // after `mountTranslationBadges`) fetches its state from the same
+    // `qa-index.json` every other badge uses.
+    //
+    // Deliberately identical markup to the generated one, down to the
+    // `fa-qa-pending` class and the `…` glyph: one badge, one painter, one
+    // panel. A second shape here would be a second set of states to keep in
+    // step with the first.
+    var tq = meta.translationQa;
+    if (tq && tq.src && tq.index && !document.querySelector(".fa-page-qa-badges")) {
+      var tqBadge = el("button", {
+        type: "button",
+        class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
+        "data-qa-family": "translation",
+        "data-qa-key": tq.key || "page.translation",
+        "data-qa-label": "Translation QA",
+        "data-qa-noun": "page",
+        "data-qa-src": tq.src,
+        "data-qa-index": tq.index,
+        "aria-expanded": "false",
+        "aria-busy": "true",
+        title: "Translation QA: loading the verdict…",
+        "aria-label": "Translation QA: loading the verdict…"
+      });
+      tqBadge.appendChild(el("span", { class: "fa-qa-tag" }, "TR"));
+      tqBadge.appendChild(el("span", { class: "fa-qa-glyph", "aria-hidden": "true" }, "…"));
+      container.appendChild(tqBadge);
     }
 
     // The page-level QA badges the generator emitted under the h1 join this

@@ -260,25 +260,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T11:43:30.994Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b5b1226a31e9bad863e57355af80331d136b8648",
-  "sourceCommitSha": "b5b1226a31e9bad863e57355af80331d136b8648",
-  "sourceCommitAt": "2026-09-21T11:41:46Z",
+  "generatedAt": "2026-09-21T12:12:11.956Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09c422b0cbd1f0f2fa87c4b96db3185a755558c5",
+  "sourceCommitSha": "09c422b0cbd1f0f2fa87c4b96db3185a755558c5",
+  "sourceCommitAt": "2026-09-21T12:10:03Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 222,
-    "Actor": 27,
+    "Skill": 220,
+    "Actor": 28,
     "Capability": 28,
-    "Role": 130,
+    "Role": 131,
     "Convention": 2,
-    "SkillPackage": 18,
-    "Process": 55,
-    "SequenceFlow": 714,
-    "ProcessNode": 680,
+    "SkillPackage": 17,
+    "Process": 58,
+    "SequenceFlow": 741,
+    "ProcessNode": 705,
     "Tool": 69,
     "Schema": 84,
     "GraphKind": 24,
-    "Directory": 34,
+    "Directory": 33,
     "Asset": 3
   },
   "@graph": [
@@ -1794,6 +1794,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/harness-tiles",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "harness-tiles",
+      "title": "A tile is the harness's, not the node's",
+      "description": "A tile is a function of the harness watching a directory, not of nodes. Where the tile set comes from, what a tile opens, and the two gaps it reports rather than hides.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/harness-tiles.md",
+      "instructionLines": 107,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/role-model",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "role-model",
@@ -2382,6 +2399,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-contract"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "board-windows",
+      "title": "Start in the avatar, open into a window",
+      "description": "Everything starts as its avatar; opening projects a window onto the board. The two mechanisms that must not be conflated, z-order, and the fixed chrome a content kind fills in.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/board-windows.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-windows"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/test-engineer",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "test-engineer",
@@ -2614,6 +2648,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/block-density"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "board-diagram-interchange",
+      "title": "Relationship first, visualisation later",
+      "description": "A board is a DIAGRAM OF a folio, not a container of one. The OMG split between the semantic model and its layout, why the arrow runs one way, and what a note may never carry.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/board-diagram-interchange.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/agent-memory",
@@ -3800,90 +3851,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-simplifier"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/root-readme",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "root-readme",
-      "title": "The root README, and the one fact it must carry",
-      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap"
-      ],
-      "instructionsPath": "../cat-bootstrap/skills/root-readme.md",
-      "instructionLines": 82,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/root-readme"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "discussion",
-      "title": "discussion — settling what an agent cannot read off disk",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap"
-      ],
-      "instructionsPath": "../cat-bootstrap/skills/discussion.md",
-      "instructionLines": 107,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/cat-bootstrap-kg-navigation",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "cat-bootstrap-kg-navigation",
-      "title": "Reading a knowledge graph before you have anything",
-      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill cat-bootstrap hands you, because the second step of the handoff cannot be followed without it.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap"
-      ],
-      "instructionsPath": "../cat-bootstrap/skills/cat-bootstrap-kg-navigation.md",
-      "instructionLines": 83,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/cat-bootstrap-kg-navigation"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/confirm-harness",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "confirm-harness",
-      "title": "Which harness, and where",
-      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap"
-      ],
-      "instructionsPath": "../cat-bootstrap/skills/confirm-harness.md",
-      "instructionLines": 59,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/confirm-harness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/log-message",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "log-message",
-      "title": "Logging what you are doing",
-      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap"
-      ],
-      "instructionsPath": "../cat-bootstrap/skills/log-message.md",
-      "instructionLines": 93,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/log-message"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/cat-bootstrap-graph-emission",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "cat-bootstrap-graph-emission",
@@ -4528,6 +4495,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/business-analyst"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#actor/board-renderer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Actor",
+      "localId": "board-renderer",
+      "actorKind": "system",
+      "title": "Board renderer",
+      "description": "The client-side code that draws a folio's boards where the reader is: the avatar, window and layout machinery each content kind declares into. Mechanical — it runs a fixed program and exercises no judgement, which is why every decision in the board diagrams sits in the reader's lane. It is NOT the CI pipeline: that publishes and never reacts to a reader, and conflating the two would put a person's click behind a build.",
+      "hasCapability": [],
+      "roleName": [
+        "board-renderer"
+      ],
+      "permissionName": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/board-renderer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#actor/platform-boundary-guard",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Actor",
       "localId": "platform-boundary-guard",
@@ -5055,15 +5036,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#convention/comment-why-not-what"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "cat-bootstrap",
-      "path": "../cat-bootstrap/skills",
-      "hasManifest": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cat-bootstrap"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/cat-bootstrap-render",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "cat-bootstrap-render",
@@ -5343,6 +5315,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/ci-health",
@@ -5367,6 +5341,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/directory-conventions",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/dispatch-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/docs-generation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/editor",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/exposition-swarm-drain",
@@ -5377,8 +5352,10 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/goal-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/harness-requirements",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/harness-tiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/idle-backlog",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/incremental-render",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/instance-kinds",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/integration-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/integration-backlog",
@@ -5388,8 +5365,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/kg-export",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/docs-auto",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/incremental-render",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/library-ingestion",
@@ -14277,6 +14252,293 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BeanLifecycle/node/End_Recorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "Board: relocate content to the trashcan",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/board-relocate.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/Start_Fishbone"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/Start_Fishbone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_AskConfirm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_AskConfirm",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/GW_Confirmed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Yes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "yes, move it",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_MoveContent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_No",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_Cancel",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Cancelled",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_Cancel",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Unchanged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Cancelled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_MoveContent",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_UpdateLayer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_UpdateLayer",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_ReportMove",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_ReportMove",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Reader",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Board renderer",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Board%20renderer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/Start_Fishbone",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "The fishbone is used on open content",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/Start_Fishbone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_AskConfirm",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Name what will move, and where it lands",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/A_AskConfirm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/GW_Confirmed",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Confirmed by the reader?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Yes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_No"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/GW_Confirmed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_Cancel",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Leave the content exactly where it is",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_No"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Cancelled"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/A_Cancel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Unchanged",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Nothing moved",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Cancelled"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Unchanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_MoveContent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Relocate the content to the trashcan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_Yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/A_MoveContent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_UpdateLayer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Drop its positions and sweep orphans",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/A_UpdateLayer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/A_ReportMove",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Say what moved and where it went",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/A_ReportMove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "The content lives in the trashcan",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardRelocate/flow/F_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_CodeQualityGates",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
       "name": "The gates a change must pass before it can merge",
@@ -20016,6 +20278,360 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote/node/EndEvent_Refused"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "Board: open and close content",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/board-open-close.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/Start_Board"
+      ],
+      "nodeCount": 10,
+      "flowCount": 13,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/Start_Board",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_RenderAvatars",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_RenderAvatars",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoOpen",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "open a card",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Open",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoRaise",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "select a window",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Raise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoRaise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoClose",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "[x]",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Close",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoClose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoZoom",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "resize the board",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_ResolveThreshold",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoZoom"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Leave",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "leave",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/End_Board",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Leave"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Opened",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Open",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Raise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Opened"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Raised",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Raise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/End_Board",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Raised"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Closed",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Close",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_OfferWayBack",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Closed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Back",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_OfferWayBack",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Back"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_ResolveThreshold",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_SwapToAvatar",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_SwapToAvatar",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_RenderAvatars",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/Start_Board",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "A board is opened",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/Start_Board"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_RenderAvatars",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Render every card as its avatar",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_RenderAvatars"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "What did the reader do?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Back"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoOpen",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoRaise",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoClose",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoZoom",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Leave"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/GW_Act"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Open",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Project a window onto the board",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoOpen"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Opened"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Open"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Raise",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Raise the window the reader selected",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoRaise",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Opened"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Raised"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Raise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Close",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Close the window back to its avatar",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoClose"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Closed"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_OfferWayBack",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Leave a reachable way back",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Closed"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Back"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_OfferWayBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_ResolveThreshold",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Resolve the kind's zoom threshold",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_DoZoom"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_ResolveThreshold"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_SwapToAvatar",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Swap cards below the threshold; leave open windows alone",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Zoom2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/A_SwapToAvatar"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/node/End_Board",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "The reader leaves the board",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Reader",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Leave",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardOpenClose/flow/F_Raised"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose/node/End_Board"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_EvidenceRetrieval",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
       "name": "Evidence for a recommendation",
@@ -23835,6 +24451,214 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "Board: place a note",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/board-place-note.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/Start_Place"
+      ],
+      "nodeCount": 6,
+      "flowCount": 6,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/Start_Place",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/GW_Exists",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_New",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "new sticky",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/GW_Exists",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_CreateNote",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_New"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Existing",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "an existing card, dragged",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/GW_Exists",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_Place",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Existing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Created",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_CreateNote",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_Place",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Created"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_Place",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_SweepOrphans",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_SweepOrphans",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/End_Placed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Author",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Author",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Layout%20layer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "Layout layer",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Layout%20layer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/Start_Place",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "A note is to appear at a spot",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Author",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/Start_Place"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/GW_Exists",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Does the note exist already?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Author",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_New",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Existing"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/GW_Exists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_CreateNote",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Write the note into the folio — with no coordinate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Author",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_New"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Created"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_CreateNote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_Place",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Record x,y for this note on THIS board",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Layout%20layer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Existing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_Created"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_Place"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_SweepOrphans",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Sweep positions whose note is gone",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Layout%20layer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/A_SweepOrphans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/node/End_Placed",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "The board shows it there",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Layout%20layer",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_BoardPlaceNote/flow/F_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote/node/End_Placed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -27942,7 +28766,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-bootstrap.jsonld#skill/discussion"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/discuss"
     },
@@ -30048,7 +30872,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-bootstrap.jsonld#skill/log-message"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/log-message"
     },
@@ -33285,6 +34109,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/board-renderer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
+      "name": "board-renderer",
+      "title": "Board renderer",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-windows",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/board-diagram-interchange",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/harness-tiles",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/Board%20renderer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/board-renderer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/validation-pipeline",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
       "name": "validation-pipeline",
@@ -33678,70 +34523,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/compute-authoring-agent"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/initiator",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
-      "name": "initiator",
-      "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge cat-bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those cat-bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/cat-bootstrap-kg-navigation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/confirm-harness",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/log-message"
-      ],
-      "bindsLane": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/initiator"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/knowledge-graph-data-store",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
-      "name": "knowledge-graph-data-store",
-      "title": "Knowledge Graph Data Store",
-      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "system"
-      ],
-      "actedUpon": true,
-      "hasSkill": [],
-      "bindsLane": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/knowledge-graph-data-store"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/requestor",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
-      "name": "requestor",
-      "title": "Requestor",
-      "description": "Wants to initialize — or cat-bootstrap, or install, or load, or harness — a harness: cat-bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "person"
-      ],
-      "judgementOnly": true,
-      "hasSkill": [],
-      "bindsLane": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/requestor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#role/logger",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
-      "name": "logger",
-      "title": "Logger",
-      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "system"
-      ],
-      "actedUpon": true,
-      "hasSkill": [],
-      "bindsLane": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/logger"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "tools",
@@ -33765,17 +34546,6 @@
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
-      "name": "cat-bootstrap",
-      "path": "cat-bootstrap/skills/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
-      ],
-      "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE — its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design — it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker — the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction — not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one — `discoverLocalPackages` — and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-bootstrap"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-bootstrap-render",
@@ -34170,8 +34940,8 @@
   ],
   "staging": {
     "branch": "claude/wizardly-galileo-feyypz",
-    "sha": "53c5a365e28fe56716541ce76db378114842c5e2",
+    "sha": "660c456908e7f429ad6baec6318638bd952276b6",
     "pr": "691/merge",
-    "run": "35595439652"
+    "run": "35597975192"
   }
 }
