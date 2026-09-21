@@ -629,6 +629,7 @@ jobs:
           # enough to hold.
           bun run check:subgraph-coverage
           bun run check:published-refs
+          bun run check:graph-kind-work
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
