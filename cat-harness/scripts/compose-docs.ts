@@ -213,6 +213,104 @@ export function composedInstances(repo = REPO): ComposedInstance[] {
   return out.sort((a, b) => a.under.localeCompare(b.under));
 }
 
+/**
+ * Composed-tree paths a CANONICAL deploy must not carry.
+ *
+ * Read from `coverage.visualiser[].publish === "staging-only"` across every
+ * declaration in the checkout, never from a list here — a list would be the
+ * `check:declared-assets` defect again, and this one fails by PUBLISHING
+ * something somebody chose not to publish.
+ *
+ * ## Withholding a page means withholding its directory
+ *
+ * A viewer is `<dir>/index.html` plus whatever it loads. Withholding the one
+ * file leaves its scripts and data deployed, which for `fsh-guts` would
+ * publish the very bytes the declaration keeps back — so an `index.*` ref
+ * withholds everything under its parent.
+ *
+ * **Except when that parent is the layer root**, which would withhold the
+ * whole site. That guard is not hypothetical bookkeeping: a visualiser ref
+ * directly in `cat-harness/docs/` is a perfectly ordinary declaration, and
+ * without the check, one such ref marked staging-only would empty the
+ * canonical deploy. The ref is then withheld as a single file.
+ */
+/**
+ * What a visualiser ref withholds, given its path inside a docs layer.
+ *
+ * An `index.*` stands for its whole directory, because a viewer is a page plus
+ * whatever it loads and withholding the page alone would deploy the assets.
+ *
+ * **Unless its parent is the layer root**, where the directory IS the site.
+ * Separated out and exported for one reason: as a branch inside
+ * `withheldFromCanonical` it could only be exercised by a declaration that
+ * actually put a ref at a layer root, so no test over this repository's real
+ * tree could ever reach it — and the failure it prevents is the canonical
+ * deploy composing to nothing. A guard that cannot be tested where it matters
+ * is a guard that is one refactor from being dropped silently.
+ */
+export function withheldPathFor(rel: string): string {
+  const slash = rel.lastIndexOf("/");
+  const base = slash === -1 ? rel : rel.slice(slash + 1);
+  const parent = slash === -1 ? "" : rel.slice(0, slash);
+  // `parent === ""` IS the layer-root case: withhold the file alone.
+  return /^index\.(html|md)$/.test(base) && parent !== "" ? `${parent}/` : rel;
+}
+
+export function withheldFromCanonical(repo = REPO): string[] {
+  const roots = docsLayers(repo).layers.map((l) => l.dir);
+  const out = new Set<string>();
+
+  const consider = (ref: string): void => {
+    const abs = resolve(repo, ref);
+    for (const root of roots) {
+      const rel = relative(root, abs);
+      // Outside this layer, or escaping it via `..` — not ours to withhold.
+      if (rel.startsWith("..") || rel === "") continue;
+      out.add(withheldPathFor(rel));
+      return;
+    }
+  };
+
+  for (const declPath of declarationsIn(repo)) {
+    let d: { directories?: { coverage?: { visualiser?: unknown } }[] };
+    try {
+      d = JSON.parse(readFileSync(declPath, "utf-8"));
+    } catch {
+      // `kg:schema:check` owns an unparseable declaration; a second voice on
+      // it here would report the same defect twice under different names.
+      continue;
+    }
+    for (const entry of d.directories ?? []) {
+      const v = entry.coverage?.visualiser;
+      if (v === undefined) continue;
+      for (const one of Array.isArray(v) ? v : [v]) {
+        if (typeof one !== "object" || one === null) continue;
+        const o = one as { ref?: string; publish?: string };
+        if (o.publish === "staging-only" && o.ref) consider(o.ref);
+      }
+    }
+  }
+  return [...out].sort();
+}
+
+/** Every `<name>.json` declaration in the checkout — root and one level down. */
+function declarationsIn(repo: string): string[] {
+  const out: string[] = [];
+  const at = declarationPathIn(repo);
+  if (at && existsSync(at)) out.push(at);
+  for (const e of readdirSync(repo, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    const p = declarationPathIn(join(repo, e.name));
+    if (p && existsSync(p)) out.push(p);
+  }
+  return out;
+}
+
+/** Whether `rel` falls under one of the withheld paths (file, or `dir/`). */
+export function isWithheld(rel: string, withheld: readonly string[]): boolean {
+  return withheld.some((w) => (w.endsWith("/") ? rel.startsWith(w) : rel === w));
+}
+
 /** Every file beneath `dir`, as paths relative to it. Dotfiles are skipped. */
 function filesUnder(dir: string, prefix = ""): string[] {
   const out: string[] = [];
@@ -244,6 +342,17 @@ export interface ComposeReport {
    * collapsing it into either would make "what did the root change" unanswerable.
    */
   readonly merged: { path: string; baseLayer: string; by: string; keys: string[] }[];
+  /**
+   * Files kept OUT of this tree because their visualisation is
+   * `publish: "staging-only"` and this is a canonical compose.
+   *
+   * Reported rather than silent, for the reason every omission here is
+   * reported: a tree that is quietly smaller than its layers is
+   * indistinguishable from a layer that failed to read. Empty on a
+   * `--staging` run, which is a different fact from "nothing is withheld
+   * anywhere" and is why the flag is echoed in the CLI output beside it.
+   */
+  readonly withheld: string[];
   /**
    * Instances composed under their own name, rather than mounted after Jekyll.
    *
@@ -313,8 +422,25 @@ export function mergeConfig(
 }
 
 /** Lay the layers down in order, recording who supplied what. */
-export function compose(out: string, repo = REPO): ComposeReport {
+/**
+ * Options for a compose run.
+ *
+ * `staging` is the ONLY way a staging-only visualisation reaches the tree, and
+ * the default is deliberately the restrictive one — see
+ * `VisualisationSchema.publish` for why the two failure directions are not
+ * symmetric. Briefly: forgetting the flag loses a page from a preview, where
+ * whoever is looking at the preview sees it missing; the opposite default
+ * publishes withheld content to the world, where nothing shows it at all.
+ */
+export interface ComposeOptions {
+  /** True on a local build or a `STAGING/<slug>/` preview. Default false. */
+  readonly staging?: boolean;
+}
+
+export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): ComposeReport {
   const { layers, missing } = docsLayers(repo);
+  const withheld = opts.staging === true ? [] : withheldFromCanonical(repo);
+  const withheldFiles: string[] = [];
 
   rmSync(out, { recursive: true, force: true });
   mkdirSync(out, { recursive: true });
@@ -327,6 +453,13 @@ export function compose(out: string, repo = REPO): ComposeReport {
   for (const [i, layer] of layers.entries()) {
     for (const rel of filesUnder(layer.dir)) {
       const isOverlay = i > 0;
+      // Withheld BEFORE anything else touches `rel`, so a staging-only page
+      // cannot be recorded as supplied, overridden or added. A report that
+      // named a file the tree does not carry would be worse than no report.
+      if (isWithheld(rel, withheld)) {
+        withheldFiles.push(rel);
+        continue;
+      }
       const dest = join(out, rel);
       const src = join(layer.dir, rel);
 
@@ -361,6 +494,15 @@ export function compose(out: string, repo = REPO): ComposeReport {
   const composedInst = composedInstances(repo);
   for (const c of composedInst) {
     for (const rel of filesUnder(c.dir)) {
+      // A composed instance lands under its own name, so its withholding is
+      // asked about the path the TREE will carry rather than the instance's
+      // own. Skipping this loop would leave a staging-only graph publishable
+      // simply by declaring it `composed`.
+      const under = `${c.under}/${rel}`;
+      if (isWithheld(under, withheld)) {
+        withheldFiles.push(under);
+        continue;
+      }
       const dest = join(out, c.under, rel);
       mkdirSync(join(dest, ".."), { recursive: true });
       cpSync(join(c.dir, rel), dest);
@@ -368,7 +510,7 @@ export function compose(out: string, repo = REPO): ComposeReport {
     }
   }
 
-  return { layers, missing, suppliedBy, overrides, added, merged, composed: composedInst };
+  return { layers, missing, suppliedBy, overrides, added, merged, withheld: withheldFiles.sort(), composed: composedInst };
 }
 
 /** Every file beneath a directory with its bytes — for the identity check. */
@@ -386,11 +528,17 @@ if (import.meta.main) {
   const i = argv.indexOf("--out");
   const out = i >= 0 ? argv[i + 1] : undefined;
   if (!out) {
-    console.error("usage: compose-docs.ts --out <dir> [--check]");
+    console.error("usage: compose-docs.ts --out <dir> [--check] [--staging]");
     process.exit(2);
   }
 
-  const r = compose(resolve(out));
+  // `--staging` is the POSITIVE assertion that this build is not the canonical
+  // deploy: a local build, or a `STAGING/<slug>/` preview. Absent means
+  // canonical, which withholds. The default is the restrictive one on purpose
+  // — `VisualisationSchema.publish` carries why the two error directions are
+  // not symmetric.
+  const staging = argv.includes("--staging");
+  const r = compose(resolve(out), REPO, { staging });
 
   for (const m of r.missing) {
     // A declared layer with no directory is a FINDING, not a skip. It is the
@@ -407,6 +555,15 @@ if (import.meta.main) {
   if (r.overrides.length === 0) console.log("  no overrides — the composed tree is the base layer");
   for (const o of r.overrides) console.log(`  OVERRIDE ${o.path} — ${o.baseLayer} -> ${o.by}`);
   for (const a of r.added) console.log(`  ADDED    ${a}`);
+  // Stated either way, never only when non-empty. "Nothing was withheld" and
+  // "withholding was off" are different facts and an empty list alone cannot
+  // tell them apart.
+  if (staging) console.log("  staging build — staging-only visualisations are INCLUDED");
+  else if (r.withheld.length === 0) console.log("  canonical build — nothing declared staging-only");
+  else {
+    console.log(`  canonical build — ${r.withheld.length} file(s) withheld as staging-only:`);
+    for (const w of r.withheld) console.log(`  WITHHELD ${w}`);
+  }
   // The changed KEYS, never a count. "merged 1 file" tells a reader nothing
   // about what the overlay did to the site's configuration, which is the whole
   // question a merged config raises.
