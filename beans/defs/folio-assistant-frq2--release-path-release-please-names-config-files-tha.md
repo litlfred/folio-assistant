@@ -1,11 +1,11 @@
 ---
 # folio-assistant-frq2
 title: 'RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository''s behaviour'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:46:25Z
-updated_at: 2026-09-20T22:49:46Z
+updated_at: 2026-09-21T05:17:40Z
 parent: folio-assistant-vke6
 ---
 
@@ -145,9 +145,27 @@ release-please config now answers it by accident.
     #623) — it survived because the version step still reads
     `GITHUB_REF_NAME`, so the code LOOKS like it supports a trigger the
     workflow does not have.
-[ ] One release cut end to end, or a recorded decision that neither path is
-    used — zero tags and a documented release process is a claim nothing has
-    tested
+[x] One release cut end to end. **Done 2026-09-21**, and it is the only box
+    that could close the others honestly — everything before it was a claim
+    about a path nothing had run.
+
+    `Release Folio Assistant` **run_number: 1**. The first execution this
+    workflow has ever had; every defect this bean found was in a path nobody
+    had exercised.
+
+    Verified as ARTEFACTS, not as exit codes — which is the whole lesson
+    here, since green steps are exactly what hid a four-file tarball:
+
+    | | |
+    |---|---|
+    | tag | `folio-assistant-v0.1.0` |
+    | asset | `folio-assistant-0.1.0.tgz`, **212,047 bytes** |
+    | the body's install URL | `.../download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz` |
+    | the asset's real URL | **identical** — the 404 is gone |
+    | GitHub Packages | `+ @litlfred/folio-assistant@0.1.0`, 70 files |
+
+    212 KB is the 69-file tarball, not the 16 KB four-file one. The published
+    name is the DECLARED name, with no `sed` involved.
 
 
 ## Still open: the package NAME, and no release has been cut
@@ -166,18 +184,17 @@ question about which instances are publishable and under what id.
 The path is now honest — it does what it says or fails loudly — but honest is
 not exercised. Cutting one is what would prove it, and that waits on the name.
 
-## NOT completed, and the open box is the point
+## Completed 2026-09-21 — and the last box is why it can be
 
-Four of five boxes are ticked. The fifth — **one release cut end to end, or a
-recorded decision that neither path is used** — is open, and this bean stays
-`in-progress` because of it.
+All five boxes are ticked, the fifth by a real release rather than an
+argument.
 
-It was briefly marked `completed` on 2026-09-20 and corrected within the
-minute. Worth recording rather than quietly fixing: every defect this bean
-found was a claim that outran what had been verified, and closing it on four
-of five boxes would have been the same move one level up. The path is now
-honest; honest is not the same as exercised, and only a cut release shows
-which.
+It was briefly marked `completed` on 2026-09-20 with four of five ticked, and
+corrected within the minute. Recorded rather than quietly fixed, because it is
+the same failure the bean is about: **every defect here was a claim that
+outran what had been verified**, and closing on four of five would have been
+that move one level up. The path was honest at that point. Honest is not
+exercised, and only the cut release showed which.
 
 ## Summary of Changes so far
 
