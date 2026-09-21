@@ -408,7 +408,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:55:33Z",
-      "updatedAt": "2026-09-21T16:55:33Z",
+      "updatedAt": "2026-09-21T20:46:41Z",
       "preview": "Pre-existing, surfaced while migrating voices to <stub>/skills/voices (bean btuv).\n\nagent-skills/agent-skills.config.json declares id=voices path=voices/ and agent-skills/voices/ does not exist. That is the dh4f defect: a consumer scans nothing and reports a clean run over it.\n\nLeft ALONE deliberately rather than removed. The entry's description states real intent — 'a shared base plus one overrid",
       "file": "beans/defs/folio-assistant-26tu--declared-but-absent-agent-skills-declares-a-voices.md"
     },
@@ -3481,14 +3481,14 @@
     {
       "id": "folio-assistant-lrbx",
       "title": "EXTRACTION: the kramdown {:toc} placeholder is extracted as translatable prose, and translators dutifully translate it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:22:39Z",
-      "updatedAt": "2026-09-21T13:22:39Z",
+      "updatedAt": "2026-09-21T20:46:20Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
     },
