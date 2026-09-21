@@ -134,7 +134,16 @@ bun run readme:sync                 # refresh a folio README's generated section
 bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
+bun run preview:site                # BUILD the docs site locally and look at a page
 ```
+
+**`preview:site` exists because a green gate set is not a rendered page.** On
+2026-09-21 a generator emitted raw `<h3>` blocks, kramdown assigned them no
+heading ids, and the theme gave all 22 of a page's section headings the SAME
+anchor — an accessibility defect (`gjli`) that `gates --all` was green across,
+because the generator's own output looked right. Only a build showed it. The
+script handles the two things that make a naive `bundle exec jekyll` fail here
+and says in its header how its output differs from CI's.
 
 **`bun run gates` is the one to run before pushing, and it was missing from this
 list until 2026-09-20.** Its absence has a measured cost: a session ran `bun

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T16:55:33Z
-updated_at: 2026-09-21T16:55:33Z
+updated_at: 2026-09-21T20:46:41Z
 parent: folio-assistant-vuip
 ---
 
@@ -21,3 +21,24 @@ Two things are now true of it at once: the directory is absent, and the path nam
 
 - agent-skills either ships its voices at skills/voices/ or drops the declaration until it does;
 - whichever way, the path matches the convention the other instances now use.
+
+
+## 2026-09-21 — the PATH is realigned; ship-or-drop is still open
+
+`agent-skills.json` declared `path: "voices/"`, the pre-migration layout,
+while `who-style-guide` and `folio-assistant-sci` moved to `skills/voices/`
+because a voice IS a skill (bean `btuv`). Now `skills/voices/`.
+
+**This closes the second `Done when`, not the first.** The directory is still
+absent either way — realigning it only means that when the voices arrive they
+land where every consumer already looks, instead of at a path the convention
+has left behind. The declaration's own description says the entry is
+deliberate, roadmap ahead of content, so dropping it is this instance's call
+and not a migration decision (`deletion-requires-confirmation`).
+
+Visible in the voices viewer as `agent-skills  agent-skills/skills/voices
+DECLARED BUT ABSENT` — the `dh4f` state reported rather than smoothed over.
+
+- [ ] agent-skills either ships its voices at `skills/voices/` or drops the
+      declaration until it does — **the owner's**
+- [x] whichever way, the path matches the convention the other instances use

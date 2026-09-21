@@ -295,9 +295,14 @@ msgstr "этот блок?» Создается автором — поддер�
 msgid "This trips up agents constantly."
 msgstr "Это постоянно сбивает агентов с толку."
 
-#: agent-onboarding.md:18
-msgid "TOC"
-msgstr "Содержание"
+# OBSOLETE. `TOC` was never prose: it is the list item kramdown REPLACES with
+# the generated table of contents, so its text reached no reader in any
+# language. `pot-extract.ts` offered it as translatable anyway, and it cost
+# real translator attention — this entry is what that cost looks like. Bean
+# `lrbx`; the extractor now drops the list a `{:toc}` directive consumes.
+# Kept rather than deleted so the work is not lost if the string ever returns.
+#~ msgid "TOC"
+#~ msgstr "Содержание"
 
 #: agent-onboarding.md:174
 msgid "Watching a sibling PR: ."

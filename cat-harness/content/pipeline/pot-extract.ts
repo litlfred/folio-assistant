@@ -75,6 +75,23 @@ const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
 const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
 const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
 const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
+/**
+ * The kramdown directive that CONSUMES the block it attaches to.
+ *
+ * `{:toc}` replaces the preceding list with a generated table of contents, so
+ * that list's text **never reaches a reader in any language**. Every other
+ * directive here attaches attributes and leaves the block rendering — a
+ * measured distinction rather than a guessed one: across this instance's docs
+ * the directive vocabulary is `{: .note }` (232), `{: .fa-edit-source }` (276),
+ * `{: .no_toc }` (38), `{: .fa-hx-dim }` (22) and others, and **only `{:toc}`
+ * consumes.** Widening this regex to all of them would delete real prose from
+ * the catalogue, which is strictly worse than the bug it fixes.
+ *
+ * `{: .no_toc }` is the near miss worth naming: it is about the table of
+ * contents, it sits beside a heading a reader DOES see, and matching on "toc"
+ * rather than on the exact directive would drop that heading.
+ */
+const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
 
 /** Minimum character length for a string to be considered translatable. */
 const MD_MIN_TEXT_LEN = 3;
@@ -185,10 +202,39 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     paragraphLines.length = 0;
   };
 
+  /**
+   * Where the current run of consecutive list items began in `entries`.
+   *
+   * `null` when the last significant line was not a list item. A kramdown
+   * directive that CONSUMES its block arrives AFTER the list it replaces, so
+   * the items are already in `entries` by then — this is what lets them be
+   * taken back out. Bean `lrbx`.
+   *
+   * A run, not a single item, because `{:toc}` attaches to the whole list. The
+   * placeholder is conventionally one item (`1. TOC`), but a two-item
+   * placeholder would otherwise leak its second line, and the directive's
+   * semantics do not care how many there are.
+   */
+  let listRunStart: number | null = null;
+  /** Blank lines do not end a list run — a loose list has them between items. */
+  const endListRun = (): void => {
+    listRunStart = null;
+  };
+
   for (let idx = 0; idx < lines.length; idx++) {
     const line = lines[idx];
     const lineno = idx + 1;
     const stripped = line.trim();
+
+    // A run of list items ends at the first line that is neither another item,
+    // a blank (loose lists have blanks between items), nor the attribute list
+    // that may terminate it. Ending the run CONSERVATIVELY is the safe
+    // direction: it means the items stay in the catalogue, which is today's
+    // behaviour, whereas failing to end one would let a `{:toc}` further down
+    // the page delete a list nobody asked it to touch.
+    if (stripped !== "" && !MD_LIST_ITEM_RE.test(line) && !MD_KRAMDOWN_ATTR_RE.test(stripped)) {
+      endListRun();
+    }
 
     // --- YAML front matter ---
     if (lineno === 1 && MD_FRONT_MATTER_DELIM.test(line)) {
@@ -266,6 +312,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     const listMatch = line.match(MD_LIST_ITEM_RE);
     if (listMatch) {
       flushParagraph();
+      if (listRunStart === null) listRunStart = entries.length;
       const text = cleanMarkdownText(listMatch[2].trim());
       if (text.length >= MD_MIN_TEXT_LEN) {
         entries.push({ source, line: lineno, msgid: text });
@@ -300,6 +347,16 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     // --- Kramdown / Jekyll attribute lists (skip) ---
     if (MD_KRAMDOWN_ATTR_RE.test(stripped)) {
       flushParagraph();
+      // A CONSUMING directive takes its block with it. `{:toc}` replaces the
+      // list above with a generated table of contents, so that list's text is
+      // a placeholder no reader ever sees — and offering it to a translator
+      // costs real attention: the Arabic and Russian translators rendered
+      // `1. TOC` as a heading, which is the correct reading of a string that
+      // should never have been shown to them. Bean `lrbx`.
+      if (MD_KRAMDOWN_CONSUMING_RE.test(stripped) && listRunStart !== null) {
+        entries.length = listRunStart;
+      }
+      endListRun();
       continue;
     }
 

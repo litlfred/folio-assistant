@@ -17,9 +17,14 @@ msgstr "Vous êtes un agent LLM qui vient d'être placé dans un dépôt utilisa
 msgid "For the architecture of skills, roles, and capabilities, read Skills & roles. This page is the practical version."
 msgstr "Pour l'architecture des compétences, des rôles et des capacités, lisez Compétences & rôles. Cette page est la version pratique."
 
-#: agent-onboarding.md:20
-msgid "TOC"
-msgstr ""
+# OBSOLETE. `TOC` was never prose: it is the list item kramdown REPLACES with
+# the generated table of contents, so its text reached no reader in any
+# language. `pot-extract.ts` offered it as translatable anyway, and it cost
+# real translator attention — this entry is what that cost looks like. Bean
+# `lrbx`; the extractor now drops the list a `{:toc}` directive consumes.
+# Kept rather than deleted so the work is not lost if the string ever returns.
+#~ msgid "TOC"
+#~ msgstr ""
 
 #: agent-onboarding.md:25
 msgid "1. Work out which repo you are in"
