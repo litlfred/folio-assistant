@@ -31,10 +31,19 @@ worked example of the split-by-dependency-boundary pattern IN the graph already.
 This bean is the rest of it, not the start of it.
 
 ## Done when
-- [ ] the remaining entry points reachable through a Tool node
-- [ ] `alternativeTo` wired to the existing ingest pair where the arms genuinely overlap
-- [ ] `requires.runtime` honest about Python deps, per bean `68dt`
-- [ ] `tool-coverage` reflects it
+
+*Superseded 2026-09-20 by the list further down that declared itself
+"REPLACES both lists above", and promoted here 2026-09-21 under bean `sfhr`.
+Its verdicts are the author's, unchanged; what moved is WHICH list a reader
+finds first. This bean carried THREE checklists, and the authoritative one was
+the one nobody consults.*
+
+- [x] the nine broken `invoke.shell` paths fixed and gated — `jqv4`
+- [x] ~~Stage B: operator-invoked, or run by `ingest-document.ts`?~~ **withdrawn**
+      — optional by design; no question, no node owed
+- [x] `extract-lean-blocks.py` retired to `fsh-guts/` under the owner's one-shot rule
+- [x] `requires.runtime` honest about Python deps, per bean `68dt`
+- [ ] `extract-candidates.py` stays a tier-C reachability observation, not a blocker
 
 
 ---
@@ -111,7 +120,7 @@ would be the wrong call if it is still wanted over there.
 group reachable only through it"* is satisfied for those, which is why they get no
 node of their own.
 
-### Done when
+### Done when — an INTERIM list, superseded below
 
 - [x] the nine broken `invoke.shell` paths fixed and gated — `jqv4`
 - [ ] **Stage B: operator-invoked with a Tool node, or run by `ingest-document.ts`?**
@@ -182,7 +191,10 @@ for, and it costs nothing to defer: the body sits beside its record, `git log
 --follow` reaches the 2026-09-17 import, and a copy into the folio is one
 `git show` away.
 
-### Done when — REPLACES both lists above
+### Done when — the working list, now PROMOTED above
+
+*Kept for its reasoning. The canonical section at the top carries these same
+verdicts, so the two agree rather than contradict.*
 
 - [x] the nine broken `invoke.shell` paths fixed and gated — `jqv4`
 - [x] ~~Stage B: operator-invoked, or run by `ingest-document.ts`?~~ **withdrawn**

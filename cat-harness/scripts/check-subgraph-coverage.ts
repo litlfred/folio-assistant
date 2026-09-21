@@ -575,7 +575,7 @@ if (import.meta.main) {
   const repoRoot = repoRootFor(instanceRootFor(import.meta.dir));
   const rs = auditAll(repoRoot);
   if (rs.length === 0) {
-    console.error("No instance carries a harness.json. That is not a clean run — nothing was checked.");
+    console.error("No instance carries a declaration. That is not a clean run — nothing was checked.");
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(rs, null, 2) : formatReport(rs));

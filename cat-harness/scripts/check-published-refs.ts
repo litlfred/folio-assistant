@@ -62,9 +62,10 @@
  */
 
 import { existsSync, readFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { expectedInstanceConfigPath } from "../schemas/harness-config.js";
 
 /**
  * Keys whose value records where THIS artefact came from.
@@ -144,10 +145,27 @@ function finding(
 }
 
 /**
- * Carrier 1 — instance dependencies in `harness.config.json`.
+ * Carrier 1 — instance dependencies in an instance's `<name>.config.json`.
  *
  * `major`: this is the reference a consumer resolves to obtain another whole
  * instance. It is the one the FHIR alignment is actually about.
+ *
+ * **The path is RESOLVED, not composed, and that is not a style preference.**
+ * This read `join(root, "harness.config.json")` until 2026-09-21. The config
+ * was renamed to `<name>.config.json` on the 21st, so `existsSync` went false
+ * for every instance, every iteration `continue`d, and the carrier reported
+ * *"no instance carries a harness.config.json — there are no declared
+ * instance dependencies in this repository to check"* with `examined: 0`.
+ *
+ * That sentence was true about a filename and false about the repository:
+ * `folio-assistant.config.json` declares `dependencies.folioAssistant`, with
+ * no `ref` and no `version` — precisely the `major` unpinned finding this
+ * carrier exists to raise. **A check that scans nothing and reports a clean
+ * run is the `dh4f` shape**, and here it was hiding the only dependency edge
+ * in the repository.
+ *
+ * `expectedInstanceConfigPath()` asks the instance what its config is called,
+ * so a future rename moves this with it rather than past it.
  */
 export function dependencyRefs(repoRoot: string): CarrierReport {
   const findings: RefFinding[] = [];
@@ -155,9 +173,12 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
   const seen: string[] = [];
 
   for (const root of instanceRootsIn(repoRoot)) {
-    const cfg = join(root, "harness.config.json");
-    if (!existsSync(cfg)) continue;
-    seen.push(relative(repoRoot, cfg) || "harness.config.json");
+    const cfg = expectedInstanceConfigPath(root);
+    // `undefined` is "nothing here declares an instance", which is not the
+    // same as "an instance with no config" — neither is a finding, but only
+    // the second means this root was examined.
+    if (cfg === undefined || !existsSync(cfg)) continue;
+    seen.push(relative(repoRoot, cfg) || cfg);
     let parsed: { dependencies?: { folioAssistant?: Array<{ name?: string; ref?: string; version?: string }> } };
     try {
       parsed = JSON.parse(readFileSync(cfg, "utf-8"));
@@ -168,7 +189,7 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
         ref: undefined,
         kind: "unpinned",
         severity: "major",
-        detail: "harness.config.json is unreadable — not a clean run, and not an empty dependency set",
+        detail: `${relative(repoRoot, cfg) || cfg} is unreadable — not a clean run, and not an empty dependency set`,
       });
       continue;
     }
@@ -188,8 +209,8 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
     note:
       examined === 0
         ? seen.length === 0
-          ? "no instance carries a harness.config.json — there are no declared instance dependencies in this repository to check"
-          : `${seen.length} harness.config.json file(s) found, none declaring dependencies.folioAssistant`
+          ? "no instance carries a config — there are no declared instance dependencies in this repository to check"
+          : `${seen.length} instance config(s) found, none declaring dependencies.folioAssistant`
         : undefined,
   };
 }
