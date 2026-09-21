@@ -3069,6 +3069,20 @@
       "file": "beans/defs/folio-assistant-ivfw--sticky-pin-unpinning-loses-the-theme-and-the-stick.md"
     },
     {
+      "id": "folio-assistant-iy1n",
+      "title": "The milnor voice declares provenance 'house', and all 12 rules now cite an ingested document",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T20:49:56Z",
+      "updatedAt": "2026-09-21T20:49:56Z",
+      "preview": "Surfaced by closing `w0hi` on 2026-09-21, and it is the schema's own worked\nexample that has gone wrong.\n\n`schemas/voices.ts` defines the vocabulary:\n\n  • `assertion` — a publisher describing its own product or house style.\n  • `evidence`  — a measurement somebody else can repeat.\n  • `house`     — a standard this project set for itself, CITING THE NODE THAT\n                  STATES IT RATHER THAN",
+      "file": "beans/defs/folio-assistant-iy1n--the-milnor-voice-declares-provenance-house-and-all.md"
+    },
+    {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
       "status": "todo",
@@ -5115,14 +5129,14 @@
     {
       "id": "folio-assistant-w0hi",
       "title": "VOICE RULE CITES PLATFORM CODE: milnor-brevity-no-repeats is derived from qa-criteria-registry.ts, not from the paper",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:55:33Z",
-      "updatedAt": "2026-09-21T16:55:33Z",
+      "updatedAt": "2026-09-21T20:50:11Z",
       "preview": "Surfaced by moving milnor to folio-assistant-sci (bean btuv).\n\nEvery other rule in the milnor voice cites the Milnor paper — libraryId milnorlink, with a page. milnor-brevity-no-repeats instead cites kgRef content/pipeline/qa-criteria-registry.ts and quotes the criterion text out of the platform's registry.\n\nSo the rule is not derived from the publication the voice declares as its source. It is de",
       "file": "beans/defs/folio-assistant-w0hi--voice-rule-cites-platform-code-milnor-brevity-no-r.md"
     },
