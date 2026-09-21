@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sqtq
 title: 'SWIMLANES HAVE NO DEFINITION: 157 task-containing lanes carry a name and no documentation'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T18:32:14Z
-updated_at: 2026-09-21T18:53:07Z
+updated_at: 2026-09-21T19:17:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -149,3 +149,74 @@ it writes is about accountability in that process.
 - [ ] the 7 role-less lanes are ruled on — binding, alias, or new role
 - [ ] the glossary extractor reads `definition` from the role and
       `scopeNote` from the lane, rather than expecting one text to be both
+
+## Landed 2026-09-21 — 157/157, and the gate is wired
+
+`bun run gates --all`: **97 gates, green**, with `check:lane-documentation`
+among them. Diff over the diagrams: **157 insertions, 0 deletions**, every
+added line a `<bpmn:documentation>`.
+
+### The "7 role-less lanes" above is wrong — it is 1, and it is deliberate
+
+Two corrections, in the order they were found, because the second is the
+interesting one.
+
+**First**, the resolver read `cat-harness/skills/roles/roles.json` alone.
+`cat-bootstrap/skills/roles/roles.json` declares four roles of its own —
+`initiator`, `requestor`, `logger`, `knowledge-graph-data-store` — each with
+a description and a matching `lanes[]`. Six of the seven were already bound.
+Resolving against both, over all 157 lanes read from the diagrams: **27 by
+`<folio:role ref>`, 129 by alias, 1 unresolved.** Sums to 157.
+
+**Second**, that last one is `Actor` in `log-message.bpmn`, and I was one
+edit away from declaring a role for it when the file stopped me. Its own
+`_lanes_comment` says:
+
+> THE FIFTH LANE IS DELIBERATELY UNBOUND: `log-message.bpmn` has a lane named
+> `Actor` and no role claims it, because the point of that diagram is that
+> the actor VARIES … A role binding `Actor` would assert the opposite.
+
+So there are **zero** accidentally-unbound lanes. The Done-when item asking
+for a ruling is withdrawn: it was already ruled, in the file.
+
+### What that leaves for the glossary — a third case, not a gap
+
+A lane whose persona varies BY DESIGN has no role to inherit a `definition`
+from, so its `<bpmn:documentation>` is the only thing the glossary gets. That
+is fine and correct. What is NOT fine is that "deliberately unbound" and
+"nobody got round to it" are indistinguishable to any tool: the distinction
+exists only in a prose `_comment` inside a JSON file, which nothing reads.
+`lane-binds-role` is a `major` criterion, so the day bootstrap's diagrams are
+audited this reads as a defect forever. Carried to bean `ug4r`.
+
+### Three defects fixed while verifying, two of them mine
+
+1. **The extraction probe was a false-finding machine** — `pot.includes(text)`
+   against a gettext template that wraps long msgids across quoted lines and
+   escapes every `"`. It reported **13 correctly-extracted lanes as missing**.
+   It now asks the extractor's own question. The `decodeLabel` +
+   NAMED/DOCUMENTATION copy this needs is a DUPLICATE (`check:partition`
+   refuses agentic-harness → folio-assist-core, rightly), and
+   `lane-extraction-parity.test.ts` is what makes it legitimate — it caught
+   real drift on its first run, the copy over-claiming 17 msgids the real
+   extractor drops.
+2. **`board-open-close.bpmn#Lane_Renderer` claimed "every task here is a
+   serviceTask"** — the file holds seven `<bpmn:task>` and none. The sentence
+   came from the worked example in my own dispatch brief; an agent used it
+   verbatim and flagged the doubt. Rewritten.
+3. **`A_WriteRootReadme` sat in no lane** — the one UNDETERMINED the check
+   reported. `Lane_Initiator`'s own text says the step belongs to it, so the
+   `flowNodeRef` was simply missing; `root-readme` joins the initiator's
+   skills so `role-carries-activity-skill` holds.
+
+## Done when — status
+
+- [x] 157 lanes carry a `<bpmn:documentation>` that is not a restatement of
+      their role's description
+- [x] the new strings are extracted into every locale's `.pot` — 285
+      templates regenerated, `translate-bpmn:check` clean
+- [x] the check is wired into `code-quality-gates.yml`
+- [x] ~~the 7 role-less lanes are ruled on~~ — **1, and already ruled in the
+      file.** The tooling half is `ug4r`
+- [ ] the glossary extractor reads `definition` from the role and
+      `scopeNote` from the lane — issue #596 slice 2, not this bean
