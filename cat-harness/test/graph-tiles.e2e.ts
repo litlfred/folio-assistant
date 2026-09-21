@@ -60,8 +60,26 @@ const DIRS: TiledDirectory[] = [
 
 const TILES = graphTiles(DIRS, "cat-harness/docs");
 
+/**
+ * The base this fixture is served under — NON-EMPTY on purpose.
+ *
+ * It was absent until issue #801, and the absence is what let the defect ship:
+ * a tile's declared href is site-root-relative (`/beans/`), the code emitted it
+ * raw, and under a fixture served at the origin root "composed against the
+ * base" and "not composed at all" are the same string. The assertion below
+ * restated `publishedHref` and passed BECAUSE nothing happened — the shape
+ * PR #776 paid for in `toRootFor`, where a test that restates the expression
+ * guards nothing at the call site.
+ *
+ * So the fixture now carries what the real deploy carries. `/folio-assistant`
+ * rather than a placeholder, because that is this site's own base and a reader
+ * comparing the test with the 404 in the issue should see the same string.
+ */
+const BASE = "/folio-assistant";
+
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
+<meta name="fa-baseurl" content="${BASE}">
 <meta name="fa-tiles" content='${JSON.stringify(TILES).replace(/'/g, "&#39;")}'>
 <style>${CSS}</style></head><body>
 <div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
@@ -166,9 +184,53 @@ test.describe("each tile opens the EXISTING visualisation — asserted by reuse"
     await ready(page);
     for (const t of await tilesOnPage(page, "navbar")) {
       const declared = TILES.find((x) => x.id === t.id)!;
-      expect(t.href, `${t.id} opens its declared visualisation`).toBe(declared.href);
+      // Two facts, and keeping them apart is the point. The DATA is the
+      // published route of the declared ref and carries no base -- that is
+      // what `graph-tiles.ts` stores and what an override resolves against.
+      // The HREF is that path composed against this deploy, which is what a
+      // browser follows. Asserting the second equals the first is the bug.
       expect(declared.href).toBe(publishedHref("cat-harness/docs", declared.ref));
+      expect(t.href, `${t.id} opens its declared visualisation`).toBe(BASE + declared.href);
     }
+  });
+
+  test("an href is composed against the base, not left at the origin", async ({ page }) => {
+    // #801 stated as the thing the reader experienced: the beans tile pointed
+    // at `litlfred.github.io/beans/`, which is a different site. Asserted by
+    // RESOLVING it the way a browser does rather than by matching the string,
+    // so a half-fix that produced `/folio-assistant//beans/` still fails.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const beans = (await tilesOnPage(page, "navbar")).find((t) => t.id === "beans")!;
+    expect(beans.href).toBe("/folio-assistant/beans/");
+    expect(new URL(beans.href!, URL_PAGE).pathname).toBe("/folio-assistant/beans/");
+  });
+
+  test("with no base declared the path is unchanged", async ({ page }) => {
+    // The documented fallback, and the common case: the e2e fixtures and a
+    // local `jekyll serve` have no base. A site that declares an empty one and
+    // a site that declares none render identically through Liquid, so there is
+    // nothing here to tell apart and nothing to report.
+    await page.route("http://nobase.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({
+          contentType: "text/html",
+          body: PAGE.replace(`<meta name="fa-baseurl" content="${BASE}">`, ""),
+        });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ $schema: "folio-todo-index/v1", items: ITEMS }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+    await page.goto("http://nobase.test/page.html");
+    await ready(page);
+    const beans = (await tilesOnPage(page, "navbar")).find((t) => t.id === "beans")!;
+    expect(beans.href).toBe("/beans/");
   });
 
   test("the title is the declared one, and falls back to the directory's id", async ({ page }) => {

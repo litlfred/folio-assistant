@@ -1933,6 +1933,52 @@
     return a;
   }
 
+  /* ── Where a declared, site-root path is composed ────────────────────
+   *
+   * `graph-tiles.ts` stores a tile's href relative to the SITE ROOT — `/beans/`
+   * — which is right, and is what `harness.links[].path` stores as well. Every
+   * other consumer of such a path hands it to Liquid's `relative_url`, which
+   * prepends `site.baseurl`. A tile cannot: it is composed here, after Liquid
+   * has finished, from JSON on a `<meta>`.
+   *
+   * SO IT HAS TO BE DONE HERE, AND IT WAS NOT — issue #801. This site serves
+   * from `/folio-assistant`, so an unprefixed `/beans/` resolves against the
+   * ORIGIN and every one of the twelve tiles 404ed. The rule was already
+   * written down 800 lines above, on the action tiles: *"an absolute `/kg/`
+   * is a 404 rather than a wrong-looking link"*. Two tile families, one rule,
+   * and only one of them was following it.
+   *
+   * NOT applied inside `tileLink`, which both families share. The action tiles
+   * are handed `#fa-site-links` values that Liquid ALREADY composed, so
+   * prefixing there would double the base and break the family that works.
+   * The base belongs where the raw declared value enters, which is here.
+   *
+   * An ABSENT meta yields `""` and the href is returned unchanged. That is the
+   * previous behaviour, deliberately: a site with no baseurl is the common case
+   * (the e2e fixtures, a local `jekyll serve`), and it is indistinguishable
+   * from a declared empty one — `site.baseurl` renders as the empty string for
+   * both. There is nothing here to report as a finding.
+   */
+  function siteBaseurl() {
+    var meta = document.querySelector('meta[name="fa-baseurl"]');
+    var v = (meta && meta.getAttribute("content")) || "";
+    return v.replace(/\/+$/, "");
+  }
+
+  /**
+   * A site-root path, composed against this deploy's base.
+   *
+   * Only a path that starts with `/` is composed. Anything else is already
+   * relative to the page, or is not ours, and prefixing it would invent a URL.
+   * No guard against a base that is already present: a tile whose declared
+   * path genuinely begins with the base's spelling is a directory somebody
+   * named that way, and skipping it would be this bug with the sign flipped.
+   */
+  function withBase(href) {
+    if (typeof href !== "string" || href.charAt(0) !== "/") return href;
+    return siteBaseurl() + href;
+  }
+
     /* ── The DECLARED visualisations, one tile each ──────────────────────
    *
    * Owner: *"if harness declares visaluzers, those should have tile"*, and
@@ -1964,7 +2010,7 @@
       // another surface.
       if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
       if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
-      var tile = tileLink(NET_GLYPH, t.title, t.href,
+      var tile = tileLink(NET_GLYPH, t.title, withBase(t.href),
                           "the declared visualisation of " + t.directory);
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
