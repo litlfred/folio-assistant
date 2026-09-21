@@ -5,9 +5,9 @@
  *
  * ## The defect, and why the two obvious checks could not find it
  *
- * `3jhq`: `docs-site.yml` ran `kg-export.ts --instance ./cat-bootstrap` and
+ * `3jhq`: `docs-site.yml` ran `kg-export.ts --instance ./bootstrap` and
  * `feature-staging.yml` did not, so a cat-harness graph staged at `$BASE`
- * carried `$BASE/cat-bootstrap.jsonld#skill/…` pointing at a document that
+ * carried `$BASE/bootstrap.jsonld#skill/…` pointing at a document that
  * build never wrote. Two dangling links on every preview. `blv9`, found by
  * hand for the third time.
  *
@@ -116,7 +116,7 @@ export function invocations(workflowText: string): Invocation[] {
     const rest = m[2] ?? "";
     const inst = /--instance\s+(?:"([^"]+)"|'([^']+)'|(\S+))/.exec(rest);
     const instance = inst ? (inst[1] ?? inst[2] ?? inst[3]) : undefined;
-    // Keyed on the PAIR: `kg-export` and `kg-export --instance ./cat-bootstrap`
+    // Keyed on the PAIR: `kg-export` and `kg-export --instance ./bootstrap`
     // are different obligations, and collapsing them is exactly how `3jhq`
     // hid — staging ran the exporter, just not for the foreign instance.
     const key = `${script}\u0000${instance ?? ""}`;

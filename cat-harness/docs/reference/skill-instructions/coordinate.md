@@ -68,6 +68,19 @@ commit.
 - When you encounter a **finding that contradicts another PR's
   framing** — write the disagreement up explicitly, post it to both
   PRs, and tag the author for resolution.
+- **A COLLISION — coordinate.** A merge conflict caused by a
+  sibling's landed work is not merely a thing to resolve; it is the
+  signal that two sessions are editing one subject. Resolve it AND
+  coordinate. Owner, 2026-09-21: *"collision=coordinate"*.
+- **A POTENTIAL collision, seen in the beans — coordinate.** Before
+  you start a topic, and at each triage, scan for an `in-progress`
+  bean whose scope overlaps yours. That is the cheapest collision to
+  find, because it is the one found BEFORE either of you has written
+  anything. Owner, same day: *"potential collision by looking at
+  beans = coordinate"*. How to read a sibling's state out of the
+  store, and the boundary of that inference, is
+  [`bean-coordination`](bean-coordination.md) §"Where a sibling
+  session is visible from" — not restated here.
 
 ## Inputs
 
@@ -217,8 +230,64 @@ commits or comments that **contradict** your branch's framing. Per
 §6: escalate inconsistent findings to the user. Do not silently
 adopt the sibling's framing without an §6 conversation.
 
+## What actually reaches a sibling — measured, 2026-09-21
+
+**Do not assume you can message a sibling session.** Measured from a
+cloud session with eleven siblings live on one repository:
+
+| channel | reaches a cloud sibling? |
+|---|---|
+| `list_sessions` | **sees** them — id, title, branch, task summary |
+| `ListAgents` | **no** — "no other Claude session is running on this machine" |
+| `SendMessage` | **no** — the send is refused, target not reachable |
+| a committed **bean** | yes — every session reads the store at session start |
+| a **PR or issue** comment | yes — to whoever looks, and it is durable |
+
+So `list_sessions` tells you WHO is working and on WHAT, and then the
+message has to travel through something committed. That asymmetry is
+worth knowing before you spend a turn on it: this list exists because
+a session read the sibling list, drafted a careful message, and
+discovered on the send that there was no channel.
+
+The practical order:
+
+1. `list_sessions` (or the beans) to find WHO overlaps and how.
+2. Write the coordination INTO the artefacts they will read — the
+   bean, the PR body, the issue. A bean is the strongest, because
+   `bean-coordination` §"The store on `main` is the one every sibling
+   reads" makes it the one surface every session opens.
+3. Only then consider a direct message, and only for a sibling
+   `ListAgents` actually lists.
+
+### Eleven sessions is the normal case, not the exception
+
+The same measurement: eleven sessions on `litlfred/folio-assistant`,
+each on its own branch, each merging `main` on a loop. One branch took
+**four** base merges in three hours, three of them conflicted. Main
+moved 109, 38, 20, 24 and 28 commits between them.
+
+A session that treats a conflict as an accident will treat all four as
+accidents. The rate IS the environment, and the thing to do about it
+is coordinate earlier, not merge harder.
+
+### The worked example: a voice landing in a directory being deleted
+
+A branch migrated every voice from `<instance>/voices/` to
+`<instance>/skills/voices/`. Mid-flight, `main` landed a NEW voice in
+`cat-harness/voices/` — the directory the branch removes. Git's rename
+detection then placed the new file inside another voice's folder.
+
+Nothing was wrong with either piece of work. What was missing was that
+neither session knew about the other, and the beans said so the whole
+time: the migration's bean was `in-progress` and names the directory.
+**A bean scan by either session would have caught it before a line was
+written**, which is exactly why the trigger above is worth having.
+
 ## Related skills
 
+- `bean-coordination` — the committed store siblings read, how to
+  claim, and how far a sibling's state can be inferred from it. The
+  DETECTION half of this skill's bean trigger lives there.
 - `delivery-summary` — what to post **after** a feature lands
   (one PR scope).
 - `watch` — passive monitoring of upstream branches.

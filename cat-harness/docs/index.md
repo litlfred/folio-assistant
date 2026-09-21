@@ -74,6 +74,12 @@ is thorough, and the honest expectation is that you will arrive at it from a
 search engine at the exact moment something breaks. That is a fine way to use
 it. The three steps above are the ones worth reading now.
 
+When it is the *machinery* that has you puzzled rather than the authoring —
+who does a thing, under which process, using which skill — start at
+[The platform]({{ '/platform.html' | relative_url }}). One sentence there
+carries the whole model, and every word in it is a separately declared
+object.
+
 ---
 
 ## What is folio-assistant?
