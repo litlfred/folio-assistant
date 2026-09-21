@@ -22,11 +22,11 @@ describe("invocations", () => {
     // instance. Collapsing the two is what let that pass unnoticed.
     const yml = [
       "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld",
-      "          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out b.jsonld",
+      "          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out b.jsonld",
     ].join("\n");
     const got = invocations(yml);
     expect(got).toHaveLength(2);
-    expect(got.map((i) => i.instance)).toEqual([undefined, "./cat-bootstrap"]);
+    expect(got.map((i) => i.instance)).toEqual([undefined, "./bootstrap"]);
   });
 
   test("a repeated invocation is counted once", () => {
@@ -47,12 +47,14 @@ describe("invocations", () => {
     // The witness. A matcher proven only against fixtures is proven against
     // its author's idea of the file.
     //
-    // `./bootstrap`, not `./cat-bootstrap`: the rename in `494bbbb6f9` swept
-    // the WORKFLOW and left this assertion behind, which is the one place in
-    // this file that reads the real file rather than a fixture — so it is the
-    // one place a rename could break, and it did. The fixtures below keep the
-    // old spelling on purpose: they are self-consistent strings about the
-    // MATCHER, and rewriting them would be churn that proves nothing.
+    // `./bootstrap`, not `./cat-bootstrap`: #771 renamed the directory an hour
+    // after #790 added this assertion, and neither branch carried the other's
+    // change. Both were green on their own head and main went red on the
+    // merge -- which is this witness doing precisely its job. The fixtures
+    // above keep saying `cat-bootstrap` on purpose: they are synthetic YAML
+    // testing that the parser returns WHATEVER instance string it is given,
+    // so the name there is arbitrary and no directory has to exist for it.
+    // This line is the only one that reads the real file.
     const got = invocations(wf("docs-site.yml"));
     expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
@@ -116,10 +118,10 @@ describe("formatReport", () => {
   test("a missing invocation names the instance argument, not just the script", () => {
     const out = formatReport({
       deploy: "docs-site.yml",
-      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./cat-bootstrap" }] }],
+      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./bootstrap" }] }],
       staleExemptions: [],
     });
-    expect(out).toContain("kg-export --instance ./cat-bootstrap");
+    expect(out).toContain("kg-export --instance ./bootstrap");
   });
 
   test("a clean run prints the exemptions with their reasons", () => {

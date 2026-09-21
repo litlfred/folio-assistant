@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ug4r
 title: A lane deliberately bound to NO role is indistinguishable from one nobody got round to
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:17:46Z
-updated_at: 2026-09-21T19:18:11Z
+updated_at: 2026-09-21T20:41:59Z
 parent: folio-assistant-1xhc
 ---
 
@@ -77,12 +77,14 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 
 ## Done when
 
-- [ ] a lane can DECLARE that its performer varies, in a form a tool reads
-- [ ] `lane-binds-role` treats a declared-variable lane as answered, and
-      still fails on an undeclared one
+- [x] a lane can DECLARE that its performer varies, in a form a tool reads
+- [x] `lane-binds-role` treats a declared-variable lane as answered, and
+      still fails on an undeclared one — falsified, 4 failures on the mutation
+      that suppresses every unbound lane
 - [ ] the glossary extractor can tell "no definition, by design" from "no
-      definition, nobody wrote one"
-- [ ] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
+      definition, nobody wrote one" — #596 slice 2, which consumes
+      `laneBinding`; not this bean
+- [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
       `bootstrap/skills/roles/roles.json` points at it rather than being
       the only record
 
@@ -128,3 +130,80 @@ than a parallel, and saying otherwise would overstate it.
 That PR is the bean front-matter gate. This is a BPMN extension plus an audit
 criterion — a different subject, and mixing them makes both harder to review.
 Implementation waits for #794 to merge.
+
+## Built 2026-09-21 — and the bean's own proposal was wrong about WHERE
+
+`bun run gates --all`: **98 gates, green.**
+
+`<folio:role variable="true"/>` on the lane, parsed in `process-model.ts` as
+`LaneDef.performerVaries`. Moddle carries an unregistered attribute through as
+a string — which is how `ref` already arrives — so no schema registration was
+needed. Only the exact string `"true"` counts: reading a typo as a declaration
+is how a defect quietly becomes an exemption, and a test asserts `"yes"` does
+not.
+
+### The correction: `roleForLane` did NOT need changing
+
+This bean said *"`roleForLane` returns a third answer"*. It does not, and
+changing it would have been wrong: its two callers (`stakeholder-map` and the
+workflow `instance`) genuinely want "the role, or nothing", and a lane with a
+varying performer correctly has no role for them.
+
+What needed the distinction was the consumer that JUDGES the binding rather
+than uses it. So `laneBinding()` is new beside `roleForLane`, returning **five**
+answers rather than the three this bean imagined:
+
+| answer | why it is its own case |
+|---|---|
+| `bound` | resolves to a declared role |
+| `dangling` | names a role the graph lacks — a typo to correct |
+| `variable` | declared: no role, and that IS the answer |
+| `contradictory` | declares BOTH a `ref` and `variable` |
+| `unbound` | nothing matched, nothing declared — the finding |
+
+`dangling` was already separate in the audit; `contradictory` is NEW and is the
+defect this flag itself introduces. It is checked FIRST and before the graph is
+read at all, because a lane saying two contradictory things is wrong whatever
+the graph contains, and resolving either would make the other silently have no
+effect — the exact shape this flag exists to remove.
+
+### Extracting it was not tidiness — it was the only way to test the case
+
+`log-message.bpmn` is in `bootstrap`, a NESTED instance the root audit does
+not read (`7u3g`, and `instance-graph-isolation.test.ts` enforces it). And
+`kg-audit.ts` takes no root argument. So the rule was reachable only through a
+script that never sees its own subject — a rule nothing checks. As an exported
+function it is tested directly, and the audit calls it.
+
+### Falsified
+
+Ten tests. Three mutations, each caught:
+
+| mutation | failures |
+|---|---|
+| the flag suppresses every unbound lane, not just declared ones | **4** |
+| the contradiction checked after the graph, so `variable` silently wins | 1 |
+| a dangling `ref` reported as `unbound` | 1 |
+
+The first is the one that mattered: it is how this fix could have become a way
+of hiding real defects, and four tests refuse it.
+
+### The prose is now the rationale, not the record
+
+`bootstrap/skills/roles/roles.json`'s `_lanes_comment` says so explicitly
+and points at the declaration. It was the only record until today, and a fact
+that lives only in a comment is one `lane-binds-role` reports as `major` for
+ever.
+
+## Where the remaining box lives
+
+The one unticked item above is **#596 slice 2's**, not this bean's: the
+extractor consumes `laneBinding` to tell a by-design definition-less term from
+a hole. It is left open here because the section above is what a reader and
+every tool consult, and ticking it would claim work that has not been done.
+
+This section replaced a second `## Done when — status` checklist that restated
+the canonical one with its own ticks. `check:bean-bodies` failed the push for
+it — correctly: a second checklist is free to disagree with the first, and the
+one a tool reads was still saying "not done". The lesson is the check's own:
+tick the canonical boxes, never shadow them.
