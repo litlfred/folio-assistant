@@ -106,3 +106,10 @@ header said "three".
       migrated? Recorded here so a later reader knows the silence is a decision
 - [ ] The 2 workflow `.yml` files are handled by whatever does the rename;
       they cannot import a constant and this check has no opinion on them
+
+*Issue link, recorded on creation.* **[#669](https://github.com/litlfred/folio-assistant/issues/669)** — shipped in [PR #657](https://github.com/litlfred/folio-assistant/pull/657).
+
+Written in the same turn the issue was opened, rather than later. `oh78` exists
+because the session working it opened four issues from beans and carried none
+of the links back; this bean is its author's first chance to not repeat that,
+and `check:bean-issue-links` is the check that would otherwise have found it.
