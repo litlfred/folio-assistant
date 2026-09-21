@@ -117,6 +117,8 @@
     "docs:auto": "bun run cat-harness/scripts/gen-docs-auto.ts",
     "docs:auto:check": "bun run cat-harness/scripts/gen-docs-auto.ts --check",
     "docs:harness:check": "bun run cat-harness/scripts/sync-docs-harness.ts --check",
+    "boards:default": "bun run cat-harness/scripts/gen-default-boards.ts",
+    "boards:default:check": "bun run cat-harness/scripts/gen-default-boards.ts --check",
     "eval:crdm-detect": "bun run cat-harness/scripts/eval-crdm-detect.ts",
     "external-schemas": "bun run cat-harness/scripts/external-schemas.ts",
     "external-schemas:check": "bun run cat-harness/scripts/external-schemas.ts --check",
