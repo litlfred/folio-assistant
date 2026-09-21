@@ -30,3 +30,41 @@ The page MUST describe the core concepts of each subgraph, WHICH WAY THE ARROWS 
 A companion page on **JSON / JSON-LD** is needed for the Schema subgraph to point at.
 
 Depends on `zzmr` (the KG's own structure) and should not restate it.
+
+
+## Added 2026-09-21 — GraphKind subtyping, and nodes that declare subgraph directories
+
+Owner, verbatim:
+
+> 'for content graph, GraphKind (this is an ugly name) can subtype and nodes can declare directories as containing subgraphs, like <stub>/Skills/voices should be declared in cat-harness as sub-graph (double check!) then any dependents like folio-assistant can add voices in folio-assisant/Skills/voices that they want to be made available.'
+
+Two asks:
+
+1. **`GraphKind` SHOULD subtype.** The name is called out as ugly and is a
+   rename candidate in its own right.
+2. **A node SHOULD be able to declare a directory as containing a SUBGRAPH**,
+   so a dependent instance can contribute into the same subgraph. The worked
+   example is voices: cat-harness declares the subgraph, and a dependent such
+   as folio-assistant adds its own voices under its own tree, which are then
+   available.
+
+### The "double check!" — checked, and the premise does not hold today
+
+`cat-harness/cat-harness.config.json` declares voices as a **top-level
+directory**, not as a subgraph under `skills/`:
+
+    id=voices          path=voices/       graphs=['voices']
+    id=cat-harness     path=skills/       graphs=['cat-harness']
+
+So the file is `cat-harness/voices/technical-writer.json`, NOT
+`cat-harness/skills/voices/…`. The `technical-writer` voice added this day sits
+at the declared path, matching `milnor.json` beside it and `who-style-guide/voices/`.
+
+That makes the ask a REAL CHANGE rather than documentation of what exists:
+either voices moves under `skills/` as a declared subgraph, or the subgraph
+mechanism is expressed some other way. Note the contribution pattern the owner
+wants already half-exists by a different route — cat-harness declares
+`who-iris/skills/`, `kg-navigation/skills/` and `large-datasets/skills/` as
+`cat-harness`-kind directories, which is dependents contributing skills without
+any subgraph concept. Whether that IS the mechanism, or the thing the subgraph
+mechanism should replace, is the decision to take before writing the page.
