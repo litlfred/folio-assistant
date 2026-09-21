@@ -5,7 +5,7 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "bs": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#",
+    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
     "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "label": "rdfs:label",
@@ -433,6 +433,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:ScenarioGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ScenarioGraph",
+      "comment": "Actors, the Roles they take on, and the User Stories those Roles serve.",
+      "prefLabel": "ScenarioGraph",
+      "definition": "Actors, the Roles they take on, and the User Stories those Roles serve.",
+      "notation": "cat:ScenarioGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:SessionStateGraph",
       "@type": [
         "rdfs:Class",
@@ -443,6 +458,21 @@
       "prefLabel": "SessionStateGraph",
       "definition": "A session's context — the acting actor, the instances it has open, and what it waits on.",
       "notation": "cat:SessionStateGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:SkillGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SkillGraph",
+      "comment": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+      "prefLabel": "SkillGraph",
+      "definition": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+      "notation": "cat:SkillGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -503,6 +533,21 @@
       "prefLabel": "WaiverGraph",
       "definition": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
       "notation": "cat:WaiverGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:WorkflowGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "WorkflowGraph",
+      "comment": "Executable BPMN processes and the DMN tables their gateways compute from.",
+      "prefLabel": "WorkflowGraph",
+      "definition": "Executable BPMN processes and the DMN tables their gateways compute from.",
+      "notation": "cat:WorkflowGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

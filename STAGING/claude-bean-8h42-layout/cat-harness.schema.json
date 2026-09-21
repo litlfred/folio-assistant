@@ -275,7 +275,7 @@
                   "repository"
                 ]
               },
-              "graphs": {
+              "graphKinds": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -395,7 +395,7 @@
             "required": [
               "id",
               "path",
-              "graphs",
+              "graphKinds",
               "dependents"
             ],
             "additionalProperties": false
@@ -415,7 +415,7 @@
                 "type": "string",
                 "format": "uri"
               },
-              "graphs": {
+              "graphKinds": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -435,7 +435,7 @@
             "required": [
               "id",
               "url",
-              "graphs"
+              "graphKinds"
             ],
             "additionalProperties": false
           },
@@ -623,12 +623,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-harness.schema.json",
   "title": "CatHarness declaration",
-  "description": "The root declaration every instance carries as `harness.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
+  "description": "The root declaration every instance carries as `<name>.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-bean-8h42-layout/cat-harness.jsonld",
   "staging": {
     "branch": "claude/bean-8h42-layout",
-    "sha": "76e3b2e9f6597e46fcb0c8d662f735e37bdb3a52",
+    "sha": "8b3af37f8a9b79d96fc56bb82dfbd3f7fdeffa8c",
     "pr": "773/merge",
-    "run": "35654064114"
+    "run": "35659986301"
   }
 }
