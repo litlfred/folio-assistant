@@ -168,14 +168,43 @@ function sequence(fm: string, key: string): string[] {
  * an unmigrated folio has: absent is "no store", not "wrong".
  */
 export function beanDefsDir(root: string): string | null {
+  return resolveBeanDefs(root).dir;
+}
+
+/** Where the store is, and WHO SAID SO. */
+export interface BeanDefsResolution {
+  /** The directory, or `null` when the graph declares no `bean-defs` node. */
+  dir: string | null;
+  /**
+   * True when a committed `beans/beans.json` named it; false when it came from
+   * {@link DEFAULT_BEAN_GRAPH} because no graph file is present.
+   */
+  declared: boolean;
+}
+
+/**
+ * {@link beanDefsDir}, plus the one fact it discards.
+ *
+ * A caller that only gets the path cannot tell **"this instance has no bean
+ * store"** from **"this instance says its store is HERE and it is not"**. The
+ * first is fine — an unmigrated folio has no `beans/` at all. The second is
+ * `dh4f`, where a consumer scans nothing and reports a clean run over it, and
+ * it is invisible without this flag because the fallback hands back a
+ * perfectly plausible `beans/defs` for a repository that never mentioned one.
+ *
+ * Bean `t6s7`. `readBeanStore` is the caller that needs it; `beanDefsDir`
+ * keeps its signature and delegates, so the other four readers are untouched.
+ */
+export function resolveBeanDefs(root: string): BeanDefsResolution {
   const graphRoot = join(root, DEFAULT_BEAN_GRAPH_ROOT);
   const file = join(graphRoot, BEAN_GRAPH_FILE);
-  const graph = existsSync(file)
+  const declared = existsSync(file);
+  const graph = declared
     ? parseBeanGraph(JSON.parse(readFileSync(file, "utf-8")))
     : DEFAULT_BEAN_GRAPH;
   const node = nodeOfKind(graph, "bean-defs");
-  if (!node) return null;
-  return join(existsSync(file) ? dirname(file) : graphRoot, node.path);
+  if (!node) return { dir: null, declared };
+  return { dir: join(declared ? dirname(file) : graphRoot, node.path), declared };
 }
 
 /**
