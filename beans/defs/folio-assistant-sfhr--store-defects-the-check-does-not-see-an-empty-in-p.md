@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:00:00Z
+updated_at: 2026-09-21T05:14:56Z
 parent: folio-assistant-ahvw
 ---
 
@@ -46,3 +46,64 @@ Wired into `code-quality-gates.yml`.
 
 - [x] A check reports: empty body on an open bean, multi-line title, and a "blocked on `<id>`" in prose whose target is scrapped or completed
 - [ ] The three beans above are repaired by their owners (this bean does not edit them)
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5.* — **The duplicated checklist
+has a reader, and it found the defect in six OPEN beans including this
+session's own.**
+
+## Three candidate rules measured and rejected before this one
+
+My premise going in was wrong, and the measurement is what corrected it. I
+assumed the defect was a second `## Done when` heading. It is not:
+
+| candidate | findings | why it fails |
+|---|---|---|
+| more than one `## Done when` heading | **34 beans** | the real `bbbl` case had NO second heading — the copy was appended bare at the foot |
+| any checklist item below the canonical section | **57 beans** | recording a NEW open item in a dated entry is this store's ordinary idiom, on my own beans included |
+| a later item that restates a canonical one | **33 beans / 75 items** | a progress note quoting the item it has just satisfied reads identically |
+
+Falsified first, as `7iog` was: a duplicated checklist planted in a bean
+passed `check:bean-bodies` with exit 0.
+
+## What separates the defect is an ASYMMETRY, and the bean said it outright
+
+> the ticks were appended as a SECOND copy of the checklist at the foot of the
+> file, so the canonical `## Done when` still read 0 of 2 and any reader or
+> tool consulting it saw an untouched bean
+
+So the rule is: **a later item that is TICKED while the canonical item it
+restates is still OPEN.** A note restating an already-ticked item agrees with
+the canonical section; an unticked later item is a new open item. Neither
+misleads anyone, and neither is reported.
+
+Containment rather than equality, because the real copies are not verbatim —
+`fgnw`'s dropped a parenthetical and `9x17`'s paraphrased ("schema validation
+as its operation" for "schema validation and profile check as DISTINCT
+operations"). An equality test passes over both.
+
+## The findings are real — verified by hand, not by score
+
+`7u3g`: canonical reads **0 of 5** while a copy at line 97 reads 4 ticked.
+`0hi8` and `9x17` the same. Even the weakest-scoring match at 0.78 is the same
+defect paraphrased. Six OPEN beans: `0hi8`, `81t5`, `b963`, `ivfw`, `jbx2`,
+`xgd8`.
+
+**`b963` was mine, so it was repaired rather than baselined** — ticked IN
+PLACE, with the evidence (`check:command-paths` merged in #604 and passing on
+main over every fenced command). It carried three ticked copies below two open
+canonical boxes, which is this defect at its most self-referential: the bean
+whose subject is *a claim that stopped being true* was making one.
+
+The other five are baselined, with `sfhr`'s own rule — their owners repair
+them, and the check fails only on a NEW one.
+
+## Also: this check had no tests at all
+
+It shipped in #589 untested. 13 now, of which exactly **two** go red when the
+rule is stubbed out — the other six are false-positive guards that must pass
+either way, one per rejected candidate above.
+
+- [x] `check:bean-bodies` reports a duplicated checklist — the `bbbl` defect's
+      remaining half
+- [ ] The five baselined `shadow-checklist` beans are repaired by their owners
+      (this bean does not edit them)
