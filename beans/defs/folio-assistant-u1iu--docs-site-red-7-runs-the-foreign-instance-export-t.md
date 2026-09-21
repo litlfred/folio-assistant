@@ -82,3 +82,44 @@ instance is qualified by its stub. Same rule the `kg-qa` tree already follows.
 - the resulting `@id` is `https://litlfred.github.io/folio-assistant/cat-bootstrap.jsonld`,
   byte-identical to the IRI cat-harness's own graph mints for it — checked
   from both ends rather than pinned to a literal
+
+## THIS BEAN DUPLICATED `40fl`, and the duplication is the finding
+
+#718 (bean `40fl`, session_014HGPQoUnzXGqSspA8x6YyD) fixed the export defect
+with the same diagnosis, in the same function, and merged at **14:02** — two
+minutes after the `main` snapshot this branch was cut from. This bean was
+opened at ~14:05 against a checkout one merge stale.
+
+**The CI-health sweep was not wrong; it was reading true history.** The fix had
+landed but `docs-site` had not re-run, because `kg-export.ts` is not in that
+workflow's `paths:` filter — which is `tyyc`/#721, a third session, on the same
+afternoon. Three separate sessions on one outage.
+
+`pomp` already carries the general rule ("not in my checkout" is not "does not
+exist"). What this adds is the narrow procedural gap: **a CI-health finding is
+about the FORGE, so it must be checked against the forge's current state — open
+PRs and `origin/main` — before it is opened as work.** Reading `git log` of a
+local `main` is not that check. `beans list` would not have helped either: the
+sibling's bean was `40fl`, titled for the symptom, and it was `in-progress` on
+their branch only.
+
+The duplicate half is withdrawn wholesale rather than reconciled — `kg-export.ts`
+is main's byte for byte, and `publication-base.test.ts` is deleted.
+
+## What was NOT a duplicate, and is why this bean stays open
+
+- `check:published-instance-exports` — nothing on main runs the deploy's
+  `--instance` commands from a checkout
+- the per-instance QA sidecar — still broken on main
+
+## Observed on main's implementation, NOT fixed here
+
+`publisherCanonical` falls back for ANY instance, with no check that it
+resolves inside this repository. No live caller passes an outside path
+(`skillHome` iterates `instanceRootsIn(repoRootFor(ROOT))`), so this is latent,
+not a defect today. But `--instance ../other-checkout` from the CLI would mint
+absolute IRIs against THIS site for a document published elsewhere — the
+"looks dereferenceable and 404s" hazard `makeIri` exists to refuse.
+
+Raised rather than fixed: it is `40fl`'s code, it is latent, and the owner
+scoped this branch to the two unique parts. Bean `fgvp`.
