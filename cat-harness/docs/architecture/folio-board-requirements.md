@@ -176,23 +176,30 @@ not only its schema.
 
 ---
 
-## R15 and R16 are REFERENCED BUT NEVER DEFINED
+## R15 and R16 — reconstructed, then confirmed
 
-Stated plainly because a design record that fills its own gaps with plausible
-sentences is worse than one that names them — invented text reads exactly like
-agreed text.
+**They were referenced but never written down.** Bean `51wf` is assigned
+*"R2, R9, R15"* and bean `zsah` *"R12, R16"*, and no comment on #602 states
+either requirement. When this record was first written they were therefore
+reported as **undefined**, with the recoverable meaning marked as inference —
+because a design record that fills its own gaps with plausible sentences is
+worse than one that names them, since invented text reads exactly like agreed
+text.
 
-Bean `51wf` is assigned *"R2, R9, R15"* and bean `zsah` *"R12, R16"*. **No
-comment on #602 states either requirement.** What they appear to mean is
-recoverable only by inference, and is recorded here as inference:
+**The owner confirmed both readings on 2026-09-21** (*"agreed on r15/16"*), so
+they are now agreed requirements rather than reconstructions:
 
-| | what it appears to mean | evidence |
+| | requirement | how it was recovered |
 |---|---|---|
-| **R15** | z-order — selecting any part of an open window raises it | `51wf`'s unit description, *"z-order with raise-on-select"* |
-| **R16** | a tile opens the **existing** visualisation; nothing builds a second viewer | a later aside on the issue, *"R12/R16 said a tile opens the existing visualisation"* |
+| **R15** | selecting any part of an open window **raises** it — z-order is a reader's act | `51wf`'s unit description, *"z-order with raise-on-select"* |
+| **R16** | a tile opens the **existing** visualisation; nothing builds a second viewer | an aside on the issue, *"R12/R16 said a tile opens the existing visualisation"* |
 
-Both were implemented to that reading. If either is wrong, the code is what
-needs re-checking, not this page.
+Both were implemented to that reading before it was confirmed, which is why the
+gap mattered: the code was already committed to an interpretation nothing had
+stated. **The provenance is kept rather than tidied away** — a requirement
+recovered from a bean's unit description and later ratified is not the same
+artefact as one written down at the time, and a reader re-checking this
+subsystem should know which it is.
 
 ---
 
