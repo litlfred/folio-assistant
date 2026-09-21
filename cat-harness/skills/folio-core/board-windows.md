@@ -1,0 +1,113 @@
+---
+name: board-windows
+description: >
+  Everything starts as its avatar; opening projects a window onto the board.
+  The two mechanisms that must not be conflated, z-order, and the fixed chrome
+  a content kind fills in.
+adapters: [document, paper, dak]
+profiles: [document, paper]
+consulted: true
+---
+
+# Start in the avatar, open into a window
+
+The owner, 2026-09-20 and 2026-09-21:
+
+> start everyrting in avatar … `[x]` closes to avatar
+
+> open is like window, avatar/tiles project open panels onto window. sum
+> funcitonality, need to handle z-order.. selecting any part raises
+
+> each content type controls its own avatar, visualtion/rendering. but assume
+> they can open a full screen panel w/ fixed controls like `[x]` or `[linksrc]`
+> or `[edit]` or what not depedning on conent.
+
+## TWO mechanisms, and conflating them is the defect
+
+| | trigger | who |
+|---|---|---|
+| **semantic zoom** | the card's rendered width crosses a declared threshold | automatic |
+| **open / close** | `[x]`, or opening a card | a person |
+
+They look alike on screen and they are not the same fact. **An open window is
+not a zoom state**: it is projected *onto* the board rather than being the card
+grown large, so it survives zooming out. Only `[x]` closes it.
+
+Collapsing them gives a board where a card can close itself with no action
+taken, and where `[x]` and a zoom-out are indistinguishable to the reader.
+
+## The threshold is declared, inherited, and traceable
+
+`schemas/semantic-zoom.ts`: a **folio default** with a **per-kind override** —
+this repository's inheritance rule applied unchanged (*inherit everything,
+override anything; a variant states only what it CHANGES*). So:
+
+- the folio always has a number, and every kind resolves to one;
+- a kind that states nothing is **complete, not invalid** — requiredness is
+  checked after resolution, never on the declaration;
+- an override carries a required `because`, and the resolver returns the
+  **source** alongside the value.
+
+That last pair is one rule, not two: *an inherited value is still a fact
+somebody must be able to trace.* A reviewer looking at a card that flipped too
+early needs to know whether somebody decided that or whether the folio's
+default landed somewhere it does not fit — different bugs, different fixes.
+
+**The boundary is stated once.** Strictly below the number, so the declared
+width is the last one that still shows words. A boundary written one way in a
+comment and the other way in the renderer is what makes a card flicker.
+
+## Z-order: selecting any part raises
+
+Windows stack, and **selecting any part of one raises it** — not a title bar,
+any part, because a reader who clicks into a window's content has already said
+which one they mean.
+
+**Z-order is session-only**, by stated default and not by omission. The DI
+layer carries no `z`: a committed stacking order would make every raise a file
+write and every two sessions a conflict, on the most concurrently-edited state
+a folio has. It is one optional field in the positions document if that turns
+out to be wrong, and the reason it is not there is recorded rather than left to
+be rediscovered.
+
+## The chrome is fixed; the kind fills it in
+
+A content kind **declares which controls it offers**, and the platform fixes
+the frame:
+
+- `[x]` is always present and always in the same place — a reader learns the
+  frame once;
+- a declared control that names nothing known is a **finding**, not a missing
+  button;
+- a control the environment cannot perform is **hidden, and the reason
+  reported**. `pb04` is why: a dead `[edit]` 404s for exactly the reader who
+  cannot edit, which reads as *"this page is broken"* rather than *"you cannot
+  do this"*.
+
+## Closing must have a reachable inverse
+
+**An action whose inverse is not reachable is not a toggle.** Bean `l4zi`: the
+landing board's close set `hidden` and stopped. On an overlay that is right —
+the board was covering what you were reading, and the launcher tile re-opens
+it. On a board that IS page content it removes a section of the page.
+
+The tile existed, which is why the report read *"no place to get it back"*
+rather than *"broken"*: **a control two clicks deep inside a collapsed launcher
+is a place a reader has to already know about.** So the inline board collapses
+to a control in its own position, and focus follows it — left alone, focus
+lands on `<body>` and the keyboard position is gone.
+
+## The floor, which is not negotiable
+
+This instance's declared interaction profile is **low-dexterity**. Every board
+action is keyboard-operable; drag is an accelerator and never the only way in.
+Targets are at least the tile size. And the board is ALWAYS collapsible to a
+linear, tile-based listing — a board that cannot be read linearly cannot be
+read by a screen reader, printed, or translated.
+
+## Not this skill
+
+The layout layer and why a note carries no coordinates:
+[`board-diagram-interchange`](board-diagram-interchange.md). Relocating content
+out of a folio is `deletion-requires-confirmation`, applied by
+`skills/workflows/board-relocate.bpmn` rather than restated here.

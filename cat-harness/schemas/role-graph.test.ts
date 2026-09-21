@@ -363,8 +363,12 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // the same reason: it holds a key and signs what it is given. The lane
     // that exercises judgement about whether a report SHOULD be signed is the
     // human one, and the two are separate lanes precisely so that is visible.
+    // `board-renderer` is mechanical for the same reason and is deliberately
+    // NOT `ci-pipeline`: it runs where the reader is, once per click, and
+    // publishes nothing. Folding a reader-facing renderer into the build
+    // actor would put a person's click behind a build.
     expect(by("system")).toEqual([
-      "attestation-service", "ci-health-watcher", "ci-pipeline",
+      "attestation-service", "board-renderer", "ci-health-watcher", "ci-pipeline",
       "ig-publisher-service", "lean-mcp",
     ]);
   });

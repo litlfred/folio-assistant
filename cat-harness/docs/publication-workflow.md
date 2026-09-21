@@ -150,6 +150,18 @@ call path only, where `inherits` would carry both specialisms everywhere.
 | `options-analysis.bpmn` | A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is `opening-brief`'s — **irreversibility and surprise, not size** — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step. |
 | `voice-review.bpmn` | Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from `review-narrative.bpmn`, and it leaves immediately when no voice is active — the default, and this instance's case. |
 
+**Boards** — a board is a **diagram of** a folio, in the OMG sense: the folio
+carries what is true, `board-positions.json` carries where it was drawn, and
+the arrow runs one way. All three exist because the discipline is a property a
+future edit breaks silently — two mechanisms that look like one, a control that
+looks like a delete, and two writes that look like one.
+
+| Diagram | Answers |
+|---------|---------|
+| `board-open-close.bpmn` | A reader opens a card and closes it again. **Two mechanisms the diagram exists to keep apart**: semantic zoom is automatic and driven by SIZE, while open and close are a person's, so an open window survives a zoom-out and only `[x]` closes it. `Leave a reachable way back` is a task rather than a courtesy — bean `l4zi`, an action whose inverse is not reachable is not a toggle. Advisory: refusing a step here would refuse a click |
+| `board-relocate.bpmn` | The fishbone. It **looks** like a delete and is not one: the content MOVES into `fsh-guts/`, keeping its identity, so every reference still resolves and the reader who hit the wrong control lost a location rather than a node. **Strict**, unlike the two above, because it edits the folio — the reader is asked first, and the question names what will move and where it lands, per `deletion-requires-confirmation` |
+| `board-place-note.bpmn` | Creating a sticky and placing one are **two writes to two graphs**, and the common bug is to make them one. The note goes into the folio carrying no coordinate; the coordinate goes into the layout layer, keyed by board and then by note — which is why one note may sit on several boards without arbitrating between them. The gateway exists because a dragged existing card takes only the second path |
+
 **Acquisition** — how a resource reaches the queue at all. `document-ingestion`
 begins at *"a file lands in `uploads/`"* and calls that its only entry point,
 which is true of ingestion and silent on everything before it:
