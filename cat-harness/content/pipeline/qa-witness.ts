@@ -62,7 +62,7 @@ import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts"
 import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
-import { existingBlockQaPath } from "./qa-paths.ts";
+import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
 
 /** The QA sidecar families a subject can carry. */
 export const QA_FAMILIES = ["block", "translation", "script", "kg"] as const;
@@ -161,6 +161,16 @@ export interface QaCriterionView {
   severity?: "critical" | "major" | "minor";
   /** Locale, for a per-locale family (`translation`). */
   locale?: string;
+  /**
+   * The subject this criterion was ruled on, when the doc covers SEVERAL.
+   *
+   * Absent on a per-subject projection, where the doc's own `subject` already
+   * says it and repeating it on every row would be noise. Present on a
+   * {@link rollUpWitnessDocs} projection, where the whole point is that one
+   * panel carries verdicts about many blocks and a reader must be able to tell
+   * which block a failing criterion belongs to.
+   */
+  block?: string;
   /** Flattened evidence lines, in the shape the reviewer wrote them. */
   evidence?: string[];
   /** Numeric measures the checker recorded alongside its verdict. */
@@ -295,12 +305,33 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
       return path ? [path] : [];
     }
     case "translation": {
-      if (!existsSync(dir)) return [];
-      const re = new RegExp(`^${escapeRe(stem)}\\.([a-z]{2,3}(?:-[A-Za-z0-9]+)*)\\.translation-qa\\.json$`);
-      return readdirSync(dir)
-        .filter((f) => re.test(f))
-        .sort()
-        .map((f) => join(dir, f));
+      // TWO trees, scanned in the order `qa-paths.ts` fixes: the results tree
+      // that sweeps write to, then the legacy sibling a downstream folio still
+      // carries. Unlike `block` above, several sidecars here are genuinely
+      // different data — one verdict per LOCALE — so the whole set is returned
+      // rather than the first that exists.
+      //
+      // The two trees are merged BY LOCALE, not concatenated: a folio
+      // mid-migration has `fr` in both places, the same verdict written twice,
+      // and concatenating would project it as two witnesses of one criterion —
+      // a checker appearing to have ruled twice on one text, which is the
+      // "sidecar grows a history of one checker arguing with itself" defect
+      // bean `oja4` already paid for. First tree wins per locale, so the
+      // results-tree copy supersedes the sibling exactly as it does for blocks.
+      const subjectRoot = join(dir, stem);
+      const re = new RegExp(
+        `^${escapeRe(stem)}\\.([a-z]{2,3}(?:-[A-Za-z0-9]+)*)\\.translation-qa\\.json$`,
+      );
+      const byLocale = new Map<string, string>();
+      const resultsDir = dirname(translationQaPath(repoRoot, subjectRoot, "xx"));
+      for (const d of [resultsDir, dir]) {
+        if (!existsSync(d)) continue;
+        for (const f of readdirSync(d).sort()) {
+          const m = re.exec(f);
+          if (m && !byLocale.has(m[1]!)) byLocale.set(m[1]!, join(d, f));
+        }
+      }
+      return [...byLocale.keys()].sort().map((l) => byLocale.get(l)!);
     }
     case "script":
       return [join(dir, "script-qa", `${stem}.script-qa.json`)].filter((p) => existsSync(p));
@@ -573,6 +604,70 @@ export function readWitnessDoc(
   };
 }
 
+/**
+ * One projection over SEVERAL subjects in one family — a page's worth of blocks.
+ *
+ * ## Why this exists
+ *
+ * The per-block `TR` icon is honest and almost always empty. Measured on this
+ * corpus: 114 of 115 translation badges render as "not swept", because a block
+ * gets a sidecar only when a PO actually carries its strings and the site is 3%
+ * translated. A reader of a *translated* page therefore had nothing to open
+ * anywhere on it — and the page-level round-trip badge that used to be there
+ * was deleted (bean `ktt2`) for publishing an unmeasured string as semantic
+ * drift. Removing it was right; leaving nothing in its place was the gap.
+ * Issue #687, bean `r3ez`.
+ *
+ * ## It rolls up, it does not re-measure
+ *
+ * Every criterion here came out of a per-block sidecar with its own witness,
+ * its own hashes and its own freshness. Nothing is averaged into a page score
+ * and no verdict is synthesised: a page-level `fail` is some block's `fail`,
+ * and opening the panel names which block and which locale. A rolled-up number
+ * that no witness stands behind is exactly the shape `ktt2` was about.
+ *
+ * ## An empty roll-up is `undefined`, not an empty doc
+ *
+ * A page whose blocks carry no translation sidecar has not been swept, which is
+ * the caller's `unswept` span — a plain mark, nothing to open. Returning a doc
+ * with zero criteria would render as a control that does nothing when pressed,
+ * and `stateOf` would call it `unswept` anyway.
+ */
+export function rollUpWitnessDocs(
+  family: QaFamily,
+  subjects: readonly { path: string; label?: string }[],
+  repoRoot: string,
+  subjectName: string,
+): QaWitnessDoc | undefined {
+  const criteria: QaCriterionView[] = [];
+  const sidecars: string[] = [];
+
+  for (const s of subjects) {
+    const doc = readWitnessDoc(family, s.path, repoRoot);
+    if (!doc) continue;
+    sidecars.push(...doc.sidecars);
+    // `doc.subject` rather than the caller's label when the projection has
+    // named itself: it is what the per-block panel shows, so the two views
+    // agree on what a block is called.
+    const block = s.label ?? doc.subject;
+    for (const c of doc.criteria) criteria.push({ ...c, block });
+  }
+
+  if (criteria.length === 0) return undefined;
+
+  criteria.sort(byResultThenId);
+  const counts = countsOf(criteria);
+  return {
+    $schema: "qa-witness/v1",
+    family,
+    subject: subjectName,
+    sidecars,
+    state: stateOf(counts),
+    counts,
+    criteria,
+  };
+}
+
 /** Worst first: a reader opening a panel is looking for what is wrong. */
 const RESULT_ORDER: Record<QaCriterionView["result"], number> = {
   fail: 0,
@@ -585,6 +680,12 @@ const RESULT_ORDER: Record<QaCriterionView["result"], number> = {
 function byResultThenId(a: QaCriterionView, b: QaCriterionView): number {
   const d = RESULT_ORDER[a.result] - RESULT_ORDER[b.result];
   if (d !== 0) return d;
+  // `block` before `locale`, and only ever set on a roll-up: a reader of a
+  // page-level panel is looking for which BLOCK is wrong, and interleaving two
+  // blocks' locales under one verdict makes that the one thing the list does
+  // not show. Absent on a per-subject projection, where it is a no-op.
+  const s = (a.block ?? "").localeCompare(b.block ?? "");
+  if (s !== 0) return s;
   const l = (a.locale ?? "").localeCompare(b.locale ?? "");
   return l !== 0 ? l : a.id.localeCompare(b.id);
 }

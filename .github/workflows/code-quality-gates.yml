@@ -647,6 +647,7 @@ jobs:
           bun run check:fallback-roles
           bun run check:kind-validators
           bun run check:artifact-index
+          bun run smart-trust:pages:check
           bun run check:actor-reach
           bun run check:harness-dirs
           # Does a path-filtered workflow rebuild when the scripts it RUNS

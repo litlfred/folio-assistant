@@ -106,16 +106,18 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/smart-trust/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -125,11 +127,14 @@
       ],
       "visualisations": [
         {
+          "kind": "docs"
+        },
+        {
           "kind": "fhir-artifact-index"
         }
       ],
       "findings": [
-        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — docs, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
     },
