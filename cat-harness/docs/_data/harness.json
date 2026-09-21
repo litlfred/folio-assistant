@@ -134,6 +134,43 @@
       ]
     },
     {
+      "name": "cat-bootstrap-tools",
+      "title": "cat-bootstrap-tools",
+      "description": "Zod for the shapes cat-bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
+      "footer": false,
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/cat-bootstrap-tools/"
+        }
+      ],
+      "findings": [
+        "cat-bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "cat-bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      ]
+    },
+    {
       "name": "detangle",
       "title": "detangle",
       "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
@@ -484,7 +521,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 33
+          "value": 34
         },
         {
           "id": "kinds",
