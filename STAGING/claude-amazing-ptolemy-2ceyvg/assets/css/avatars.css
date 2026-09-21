@@ -38,7 +38,7 @@
   mask-composite: add;
 }
 
-.fa-avatar[data-fa-kind="cat-bootstrap"] {
+.fa-avatar[data-fa-kind="bootstrap"] {
   /* a seed germinating — the first thing, before anything else is known */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
@@ -285,7 +285,7 @@
 
 /* Light — the explicit choice, then the system default. */
 :root[data-fa-scheme="light"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 46% 34%); }
+  .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
   .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 46% 34%); }
@@ -324,7 +324,7 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-fa-scheme="dark"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 46% 34%); }
+    .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
     .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 46% 34%); }
@@ -364,7 +364,7 @@
 
 /* Dark — the explicit choice, then the system default. */
 :root[data-fa-scheme="dark"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 42% 72%); }
+  .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
   .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 42% 72%); }
@@ -403,7 +403,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"] { background-color: hsl(96 42% 72%); }
+    .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
     .fa-avatar[data-fa-kind="workflows"] { background-color: hsl(280 42% 72%); }
@@ -445,7 +445,7 @@
  * lightness still clears the surface, because an unreadable discarded
  * item is a deleted one as far as a reader is concerned. */
 :root[data-fa-scheme="light"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
+  .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
   .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
@@ -483,7 +483,7 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-fa-scheme="dark"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
+    .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
     .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
@@ -521,7 +521,7 @@
 }
 
 :root[data-fa-scheme="dark"] {
-  .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
+  .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
   .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
@@ -559,7 +559,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) {
-    .fa-avatar[data-fa-kind="cat-bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
+    .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
     .fa-avatar[data-fa-kind="workflows"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
