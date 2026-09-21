@@ -23,15 +23,25 @@ and never writes. Fixed for the duration of an instance. It changes only
 when a human directs an authoring act, outside any process.</li>
 <li><code>state</code> — <strong>live state.</strong> A record the process itself writes as it runs. A
 bean's status changes because a step completed.</li>
+<li><code>derived</code> — produced FROM a source, and regenerated rather than
+re-authored. It stands on its own the way <code>content</code> does, but a finding
+against it is a finding against its GENERATOR.</li>
 </ul>
-<p>Three values and no fourth. There is no &quot;could not determine&quot; here, and that
-is a departure from this repo's usual three-state rule for a reason worth
-stating: a third state is right when a CHECK looked and could not tell, and
+<p>Four values, and <strong>no &quot;could not determine&quot;</strong> — which is a departure from
+this repo's usual three-state rule for a reason worth stating: a third state is right when a CHECK looked and could not tell, and
 wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
 kind knows what a process does with it; letting them decline to say would put
 the burden on every consumer instead, which is the position the axis exists
 to end.</p>
-<h2 id="arrived-by-being-needed-not-by-being-symmetrical" class="tsd-anchor-link"><code>context</code> arrived by being needed, not by being symmetrical<a href="#arrived-by-being-needed-not-by-being-symmetrical" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h2 id="two-of-the-four-arrived-by-being-needed-not-by-being-symmetrical" class="tsd-anchor-link">Two of the four arrived by being needed, not by being symmetrical<a href="#two-of-the-four-arrived-by-being-needed-not-by-being-symmetrical" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>This axis shipped with TWO values and has twice been widened by a case that
+neither side described. That is the pattern to expect when adding a kind:
+the value you need may not exist yet, and inventing a fifth is legitimate —
+but only after the existing four have each been ruled out by a RULE rather
+than by taste. <code>derived</code> was ruled in exactly that way (see
+<code>isDerivedGraph</code>): <code>context</code> was refused because a declared process writes
+<code>library/</code> and <code>context</code> makes that a defect; <code>content</code> was refused because
+the QA sweep runs <em>&quot;only on active/working content&quot;</em>.</p>
 <p>The axis shipped with two values and the owner refined it the same day,
 settling bean <code>mhh9</code>: <em>&quot;put memory under state/context as static, during a
 process. it does not change. agents dont work on it (except when an authoring
@@ -43,7 +53,7 @@ tell whether writing to it is normal or a bug.</p>
 <p>See <code>skills/folio-core/content-context-and-state-graphs.md</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/a1439da3cc8781a8608e07db520e7f620a06d4a5/cat-harness/schemas/cat-harness.ts#L134">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:134</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/812a2af854890dd5243840f5b8e6bcbacbbe63b4/cat-harness/schemas/cat-harness.ts#L145">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:145</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -58,7 +68,7 @@ tell whether writing to it is normal or a bug.</p>
 <div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
 <details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h3>On This Page</h3></summary>
-<div class="tsd-accordion-details"><a href="#arrived-by-being-needed-not-by-being-symmetrical"><span> arrived by being needed, not by being symmetrical</span></a></div></details></div>
+<div class="tsd-accordion-details"><a href="#two-of-the-four-arrived-by-being-needed-not-by-being-symmetrical"><span>Two of the four arrived by being needed, not by being symmetrical</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

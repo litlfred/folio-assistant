@@ -231,14 +231,14 @@
     {
       "id": "folio-assistant-1ity",
       "title": "COVERAGE: four instances' library/ directories are rendered by the library viewer but do not declare it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:51:00Z",
-      "updatedAt": "2026-09-20T19:51:00Z",
+      "updatedAt": "2026-09-21T07:28:24Z",
       "preview": "---\n\n## Coverage declared for what this work actually renders — 2026-09-20\n\nPR #594 landed `coverage: { visualiser, docs, skill }` on a directory entry\nwhile this branch was in flight, and `check:subgraph-coverage` immediately\nreported `schemas`, `library` and `uploads` as **owing a visualiser** — with\nthe pages sitting right there. The check reads a DECLARATION, not the\nexistence of a file, and i",
       "file": "beans/defs/folio-assistant-1ity--coverage-four-instances-library-directories-are-re.md"
     },
@@ -1757,6 +1757,20 @@
       "file": "beans/defs/folio-assistant-bm6d--staging-every-deploy-pushes-two-commits-so-every-d.md"
     },
     {
+      "id": "folio-assistant-bmr0",
+      "title": "A stray backtick in a viewer page template gets a gate, after four warnings did not work",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:17:07Z",
+      "updatedAt": "2026-09-21T06:17:07Z",
+      "preview": "Recorded after the work rather than before it, which is the wrong order and is\nsaid rather than hidden: it came out of closing `qttr`, where a stray backtick\nin a new comment broke the build for the fourth time in one file.\n\n## Four warnings have not worked\n\n`gen-schema-viz.ts`, `gen-library-viz.ts`, `kg-viewer.ts` and\n`state-visualizer.ts` each build a whole HTML page as ONE template literal,\nand",
+      "file": "beans/defs/folio-assistant-bmr0--a-stray-backtick-in-a-viewer-page-template-gets-a.md"
+    },
+    {
       "id": "folio-assistant-bp4x",
       "title": "STICKIES: each initiator contributes its own sticky, rather than one list owning them all",
       "status": "completed",
@@ -1899,7 +1913,7 @@
     {
       "id": "folio-assistant-cjtm",
       "title": "SKILL: creating a new instance KIND — naming, prefixes, and repointing cat-bootstrap/README.md",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -1910,7 +1924,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:45:37Z",
-      "updatedAt": "2026-09-20T16:58:50Z",
+      "updatedAt": "2026-09-21T07:36:35Z",
       "preview": "Owner, 2026-09-20, across several messages while PR #477 was merging. Every\nline below is theirs; the grouping is mine.\n\n## The prefix families\n\n> cat- prefix does not extend to folio-assistant-*\n\n> also who- prefixs, and litlfred- prefix\n\nSo a prefix names the LAYER or the OWNER an instance belongs to, and the\nfamilies in this repository today are:\n\n| prefix | what it marks | instances here |\n|--",
       "file": "beans/defs/folio-assistant-cjtm--skill-creating-a-new-instance-kind-naming-prefixes.md"
     },
@@ -3395,6 +3409,20 @@
       "file": "beans/defs/folio-assistant-pn6j--ingest-l1-completeness-gate-derived-content-must-b.md"
     },
     {
+      "id": "folio-assistant-pomp",
+      "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T06:43:56Z",
+      "updatedAt": "2026-09-21T06:43:56Z",
+      "preview": "Two occurrences in one session, same shape, both published before being\ncaught. Recorded because the failure mode is invisible from inside: the\ncommand succeeds, the output is definite, and the conclusion is about somebody\nelse's work being broken.\n\n## Occurrence 1 — `ankg`'s precedent\n\nAsserted, in a commit message, a PR body and an issue comment: *\"#607 says it\nbuilt pruning in `gen-iris-pages.t",
+      "file": "beans/defs/folio-assistant-pomp--a-stale-originmain-produced-two-confident-wrong-fi.md"
+    },
+    {
       "id": "folio-assistant-ppkm",
       "title": "ROUTE B: bind the derived gates as Tool nodes, so a downstream instance inherits them",
       "status": "completed",
@@ -3505,6 +3533,20 @@
       "updatedAt": "2026-09-20T13:18:18Z",
       "preview": "Queued on the owner's ruling of 2026-09-20: root `harness.json` now, this\nschema work next. Their words for it: *\"directive for cat-harness to create if\n(as named in schema)\"*.\n\n## It was already found, and already declined — that is the point\n\n`cat-harness/harness.json`, on the `bootstrap` skills entry, states it exactly:\n\n> a `ContentDirectory` cannot say whether it is a LAYOUT dependents should",
       "file": "beans/defs/folio-assistant-qmjh--schema-a-contentdirectory-cannot-say-whether-it-is.md"
+    },
+    {
+      "id": "folio-assistant-qttr",
+      "title": "Relationship diagram: a layer has no width budget, so 12 of 67 modules render illegibly",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T05:51:49Z",
+      "updatedAt": "2026-09-21T05:51:49Z",
+      "preview": "Found while opening `whbf` (the dynamic half), by measuring the static half\nrather than taking its premise. `whbf` assumes the picture is right and\ninteraction is what is missing. It is not.\n\n## The measurement\n\nPlaywright against the committed `cat-harness` schema viewer at a 1280px\nviewport, reading each module's `viewBox` against the SVG's actual CSS width.\nAll 67 modules, worst first:\n\n| modul",
+      "file": "beans/defs/folio-assistant-qttr--relationship-diagram-a-layer-has-no-width-budget-s.md"
     },
     {
       "id": "folio-assistant-r1lz",
@@ -3675,6 +3717,20 @@
       "updatedAt": "2026-09-20T06:47:01Z",
       "preview": "Owner, 2026-09-20:\n\n> the state machine (which could being played by the agent) should be keeping\n> track of session context including the actor is a required input\n\n## Measured before designing: no session store exists, and one file looked like it\n\n`.harness/interaction.json` is the only session-adjacent file, and it is NOT\nthis: it holds a person's interaction PREFERENCES — durable, read at sess",
       "file": "beans/defs/folio-assistant-s8mo--session-context-what-the-state-machine-tracks-with.md"
+    },
+    {
+      "id": "folio-assistant-s8nu",
+      "title": "Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T05:33:00Z",
+      "updatedAt": "2026-09-21T06:05:00Z",
+      "preview": "Recorded after `ankg` was fixed on main while this branch was fixing it too —\nso the count below is measured against main, not against a plan.\n\n## The four\n\n| selector | where | how it decides |\n|---|---|---|\n| `prunableStickies` | `ensure-landing-sticky.ts` | the candidate parses as the thing it writes |\n| `OWNED` | `who-iris/scripts/gen-iris-pages.ts` (#607) | a regex over FILE NAMES this genera",
+      "file": "beans/defs/folio-assistant-s8nu--three-orphan-pruners-now-exist-for-one-problem-vie.md"
     },
     {
       "id": "folio-assistant-sa8y",
@@ -4651,7 +4707,7 @@
     {
       "id": "folio-assistant-yzsj",
       "title": "gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -4679,7 +4735,7 @@
     {
       "id": "folio-assistant-z634",
       "title": "Should bootstrap's published schemas become STRICT (additionalProperties: false)?",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-vke6",
