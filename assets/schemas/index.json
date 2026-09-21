@@ -27096,6 +27096,19 @@
           "array": false
         },
         {
+          "name": "pixelWidth",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Pixel dimensions, where the bitstream is a raster."
+        },
+        {
+          "name": "pixelHeight",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "materialization",
           "type": "MaterializationSchema",
           "optional": false,
@@ -27287,7 +27300,15 @@
           "name": "totalItemsUpstream",
           "type": "z.number().int().nonnegative().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "ITEMS upstream — the things a person cites, not the files they are made of."
+        },
+        {
+          "name": "totalFilesUpstream",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FILES upstream, where the source publishes that separately."
         },
         {
           "name": "totalBytesUpstream",
