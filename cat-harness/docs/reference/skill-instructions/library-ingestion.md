@@ -77,7 +77,7 @@ decides **on your behalf** — read it when the answer surprises you, not before
 
 ## Entry point two — an asset in a remote graph
 
-An instance declares `remoteGraphs` in its `harness.json`: a graph it knows
+An instance declares `remoteGraphs` in its declaration: a graph it knows
 about and does not hold (`schemas/cat-harness.ts`, `RemoteGraph`). Assets listed
 there are `referenced` in exactly the sense
 `folio-assistant-core/schemas/materialization.ts` defines — we know they exist

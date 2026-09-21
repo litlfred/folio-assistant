@@ -16,7 +16,7 @@ The core document model, organized as atomic knowledge units:
 Not content. These describe the **instance** and the people and processes
 around it, and they are read by tools rather than rendered.
 
-- **[cat-harness.ts](./cat-harness.ts)** — the root `harness.json`
+- **[cat-harness.ts](./cat-harness.ts)** — the repository's declaration
   declaration: which directories an instance scans and what **kind of graph**
   each holds (`tools`, `kg`, `schemas`, `beans`, and `folio`, which core
   registers because only core can render).

@@ -22,7 +22,7 @@ renders nothing a human looks at — it is the navbar *footer*, and the
 [harness-instances](../../cat-harness/docs/architecture/harness-instances.md)
 page records the floor-that-rises rule: visualiser exempt at this layer,
 required at `cat-harness` and above. The exemption is declared in
-`cat-bootstrap/harness.json` under `renderExemption`, and it carries an `owes`
+`cat-bootstrap/cat-bootstrap.json` under `renderExemption`, and it carries an `owes`
 field naming this document. **An exemption with no substitute is a hole**; the
 `owes` field is what stops it being one.
 

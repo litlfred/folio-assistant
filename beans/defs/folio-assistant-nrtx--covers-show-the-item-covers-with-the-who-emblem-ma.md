@@ -1,7 +1,7 @@
 ---
 # folio-assistant-nrtx
 title: 'COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T17:40:00Z
@@ -81,8 +81,30 @@ only.
       lockup survives outside it
 - [x] Cover `src` derived from the page's directory rather than a literal strip
 - [x] `COVERS_SHOWN = true`, alt text says the emblem was masked
-- [ ] `bun run gates` green
-- [ ] Merged, and verified on `main`
+- [x] `bun run gates` green — 92/92, with pymupdf and with a stub that hides it
+- [x] Merged as `24570e7536`, and **verified on `main` after the merge**:
+      `COVERS_SHOWN = true` at `gen-iris-pages.ts:358`, `gen-covers --check`
+      clean, 3 declared regions, 3 `<img>` src resolve / 0 broken
+
+## Summary of Changes
+
+The emblem is absent from the committed bytes rather than hidden by a flag, so
+no display decision downstream can leak it. Regions are data with a required
+reason, schema-bounded by the declared raster; the renderer refuses an
+out-of-bounds region rather than clamping, because a mask covering less than
+asked looks exactly like one that worked.
+
+**CI caught a real one.** The bytes-level test shelled out to `pymupdf`, in a
+gate job that installs `ruff` and nothing else — which `gen-covers.ts`
+documents, at length, as having reddened the branch three times before. I read
+that paragraph while writing this and walked into it anyway. Fixed per
+`verifyWithoutRender`'s rule: degrade to *slightly less* and say what was
+skipped. Two of the three claims need no decoder, and both were falsified, so
+the fallback can genuinely fail.
+
+**Left open with the owner:** whether the publication titles containing "WHO"
+should also be masked, and whether the mid-grey fill reads as deliberate or as
+damage on a page whose job is to look like IRIS. Both are one-line reversals.
 
 ## Not this bean
 
