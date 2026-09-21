@@ -317,3 +317,53 @@ Related: `o7eq` (the URL space this completes), `wwi6` (the same mechanism for
 uploads/ and library/), `x4a6` (declaring `docs/` as the renderable graph),
 `ohx6` (cat-harness's own folio/), `qmjh` (a ContentDirectory saying whether
 dependents reproduce it).
+
+## Behaviours settled 2026-09-21 — `_config.yml` merges, overlay keys win
+
+The compose ruling said instances overlay *"content and behaviors"*. Content
+shipped first; behaviours were left as a refusal, because two Jekyll configs
+want merging and the precedence had not been chosen. That refusal had a real
+cost: a downstream harness could overlay pages but could not change ONE Jekyll
+setting — no theme, no nav, no title.
+
+Owner's ruling, asked as three options and answered "2":
+
+> **Overlay keys win. Objects merge recursively. Lists REPLACE rather than
+> concatenate.**
+
+Lists replacing is the clause worth recording, because concatenation is the
+more common default and is wrong here for the same reason the file overlay is
+last-wins: an overlay that wanted three nav entries and inherited seven has no
+way to remove the four it did not ask for. One direction everywhere.
+
+**The allowlist that was NOT chosen** matters as much. Merging only declared
+keys (`title`, `nav`, colour tokens) is safer per-key and is exactly the `6tkl`
+shape — a hardcoded list that goes stale silently, which this repository has
+paid for three times.
+
+### The constraint that shaped the implementation
+
+**A YAML round trip is not byte-preserving** — it strips comments and may
+reorder keys. Merging unconditionally would therefore rewrite the published
+`_config.yml` on a tree whose overlay carries none, breaking the byte-identity
+property that licenses `docs-site.yml` pointing `source:` at the composed tree
+at all. So the merge fires ONLY when an overlay supplies a config AND a lower
+layer already did; every other case copies bytes untouched.
+
+Verified on the real tree, not only on fixtures:
+
+    composed 437 file(s) from 2 layer(s)
+    no overrides — the composed tree is the base layer
+    cat-harness/docs/_config.yml vs composed _config.yml   IDENTICAL
+
+...and with a temporary overlay config in place, end to end:
+
+    MERGED  _config.yml — docs <- root-docs (title, aux_links)
+    title overlaid; description, remote_theme, baseurl and 25 further
+    lines survived from the base
+
+The report names the CHANGED KEYS rather than counting files, the same `dh4f`
+discipline the override path already follows: "merged 1 file" leaves a reader
+unable to tell which settings moved, which is the whole question a merged
+configuration raises.
+

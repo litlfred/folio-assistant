@@ -116,8 +116,40 @@ const AUTHORITY: Record<string, EdgeAuthority> = {
   "prose-mention": "prose",
 };
 
+/**
+ * The authority for an extractor, REFUSING rather than defaulting.
+ *
+ * This read `AUTHORITY[via] ?? "recorded"`. The fallback was unreachable —
+ * measured 2026-09-21, the eight `via` values the extractors emit are exactly
+ * the eight {@link AUTHORITY} declares — so it silenced nothing today and
+ * would have silenced the next extractor added.
+ *
+ * That matters more here than a default usually does, because `recorded` is
+ * not a neutral guess: it is the value that makes a boundary edge stop
+ * counting toward `role`. A new `enforced` extractor landing as `recorded`
+ * would turn real directed dependencies into `undetermined` verdicts, and the
+ * report would look exactly as it does when the analysis is right.
+ *
+ * Bean `kvsx`'s first requirement is that every extractor DECLARES its
+ * authority. A `??` makes that true by coincidence rather than by
+ * construction, which is the `6tkl` shape: the check cannot fail, so it cannot
+ * tell you anything.
+ */
+function authorityOf(via: string): EdgeAuthority {
+  const a = AUTHORITY[via];
+  if (a === undefined) {
+    throw new Error(
+      `kg-detangle: extractor '${via}' declares no authority. Add it to AUTHORITY in this file as ` +
+        `'enforced' (a build or engine breaks if the arrow is reversed) or 'recorded' (the direction is ` +
+        `where the author filed the pointer) or 'prose' (a mention, which moves no verdict). ` +
+        `Defaulting would file it as 'recorded' and silently drop it from every role verdict.`,
+    );
+  }
+  return a;
+}
+
 function link(from: string, toId: string | undefined, ref: string, via: string) {
-  if (toId && byId.has(toId)) edges.push({ from, to: toId, via, authority: AUTHORITY[via] ?? "recorded" });
+  if (toId && byId.has(toId)) edges.push({ from, to: toId, via, authority: authorityOf(via) });
   else dangling.push({ from, ref, via });
 }
 
