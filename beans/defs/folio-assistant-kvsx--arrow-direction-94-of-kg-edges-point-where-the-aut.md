@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kvsx
 title: 'ARROW DIRECTION: 94% of KG edges point where the AUTHOR PUT THE POINTER, not where the dependency runs'
-status: in-progress
+status: completed
 type: bug
 priority: critical
 created_at: 2026-09-20T08:27:47Z
-updated_at: 2026-09-21T08:54:25Z
+updated_at: 2026-09-21T10:10:00Z
 parent: folio-assistant-kupb
 ---
 
@@ -101,3 +101,28 @@ and that is its own bean, not a line item here.
 
 82 gates pass.
 
+## Summary of Changes
+
+Merged in #674 (`ce71f60`).
+
+**The model was already built** — in `detangle/`, its own instance. This bean
+predates that code and names four extractors that are not identifiers anywhere
+in `cat-harness/`, which is why searching there reads as unbuilt. All four
+"Done when" bullets were already satisfied, two beyond what was asked:
+`EdgeAuthority` is three states over eight extractors, not two over four, and
+`skills/workflows` / `skills/roles` both read `undetermined` rather than
+`source` — the exact re-statement demanded.
+
+**What was actually wrong, and is fixed:** `AUTHORITY[via] ?? "recorded"`, a
+silent default on the one axis that must not have one. Measured first — the
+emitted `via` values and the declared keys are exactly equal, 8 and 8 — so the
+fallback was unreachable and silenced nothing. That is what made it worth
+removing: the requirement that every extractor DECLARES was true by coincidence
+rather than construction, which is the `6tkl` shape. `recorded` is not a
+neutral guess either: it is the value that stops a boundary edge counting
+toward `role`. `authorityOf()` now refuses, falsified by removing `md-link`
+(rc=1, actionable message).
+
+Follow-up: `sb6z` — nothing RUNS `kg-detangle.ts`, so the model is correct and
+unexercised. `kg:detangle` was added here for discoverability, deliberately not
+gated.
