@@ -613,6 +613,13 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
+          # A milestone states its blockers as a ROUTE, so both GOAL milestones
+          # advertised finished work as next and neither detector could see it.
+          # Two rules only -- an id that is an operand of an arrow, and a
+          # numbered step under a path heading -- with prose that merely
+          # mentions a closed bean deliberately NOT examined and said so.
+          bun run check:stale-paths
           # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
           # session did find. Fails only on a tag with no `## Evidence` -- the
           # parking space the skill forbids. Closing them stays the owner's.
@@ -631,6 +638,11 @@ jobs:
           bun run check:l1-complete
           bun run check:l1-complete -- --check
           bun run check:catalogue
+          # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
+          # least one MEANINGFULLY POPULATED page. Exit 2 — could not
+          # determine — is a failure here and not a pass, which is the whole
+          # reason the check exists rather than a file-exists test.
+          bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators

@@ -20,7 +20,7 @@
       "materialization": {
         "state": "materialized",
         "of": "https://iris.who.int/handle/10665/145714",
-        "localPath": "uploads/9789241548960_eng.pdf",
+        "localPath": "uploads/9789241548960-eng/9789241548960_eng.pdf",
         "purpose": "both",
         "bytes": 2136157,
         "fixity": {
@@ -49,7 +49,7 @@
             "basis": "no dc.rights field in the captured record"
           }
         },
-        "note": "Re-keyed 2026-09-20 from the captured full item record. It was `item/local:<slug>` with `parents: []` -- an item this repository held and could not place -- because no record had been captured for it. One has, so the id is now the DSpace UUID from the captured page's own URL, the parents are the breadcrumb, and the bitstream's `of` is the Handle rather than a `local:` origin. The slug survives as `libraryId`, which is what the ingested text is filed under and what every existing reference resolves through."
+        "note": "Re-keyed 2026-09-20 from the captured full item record. It was `item/local:<slug>` with `parents: []` -- an item this repository held and could not place -- because no record had been captured for it. One has, so the id is now the DSpace UUID from the captured page's own URL, the parents are the breadcrumb, and the bitstream's `of` is the Handle rather than a `local:` origin. The slug survives as `libraryId`, which is what the ingested text is filed under and what every existing reference resolves through. Relocated 2026-09-21 (bean `yl5w`, issue #663): the bytes were at `cat-harness/uploads/` while this path claimed `who-iris/uploads/`, so the claim was false and nothing checked it. `localPath` is instance-relative by contract, so a folio's sources belong inside the folio — the file now sits beside its own `intake.json` and IRIS capture, and `check:catalogue` verifies it."
       }
     },
     {
@@ -61,7 +61,7 @@
       "pixelHeight": 450,
       "materialization": {
         "state": "materialized",
-        "of": "local:cat-harness/uploads/9789241548960_eng.pdf#page=1",
+        "of": "local:who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf#page=1",
         "localPath": "docs/assets/covers/9789241548960-eng-cover.png",
         "purpose": "working",
         "bytes": 17696,

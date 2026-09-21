@@ -45,7 +45,7 @@
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
-import { dirname, join, resolve } from "path";
+import { basename, dirname, join, resolve } from "path";
 
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
@@ -57,7 +57,35 @@ const INSTANCE = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(INSTANCE, "..");
 
 const NODES = join(INSTANCE, "catalogue", "nodes");
-const OUT = join(INSTANCE, "docs");
+/**
+ * WHERE EACH PAGE GOES, and the two are different KINDS of thing.
+ *
+ * Owner, 2026-09-21: *"the iris KG should be in who-iris/library (served by
+ * cat-harness/library) which may or may not inlude materialized content, the
+ * docs in who-iris/docs (served by cat-harness/docs)."*
+ *
+ * So the split is not cosmetic. The replica — the home page, the community
+ * list, every collection and item page — is a RENDERING OF THE KG, and the KG
+ * is library-side. The ingestion notes and the portal proposal are
+ * DOCUMENTATION, and documentation is docs-side. One directory served both
+ * until now, and `mount-instance-docs.ts` copies a declared directory to
+ * `/<kind>/<instance>/`, so `/docs/who-iris/` was byte-for-byte the replica
+ * with the replica's own top navbar. That is what the owner was looking at.
+ *
+ * **Only loose files go into `library/`.** Every DIRECTORY under a library
+ * graph is read as a corpus entry by `library-graph.ts` — it walks
+ * subdirectories and treats each as a slug — so an `assets/` folder there
+ * would appear in the L1 listing as a document titled "assets" with no
+ * sections. The covers therefore stay where the catalogue's `localPath`
+ * already names them, and nothing about `yl5w` has to move again.
+ */
+const LIB = join(INSTANCE, "library");
+const DOCS = join(INSTANCE, "docs");
+
+// No `outDirFor(name)` helper: the map key carries the side, so nothing has to
+// infer it from a filename. An inference would have to be kept in step with
+// the two OWNED patterns below, and three answers to one question is how a
+// page ends up written to one side and pruned from the other.
 /**
  * The skill this page is a PROJECTION of — never a second copy of it.
  *
@@ -101,17 +129,44 @@ const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-
  * the same licence `prunableStickies` operates under. A hand-authored page, an
  * asset directory or a `.nojekyll` in the same directory is untouched.
  */
+/**
+ * The documentation pages, named rather than pattern-matched.
+ *
+ * Two of them, and both are prose about the work rather than a rendering of
+ * the catalogue. A pattern would have to guess, and guessing which side of the
+ * split a page falls on is the one thing this must not do.
+ */
+export const DOC_PAGES = new Set(["index.html", "ingestion-notes.html", "kg-to-portal.html"]);
+
+/** Everything this generator writes, on either side. */
 export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|collection-.*|item-.*)\.html$/;
+
+/** What it owns in `library/` — the replica, which is the KG rendered. */
+export const OWNED_LIB = /^(index|community-list|collection-.*|item-.*)\.html$/;
+
+/**
+ * What it owns in `docs/` — the documentation, and its own index.
+ *
+ * `index.html` is owned on BOTH sides, deliberately: the replica needs one
+ * because it is a site, and the docs side needs one because
+ * `mount-instance-docs.ts` will not mount a directory without it. The
+ * cross-side sweep below therefore has to exclude a name owned here as well,
+ * or it deletes the docs index on sight.
+ */
+export const OWNED_DOCS = /^(index|ingestion-notes|kg-to-portal)\.html$/;
 
 /**
  * Where a committed file is actually served from.
  *
- * Bean `yl5w`: every `localPath` in the catalogue points at
- * `who-iris/uploads/…`, and all three are MISSING — the bytes are in
- * `cat-harness/uploads/`, because #477 moved `library/` and left `uploads/`
- * behind. The owner asked for *"links to working assets"*, so these pages link
- * to where the bytes ARE and the page says so in the open, rather than
- * emitting a dead link that matches a claim.
+ * The owner asked for *"links to working assets"*, so a link here is built
+ * from a path that RESOLVED rather than from one the catalogue claims. Until
+ * 2026-09-21 those were different things — bean `yl5w`: every ORIGINAL
+ * `localPath` named `who-iris/uploads/…` while the bytes sat in
+ * `cat-harness/uploads/`, and `lib/bytes.ts` carried a fallback so the links
+ * worked anyway. The sources have since moved into the folio and the fallback
+ * is gone, so the two now agree; the rule stays, because a generator that
+ * emits a link from an unverified claim is one relocation away from shipping
+ * dead links again.
  */
 const RAW = "https://raw.githubusercontent.com/litlfred/folio-assistant/main";
 
@@ -633,10 +688,27 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
 </div></header>
 
+<!--
+  THE DOCUMENTATION IS NOT IN THIS NAVBAR, and that is the owner's ruling of
+  2026-09-21: *"the docs/ should not be for the who-iris top navbar, instead,
+  f-a navbar should still be on the left, with who-iris and then link to docs
+  on side in navbar."*
+
+  This strip is the REPLICA's chrome -- it exists to look like the IRIS site,
+  and the IRIS site has no page about how this repository ingested it. The
+  ingestion notes and the portal proposal are reached from the folio-assistant
+  navbar on the left, through who-iris's own tile in harness-tiles.ts, which
+  is where a reader looking for documentation about this harness is standing.
+  Putting them here also meant linking across two mount points once the split
+  landed, which is a relative path that breaks the first time either route
+  moves.
+
+  (No backticks in this comment: it sits inside the page template literal, and
+  one here closes the string and turns the rest of the file into TypeScript,
+  failing at a line far from the mistake.)
+-->
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
-  <a href="ingestion-notes.html">Ingestion notes</a>
-  <a href="kg-to-portal.html">KG &rarr; portal</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
@@ -1343,13 +1415,16 @@ ${rows}
   </tbody>
 </table>
 
-<h2>Still open</h2>
-<p>Bean <code>yl5w</code>: every <code>localPath</code> in the catalogue points at
-<code>who-iris/uploads/</code> and all three are missing — the bytes are under
-<code>cat-harness/uploads/</code>, and <code>check:catalogue</code> does not check
-<code>localPath</code> at all. These pages link to where the bytes <em>are</em> rather
-than to where the claim says they are, and say so rather than emitting a dead link
-that matches the claim. That is a workaround, not a fix.</p>
+<h2>Settled 2026-09-21 — bean <code>yl5w</code></h2>
+<p>Every ORIGINAL <code>localPath</code> in this catalogue named
+<code>who-iris/uploads/</code> while the bytes sat in <code>cat-harness/uploads/</code>,
+and <code>check:catalogue</code> did not look at <code>localPath</code> at all — so
+three <code>materialized</code> claims resolved to nothing while the gate printed
+<em>clean</em>. The three sources now sit beside their own intake records at
+<code>who-iris/uploads/&lt;slug&gt;/</code>, the page generator's fallback is deleted,
+and <code>check:catalogue</code> verifies every <code>localPath</code> — with
+<em>could not determine</em> as its own answer, because an unreadable file is not a
+missing one.</p>
 
 <p><code>iris.who.int</code> is egress-blocked from the environment that generates this
 page, so nothing here was fetched from IRIS. Every record was transcribed from a capture
@@ -1390,9 +1465,15 @@ function kgToPortal(all: Node[]): string {
   const heldBytes = held
     .map((n) => assetHref(n)?.bytes ?? 0)
     .reduce((a, b) => a + b, 0);
-  const pages = readdirSync(OUT).filter((f) => f.endsWith(".html")).length;
-  const covers = existsSync(join(OUT, "assets", "covers"))
-    ? readdirSync(join(OUT, "assets", "covers")).filter((f) => f.endsWith(".png")).length
+  // BOTH sides, since the 2026-09-21 split: the replica is library-side and
+  // the documentation is docs-side, and "how many pages does this instance
+  // ship" is a question about the instance rather than about one directory.
+  const htmlIn = (dir: string): number =>
+    existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".html")).length : 0;
+  const pages = htmlIn(LIB) + htmlIn(DOCS);
+  // The covers stay docs-side, where the catalogue's `localPath` names them.
+  const covers = existsSync(join(DOCS, "assets", "covers"))
+    ? readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png")).length
     : 0;
 
   const svg = existsSync(ARCH_SVG)
@@ -1530,60 +1611,120 @@ requirements this instance paid for, generated from the skill that records them.
 `;
 }
 
+/**
+ * The docs side's own landing page.
+ *
+ * @see the owner's ruling, 2026-09-21 — the KG is library-side and the
+ * documentation is docs-side, each served by its own cat-harness handler.
+ *
+ * It is deliberately SHORT and it links nothing across the two mount points.
+ * A link from here to the replica would have to be written relative to where
+ * the page lands after mounting, which this generator does not know and must
+ * not compose; the folio-assistant navbar on the left is what reaches both,
+ * which is the whole point of the ruling.
+ */
+function docsIndex(): string {
+  return `
+<h1>who-iris &mdash; documentation</h1>
+
+<p class="lede">What this harness is, what ingesting it cost, and where the
+ingested copy is meant to end up. These pages are <em>about</em> the work; the
+catalogue itself, and the replica rendered from it, are served separately by
+the library handler.</p>
+
+<div class="caveat">
+  <p><strong>This is not a copy of IRIS.</strong> who-iris models the WHO
+  Institutional Repository for Information Sharing <em>by reference</em>:
+  ${banner()}. Everything on these pages was transcribed from captures the
+  owner supplied &mdash; <code>iris.who.int</code> is not reachable from the
+  environment that renders them, so nothing here was fetched. The figures come
+  from the catalogue rather than from this sentence, which is why they are the
+  same ones the replica shows.</p>
+</div>
+
+<h2>Pages</h2>
+<ul class="doclist">
+  <li>
+    <a href="ingestion-notes.html">What ingesting these documents cost</a>
+    <p>The requirements the ingestion produced, rendered from
+    <code>skills/iris-dspace.md</code> rather than restated &mdash; so the page
+    and the skill cannot drift. Includes what the captured DSpace records gave
+    that inference could not.</p>
+  </li>
+  <li>
+    <a href="kg-to-portal.html">From this catalogue to somebody else&rsquo;s portal</a>
+    <p>The general pattern this instance is a worked example of:
+    <em>select &rarr; serialize &rarr; package &rarr; sign &rarr; distribute
+    &rarr; verify</em>, with the trust anchors read off the WHO SMART Trust IG
+    and the transport left undetermined rather than guessed.</p>
+  </li>
+</ul>
+`;
+}
+
 function main(): number {
   const all = nodes();
   const files = new Map<string, string>();
 
+  // KEYED BY SIDE, not by name. Both sides need an `index.html` — the replica
+  // needs one because it is a site, and the docs side needs one because
+  // `mount-instance-docs.ts` will not mount a directory without it — so a map
+  // keyed on the bare name can hold only one of them.
   files.set(
-    "index.html",
+    "library/index.html",
     page("who-iris", [{ label: "Home" }], landingPage(all)),
   );
 
   files.set(
-    "kg-to-portal.html",
+    "docs/index.html",
+    page("who-iris — documentation", [{ label: "Documentation" }], docsIndex()),
+  );
+
+  files.set(
+    "docs/kg-to-portal.html",
     page(
       "From this catalogue to somebody else's portal",
-      [{ label: "Home", href: "index.html" }, { label: "KG to portal" }],
+      [{ label: "Documentation", href: "index.html" }, { label: "KG to portal" }],
       kgToPortal(all),
     ),
   );
 
   files.set(
-    "ingestion-notes.html",
+    "docs/ingestion-notes.html",
     page(
       "What ingesting these documents cost",
-      [{ label: "Home", href: "index.html" }, { label: "Ingestion notes" }],
+      [{ label: "Documentation", href: "index.html" }, { label: "Ingestion notes" }],
       ingestionNotes(requirementsFromSkill(readFileSync(SKILL, "utf-8")), all),
     ),
   );
 
   files.set(
-    "community-list.html",
+    "library/community-list.html",
     page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all)),
   );
 
   for (const c of all.filter((n) => n.flavour === "collection")) {
     files.set(
-      `collection-${slug(c.id)}.html`,
+      `library/collection-${slug(c.id)}.html`,
       page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all)),
     );
   }
 
   for (const n of all.filter((x) => x.flavour === "item")) {
     files.set(
-      `item-${slug(n.id)}.html`,
+      `library/item-${slug(n.id)}.html`,
       page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all)),
     );
   }
 
   const check = process.argv.includes("--check");
   let stale = 0;
-  for (const [name, html] of files) {
-    const p = join(OUT, name);
+  for (const [key, html] of files) {
+    const p = join(INSTANCE, key);
     const prev = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
     if (prev === html) continue;
     if (check) {
-      console.error(`stale or missing: who-iris/docs/${name}`);
+      console.error(`stale or missing: who-iris/${key}`);
       stale++;
       continue;
     }
@@ -1608,14 +1749,44 @@ function main(): number {
   // a page somebody hand-added, a `.nojekyll`, an asset directory, all survive.
   // Precedent is `prunableStickies` in `ensure-landing-sticky.ts`, which prunes
   // its own output for the same reason.
-  const orphans = existsSync(OUT)
-    ? readdirSync(OUT)
-        .filter((f) => OWNED.test(f) && !files.has(f))
-        .sort()
-    : [];
+  // Per DIRECTORY, each against the pattern it owns there. One combined
+  // pattern would prune a docs page out of `library/` and vice versa — which
+  // is exactly what the split exists to stop, and the failure would look like
+  // a successful clean-up.
+  /**
+   * This generator's output sitting in the wrong directory for what it is.
+   *
+   * `ownedHere` is subtracted, and that is not a refinement — `index.html` is
+   * legitimately on both sides, so without it the first sweep past `docs/`
+   * deletes the docs index every run and the directory stops mounting.
+   */
+  const wrongSide = (dir: string, ownedElsewhere: RegExp, ownedHere: RegExp): string[] =>
+    existsSync(dir)
+      ? readdirSync(dir).filter((f) => ownedElsewhere.test(f) && !ownedHere.test(f)).sort()
+      : [];
+  const orphansIn = (dir: string, owned: RegExp): string[] =>
+    existsSync(dir)
+      ? readdirSync(dir)
+          .filter((f) => owned.test(f) && !files.has(`${basename(dir)}/${f}`))
+          .sort()
+      : [];
+  const orphans = [
+    ...orphansIn(LIB, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    ...orphansIn(DOCS, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
+    // The pages that CHANGED SIDES, and the predicate here is deliberately
+    // NOT the one above. A page carrying the other side's name does not belong
+    // in this directory AT ALL — whether or not it is currently being written
+    // somewhere else. The first draft asked `!files.has(name)` here too, and
+    // every stale copy survived: `index.html` is being written to `library/`,
+    // so the docs-side copy looked live and stayed exactly where the owner did
+    // not want it. Caught by listing the directory afterwards rather than by
+    // trusting the sweep.
+    ...wrongSide(DOCS, OWNED_LIB, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
+    ...wrongSide(LIB, OWNED_DOCS, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+  ];
 
   if (check) {
-    for (const o of orphans) console.error(`orphaned: who-iris/docs/${o}`);
+    for (const o of orphans) console.error(`orphaned: ${o.rel}`);
     if (stale || orphans.length) {
       const bits = [
         stale ? `${stale} page(s) stale` : "",
@@ -1628,11 +1799,13 @@ function main(): number {
     return 0;
   }
 
-  for (const o of orphans) rmSync(join(OUT, o));
+  for (const o of orphans) rmSync(join(o.dir, o.name));
 
-  console.log(`wrote ${files.size} page(s) to who-iris/docs/`);
-  for (const name of files.keys()) console.log(`  ${name}`);
-  for (const o of orphans) console.log(`  pruned ${o}`);
+  const lib = [...files.keys()].filter((k) => k.startsWith("library/"));
+  const docs = [...files.keys()].filter((k) => k.startsWith("docs/"));
+  console.log(`wrote ${lib.length} page(s) to who-iris/library/ and ${docs.length} to who-iris/docs/`);
+  for (const key of [...lib, ...docs]) console.log(`  who-iris/${key}`);
+  for (const o of orphans) console.log(`  pruned ${o.rel}`);
   return 0;
 }
 

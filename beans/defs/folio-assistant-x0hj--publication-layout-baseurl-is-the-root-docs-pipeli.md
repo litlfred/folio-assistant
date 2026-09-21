@@ -1,10 +1,11 @@
 ---
 # folio-assistant-x0hj
 title: 'PUBLICATION LAYOUT: <baseurl>/ is the root docs pipeline, <baseurl>/<instantiated harness>/<path> is everything else'
-status: todo
+status: scrapped
 type: task
+priority: normal
 created_at: 2026-09-20T18:26:35Z
-updated_at: 2026-09-20T18:26:35Z
+updated_at: 2026-09-21T10:40:17Z
 parent: folio-assistant-yj32
 ---
 
@@ -170,3 +171,45 @@ unchanged and still the thing to gate.
 
 **Do not scrap without checking that.** Whoever picks this up should read #584
 first, then decide whether the residue is a bean or a line on that branch's.
+
+---
+
+## Reasons for Scrapping — 2026-09-21
+
+**The check this bean asked for has been done.** Its last line said *"Do not
+scrap without checking that"* — the residue measurement — and *"read #584
+first, then decide whether the residue is a bean or a line on that branch's"*.
+
+**#584 is merged.** The corrected rule (`<base-url>/<kind>/<instance>/`, and
+the collision rule *walk from the root, outermost wins, stop*) is on main, with
+`renderingPath` as the composer and `check:instance-render` as the conformance
+check — **12 rendered, 0 failed, 0 undetermined** on today's tree.
+
+### The residue, measured rather than assumed
+
+| artefact | verdict |
+|---|---|
+| `_site/fsh-guts.jsonld` | **not a defect.** The owner asked for it by name — *"jsonld accessible via `<base-url>/fsh-guts.jsonld`"* — and it is a second document precisely so a crawler never arrives at it |
+| `_site/folio-assistant.jsonld` | the REPOSITORY's union graph, not an instance rendering |
+| `_site/folio-assistant/index.html` | its viewer, same |
+
+Both of the latter take their name from `artefactStub`, documented as *"the
+REPOSITORY's short name, used as the filename stem of every artefact"*. They
+span all 12 instances, so they have no single `<subject>` to compose a path
+from — which is **exactly** the open question already sitting on `o7eq`
+(§"Their placement is NOT settled by the three-case ruling"), where the schema
+viewer spans 4 instances and the library viewer 3.
+
+### So the residue is a line on `o7eq`, not a bean
+
+It has been written there, as two more rows under that question, with the
+five-artefact table one ruling now covers. Splitting it would mean asking the
+owner the same question twice and risking two answers.
+
+**Scrapped, not deleted**, per the never-delete rule: a scrapped bean stops the
+next agent re-entering a dead end, while a deleted one leaves a sibling unable
+to tell abandonment from accident. Nothing here is lost — the superseded-rule
+analysis stays readable above, and the live question is on `o7eq`.
+
+`blv9` (an `@id` must move with the file that carries it) is untouched by any
+of this and remains the thing to gate.

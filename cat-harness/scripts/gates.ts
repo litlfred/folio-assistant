@@ -658,6 +658,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "same as `schema:viz:check` and for the same reason: the writer runs at deploy, and the projection derives from the whole repository, so its red means a sibling merged rather than that this diff forgot. Run it by hand, or from `/prepare-merge`",
   },
   {
+    script: "check:session-staleness",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT, and that is the reason rather than a preference. Probed 2026-09-21 from inside a session container: no session credential in the environment, `api.anthropic.com/v1/sessions` -> 401, `claude.ai/api/code/sessions` -> 403. `list_sessions` is an MCP tool an AGENT holds, not an endpoint a script can call -- the same wall that makes `sibling-sessions.ts` infer sessions from commit trailers. Wired as a gate it would examine NOTHING and report a clean run over every session, which is the `dh4f` defect inside the check written to stop a clean-run-over-nothing one level up. It belongs in the session-start sweep, run by an agent that can produce the listing, or by hand with a saved payload. Bean `rq8s`",
+  },
+  {
     script: "check:ci-health",
     kind: "report",
     reason:

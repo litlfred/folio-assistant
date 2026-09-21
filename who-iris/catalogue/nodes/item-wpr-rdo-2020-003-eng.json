@@ -21,7 +21,7 @@
       "materialization": {
         "state": "materialized",
         "of": "https://iris.who.int/handle/10665/332098",
-        "localPath": "uploads/WPR-RDO-2020-003-eng.pdf",
+        "localPath": "uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf",
         "purpose": "both",
         "bytes": 2810648,
         "fixity": {
@@ -49,7 +49,8 @@
             "verdict": "unknown",
             "basis": "no dc.rights field in the captured record"
           }
-        }
+        },
+        "note": " Relocated 2026-09-21 (bean `yl5w`, issue #663): the bytes were at `cat-harness/uploads/` while this path claimed `who-iris/uploads/`, so the claim was false and nothing checked it. `localPath` is instance-relative by contract, so a folio's sources belong inside the folio — the file now sits beside its own `intake.json` and IRIS capture, and `check:catalogue` verifies it."
       }
     },
     {
@@ -61,7 +62,7 @@
       "pixelHeight": 212,
       "materialization": {
         "state": "materialized",
-        "of": "local:cat-harness/uploads/WPR-RDO-2020-003-eng.pdf#page=1",
+        "of": "local:who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf#page=1",
         "localPath": "docs/assets/covers/wpr-rdo-2020-003-eng-cover.png",
         "purpose": "working",
         "bytes": 8970,
