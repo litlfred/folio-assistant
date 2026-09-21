@@ -24,7 +24,14 @@ import { join } from "node:path";
 
 import Ajv from "ajv";
 
-import { DiscussionInputSchema, DiscussionOutputSchema } from "./discussion.ts";
+import {
+  DiscussionInputSchema,
+  DiscussionOutputObjectSchema,
+  DiscussionOutputSchema,
+  ExchangeEntrySchema,
+  ParticipantSchema,
+  RepositoryRefSchema,
+} from "./discussion.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const read = (p: string): Record<string, unknown> => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
@@ -82,6 +89,50 @@ const OUTPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
     doc: { outcome: "settled", exchange },
     valid: false,
   },
+  {
+    // STRICTNESS, bean `z634`. These documents are written by AGENTS, and the
+    // typo'd key is the failure they are most exposed to: before this, a
+    // misspelled `assumption` was silently ignored, which is the worst of both
+    // answers — the field is absent, so the `assumed` conditional should have
+    // fired, and the stray key carried the value that would have satisfied it.
+    why: "STRICTNESS: a typo'd key is rejected rather than ignored",
+    doc: {
+      outcome: "settled",
+      harness: "cat-harness",
+      determinedBy: "assumed",
+      assumtion: "the README's stated default",
+      answeredBy: participant,
+      exchange,
+    },
+    valid: false,
+  },
+  {
+    // The same document spelled correctly. Without this pair the case above
+    // would still pass if the schema rejected it for the WRONG reason — the
+    // missing `assumption` rather than the extra key — and the two are
+    // indistinguishable from one `valid: false`.
+    why: "...and the same document with the key spelled right is accepted",
+    doc: {
+      outcome: "settled",
+      harness: "cat-harness",
+      determinedBy: "assumed",
+      assumption: "the README's stated default",
+      answeredBy: participant,
+      exchange,
+    },
+    valid: true,
+  },
+  {
+    why: "STRICTNESS reaches NESTED objects too — a participant with a stray key",
+    doc: {
+      outcome: "settled",
+      harness: "cat-harness",
+      determinedBy: "asked",
+      answeredBy: { ...participant, nickname: "not a field" },
+      exchange,
+    },
+    valid: false,
+  },
 ];
 
 const INPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
@@ -104,6 +155,11 @@ const INPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
     doc: { open: ["harness"], askedOf: participant, knownRepositories: [{ url: "x" }] },
     valid: false,
   },
+  {
+    why: "STRICTNESS: an extra top-level key is rejected rather than ignored",
+    doc: { open: ["harness"], askedOf: participant, contex: "read the README" },
+    valid: false,
+  },
 ];
 
 describe("the generated bootstrap schemas", () => {
@@ -122,13 +178,45 @@ describe("the generated bootstrap schemas", () => {
     expect(OUTPUT.allOf).toHaveLength(2);
   });
 
-  test("do NOT tighten the contract with additionalProperties", () => {
-    // The hand-written documents carried none at any depth. Publishing
-    // `additionalProperties: false` would reject documents that validate
-    // today — a tightening nobody asked for, arriving as a side effect of
-    // choosing Zod.
-    expect(JSON.stringify(INPUT)).not.toContain("additionalProperties");
-    expect(JSON.stringify(OUTPUT)).not.toContain("additionalProperties");
+  test("ARE strict, at every depth — bean `z634`, decided 2026-09-21", () => {
+    // This test asserted the OPPOSITE until 2026-09-21, and the reversal is
+    // the bean rather than a change of mind. The port that created these
+    // documents stripped `additionalProperties` because the hand-written ones
+    // it replaced carried none, and tightening a published contract as a side
+    // effect of choosing Zod would have been wrong.
+    //
+    // `z634` pre-registered the test that settles it — does anything actually
+    // PRODUCE one of these documents? Nothing does, the skill doc is silent
+    // rather than permissive, and the `$id` was one day old. So nothing can
+    // break, and strictness buys the failure these documents are most exposed
+    // to: they are agent-authored, and a typo'd key was silently ignored.
+    //
+    // Counted rather than merely present, because `toContain` would pass on a
+    // document strict at the top level and open at every nesting — which is
+    // the shape a later `.strict()` dropped from one object would leave, and
+    // the one this cannot distinguish from correct.
+    const count = (o: unknown) => JSON.stringify(o).split('"additionalProperties":false').length - 1;
+    expect(count(INPUT)).toBe(3);
+    expect(count(OUTPUT)).toBe(4);
+  });
+
+  test("the Zod is strict too, or the two forms disagree about what validates", () => {
+    // `z.object()` STRIPS an unknown key and parses successfully; only
+    // `.strict()` rejects it. So making the JSON Schema strict without the Zod
+    // would publish a contract the source of truth does not hold — caught by
+    // the cross-check below rather than reasoned about, which is why that
+    // cross-check exists.
+    for (const [name, schema] of [
+      ["RepositoryRefSchema", RepositoryRefSchema],
+      ["ParticipantSchema", ParticipantSchema],
+      ["DiscussionInputSchema", DiscussionInputSchema],
+      ["ExchangeEntrySchema", ExchangeEntrySchema],
+      ["DiscussionOutputObjectSchema", DiscussionOutputObjectSchema],
+    ] as const) {
+      expect({ [name]: (schema as { _def: { unknownKeys?: string } })._def.unknownKeys }).toEqual({
+        [name]: "strict",
+      });
+    }
   });
 
   describe("output corpus", () => {

@@ -108,16 +108,27 @@ export const DECLARATION_FILENAME = "harness.json";
  *   when a human directs an authoring act, outside any process.
  * - `state` — **live state.** A record the process itself writes as it runs. A
  *   bean's status changes because a step completed.
+ * - `derived` — produced FROM a source, and regenerated rather than
+ *   re-authored. It stands on its own the way `content` does, but a finding
+ *   against it is a finding against its GENERATOR.
  *
- * Three values and no fourth. There is no "could not determine" here, and that
- * is a departure from this repo's usual three-state rule for a reason worth
- * stating: a third state is right when a CHECK looked and could not tell, and
+ * Four values, and **no "could not determine"** — which is a departure from
+ * this repo's usual three-state rule for a reason worth stating: a third state is right when a CHECK looked and could not tell, and
  * wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
  * kind knows what a process does with it; letting them decline to say would put
  * the burden on every consumer instead, which is the position the axis exists
  * to end.
  *
- * ## `context` arrived by being needed, not by being symmetrical
+ * ## Two of the four arrived by being needed, not by being symmetrical
+ *
+ * This axis shipped with TWO values and has twice been widened by a case that
+ * neither side described. That is the pattern to expect when adding a kind:
+ * the value you need may not exist yet, and inventing a fifth is legitimate —
+ * but only after the existing four have each been ruled out by a RULE rather
+ * than by taste. `derived` was ruled in exactly that way (see
+ * `isDerivedGraph`): `context` was refused because a declared process writes
+ * `library/` and `context` makes that a defect; `content` was refused because
+ * the QA sweep runs *"only on active/working content"*.
  *
  * The axis shipped with two values and the owner refined it the same day,
  * settling bean `mhh9`: *"put memory under state/context as static, during a
@@ -198,6 +209,12 @@ export interface GraphKindDef {
    *   runs: a bean's status changes because a step completed, a workflow
    *   instance's token moves. It REFERENCES content and is meaningless
    *   without it.
+   * - **`derived`** — produced FROM a source and REGENERATED rather than
+   *   re-authored. It stands on its own the way `content` does — a `library/`
+   *   section still reads — but a QA finding against it is a finding against
+   *   the ingestion that made it, which is why the sweep skips it. Added
+   *   2026-09-20 (bean `hqku`); see `isDerivedGraph` for why neither
+   *   `content` nor `context` fitted.
    *
    * **REQUIRED, so a kind cannot go unclassified.** That is the
    * `DOCUMENT_BLOCK_KINDS` discipline — derived as the complement of
@@ -2655,7 +2672,7 @@ export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub"
 }
 
 export function siteDirFor(root: string): string {
-  const p = join(root, "harness.json");
+  const p = join(root, DECLARATION_FILENAME);
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));

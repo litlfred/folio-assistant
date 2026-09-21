@@ -167,3 +167,19 @@ failure. All four instances report `rendered`, 0 failed, 0 undetermined.
 floor-that-rises table. Extended rather than rewritten: a subsection now
 records that the exemption is declared data, why `owes` is required, and why
 the spread guard is global.
+---
+
+*2026-09-21, session_01AYHimvYMmf8h8e9fFN6dW5 — **the bootstrap exception is
+narrower than its name.***
+
+Asked as the `goal-review` sweep's single question, the owner ruled REPLACE on
+`b5f0` and added, verbatim: *"1 bit should also bootstrap and folio-assistant
+configs/instantatioon"*. So `cat-bootstrap/` carries its own config file like
+every other instantiation root.
+
+This bean's exception is about a **visualiser** — bootstrap has none, and its
+`.json`/`.jsonld` IS its existence. It is not an exemption from the
+declaration rule, and "bootstrap is the exception" read as though it were.
+
+**Not edited here** — a sibling's bean, and nothing in its Done-when changes.
+The ruling and its cost are on `b5f0`.

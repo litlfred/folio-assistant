@@ -146,6 +146,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/board.test.ts",
+      "instance": "cat-harness",
+      "name": "board.test",
+      "graphNode": "undeclared",
+      "summary": "A board shows the whole folio unless it says otherwise.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/board.ts",
+      "instance": "cat-harness",
+      "name": "board",
+      "graphNode": "schema",
+      "summary": "A board — the surface a folio's notes and its content are read on together.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/builders.ts",
       "instance": "cat-harness",
       "name": "builders",
@@ -587,6 +603,22 @@
       "name": "script-qa",
       "graphNode": "schema",
       "summary": "Per-script QA report schema.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/semantic-zoom.test.ts",
+      "instance": "cat-harness",
+      "name": "semantic-zoom.test",
+      "graphNode": "undeclared",
+      "summary": "The threshold is declared, inherited, and traceable.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "instance": "cat-harness",
+      "name": "semantic-zoom",
+      "graphNode": "schema",
+      "summary": "When a card stops rendering its words and becomes its avatar.",
       "isTest": false
     },
     {
@@ -4401,13 +4433,6 @@
       "doc": "Where one note sits, in BOARD UNITS rather than pixels.",
       "fields": [
         {
-          "name": "note",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The note this places. An id, never an embedded copy — see the module docs."
-        },
-        {
           "name": "x",
           "type": "z.number().finite()",
           "optional": false,
@@ -4446,7 +4471,7 @@
         },
         {
           "name": "boards",
-          "type": "z.record(z.string().min(1), z.array(BoardPositionSchema))",
+          "type": "z.record(z.string().min(1), z.record(z.string().min(1), BoardPositionSchema))",
           "optional": false,
           "array": false
         }
@@ -4459,6 +4484,160 @@
       "unresolved": [],
       "external": [
         "BOARD_POSITIONS_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board-positions.ts#PlacedNote",
+      "name": "PlacedNote",
+      "module": "cat-harness/schemas/board-positions.ts",
+      "kind": "type-alias",
+      "doc": "A position together with the note it places — what the readers hand back.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board.ts#Board",
+      "name": "Board",
+      "module": "cat-harness/schemas/board.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board.ts#BoardContentNode",
+      "name": "BoardContentNode",
+      "module": "cat-harness/schemas/board.ts",
+      "kind": "type-alias",
+      "doc": "The part of a content node a board matches on.",
+      "fields": [
+        {
+          "name": "page",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The page slug the node is on."
+        },
+        {
+          "name": "node",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The node's id within that page."
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The node's kind, when it has one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board.ts#BoardFilter",
+      "name": "BoardFilter",
+      "module": "cat-harness/schemas/board.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board.ts#BoardFilterSchema",
+      "name": "BoardFilterSchema",
+      "module": "cat-harness/schemas/board.ts",
+      "kind": "zod-object",
+      "doc": "Which content a board shows, when it does not show all of it.",
+      "fields": [
+        {
+          "name": "pages",
+          "type": "z.array(z.string().min(1)).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Page slugs. Absent: every page."
+        },
+        {
+          "name": "kinds",
+          "type": "z.array(z.string().min(1)).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Content kinds. Absent: every kind."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/board.ts#BoardSchema",
+      "name": "BoardSchema",
+      "module": "cat-harness/schemas/board.ts",
+      "kind": "zod-object",
+      "doc": "A board.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(BOARD_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The id the positions layer already keys by."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What a reader sees in a tab or a heading."
+        },
+        {
+          "name": "filter",
+          "type": "BoardFilterSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What this board shows. **Absent is the default and means the whole"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/board.ts#BoardFilterSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "BOARD_SCHEMA_TAG",
         "z"
       ],
       "exported": true
@@ -4597,6 +4776,13 @@
           "doc": "Where this note is attached, as a three-state answer."
         },
         {
+          "name": "alsoAbout",
+          "type": "AlsoAboutSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Content nodes this note is ALSO about, without being attached to them."
+        },
+        {
           "name": "tags",
           "type": "NoteTagsSchema.default(EMPTY_NOTE_TAGS)",
           "optional": true,
@@ -4608,6 +4794,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
+        "cat-harness/schemas/note-anchor.ts#AlsoAboutSchema",
         "cat-harness/schemas/note-anchor.ts#NoteAnchorSchema"
       ],
       "unresolved": [],
@@ -4944,6 +5131,13 @@
           "optional": true,
           "array": false,
           "doc": "What this instance is excused from rendering, and what it carries instead."
+        },
+        {
+          "name": "needs",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         }
       ],
       "extendsNames": [
@@ -5050,6 +5244,13 @@
           "type": "RenderExemptionSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "needs",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         }
       ],
       "extendsNames": [],
@@ -14514,6 +14715,33 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/note-anchor.ts#AlsoAbout",
+      "name": "AlsoAbout",
+      "module": "cat-harness/schemas/note-anchor.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/note-anchor.ts#AlsoAboutSchema",
+      "name": "AlsoAboutSchema",
+      "module": "cat-harness/schemas/note-anchor.ts",
+      "kind": "zod-array",
+      "doc": "Content nodes a note is ALSO about, without being attached to them.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/note-anchor.ts#Anchored",
       "name": "Anchored",
       "module": "cat-harness/schemas/note-anchor.ts",
@@ -14663,6 +14891,20 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/note-anchor.ts#Related",
+      "name": "Related",
+      "module": "cat-harness/schemas/note-anchor.ts",
+      "kind": "type-alias",
+      "doc": "Anything that may carry secondary references, alongside its anchor.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -16877,6 +17119,156 @@
         "cat-harness/schemas/block-qa.ts#QaCriterionEntry",
         "cat-harness/schemas/script-qa.ts#ScriptLanguage"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#KindZoom",
+      "name": "KindZoom",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#KindZoomSchema",
+      "name": "KindZoomSchema",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "zod-object",
+      "doc": "One kind's override.",
+      "fields": [
+        {
+          "name": "belowPx",
+          "type": "z.number().positive().finite()",
+          "optional": false,
+          "array": false,
+          "doc": "Rendered card width, in CSS pixels, below which this kind shows its avatar."
+        },
+        {
+          "name": "because",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why this kind differs from the folio's default. Required on every override."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#ResolvedZoom",
+      "name": "ResolvedZoom",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "type-alias",
+      "doc": "A resolved threshold, with its provenance.",
+      "fields": [
+        {
+          "name": "belowPx",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "ZoomSource",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Present exactly when `source` is `\"kind\"` — an override always cites why."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/semantic-zoom.ts#ZoomSource"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#SemanticZoom",
+      "name": "SemanticZoom",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#SemanticZoomSchema",
+      "name": "SemanticZoomSchema",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "zod-object",
+      "doc": "A folio's semantic-zoom declaration: one default, and any number of overrides.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SEMANTIC_ZOOM_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "belowPx",
+          "type": "z.number().positive().finite()",
+          "optional": false,
+          "array": false,
+          "doc": "The folio's default, in CSS pixels. Required — so nothing is ever unstated."
+        },
+        {
+          "name": "byKind",
+          "type": "z.record(z.string().min(1), KindZoomSchema).default({})",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides, keyed by kind. A kind absent here takes the default."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/semantic-zoom.ts#KindZoomSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SEMANTIC_ZOOM_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/semantic-zoom.ts#ZoomSource",
+      "name": "ZoomSource",
+      "module": "cat-harness/schemas/semantic-zoom.ts",
+      "kind": "type-alias",
+      "doc": "Where a resolved threshold came from.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "folio",
+        "kind"
+      ],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -27208,6 +27600,19 @@
           "array": false
         },
         {
+          "name": "pixelWidth",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Pixel dimensions, where the bitstream is a raster."
+        },
+        {
+          "name": "pixelHeight",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "materialization",
           "type": "MaterializationSchema",
           "optional": false,
@@ -27399,7 +27804,15 @@
           "name": "totalItemsUpstream",
           "type": "z.number().int().nonnegative().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "ITEMS upstream — the things a person cites, not the files they are made of."
+        },
+        {
+          "name": "totalFilesUpstream",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FILES upstream, where the source publishes that separately."
         },
         {
           "name": "totalBytesUpstream",
@@ -29189,9 +29602,25 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/board.ts#BoardSchema",
+      "to": "cat-harness/schemas/board.ts#BoardFilterSchema",
+      "via": "filter",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
       "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
       "via": "tags",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
+      "to": "cat-harness/schemas/note-anchor.ts#AlsoAboutSchema",
+      "via": "alsoAbout",
       "kind": "field",
       "optional": true,
       "array": false
@@ -31314,6 +31743,22 @@
       "via": "language",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/semantic-zoom.ts#ResolvedZoom",
+      "to": "cat-harness/schemas/semantic-zoom.ts#ZoomSource",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/semantic-zoom.ts#SemanticZoomSchema",
+      "to": "cat-harness/schemas/semantic-zoom.ts#KindZoomSchema",
+      "via": "byKind",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

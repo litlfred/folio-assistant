@@ -1,7 +1,7 @@
 ---
 # folio-assistant-yzsj
 title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:02:00Z
@@ -471,8 +471,8 @@ compared, plus a new one pinning the re-read invariant — falsified by swapping
 
 ## Done when
 
-- [ ] A ruling on ONE shared publishing step vs four copies (see the
-      correction above — `06kg` is the precedent against copying)
+- [x] A ruling on ONE shared publishing step vs four copies. **NO SHARED
+      STEP**, owner's "Go", 2026-09-21 — see below
 - [x] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
       checkout — NOT a committed `.gitattributes`, which a full replace
       deletes. **Done 2026-09-20** (`git-union-attr.sh`, three call sites),
@@ -481,12 +481,15 @@ compared, plus a new one pinning the re-read invariant — falsified by swapping
       (`publish-gh-pages.sh`, rebuild-per-attempt). `blueprint.yml` and
       `lean_ci.yml` are NOT done and do not need to be: both have **0 runs**
       ever here, so neither can lose a race
-- [ ] `discoverability-docs.yml` and `deploy-folio.yml` either name the group
-      or carry a stated reason, the way `feature-staging.yml:94` does
-- [ ] `check-workflows`' `gh-pages-ungrouped` finding is re-checked — `xd1s`
-      added it, and three workflows are outside the group today, so either it
-      is not running or it does not catch this shape
-- [ ] `check-ci-health`'s `6pfo` citation points at the right bean
+- [x] `discoverability-docs.yml` and `deploy-folio.yml` either name the group
+      or carry a stated reason, the way `feature-staging.yml:94` does.
+      **Already true 2026-09-21, and this bean was wrong about both** — see
+      the verification below
+- [x] `check-workflows`' `gh-pages-ungrouped` finding is re-checked. **It is
+      running and it does catch this shape**; the disjunction above was
+      missing its third branch — see below
+- [x] `check-ci-health`'s `6pfo` citation points at the right bean. Fixed by
+      a sibling on 2026-09-20 — `ci-health.ts:1123` records the change
 
 Related: `xd1s` (completed, the group), `eoix` and `pdxk` (archived, the
 pending-cancellation measurement), `bm6d` (self-inflicted double-push), `6pfo`
@@ -520,3 +523,117 @@ impossible.
 Proposed there: `.gitattributes` on `gh-pages` scoping `merge=union` to
 `_render-log/*.jsonl` — correct semantics for an append-only log, and narrow
 on purpose.
+
+
+## VERIFIED 2026-09-21 — three of the four open boxes were already satisfied
+
+Re-derived rather than taken, because this bean's own rule is never to quote a
+count from prose, and its own tables have gone stale twice.
+
+### `check-workflows` runs, and it catches the shape
+
+```
+$ bun run check:workflows
+Workflows: 39
+✓ ... every gh-pages push is protected by the `gh-pages-push` queue or a retry
+```
+
+The box offered a disjunction — *"either it is not running or it does not
+catch this shape"* — and the answer is **neither**. It runs, it catches it,
+and it finds nothing because there is nothing to find. Worth recording as a
+shape: a check reporting clean is evidence only once you have asked WHY it is
+clean, and this bean assumed the two failure branches without asking.
+
+### `discoverability-docs.yml` opted out AND said why, at line 32
+
+> `NO shared gh-pages-push group here, deliberately — see the retry below.`
+
+...followed by the measurement: #300 put all three of its jobs in the group,
+and because they run in parallel with no `needs:`, one runs, one pends, and
+the third cancels the pending one — *"a lost publish EVERY RUN"*. This bean
+recorded it as **"no stated reason"**. It has one, and it is the same
+pending-cancellation argument `feature-staging` carries.
+
+### `deploy-folio.yml` does not publish to `gh-pages` at all
+
+This bean listed it as **"no concurrency block at all"**, under a heading
+about workflows touching `gh-pages`. Measured: it has no `peaceiris` step, no
+`git push`, no `branch:` — its only mention of `gh-pages` is one comment
+saying the SPA that `publish.yml` publishes must not be blocked. A workflow
+that does not push cannot be missing a group.
+
+### And the live-pusher count, which is the number that matters
+
+| workflow | runs ever | pushes gh-pages |
+|---|---|---|
+| `feature-staging.yml` | 1210+ | yes |
+| `docs-site.yml` | **332** | yes |
+| `blueprint.yml` | **0** | yes |
+| `lean_ci.yml` | **0** | yes |
+| `discoverability-docs.yml` | **0** | yes |
+| `deploy-folio.yml` | 0 | **no** |
+| `publish.yml` | 1, in June | yes |
+
+**Two workflows actually contend.** Everything else is a workflow that has
+never run, or one that does not push.
+
+### `docs-site` on `main` since the fix
+
+Last five runs on `main`: **4 success, 1 cancelled, 0 failed.** The
+cancellation is run 331 superseded by run 332 nine seconds later — the
+workflow-level `docs-site-${{ github.ref }}` group doing what it should, since
+a superseded site build finishing is worse than it stopping. The job-level
+`gh-pages-push` carries `cancel-in-progress: false`, so the *push* is still
+queued rather than dropped. That is the two-group arrangement working as
+designed, not a residue of the race.
+
+## The one box left is the ruling, and the measurement above changes the question
+
+> A ruling on ONE shared publishing step vs four copies
+
+**The premise is four copies; two of them have never run.** The live pair is
+`docs-site` and `feature-staging`, and they differ in exactly the property the
+retry strategy depends on — `docs-site.yml` says so itself:
+
+> A REBASE WOULD HAVE BEEN THE WRONG RETRY ... `feature-staging` rebases
+> correctly because its commit touches one `STAGING/<slug>/`. This commit
+> replaces the WHOLE TREE, so replaying it onto a newer `gh-pages` would
+> re-apply that replacement over whatever landed in between — `plj1` again,
+> re-created by the safety mechanism.
+
+So a shared step would have to carry both strategies and a flag to pick
+between them, which is two implementations with a conditional rather than one.
+`06kg` is the precedent against copying a BACKOFF — one behaviour with one
+correct implementation — and both of these already call
+`scripts/backoff-sleep.ts`. The thing that is duplicated is not duplicated.
+
+**Recommendation: no shared step.** Left open rather than ticked, because the
+box asks for a ruling and reversing a proposal on an agent's own judgement is
+what this bean elsewhere declines to do.
+
+
+## RULED 2026-09-21 — no shared publishing step, and the bean closes
+
+The premise was *four copies*; **two of them have never run**. The live pair
+is `docs-site` (332 runs) and `feature-staging` (1210+), and they differ in
+exactly the property the retry strategy depends on — `docs-site.yml` states it
+itself:
+
+> A REBASE WOULD HAVE BEEN THE WRONG RETRY ... `feature-staging` rebases
+> correctly because its commit touches one `STAGING/<slug>/`. This commit
+> replaces the WHOLE TREE, so replaying it onto a newer `gh-pages` would
+> re-apply that replacement over whatever landed in between — `plj1` again,
+> re-created by the safety mechanism.
+
+A shared step would have to carry both strategies plus a flag to choose
+between them: two implementations with a conditional, not one. And `06kg`, the
+precedent cited for consolidating, is about copying a **backoff** — one
+behaviour with one correct implementation — which both already share via
+`scripts/backoff-sleep.ts`. **The thing that is duplicated is not
+duplicated.**
+
+Everything else in this bean is done: the `merge=union` half shipped, the
+`docs-site` retry shipped, and the three remaining boxes were verified already
+satisfied on 2026-09-21 (two of them by findings this bean had recorded
+wrongly — `discoverability-docs` DOES state its reason, and `deploy-folio`
+does not push to `gh-pages` at all).

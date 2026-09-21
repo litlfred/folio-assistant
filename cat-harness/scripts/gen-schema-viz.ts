@@ -618,6 +618,34 @@ function diaEdgeStyle(kind) {
 
 var DIA_CONTEXT_MAX = 12;
 
+/* WIDTH BUDGET, in viewBox units (bean qttr).
+   Without one, a layer is placed as a single row and the viewBox grows with
+   it, so the SVG scales the whole picture down to fit its container --
+   silently, because an SVG that does not fit does not complain. Measured
+   across all 67 modules of this graph: dak-blocks.ts came out 5476 units
+   wide against 1248 CSS px, a scale of 0.228, which renders a 10px font at
+   2.3px. Twelve modules were below a 5px effective glyph.
+   The budget is the PANEL'S OWN WIDTH, so the rendered scale lands at 1:1
+   rather than under it, and a narrow reader gets a tall legible picture
+   instead of a wide illegible one. A fixed budget cannot do that: 1100 units
+   is 1:1 on a laptop and 0.36 on a phone.
+   This makes wrapping depend on the viewport, which is deliberate and does
+   not cost reproducibility -- the ORDER within a layer is what has to be
+   stable, and it is untouched.
+   There is deliberately NO FLOOR. A floor was tried at 560 and measured: at a
+   390px viewport it left 49 of 69 modules below a 5px glyph, because the
+   floor rather than the page was setting the width. Taking the panel's width
+   whatever it is degrades to one box per row on a phone -- tall, but legible,
+   which is the trade worth making for a panel a reader opened in order to
+   read. The band loop already gives an over-budget box a row of its own, so
+   no width is degenerate. */
+function diaWidth(svg) {
+  /* A collapsed details panel measures 0, and so does a detached node. The
+     fallback is only ever used for a layout that is about to be redone on
+     open, so it need only be sane. */
+  return svg.getBoundingClientRect().width || 900;
+}
+
 function diaModel() {
   var mod = $("mod") ? $("mod").value : "";
   var core = G.decls.filter(function (d) { return inScope(d) && (!mod || d.module === mod); });
@@ -735,27 +763,48 @@ function diagram() {
     return { d: d, rows: rows, w: w, h: HEAD + (rows.length ? rows.length * LH + 6 : 0) };
   });
 
-  var y = 20, W = 0;
+  /* A layer becomes one or more BANDS, each within the width budget. Wrapping keeps
+     a layer's members in their own stretch of the picture, so layer-as-depth
+     still reads; it only stops the row running off the side. Order within the
+     layer is untouched, so the arrangement stays reproducible. */
+  var budget = diaWidth(svg);
+  var bands = [];
   L.keys.forEach(function (ky) {
-    var row = L.rows[ky];
-    var rw = row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (row.length - 1);
-    var x = 20, hmax = 0;
+    var row = L.rows[ky], cur = [], w = 0;
     row.forEach(function (i) {
+      var bw = boxes[i].w;
+      if (cur.length && w + GAPX + bw > budget) { bands.push({ ky: ky, row: cur }); cur = []; w = 0; }
+      w += (cur.length ? GAPX : 0) + bw;
+      cur.push(i);
+    });
+    /* A single box wider than the budget still gets a band of its own rather
+       than being dropped. Unreachable at today's 258-unit cap, and a visibly
+       oversized band is a better failure than a missing declaration. */
+    if (cur.length) bands.push({ ky: ky, row: cur });
+  });
+  var wrapped = bands.length - L.keys.length;
+
+  var y = 20, W = 0;
+  bands.forEach(function (b, bi) {
+    b.rw = b.row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (b.row.length - 1);
+    var x = 20, hmax = 0;
+    b.row.forEach(function (i) {
       boxes[i].x = x; boxes[i].y = y;
       x += boxes[i].w + GAPX;
       if (boxes[i].h > hmax) hmax = boxes[i].h;
     });
-    W = Math.max(W, rw + 40);
-    y += hmax + GAPY;
+    W = Math.max(W, b.rw + 40);
+    /* Tighter between bands of ONE layer than between layers: the gap is what
+       tells a reader the two rows are the same depth rather than two. */
+    var same = bands[bi + 1] && bands[bi + 1].ky === b.ky;
+    y += hmax + (same ? 30 : GAPY);
   });
   var H = y;
 
-  /* Centre each row, now that the widest is known. */
-  L.keys.forEach(function (ky) {
-    var row = L.rows[ky];
-    var rw = row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (row.length - 1);
-    var off = (W - rw) / 2 - 20;
-    row.forEach(function (i) { boxes[i].x += off; });
+  /* Centre each band, now that the widest is known. */
+  bands.forEach(function (b) {
+    var off = (W - b.rw) / 2 - 20;
+    b.row.forEach(function (i) { boxes[i].x += off; });
   });
 
   var parts = [
@@ -767,6 +816,7 @@ function diagram() {
     "</defs>",
   ];
 
+  var crowded = 0;
   m.edges.forEach(function (e, ei) {
     var a = boxes[e.a], b = boxes[e.b];
     var ax = a.x + a.w / 2, bx = b.x + b.w / 2;
@@ -789,8 +839,48 @@ function diagram() {
          only has to separate neighbours rather than be optimal. */
       var lx = (ax + bx) / 2, ly = my + ((ei % 3) - 1) * 13;
       var txt = e.via + (e.array ? " *" : "") + (e.optional ? " 0..1" : "");
-      parts.push('<rect class="dia-lb" x="' + (lx - (txt.length * 3.3 + 5)).toFixed(1) + '" y="' + (ly - 8).toFixed(1) +
-        '" width="' + (txt.length * 6.6 + 10).toFixed(1) + '" height="15" rx="3"/>');
+      /* A label that lands ON a box (bean qttr). Boxes are painted after the
+         edges, so an opaque one hides the label -- but a CONTEXT box is
+         faded, and the label then shows through its fields as overstruck
+         text. Narrow layouts made this common rather than rare: one box per
+         row means a near-vertical edge whose midpoint is the next box.
+         Push clear of the offender rather than dropping the label, because
+         the label is the whole point of the edge -- "Role is linked to
+         Skill" is half an answer, "via skills, many" is the whole one. */
+      var half = txt.length * 3.3 + 5;
+      var blocker = function (cx, cy) {
+        for (var q = 0; q < boxes.length; q++) {
+          var bq = boxes[q];
+          if (cx + half > bq.x && cx - half < bq.x + bq.w && cy + 8 > bq.y && cy - 8 < bq.y + bq.h) return bq;
+        }
+        return null;
+      };
+      /* Candidates in order of preference, first clear one wins. One pass of
+         push-aside was not enough: measured over this graph it left 28 of 323
+         labels still on a box, because pushing clear of one lands on the
+         next. Deterministic -- the same edge in the same layout always picks
+         the same candidate. */
+      var hit = blocker(lx, ly);
+      if (hit) {
+        var cands = [
+          [hit.x + hit.w + half + 6, ly],
+          [hit.x - half - 6, ly],
+          [(ax + bx) / 2, ay + 11],
+          [(ax + bx) / 2, by - 11],
+          [hit.x + hit.w + half + 6, ay + 11],
+          [hit.x - half - 6, by - 11],
+        ];
+        for (var ci = 0; ci < cands.length; ci++) {
+          if (cands[ci][0] - half < 0 || cands[ci][0] + half > W) continue;
+          if (!blocker(cands[ci][0], cands[ci][1])) { lx = cands[ci][0]; ly = cands[ci][1]; hit = null; break; }
+        }
+        /* Still nowhere clear. Counted and reported rather than silently
+           overstruck or silently dropped -- an edge whose field a reader
+           cannot read is the same loss the undrawn-edge count exists for. */
+        if (hit) crowded++;
+      }
+      parts.push('<rect class="dia-lb" x="' + (lx - half).toFixed(1) + '" y="' + (ly - 8).toFixed(1) +
+        '" width="' + (half * 2).toFixed(1) + '" height="15" rx="3"/>');
       parts.push('<text class="dia-l" x="' + lx.toFixed(1) + '" y="' + (ly + 3).toFixed(1) +
         '" text-anchor="middle">' + esc(txt) + "</text>");
     }
@@ -828,7 +918,12 @@ function diagram() {
     "through; <b>*</b> is a list. Click a box to open its definition." +
     (m.ctxShown ? " <b>" + m.ctxShown + "</b> faded box(es) sit OUTSIDE this filter and are drawn because " +
       "something here links to them \u2014 a cut edge is the one most worth seeing." : "") +
-    (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "");
+    (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "") +
+    /* Said rather than left to be noticed: a wrapped layer looks like two
+       layers to a reader who was not told, and the alternative the panel used
+       to take was to shrink the whole picture without saying so. */
+    (wrapped ? " <b>" + wrapped + "</b> row(s) wrapped to keep the boxes at full size." : "") +
+    (crowded ? " <b>" + crowded + "</b> label(s) had nowhere clear to sit and overlap a box \u2014 hover the edge's boxes to read the field." : "");
 
   key.innerHTML =
     '<span><i class="k-gen"></i>generalisation (extends)</span>' +
@@ -941,6 +1036,17 @@ fetch(DATA_HREF).then(function (r) {
     /* Drawn on first open rather than at load: a reader who never opens the
        panel should not pay for a layout over 812 declarations. */
     if ($("overview").open && !$("ov-svg").childNodes.length) diagram();
+  });
+  /* The width budget is the panel's own width, so a resize changes how many
+     boxes fit a row. Without this the layout keeps the width it was built at
+     and the reader is back to a shrunk picture -- the defect the budget
+     exists to remove. Debounced, because a drag fires this continuously and
+     the layout is the expensive part. */
+  var rsz;
+  window.addEventListener("resize", function () {
+    if (!$("overview").open || !$("ov-svg").childNodes.length) return;
+    clearTimeout(rsz);
+    rsz = setTimeout(diagram, 150);
   });
   $("detail").addEventListener("click", function (e) {
     var a = e.target.closest('a[href^="#"]');
