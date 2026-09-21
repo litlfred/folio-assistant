@@ -628,6 +628,13 @@ jobs:
           bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A backtick inside a viewer's page template closes the string
+          # and turns the rest of the page into TypeScript. The compiler
+          # already refuses it, so this is about the MESSAGE: it names a
+          # token on the offending line and never mentions backticks, and
+          # four separate sessions have lost a build to that. Four in-file
+          # warnings did not stop it.
+          bun run check:viewer-backticks
           # One config per instance: `<name>.config.json` at the
           # instantiation root. This repository instantiates more than
           # one harness, so a single `harness.config.json` at the repo

@@ -35,6 +35,7 @@
       "required": [
         "kind"
       ],
+      "additionalProperties": false,
       "description": "Who is being asked. The two participant kinds are symmetric — the same skill serves human-to-agent and agent-to-agent — but the answer's weight differs, so the kind is recorded rather than inferred."
     },
     "candidates": {
@@ -68,7 +69,8 @@
         "required": [
           "url",
           "role"
-        ]
+        ],
+        "additionalProperties": false
       },
       "description": "Repositories already evident from the checkout, each with the part it is known to play. Offered so the participant confirms or corrects rather than recites."
     },
@@ -80,5 +82,6 @@
   "required": [
     "open",
     "askedOf"
-  ]
+  ],
+  "additionalProperties": false
 }

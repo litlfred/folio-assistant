@@ -41,7 +41,8 @@
         "required": [
           "url",
           "role"
-        ]
+        ],
+        "additionalProperties": false
       },
       "description": "The repositories involved, each with the part it plays. Recorded as pairs rather than a flat list: read-from and written-to may be one repository or two, and which is which is the answer."
     },
@@ -75,6 +76,7 @@
       "required": [
         "kind"
       ],
+      "additionalProperties": false,
       "description": "Who settled it. An answer from a sibling agent is evidence of a different weight from the person who wants the harness — both are admissible, neither is conflated with the other."
     },
     "exchange": {
@@ -97,7 +99,8 @@
         },
         "required": [
           "asked"
-        ]
+        ],
+        "additionalProperties": false
       },
       "minItems": 1,
       "description": "What was actually put and what came back, in order. One entry is the expected case — the skill's rule is to ask the fewest questions that settle it."
@@ -119,6 +122,7 @@
     "answeredBy",
     "exchange"
   ],
+  "additionalProperties": false,
   "allOf": [
     {
       "if": {
