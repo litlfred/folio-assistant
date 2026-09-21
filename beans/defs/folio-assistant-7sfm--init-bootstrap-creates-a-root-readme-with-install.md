@@ -66,3 +66,6 @@ owns from then on.
 Also updated: `cat-bootstrap/README.md` gains step 6 and FR-8,
 `package-manifest.json` registers the skill, and `AGENTS.md` stops counting
 the skills (it said "two"; the manifest is the list).
+
+Issue #668 · PR #666. Recorded both ways per `oh78` / PR #657: a bean
+opened from an issue carries the link, and `check:bean-issue-links` now asks.
