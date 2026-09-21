@@ -54,20 +54,36 @@ position rather than inferring one.
 
 #### Skills
 
-The instruction body an Actor needs to perform a Task. A Skill states a
-capability **generically**: it is portable across forges, binaries and machines
-by construction.
+A **Capability with defined inputs and outputs** — the instruction body an
+Actor needs to perform a Task, stated **generically** so that it is portable
+across forges, binaries and machines by construction. A Content repository MUST
+constrain those inputs and outputs with a Schema; the consequence of not doing
+so is in [Repositories](#repositories) below, and it is not a small one.
+
+A Skill MAY be designated mechanical, human, or either. That is a property of
+the Capability, not of whoever happens to run it today.
 
 #### Tools
 
 The concrete mechanisms. A Tool names the Skills it satisfies through its
-`satisfies` field, and one Skill MAY be satisfied by several Tools — which is
-what lets the same capability be tested along the spectrum from fully
-deterministic to agentic.
+`satisfies` field, and **one Skill MAY be satisfied by several Tools** — which
+is the point of the separation rather than an allowance. Several Tools for one
+Skill is what lets the same Capability be exercised at different points on the
+spectrum from fully deterministic to fully agentic, and compared.
 
 *Used for*: keeping the mechanism out of the instruction. A Skill that names a
 vendor, a CLI or an endpoint has swallowed a Tool, and the swallowing is what
 makes a layer un-portable.
+
+#### Tests
+
+What adjudicates whether a Skill was performed, and how well. A Test exercises a
+Skill; the Tools associated with that Skill are what a Test runs it through. So
+the chain reads **Test → Skill → Task**, and a Test that names a Tool directly
+has jumped the Skill and measures a mechanism rather than a Capability.
+
+*Used for*: quality control, compliance testing, and comparing model
+performance across modalities. Tests are the third repository class below.
 
 #### Context
 
@@ -90,11 +106,26 @@ an agent can invoke against it.
 *Used for*: making a declared directory something a person can actually look
 at. A directory nobody can see is one nobody checks.
 
-### Dynamic state
+### Dynamic Context
 
-Beans, todos, Workflow instances, QA sidecars, health results: what is being
-worked on and how far it got. Written by processes as they run, committed so it
-survives a fresh container.
+What is being worked on and how far it got. Written by processes as they run,
+committed so it survives a fresh container. It splits by **who the state is
+for**, which is a sharper line than what the state holds:
+
+- **beans — agentic state management.** Used by Agents to coordinate and track
+  internal state within a Workflow. *"Changes to the vaccination schedule are
+  ready for review at staging."*
+- **todos — human state management.** Attached to a step in a Workflow **or to
+  a knowledge asset**, for human Actors. *"Please review this change in
+  medication."*
+
+A todo attaching to a knowledge asset and not only to a step is what makes the
+two stores genuinely different rather than one store with an audience field: a
+bean without a Workflow position is incomplete, and a todo on a chapter has no
+Workflow position to be missing.
+
+Workflow instances, QA sidecars and health results are Dynamic Context too,
+written by the process that produces them.
 
 *Used for*: the work plan, and the evidence that a claim about the corpus was
 measured rather than remembered.

@@ -12,6 +12,7 @@ be followed mechanically rather than inferred:
 | Workflow lane | lane binding | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
+| Test | exercises | Skill |
 | any content node | `$schema` | Schema |
 | Folio | the board layer | Board, then Position, then Note |
 
@@ -19,10 +20,15 @@ Three properties of that table are worth stating, because each one is a
 decision that could have gone the other way.
 
 **Skill is a sink.** Roles point at Skills, Workflow activities point at Skills,
-Tools point at Skills — and a Skill points at none of them. It names a
-capability and does not know who holds it or what runs it. That is what lets
-one Skill serve several Roles and be satisfied by several Tools without
-editing the Skill.
+Tools point at Skills, Tests point at Skills — and a Skill points at none of
+them. It names a Capability and does not know who holds it, what runs it, or
+what measures it. That is what lets one Skill serve several Roles, be satisfied
+by several Tools and be exercised by several Tests without editing the Skill.
+
+It is also why the chain reads **Test → Skill → Task** rather than Test → Tool.
+A Test that names a Tool directly has jumped the sink and is measuring a
+mechanism instead of a Capability — which is exactly the comparison the several
+Tools per Skill allowance exists to make possible.
 
 **The Harness points at everything and nothing points back.** A board is a
 diagram *of* a folio in the OMG sense that a `BPMNDiagram` is a diagram of a

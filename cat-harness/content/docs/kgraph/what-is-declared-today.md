@@ -41,11 +41,18 @@ declaration in every dependent instance says.
   them, which is what `context` asserts — but the two axes disagree here, and a
   disagreement nobody has written down is one that gets rediscovered.
 
-**What already works, by a route the taxonomy does not describe.** Three
-instances — `agent-skills`, `cat-harness` and `who-style-guide` — each declare
-their own `voices/` directory of kind `voices`, and the overlay resolves them
-together. So a dependent contributing into a shared body of knowledge is not a
-missing capability; it is an existing one reached through the **kind** rather
-than through any subgraph declaration. Whether that IS the mechanism or the
-thing a subgraph mechanism should replace is an open decision, tracked on bean
-`rapm`, and this page will say which once it is taken.
+**How a dependent contributes into a shared body of knowledge.** Through the
+**kind**, and that is the mechanism rather than a stopgap — settled by the
+owner, 2026-09-21. Three instances — `agent-skills`, `cat-harness` and
+`who-style-guide` — each declare their own `voices/` directory of kind
+`voices`, and the overlay resolves all three together. A fourth instance
+wanting to contribute a Voice declares a directory, names the kind, and is
+done: no nesting, no subgraph declaration, nothing added to the schema.
+
+The alternative considered and set aside was letting a directory entry declare
+nested subgraph directories, so that a shared body would live at a path such as
+`skills/voices/` and dependents would add under the same path. It buys a
+hierarchy that nothing currently needs, at the cost of a schema change, a
+migration of every in-tree declaration, and an alias carried for downstream
+ones. The overlay already delivers the outcome, and it is already proven by
+three instances.

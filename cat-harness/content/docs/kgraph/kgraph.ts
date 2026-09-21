@@ -22,6 +22,11 @@ export default webpage({
       block: "which-way-the-arrows-flow",
     },
     {
+      id: "repositories",
+      title: "Repositories — four classes, three relations",
+      block: "repositories",
+    },
+    {
       id: "what-is-declared-today",
       title: "What is declared today, measured",
       block: "what-is-declared-today",

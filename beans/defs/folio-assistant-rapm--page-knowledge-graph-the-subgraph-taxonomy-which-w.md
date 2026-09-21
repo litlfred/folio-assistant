@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rapm
 title: 'PAGE: Knowledge Graph — the subgraph taxonomy, which way the arrows flow, and how each is used'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-09-21T16:21:34Z
+updated_at: 2026-09-21T18:12:11Z
 parent: folio-assistant-2upx
 ---
 

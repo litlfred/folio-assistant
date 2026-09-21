@@ -24,23 +24,41 @@ _This page is generated from [`content/docs/kgraph/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/kgraph/overview.md){: .fa-node-edit title="Edit content/docs/kgraph/overview.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Everything this harness knows about itself is one graph. The Schemas that
+Everything this harness knows about itself is one graph: the Schemas that
 describe its content, the Skills an agent reads, the Workflows those Skills are
-invoked from, the Roles that own a lane in a Workflow, the Tools that carry out
-a Skill concretely, and the running record of what is being worked on — all of
-it is authored as nodes, declared by the instance that holds them, and exported
-together. That graph is the **KGraph**.
+invoked from, the Roles that own a lane, the Tools and Tests that exercise a
+Skill, and the running record of what is being worked on. That graph is the
+**KGraph**.
 
-It is not one directory. An instance declares the directories it scans and the
-**kind** of graph each holds, in its `<name>.json` root declaration; a
-dependent instance inherits those declarations and may add its own. So the
-KGraph of a checkout is the union of what every instance in it declares — which
-is why "where is the KGraph" has no filesystem answer, and why a consumer asks
-for a kind rather than opening a path.
+Two sentences fix the whole model, and the rest of this page elaborates them.
+
+> **An Agent utilizes Skills to execute one or more Tasks in a Workflow, with
+> an associated KGraph of Static Context (Skills, User Stories) and Dynamic
+> Context. Zero or more Tools may be associated with a Skill, for Test
+> execution on an agentic-to-deterministic spectrum.**
+
+> **KGraphs are managed in git repositories, comprised of self-documenting
+> JSON-LD. Content is rendered into various formats for consumption by
+> downstream knowledge products, and by public-health, clinical-health and
+> personal-health applications.**
+
+Three definitions come straight out of the first sentence and are used
+unchanged throughout:
+
+- A **Role** is a swimlane, played by a human, agentic or mechanical Actor.
+- A **Task** is a step in a Workflow — a node in the BPMN.
+- A **Skill** is a **Capability with defined inputs and outputs**.
+
+The KGraph is not one directory, and not one repository. An instance declares
+the directories it scans and the **kind** of graph each holds, in its
+`<name>.json` root declaration; a dependent instance inherits those and may add
+its own. So the KGraph of a checkout is the union of what every instance in it
+declares — which is why "where is the KGraph" has no filesystem answer, and why
+a consumer asks for a kind rather than opening a path.
 
 This page says what the subgraphs are, which way the references between them
-run, and how each is used. It does not restate the declaration mechanism
-itself: that is
+run, how repositories divide the work, and how much of it is declared today. It
+does not restate the declaration mechanism: that is
 [`directory-conventions`](reference/skill-instructions/directory-conventions.html),
 and the schema is
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts).
@@ -53,26 +71,35 @@ and the schema is
 Two independent questions get asked about every subgraph, and reading either
 answer as the other is the mistake this section exists to prevent.
 
-**What is it about?** Schemas, Skills, Workflows, Roles, Tools, Context,
-running state. This is the *topical* axis, and it is what the rest of this page
+**What is it about?** Schemas, Skills, Workflows, Roles, Tools, Tests, Context,
+running state. This is the *topical* axis, and it is what the next section
 describes.
 
-**What does a running process do with it?** The declaration answers this in the
-`holds` field of the kind: a graph is `content` (a process produces it),
-`context` (a process reads it and never writes it), `state` (a process writes it
-as it runs), or `derived` (something else computes it). A step that writes to a
-`context` graph is a defect rather than an update, which is the whole reason the
-field is REQUIRED — a kind that has not decided does not compile.
+**Does it change while a Workflow runs?** This is the **Static Context /
+Dynamic Context** split from the anchor sentence above, and the declaration
+already answers it mechanically in the `holds` field of each kind: a graph is
+`content` (a process produces it), `context` (a process reads it and never
+writes it), `state` (a process writes it as it runs), or `derived` (something
+else computes it).
 
-The two axes are orthogonal. Skills and Schemas are both `content` and are
-nothing like each other topically; Memory and Methodologies are both `context`
-for entirely different reasons. Asking "is this a Skill?" tells you nothing
-about whether a Workflow may write to it, and asking "may a Workflow write to
-it?" tells you nothing about what it is for.
+| | `holds` | examples |
+|---|---|---|
+| **Static Context** | `content`, `context`, `derived` | Skills, User Stories, Schemas, Workflows, methodologies, memories |
+| **Dynamic Context** | `state` | beans, todos, Workflow instances, QA sidecars |
 
-**A third meaning is already in circulation**, and it is worth pinning before
-it spreads. [Subgraph viewers](subgraph-viewers.html) uses *subgraph* for one
-declared directory — the thing a visualiser draws and a skill governs. This
+A step that writes to a `context` graph is a defect rather than an update,
+which is the whole reason the field is REQUIRED — a kind that has not decided
+does not compile.
+
+The two axes are orthogonal. Skills and Schemas are both Static and are nothing
+like each other topically; memories and methodologies are both Static for
+entirely different reasons. Asking "is this a Skill?" tells you nothing about
+whether a Workflow may write to it, and asking "may a Workflow write to it?"
+tells you nothing about what it is for.
+
+**A third meaning of *subgraph* is already in circulation**, and it is worth
+pinning before it spreads. [Subgraph viewers](subgraph-viewers.html) uses it for
+one declared directory — the thing a visualiser draws and a Skill governs. This
 page uses it for a branch of the topical taxonomy. One topical subgraph is
 usually several declared directories across several instances, so the two
 readings are related but do not count the same things. Where the number
@@ -140,20 +167,36 @@ position rather than inferring one.
 
 #### Skills
 
-The instruction body an Actor needs to perform a Task. A Skill states a
-capability **generically**: it is portable across forges, binaries and machines
-by construction.
+A **Capability with defined inputs and outputs** — the instruction body an
+Actor needs to perform a Task, stated **generically** so that it is portable
+across forges, binaries and machines by construction. A Content repository MUST
+constrain those inputs and outputs with a Schema; the consequence of not doing
+so is in [Repositories](#repositories) below, and it is not a small one.
+
+A Skill MAY be designated mechanical, human, or either. That is a property of
+the Capability, not of whoever happens to run it today.
 
 #### Tools
 
 The concrete mechanisms. A Tool names the Skills it satisfies through its
-`satisfies` field, and one Skill MAY be satisfied by several Tools — which is
-what lets the same capability be tested along the spectrum from fully
-deterministic to agentic.
+`satisfies` field, and **one Skill MAY be satisfied by several Tools** — which
+is the point of the separation rather than an allowance. Several Tools for one
+Skill is what lets the same Capability be exercised at different points on the
+spectrum from fully deterministic to fully agentic, and compared.
 
 *Used for*: keeping the mechanism out of the instruction. A Skill that names a
 vendor, a CLI or an endpoint has swallowed a Tool, and the swallowing is what
 makes a layer un-portable.
+
+#### Tests
+
+What adjudicates whether a Skill was performed, and how well. A Test exercises a
+Skill; the Tools associated with that Skill are what a Test runs it through. So
+the chain reads **Test → Skill → Task**, and a Test that names a Tool directly
+has jumped the Skill and measures a mechanism rather than a Capability.
+
+*Used for*: quality control, compliance testing, and comparing model
+performance across modalities. Tests are the third repository class below.
 
 #### Context
 
@@ -176,11 +219,26 @@ an agent can invoke against it.
 *Used for*: making a declared directory something a person can actually look
 at. A directory nobody can see is one nobody checks.
 
-### Dynamic state
+### Dynamic Context
 
-Beans, todos, Workflow instances, QA sidecars, health results: what is being
-worked on and how far it got. Written by processes as they run, committed so it
-survives a fresh container.
+What is being worked on and how far it got. Written by processes as they run,
+committed so it survives a fresh container. It splits by **who the state is
+for**, which is a sharper line than what the state holds:
+
+- **beans — agentic state management.** Used by Agents to coordinate and track
+  internal state within a Workflow. *"Changes to the vaccination schedule are
+  ready for review at staging."*
+- **todos — human state management.** Attached to a step in a Workflow **or to
+  a knowledge asset**, for human Actors. *"Please review this change in
+  medication."*
+
+A todo attaching to a knowledge asset and not only to a step is what makes the
+two stores genuinely different rather than one store with an audience field: a
+bean without a Workflow position is incomplete, and a todo on a chapter has no
+Workflow position to be missing.
+
+Workflow instances, QA sidecars and health results are Dynamic Context too,
+written by the process that produces them.
 
 *Used for*: the work plan, and the evidence that a claim about the corpus was
 measured rather than remembered.
@@ -204,6 +262,7 @@ be followed mechanically rather than inferred:
 | Workflow lane | lane binding | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
+| Test | exercises | Skill |
 | any content node | `$schema` | Schema |
 | Folio | the board layer | Board, then Position, then Note |
 
@@ -211,10 +270,15 @@ Three properties of that table are worth stating, because each one is a
 decision that could have gone the other way.
 
 **Skill is a sink.** Roles point at Skills, Workflow activities point at Skills,
-Tools point at Skills — and a Skill points at none of them. It names a
-capability and does not know who holds it or what runs it. That is what lets
-one Skill serve several Roles and be satisfied by several Tools without
-editing the Skill.
+Tools point at Skills, Tests point at Skills — and a Skill points at none of
+them. It names a Capability and does not know who holds it, what runs it, or
+what measures it. That is what lets one Skill serve several Roles, be satisfied
+by several Tools and be exercised by several Tests without editing the Skill.
+
+It is also why the chain reads **Test → Skill → Task** rather than Test → Tool.
+A Test that names a Tool directly has jumped the sink and is measuring a
+mechanism instead of a Capability — which is exactly the comparison the several
+Tools per Skill allowance exists to make possible.
 
 **The Harness points at everything and nothing points back.** A board is a
 diagram *of* a folio in the OMG sense that a `BPMNDiagram` is a diagram of a
@@ -236,6 +300,92 @@ references to nodes. So a User Story cannot be pointed at, counted, or traced
 to the Workflow it justifies. It is described here as the taxonomy intends and
 flagged in the next section as not yet declared, because a page that showed it
 as an edge would be describing a graph the registry cannot produce.
+
+## Repositories — four classes, three relations
+{: #repositories data-fa-label="sec:kgraph-repositories" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/kgraph/repositories.md){: .fa-node-edit title="Edit content/docs/kgraph/repositories.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
+
+A KGraph is **managed in git repositories, comprised of self-documenting
+JSON-LD**, and rendered into whatever formats a downstream knowledge product,
+public-health system, clinical system or personal-health application needs.
+That makes a repository the unit of distribution, and repositories come in four
+classes. A class is defined by what it is ALLOWED to do, not by what it happens
+to contain.
+
+### Content repositories
+
+Where the KGraph itself lives. A Content repository:
+
+- MAY define Schemas for the Content types of a KGraph's nodes.
+- MAY instantiate instances of those Content types.
+- MAY define the Skills needed to publish and consume those instances.
+- MAY designate a Skill as mechanical, as human, or as either.
+- **MUST constrain a Skill's inputs and outputs with Schemas.**
+
+That last clause is the only absolute requirement in the whole four-class
+model, and it is what makes the rest of it hold together. A Skill is a
+**Capability with defined inputs and outputs**; a Tool claims to satisfy a
+Skill; a Test claims to exercise one. If the Skill's boundary is not written
+down as a Schema, "does this Tool satisfy that Skill?" has no answer anyone can
+check, and the agentic-to-deterministic comparison the Tool and Test classes
+exist for cannot be run at all.
+
+### Tool repositories
+
+Where the mechanisms live, out of the Content repository on purpose. A Tool
+repository:
+
+- MAY implement a Skill through coordinated use of Tools — scripts, retrieving
+  and running software, remote or local services, containers.
+- MAY expose Tools to agents as MCP services.
+- MAY expose a Tool for local execution.
+- MAY configure Tools for a test harness.
+- MAY define **more than one Tool for one Skill**.
+
+The last one is the point of the separation rather than an allowance. Several
+Tools for one Skill is what lets the same Capability be exercised at different
+points on the spectrum from fully deterministic to fully agentic, and compared.
+
+### Test repositories
+
+Where adjudication, quality control and compliance testing live. A Test
+repository:
+
+- MAY contain test data.
+- MAY contain test-data generation templates and configuration data.
+- MAY define Test Plans.
+- MAY define test-language dialects such as Gherkin.
+- MAY make test data available to a test harness, or to a subject-matter expert
+  or author for review.
+
+### Consumer applications
+
+The downstream end. A consumer application:
+
+- MAY use a KGraph's Schemas and instance data from a Content repository.
+- MAY execute decision logic or indicator calculation from a Content
+  repository.
+- MAY use Test and Tool repositories when building, preparing for a
+  connectathon, or compliance-testing.
+
+### Three relations run between repositories
+
+The edges are not interchangeable, and each already has a carrier in the
+declaration — they had simply never been named as one set of three:
+
+| relation | runs | carried by |
+|---|---|---|
+| **depends** | Content → Content | `needs` in the declaration — the layer stack, foundation first |
+| **references** | Tool → Content, Test → Content | `remoteGraphs` — a graph this instance knows about and does not hold |
+| **utilizes** | Tool → Tool, Test → Tool, App → Content, App → Test | `dependencies` in the config — what this instance USES, overlaid |
+
+**The three answer different questions**, which is why collapsing them loses
+information a consumer needs. *Depends* is about layering: it fixes an order, so
+a cycle in it is a defect. *References* is about knowing a graph exists without
+holding it, so it crosses a repository boundary by definition. *Utilizes* is
+about consumption at run time, and a consumer application may utilize a Content
+repository it has no dependency on whatsoever.
 
 ## What is declared today, measured
 {: #what-is-declared-today data-fa-label="sec:kgraph-what-is-declared-today" }
@@ -285,14 +435,21 @@ declaration in every dependent instance says.
   them, which is what `context` asserts — but the two axes disagree here, and a
   disagreement nobody has written down is one that gets rediscovered.
 
-**What already works, by a route the taxonomy does not describe.** Three
-instances — `agent-skills`, `cat-harness` and `who-style-guide` — each declare
-their own `voices/` directory of kind `voices`, and the overlay resolves them
-together. So a dependent contributing into a shared body of knowledge is not a
-missing capability; it is an existing one reached through the **kind** rather
-than through any subgraph declaration. Whether that IS the mechanism or the
-thing a subgraph mechanism should replace is an open decision, tracked on bean
-`rapm`, and this page will say which once it is taken.
+**How a dependent contributes into a shared body of knowledge.** Through the
+**kind**, and that is the mechanism rather than a stopgap — settled by the
+owner, 2026-09-21. Three instances — `agent-skills`, `cat-harness` and
+`who-style-guide` — each declare their own `voices/` directory of kind
+`voices`, and the overlay resolves all three together. A fourth instance
+wanting to contribute a Voice declares a directory, names the kind, and is
+done: no nesting, no subgraph declaration, nothing added to the schema.
+
+The alternative considered and set aside was letting a directory entry declare
+nested subgraph directories, so that a shared body would live at a path such as
+`skills/voices/` and dependents would add under the same path. It buys a
+hierarchy that nothing currently needs, at the cost of a schema change, a
+migration of every in-tree declaration, and an alias carried for downstream
+ones. The overlay already delivers the outcome, and it is already proven by
+three instances.
 
 ## Where the rules live
 {: #where-the-rules-live data-fa-label="sec:kgraph-where-the-rules-live" }
