@@ -93,12 +93,30 @@ repository root.
 > repository root**, named for their instance rather than placed inside it,
 > which is why looking in `cat-harness/` for one turns up nothing.
 >
-> **What that does NOT establish is the consequence below.** The 235 committed
-> sidecars carrying `detangler-archimedean-wall` were written under the old
-> behaviour and are still in the tree; whether a fresh run still emits them
-> depends on the criterion gating rather than on the profile lookup alone, and
-> that was not measured. Bean `zq3f`. Reading a fixed resolver as a fixed
-> defect is how a stale sidecar gets mistaken for a current verdict.
+> **But the resolver is not what controls this criterion, and the consequence
+> below never occurred.** Measured on the same day under bean `zq3f`, which
+> opened to check exactly that and closed by falsifying its own premise:
+>
+> - **The fence is the mechanism, not the resolver.** Probed here,
+>   `folioOptionalAxes()` is `[]` and `inRegistry` is `false` — neither config
+>   declares `qaAxes`, so `detangler-archimedean-wall` is not registered at
+>   all. What stops it firing is the `archimedean-wall` opt-in this very
+>   section introduced. `folio-optional-axes.test.ts` pins both states and is
+>   the evidence to read first.
+> - **There were never any bad verdicts.** 122 `block-qa` sidecars and 113
+>   witnesses carry the criterion, and **every one records `"result": "n/a"`**
+>   — not one `critical`, not one finding. The paragraph below describes a
+>   harm that did not happen for this criterion; what the sidecars record is
+>   that it was evaluated and found not applicable.
+> - **"235" was a grep artefact.** `grep -rl` counts files CONTAINING a
+>   string, so it swept witnesses in with sidecars and counted a substring
+>   rather than a verdict — the same error shape as `cat-harness.json`
+>   containing `harness.json`, one directory over, and it reached a skill and
+>   a PR body before anything parsed it.
+>
+> Read the paragraph below as the reasoning that motivated the fence, not as a
+> live defect. Reading a fixed resolver as a fixed defect would have been one
+> error; reading it as *the* fix was the one actually made.
 
 The consequence is already committed in the tree. The config file's own comment
 says the third state *"runs every criterion, and the paper adapter's

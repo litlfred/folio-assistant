@@ -149,6 +149,10 @@ export const RULES: Rule[] = [
       // It builds an instance's KG the way `kg-export` (already harness,
       // below) does, one instance at a time (issue #720).
       "scripts/check-published-instance-exports.ts",
+      // HARNESS on the same argument: its subject is this repository's own
+      // workflows -- which generators each invokes -- and it reads no folio
+      // content at all (issue #777, bean `qgpo`).
+      "scripts/check-invocation-parity.ts",
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -636,6 +640,7 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
       "scripts/check-ready-to-close.ts",
