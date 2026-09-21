@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kvsx
 title: 'ARROW DIRECTION: 94% of KG edges point where the AUTHOR PUT THE POINTER, not where the dependency runs'
-status: todo
+status: in-progress
 type: bug
 priority: critical
 created_at: 2026-09-20T08:27:47Z
-updated_at: 2026-09-20T08:27:47Z
+updated_at: 2026-09-21T08:54:25Z
 parent: folio-assistant-kupb
 ---
 
@@ -37,3 +37,67 @@ AND IT MEETS THE OWNER'S OTHER THREAD THE SAME DAY: 'rendering (jsutthedocs) can
 - `role` is computed from ENFORCED edges, or REFUSES and reports the boundary undetermined -- never computed over recorded edges as though they were facts. Same three-state rule as everywhere else here: 'could not determine' is not 'determined to be a source'.
 - Recorded edges are reported as SYMMETRIC COUPLING with a count, which is a real finding, rather than as directed dependency.
 - The `workflows` and `roles` verdicts are re-stated against the corrected model before either is carved.
+
+## Re-measured 2026-09-21 — the model ALREADY LANDED, and it went further
+
+Claimed this to build it and found it built. Every bullet above checked against
+the tree rather than taken from the bean, because the bean was written before
+`detangle/` existed as committed code and its own table names four extractors
+that are not identifiers anywhere in `cat-harness/`.
+
+**Where it actually lives:** `detangle/` — its own instance, with
+`harness.json`, `schemas/detangle.ts` and `scripts/kg-detangle.ts`. Nothing in
+`cat-harness/` mentions the extractors, which is why a search there finds
+nothing and reads as "unbuilt".
+
+| Done-when | state | evidence |
+|---|---|---|
+| every extractor declares enforced or recorded | **done, and extended** | `EdgeAuthority` is THREE states — `enforced \| recorded \| prose` — and `AUTHORITY` declares **8** extractors, not the 4 this bean lists. `bpmn-call`, `bpmn-import`, `bpmn-decision` were added as `enforced`. |
+| role computed from ENFORCED edges, or REFUSES | **done** | `DetangleMetrics.enforcedBoundary`, documented *"`role` is read off these ALONE"*. `undetermined` is a real value in the report. |
+| recorded edges reported as SYMMETRIC COUPLING with a count | **done** | `recordedBoundary`, documented in exactly those words, and the verdict clause prints *"all N boundary edges are RECORDED … `${m.inbound}` in / `${m.outbound}` out describes the filing, not the coupling."* |
+| the workflows and roles verdicts re-stated | **done** | Both now read `undetermined`. `skills/workflows` 0 in / 387 out, `skills/roles` 0 in / 222 out — the counts this bean called source-shaped, no longer reported as `source`. |
+
+`detangle/` is also in `tsconfig.json` now, so the TS2322 its own comment
+records as uncaught is caught today. That gap closed too.
+
+## What was actually wrong, and is fixed here
+
+**`AUTHORITY[via] ?? "recorded"` — a silent default on the one axis that must
+not have one.**
+
+Measured before touching it: the `via` values the extractors emit and the keys
+`AUTHORITY` declares are **exactly equal, 8 and 8**, so the fallback was
+unreachable and silenced nothing today. That is precisely what makes it worth
+removing — bullet 1 was true by COINCIDENCE rather than by construction, which
+is the `6tkl` shape: a clause that cannot fail cannot tell you anything.
+
+It is not a neutral default either. `recorded` is the value that makes a
+boundary edge stop counting toward `role`, so a new `enforced` extractor
+landing under the fallback would turn real directed dependencies into
+`undetermined` verdicts — and the report would look exactly as it does when the
+analysis is right.
+
+`authorityOf()` now refuses, naming the extractor and the three values it may
+declare. Falsified by removing `md-link` from `AUTHORITY`:
+
+    rc=1
+    error: kg-detangle: extractor 'md-link' declares no authority. Add it to
+    AUTHORITY in this file as 'enforced' ... Defaulting would file it as
+    'recorded' and silently drop it from every role verdict.
+
+## The finding this turned up, which is NOT this bean's
+
+**Nothing runs `kg-detangle.ts`.** No npm script, no gate, no workflow. The
+`detangler` hits in `qa-sweep.yml` and `witness-pipeline.yml` are the unrelated
+CONTENT QA axis of the same name. So the model above is correct and unexercised,
+and a regression in it is invisible — `xom7` one level out.
+
+`kg:detangle` is added here so the tool is at least runnable by name. It is
+deliberately NOT added to `gates`: it is an analysis that reports
+*"Nothing here decides anything"*, and a gate that cannot fail is the thing
+this repository keeps paying for. What it needs is a different question —
+whether a committed sidecar should pin the verdicts the way `kg:audit` does —
+and that is its own bean, not a line item here.
+
+82 gates pass.
+
