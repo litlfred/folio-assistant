@@ -135,3 +135,8 @@ backlog.
       it asserts local bytes that are not there
 - [ ] Baseline entries removed as they are repaired; the check reports a stale
       one, so this cannot be forgotten
+
+*Issue link, recorded on creation.* **[#681](https://github.com/litlfred/folio-assistant/issues/681)** — shipped in [PR #682](https://github.com/litlfred/folio-assistant/pull/682).
+
+Written in the same turn the issue was opened. `oh78` exists because a session
+opened four issues from beans and carried none of the links back.
