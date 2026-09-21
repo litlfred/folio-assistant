@@ -2441,14 +2441,14 @@
     {
       "id": "folio-assistant-fgvp",
       "title": "LATENT: the publication-base fallback has no repo-boundary check, so --instance on an outside checkout mints this site's IRIs",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:23:29Z",
-      "updatedAt": "2026-09-21T16:23:29Z",
+      "updatedAt": "2026-09-21T17:29:17Z",
       "preview": "Observed while merging #718 into the `u1iu` branch, 2026-09-21. **Not a defect\ntoday** — filed so it is not rediscovered as one.\n\n## What was measured\n\n`exportIdentity` (main, after #718):\n\n    const ownCanonical = decl?.canonicalUrl ?? \"\";\n    const publisherCanonical = ownCanonical ? \"\" : (readDeclaration(ROOT)?.canonicalUrl ?? \"\");\n\nThe fallback applies to ANY `instanceRoot`, with no check that",
       "file": "beans/defs/folio-assistant-fgvp--latent-the-publication-base-fallback-has-no-repo-b.md"
     },
@@ -2749,14 +2749,14 @@
     {
       "id": "folio-assistant-hrv2",
       "title": "AGENTS.md names the wrong file for the health graph — and the wrong file FAMILY",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:51:13Z",
-      "updatedAt": "2026-09-21T17:45:00Z",
+      "updatedAt": "2026-09-21T17:43:43Z",
       "preview": "Found 2026-09-21 while closing `jijc`'s workflow half, and **not fixed there**\nbecause it is a different file with a different owner.\n\n`AGENTS.md` §\"Repository health\":\n\n> Results are committed under `test/health/results/`, declared in\n> `folio-assistant.config.json` as the `health` graph.\n\nBoth halves are wrong, and they are wrong in different ways:\n\n| claim | measured on `main` @ `0fc29b9` |\n|--",
       "file": "beans/defs/folio-assistant-hrv2--agentsmd-names-the-wrong-file-for-the-health-graph.md"
     },
@@ -3491,6 +3491,20 @@
       "updatedAt": "2026-09-20T19:09:24Z",
       "preview": "Found 2026-09-20 while getting PR #576 mergeable after #477 landed (session_017PqeiS4JYySSWGAYLedmus).\n\n## Measured\n\n`#477` created three new top-level instances, each with a `skills/` directory\nholding one skill and **no `package-manifest.json`**:\n\n| directory | skills | declared name |\n|---|---|---|\n| `kg-navigation/skills` | 1 | none |\n| `large-datasets/skills` | 1 | none |\n| `who-iris/skills` ",
       "file": "beans/defs/folio-assistant-nlvl--package-id-collision-477s-three-new-skills-directo.md"
+    },
+    {
+      "id": "folio-assistant-nrtx",
+      "title": "COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T17:40:00Z",
+      "updatedAt": "2026-09-21T18:10:00Z",
+      "preview": "## What\n\nShow the three item covers on the who-iris replica with the WHO emblem blanked\nout. Owner, 2026-09-21, choosing between four options: *\"Show covers, but\nstrip/mask the emblem\"* — after their earlier ruling that the emblem counts as\n*\"logo and other branding\"* had them withheld entirely.\n\n## Two faults were stacked, and the outer one hid the inner\n\n1. `COVERS_SHOWN = false` — the ruling. R",
+      "file": "beans/defs/folio-assistant-nrtx--covers-show-the-item-covers-with-the-who-emblem-ma.md"
     },
     {
       "id": "folio-assistant-nvbr",
@@ -4719,6 +4733,20 @@
       "updatedAt": "2026-09-21T16:50:00Z",
       "preview": "## What\n\n`exportIdentity`'s fallback — mine, from `40fl`/#718 — inherits the host\ninstance's `canonicalUrl` for **any** instance declaring none, with no\ncondition on where that instance lives. Measured on `main` at `0fc29b98cc`:\n\n```\n$ kg-export.ts --instance /tmp/.../outside --out …\n  @id  https://litlfred.github.io/folio-assistant/outside.jsonld\n  exit 0, no problem reported\n```\n\nA directory in ",
       "file": "beans/defs/folio-assistant-vz24--kg-exports-publication-base-fallback-has-no-bounda.md"
+    },
+    {
+      "id": "folio-assistant-vzur",
+      "title": "The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T17:43:09Z",
+      "updatedAt": "2026-09-21T17:43:09Z",
+      "preview": "Split out of `hrv2`, which was about a **wrong** filename. This is the\n**retired** one, and the owner scoped it out of that change deliberately.\n\n**Measured 2026-09-21 on `main`:** `harness.json` appears **162 times across 83\nmarkdown files**, excluding `beans/` (historical records, correct as written).\nAmong them the skills an agent reads to learn how this repository works —\n`directory-convention",
+      "file": "beans/defs/folio-assistant-vzur--the-markdown-backlog-162-occurrences-of-the-retire.md"
     },
     {
       "id": "folio-assistant-w095",
