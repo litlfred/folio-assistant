@@ -32,8 +32,9 @@
  *
  * @module detangle/scripts/kg-detangle
  */
-import { readdirSync, readFileSync, statSync, existsSync } from "fs";
+import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
+import { sidecarFor, sidecarPathFor, staleFields } from "../schemas/detangle-sidecar.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -250,6 +251,76 @@ const results = groups.map((g) => {
   return { ...m, clauses: failingClauses(m, DEFAULT_THRESHOLDS) };
 });
 
+// ── The durable record — bean `sb6z`, and the owner's ruling on what it holds.
+//
+// `--check` compares; the default WRITES. Same shape as `kg:audit` /
+// `kg:audit:check`, and for the same reason: the check fails on a STALE
+// sidecar rather than on a bad number, so it cannot become the gate that
+// always passes. `detangle.ts` says the carve is an adjudication — that stays
+// a person's call, and nothing here grades it.
+const RESULTS_DIR = join(resolve(import.meta.dir, ".."), "results");
+
+function writeSidecars(): { written: string[]; stale: { path: string; fields: string[] }[] } {
+  const written: string[] = [];
+  const stale: { path: string; fields: string[] }[] = [];
+  for (const r of results) {
+    const rel = sidecarPathFor(r.group);
+    const abs = join(RESULTS_DIR, rel);
+    const fresh = sidecarFor(r);
+    let committed: unknown = null;
+    try {
+      committed = JSON.parse(readFileSync(abs, "utf-8"));
+    } catch {
+      // Absent or unreadable — every field differs, which `staleFields` says.
+    }
+    const fields = staleFields(committed, fresh);
+    if (fields.length > 0) stale.push({ path: rel, fields });
+    if (!checking) {
+      mkdirSync(dirname(abs), { recursive: true });
+      writeFileSync(abs, JSON.stringify(fresh, null, 2) + "\n", "utf-8");
+    }
+    written.push(rel);
+  }
+  return { written, stale };
+}
+
+/**
+ * Sidecars no current group accounts for.
+ *
+ * Bean `3jj9`, paid for one package over: a sidecar whose SUBJECT was renamed
+ * sat in the tree reporting a verdict about a path nobody had, while the live
+ * subject had no sidecar at all, and `--check` exited 0 across both. The loop
+ * above only ever looks from group to file; this looks the other way.
+ *
+ * REPORTED, NEVER DELETED. An orphan can also mean the group is temporarily
+ * undiscovered — a declaration gap, not a dead group — and deleting on that
+ * evidence destroys a measurement to hide a defect.
+ * `deletion-requires-confirmation`: the agent reports, a person decides.
+ */
+function sweepOrphans(accountedFor: string[]): string[] {
+  const known = new Set(accountedFor);
+  const out: string[] = [];
+  const walk = (dir: string, prefix = ""): void => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return; // no results directory yet is not an orphan
+    }
+    for (const e of entries) {
+      const rel = prefix ? `${prefix}/${e.name}` : e.name;
+      if (e.isDirectory()) walk(join(dir, e.name), rel);
+      else if (e.name.endsWith(".detangle.json") && !known.has(rel)) out.push(rel);
+    }
+  };
+  walk(RESULTS_DIR);
+  return out.sort();
+}
+
+const checking = process.argv.includes("--check");
+const { written: sidecarsWritten, stale: staleSidecars } = writeSidecars();
+const orphanSidecars = sweepOrphans(sidecarsWritten);
+
 if (process.argv.includes("--json")) {
   console.log(JSON.stringify({ thresholds: DEFAULT_THRESHOLDS, results, dangling }, null, 2));
 } else {
@@ -290,4 +361,29 @@ if (process.argv.includes("--json")) {
     `\n  Nothing here decides anything. A failing clause is a reason to LOOK.\n` +
       `  The carve is an adjudication — see detangle/schemas/detangle.ts, "taste is a declared step".\n`,
   );
+}
+
+// ── Report the pinned record, after the table so it reads as a footnote to it.
+if (!process.argv.includes("--json")) {
+  const where = relative(process.cwd(), RESULTS_DIR);
+  if (checking) {
+    if (staleSidecars.length === 0 && orphanSidecars.length === 0) {
+      console.log(`  \u2713 ${sidecarsWritten.length} pinned measurement(s) current in ${where}/`);
+    }
+  } else {
+    console.log(`\n  wrote ${sidecarsWritten.length} pinned measurement(s) to ${where}/`);
+  }
+  // NAMED, never counted — the question a stale sidecar raises is WHICH number
+  // moved, and a bare count makes the reader go and diff it themselves.
+  for (const s of staleSidecars) {
+    console[checking ? "error" : "log"](`  ${checking ? "STALE" : "updated"}  ${s.path} — ${s.fields.join(", ")}`);
+  }
+  for (const o of orphanSidecars) {
+    console.error(`  ORPHAN ${o} — no current group measures this. Reported, not deleted: it may be a declaration gap rather than a dead group.`);
+  }
+}
+
+if (checking && (staleSidecars.length > 0 || orphanSidecars.length > 0)) {
+  console.error(`\n  Run \`bun run kg:detangle\` and commit the result.`);
+  process.exit(1);
 }
