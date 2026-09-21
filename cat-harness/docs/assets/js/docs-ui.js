@@ -1732,6 +1732,134 @@
    * mirrors `window-stack.test.ts` case for case, against the real file.
    */
   var zoomState = { zoom: null, asked: false };
+
+  /* ═══ Panel chrome — the kind declares, the platform fixes ════════════
+   *
+   * Owner: *"each content type controls its own avatar, visualtion/rendering.
+   * but assume they can open a full screen panel w/ fixed controls like [x] or
+   * [linksrc] or [edit] or what not depedning on conent."*
+   *
+   * CRDM Q7 settled the line: `[x]` is in the same place with the same
+   * behaviour on every panel, so a reader learns the frame once; everything
+   * else is the kind's to offer.
+   *
+   * THREE STATES, and collapsing any two loses a fact: not declared (this kind
+   * does not offer it), declared and servable (the control), declared and
+   * unservable (no control, AND a reason). The third is the one that gets
+   * lost, and `pb04` is the case already paid for — an `[edit]` the pipeline
+   * cannot perform 404s for exactly the reader who cannot edit, which reads as
+   * "this page is broken" rather than "you cannot do this".
+   *
+   * Mirrors `schemas/panel-chrome.ts`, which this file cannot import. Same
+   * cost, same mitigation as `window-stack.ts`: the e2e asserts the browser's
+   * answer against the model's, case for case.
+   */
+  var FIXED_CONTROLS = ["close"];
+  var PANEL_CONTROLS = {
+    close: { id: "close", label: "Close", needs: "none" },
+    view: { id: "view", label: "View source", needs: "source-read" },
+    edit: { id: "edit", label: "Edit", needs: "source-write" },
+    pin: { id: "pin", label: "Pin to the page", needs: "none" },
+    discard: { id: "discard", label: "Discard", needs: "none" },
+  };
+  var KIND_CONTROLS = {
+    todo: ["view", "edit", "pin", "discard"],
+    bean: ["view"],
+  };
+
+  /** The frame first and always, then what the kind declared. Unknowns dropped. */
+  function controlsFor(kind) {
+    var declared = (KIND_CONTROLS[kind] || []).filter(function (id) {
+      return (
+        Object.prototype.hasOwnProperty.call(PANEL_CONTROLS, id) &&
+        FIXED_CONTROLS.indexOf(id) === -1
+      );
+    });
+    return FIXED_CONTROLS.concat(declared).map(function (id) { return PANEL_CONTROLS[id]; });
+  }
+
+  /**
+   * The badge for the CONTENT NODE a card is about, or null.
+   *
+   * R7: *a node rendered as its avatar carries the same badge, from the same
+   * query as R6.* One function, called once per card, whose answer both the
+   * avatar and the open window render — so the two surfaces cannot disagree
+   * for the same reason the badge and its panel cannot (`1rta`).
+   *
+   * `null` when the card is about no node: a board card with no `targetLabel`
+   * annotates nothing, and a badge of nothing is not a zero, it is absent.
+   */
+  function nodeBadge(todo) {
+    var label = todo.targetLabel;
+    if (!label) return null;
+    var count = 0;
+    for (var i = 0; i < todoState.items.length; i++) {
+      if (todoState.items[i].targetLabel === label) count++;
+    }
+    // R5's threshold, and the same split: the chip takes `showCount`, the
+    // accessible name takes the exact `count`.
+    return { count: count, showCount: count > 1, label: label };
+  }
+
+  /** One badge, rendered the same way wherever it rides. */
+  function badgeChip(badge, where) {
+    var chip = el("span", {
+      class: "fa-node-badge fa-node-badge--" + where,
+      "data-fa-notes": String(badge.count),
+      "aria-label":
+        badge.count + (badge.count === 1 ? " note" : " notes") + " on this section",
+    });
+    if (badge.showCount) {
+      chip.appendChild(el("span", { class: "fa-node-badge-count" }, String(badge.count)));
+    }
+    return chip;
+  }
+
+  /**
+   * One declared control, as a button the frame can place.
+   *
+   * `close` is the platform's and is wired here; everything else delegates to
+   * the behaviour the board already owns. A kind declares WHICH controls it
+   * offers, never what they do — two panels whose `[x]` did different things
+   * would be two frames.
+   */
+  function controlButton(control, todo, onClose) {
+    if (control.id === "view" || control.id === "edit") {
+      return el("a", {
+        class: "fa-board-window-control fa-node-edit",
+        "data-fa-control": control.id,
+        href: control.id === "view" ? todo.viewHref : todo.editHref,
+        "aria-label": control.label + " — " + todo.summary,
+      }, control.id === "view" ? "\u2398" : "\u270E");
+    }
+    var b = el("button", {
+      type: "button",
+      class: "fa-board-window-control",
+      "data-fa-control": control.id,
+      "aria-label": control.label + " — " + todo.summary,
+    }, control.id === "close" ? "\u00D7" : control.label);
+    if (control.id === "close") {
+      b.addEventListener("click", function (e) { e.stopPropagation(); onClose(todo); });
+    }
+    return b;
+  }
+
+  /** Split into what this node can serve and what it cannot, with reasons. */
+  function servableControls(controls, capabilities) {
+    var shown = [];
+    var hidden = [];
+    for (var i = 0; i < controls.length; i++) {
+      var c = controls[i];
+      if (c.needs === "none" || capabilities[c.needs] === true) shown.push(c);
+      else {
+        hidden.push({
+          control: c,
+          because: c.label + " needs " + c.needs + ", which this node does not have.",
+        });
+      }
+    }
+    return { shown: shown, hidden: hidden };
+  }
   var windowStack = { open: [] };
 
   function isWindowOpen(id) { return windowStack.open.indexOf(id) !== -1; }
@@ -2410,16 +2538,33 @@
       });
       var bar = el("div", { class: "fa-board-window-bar" });
       bar.appendChild(el("span", { class: "fa-board-window-title" }, todo.summary));
-      var x = el("button", {
-        type: "button",
-        class: "fa-board-window-close",
-        "aria-label": "Close " + todo.summary + " back to its avatar",
-      }, "×");
-      x.addEventListener("click", function (e) {
-        e.stopPropagation();
-        closeCard(todo);
-      });
-      bar.appendChild(x);
+      // R7: THE SAME BADGE AS THE AVATAR, from the same query. Not a second
+      // count — `nodeBadge` is called once per card and both surfaces render
+      // what it returned, which is R6's rule carried onto a second surface.
+      var nb = nodeBadge(todo);
+      if (nb) bar.appendChild(badgeChip(nb, "window"));
+
+      /* THE CONTROLS. The frame first, then what the kind declared, then what
+       * this node can actually serve. A declared control the node cannot serve
+       * is HIDDEN and the reason is reported — never rendered as a button that
+       * would 404 for exactly the reader who cannot use it (`pb04`). */
+      var caps = { "source-read": !!todo.viewHref, "source-write": !!todo.editHref };
+      var split = servableControls(controlsFor("todo"), caps);
+      for (var ci = 0; ci < split.shown.length; ci++) {
+        bar.appendChild(controlButton(split.shown[ci], todo, closeCard));
+      }
+      if (split.hidden.length) {
+        // Reported once per panel rather than swallowed: "this kind does not
+        // offer edit" and "this deployment cannot serve edit" are different
+        // facts, and only one of them is somebody's to fix.
+        panel.setAttribute(
+          "data-fa-hidden-controls",
+          split.hidden.map(function (h) { return h.control.id; }).join(" "),
+        );
+        for (var hi = 0; hi < split.hidden.length; hi++) {
+          console.info("docs-ui: " + todo.id + " — " + split.hidden[hi].because);
+        }
+      }
       panel.appendChild(bar);
       // The card's own rendering: the kind controls what its panel shows, the
       // platform fixes the frame around it. `compact` because the window
@@ -2500,9 +2645,26 @@
           type: "button",
           class: "fa-avatar fa-sticky-avatar",
           "data-fa-kind": "todo",
+          // WHICH card this avatar opens. The board stacks by BPMN subprocess
+          // depth, so DOM order is not the index order of anything a caller
+          // holds — an avatar addressed by position is addressed by a fact
+          // the board is free to change.
+          //
+          // `data-fa-opens`, NOT `data-fa-todo`: the linear floor already uses
+          // that name for a listing entry, and one attribute over two
+          // different objects means every `[data-fa-todo]` selector silently
+          // returns both. Caught by `linear-floor.e2e.ts` asserting its
+          // listing is not duplicated — which it was not; it had been joined
+          // by a control from another surface.
+          "data-fa-opens": todo.id,
           "aria-label": "Open " + todo.summary,
           title: todo.summary,
         });
+        // R7: a node rendered as its avatar carries the same badge as its open
+        // window, from ONE query. `nodeBadge` is the query; both surfaces
+        // render its answer, so there is no second count to disagree.
+        var ab = nodeBadge(todo);
+        if (ab) open.appendChild(badgeChip(ab, "avatar"));
         open.addEventListener("click", function () { openCard(todo); });
         slot.insertBefore(open, slot.firstChild);
       })(rows[si].todo);

@@ -164,7 +164,7 @@ test.describe("opening projects a window", () => {
     await boot(p);
     await p.locator(".fa-sticky-avatar").first().click();
     await expect(p.locator(".fa-board-window")).toHaveCount(1);
-    await p.locator(".fa-board-window-close").click();
+    await p.locator('[data-fa-control="close"]').click();
     await expect(p.locator(".fa-board-window")).toHaveCount(0);
     // The avatar is still there, and focus came back to it — the way back is
     // reachable, which is the whole of `l4zi`.
@@ -269,7 +269,7 @@ test.describe("selecting any part raises it", () => {
     // reached by selecting the window, not by clicking through what is on top
     // of it.
     await p.locator('.fa-board-window[data-fa-window="beta"] .fa-board-window-title').click();
-    await p.locator('.fa-board-window[data-fa-window="beta"] .fa-board-window-close').click();
+    await p.locator('.fa-board-window[data-fa-window="beta"] [data-fa-control="close"]').click();
     await expect(p.locator(".fa-board-window")).toHaveCount(2);
     const zs = await p
       .locator(".fa-board-window")
