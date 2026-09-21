@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pp93
 title: 'TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T11:23:21Z
-updated_at: 2026-09-21T11:46:25Z
+updated_at: 2026-09-21T12:02:00Z
 parent: folio-assistant-bzyu
 ---
 
