@@ -23,7 +23,7 @@ import {
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
 import {
   AGENT_INSTRUCTIONS_ROLE,
-  ASSET_ROLE_PURPOSE,
+  assetRolePurpose,
   INSTANCE_README_ROLE,
   instanceRootsIn,
 } from "../../schemas/cat-harness.js";
@@ -326,8 +326,8 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   });
 
   it("carries each role's purpose from the one place it is declared", () => {
-    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[AGENT_INSTRUCTIONS_ROLE]!);
-    expect(out.markdown).toContain(ASSET_ROLE_PURPOSE[INSTANCE_README_ROLE]!);
+    expect(out.markdown).toContain(assetRolePurpose(AGENT_INSTRUCTIONS_ROLE)!);
+    expect(out.markdown).toContain(assetRolePurpose(INSTANCE_README_ROLE)!);
   });
 
   it("an unreadable tree is UNDETERMINED, not 'this repository has no instances'", () => {

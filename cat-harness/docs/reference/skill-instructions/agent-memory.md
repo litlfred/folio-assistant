@@ -132,22 +132,40 @@ this skill (2026-09-20, issue #592):
 > it is an asset and has a defined purpose (that is part of skills of mantiaing
 > agent memroies)
 
-| role | purpose | delivery |
-|---|---|---|
-| `instance-readme` | what the instance **is**, for a reader | read as a file |
-| `agent-instructions` | what a cold agent **does** here, in order | read as a file |
-| agent memory | durable facts an agent must have without asking | **injected** |
+| role | purpose | layer | delivery |
+|---|---|---|---|
+| `instance-readme` | what the instance **is**, for a reader | `context` | read as a file |
+| `agent-instructions` | what a cold agent **does** here, in order | `context` | read as a file |
+| agent memory | durable facts an agent must have without asking | `context` | **injected** |
 
-The purposes are declared once, per ROLE, in `ASSET_ROLE_PURPOSE`
-(`schemas/cat-harness.ts`) — never per asset, which would be eleven instances
-each spelling out what `instance-readme` is for and the eleventh saying
-something slightly different.
+**This table is DECLARED, not described.** All three columns are `ASSET_ROLES`
+in `schemas/cat-harness.ts` — one record of objects, per ROLE, never per asset.
+Per asset would be eleven instances each spelling out what `instance-readme` is
+for and the eleventh saying something slightly different; three parallel
+`Record<string, …>` maps would be the same failure one level up, where a role
+gains a purpose and no layer and reads as governed anyway. `layer` and
+`delivery` are **required** on `AssetRoleDef`, so a new role decides them at the
+keyboard rather than at CI.
 
-**The delivery column is the rule, and it is mechanical rather than a matter of
-taste.** Memory is spliced into a prompt, so it pays a budget — `MEMORY.md`'s
-first 200 lines, *with the overflow dropped silently*. A file is opened, so
-nothing truncates it. That is why `AGENTS.md` may be long and an entry here may
-not, and why a fact that must arrive unasked belongs here rather than there.
+**The layer column is why a step writing one of these is a defect rather than
+an update.** The owner, on issue #592: *"its static content at process runtime
+and treated as an asset like memories"* — which is `context` word for word, and
+the same layer agent memory holds, which is what *"like memories"* asks for.
+`processMayWriteAsset(role)` answers it, through the same `layerIsWritable`
+rule the graph kinds use: assets and directories cannot come to disagree about
+what `context` permits, because there is one rule and not two spellings of
+`=== "state"`. For a role this layer does not govern it returns `undefined` —
+the third state, and never to be read as permission.
+
+**The delivery column is mechanical rather than a matter of taste.** Memory is
+spliced into a prompt, so it pays a budget — `MEMORY.md`'s first 200 lines,
+*with the overflow dropped silently*. A file is opened, so nothing truncates
+it. That is why `AGENTS.md` may be long and an entry here may not, and why a
+fact that must arrive unasked belongs here rather than there. It is asserted
+rather than stated: `asset-roles.test.ts` measures this repository's own
+`AGENTS.md` past the 200-line budget, which is legal *only* because its
+delivery is `file` — switch the role to `injected` and the test says so before
+a reader finds out by losing half the file.
 
 **`AGENTS.md` augments the README; it never restates it.**
 
@@ -159,7 +177,15 @@ this*, `AGENTS.md` answers *what do I do, in what order*. A session that
 establishes a durable fact about an instance updates the one whose question it
 answers — and if it answers neither, it is a memory entry.
 
-`bun run check:subgraph-coverage` reports any instance missing either asset.
+`bun run check:subgraph-coverage` reports any instance missing either asset,
+and `bun run check:asset-roles` keeps the declaration single: a required role
+`ASSET_ROLES` does not govern, a role a running process would be allowed to
+write, or an asset restating `purpose`, `layer` or `delivery` on itself. That
+last one is asked of the RAW `harness.json` on purpose — `KgAssetSchema` is a
+non-strict `z.object` and drops an unknown key without a word, so after
+parsing the evidence is gone. It has happened: a `purpose` written into
+`cat-harness/harness.json` read as if it carried one and no consumer ever saw
+it, which is worse than absent because absent is visible.
 Both are required of every instance: one with a README and no `AGENTS.md` is
 readable by a person and mute to an agent, and the reverse leaves a reader
 following instructions with nothing saying what they are in.

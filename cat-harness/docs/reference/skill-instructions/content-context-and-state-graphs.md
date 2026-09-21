@@ -203,6 +203,34 @@ kept because the rule it illustrates is not: **a directory of one kind may
 contain a node of another, and the containing declaration is not a claim about
 its contents.**
 
+## A declared ASSET carries a layer too
+
+The axis is not only about directories. `instance-readme` and
+`agent-instructions` are declared assets, and both hold **`context`** — the
+owner's own words on issue #592: *"its static content at process runtime and
+treated as an asset like memories"*. `README.md` and `AGENTS.md` are read at
+session start and authored by a human, so a step that rewrites one is a defect
+by the same rule a step writing to `memory/` is.
+
+**One rule, not two spellings.** `layerIsWritable(layer)` is the whole of it;
+`processMayWrite(kind)` and `processMayWriteAsset(role)` both call it. They
+were nearly written as two `=== "state"` comparisons, which is how a `context`
+directory and a `context` asset come to mean different things the day a fourth
+layer is added — and the word stops carrying a rule the moment that is
+possible.
+
+**Where an asset's layer is declared is the one difference.** A directory's
+layer is a property of its graph KIND; an asset's is a property of its ROLE,
+in `ASSET_ROLES`, because an asset has no kind. A per-asset `layer` would be
+eleven instances answering one question, and `check:asset-roles` rejects it —
+asked of the raw `harness.json`, since `KgAssetSchema` strips an unknown key
+without a word.
+
+**Creation at INITIALISATION is not a process write.** A `context` asset that
+does not exist yet has to come from somewhere, and bootstrap writing one when
+it is absent is not the write this rule forbids: initialisation is not process
+runtime. Bean `7sfm` is where that lands alongside the code that does it.
+
 ## See also
 
 - [`directory-conventions`](directory-conventions.md) — what a declaration is

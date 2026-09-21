@@ -149,7 +149,7 @@ The order and the reasoning are in
 ## Maintaining these files is memory work, not documentation work
 
 `README.md` and `AGENTS.md` are **declared assets with a declared purpose**
-(`ASSET_ROLE_PURPOSE` in `schemas/cat-harness.ts` — one place, per ROLE, not
+(`ASSET_ROLES` in `schemas/cat-harness.ts` — one place, per ROLE, not
 per asset). Keeping them true is part of
 [`agent-memory`](agent-memory.md), and the owner put them there:
 
