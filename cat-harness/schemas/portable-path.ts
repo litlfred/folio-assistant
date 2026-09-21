@@ -39,14 +39,31 @@
  * `req%3Aagent-workflow` — legible enough to recognise, and decodable back to
  * the id it names.
  *
- * ## The generator fix is not the gate
+ * ## The encoder is not the gate, and the gate does not cover everything
  *
- * Encoding here only protects names this module composes. A hand-authored file,
- * or a name composed somewhere that has not been found yet, lands in the tree
- * unchecked — which is how the seven got there. {@link unportableSegment} is
- * the predicate a repository-wide gate runs over TRACKED paths
- * (`scripts/check-portable-paths.ts`), so a clone-breaking name fails on the
- * day it is committed rather than on the day somebody on Windows tries.
+ * Encoding only protects the names a caller routes through here. A
+ * hand-authored file lands in the tree unchecked — which is how the seven got
+ * there — so {@link unportableSegment} is also the predicate a repository-wide
+ * gate runs (`scripts/check-portable-paths.ts`), and a clone-breaking name
+ * fails on the day it is committed rather than on the day somebody on Windows
+ * tries.
+ *
+ * **That gate reads `git ls-files`, so it sees TRACKED paths only.** Output a
+ * generator writes into an ignored build directory is outside it, and an
+ * unportable name there breaks a Windows *build* rather than a clone. Nothing
+ * here closes that; it is named so the next reader does not assume otherwise.
+ * The cover for those writers is this module's encoding at the composer, which
+ * is why the id-to-filename call sites route through {@link portableSegment}
+ * rather than relying on the gate to catch them.
+ *
+ * ## Encoding is not always the right tool
+ *
+ * Where a segment is also a PUBLIC ROUTE — `scripts/state-visualizer.ts`
+ * builds a site directory from a declared graph id — encoding would silently
+ * publish `/req%3Ax/` and the declaration would stop saying where the page is.
+ * There the id is refused with a message naming the remedy, exactly as a
+ * reserved device name is: `aux` has nothing to encode, and some ids simply
+ * have to be renamed.
  *
  * @graphNode none — a predicate and an encoder over path strings, not a schema
  * @module schemas/portable-path

@@ -145,6 +145,7 @@ import {
 // a folio graph, so `readDeclaration` throws on a valid declaration without it.
 // The same line `print-stub.ts` carries, for the same reason.
 import "../schemas/folio-graph-kind.js";
+import { unportableSegment } from "../schemas/portable-path";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -670,7 +671,25 @@ for (const g of taken) {
       `not rendered. Rename the directory's id in harness.json.`,
   );
 }
-const graphs = all.filter((g) => !taken.includes(g));
+// REFUSED, not encoded — and the difference is the point.
+//
+// Everywhere else an id names a private artefact, `portableSegment` encodes it
+// and the caller never sees the spelling. Here the id is also the site's URL
+// ROUTE, so encoding it would quietly publish `/req%3Ax/` and the declaration
+// would no longer say where the page is. A declaration that cannot be rendered
+// on a filesystem the site is built on is a defect in the declaration, and the
+// remedy is the one this generator already gives for a colliding id: rename it.
+//
+// Same shape as `portable-path.ts`'s device names — encoding does not rescue
+// every id, and saying so beats mangling one.
+const unportable = all.filter((g) => !taken.includes(g) && unportableSegment(g.id));
+for (const g of unportable) {
+  console.error(
+    `  ! declared directory \`${g.id}\` cannot be a directory or a route on every platform ` +
+      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in harness.json.`,
+  );
+}
+const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));
 
 for (const g of graphs) {
   emit(join(SITE, g.id, "index.html"), dashboardPage(g, graphs));

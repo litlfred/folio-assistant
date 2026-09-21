@@ -6,6 +6,9 @@
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
 
+import { scriptSidecarPath } from "../content/pipeline/qa-utils";
+import { detailFileName, detailRelPath } from "../scripts/agent-memory";
+import { stickyFile } from "../scripts/ensure-landing-sticky";
 import { kgQaSidecarPath } from "./kg-qa";
 import { portableSegment, unportablePath, unportableSegment } from "./portable-path";
 
@@ -84,6 +87,45 @@ describe("portableSegment", () => {
     // reports it, and the subject needs a different id.
     expect(portableSegment("aux")).toBe("aux");
     expect(unportableSegment(portableSegment("aux"))).toBe("reserved-device-name");
+  });
+});
+
+describe("the id-to-filename composers, as a class", () => {
+  // litlfred on PR #683: "seems to be only fixing one issue, not the pattern."
+  // Correct — `kgQaSidecarPath` was one of several places that build a filename
+  // from an id, and an id is not constrained to be a legal filename. These
+  // pin the class rather than the one instance that bit.
+
+  test("every composer encodes, so no id can compose an uncheckable name", () => {
+    const hostile = "req:x";
+    expect(scriptSidecarPath(hostile, "/repo")).toBe(
+      join("/repo", "content/pipeline/script-sidecars", "req%3Ax.script.json"),
+    );
+    expect(stickyFile(hostile)).toBe("req%3Ax.json");
+    expect(detailFileName(hostile)).toBe("req%3Ax.md");
+    expect(detailRelPath(hostile)).toBe(join("detail", "req%3Ax.md"));
+    for (const p of [scriptSidecarPath(hostile, "/repo"), stickyFile(hostile), detailFileName(hostile)]) {
+      expect(unportablePath(p)).toBeUndefined();
+    }
+  });
+
+  test("and every one is identity on the ids actually in use, so nothing moves", () => {
+    // The safety property for the whole change: encoding a slug returns the
+    // slug, so no committed sidecar, sticky or detail file changes path. If
+    // this fails, the change is a silent mass rename rather than a guard.
+    expect(scriptSidecarPath("lean-mirror-drift", "/repo")).toBe(
+      join("/repo", "content/pipeline/script-sidecars", "lean-mirror-drift.script.json"),
+    );
+    expect(stickyFile("getting-started")).toBe("getting-started.json");
+    expect(detailFileName("kg-audit-baseline")).toBe("kg-audit-baseline.md");
+  });
+
+  test("detailRelPath and detailFileName cannot drift, because one calls the other", () => {
+    // Not cosmetic: `writeDetail` prunes `detail/` against a keep-set built
+    // from these names, so two spellings would delete the file just written.
+    for (const id of ["plain", "req:x", "a b", "100%"]) {
+      expect(detailRelPath(id)).toBe(join("detail", detailFileName(id)));
+    }
   });
 });
 

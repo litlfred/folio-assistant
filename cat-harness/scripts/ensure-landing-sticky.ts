@@ -86,6 +86,7 @@ import {
   stickyFromContribution,
   type LandingSticky,
 } from "../schemas/landing-sticky.js";
+import { portableSegment } from "../schemas/portable-path";
 import {
   StickyContributionSchema,
   composeContributions,
@@ -113,7 +114,12 @@ export const FOLIO_DIR_PATH = "folio/";
  * prevent — an enumeration maintained in two places, one of which is short.
  */
 export function stickyFile(id: string): string {
-  return `${id}.json`;
+  // `portableSegment`: the id is what NAMES the file, and an id is not
+  // constrained to be a legal filename — the `req:agent-workflow` shape that
+  // made this repository unclonable on Windows. Every sticky id today is a slug
+  // and encodes to itself, so no existing sticky moves. One composer, used by
+  // both the writers and the readers below, so the encoding cannot split them.
+  return `${portableSegment(id)}.json`;
 }
 
 /**
