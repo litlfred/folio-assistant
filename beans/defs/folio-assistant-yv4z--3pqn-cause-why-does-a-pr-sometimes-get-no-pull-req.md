@@ -218,3 +218,16 @@ was clean and a sibling was already mid-build. Pushing the claim first is the
 one mitigation a single session can apply.
 
 *Issue link, recorded on creation.* **[#723](https://github.com/litlfred/folio-assistant/issues/723)**
+
+
+---
+
+## Step 2 of the decisive test — IN PROGRESS
+
+This block exists to CREATE a conflict against `main`, which already carries a
+different block at exactly this position. It is the instrument, not a finding:
+`yv4z`'s step 2 asks whether a PR that is unmergeable AT CREATION carries
+`refs/pull/N/merge`, and that can only be measured on a PR which is open and
+conflicted at the same moment. Every open PR checked so far was mergeable.
+
+Replaced by the measurement once taken.
