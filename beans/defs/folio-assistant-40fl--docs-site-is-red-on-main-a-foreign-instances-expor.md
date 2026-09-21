@@ -1,7 +1,7 @@
 ---
 # folio-assistant-40fl
 title: 'docs-site is red on main: a foreign instance''s export has no publication base, so kg-export exits 1'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T13:11:53Z
@@ -65,7 +65,33 @@ in here* — and it went unnoticed for two hours across four merges.
       rather than listing `cat-bootstrap`
 - [x] A test asserts `problems == []` for a foreign export
 - [x] Both falsified by planting the old behaviour
-- [ ] `docs-site` green on `main`
+- [x] `docs-site` green on `main` — **observed**, run dispatched against `2d20850562`;
+      `check:ci-health` went from *"8 consecutive failure(s)"* to `✓ green`
+
+## Summary of Changes
+
+Merged as `2d20850562` (PR #718) on the owner's instruction.
+
+`exportIdentity` now falls back to the **publishing** instance's `canonicalUrl`
+when the exported instance declares none — a fallback, never an override, so an
+instance that declares its own keeps it. It also returns `instanceDir`, so the
+caller naming the consulted declaration does not repeat the `?? ROOT` default.
+
+The diagnostic named `harness.json`, a filename #695 excised. It now resolves
+and names the file it actually read.
+
+Two tests, both falsified by planting the old behaviour (45 pass / 2 fail):
+
+- an absolute `@id` for **every** declared instance, derived over
+  `instanceRootsIn` rather than listing `cat-bootstrap`, and refusing an empty
+  instance list rather than passing vacuously;
+- `problems == []` for a foreign export — the assertion that was missing, and
+  the reason `publishedPaths()` stayed green for two hours while the site was
+  down.
+
+Verified on the merged tree (main was 6 commits ahead, including #709):
+`gates` 87/87, the docs-site export sequence run verbatim under `set -e` exits
+0 with both `@id`s absolute.
 
 ## Not this bean
 

@@ -41,6 +41,11 @@ on:
       # forgetting is invisible.
       - '*/library/**/structure.json'
       - '*/library/**/candidates.json'
+      # The same argument this file already makes about `*/library/**`, applied
+      # to the scripts: a named list is edited by whoever remembers it, and
+      # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
+      # workflow runs uncovered — all of them test files it executes.
+      - 'cat-harness/scripts/**'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -68,6 +73,11 @@ on:
       # forgetting is invisible.
       - '*/library/**/structure.json'
       - '*/library/**/candidates.json'
+      # The same argument this file already makes about `*/library/**`, applied
+      # to the scripts: a named list is edited by whoever remembers it, and
+      # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
+      # workflow runs uncovered — all of them test files it executes.
+      - 'cat-harness/scripts/**'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
