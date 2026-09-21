@@ -75,8 +75,15 @@ on:
       # `canonicalUrl` is read from it — so a change here changes the published
       # bytes while touching no script. `cat-harness/schemas/**` above covers
       # the schema, never the instance's own config.
-      - 'cat-harness/*.config.json'
-      - 'cat-bootstrap/*.config.json'
+      # `<instance>/<name>.json` since #727 reversed the suffix (declarations
+      # are `.json`; `.config.json` is now a different file). Written as a
+      # wildcard over the instance root rather than the two names, because THIS
+      # PATTERN WAS ALREADY WRONG ONCE: it was added as `*.config.json` hours
+      # before #727 landed, and would have matched nothing while looking
+      # deliberate — the same silent miss `tyyc` is about, inside `tyyc`'s own
+      # fix. A suffix that moves twice in a day is not a thing to spell twice.
+      - 'cat-harness/*.json'
+      - 'cat-bootstrap/*.json'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
