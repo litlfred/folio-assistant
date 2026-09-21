@@ -353,3 +353,56 @@ interface" (case 2) is a different artefact from `<base>/who-iris/library/`
 (case 3, the viewer over who-iris's library) — and the two now share a prefix.
 Whether that is a collision or a hierarchy is not settled by anything the
 owner has said, and nothing in this work depends on it.
+
+---
+
+## `x0hj`'s residue, measured 2026-09-21 — and it folds into the OPEN QUESTION above
+
+`x0hj` is the same owner message as this bean, filed four minutes earlier in a
+parallel session. It was already marked *"superseded in substance"* by #584,
+with one thing held back: a measurement of **three published artefacts that do
+not follow the rule**, and the instruction *"do not scrap without checking
+that"*. Checked, on today's main, with #584 merged:
+
+| artefact | where the build puts it | verdict |
+|---|---|---|
+| `_site/fsh-guts.jsonld` | `docs-site.yml:301` | **not a defect** — the owner asked for it by name: *"jsonld accessible via `<base-url>/fsh-guts.jsonld`"*. A second document precisely so a crawler never arrives at it, with `UNPUBLISHED_GRAPH_KINDS` stripping it from every other graph |
+| `_site/folio-assistant.jsonld` | `docs-site.yml:279` | see below |
+| `_site/folio-assistant/index.html` | `docs-site.yml:281` | see below |
+| `_site/cat-bootstrap/cat-bootstrap.jsonld` | `docs-site.yml:362` | **conforms** — and it is this bean's own worked example |
+
+### The two that remain are not an instance's rendering at all
+
+Both take their name from `STUB=$(print-stub.ts ./cat-harness)`, which resolves
+to **`folio-assistant`** — and `artefactStub` is documented as *"the
+REPOSITORY's short name, used as the filename stem of every artefact… so a
+reader who knows the repo knows the filename"*. So `<STUB>.jsonld` is the
+**repository's** union graph, not the `cat-harness` instance's rendering
+published under a confusing name.
+
+That makes them the same shape as this bean's §"Their placement is NOT settled
+by the three-case ruling": an artefact that **spans instances** and therefore
+has no single `<subject>` to compose a path from. The schema viewer reads 4
+declared `schemas` directories and the library viewer 3 — and the repository
+graph reads all 12.
+
+**So the residue is not a separate bean. It is two more rows under the open
+question already on this one**, and whichever of the three readings the owner
+picks should be applied to them at the same time. Splitting it would mean
+asking the same question twice and risking two answers.
+
+### What genuinely remains open, restated with these included
+
+Five artefacts, one ruling:
+
+| | spans | composed today as |
+|---|---|---|
+| schema viewer | 4 instances | `<base>/schemas/` |
+| library viewer | 3 instances + 3 queues | `<base>/library/` |
+| repository KG | 12 instances | `<base>/folio-assistant.jsonld` |
+| repository KG viewer | 12 instances | `<base>/folio-assistant/index.html` |
+| `.json` aliases of both | — | follow whatever the above do |
+
+`blv9` — an `@id` must move with the file that carries it — is unchanged by any
+of this and is still the thing to gate whichever reading wins. **Nothing was
+moved**: the generators compose no path, so a change is one line per generator.
