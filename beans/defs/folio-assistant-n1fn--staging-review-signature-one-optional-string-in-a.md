@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-21T16:52:08Z
 updated_at: 2026-09-21T16:52:36Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -60,3 +61,21 @@ A second URL-composition rule. The skill already says a URL is looked up in
 `gh-pages` and never composed, with the measured failure behind it. Restating
 it in the new section would be two statements of one rule, free to drift —
 the migration debt `AGENTS.md`'s own banner describes.
+
+
+## The bean that broke the gate it was opened under
+
+`bun run gates` went red on push 1 with one failure: *"every open bean belongs
+to an epic > the real corpus passes"*. **This bean was the orphan** — created
+with `beans create "<title>"`, which takes a title and nothing else, so it
+landed parentless and went straight to the roadmap's Miscellaneous section.
+
+Parented to `ahvw` (PROCESS: how an agent decides what it does), which is where
+a skill about how an agent hands a preview to a reviewer belongs — not `o3xy`,
+which is the rendered site's own accessibility, and not `yj32`.
+
+**The failure is a small one with a general shape**: `beans create` is the one
+step in this workflow whose output is invisible until a gate reads the whole
+corpus. `todo-manager` already carries §"Check before you create" for the
+duplicate case; the parent case has the same cause — the CLI's one-argument
+form is the convenient one and it produces an incomplete node every time.
