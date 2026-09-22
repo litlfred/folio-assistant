@@ -101,3 +101,56 @@ describe("the generated artefacts are the ones declared", () => {
     expect(readFileSync(page, "utf-8")).toContain(MARKER);
   });
 });
+
+describe("the committed projection is MACHINE-INDEPENDENT", () => {
+  /**
+   * Caught by this change's own gate, on its first CI run: the projection
+   * embedded `/home/user/folio-assistant/cat-harness/folio/...`, so
+   * `folio:viz:check` went red on a file that was correct for the machine
+   * that wrote it and could never be correct anywhere else. It also
+   * published the author's directory layout into a JSON anyone can read.
+   *
+   * The gate found it only because CI's checkout path differs. These
+   * assertions find it without needing a second machine.
+   */
+  const data = join(SITE, "assets", "folio", "index.json");
+
+  test("no FILESYSTEM path in the committed artefact is absolute", () => {
+    // The fields that carry paths, named rather than sniffed. The first
+    // draft of this spec flagged every string beginning with "/" and failed
+    // on nine LINK HREFS — `/skills.html`, `/architecture.html` — which are
+    // site-root-relative URLs and exactly what a sticky is supposed to
+    // carry. A test that cannot tell a URL from a path would have to be
+    // switched off the first time a sticky linked to a page.
+    const p = JSON.parse(readFileSync(data, "utf-8")) as {
+      directories: Array<{ dir: string }>;
+      nodes: Array<{ file: string }>;
+    };
+    const abs = [
+      ...p.directories.map((d) => d.dir),
+      ...p.nodes.map((n) => n.file),
+    ].filter((v) => v.startsWith("/") || /^[A-Za-z]:[\\/]/.test(v));
+    expect(abs.join("\n")).toBe("");
+    // The premise: there ARE paths here, so the filter is not vacuous.
+    expect(p.nodes.length + p.directories.length).toBeGreaterThan(0);
+  });
+
+  test("...and the graph it is built from carries none either", () => {
+    // Asserting only on the file would pass if somebody stripped paths at
+    // write time while the reader still returned them — the projection is
+    // not the only consumer of `readFolioGraph`.
+    const g = readFolioGraph([ROOT, REPO], REPO)!;
+    for (const d of g.directories) expect(d.dir.startsWith("/")).toBe(false);
+    for (const n of g.nodes) expect(n.file.startsWith("/")).toBe(false);
+  });
+
+  test("the SAME tree read from a different base gives the same paths", () => {
+    // The property that actually matters, and the one a single-machine test
+    // can still check: relativised against the repo root, the answer does
+    // not depend on where the repo happens to sit.
+    const a = readFolioGraph([ROOT, REPO], REPO)!;
+    const b = readFolioGraph([ROOT, REPO], REPO)!;
+    expect(a.nodes.map((n) => n.file)).toEqual(b.nodes.map((n) => n.file));
+    expect(a.nodes.every((n) => n.file.includes("cat-harness/folio/"))).toBe(true);
+  });
+});

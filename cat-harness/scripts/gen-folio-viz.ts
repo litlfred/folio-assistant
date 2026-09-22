@@ -64,7 +64,7 @@
  * Exit: 0 written or up to date · 1 stale under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
@@ -107,10 +107,25 @@ export interface FolioGraph {
  * nothing and reports a clean run is worse than one that says it found
  * nothing.
  */
-export function readFolioGraph(roots: string[]): FolioGraph | null {
+export function readFolioGraph(roots: string[], repo?: string): FolioGraph | null {
   const dirs = new Set<string>();
   for (const root of roots) for (const d of directoriesForGraph(root, "folio")) dirs.add(d);
   if (dirs.size === 0) return null;
+
+  // REPO-RELATIVE, AND THE COMMITTED ARTEFACT IS WHY.
+  //
+  // The first version emitted absolute paths, so the projection carried
+  // `/home/user/folio-assistant/cat-harness/folio/...` — the author's own
+  // checkout. CI builds at `/home/runner/work/...`, so `folio:viz:check`
+  // went red on a file that was correct: the artefact could never be
+  // current anywhere but the machine that wrote it, and it published that
+  // machine's directory layout into a JSON anyone can read.
+  //
+  // Caught by the gate this same change added, on its first CI run. Its
+  // siblings (`library/`, `voices/`) already emit relative paths; this one
+  // did not, and nothing said so until the path differed.
+  const base = repo ?? roots[roots.length - 1] ?? "";
+  const rel = (p: string): string => (base ? relative(base, p) : p).split("\\").join("/");
 
   const g: FolioGraph = { directories: [], nodes: [] };
   for (const dir of [...dirs].sort()) {
@@ -134,7 +149,7 @@ export function readFolioGraph(roots: string[]): FolioGraph | null {
             declaredIn: null,
             links: [],
             chars: 0,
-            file,
+            file: rel(file),
           });
           n++;
           continue;
@@ -153,12 +168,12 @@ export function readFolioGraph(roots: string[]): FolioGraph | null {
               }))
             : [],
           chars: String(raw.comment ?? raw.text ?? "").length,
-          file,
+          file: rel(file),
         });
         n++;
       }
     }
-    g.directories.push({ dir, present, nodes: n });
+    g.directories.push({ dir: rel(dir), present, nodes: n });
   }
   return g;
 }
@@ -292,7 +307,7 @@ function emit(path: string, content: string): void {
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const g = readFolioGraph([ROOT, repoRoot]);
+  const g = readFolioGraph([ROOT, repoRoot], repoRoot);
   if (g === null) {
     console.log("  · no folio directory is declared — nothing to publish");
     process.exit(0);
