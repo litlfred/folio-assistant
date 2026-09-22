@@ -1,0 +1,37 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-layout-norms.ts",
+    "script_hash": "597392be3bd1"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "declared-directories"
+  },
+  "updated_at": "2026-09-22T21:36:01.238Z",
+  "families": {
+    "nested-declaration": {
+      "summary": "A declared directory contained by another declared directory — an asset buried below its stub instead of sitting at `<stub>/<asset>`. A consumer scanning the outer graph must then decide whether the inner one's nodes are also its own (bean `x4v4`), and every count computed from that sweep depends on the answer. Known pairs are baselined so outstanding work does not fail the gate; a pair not in the baseline does.",
+      "count": 4,
+      "entries": [
+        {
+          "pair": "agent-skills: skills contains skills/voices",
+          "known": true
+        },
+        {
+          "pair": "folio-assistant-core: skills contains skills/voices",
+          "known": true
+        },
+        {
+          "pair": "folio-assistant-sci: skills contains skills/voices",
+          "known": true
+        },
+        {
+          "pair": "who-style-guide: skills contains skills/voices",
+          "known": true
+        }
+      ]
+    }
+  },
+  "total": 4
+}

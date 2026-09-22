@@ -934,6 +934,14 @@ jobs:
           # a citation that claims to resolve and does not is worse than
           # none, because every listing reads it as backed.
           bun run check:methodology-evidence
+          # The layout norm, ENFORCED AS A RATCHET rather than as a gate
+          # on the whole corpus: no declared directory sits inside another
+          # declared directory, with the four `skills/voices` nestings that
+          # exist today baselined. A pair not in the baseline fails, so
+          # `cat-harness` — which reached zero on 2026-09-22 and has no
+          # baseline entry — cannot regress. Owner: "follow established
+          # norms on layout. qa to enforce."
+          bun run check:layout-norms
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
