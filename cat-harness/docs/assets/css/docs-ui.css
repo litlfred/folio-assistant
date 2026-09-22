@@ -2748,6 +2748,94 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 .fa-sticky-layer:empty { display: none; }
 
+/* ── THE GLASS — R25's pull-down folio ────────────────────────────────
+ *
+ * Owner: *"the user in visualization should be able to pull down their
+ * folio"*, and *"pulling down folio panel = glass/window on which stikcy
+ * notes/avatrs of materialized assets … are visualized."*
+ *
+ * CLOSED, THE LAYER IS WHAT IT ALWAYS WAS: a coordinate frame that passes
+ * every pointer through, so a pinned sticky floats over the page and the page
+ * underneath stays usable. Only `open` makes it a surface.
+ *
+ * `pointer-events` IS THE WHOLE MECHANISM and it is why this is not a new
+ * element. A glass that captured clicks while closed would make every page it
+ * is mounted on — which is now every page — unusable, and it would do so
+ * invisibly, since a transparent full-viewport div looks like nothing at all.
+ */
+.fa-sticky-layer[data-fa-glass="open"] {
+  pointer-events: auto;
+  /* Translucent rather than opaque: the point of a glass is that you can see
+     what you were browsing underneath it. */
+  background: rgba(20, 20, 24, 0.55);
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer[data-fa-glass="open"] {
+  background: rgba(240, 240, 244, 0.72);
+}
+
+/* The sheet is the glass's own chrome and is ALWAYS present, which is what
+   keeps `:empty` above from hiding an open glass that holds no cards yet. It
+   is inert while closed — `visibility` rather than `display`, so a card the
+   board floats into the layer is unaffected either way. */
+.fa-glass-sheet {
+  position: absolute;
+  inset: 0;
+  padding: 3rem 1rem 1rem;
+  overflow: auto;
+}
+.fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
+
+/* "Nothing here" is a STATE, not a failure — and saying so is the difference
+   between a tidy glass and a broken one. */
+.fa-glass-empty {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 1px dashed var(--fa-rule, rgba(128, 128, 128, 0.5));
+  border-radius: var(--fa-folio-radius, 0);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* The handle. ABOVE the layer's own z-index, so it stays reachable while the
+   glass is open — `l4zi`: an action whose inverse is not reachable is not a
+   toggle, and a glass you can only leave by guessing at Escape is exactly
+   that. */
+.fa-glass-handle {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 91;
+  /* SC 2.5.8's 24px floor, and this instance's profile is low-dexterity, so
+     the floor is the point rather than a minimum to argue down from. */
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-top: 0;
+  border-radius: var(--fa-folio-radius, 0);
+  background: var(--sidebar-color, #27262b);
+  /* AN EXPLICIT FOREGROUND, never `inherit`, and this cost an a11y failure
+     before it was written: axe measured 1.39:1, `#000000` on `#27262b`.
+     The handle is appended to `document.body`, so there is nothing above it
+     to inherit from but the document default — a control that carries its own
+     BACKGROUND and leans on an inherited FOREGROUND is `23bc` again, and
+     being body-level is what makes it certain rather than likely.
+     12.46:1 on the dark chrome, computed rather than eyeballed. */
+  color: #e8eaed;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+:root[data-fa-scheme="light"] .fa-glass-handle {
+  background: #e8eaed;
+  border-color: #767d88;           /* 3.44:1 as a boundary, SC 1.4.11 */
+  color: #1f2933;                  /* 12.24:1 */
+}
+.fa-glass-handle:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
  *
