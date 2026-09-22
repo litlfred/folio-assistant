@@ -663,6 +663,42 @@
      */
     min-width: 0;
     align-items: flex-start;
+    /* THE THREE REGIONS, and this is where they stop being a convention.
+     *
+     * `navbar.ts` has had them since it was extracted: `.fa-nav-top` at
+     * `0 0 auto`, `.fa-nav-graphs` at `1 1 auto; min-height:0; overflow-y:auto`
+     * and `.fa-nav-bottom` at `0 0 auto`. THIS side had `overflow-y: auto` on
+     * `.side-bar` itself -- ONE scroll box -- so the harness tabs scrolled off
+     * the bottom with everything else. The owner's layout is explicit that they
+     * must not: *"KG libraries is a scrollable stacks between fixed top an
+     * bottom parts of navbar menu/tab."*
+     *
+     * `hidden`, not `auto`: the column no longer has anything to scroll, and
+     * leaving `auto` here gives a second scrollbar that appears only when a
+     * rounding error makes the column one pixel too tall. */
+    overflow: hidden;
+  }
+
+  /* The theme's own children ARE the regions, so nothing is re-ordered and
+   * `sidebar.html` is not overridden -- the same refusal this file already
+   * makes for the `☰`'s placement.
+   *
+   * Written as "every child is fixed, then `.site-nav` absorbs" rather than as
+   * three selectors, because the theme resolves through `remote_theme` and is
+   * not in this checkout: the count of `.side-bar`'s children is a fact about
+   * a gem, and a rule that names each one by hand is a rule that breaks on the
+   * next theme bump. `0 0 auto` for an unknown fourth child is the safe
+   * default -- it keeps its own height, which is what it had. */
+  .side-bar > * { flex: 0 0 auto; }
+  .side-bar > .site-nav {
+    /* `min-height: 0` is NOT optional, and it is the whole mechanism. A flex
+     * child defaults to `min-height: auto`, which refuses to shrink below its
+     * content, so the column grows past the viewport and the fixed bottom is
+     * pushed off the screen -- taking the harnesses and home with it. That is
+     * the same sentence `navbar.ts` carries over its own middle region, and it
+     * is here because the failure is identical, not because it was copied. */
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -746,13 +782,25 @@
 
   /* THE CLOSE CONTROL. Only while pinned open -- an `[x]` alone in a 3.5rem
      strip would be the only thing in it and would read as a close button for
-     the page. `sticky` so it survives the inner scroll. */
+     the page.
+
+     `absolute`, NOT `sticky`, and the change is forced by the regions above.
+     `sticky; top: 0` lifted this to the top of `.side-bar`'s scroll -- which
+     worked only because `.side-bar` WAS the scroll container. It no longer is,
+     and this control is painted from `.site-footer`, the LAST of the sidebar's
+     children, so a sticky one would have sat at the BOTTOM of the navbar.
+
+     Anchored instead to `.side-bar`, which is `position: fixed` at this
+     breakpoint and therefore a containing block. Same argument the `☰` above
+     already makes and for the same reason: where a label is PAINTED is free of
+     where it sits in the markup, so neither control needs the theme's
+     `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
-    position: sticky;
+    position: absolute;
     top: 0;
-    z-index: 1;
-    float: right;
+    right: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3971,13 +4019,103 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * `:has()` scopes this to the footer that carries OUR block, so a future
  * footer with ordinary footer content keeps the theme's layout.
  */
-.site-footer:has(> .fa-harness-tabs) {
+.site-footer:has(.fa-nav-home) {
   position: static;
-  width: 100%;
+  /* `var(--fa-nav-open)`, NOT `100%`, and the difference is a measured defect.
+   *
+   * This said `width: 100%` and was correct when written: the sidebar had one
+   * width and 100% of it WAS the open width. The icon strip then landed, 100%
+   * became `3.5rem`, and the harness tabs began wrapping to about one
+   * character per line. Measured in a browser 2026-09-22 at 1280x900: the
+   * footer laid out **55px wide and 5262px tall**, inside a 900px column.
+   *
+   * It was invisible because every label in the strip is held at `opacity: 0`,
+   * so the only symptom was a scrollbar on a collapsed navbar. `.side-bar > *`
+   * already carries the right value and says why; this rule was simply beating
+   * it on specificity, which is the whole failure.
+   *
+   * Scoped to `.fa-nav-home` rather than `> .fa-harness-tabs` because the tabs
+   * moved into the scrolling stack below, and home renders even when no tile
+   * does — so this now matches exactly when our block is present, which is
+   * what the original `:has()` was for. */
+  width: var(--fa-nav-open);
   padding-right: 0;
   padding-left: 0;
   /* The theme's `!important` has to be answered in kind. */
   font-size: 0.75rem !important;
+
+  /* THE FIXED BOTTOM, as a column of its own: the stack scrolls, home does
+   * not. `min-height: 0` for the same reason it appears on the middle region
+   * — without it a flex child refuses to shrink below its content and the
+   * cap below does nothing.
+   *
+   * `!important` ON THE DISPLAY, and it is not belt-and-braces. The theme puts
+   * `d-md-block` on this element, which is `display: block !important` from
+   * `mq(md)` up — so a plain `display: flex` loses and every flex value below
+   * goes inert. MEASURED: the footer computed `display: block`, the stack took
+   * its full 1044px instead of shrinking, and home landed at y=1510 in a 900px
+   * viewport — rendered, clipped, and unreachable. The same answer this rule
+   * already gives the theme's `font-size` two lines down, for the same
+   * reason. */
+  display: flex !important;
+  flex-direction: column;
+  min-height: 0;
+  /* AT MOST HALF THE NAVBAR.
+   *
+   * Not a taste number and not tuned to today's content: the owner's three
+   * regions each have a job, and a "fixed" bottom that may take the whole
+   * column has taken the middle's job away. Half is the largest share that
+   * cannot crowd the other two out, and it is the only fraction with that
+   * property. Beyond it the stack scrolls, which is why the cap costs no
+   * reachability. */
+  max-height: 50%;
+  overflow: hidden;
+}
+
+/* The harnesses, between the cap and home. */
+.fa-nav-bottom__stack {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* HOME, PINNED BELOW THE STACK — *"keep home at bottom for who iris."*
+ *
+ * `flex: 0 0 auto`, so folding or scrolling the harnesses cannot take it with
+ * them. It is the one destination that must stay reachable when everything
+ * else is collapsed, which is also why the markup puts it outside both
+ * `<details>`. */
+.fa-nav-home {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 var(--fa-nav-pad);
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+  color: inherit;
+  text-decoration: none;
+}
+
+.fa-nav-home:hover,
+.fa-nav-home:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+}
+
+.fa-nav-home__mark {
+  flex: none;
+  width: var(--fa-nav-mark);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.fa-nav-home__label {
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* ═══ THE HARNESS DIVIDERS ═════════════════════════════════════════════════
@@ -4007,6 +4145,58 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * both schemes are derived, so no tab can be authored legible in one mode and
  * invisible in the other.
  * ───────────────────────────────────────────────────────────────────────── */
+
+/* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
+ *
+ * `harness-tiles.ts` writes `tone` as an ANGLE — 268, 236, 96, 0 — and this
+ * file's own comments say so twice: *"the avatar's declared hue, passed in as
+ * `--fa-tile-tone`"*. Nine rules then fed that angle straight to
+ * `color-mix()` and to a `border-left` shorthand.
+ *
+ * MEASURED IN A BROWSER, 2026-09-22, with a control rather than from the spec:
+ *
+ *     --h: 268; background: color-mix(in oklab, var(--h) 28%, transparent)
+ *       -> rgba(0, 0, 0, 0)          INVALID at computed-value time
+ *     --h: 268; background: hsl(var(--h) 45% 28%)
+ *       -> rgb(69, 39, 104)          works
+ *
+ * So every harness divider rendered with **no background and no left stripe**.
+ * The coloured tabs the owner asked for — *"as if you are opening a giant
+ * tabbed folio"* — had no colour at all, and nothing caught it because an
+ * invalid custom-property substitution fails SILENTLY: no parse error, no
+ * console warning, just the initial value.
+ *
+ * THE TWO LIGHTNESSES ARE THE AVATAR GENERATOR'S OWN, not new ones:
+ * `hsl(<tone> 46% 34%)` light and `hsl(<tone> 42% 72%)` dark, from
+ * `gen-avatars-css.ts` — the same pair `.fa-site-mark--masked` already uses.
+ * Picking a third here would remove one colour vocabulary while adding
+ * another.
+ *
+ * `--fa-tile-on` IS THE ABSENCE, and it is why the saturation is computed
+ * rather than declared. `GENERIC.tone` is **0**, and it means *"a question
+ * mark — no avatar is declared for this kind"*, NOT red. Nine of the fourteen
+ * harnesses are generic today, so saturating hue 0 would paint two thirds of
+ * the navbar red on the strength of a missing declaration. At `0` the
+ * saturation computes to `0%` and the divider is grey, which is what an
+ * absence looks like.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-harness-tab,
+.fa-harness-section {
+  --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(46% * var(--fa-tile-on, 0)) 34%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-fa-scheme="light"]) .fa-harness-tab,
+  :root:not([data-fa-scheme="light"]) .fa-harness-section {
+    --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+  }
+}
+
+:root[data-fa-scheme="dark"] .fa-harness-tab,
+:root[data-fa-scheme="dark"] .fa-harness-section {
+  --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+}
 
 .fa-harness-tabs {
   width: 100%;
@@ -4076,8 +4266,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   /* The tab shape: square where it meets the spine, rounded where it sticks
    * out. Horizontally oriented, per the owner's photo turned on its side. */
   border-radius: 0 0.375rem 0.375rem 0;
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 28%, transparent);
-  border-left: 0.375rem solid var(--fa-tile-tone, #888);
+  background: color-mix(in oklab, var(--fa-tile-ink) 28%, transparent);
+  border-left: 0.375rem solid var(--fa-tile-ink);
   color: inherit;
   font-weight: 600;
   text-decoration: none;
@@ -4085,17 +4275,17 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) .fa-harness-tab__body {
-    background: color-mix(in oklab, var(--fa-tile-tone, #888) 34%, transparent);
+    background: color-mix(in oklab, var(--fa-tile-ink) 34%, transparent);
   }
 }
 
 :root[data-fa-scheme="dark"] .fa-harness-tab__body {
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 34%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 34%, transparent);
 }
 
 a.fa-harness-tab__body:hover,
 a.fa-harness-tab__body:focus-visible {
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 48%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 48%, transparent);
   text-decoration: none;
   /* The reach-for gesture, made visible: the tab comes out a little. */
   transform: translateX(0.125rem);
@@ -4106,6 +4296,39 @@ a.fa-harness-tab__body:focus-visible {
    * than no link. */
   opacity: 0.55;
   cursor: default;
+}
+
+/* THE MARK — the harness's avatar, or its initial.
+ *
+ * Sized to `--fa-nav-mark`, the SAME column `navbar.ts` gives its own mark, so
+ * the two surfaces line their labels up at the same x. That is the point of
+ * the shared geometry record: the strip is exactly this column and its two
+ * gutters, on both sides.
+ *
+ * An INITIAL rather than a placeholder glyph when nothing is declared —
+ * `navbar.ts`'s own rule, and the reason is the same one: `603s` reports "no
+ * avatar declared" as a finding elsewhere, and a navbar is not the place to
+ * render a gap as a `?`. Nine of fourteen harnesses take this branch today, so
+ * it is the common case and not the edge. */
+.fa-harness-tab__mark {
+  flex: none;
+  width: var(--fa-nav-mark);
+  height: var(--fa-nav-mark);
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+.fa-harness-tab__mark--initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.1875rem;
+  /* The tone, at the strength the mark can carry. A generic harness computes
+   * this to grey, for the reason the `--fa-tile-ink` block above gives. */
+  background: color-mix(in oklab, var(--fa-tile-ink) 55%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .fa-harness-tab__label {
@@ -4191,9 +4414,9 @@ a.fa-harness-tab__body:focus-visible {
 .fa-harness-section {
   margin: 1rem 0;
   padding: 0.75rem 1rem;
-  border-left: 0.375rem solid var(--fa-tile-tone, #888);
+  border-left: 0.375rem solid var(--fa-tile-ink);
   border-radius: 0 0.375rem 0.375rem 0;
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 10%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 10%, transparent);
 }
 
 .fa-harness-section__title {
@@ -4636,7 +4859,7 @@ a.fa-harness-tab__body:focus-visible {
  * reader who cannot see the outline still has to be told what their arrow keys
  * now do. */
 .fa-board-window[data-fa-moving="true"] {
-  outline: 2px dashed var(--fa-tile-tone, currentColor);
+  outline: 2px dashed var(--fa-tile-ink, currentColor);
   outline-offset: 2px;
 }
 
