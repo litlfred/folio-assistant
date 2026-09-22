@@ -6793,6 +6793,13 @@
           "array": true
         },
         {
+          "name": "renamedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Former labels — see `BlockBase.renamedFrom` in `schemas/types.ts`."
+        },
+        {
           "name": "foreshadows",
           "type": "z.array(z.string()).optional()",
           "optional": true,
@@ -25918,6 +25925,13 @@
           "optional": false,
           "array": false,
           "doc": "Label following project convention (e.g. \"def:quantum-universe\")."
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Labels this block was previously known by, oldest first."
         },
         {
           "name": "title",

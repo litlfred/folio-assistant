@@ -1275,14 +1275,14 @@
     {
       "id": "folio-assistant-5xzc",
       "title": "QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:32:13Z",
       "preview": "Owner: *\"blocks are in the knoledge graph folio/. QA, to manage IDs\"*.\n\n**Why first.** Every other child keys on the block id. A diff matches blocks\nacross `main` and STAGING by id, a review comment anchors to an id, and a heat\nmap aggregates by id. If ids drift, the diff reads everything as removed and\nre-added, and every comment orphans. That is how this whole epic fails.\n\n**Measured 2026-09-22.",
       "file": "beans/defs/folio-assistant-5xzc--qa-block-ids-in-the-folio-graph-are-unique-and-sta.md"
     },
@@ -5330,7 +5330,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:29Z",
-      "updatedAt": "2026-09-22T21:25:28Z",
+      "updatedAt": "2026-09-22T21:44:56Z",
       "preview": "## What this is\n\nOwner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), verbatim across four\nturns because each one moved the scope:\n\n> learn skills for document review for large things like a DAK or L1 digital\n> transofrmation hadbook. use it to develop tools in redendering/visauatlion as\n> part of docuemnt editiing and review process. will use feature branch\n> /staging for comparison against main",
       "file": "beans/defs/folio-assistant-q4jm--large-document-review-a-review-visualiser-for-a-fo.md"
     },
