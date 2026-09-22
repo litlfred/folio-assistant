@@ -95,29 +95,21 @@ const ROOT_TYPES = new Set(["milestone", "epic"]);
 /**
  * The types a parent may have.
  *
- * An epic's parent is a milestone, a feature's is an epic, and a task's is
- * either — so all three are acceptable rather than only `epic`. Nothing
- * wider: parenting a task to a task nests the roadmap somewhere nobody looks,
- * which is the original reason this constraint exists.
+ * `milestone -> epic -> feature -> task/bug`, which is the hierarchy
+ * `beans prime` states. Nothing wider: parenting a task to a task nests the
+ * roadmap somewhere nobody looks, which is the original reason this
+ * constraint exists.
  *
- * ## `feature` was missing, and that was a CONTRADICTION rather than an omission
+ * `feature` WAS MISSING and the owner settled it, 2026-09-22 (`itka` finding
+ * 2, issue #941): a feature is a real tier that may hold tasks, not a label.
+ * Until then this set omitted it while the file's own header quoted the
+ * four-tier sentence to justify `ROOT_TYPES` — the check cited the rule and
+ * then contradicted it.
  *
- * `itka` finding 2. This set held `{milestone, epic}`, so a task parented to a
- * FEATURE was refused — while this file's own header quotes `beans prime`'s
- * hierarchy, `milestone -> epic -> feature -> task/bug`, to justify
- * `ROOT_TYPES`. It cited the sentence and then contradicted it.
- *
- * Two readings were possible and they are not equivalent: either `feature` is
- * a real tier and this set was missing it, or `feature` is a label and the
- * hierarchy sentence was wrong. **Which one is true changes where existing
- * beans belong**, so it was not settleable by editing a checker — the owner
- * ruled 2026-09-22 that `feature` IS a tier.
- *
- * MEASURED at that ruling, and the number is why this is forward-looking
- * rather than a repair: **45 beans are typed `feature`**, every one parented
- * to an epic, and **none has a child**. So no existing bean was being refused;
- * what was refused was the shape nobody could create. A store can use a type
- * heavily and still never exercise the rule the type implies.
+ * MEASURED BEFORE THE RULING, so the choice was not made blind: 51 beans are
+ * typed `feature`, exactly 2 hang from one and neither is open, and 25 of 25
+ * open features hang from an epic. The omission had no live victim; what it
+ * decided was what is allowed NEXT.
  */
 const PARENT_TYPES = new Set(["milestone", "epic", "feature"]);
 
@@ -125,9 +117,25 @@ const PARENT_TYPES = new Set(["milestone", "epic", "feature"]);
  * Where each type sits in `beans prime`'s hierarchy, lower being higher up.
  *
  * Used for DIRECTION, which `PARENT_TYPES` cannot express: that set says a
- * type is allowed to be somebody's parent, not that it is allowed to be THIS
- * bean's parent. Before `feature` joined it the two questions happened to
- * coincide; they do not any more.
+ * type is ALLOWED TO BE SOMEBODY'S parent, not that it is allowed to be THIS
+ * bean's parent. While the set held only the two root types those questions
+ * coincided. A middle tier separates them.
+ *
+ * ## Why this is a DELTA over #953 rather than a duplicate of it
+ *
+ * #953 closed the same hole with `b.type === "epic" && p.type !== "milestone"`
+ * — stated positively, which is right, and which is why that rule is kept
+ * below unchanged. But it guards **epics only**. Widening `PARENT_TYPES`
+ * admits two inversions and #953's form catches one of them:
+ *
+ * | shape | caught by the epic rule | caught by RANK |
+ * |---|---|---|
+ * | an `epic` under a `feature`   | yes | yes |
+ * | a `feature` under a `feature` | **no** | yes |
+ *
+ * MEASURED, not argued: against merged `main` at `b7f8945b`, a five-bean
+ * fixture (`m1` <- `e1` <- `f1` <- `f2`) reported `problems: []`. A feature
+ * nested in a feature passes today.
  *
  * A type absent here is not ranked and is not direction-checked — the rule
  * declines to judge what the hierarchy does not mention, rather than guessing
@@ -218,35 +226,70 @@ export function checkBeanParents(root: string): BeanParentsReport {
         key: key(b.id, "parent-type"),
         message: `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not a milestone, epic or feature`,
       });
-    } else if (RANK[b.type ?? ""] !== undefined && RANK[p.type ?? ""] !== undefined && RANK[p.type ?? ""]! >= RANK[b.type ?? ""]! && !(b.type === "epic" && p.type === "epic")) {
-      // ADDING `feature` TO `PARENT_TYPES` WIDENS MORE THAN IT LOOKS. On its
-      // own it would also permit an epic hanging from a feature, and a feature
-      // nesting inside a feature — an INVERTED hierarchy, silently, because
-      // every such parent has an allowed type.
-      //
-      // So the direction is checked rather than only the type: a parent must
-      // sit strictly HIGHER than its child. That subsumes epic-under-epic,
-      // which keeps its own branch below purely so its baseline key and its
-      // specific wording survive; without that, `d308`'s recorded entry would
-      // stop matching and be reported stale by a change that repaired nothing.
+    } else if (b.type === "epic" && p.type !== "milestone") {
+      /* AN EPIC HANGS FROM A GOAL, and from nothing else. `beans prime`'s
+       * hierarchy says so: milestone -> epic -> feature -> task/bug.
+       *
+       * STATED POSITIVELY rather than as "not another epic", which is what it
+       * said until `feature` joined `PARENT_TYPES` (owner's ruling, 2026-09-22).
+       * The old form tested one wrong parent out of the set; widening
+       * `PARENT_TYPES` silently made `epic -> feature` legal, which inverts the
+       * hierarchy — a goal's child hanging off one of its own grandchildren.
+       * The general form cannot be holed that way by a later addition.
+       *
+       * Its own case rather than a narrower `PARENT_TYPES`, because the two
+       * are not the same rule — a task's parent may be an epic and this one
+       * may not — and because the message can then say WHY rather than
+       * "wrong type".
+       */
+      found.push({
+        key: key(b.id, "epic-under-epic"),
+        message:
+          `${where}: an epic's parent is a \`milestone\` (a goal) — ` +
+          // Typed rather than prosed: "is a epic" is what an article in a
+          // template gets you, and the fix is to stop needing one.
+          `\`${b.parent}\` has type \`${p.type || "none"}\``,
+      });
+    } else if (RANK[b.type ?? ""] !== undefined && RANK[p.type ?? ""] !== undefined && RANK[p.type ?? ""]! >= RANK[b.type ?? ""]!) {
+      /* ADDING `feature` TO `PARENT_TYPES` WIDENS MORE THAN IT LOOKS. On its
+       * own it also permits an epic hanging from a feature, and a feature
+       * nesting inside a feature — an INVERTED hierarchy, silently, because
+       * every such parent has an allowed type.
+       *
+       * So the direction is checked rather than only the type: a parent must
+       * sit strictly HIGHER than its child.
+       *
+       * ## What this adds OVER the epic rule below, which #953 already fixed
+       *
+       * That rule is the positive form — an epic's parent IS a milestone —
+       * and it is right. It guards EPICS. It does not reach a `feature`
+       * nested in a `feature`, because its guard is `b.type === "epic"`.
+       * Measured against merged `main` at `b7f8945b`: a fixture
+       * `m1 <- e1 <- f1 <- f2` reported `problems: []`.
+       *
+       * ## ORDER IS LOAD-BEARING: this runs AFTER the epic rule, not before
+       *
+       * Every epic whose parent is not a milestone is already caught above,
+       * with the key `epic-under-epic` and #953's wording. So this branch
+       * only ever sees NON-epic children, and it needs no escape hatch for
+       * epic-under-epic — an earlier draft carried one, written against the
+       * old negated rule, and it became dead weight the moment #953's
+       * positive form landed.
+       *
+       * Putting it first instead is what an earlier draft of this merge did,
+       * and it is wrong twice: `d308`'s baseline key would change from
+       * `epic-under-epic` to `parent-not-higher`, so the recorded entry
+       * would be reported STALE by a change that repaired nothing — the
+       * baseline may only shrink, and only for the right reason — and #953's
+       * own tests, which assert the epic message by name, would go red for a
+       * rule that had not actually changed.
+       */
       found.push({
         key: key(b.id, "parent-not-higher"),
         message:
           `${where}: a \`${b.type}\` hangs below a \`${p.type}\` in ` +
           "`milestone -> epic -> feature -> task/bug`, so `" +
           `${b.parent}\` cannot be its parent`,
-      });
-    } else if (b.type === "epic" && p.type === "epic") {
-      // Epics nest under a GOAL, not under each other, and `beans prime`'s
-      // hierarchy says so: milestone -> epic -> feature -> task/bug. Its own
-      // case rather than a narrower PARENT_TYPES, because the two are not the
-      // same rule — a task's parent may be an epic, and this one may not — and
-      // because the message can then say WHY instead of "wrong type".
-      found.push({
-        key: key(b.id, "epic-under-epic"),
-        message:
-          `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
-          `\`${b.parent}\` is an epic`,
       });
     }
   }
@@ -273,21 +316,34 @@ export function formatReport(r: BeanParentsReport): string {
   if (r.problems.length === 0) {
     /* THE CLAIM IS EARNED ONLY WHEN THE BASELINE IS EMPTY.
      *
-     * Making the rule reachable (`itka`, #941) was necessary and not
-     * sufficient: with `d308` recorded, this printed
+     * #953 fixed the WORDING — the old line named the wrong shape twice over,
+     * since parents may be features and the epic rule requires a milestone
+     * rather than merely forbidding another epic — and that wording is kept.
      *
-     *   ✓ ... and no epic hangs from another
-     *   · outstanding (baselined): ... `folio-assistant-zzmr` is an epic
+     * It did not fix the QUANTIFIER, and that is this branch's second delta.
+     * `d308` is baselined, so on `main` at `b7f8945b` the check prints, in
+     * these two adjacent lines:
+     *
+     *   ✓ every open bean hangs from a milestone, epic or feature, and every
+     *     epic from a milestone
+     *   · outstanding (baselined): folio-assistant-d308 …: an epic's parent is
+     *     a `milestone` (a goal) — `folio-assistant-zzmr` has type `epic`
      *
      * — a universal asserted on one line and refuted on the next. That is the
      * defect this check was repaired FOR, surviving inside the repair, and it
-     * is why "no NEW" is not pedantry: a reader who stops at the tick is
-     * entitled to believe it.
+     * is why "NEW" is not pedantry: a reader who stops at the tick is entitled
+     * to believe it.
+     *
+     * The baselined branch says NEW rather than dropping the claim, because
+     * the check does still guarantee something — the count cannot grow — and
+     * saying nothing would understate it as badly as the universal overstates
+     * it.
      */
     out.push(
       r.outstanding.length
-        ? "  ✓ every open bean is placed under an epic or a milestone, and no NEW epic hangs from another"
-        : "  ✓ every open bean is placed under an epic or a milestone, and no epic hangs from another",
+        ? "  ✓ every open bean hangs from a milestone, epic or feature, and every NEW epic from a milestone" +
+          ` — ${r.outstanding.length} baselined defect(s) below, which this check holds level rather than clears`
+        : "  ✓ every open bean hangs from a milestone, epic or feature, and every epic from a milestone",
     );
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);

@@ -136,3 +136,51 @@ author it, and a policy decision on somebody else's process is theirs.
 *"Consider whether `process-model.ts` should keep defaulting."* Making the
 attribute required is the stronger fix and it breaks every downstream
 instance's diagrams. Nothing here moves it.
+
+## Re-measured 2026-09-22 (`osyc`) — and a fourth state this bean did not have
+
+The corpus moved: `cat-harness/processes/` holds **51**, the repository **62**.
+This bean's `16 of 33` and its 6/11/16 split are stale, and re-measuring them
+turned up a case neither this bean nor `prhr` had a slot for.
+
+| | this bean's scope (`cat-harness/processes/`, 51) | repo-wide (62) |
+|---|---|---|
+| no `folio:policy` element | 14 | **23** |
+| `enforcement="strict"`, explicit | 21 | **22** |
+| `enforcement="advisory"`, explicit | 16 | **16** |
+
+Repo-wide those are 61, not 62. The missing file is the fourth state:
+
+    cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn:83
+        <folio:policy relaxable="false"/>
+
+**A policy element that states no enforcement.** Not absence — somebody opened
+the element and wrote a different attribute in it. `loadProcessModel` reads it
+as `strict`, the same as absence, so the engine is right and nothing is
+mis-gated; the safe direction still holds, exactly as this bean's original
+"not a bug report" says.
+
+What it breaks is the *count*, because this bean and `prhr` measure the question
+with two different oracles and call both answers the same thing:
+
+- this bean: `grep -L 'folio:policy'` — **the element**. → 23 repo-wide.
+- `prhr` / `gen-processes-viz.ts`: `/<folio:policy[^>]*\benforcement\s*=/` —
+  **the value**. → 24 repo-wide.
+
+Both are defensible and they are not the same question. The published index
+reports 24 under a field whose own comment (`gen-processes-viz.ts:88`) says
+*"whether the FILE declares a policy"* — which is the element reading, so the
+comment describes a measurement the code does not take. The code's reading is
+the one the three-state argument actually wants (*somebody chose* vs *nobody
+said*), so the correction belongs on the comment and on `prhr`'s prose, not on
+the regex.
+
+Cross-check, two independent oracles agreeing:
+
+    22 explicit strict + 23 no-element + 1 policy-without-enforcement = 46
+    loadProcessModel's strict count                                   = 46 ✓
+    46 strict + 16 advisory                                           = 62 ✓
+
+So this bean's cost statement stands and gains one line: the file no longer
+records a decision **and**, in one case, records the act of writing a policy
+without recording the decision it was for.

@@ -62,120 +62,148 @@ it is the owner's call rather than a checker's.
 ## Done when
 
 - [x] The root exclusion is narrowed to the has-a-parent rule; the
-      epic-under-epic branch is reachable. The loop now runs over EVERY open
-      bean and roots `continue` only on the missing-parent case
-- [x] Falsified: an epic parented to an epic turns it red, and did not before.
-      Restoring the old one-line filter turns **4** of the 12 new tests red —
-      the epic-under-epic case plus the two dangling/wrong-type cases that also
-      never reached a root — and restoring the fix turns them green
-- [x] `d308` is reported as **outstanding** for its owner, not failed on.
-      `bean-parents-baseline.json` carries the single pair; a NEW one fails, and
-      a **stale** entry fails too, so the file can only shrink (verified by
-      adding a bogus entry and watching it exit 1)
+      epic-under-epic branch is reachable
+- [x] Falsified: an epic parented to an epic turns it red, and did not before
+- [x] `d308` is reported as **outstanding** for its owner, not failed on
 - [x] Finding 2 is put to the owner as a question and its answer recorded here
-      before `PARENT_TYPES` is touched
+      before `PARENT_TYPES` is touched — **asked with the numbers, answered
+      2026-09-22: a feature IS a tier**. See the ruling below.
 
-## Finding 1 — fixed 2026-09-22
+---
 
-**The branch was provably dead, and the summary asserted it.** Measured before
-touching anything: **0 epics** among the **179** open beans the loop ran over,
-because `ROOT_TYPES` was applied to the whole filter rather than to the
-has-a-parent rule alone.
+## Finding 1 shipped 2026-09-22 — #941, PR #942, merged `fc36f70429`
 
-The fix is the scope, not the rule. The loop now runs over every open bean;
-a root `continue`s only on the missing-parent case, and the three rules about
-the parent a bean **actually declares** — exists, right type, not an epic under
-an epic — reach roots like everything else.
+The rule is reachable. The root exclusion now lives on the has-a-parent
+branch alone; `open` still counts what sits below the roots, so no historical
+reading of this report changes meaning. `d308 -> zzmr` is recorded in
+`cat-harness/scripts/bean-parents-baseline.json` — listed, never failed, and
+the file can only shrink because an entry nothing matches is reported stale
+and does fail.
 
-**That turned out to matter for more than the one branch.** Narrowing the scope
-also made two other rules reachable for roots, which the bean had not noticed:
-an epic with a **dangling** parent, and an epic parented to a **task**. Both now
-have tests. Neither has a live instance today, so the fix surfaces nothing new
-there — but they were as unreachable as the branch this bean was opened for.
+Falsified five ways, each restored. The one worth keeping: restoring the old
+filter with a live epic-under-epic present makes the check print
+*"✓ … and no epic hangs from another"* verbatim. Recorded honestly — that run
+also exits 1, but from the NEW stale-detection rather than from the rule, so
+the evidence is the line and not the status.
 
-**What it surfaces: exactly one pair,** `d308 -> zzmr`, which is what the bean
-predicted. Baselined rather than fixed: re-homing it moves somebody else's work
-in the roadmap, and `bean-coordination` is explicit that an outstanding defect
-is the bean **owner's** to repair.
+**This bean's own count was stale**: it says 2 epics hang from an epic and the
+store holds 1. The other was re-homed as a root after this was written.
 
-**The summary line was the last trap.** With the baseline in place the check
-went green while still printing *"no epic hangs from another"* over a known
-pair — reproducing this bean's own defect one line further down. It now reads
-*"no **NEW** epic hangs from another"* whenever the baseline is non-empty, and
-lists each outstanding pair **whether or not anything failed**: a backlog that
-only prints on a red run is invisible on exactly the days somebody would act on
-it.
+## Finding 2 MEASURED 2026-09-22, and it is still the owner's call
 
-`bun run gates` — 122 of 122. 12 new tests.
+The question was *"is `feature` a tier that may hold tasks, or a label?"*
+Nobody had said what it would cost to answer either way. Measured across the
+whole store, all statuses:
 
-## Finding 2 — still the owner's, and still not touched
+| | |
+|---|---|
+| beans typed `feature` | **51** (25 open) |
+| beans parented to a feature | **2**, and **0 of them open** |
+| open `feature` beans' own parents | 25 of 25 are epics |
 
-`PARENT_TYPES` is unchanged. Whether `feature` is a real tier or a label
-changes where existing beans belong, and a checker does not get to decide that
-by being edited.
+**So the check refuses nothing today.** `PARENT_TYPES` omitting `feature` has
+no live victim: not one open bean hangs from a feature, and every open feature
+hangs from an epic. The corpus behaves as three tiers
+(`milestone -> epic -> everything else`) while `beans prime` states four.
 
-## Finding 2 — ruled 2026-09-22: `feature` IS a tier
+That does not settle it — a rule with no current victim still decides what is
+allowed NEXT — but it removes the cost argument from both sides, which is what
+made this unanswerable before. Put to the owner with these numbers rather than
+as an abstract choice.
 
-Put to the owner with both readings and **without** the count, deliberately:
-45-of-502 would have made one answer look obvious, and a store with no
-features holding work does not prove `feature` is a label — it proves nobody
-has used it that way yet. **Answer: `feature` is a real tier.**
-`PARENT_TYPES` gains it.
+## OWNER'S RULING, 2026-09-22 — `feature` is a real tier
 
-**Measured after the ruling, and it changes what the fix IS.** 45 beans are
-typed `feature`; **every one is parented to an epic and none has a child.**
-So no existing bean was being refused. What the old set refused was a shape
-nobody could create — the change is forward-looking rather than a repair, and
-`beans create -t task --parent <feature>` now produces something placeable.
+Asked with the measurement rather than as an abstract choice, and answered:
+**a feature may hold tasks.** `PARENT_TYPES` becomes
+`{milestone, epic, feature}`, matching the hierarchy `beans prime` has stated
+all along — so the check stops citing that sentence and contradicting it.
 
-### The widening opened more than one entry in a Set
+Nothing needed re-parenting: the omission had no live victim. What it decided
+was what is allowed next, and the answer is the documented four tiers.
 
-`PARENT_TYPES` answers *"may this type be somebody's parent"*, which is not
-*"may it be THIS bean's parent"*. While it held only the two root types those
-questions coincided. A middle tier separates them, and adding `feature` alone
-would have silently permitted an **epic hanging from a feature** and a
-**feature nested in a feature** — an inverted hierarchy in which every parent
-still has an allowed type.
+### The ruling opened a hole, and it is closed in the same change
 
-So direction is now checked too, by `RANK`: a parent must sit strictly higher
-in `milestone -> epic -> feature -> task/bug`. A type the hierarchy does not
-mention is **not** ranked and not direction-checked — the rule declines to
-judge what `beans prime` never placed rather than inventing a position for it.
+Widening `PARENT_TYPES` makes `epic -> feature` pass the type check. The epic
+rule read `p.type === "epic"` — testing ONE forbidden parent out of the set
+rather than requiring the right one — so the two together would have allowed
+**a goal's child to hang off one of its own grandchildren**. The hierarchy
+inverted, by a one-word addition, with no test failing.
 
-**Falsified independently, which is the part that matters.** Removing the
-direction rule while KEEPING the widening fails exactly the four inversion
-tests — so the guard is doing work the widening does not, rather than
-restating it. Reverting `PARENT_TYPES` fails five.
+Stated positively now: `p.type !== "milestone"`. A requirement cannot be
+holed by a later addition to a set the way a negation can.
 
-The epic-under-epic branch survives even though `RANK` subsumes it: folding it
-in would change its baseline key and report `d308`'s recorded entry as
-**stale** after a change that repaired nothing.
+**Falsified, and the second case is the one worth keeping:**
 
-## Collision with issue #941 — the same defect, fixed twice
+| injected | result |
+|---|---|
+| `PARENT_TYPES` reverted | 2 fail — the feature-tier tests |
+| epic rule reverted to the negation, `feature` KEPT | **1 fail — the inversion guard, by name** |
+| restored | 18 pass |
 
-Finding 1 was fixed on `main` by a sibling session under issue #941 while
-PR #938 was open. Its implementation is canonical here; mine is discarded,
-including my duplicate test file. Its baseline key (`<rule>:<bean-id>`) is
-better than mine (the pair), because a title edit cannot disturb it.
+### Two smaller things fixed while in there
 
-**One thing it shipped that this branch had caught and fixed**, worth
-recording because it is this bean's own defect surviving inside the repair:
-with `d308` baselined, `main`'s summary printed
+**The summary line named the wrong shape twice over.** It said *"every open
+bean is placed under an epic or a milestone, and no epic hangs from another"*
+— parents may be features now, and the epic rule requires a milestone rather
+than merely forbidding an epic. A summary describing a rule the code no longer
+has is this bean's own defect one layer up.
 
-```
-✓ ... and no epic hangs from another
-· outstanding (baselined): ... `folio-assistant-zzmr` is an epic
-```
+**"is a epic".** The message built an article into a template. It reports
+`` has type `epic` `` instead, so there is no article to get wrong.
 
-— a universal asserted on one line and refuted on the next. Its comment read
-*"THE CLAIM IS NOW EARNED ... the sentence stands"*; the sentence did not
-stand. Making the rule reachable was necessary and not sufficient. The tick is
-now narrowed to **"no NEW epic hangs from another"** whenever the baseline is
-non-empty, `formatReport` is exported so that line is testable at all, and a
-test asserts the property — that a universal tick and a listed counterexample
-never appear together — rather than matching one string.
+---
 
-That is the fourth time today a defect found here was independently found by a
-sibling session working the same `main`. Three times theirs was better and
-this branch adopted it. This is the one where reading their output line by
-line was worth more than trusting the verdict.
+## Finding 2 is NOT finished by #953 — two deltas, both reproducible on `main`
+
+_Stream 1/3 (`upgd`), 2026-09-22, on `main` at `b7f8945b`._ The consolidation
+claim listed this PR as *"verify superseded by #953, then close"*. Verified by
+reading both diffs and by probing the merged code — **and the premise is
+false.** Both PRs implement the owner's ruling; they close the hole that
+widening `PARENT_TYPES` opens **differently**, and #953's closure is narrower
+in two ways that are live right now.
+
+### Delta 1 — a `feature` nested in a `feature` passes
+
+#953's epic rule is the positive form, `b.type === "epic" && p.type !==
+"milestone"`. Stated positively is right and it is kept. But its guard is
+`b.type === "epic"`, so it reaches **epics only**. §"The widening was not one
+entry in a Set" named *two* inversions; #953 closes one.
+
+Probed against merged `main` with a five-bean fixture — `m1` <- `e1` <- `f1`
+<- `f2`, plus a legal `t1`:
+
+    problems: []
+    flagged f2 (feature-under-feature)? false
+
+With `RANK` restored on top of #953:
+
+    f2: a `feature` hangs below a `feature` in `milestone -> epic -> feature
+    -> task/bug`, so `f1` cannot be its parent
+
+### Delta 2 — the summary asserts a universal the next line refutes
+
+#953 fixed the summary's WORDING and not its QUANTIFIER. `d308` is baselined,
+so `bun run check:bean-parents` on `main` prints, verbatim, in two adjacent
+lines:
+
+    ✓ every open bean hangs from a milestone, epic or feature, and every epic from a milestone
+    · outstanding (baselined): folio-assistant-d308 (...): an epic's parent is a `milestone` (a goal) — `folio-assistant-zzmr` has type `epic`
+
+That is the defect this bean was opened FOR, surviving inside its own repair.
+The fix keeps #953's wording and quantifies it: **"every NEW epic"** whenever
+the baseline is non-empty, with the outstanding count named, because the check
+does still guarantee that the count cannot grow and dropping the claim would
+understate it as badly as the universal overstates it.
+
+### A third, smaller one
+
+`main`'s `parent-type` message still reads *"not an epic or a milestone"*
+after `feature` became a legal parent.
+
+### What this branch now is
+
+`main` merged in; #953's implementation kept as canonical wherever the two
+overlap. What remains is the delta above — `RANK` and its direction rule, the
+baseline-aware summary, the message fix, and the tests — plus the escape hatch
+that keeps `epic-under-epic` falling through to its own branch so `d308`'s
+baseline key survives and the file shrinks only for the right reason.

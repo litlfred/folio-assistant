@@ -92,8 +92,11 @@ describe("a feature may hold work — the ruling", () => {
 
 describe("the direction is checked, not just the type — what widening opened up", () => {
   test("an EPIC parented to a feature is refused", () => {
-    // `feature` is now an allowed parent TYPE, so only a direction rule
-    // catches this. Without one it would pass silently.
+    // `feature` is now an allowed parent TYPE, so the type check alone lets
+    // this through. #953's epic rule — an epic's parent IS a milestone —
+    // catches it, and runs FIRST, so it keeps the `epic-under-epic` key and
+    // its own wording. The direction rule below is what covers the shapes
+    // that rule cannot see, not this one.
     const p = problems(
       store([
         ["ep1", "in-progress", "epic", ""],
@@ -102,7 +105,7 @@ describe("the direction is checked, not just the type — what widening opened u
       ]),
     );
     expect(p.length).toBe(1);
-    expect(p[0]).toContain("hangs below");
+    expect(p[0]).toContain("an epic's parent is a `milestone`");
   });
 
   test("a feature nested in a feature is refused", () => {
@@ -128,24 +131,33 @@ describe("the direction is checked, not just the type — what widening opened u
     expect(p[0]).toContain("hangs below");
   });
 
-  test("...and the message names BOTH types, so the reader sees the inversion", () => {
+  test("...and the direction message names BOTH types, so the reader sees the inversion", () => {
+    // Asserted on feature-under-feature, which is the shape ONLY the
+    // direction rule reaches: #953's epic rule is guarded on
+    // `b.type === "epic"`, so it never sees this one. Measured against merged
+    // `main` at `b7f8945b`, this fixture reported `problems: []`.
     const p = problems(
       store([
         ["ep1", "in-progress", "epic", ""],
         ["ft1", "in-progress", "feature", "ep1"],
-        ["ep2", "in-progress", "epic", "ft1"],
+        ["ft2", "in-progress", "feature", "ft1"],
       ]),
     );
-    expect(p[0]).toContain("`epic`");
+    expect(p[0]).toContain("hangs below");
     expect(p[0]).toContain("`feature`");
   });
 });
 
 describe("the epic-under-epic case keeps its OWN branch, and that is deliberate", () => {
   test("it still reports the epic-specific wording, not the generic direction one", () => {
-    // The direction rule subsumes it. The branch survives so the baseline key
-    // `epic-under-epic:<id>` keeps matching — folding it in would report
+    // The direction rule would subsume it. The branch survives, and runs
+    // FIRST, so the baseline key `epic-under-epic:<id>` keeps matching —
+    // folding it in, or ordering the direction rule ahead of it, would report
     // `d308`'s recorded entry as stale after a change that repaired nothing.
+    //
+    // The wording asserted here is #953's positive form. This test said
+    // "not another epic" until `main` was merged in; that phrasing described
+    // the negated rule #953 replaced, so it was the TEST that was stale.
     const p = problems(
       store([
         ["ep1", "in-progress", "epic", ""],
@@ -153,7 +165,7 @@ describe("the epic-under-epic case keeps its OWN branch, and that is deliberate"
       ]),
     );
     expect(p.length).toBe(1);
-    expect(p[0]).toContain("not another epic");
+    expect(p[0]).toContain("an epic's parent is a `milestone`");
     expect(p[0]).not.toContain("hangs below");
   });
 });
@@ -185,15 +197,19 @@ describe("the summary never asserts a universal the next line refutes", () => {
   const report = (outstanding: string[]) =>
     formatReport({ store: "beans/defs", open: 3, problems: [], outstanding, stale: [] });
 
+  // #953 fixed this line's WORDING and not its QUANTIFIER, so the wording
+  // asserted here is its own and only "NEW" is this branch's delta.
   test("with nothing baselined the unqualified claim stands", () => {
     const out = report([]);
-    expect(out).toContain("no epic hangs from another");
-    expect(out).not.toContain("no NEW epic");
+    expect(out).toContain("every epic from a milestone");
+    expect(out).not.toContain("NEW");
   });
 
   test("with something baselined the claim is narrowed to NEW", () => {
     const out = report(["folio-assistant-d308: an epic's parent is ... `zzmr` is an epic"]);
-    expect(out).toContain("no NEW epic hangs from another");
+    expect(out).toContain("every NEW epic from a milestone");
+    // ...and it says how many, so the tick cannot be read as a clean sweep.
+    expect(out).toContain("1 baselined defect(s)");
   });
 
   test("...and the outstanding entry is still printed, so it is not hidden either", () => {
