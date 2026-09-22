@@ -23,8 +23,10 @@
  * file named after that type.** The filename is the assertion; the type's IRI
  * is the resolvable reference to what the assertion MEANS. Several markers
  * coexist, so the answer is a set rather than a value, and each marker stays
- * owned by whoever defined it — `sushi-config.yaml` is SUSHI's, `dak.json` is
- * WHO's, and neither is ours to rename.
+ * owned by whoever defined it — `sushi-config.yaml` is SUSHI's and is
+ * not ours to rename. `dak.config.json` IS ours (bean `cz17`), and was renamed
+ * from `dak.json` on 2026-09-22 for consistency with `<name>.config.json`; the
+ * claim that it was WHO's and unrenameable stood here until then.
  *
  * That is why this is a registry rather than an enum, and why each entry
  * carries its own `filename`: the owner's rule, 2026-09-20 —
@@ -66,9 +68,10 @@ export interface ContentTypeDef {
    * The file whose presence at a repository root makes the assertion.
    *
    * Named by the TYPE, not computed from anything. `sushi-config.yaml` is
-   * SUSHI's spelling and is YAML; `dak.json` is WHO's. A convention that
-   * claimed to cover the set would be false on arrival, so there is no
-   * convention — there is this field.
+   * SUSHI's spelling and is YAML; `dak.config.json` is ours. A
+   * convention that claimed to cover the set would still be false on arrival —
+   * one marker in the set belongs to somebody else — so there is no
+   * convention, there is this field.
    *
    * ## A FUNCTION where the name is the instance's, not the type's
    *

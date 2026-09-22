@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-SushiConfigLogicalModel.schema.json",
+  "title": "SUSHI Configuration Logical Model",
+  "description": "Logical model defining the structure of sushi-config.yaml files used for FHIR Implementation Guide configuration. This model captures the essential metadata and configuration parameters needed for IG publishing.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "SushiConfigLogicalModel",
+      "description": "Resource type identifier for SushiConfigLogicalModel logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for SushiConfigLogicalModel logical model",
+      "examples": [
+        "LogicalModel-SushiConfigLogicalModel"
+      ]
+    },
+    "id": {
+      "type": "object",
+      "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL for the IG, should match DAK publicationUrl (e.g., http://smart.who.int/trust)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the group"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the sub-menu item"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the group"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the dependency"
+    },
+    "status": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Code from ValueSet publication-status (plain string)"
+        },
+        {
+          "type": "object",
+          "description": "Code from ValueSet publication-status (JSON-LD structure)",
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "http://smart.who.int/base/ValueSet-publication-status.jsonld",
+              "description": "JSON-LD type reference to ValueSet publication-status"
+            },
+            "@id": {
+              "type": "string",
+              "format": "uri",
+              "description": "Full IRI of the code from ValueSet publication-status"
+            }
+          },
+          "required": [
+            "@type",
+            "@id"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Publication status of the IG"
+    },
+    "license": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Code from ValueSet spdx-license (plain string)"
+        },
+        {
+          "type": "object",
+          "description": "Code from ValueSet spdx-license (JSON-LD structure)",
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "http://smart.who.int/base/ValueSet-spdx-license.jsonld",
+              "description": "JSON-LD type reference to ValueSet spdx-license"
+            },
+            "@id": {
+              "type": "string",
+              "format": "uri",
+              "description": "Full IRI of the code from ValueSet spdx-license"
+            }
+          },
+          "required": [
+            "@type",
+            "@id"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "License under which the IG is published, should match DAK license"
+    },
+    "copyrightYear": {
+      "type": "string",
+      "description": "Year or year range for copyright, should match DAK"
+    },
+    "experimental": {
+      "type": "boolean",
+      "description": "Whether this IG is experimental, should match DAK"
+    },
+    "releaseLabel": {
+      "type": "string",
+      "description": "Label for this release (e.g., ci-build, draft, ballot)"
+    },
+    "publisher": {
+      "type": "object",
+      "description": "Organization responsible for publishing the IG"
+    },
+    "modifierExtension": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR Extension"
+      },
+      "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+    },
+    "url": {
+      "type": "string",
+      "description": "URL of the sub-menu item"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email for the publisher"
+    },
+    "fhirVersion": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Code from ValueSet FHIR-version (plain string)"
+        },
+        {
+          "type": "object",
+          "description": "Code from ValueSet FHIR-version (JSON-LD structure)",
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "http://smart.who.int/base/ValueSet-FHIR-version.jsonld",
+              "description": "JSON-LD type reference to ValueSet FHIR-version"
+            },
+            "@id": {
+              "type": "string",
+              "format": "uri",
+              "description": "Full IRI of the code from ValueSet FHIR-version"
+            }
+          },
+          "required": [
+            "@type",
+            "@id"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Version of FHIR this IG is built on"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Other IGs or packages this IG depends on"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for this dependency"
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Custom pages included in the IG"
+    },
+    "filename": {
+      "type": "string",
+      "description": "Filename of the page (e.g., index.md)"
+    },
+    "menu": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Navigation menu structure for the IG"
+    },
+    "subItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Sub-menu items"
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of resources in this group"
+    },
+    "reference": {
+      "type": "string",
+      "description": "Reference to the resource (used as YAML key)"
+    },
+    "exampleBoolean": {
+      "type": "boolean",
+      "description": "Whether this resource is an example"
+    },
+    "exampleCanonical": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL this resource is an example of"
+    },
+    "groupingId": {
+      "type": "string",
+      "description": "ID of the group this resource belongs to"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Logical groupings of resources in the IG"
+    },
+    "global": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR BackboneElement"
+      },
+      "description": "Global profile assignments"
+    },
+    "type": {
+      "type": "string",
+      "description": "FHIR resource type"
+    },
+    "profile": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "Profiles this IG conforms to"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Additional metadata for the IG"
+    },
+    "contact": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR ContactDetail"
+      },
+      "description": "Contact details for this IG"
+    },
+    "useContext": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR UsageContext"
+      },
+      "description": "Context where this IG is intended to be used"
+    },
+    "jurisdiction": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Jurisdictions where this IG applies"
+    },
+    "FSHOnly": {
+      "type": "boolean",
+      "description": "Whether to export only FSH resources without IG content"
+    },
+    "applyExtensionMetadataToRoot": {
+      "type": "boolean",
+      "description": "Whether to apply extension metadata to root elements"
+    },
+    "instanceOptions": {
+      "type": "object",
+      "description": "Configuration for instance processing"
+    },
+    "setMetaProfile": {
+      "type": "string",
+      "description": "When to automatically set meta.profile"
+    },
+    "setId": {
+      "type": "string",
+      "description": "When to automatically set id"
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "canonical",
+    "name",
+    "title",
+    "description",
+    "version",
+    "status",
+    "license",
+    "publisher",
+    "name",
+    "fhirVersion",
+    "id",
+    "version",
+    "filename",
+    "title",
+    "title",
+    "url",
+    "title",
+    "url",
+    "reference",
+    "id",
+    "name",
+    "description",
+    "type",
+    "profile"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/SushiConfigLogicalModel",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base",
+  "jsonld:valuesets": [
+    "publication-status",
+    "FHIR-version",
+    "spdx-license"
+  ],
+  "jsonld:contextTemplate": {
+    "@version": 1.1,
+    "fhir": "http://hl7.org/fhir/",
+    "publication-status": "http://smart.who.int/base/ValueSet-publication-status.jsonld",
+    "FHIR-version": "http://smart.who.int/base/ValueSet-FHIR-version.jsonld",
+    "spdx-license": "http://smart.who.int/base/ValueSet-spdx-license.jsonld"
+  }
+}

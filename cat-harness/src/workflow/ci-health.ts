@@ -295,6 +295,23 @@ export interface WorkflowHealth {
    */
   noRunsInWindow?: boolean;
   /**
+   * WHY there was no run — supplied by the caller, like {@link scheduled}.
+   *
+   * A `no-runs` row was reported as a bare count under the parenthetical
+   * *"(dispatch-only, or vendored for a folio)"*. Both halves are plausible
+   * and **neither was measured**, so the line could not distinguish 31 files
+   * that cannot fire from 30 that cannot and one that should have. A summary
+   * asserting a cause is the `1xhc` defect at the level of the report rather
+   * than the gate. Bean `kpcl`.
+   *
+   * Reading YAML is not this module's business — the same reason
+   * {@link AssessOptions.hasSchedule} is a callback — so the verdict arrives
+   * computed. Unset means the caller did not say, which is NOT
+   * `"undetermined"`: the first is "nobody asked", the second is "asked and
+   * could not tell".
+   */
+  noRunReason?: NoRunReason;
+  /**
    * This workflow fires on a `schedule:`.
    *
    * Supplied by the caller ({@link AssessOptions.hasSchedule}), because
@@ -414,6 +431,15 @@ export function byWorkflow(runs: RunSummary[]): Map<string, RunSummary[]> {
   return out;
 }
 
+/**
+ * Why a workflow file produced no run, as {@link WorkflowHealth.noRunReason}.
+ *
+ * Only `auto-triggered` is a defect: the workflow can fire on this branch and
+ * did not. `undetermined` is the third state this module applies everywhere —
+ * it is never folded into either of the benign two.
+ */
+export type NoRunReason = "dispatch-only" | "path-filtered" | "auto-triggered" | "undetermined";
+
 export interface AssessOptions {
   now?: Date;
   /**
@@ -492,6 +518,13 @@ export interface AssessOptions {
    * unset rather than guessed, on the same rule as every other predicate here.
    */
   hasSchedule?: (path: string) => boolean | undefined;
+  /**
+   * Why this workflow produced no run. See {@link WorkflowHealth.noRunReason}.
+   *
+   * Consulted only for a file with no runs. Omitting it keeps the previous
+   * output, which counted every such file under one unmeasured parenthetical.
+   */
+  noRunReason?: (path: string) => NoRunReason | undefined;
   /**
    * The outcome of a direct per-workflow request, for files the window missed.
    * See {@link WorkflowHealth.probe}. Omit it and no row claims to have been
@@ -590,6 +623,9 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
       // Unknown stays unset. A row that cannot say whether it was expected to
       // run says nothing about it, rather than implying "dispatch-only".
       ...(opts.hasSchedule?.(wf.path) === true ? { scheduled: true } : {}),
+      // Unset when the caller supplied no predicate: "nobody asked" is not
+      // "asked and could not tell", and only the second is `undetermined`.
+      ...(opts.noRunReason?.(wf.path) ? { noRunReason: opts.noRunReason(wf.path) } : {}),
       ...(opts.probed?.(wf.path) ? { probe: opts.probed(wf.path) } : {}),
       ...youth(wf.path, opts, now),
     });
@@ -808,15 +844,30 @@ export function render(
 
   const unjudgedOther = health.filter((h) => h.noRunsInWindow && !h.scheduled);
   if (unjudgedOther.length > 0) {
-    // A count rather than a list. Most of these are folio-vendored,
-    // dispatch-only files the platform should never judge, and naming 35 of
-    // them every run is how a reader learns to skip the section. The count is
-    // what makes the ratio visible; `--markdown` readers who want the names
-    // have the file list.
+    /* A count rather than a list, BY CLASS. Most of these are folio-vendored,
+     * dispatch-only files the platform should never judge, and naming 35 of
+     * them every run is how a reader learns to skip the section — so the
+     * benign classes stay counts. What changed is that the classes are
+     * measured rather than asserted in a parenthetical, and the one class that
+     * IS a defect is named: a workflow that can fire here and did not. */
+    const by = (r: NoRunReason) => unjudgedOther.filter((h) => h.noRunReason === r).length;
+    const unsaid = unjudgedOther.filter((h) => h.noRunReason === undefined).length;
+    const parts = [
+      by("dispatch-only") ? `${by("dispatch-only")} cannot fire by themselves` : "",
+      by("path-filtered") ? `${by("path-filtered")} fire only on specific paths` : "",
+      by("undetermined") ? `${by("undetermined")} unreadable` : "",
+      unsaid ? `${unsaid} unclassified` : "",
+    ].filter(Boolean);
     lines.push(
       `- ℹ️ ${unjudgedOther.length} other workflow file(s) produced no run in ` +
-        `the window and are unjudged (dispatch-only, or vendored for a folio).`,
+        `the window and are unjudged` +
+        (parts.length ? `: ${parts.join(", ")}.` : "."),
     );
+    for (const h of unjudgedOther.filter((x) => x.noRunReason === "auto-triggered")) {
+      lines.push(
+        `- ⚠️ **${h.workflow}** — UNJUDGED: it can fire on this branch and produced no run. Not green.`,
+      );
+    }
   }
 
   const ok = health.filter(

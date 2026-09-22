@@ -64,6 +64,41 @@ Both are installed by this package's `docker` block; `ig-publisher` requires
 `java-runtime`, `jekyll` is its own capability. `exposePorts: [4000]` is there
 for serving the built site locally.
 
+## The render-IG phase — what the Publisher run actually accomplishes
+
+The Publisher is **one step** in the WHO build, between six pre-processing
+invocations and eight post-processing ones
+([`dak-preprocessing`](dak-preprocessing.md),
+[`dak-postprocessing`](dak-postprocessing.md)). It is easy to credit it with
+what the phases around it do, so this is what the run itself produces:
+
+| it produces | notes |
+|---|---|
+| `output/` — the rendered site | HTML per resource and per page, from `input/pagecontent/` and `sushi-config.yaml`'s `pages:` |
+| `{ResourceType}-{id}.json` per resource | the **structured** surface everything downstream reads |
+| `.xml` and `.ttl` per resource | not read by this platform's render path — see the JSON-only contract |
+| `package.tgz` → `package/.index.json` | filename / resourceType / id, index-version 2 |
+| `canonicals.json`, `package.manifest.json` | partial views of the same artefact set |
+| `artifacts.html` | the **only** source of an artefact's category |
+| `qa.json` | the validation record, uploaded as a workflow artifact |
+| POT files | extracted translatable strings |
+
+**And it accomplishes two things no post-processing step can.** It *validates*
+every resource against its profiles and the declared FHIR version, and it
+*resolves* the dependency closure — `hl7.terminology`, `hl7.fhir.uv.cql`,
+`hl7.fhir.uv.cpg`, `hl7.fhir.uv.crmi`, `hl7.fhir.uv.sdc` for smart-base — with
+version pinning and terminology expansion against `tx`. That resolution is the
+part a cache cannot fake, and it is why the phased transition keeps the
+Publisher for the AST and QA rather than removing it.
+
+### Where it is invoked from, and what that costs
+
+Inside Docker (`hl7fhir/ig-publisher-base`), with `publisher.jar` re-downloaded
+from the latest release on **every** run. So the toolchain version is whatever
+HL7 shipped most recently, not a pin — two builds of an unchanged commit can
+differ. Bean `dhvf` names this as the SUSHI/FHIR version-floating problem; it
+applies here with the same force.
+
 ## Full build versus restored state
 
 `ig-incremental-build.bpmn` restores derived state and assembles the site

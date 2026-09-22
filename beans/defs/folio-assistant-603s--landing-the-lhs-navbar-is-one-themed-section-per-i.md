@@ -203,6 +203,8 @@ Owner, re-asserting the ask in narrower terms:
 - `cat-harness/scripts/harness-tiles.ts` — one tile per initiated harness,
   discovered by scanning the repository root for `harness.json` (this bean's
   question 1, answered: `harness.json` is what names an instance).
+  **↑ SUPERSEDED TWICE — see the 2026-09-22 entry at the end of this bean.
+  `harness.json` no longer exists, and the answer is no longer a filename.**
 - Wired into `scripts/sync-docs-harness.ts`, so it rides the existing
   `docs:harness:check` staleness gate rather than arriving as a second
   generated file with a second gate free to disagree with the first.
@@ -333,3 +335,62 @@ other three need the declaration.
 "per-instance" is satisfied trivially and would need a second instance with
 tools before the split is exercised. An element that renders correctly today
 for `tools` has not been tested on it.
+
+---
+
+*2026-09-22, session_01SrFVoXeLER715HHQQaK22u, stream `10uc` (GOAL 2) —
+**question 1 is CLOSED, and the note above it is stale by one ruling.***
+
+The 2026-09-21 entry above records the owner ruling **REPLACE** on `b5f0`. That
+ruling was **reversed by the owner later the same day**, so an agent that reads
+this bean top to bottom currently gets the retired answer twice: once as
+`harness.json` and once as the merge that replaced it.
+
+**The standing answer, and it has landed in code:**
+
+| | |
+|---|---|
+| `<name>.json` | the **declaration** — directories, graphs, dependents, assets, stickies. `readDeclaration()` |
+| `<name>.config.json` | the **config** — contentType, adapter, feedbackDir, viewer, readme. `readHarnessConfig()` |
+
+The owner's words, from `b5f0`: *"rename the stub need cat-harness.config.json
+and cat-harness/cat-harness.json, same for folio-assistant (instance,
+declration)"*, and *"1"* when the conflict with REPLACE was put back to them.
+It is the option this bean's §1 had itself offered — *"`<name>.json` +
+`<name>.config.json` would at least pair them"*.
+
+**The important part for this bean is not which name won. It is that the
+question changed shape.**
+
+> **An instance is no longer marked by a FILENAME.** `findDeclarationFile(dir)`
+> takes the file whose filename **stem equals its own declared `name`**
+> (`CONFIG_SUFFIX` / `instanceDeclarationFilename`,
+> `cat-harness/schemas/cat-harness.ts:145-185`). A declaration is
+> self-identifying, so a renamed clone still resolves — which is what answered
+> migration-plan I.8's objection that a per-repo name *"fails silently"*.
+
+So question 1 — *"Which file marks an instance?"* — is answered **"none in
+particular; ask `findDeclarationFile`."** Any future navbar work that scans for
+a literal is wrong under either ruling.
+
+**Measured on `main` 2026-09-22, not carried forward:** six `*.config.json` at
+instantiation roots, paired with `bootstrap/bootstrap.json`,
+`cat-harness/cat-harness.json`, `who-iris/who-iris.json` and
+`folio-assistant.json`. `find . -name harness.json` returns exactly one hit,
+`cat-harness/docs/_data/harness.json`, which `b5f0` names as generated data
+rather than a declaration.
+
+**The code in this bean is already correct.** `harness-tiles.ts:290` and `:297`
+call `findDeclarationFile`, not a literal filename. The scanner was repointed
+when the rename landed. **Only the prose was stale**, which is why the inline
+marker above points here rather than the line being rewritten — an append
+cannot collide with another session.
+
+This closes `b5f0`'s open Done-when *"`AGENTS.md`, `zkgs`'s Done-when and
+`603s`'s recorded answer are corrected, or each says why it still reads the
+other way"* **for this bean only**. `AGENTS.md` and `zkgs` are not this
+stream's and are untouched.
+
+**Still open on this bean, and unchanged:** what a "display subgraph" is, where
+`.fa-landing-board` fits, and the 2026-09-22 common expanding nav element from
+issue #851. Question 1 was the blocking one.

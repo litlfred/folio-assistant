@@ -1,12 +1,12 @@
 ---
 # folio-assistant-nsbb
 title: 'IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-21T15:37:14Z
-updated_at: 2026-09-21T15:37:14Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-22T19:07:23Z
+parent: folio-assistant-uhkv
 ---
 
 Owner, 2026-09-21, verbatim:

@@ -1029,6 +1029,15 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
       // the swap is the visible half of the rename.
+      // Added 2026-09-22 with the owner's stack ruling
+      // (`core->fhir-harness->smart-base->siblings{smart-l1, smart-dak,
+      // smart-ig}`, issue #963). It is the BASE the note above is about: the
+      // bare FHIR IG pipeline, with no WHO, DAK or SMART assumption, which is
+      // what `nsbb` had been asking for since 2026-09-21. It sorts here rather
+      // than beside the `smart-*` entries because it is deliberately NOT one
+      // of them -- the WHO package may reference this layer and this layer may
+      // never reference the WHO package.
+      "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
       "kg-navigation",
@@ -1044,6 +1053,15 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
       // collapse into a `smart-base` instance. It is listed because it EXISTS
       // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877). This is the `smart-base` instance that
+      // `nsbb` called for, and its arrival is the FIRST half of what the note
+      // above predicted: the per-IG harnesses are expected to collapse into it.
+      // They have NOT collapsed yet and both are still listed, because this
+      // assertion is about what EXISTS today and nothing else. It holds the
+      // ingested WHO digital-health corpus, the DIIG methodology read out of
+      // it, and the voice derived from it -- KG assets, not the IG pipeline,
+      // which stays `nsbb`'s question.
+      "smart-base",
       "smart-immunizations",
       "smart-trust",
       "who-iris",

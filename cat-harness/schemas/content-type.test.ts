@@ -90,7 +90,7 @@ describe("a repository is a SET of types, not a boolean", () => {
     // measured shape of the repository `79t3` cites, and the reason the answer
     // had to become a set.
     const root = repo({
-      "dak.json": '{"name":"base","canonicalUrl":"http://smart.who.int/base"}',
+      "dak.config.json": '{"name":"base","canonicalUrl":"http://smart.who.int/base"}',
       "sushi-config.yaml": "canonical: http://smart.who.int/base\n",
     });
     expect(describeRepository(root, base()).types.map((t) => t.id).sort()).toEqual([
@@ -102,7 +102,7 @@ describe("a repository is a SET of types, not a boolean", () => {
   test("three at once, including ours", () => {
     const root = repo({
       ["x.json"]: '{"name":"x"}',
-      "dak.json": '{"name":"x"}',
+      "dak.config.json": '{"name":"x"}',
       "sushi-config.yaml": "canonical: http://example.org/x\n",
     });
     expect(describeRepository(root, base()).types).toHaveLength(3);
@@ -156,7 +156,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
     // which layer happened to load first.
     const root = repo({
       ["x.json"]: '{"name":"x","canonicalUrl":"http://one.example/"}',
-      "dak.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
+      "dak.config.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
     });
     const d = describeRepository(root, base());
     expect(d.disagreements).toHaveLength(1);
@@ -173,7 +173,7 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
     // `types`. Both claims survive in full.
     const root = repo({
       ["x.json"]: '{"name":"x","canonicalUrl":"http://one.example/"}',
-      "dak.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
+      "dak.config.json": '{"name":"x","canonicalUrl":"http://two.example/"}',
     });
     const d = describeRepository(root, base());
     const byId = Object.fromEntries(d.types.map((t) => [t.id, t.facts["canonicalUrl"]]));
@@ -183,18 +183,18 @@ describe("two markers stating one fact differently are REPORTED, not resolved", 
   test("agreement is silence, not a finding", () => {
     const root = repo({
       ["x.json"]: '{"name":"x","canonicalUrl":"http://same.example/"}',
-      "dak.json": '{"name":"x","canonicalUrl":"http://same.example/"}',
+      "dak.config.json": '{"name":"x","canonicalUrl":"http://same.example/"}',
     });
     expect(describeRepository(root, base()).disagreements).toEqual([]);
   });
 
-  test("`dak.json` spelling `canonical` is compared against `canonicalUrl`", () => {
+  test("`dak.config.json` spelling `canonical` is compared against `canonicalUrl`", () => {
     // The two files beside each other in `smart-base` spell one fact two ways.
     // Reading only our spelling would make every such disagreement invisible,
     // which is the failure mode this whole section exists to prevent.
     const root = repo({
       ["x.json"]: '{"name":"x","canonicalUrl":"http://ours.example/"}',
-      "dak.json": '{"name":"x","canonical":"http://theirs.example/"}',
+      "dak.config.json": '{"name":"x","canonical":"http://theirs.example/"}',
     });
     expect(describeRepository(root, base()).disagreements.map((x) => x.fact)).toEqual([
       "canonicalUrl",
@@ -259,7 +259,7 @@ describe("the set is closed under the dependency tree", () => {
   }
 
   test("a dependency's types are in the closure, ATTRIBUTED to it", () => {
-    const dep = instance("dep", { "dak.json": '{"name":"who"}' });
+    const dep = instance("dep", { "dak.config.json": '{"name":"who"}' });
     const root = instance("root", { ["mine.json"]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
@@ -276,7 +276,7 @@ describe("the set is closed under the dependency tree", () => {
   test("`own` separates 'this repo IS a DAK' from 'something it depends on is'", () => {
     // The distinction a flattened set destroys, and the case the bean cites:
     // a folio depending on a WHO adapter is not itself a DAK.
-    const dep = instance("dep2", { "dak.json": '{"name":"who"}' });
+    const dep = instance("dep2", { "dak.config.json": '{"name":"who"}' });
     const root = instance("root2", { ["mine.json"]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
@@ -288,8 +288,8 @@ describe("the set is closed under the dependency tree", () => {
   test("a type asserted by BOTH appears twice — not a duplicate to collapse", () => {
     // Two repositories each making the claim is what the tree says. Merging
     // them would answer "is this tree a DAK" and lose "which of them is".
-    const dep = instance("dep3", { "dak.json": '{"name":"who"}' });
-    const root = instance("root3", { "dak.json": '{"name":"mine"}' });
+    const dep = instance("dep3", { "dak.config.json": '{"name":"who"}' });
+    const root = instance("root3", { "dak.config.json": '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
 
     const c = describeRepositoryClosure(root, base());
@@ -311,7 +311,7 @@ describe("the set is closed under the dependency tree", () => {
     // They are two repositories. Reporting it as a conflict would make every
     // non-trivial dependency tree look broken, which is the false positive
     // that gets a check switched off within a week.
-    const dep = instance("dep4", { "dak.json": '{"canonicalUrl":"http://theirs/"}' });
+    const dep = instance("dep4", { "dak.config.json": '{"canonicalUrl":"http://theirs/"}' });
     const root = instance("root4", { ["x.json"]: '{"canonicalUrl":"http://ours/"}' });
     dependsOn(root, "who-adapter", dep);
 
@@ -329,7 +329,7 @@ describe("the set is closed under the dependency tree", () => {
       // throws"). The subject here is two markers disagreeing about
       // `canonicalUrl`, and a valid declaration carries both facts fine.
       ["who-adapter.config.json"]: '{"name":"who-adapter","canonicalUrl":"http://a/"}',
-      "dak.json": '{"canonicalUrl":"http://b/"}',
+      "dak.config.json": '{"canonicalUrl":"http://b/"}',
     });
     const root = instance("root5", { ["mine.json"]: '{"name":"mine"}' });
     dependsOn(root, "who-adapter", dep);
