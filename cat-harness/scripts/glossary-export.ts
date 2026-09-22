@@ -200,7 +200,7 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
   for (const f of bpmnFiles(instanceRoot)) {
     const rel = relative(repoRoot, f);
     const xml = readFileSync(f, "utf-8");
-    const procRe = /<bpmn:process\b([^>]*)>([\s\S]*?)<\/bpmn:process>/g;
+    const procRe = /<(?:bpmn:)?process\b([^>]*)>([\s\S]*?)<\/(?:bpmn:)?process>/g;
     for (let p = procRe.exec(xml); p !== null; p = procRe.exec(xml)) {
       const pAttrs = p[1] ?? "";
       const pBody = p[2] ?? "";
@@ -209,22 +209,22 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
       const processName = /name="([^"]+)"/.exec(pAttrs)?.[1] ?? null;
 
       const acts = new Set<string>();
-      const actRe = new RegExp(`<bpmn:(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
+      const actRe = new RegExp(`<(?:bpmn:)?(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
       for (let a = actRe.exec(pBody); a !== null; a = actRe.exec(pBody)) acts.add(a[1]!);
 
-      const laneRe = /<bpmn:lane\b([^>]*?)(?:\/>|>([\s\S]*?)<\/bpmn:lane>)/g;
+      const laneRe = /<(?:bpmn:)?lane\b([^>]*?)(?:\/>|>([\s\S]*?)<\/(?:bpmn:)?lane>)/g;
       for (let m = laneRe.exec(pBody); m !== null; m = laneRe.exec(pBody)) {
         const attrs = m[1] ?? "";
         const body = m[2] ?? "";
         const laneId = /id="([^"]+)"/.exec(attrs)?.[1];
         if (laneId === undefined) continue;
         const members = new Set<string>();
-        const refRe = /<bpmn:flowNodeRef>([^<]+)<\/bpmn:flowNodeRef>/g;
+        const refRe = /<(?:bpmn:)?flowNodeRef>([^<]+)<\/(?:bpmn:)?flowNodeRef>/g;
         for (let r = refRe.exec(body); r !== null; r = refRe.exec(body)) members.add(r[1]!.trim());
         // An EMPTY `<documentation/>` is not documentation — the same guard
         // `check-lane-documentation` applies, and for the same reason: a gate
         // satisfiable by a keystroke stops meaning anything.
-        const doc = /<bpmn:documentation[^>]*>([\s\S]*?)<\/bpmn:documentation>/.exec(body)?.[1]?.trim();
+        const doc = /<(?:bpmn:)?documentation[^>]*>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(body)?.[1]?.trim();
         out.push({
           file: rel,
           processId,

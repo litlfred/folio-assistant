@@ -427,10 +427,19 @@ assertion, not a gap.
 - **11 declared roles no swimlane draws.** They are still concepts (omitting
   them would be `dh4f`) and are named in the report. 8 declare no `lanes[]` at
   all — agent personas nothing draws, by design.
-- **1 dangling lane binding**: `translation-adjudicator` binds
-  *"Human reviewer / adjudicator"*, which no diagram contains — `fd6i`.
-  Distinguished from `log` and `session-record`, whose lanes exist but hold no
-  task, which is not a defect: an `actedUpon` lane holds none by construction.
+- **1 dangling lane binding** was reported: `translation-adjudicator` binding
+  *"Human reviewer / adjudicator"*. **THAT FINDING WAS FALSE**, corrected
+  2026-09-22 while roasting `7pdi`. The lane is real; the extractor could not
+  see it, because `translation-workflow.bpmn` declares BPMN as the DEFAULT
+  namespace and writes `<lane>` with no `bpmn:` prefix, which every prefixed
+  regex here missed. A false finding is worse than none — the next agent goes
+  looking for a lane to add that is already there.
+
+  Fixed with the namespace-tolerant readers; the corpus is **159**
+  task-containing lanes, not 157, and the glossary is **43 concepts / 152
+  usages**. `log` and `session-record` remain correctly reported as declared
+  roles no swimlane draws: their lanes exist but hold no task, which is not a
+  defect — an `actedUpon` lane holds none by construction.
 
 ### Falsified by mutation, six ways
 
