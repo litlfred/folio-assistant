@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 485,
+      "count": 486,
       "unit": "beans"
     }
   },
@@ -1543,14 +1543,14 @@
     {
       "id": "folio-assistant-7pdi",
       "title": "ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:27:42Z",
-      "updatedAt": "2026-09-22T06:28:43Z",
+      "updatedAt": "2026-09-22T08:48:05Z",
       "preview": "Owner, 2026-09-21 (session_017PqeiS4JYySSWGAYLedmus), queued as an aside —\nverbatim, because the ask ties five things together and a paraphrase would\ndrop one:\n\n> aside, find bean on code review: need to see if semantic/narrative assertion\n> matches code written. similar skills for lean already. generalize process,\n> and provde high levels skills + specific lean things in own subgraph.\n> probably ",
       "file": "beans/defs/folio-assistant-7pdi--adjudication-a-first-class-process-for-when-review.md"
     },
@@ -5871,6 +5871,20 @@
       "updatedAt": "2026-09-21T23:05:00Z",
       "preview": "#796's question 1 — the requester's own parenthetical, *\"clarifying if KG is\nstatic w// materizlied…\"* — plus R27, *\"materialized should live in folio\"*.\n\n## Question 1 needed READING, not deciding\n\nThe answer was already in the corpus in three places, none read as answering\nit:\n\n| | |\n|---|---|\n| `folio-assistant-core/schemas/materialization.ts` | three states — `referenced` / `materialized` / `u",
       "file": "beans/defs/folio-assistant-vhmz--r27-settled-the-folio-is-the-readers-repository-li.md"
+    },
+    {
+      "id": "folio-assistant-vigi",
+      "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:50:21Z",
+      "updatedAt": "2026-09-22T08:50:42Z",
+      "preview": "Found 2026-09-22 while answering ruling 2 on #596 — the owner asked what is\nJSON-LD-centric in this ecosystem and what has pre-existing wrappers. The\nanswer to the second is **nothing**, and that turns out to matter beyond the\nquestion that produced it.\n\n## Measured\n\n**28 dependencies, and not one is an RDF, JSON-LD, SPARQL or FHIR library.**\n\nEvery JSON-LD document this repository publishes — the",
+      "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
     },
     {
       "id": "folio-assistant-vjbl",
