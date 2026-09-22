@@ -28,6 +28,7 @@ import {
 import { injectRail, railModel } from "../lib/harness-rail.js";
 import { documentIndexOf } from "../lib/navbar.js";
 import { navbarGeometryCssPath, renderNavbarGeometryCss } from "../gen-navbar-geometry-css.js";
+import { publishedUrlOf } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
@@ -530,5 +531,55 @@ describe("a declared avatar region crops the mark — `603s`", () => {
     expect(h).not.toContain("px;");
     expect(h).toContain("width:400%");
     expect(h).toContain("left:-100%");
+  });
+});
+
+describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () => {
+  // Owner, 2026-09-22: *"fix the .md paths in the harness tabs too."*
+  //
+  // Swept with a HEAD request per link against a local build: 3 of 31 distinct
+  // harness-tab links 404'd, all three `index.md`. The conversion had handled
+  // `.html` and passed `.md` through untouched.
+
+  it("an index leaf addresses as its directory — either extension", () => {
+    expect(publishedUrlOf("processes/index.md")).toBe("/processes/");
+    expect(publishedUrlOf("processes/index.html")).toBe("/processes/");
+  });
+
+  it("any OTHER page addresses as itself, with `.html`", () => {
+    // This is the row that stops the obvious fix from being right. Stripping
+    // `.md` would give `/tool-graph/`, which is a 404 — measured against the
+    // built site, where `/tool-graph.html` is 200 and `/tool-graph/` is not.
+    expect(publishedUrlOf("tool-graph.md")).toBe("/tool-graph.html");
+    expect(publishedUrlOf("subgraph-viewers.md")).toBe("/subgraph-viewers.html");
+  });
+
+  it("a directory is already a URL and is left alone", () => {
+    expect(publishedUrlOf("cat-harness/library/cat-harness/")).toBe("/cat-harness/library/cat-harness/");
+  });
+
+  it("does not mistake a mid-path `index` for the leaf", () => {
+    // `.../index/skills/...` is a real shape here — the docs-auto tree — and a
+    // rule anchored anywhere but the end would eat a directory called `index`.
+    expect(publishedUrlOf("cat-harness/docs-auto/index/skills/")).toBe(
+      "/cat-harness/docs-auto/index/skills/",
+    );
+  });
+
+  it("no harness tab link ends in `.md`, over the REAL committed data", () => {
+    // The regression guard, run over what actually ships rather than over a
+    // fixture: a fixture would have passed throughout the defect.
+    // Derived, never spelled out — `site-dir-single-answer` refuses a literal
+    // site root anywhere in source, and it caught this file once already.
+    const root = instanceRootFor(import.meta.dir);
+    const data = JSON.parse(
+      readFileSync(join(root, siteDirFor(root), "_data", "harness.json"), "utf8"),
+    ) as { harnesses: { name: string; visualisations?: { kind: string; path?: string }[] }[] };
+    const offenders = data.harnesses.flatMap((h) =>
+      (h.visualisations ?? [])
+        .filter((v) => v.path?.endsWith(".md"))
+        .map((v) => `${h.name}:${v.kind} -> ${v.path}`),
+    );
+    expect(offenders).toEqual([]);
   });
 });

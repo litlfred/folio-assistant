@@ -364,7 +364,7 @@ function tileFor(
     for (const v of visualisationsOf(d.coverage, d.id)) {
       if (!v.ref.startsWith(sitePrefix)) continue;
       if (!existsSync(join(repoRoot, v.ref))) continue;
-      const page = `/${v.ref.slice(sitePrefix.length).replace(/index\.html$/, "")}`;
+      const page = publishedUrlOf(v.ref.slice(sitePrefix.length));
       for (const kind of d.graphKinds ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }
@@ -858,6 +858,54 @@ export function harnessTiles(
  * that was not the thing it counted. Qualifying the label fixes what a reader
  * sees; the finding is what tells somebody a declaration is ambiguous.
  */
+/**
+ * A source path under the site directory, as the URL the built site serves it at.
+ *
+ * ## The defect this closes, measured rather than argued
+ *
+ * This was `replace(/index\.html$/, "")` inline — it handled the `.html` case
+ * and silently passed a `.md` path through as if it were a URL. Owner,
+ * 2026-09-22: *"fix the .md paths in the harness tabs too."*
+ *
+ * Swept with a HEAD request per link against a local build, 2026-09-22:
+ * **3 of 31** distinct harness-tab links returned 404, and all three were the
+ * `index.md` ones — `/processes/index.md`, `/tools/index.md`,
+ * `/fsh-guts/index.md`. The other 28 were fine, so this is the whole of it and
+ * not a sample.
+ *
+ * **The declaration was never wrong.** A `coverage` ref names a SOURCE FILE —
+ * that is what `resolveCoveragePath` resolves it to, on disk. The bug was
+ * treating a source path as a URL, which is a conversion with exactly one
+ * correct home: here.
+ *
+ * ## The rules are Jekyll's, and they were verified, not assumed
+ *
+ * `_config.yml` sets **no** `permalink`, so Jekyll's default applies. Checked
+ * against the built site rather than read off the documentation:
+ *
+ * | source | served at | measured |
+ * |---|---|---|
+ * | `processes/index.md` | `/processes/` | 200 |
+ * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
+ *
+ * So an `index` leaf addresses as its directory and every other page addresses
+ * as itself with an `.html` extension. The second row is why this does not
+ * simply strip `.md`: that would have produced `/tool-graph/`, which is a 404
+ * this repository would have shipped in place of the one it had.
+ *
+ * **If a `permalink` is ever set, this becomes wrong** — and it will be wrong
+ * silently, because a 404 behind a tab looks like a broken site rather than a
+ * stale rule. The test pins the three cases above; a `permalink` added to
+ * `_config.yml` should send somebody here.
+ */
+export function publishedUrlOf(relPathUnderSite: string): string {
+  const withoutIndex = relPathUnderSite.replace(/(^|\/)index\.(html|md)$/, "$1");
+  // Only a LEAF page is rewritten. A path already ending in `/` is a
+  // directory and addresses as itself.
+  return `/${withoutIndex.replace(/\.md$/, ".html")}`;
+}
+
 export function disambiguate(tiles: readonly HarnessTile[]): HarnessTile[] {
   const byTitle = new Map<string, number>();
   for (const t of tiles) byTitle.set(t.title, (byTitle.get(t.title) ?? 0) + 1);

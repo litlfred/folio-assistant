@@ -270,17 +270,16 @@ function navbarRow(
       icon === "kg"
         ? siteLinkList.find((l) => l.id === "kg")?.path
         : byKind.get(icon);
-    // `/processes/index.md` is what the coverage declares and NOT what the
-    // built site serves -- Jekyll renders that page at `/processes/`. The tabs
-    // have always linked the declared value and therefore 404 on the two kinds
-    // that declare an `index.md`; that is a wider defect than this row and is
-    // recorded rather than fixed here, because changing what a COVERAGE path
-    // means would move every consumer at once.
+    // NO NORMALISATION HERE ANY MORE. This line used to rewrite `index.md`
+    // for this row alone, with a comment saying the tabs' version of the same
+    // defect was "wider ... and recorded rather than fixed". The owner asked
+    // for the wider one, so `publishedUrlOf` in `harness-tiles.ts` now mints
+    // the URL correctly for EVERY consumer and this row inherits it.
     //
-    // Normalised for this row only: an icon in a six-slot row that 404s is the
-    // `pb04` failure with the best possible disguise, since it looks like
-    // navigation right up to the click.
-    if (at) hrefs[icon] = at.replace(/\/index\.md$/, "/");
+    // Deleting the local fix is the point rather than tidiness: two places
+    // converting one path is two answers, and the one further from the source
+    // is the one that goes stale.
+    if (at) hrefs[icon] = at;
   }
   // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is
   // is library docs/ and other controlled folders"*. Resolved here beside the
@@ -290,8 +289,10 @@ function navbarRow(
   //
   // A kind with NO path is kept, with no path. `pb04`: declared-and-unrendered
   // is a finding, and dropping it answers "where is qa" with silence.
+  // Paths come through as `harness-tiles.ts` minted them -- see the note
+  // above on why this no longer rewrites anything.
   const folders = (mine.visualisations ?? []).map((v) =>
-    v.path ? { kind: v.kind, path: v.path.replace(/\/index\.md$/, "/") } : { kind: v.kind },
+    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind },
   );
   return { icons: [...mine.navbarIcons], hrefs, folders };
 }
