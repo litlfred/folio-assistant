@@ -438,25 +438,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790090457">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790106181">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790090457">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790106181">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790090457">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790106181">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790090457">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790106181">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -473,7 +473,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790090457" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790106181" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1140,6 +1140,96 @@ neither session knew about the other, and the beans said so the whole
 time: the migration’s bean was <code class="language-plaintext highlighter-rouge">in-progress</code> and names the directory.
 <strong>A bean scan by either session would have caught it before a line was
 written</strong>, which is exactly why the trigger above is worth having.</p>
+<h2 id="crossing-into-a-siblings-subject--permitted-and-what-it-costs">
+  
+  
+    <a href="#crossing-into-a-siblings-subject--permitted-and-what-it-costs" class="anchor-heading" aria-labelledby="crossing-into-a-siblings-subject--permitted-and-what-it-costs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Crossing into a sibling’s subject — permitted, and what it costs
+  
+  
+</h2>
+    
+
+<p>Owner, 2026-09-22, on stream 3 of the #956 consolidation rewriting the <code class="language-plaintext highlighter-rouge">yg29</code>
+milestone it had been told not to touch:</p>
+
+<blockquote>
+  <p><em>“crossing stream is ok, but /coordinate and be aware of potential collisions.
+try avoid duplicating work.”</em></p>
+</blockquote>
+
+<p>Two rulings, and they are not the same one twice.</p>
+
+<p><strong>1. The stream that owns a milestone’s WORK may repair the milestone.</strong>
+<code class="language-plaintext highlighter-rouge">check-stale-paths.ts</code> reserved that repair to “the bean’s OWNER” on the ground
+that <em>“a milestone is a statement of what its owner believes the goal needs
+next, and rewriting somebody else’s belief is not a checker’s to do.”</em> That
+ground still holds <strong>for a checker</strong> — a gate that guesses replaces a stale
+belief with an invented one. It does <strong>not</strong> hold for a session that has
+re-measured the goal’s whole surface. Stream 3 repaired <code class="language-plaintext highlighter-rouge">yg29</code> and found two
+defects a path detector structurally cannot see: <code class="language-plaintext highlighter-rouge">hqku</code> carried as a live
+“blocked on the owner” for two days after it completed, and <em>“<code class="language-plaintext highlighter-rouge">who-iris/</code> has no
+<code class="language-plaintext highlighter-rouge">docs/</code>”</em> against a directory holding three rendered pages.</p>
+
+<p>So the line is <strong>checker vs. session</strong>, not owner vs. non-owner. A session
+repairing somebody’s milestone re-measures every line it rewrites, in a fresh
+container, by running the thing — and says which clause it could not verify.</p>
+
+<p><strong>2. Crossing is permitted; colliding silently is not.</strong> Cross freely, but the
+crossing is what triggers this skill rather than what excuses skipping it.</p>
+<h3 id="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one">
+  
+  
+    <a href="#the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one" class="anchor-heading" aria-labelledby="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The collision surface is FILES, and it is predictable before you touch one
+  
+  
+</h3>
+    
+
+<p>A bean scan finds sessions working the same <em>subject</em>. It does not find two
+sessions about to edit the same <em>file</em> from different subjects, which is how
+the #956 consolidation nearly lost a baseline:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>file</th>
+      <th>why two sessions want it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/stale-paths-baseline.json</code></td>
+      <td><strong>two lines long.</strong> Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it <em>shrinks rather than fossilises</em> — and an empty baseline fails every finding, “which is the safe direction” only if somebody notices.</td>
+    </tr>
+    <tr>
+      <td>a shared bean like <code class="language-plaintext highlighter-rouge">k59d</code></td>
+      <td>every stream appends its own outcome. <strong>“An append cannot collide” is false when two sessions append</strong>, because both land at EOF. That precedent is recorded in <code class="language-plaintext highlighter-rouge">k59d</code> itself and is wrong as stated.</td>
+    </tr>
+    <tr>
+      <td>generated dirs (<code class="language-plaintext highlighter-rouge">docs-auto/</code>, <code class="language-plaintext highlighter-rouge">skill-instructions/</code>, kg-qa sidecars)</td>
+      <td>nobody edits them, everybody regenerates them. Take <code class="language-plaintext highlighter-rouge">main</code>’s copy and re-run the generator — never hand-merge.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Name the files you will touch, not just the beans</strong>, when you post intent.
+A sibling can dodge a file; it cannot dodge a subject it cannot see.</p>
+<h3 id="duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open">
+  
+  
+    <a href="#duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open" class="anchor-heading" aria-labelledby="duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Duplicated work is measured in what was already pushed, not in what is open
+  
+  
+</h3>
+    
+
+<p>The same consolidation measured <code class="language-plaintext highlighter-rouge">p5wm</code>’s critical path <strong>twice</strong> — once in the
+session writing the stream claims, once in the stream that received them,
+reaching the identical answer (five live steps, not eight). Neither was wrong
+and both were competent; the second was free to skip. Before re-deriving a
+measurement, check whether a sibling’s <strong>pushed commit</strong> already carries it:
+an open PR’s diff is a fact, and reading it costs one call against a session’s
+worth of re-measurement.</p>
 <h2 id="related-skills">
   
   
@@ -2116,7 +2206,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35746533320"><code>b7f8945</code></a> &middot; 2026-09-22T15:20:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35775436938"><code>6ac5e7f</code></a> &middot; 2026-09-22T19:42:55Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
