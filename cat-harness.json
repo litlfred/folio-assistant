@@ -260,13 +260,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T06:20:57.334Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3978dc45789b26ebc607694ef248acb66582ea2e",
-  "sourceCommitSha": "3978dc45789b26ebc607694ef248acb66582ea2e",
-  "sourceCommitAt": "2026-09-22T08:18:01+02:00",
+  "generatedAt": "2026-09-22T06:26:19.974Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7ea0eb5054cb28de95302c2ebecc6b7c83474aa0",
+  "sourceCommitSha": "7ea0eb5054cb28de95302c2ebecc6b7c83474aa0",
+  "sourceCommitAt": "2026-09-22T08:24:21+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 226,
+    "Skill": 227,
     "Actor": 29,
     "Capability": 28,
     "Convention": 2,
@@ -1236,7 +1236,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/untainted-verification.md",
-      "instructionLines": 159,
+      "instructionLines": 160,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2204,7 +2204,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 634,
+      "instructionLines": 648,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2536,6 +2536,22 @@
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
       "instructionLines": 414,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "evidence-review",
+      "title": "Evidence review — the same rule, a second instance",
+      "description": "Evidence review as an instance of untainted verification — the separation of the appraising party from the drafting party, what recurring surveillance in a living guideline shares with a stale QA verdict, and which of guideline methodology's rules are fenced rather than shipped.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/evidence-review.md",
+      "instructionLines": 115,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5134,6 +5150,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/editor",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
@@ -31817,6 +31834,7 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification"
       ],
@@ -33015,8 +33033,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "3978dc45789b26ebc607694ef248acb66582ea2e",
+    "sha": "7ea0eb5054cb28de95302c2ebecc6b7c83474aa0",
     "pr": "main",
-    "run": "35694214485"
+    "run": "35694684027"
   }
 }

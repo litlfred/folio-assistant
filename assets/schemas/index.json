@@ -4372,6 +4372,13 @@
           "doc": "Optional version pin (script revision, model id)."
         },
         {
+          "name": "actor",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declared ACTOR this reviewer was acting as — an id in"
+        },
+        {
           "name": "script_hash",
           "type": "string",
           "optional": true,
@@ -4544,24 +4551,24 @@
       "fields": [
         {
           "name": "checker_sees",
-          "type": "CompanionRole[]",
+          "type": "A[]",
           "optional": false,
           "array": true,
-          "doc": "Companion roles the CHECKER is given."
+          "doc": "Artefacts the CHECKER is given."
         },
         {
           "name": "checker_withheld",
-          "type": "CompanionRole[]",
+          "type": "A[]",
           "optional": false,
           "array": true,
-          "doc": "Companion roles deliberately WITHHELD from the checker."
+          "doc": "Artefacts deliberately WITHHELD from the checker."
         },
         {
           "name": "adjudicator_sees",
-          "type": "CompanionRole[]",
+          "type": "A[]",
           "optional": false,
           "array": true,
-          "doc": "Companion roles the ADJUDICATOR is given, alongside the checker's output."
+          "doc": "Artefacts the ADJUDICATOR is given, alongside the checker's output."
         },
         {
           "name": "drift",
@@ -4573,9 +4580,7 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [
-        "cat-harness/schemas/block-qa.ts#CompanionRole"
-      ],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -31765,30 +31770,6 @@
       "kind": "field",
       "optional": false,
       "array": false
-    },
-    {
-      "from": "cat-harness/schemas/block-qa.ts#UntaintedDispatch",
-      "to": "cat-harness/schemas/block-qa.ts#CompanionRole",
-      "via": "adjudicator_sees",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/block-qa.ts#UntaintedDispatch",
-      "to": "cat-harness/schemas/block-qa.ts#CompanionRole",
-      "via": "checker_sees",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/block-qa.ts#UntaintedDispatch",
-      "to": "cat-harness/schemas/block-qa.ts#CompanionRole",
-      "via": "checker_withheld",
-      "kind": "field",
-      "optional": false,
-      "array": true
     },
     {
       "from": "cat-harness/schemas/board-positions.ts#BoardPositionsSchema",
