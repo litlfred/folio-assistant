@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/skills/terminology-management/input.schema.json",
+  "title": "Terminology Management Input",
+  "description": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.",
+  "type": "object",
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "create-codesystem",
+        "create-valueset",
+        "create-conceptmap",
+        "validate-bindings",
+        "map-to-standard"
+      ],
+      "description": "Terminology operation to perform."
+    },
+    "targetStandard": {
+      "type": "string",
+      "enum": [
+        "ICD-11",
+        "SNOMED-CT",
+        "LOINC",
+        "IPS",
+        "WHO-FIC",
+        "WHO-ATC"
+      ],
+      "description": "Target standard terminology for mapping."
+    },
+    "inputFile": {
+      "type": "string",
+      "description": "Path to input terminology resource (FSH, JSON, CSV)."
+    }
+  },
+  "staging": {
+    "branch": "claude/amazing-ptolemy-2ceyvg",
+    "sha": "65dc52774daf4d05cbaf86abb34118b26222aaee",
+    "pr": "870/merge",
+    "run": "35700847478"
+  }
+}
