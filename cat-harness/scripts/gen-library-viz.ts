@@ -56,13 +56,37 @@ import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
+import { tileCounts } from "../schemas/tile-count.js";
+import { itemState } from "./gen-uploads-viz.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
 /** The projection. Everything the reader found; it is already small. */
 function projection(g: LibraryGraph): unknown {
-  return { $schema: "folio-library-index/v1", ...g };
+  return {
+    $schema: "folio-library-index/v1",
+    // TWO tiles, ONE dataset — the case `schemas/tile-count.ts` is keyed by
+    // directory for. `flh4` put the queue block here rather than under a
+    // second projection, "since two projections over it would be two answers
+    // to how many are queued", and `gen-uploads-viz.ts` publishes a viewer
+    // with no projection of its own. So this file owes both numbers.
+    //
+    // They are DIFFERENT questions, not one number shown twice:
+    //   `library` — how much corpus there is, which is `entries`
+    //   `uploads` — how much is WAITING, which is not an array length at all.
+    //     A total would read as reassurance; the queue exists because the
+    //     corpus grep searches `library/` only, so a file still waiting here
+    //     makes a clean grep read as "nobody has done this" (#836).
+    //
+    // `itemState` rather than a second `ingestedBy` test: one definition of
+    // waiting, and it is the viewer's own.
+    ...tileCounts({
+      library: [g.entries.length, "entries"],
+      uploads: [g.uploads.filter((u) => itemState(u) === "waiting").length, "waiting"],
+    }),
+    ...g,
+  };
 }
 
 export function viewerHtml(dataHref: string, scope = ""): string {

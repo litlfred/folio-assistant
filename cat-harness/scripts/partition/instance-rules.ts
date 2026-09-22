@@ -258,6 +258,12 @@ export const RULES: Rule[] = [
       "scripts/check-escaped-markup.ts",     // no page publishes a block tag as visible text
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
+      // Its merge-time sibling, and harness-level for the same reason: it
+      // resolves conflicts in the `qa` graph by re-running whichever writer
+      // the sidecars name. It reads the DECLARATION, `package.json` and git's
+      // index, and nothing in it is about any folio's subject matter — a folio
+      // could not make it resolve differently, only give it more files.
+      "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -295,6 +301,13 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
+      // twenty lines up, and it arrived the same way: classified core first
+      // because a badge is something a reader sees, and `check:partition`
+      // answered with a wrong-direction edge from `sync-docs-harness.ts`,
+      // which is harness and reads it. A tile is harness machinery whatever
+      // it looks like on the page.
+      "schemas/tile-count.ts",               // a projection's declared headline number
       // The skill-framework vocabulary — actors, capabilities, skills,
       // requirements, the package registry. It was the top 240 lines of
       // `constraints.ts` and 32 aliases in `types.ts`, which put it under the

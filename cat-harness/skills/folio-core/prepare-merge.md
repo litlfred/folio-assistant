@@ -44,6 +44,9 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
      green check. A rebase needs a force-push **with lease**:
      `git push --force-with-lease` — never a bare `--force` (it clobbers sibling
      pushes).
+   **A conflict in a generated QA sidecar has a command** —
+   `bun run qa:resolve-conflicts`. See §"Conflicts in `test/results/`" below
+   before resolving one by hand.
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
      fast-forward: git fast-forwards without running a merge, so conflicts are
@@ -139,6 +142,52 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    dispatch-only repo it is evidence of the opposite.
 8. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
    requested, see below.
+
+## Conflicts in `test/results/` — the command, and the 13 files it refuses
+
+**Measured, not impressionistic.** Across one working session on PR #773 and
+its successor: **four base merges, four conflicts, every one in a committed
+generated QA sidecar and none in authored code.** Bean `520m`.
+
+```sh
+bun run qa:resolve-conflicts             # resolve what is safe, report the rest
+bun run qa:resolve-conflicts --dry-run   # say what it would do, change nothing
+bun run qa:resolve-conflicts --explain   # ...and why, per file
+```
+
+**Why regenerating is a resolution and not a guess.** Both writers are
+idempotent — `bun run translation:block-qa` and `bun run kg:audit` over an
+unchanged tree write nothing, because `sameScriptVerdict` keeps a reproduced
+entry verbatim and ignores `reviewed_at`, `reviewed_sha` and
+`script_commit_sha`. So a sidecar is a pure function of the tree, and the
+merged tree has exactly one correct answer; both sides are stale with respect
+to it by definition, which is why *which* side you take does not matter.
+
+That also corrects the first explanation anyone reaches for. These conflicts
+are **not** a timestamp both sides restamped — the machinery preventing that
+already exists and works. Both sides really had changed the inputs. The verdict
+being unchanged does not make the conflict empty; it makes it trivially
+resolvable.
+
+> **The 13.** Across all 630 committed sidecars there are **5,883 `script`
+> entries and 13 `agent` ones** (11 `block-qa/v1`, 2 `translation-qa/v1`).
+> Regenerating blindly is right for 5,883 and would silently destroy 13 — two
+> of them in the family that churns most.
+
+The command refuses those files rather than resolving them, checks the same
+predicate again *after* regenerating, and leaves every conflict outside the
+declared `qa` graph untouched and unstaged. **Resolving one of these by hand is
+still fine — but check for a non-script `reviewer.kind` on both sides first**,
+which is the one thing a regeneration cannot recover.
+
+And the habit this guards: a conflict an agent resolves without reading teaches
+that conflicts in `test/results/` are safe to wave through, which is exactly
+what would wave through the one that is not.
+
+**The owner chose the script over a git merge driver**, 2026-09-21. A driver
+needs a `git config` step in every clone and CI runner, and the people hitting
+these conflicts are mostly agents in fresh containers — where a setup step
+nobody ran is a driver that is not there, failing open and silently.
 
 ## Opening the PR (only when asked)
 
