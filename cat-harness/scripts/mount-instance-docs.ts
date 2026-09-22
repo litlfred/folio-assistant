@@ -392,7 +392,7 @@ function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undef
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string } | null }[] };
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -406,7 +406,16 @@ function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undef
       // A site-absolute href has to be re-based for a page that is not at the
       // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
       const href = h.href ? `${toRoot}${h.href}` : undefined;
-      const avatar = h.icon?.src ? { src: `${toRoot}${h.icon.src}`, ...(h.icon.title ? { title: h.icon.title } : {}) } : undefined;
+      const avatar = h.icon?.src
+        ? {
+            src: `${toRoot}${h.icon.src}`,
+            ...(h.icon.title ? { title: h.icon.title } : {}),
+            // `603s`'s declared crop, when the icon image carries one.
+            // `harness-tiles.ts` puts it here; nothing in this file decides a
+            // box, which is the point of declaring it.
+            ...(h.icon.region ? { region: h.icon.region } : {}),
+          }
+        : undefined;
       return {
         label,
         ...(href ? { href } : {}),

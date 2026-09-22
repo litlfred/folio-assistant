@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:08:55Z
-updated_at: 2026-09-22T18:08:55Z
+updated_at: 2026-09-22T18:37:50Z
 parent: folio-assistant-vuip
 ---
 
@@ -76,3 +76,155 @@ of a three-stream split, not overlooked.
 - [ ] #951, #944 conflict-free and green, or a stated reason they are not
 - [ ] The 10 dependabot PRs triaged with a recorded decision per major bump
 - [ ] #731, #750, #737, #231 each either advanced or given an owner question
+
+
+---
+
+## Step 1 done — critical paths re-verified on `main` at `b7f8945b`, 2026-09-22
+
+Every number below was produced by running the repo's own gates in this
+checkout, not by reading a bean. `bun run gates`: **123 of 123, exit 0**,
+10,270 tests across 398 files.
+
+### The path this claim states is wrong in its ordering
+
+This bean states **`wggr` → `zlmp` → `rnfl`**. `vuip` states *"wggr, then
+b5f0 / zkgs, then zmdo"*. The two disagree, and **`zlmp`'s own §Status
+disagrees with both**: *"`wggr` / `b5f0` / `zmdo` are not waiting on it."*
+`check:partition` re-run here confirms why — 920 modules, 2045 edges,
+**0 wrong-direction, 0 unassigned**. `zlmp` stays `in-progress` for descendant
+work (`rfev`, the A/B/C registration question, settled as *C now, B as the
+destination*) and is gating nothing. Position in the path withdrawn; status
+untouched.
+
+`zkgs`, which `vuip` puts on the path, is parented to **`1swy`** — the QA root,
+which is in no stream. A milestone's critical path naming a bean outside every
+stream is worth stating plainly.
+
+### Stale blockers withdrawn, with reasons
+
+| bean | what it advertised | measured |
+|---|---|---|
+| `x4a6` | title: *blocked on core's folio registration reaching every declaration reader* | its own body records **31 of 31 readers reach it** (via `bun build`). Its one open box names `q2wn` — **completed 2026-09-22T10:28:50Z**, and `partition/engine.ts` now documents the bare side-effect form naming `folio-graph-kind` at lines 172/189. Blocker withdrawn; title corrected; what remains is a **decision**, below. |
+| `hs08` | 86 non-test sites, 25 test files, 8 workflows, `init-folio` scaffolds `content/` | **4** renameable sites (6 matches, 2 of which this bean itself says must NOT move), **11** test sites, **6** workflow files — and `init-folio` **already scaffolds `folio/`**, so that box is done. |
+
+### One finding neither bean had
+
+The four renameable sites all build **`cat-harness/content/docs/`**, which holds
+**14 documentation subgraphs** the docs-site generators read today — and which
+**`cat-harness.json` does not declare at all**, while the declared `folio/`
+holds three JSON files. `hs08` records the absence of a `content` entry as the
+rename having *landed*. It is the opposite: the declaration was emptied before
+the directory was moved, so 14 live subgraphs are invisible to any consumer
+that scans the declaration. `dh4f` pointed the other way — present-but-undeclared
+rather than declared-but-absent.
+
+### The PR table in this claim is already stale in two places
+
+Re-measured against the live API, ~18:2xZ:
+
+- **#731 is `clean`**, not `unknown`. The *"~550 commits behind"* note no longer
+  describes it.
+- There are **four** `zod` 3→4 PRs, not three: **#909** (root), #911, #912,
+  #913. #956 says three as well. The collapse is one decision over four PRs.
+
+### #938 is NOT superseded by #953 — the instruction's premise is false, and it is reproducible
+
+This claim says to *"verify superseded by reading both diffs, not by matching
+titles, then close with the evidence."* Read, and the evidence says **do not
+close it**. Both implement the owner's `feature`-is-a-tier ruling; they close
+the hole that widening `PARENT_TYPES` opens **differently**, and #953's closure
+is narrower in two ways that are live on `main` right now.
+
+**1. `feature` under `feature` passes.** #953 guards epics only
+(`b.type === "epic" && p.type !== "milestone"`). #938 adds a `RANK` table and
+checks **direction** for every ranked pair. Probed against merged `main` with a
+five-bean fixture (`m1` ← `e1` ← `f1` ← `f2`, plus `t1`):
+
+    problems: []
+    flagged f2 (feature-under-feature)? false
+
+**2. The summary asserts a universal the next line refutes.** `check:bean-parents`
+on this repo, verbatim:
+
+    ✓ every open bean hangs from a milestone, epic or feature, and every epic from a milestone
+    · outstanding (baselined): folio-assistant-d308 …: an epic's parent is a `milestone` (a goal) — `folio-assistant-zzmr` has type `epic`
+
+That is the defect #938 names — *"a reader who stops at the tick is entitled to
+believe it"* — and #938's fix (say **"no NEW epic"** whenever the baseline is
+non-empty) did not land with #953.
+
+A third, smaller one: main's `parent-type` message still reads *"not an epic or
+a milestone"* after `feature` became a legal parent.
+
+So #938 reduces to a delta over #953 rather than closing: the `RANK` direction
+check, the baseline-aware summary, the message fix, and its test.
+
+### Carried to the owner as decisions, not taken here
+
+1. `x4a6`'s reachability gate — *not red on arrival*, 31 of 31 pass today.
+2. `hs08`'s `cat-harness/content/docs/` → where, and declared as what.
+3. The four `zod` PRs and the two `typescript` PRs.
+
+
+---
+
+## Dependabot triaged as three decisions, not ten — measured 2026-09-22 on `b7f8945b`
+
+The claim says to *"state what breaks under `zod` 4 and `typescript` 7 before
+merging either."* Both were run, not reasoned about.
+
+### `zod` 3.25.76 → 4.6.5 — #909, #911, #912, #913 (FOUR, not three)
+
+The claim and #956 both say three. There are four package.json files declaring
+`zod`, and one PR each: root, `cat-harness/adapters/mcp-server`,
+`cat-harness/schemas`, `cat-harness/schemas/block-qa-schema`. One decision, four
+PRs; they must land together or the four declarations disagree.
+
+**Blast radius: 3 lines in 1 file.** Every v4 removal was checked against the
+corpus rather than assumed:
+
+| v4 change | sites | verdict |
+|---|---|---|
+| `z.record(V)` single-arg **removed** | 82 total — **69 already two-arg**, **3 one-arg** | `skill-package.ts:126,312,313` — the only real work |
+| `ZodError.errors` **removed** | 0 | the 15 `.errors` hits are LaTeX AST reports and YAML docs, none a ZodError |
+| `.strict()` / `.passthrough()` | 96 / 15 | **deprecated, still functional** in v4 |
+| `z.string().url()` / `.email()` | 22 / 1 | **deprecated, still functional** in v4 |
+| `z.preprocess`, `.superRefine`, `.default` | 2 / 11 / 102 | unaffected |
+
+The 94 files importing `zod` are almost all unaffected because this corpus
+already writes `z.record(K, V)`.
+
+### `typescript` → 7.0.2 — #910 (root, from 6.0.3) and #914 (block-qa-schema, from 5.9.3)
+
+**Run, not predicted.** `bun add -D typescript@7.0.2 && bun run typecheck`:
+
+    107 errors, in exactly 2 files
+      cat-harness/scripts/schema-graph.ts            69
+      cat-harness/content/pipeline/qa-criterion-hash.ts  38
+
+    68 x TS2339  Property 'isTypeAliasDeclaration' | 'createSourceFile' | … does not exist
+    35 x TS2694  Namespace '…/typescript/lib/version' has no exported member 'Node'
+     4 x TS7006  implicit any
+
+**One cause.** Both files do `import ts from "typescript"` and use the
+**compiler API** — `ts.createSourceFile`, `ts.SyntaxKind`, `ts.isIdentifier`,
+`ts.Node`. TypeScript 7 is the native port; its default entry no longer serves
+that API, and the import resolves to `typescript/lib/version`. Baseline
+confirmed: `typecheck` exits **0** on 6.0.3 before and after, and the tree was
+restored clean.
+
+This is **not a config tweak**. Those two files need pinning to 6, or
+rewriting against whatever TS 7 exposes, or a different parser. It is a real
+piece of work and it is the reason `typescript` is a separate decision from
+`zod` rather than part of the same batch.
+
+### The remaining four
+
+#907 `requests` (Python, 1 line), #908 minor-and-patch group (2 files),
+#915 the actions group (39 files, 16 updates). Not measured here — they carry
+no known breaking surface and are the cheapest of the ten.
+
+### Put to the owner
+
+Asked as a selection. Nothing merged.
