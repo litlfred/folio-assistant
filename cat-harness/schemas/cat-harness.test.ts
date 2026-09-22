@@ -1062,7 +1062,18 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // it, and the voice derived from it -- KG assets, not the IG pipeline,
       // which stays `nsbb`'s question.
       "smart-base",
+      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
+      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
+      // smart-dak, smart-ig}`. They were named in the ruling and in
+      // `smart-stack-layering` for a whole PR while no directory declared any
+      // of them, so the stack existed in prose and nowhere a consumer could
+      // read it. Each declares NO directories, deliberately: that is the
+      // `folio-assistant-core` precedent, because a declared-but-absent
+      // directory is the `dh4f` defect.
+      "smart-dak",
+      "smart-ig",
       "smart-immunizations",
+      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",

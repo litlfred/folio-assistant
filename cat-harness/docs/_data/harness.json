@@ -461,7 +461,7 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "smart-ig"
       ],
       "icon": null,
       "tone": 0,
@@ -888,7 +888,7 @@
       "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "smart-ig"
       ],
       "icon": null,
       "tone": 0,
@@ -925,13 +925,121 @@
       ]
     },
     {
+      "name": "smart-l1",
+      "title": "SMART L1",
+      "label": "SMART L1",
+      "description": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evidence a Digital Adaptation Kit is written from.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-l1: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "smart-ig",
+      "title": "SMART IG",
+      "label": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-ig: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
+      "name": "smart-dak",
+      "title": "SMART DAK",
+      "label": "SMART DAK",
+      "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-dak: no avatar declared for this instance — showing the generic mark."
+      ]
+    },
+    {
       "name": "smart-base",
       "title": "SMART Base",
       "label": "SMART Base",
       "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "fhir-harness"
       ],
       "icon": null,
       "tone": 0,
