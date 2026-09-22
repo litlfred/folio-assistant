@@ -5865,6 +5865,13 @@
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "absent",
+          "type": "z .object({ reason: z.string().min(1, \"an absent directory's reason cannot be empty\") }) .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is DECLARED and deliberately not on disk, with the reason."
         }
       ],
       "extendsNames": [],
