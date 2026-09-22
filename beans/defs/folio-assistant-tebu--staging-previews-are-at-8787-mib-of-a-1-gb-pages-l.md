@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tebu
 title: Staging previews are at 878.7 MiB of a 1 GB Pages limit, nothing is prunable, and the check's remedy addresses a different budget
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T06:03:07Z
-updated_at: 2026-09-22T06:03:07Z
+updated_at: 2026-09-22T06:30:20Z
 parent: folio-assistant-1xhc
 ---
 
@@ -71,8 +71,8 @@ review. So the cut has to be conditional on what the branch actually touches.
 - [x] A preview omits `reference/` and `api/` **unless the branch's diff
       touches their sources**, leaving a stub that links to the main site's copy
 - [x] The saving is measured on a real preview, not projected
-- [ ] The check's stale ~38 MB calibration is corrected to the measured figure
-- [ ] The basis stops naming blob sharing as the remedy for a published-size
+- [x] The check's stale ~38 MB calibration is corrected to the measured figure
+- [x] The basis stops naming blob sharing as the remedy for a published-size
       threshold, or says explicitly which budget each sentence is about
 
 
@@ -184,3 +184,54 @@ Separately and not caused by this change: the total fell 878.7 → 741.2 MiB
 while this was being written, because #833 and #838 merged and their previews
 were reaped automatically. The auto-removal works; it was never the problem.
 
+
+---
+
+## The check's own two defects, corrected
+
+`test/health/checks.ts` — the documented basis, and the `basis` string the
+report carries.
+
+### The calibration was stale by more than 2x
+
+It reasoned from *"the measured ~38 MB per preview"*, so *"500 MB is about
+thirteen concurrent reviews"*. At the measured **~88 MiB** it is about **five
+or six** — below the concurrency this repository reaches routinely, which is
+why an ordinary working day tripped `critical`. A threshold that always fires
+has stopped discriminating.
+
+**`STAGING_WARN_BYTES` is left at 500 MB.** That value is the owner's
+(*"set stagfing to 500mb"*); what was wrong is the arithmetic beneath it, and
+whether the number still buys what they wanted is theirs to decide, not a
+thing to quietly recalibrate.
+
+### Two budgets, and the threshold is about one of them
+
+The basis gave a **deduplication** argument — zero HTML blobs shared, nine
+previews storing nine copies — as the reason to act on a threshold stated
+against *"the documented 1 GB Pages ceiling"*. Those are different budgets:
+
+| budget | counts | does blob sharing help? |
+|---|---|---|
+| 1 GB Pages ceiling | the PUBLISHED tree, each preview materialising its own copies | **no** |
+| `gh-pages` repository size | git objects, identical content stored once | yes |
+
+Measured: **878.7 MiB summed, 616.7 MiB unique, 47.3 MiB shared.** Sharing now
+exists — `g196` made the banner a constant fragment, which is exactly the
+"most fundamental" source the doc still listed as live — and it still cannot
+reduce what Pages counts.
+
+The four addressing sources stay in the doc and stay worth fixing. They are a
+repository-growth remedy, and the doc now says so rather than offering them
+against the wrong limit.
+
+### Severity has since dropped, and NOT mainly because of this
+
+The report now reads `major` at 745.3 MB rather than `critical` at 878.7.
+Attributed honestly: ~177 MiB of that is #833 and #838 merging and their
+previews being reaped automatically; this bean's trim contributed by making
+this branch's own preview add 39.2 MiB instead of ~88. The automatic drain
+was doing its job the whole time — which is the point the finding's own
+action missed when it proposed labelling previews for cleanup.
+
+94 health tests pass; `bun run gates` 102/102.
