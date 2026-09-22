@@ -475,6 +475,27 @@ function tileFor(
     );
   }
 
+  // READ-ONLY IS STATED WHETHER OR NOT A VIEWER EXISTS, and that separation is
+  // the whole point of the two greys.
+  //
+  // Every read-only kind in this repository today ALSO lacks a viewer, so a
+  // mark that rode the viewer list would render zero times — which is exactly
+  // what happened on the first attempt: the mark shipped on the graph-tile
+  // surface, `readOnly` is never populated there, and reading the staging
+  // deploy found it on 0 of 3 pages. Live CSS, live JS, nothing to style.
+  //
+  // So the fact goes where it cannot be hidden by the gap. A reader told only
+  // "catalogue: no published viewer" learns that nothing opens, and not that
+  // what is behind it is frozen and needs a copy-out to work on.
+  const frozen = visualisations.filter((v) => v.readOnly === true).map((v) => v.kind);
+  if (frozen.length > 0) {
+    findings.push(
+      `${decl.name}: ${frozen.length} graph(s) hold materialized content and are READ-ONLY — ` +
+        `${frozen.join(", ")}. Readable, not editable here: copy one out to your own ` +
+        `folio/ to work on it. Separate from whether a viewer is published.`,
+    );
+  }
+
   // A DECLARED visualiser that does not resolve is `flh4`'s defect, and it is
   // a different finding from "no viewer": one says nobody built it, the other
   // says the declaration is wrong.

@@ -38,7 +38,7 @@ interface Vis {
 }
 const harnesses = (
   JSON.parse(readFileSync(join(BASE_DOCS, "_data", "harness.json"), "utf-8")) as {
-    harnesses?: { name?: string; title?: string; visualisations?: Vis[] }[];
+    harnesses?: { name?: string; title?: string; findings?: string[]; visualisations?: Vis[] }[];
   }
 ).harnesses ?? [];
 const all = harnesses.flatMap((h) => (h.visualisations ?? []).map((v) => ({ ...v, title: h.name ?? h.title })));
@@ -112,6 +112,64 @@ describe("the two states arrive separately", () => {
       expect(v.kind, `${v.title}/${v.kind} claims writable — is that declared?`).toBeDefined();
     }
     expect(explicitFalse.length).toBeLessThanOrEqual(all.length);
+  });
+});
+
+describe("read-only is SAID, not only recorded", () => {
+  /**
+   * THE DEFECT THIS PINS: a mark with nothing to style.
+   *
+   * The first attempt put the read-only mark on the graph-tile surface —
+   * `docs-ui.js` reading `t.readOnly`, CSS dashing the tile. Both shipped.
+   * Reading the STAGING DEPLOY found `readOnly` on **0 of 3** sampled pages,
+   * because that surface's tiles come from the ROOT instance's declaration and
+   * no cat-harness directory is read-only. Live code, nothing to act on.
+   *
+   * A description of a rendered artefact is not the artefact
+   * (`continual-progress`, measured on PR #178). The deploy said so; the diff
+   * did not.
+   *
+   * So the fact is carried as a FINDING, which renders wherever findings do
+   * and cannot be hidden by a kind having no viewer — the case that is in fact
+   * true of every frozen kind here.
+   */
+  const findingsOf = (name: string) =>
+    (harnesses.find((h) => h.name === name)?.findings ?? []).filter((f) => f.includes("READ-ONLY"));
+
+  it("every instance with a frozen kind says so in a finding", () => {
+    const withFrozen = harnesses.filter((h) => (h.visualisations ?? []).some((v) => v.readOnly === true));
+    expect(withFrozen.length).toBeGreaterThan(0);
+    for (const h of withFrozen) {
+      expect(findingsOf(h.name ?? ""), `${h.name}: frozen kinds recorded but never stated`).not.toEqual([]);
+    }
+  });
+
+  it("the finding names the kinds, not just a count", () => {
+    // A count alone sends a reader back to the data file to learn WHICH.
+    for (const h of harnesses) {
+      const frozen = (h.visualisations ?? []).filter((v) => v.readOnly === true).map((v) => v.kind);
+      if (frozen.length === 0) continue;
+      const f = findingsOf(h.name ?? "")[0]!;
+      for (const k of frozen) expect(f).toContain(k);
+    }
+  });
+
+  it("and says what to do about it", () => {
+    // The read-only grey is the one that OFFERS THE COPY-OUT. A finding that
+    // only reports the state leaves a reader stuck in front of content they
+    // may not edit and no route to working on it.
+    for (const h of harnesses) {
+      for (const f of findingsOf(h.name ?? "")) expect(f).toContain("copy one out");
+    }
+  });
+
+  it("an instance with nothing frozen says nothing", () => {
+    // The mirror: a finding on every instance would be noise, and noise is how
+    // a report stops being read.
+    for (const h of harnesses) {
+      if ((h.visualisations ?? []).some((v) => v.readOnly === true)) continue;
+      expect(findingsOf(h.name ?? ""), `${h.name}: reports frozen content it does not have`).toEqual([]);
+    }
   });
 });
 

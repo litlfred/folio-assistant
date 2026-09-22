@@ -325,3 +325,45 @@ and names the stronger one, so the eventual fix will not look like a regression.
 The copy-out BPMN with lanes bound to roles, its committed instance under
 `beans/workflows/`, and `todo-review` linking back. Those were waiting on the
 provenance field; they are not waiting on it any more.
+
+## A MARK WITH NOTHING TO STYLE — caught by reading the deploy, not the diff
+
+The first two-greys implementation put the read-only mark on the **graph-tile**
+surface: `docs-ui.js` reading `t.readOnly`, CSS dashing the tile, both shipped
+and both correct in isolation. A staging-preview notice prompted a check of the
+deployed branch, and `readOnly` appeared **0 times on 3 of 3 sampled pages**.
+
+The reason is a surface split that no test covered: `fa-tiles` is built from
+`graphTiles(decl.directories)` where `decl` is the **root** instance, and no
+`cat-harness` directory is read-only. The `readOnly` data lives in
+`_data/harness.json`'s `harnesses[].visualisations` — a different surface,
+rendered by Liquid, not by that tile loop. Live CSS, live JS, nothing to act on.
+
+`continual-progress` already measures this on PR #178: *a human cannot assess a
+rendered artefact from a description of it.* The deploy said so; the diff did
+not, and the gates were green across it.
+
+### The second attempt nearly repeated it
+
+The obvious fix — mark the read-only entries in the harness viewer list — would
+also have rendered zero times, because that list holds only kinds **with** a
+`path` and **no kind here is both published and read-only**: all three frozen
+ones lack a viewer.
+
+So the fact is carried as a **finding**, where a missing viewer cannot hide it.
+It renders for all three today. The viewer-list mark is kept anyway, correct
+from the moment a frozen kind gains a viewer, with its own comment saying it is
+currently unexercised — because adding it later is precisely how the first
+attempt happened.
+
+A reader told only *"catalogue: no published viewer"* learns that nothing opens,
+and not that what is behind it is frozen and needs a copy-out. The finding says
+both, and says what to do: *"copy one out to your own `folio/` to work on it."*
+
+### What could NOT be verified here
+
+`bun run preview:site` has no working Jekyll in this container, so the rendered
+page was not inspected — only the data reaching it and the template that reads
+that data. Four assertions in `two-greys.test.ts` pin the finding's presence,
+the kinds it names, the action it offers, and its ABSENCE on instances holding
+nothing frozen.

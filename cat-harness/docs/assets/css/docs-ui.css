@@ -2052,6 +2052,23 @@ a.fa-tile[data-fa-readonly] {
   border-style: dashed;
 }
 
+/* The same state on the harness viewer list, where it actually occurs today.
+ *
+ * A link cannot carry a dashed BORDER legibly — it has none — so the mark is a
+ * dashed underline plus a word. The word is there because this list is dense
+ * and a reader scanning it should not have to notice a line style; the dash
+ * carries it for anyone who reads the link itself. Neither is colour. */
+a[data-fa-readonly] {
+  text-decoration-style: dashed;
+}
+
+.fa-readonly-note {
+  margin-left: 0.4em;
+  font-size: 0.78em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
 a.fa-tile[data-fa-readonly]:hover,
 a.fa-tile[data-fa-readonly]:focus-visible {
   /* Hover keeps the dash: the tile is still read-only while you point at it,
