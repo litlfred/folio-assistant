@@ -1220,7 +1220,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:47:15Z",
-      "updatedAt": "2026-09-21T22:58:51Z",
+      "updatedAt": "2026-09-21T23:03:58Z",
       "preview": "Issue #801. `graph-tiles.ts` stores a site-root-relative href (`/beans/`), which is right as data. `docs-ui.js`'s `tileLink` writes it into an anchor with no `site.baseurl`, so under `baseurl: /folio-assistant` every one of the 12 tiles resolves against the ORIGIN and 404s. The owner found it from the other end: looking for the beans board and landing on https://litlfred.github.io/beans/ — which i",
       "file": "beans/defs/folio-assistant-68au--every-graph-tile-in-the-navbar-404s-the-href-never.md"
     },
@@ -3123,6 +3123,20 @@
       "updatedAt": "2026-09-20T09:01:32Z",
       "preview": "Owner, 2026-09-20: 'noting cacheing olean stragety for \"compiled/compuable\" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'\n\nA THIRD KIND OF REMOTE CONTENT, and `materialization.ts` currently has two purposes (`working`, `archival`) with no room for it. A COMPILED artefact is neither:\n- it is DERIVED, so it is not archival — the source is e",
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
+    },
+    {
+      "id": "folio-assistant-gr5h",
+      "title": "declared-directory-resolves has been over bun's default 5s timeout the whole time — 9.3s measured, passing only on a fast enough machine",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:55:59Z",
+      "updatedAt": "2026-09-22T06:55:59Z",
+      "preview": "Found 2026-09-22 while driving `a58y` to green. **Pre-existing on `main`, not\nintroduced by the branch that found it** — measured both sides: 55 modules\ncall a directory accessor on `main` and 55 on the branch, so the workload is\nidentical.\n\n## What it actually was\n\nNot a flake, and not an assertion failure:\n\n    (fail) each one resolves `library` in a FRESH process [5038.08ms]\n      ^ this test t",
+      "file": "beans/defs/folio-assistant-gr5h--declared-directory-resolves-has-been-over-buns-def.md"
     },
     {
       "id": "folio-assistant-h32d",
@@ -5149,6 +5163,20 @@
       "file": "beans/defs/folio-assistant-shzs--tool-313-task-runnodeaudits-kg-audit-rendering-20.md"
     },
     {
+      "id": "folio-assistant-sj6m",
+      "title": "TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:48:03Z",
+      "updatedAt": "2026-09-22T06:48:27Z",
+      "preview": "## The ask, owner 2026-09-22 — verbatim\n\nQuoted rather than paraphrased, because it carries four requirements in three\nsentences and a paraphrase would be a second answer free to drift:\n\n| Each tool node needs a QA check and all referenced assets.  Need to check\n| before execution if security gates passed.\n|\n| Note skill.update In general subprocess can be run w/ same agent or\n| dispatch one or mo",
+      "file": "beans/defs/folio-assistant-sj6m--tool-nodes-are-unaudited-69-of-them-and-tool-is-no.md"
+    },
+    {
       "id": "folio-assistant-sjic",
       "title": "ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom",
       "status": "in-progress",
@@ -6485,6 +6513,20 @@
       "updatedAt": "2026-09-20T18:24:21Z",
       "preview": "THE BLOCKER, and it is measured, not anticipated. `scripts/check-voices.ts:35` resolves `libraryId` as `library/<id>/sections/<sec>.md` against the VOICE'S OWN instance root. Move `voices/who-*.json` to `who-style-guide/` and every citation in all three stops resolving.\n\nBean `r1lz` predicted this on 2026-09-19 and named it in general: 'a skill derived from a source text in another repo would cite",
       "file": "beans/defs/folio-assistant-z7ev--cross-instance-library-reference-a-voice-in-who-st.md"
+    },
+    {
+      "id": "folio-assistant-z9ax",
+      "title": "69 modules carry a folio registration import that is now a no-op",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:29:45Z",
+      "updatedAt": "2026-09-22T06:30:00Z",
+      "preview": "Left behind by `q2wn`, deliberately and with the attempt recorded.\n\n## What is true now\n\n`schemas/cat-harness.ts` imports `schemas/folio-graph-kind.js` at its foot, so\nthe `folio` kind is registered by the time any reader can be called — a reader\nlives in that module, so loading it is a precondition of calling one. Proved\nin a fresh process importing only `readDeclaration`.\n\nThat makes every OTHER",
+      "file": "beans/defs/folio-assistant-z9ax--69-modules-carry-a-folio-registration-import-that.md"
     },
     {
       "id": "folio-assistant-z9eb",

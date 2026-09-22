@@ -266,10 +266,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-22T07:16:36.687Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c76331ec89bdf59fcbb3fe0569bc2c33ecbecd39",
-  "sourceCommitSha": "c76331ec89bdf59fcbb3fe0569bc2c33ecbecd39",
-  "sourceCommitAt": "2026-09-22T09:14:48+02:00",
+  "generatedAt": "2026-09-22T07:24:39.832Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/29091ab35d253506a36631c16e26e7b6dbb96a87",
+  "sourceCommitSha": "29091ab35d253506a36631c16e26e7b6dbb96a87",
+  "sourceCommitAt": "2026-09-22T09:22:51+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -352,7 +352,7 @@
       "name": "bootstrap-graph-emission",
       "title": "Emitting bootstrap's own graph",
       "description": "How bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
-      "instructionsPath": "render/bootstrap-graph-emission.md",
+      "instructionsPath": "tools/bootstrap-graph-emission.md",
       "instructionLines": 89,
       "hasInstructions": true,
       "hasIOContract": false,
@@ -365,7 +365,7 @@
       "name": "bootstrap-graph-publication",
       "title": "Publishing bootstrap's graph",
       "description": "Where bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
-      "instructionsPath": "render/bootstrap-graph-publication.md",
+      "instructionsPath": "tools/bootstrap-graph-publication.md",
       "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
@@ -1431,11 +1431,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "bootstrap-render",
-      "path": "render/",
+      "path": "tools/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
-      "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `bootstrap-graph-emission` (what the document contains and the four properties it holds) and `bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`.",
+      "description": "The skills for RENDERING this instance's own graph as `.jsonld`/`.json` — `bootstrap-graph-emission` (what the document contains and the four properties it holds) and `bootstrap-graph-publication` (where it lands, why its `@id` must equal that path, and why it is no longer committed). A SEPARATE id from `cat-harness`, which `skills/` already holds: overrides match on id, so reusing it would replace bootstrap's skills with these. SEPARATE from `skills/` as a package too, because the two answer different questions — `skills/` is about READING a graph cold and about the initialization flow, this is about bootstrap EMITTING its own. Until this directory existed the emission discipline lived in a code comment in `kg-export.ts` and a YAML comment in `docs-site.yml`, which is why it was rediscovered rather than read. Bean `hfkl`. MOVED from `render/` to `tools/` on 2026-09-22 on the owner's instruction. The ID is UNCHANGED: `bootstrap-render` names what this package IS — the skills governing bootstrap's own graph emission — and ids are stable across a relocation while paths are not, which is the same rule that kept the discussion schemas' published `$id`s fixed when they moved. graphKinds stays `[\"skills\"]` and does NOT become `[\"tools\"]`: the `tools` graph holds Tool nodes authored as TypeScript through `defineTool`, and these are two markdown skill bodies. `hfkl` records the owner's original words for this content — *\"as subgraph of skill related to renering .jsonld/.json\"*, and *\"maybe in wrong place\"*, which is what this move answers.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render"
     },
     {
@@ -1459,8 +1459,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c76331ec89bdf59fcbb3fe0569bc2c33ecbecd39",
+    "sha": "29091ab35d253506a36631c16e26e7b6dbb96a87",
     "pr": "main",
-    "run": "35698646896"
+    "run": "35699311646"
   }
 }
