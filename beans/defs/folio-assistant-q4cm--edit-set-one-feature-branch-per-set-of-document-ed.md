@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:04:32Z
+updated_at: 2026-09-22T21:20:37Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-txut
@@ -64,4 +64,14 @@ Measured: PRs #961–#967 were all opened as `litlfred`, because agents push thr
 2. an owner review carrying a fixed acceptance marker, plus the existing "merge it";
 3. branch protection with CODEOWNERS and a separate reviewer account.
 
-- [ ] the owner-as-author case is decided and tested
+- [x] the owner-as-author case is decided (see ruling below); testing is tracked in the ruling section
+
+
+## Owner ruling 2026-09-22: option 1
+
+The owner chose **option 1** when asked with the three options side by side. When the owner authored the PR, acceptance is an owner PR review carrying a fixed acceptance marker, followed by the existing explicit "merge it". A GitHub APPROVE is still used when the accepter is not the PR author, for example an SME or a second editor.
+
+Known cost, accepted: GitHub does not record the owner's acceptance as a formal approval, so it lives in the review body. The tool must therefore parse the marker, and must never treat "could not read reviews" as accepted.
+
+- [x] the owner-as-author case is decided
+- [ ] the marker format is fixed, and the tool recognises it (test)
