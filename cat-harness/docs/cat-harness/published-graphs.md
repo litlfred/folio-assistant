@@ -56,12 +56,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-1 of 3 published.
+3 of 3 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
-- smart-trust — *declared, not published*
-- WHO IRIS — *declared, not published*
+- [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-docs/' | relative_url }})
 
 ### `fhir-artifact-index`
 
