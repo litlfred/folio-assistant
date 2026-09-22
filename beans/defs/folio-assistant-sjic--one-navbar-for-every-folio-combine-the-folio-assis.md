@@ -76,13 +76,17 @@ So this bean RECORDS the spec and claims nothing. Sequencing is the owner's.
 
 - [ ] One renderer produces the navbar for a Jekyll page and for a mounted
       page, with the difference DECLARED rather than branched on
-- [ ] The three regions are structural, not a styling convention -- the middle
+      — **STILL OPEN after PR #959.** The sidebar shares the GEOMETRY (one
+      generated region, gated) and the BEHAVIOUR, so the two can no longer
+      disagree about a width. It is still Liquid plus CSS and does not call
+      the renderer. "Cannot disagree" is not "one renderer".
+- [x] The three regions are structural, not a styling convention -- the middle
       scrolls and the other two cannot
-- [ ] An instance's graphs appear from its DECLARATION, so a new graph kind
+- [x] An instance's graphs appear from its DECLARATION, so a new graph kind
       with content needs no edit to the navbar
-- [ ] An open document's index appears in the fixed top, and disappears with it
-- [ ] Harness avatars come from the theme, not from a list in the renderer
-- [ ] The rail and the sidebar no longer state any number twice
+- [x] An open document's index appears in the fixed top, and disappears with it
+- [x] Harness avatars come from the theme, not from a list in the renderer
+- [x] The rail and the sidebar no longer state any number twice
 
 ## CLAIMED, and the boundary is the point — 2026-09-21, session_014HGPQoUnzXGqSspA8x6YyD
 
@@ -262,25 +266,17 @@ analyst, architecture), not instances. The crop mechanism is built and tested;
 choosing the mapping is the owner's, not mine.
 
 
-## DONE-WHEN, checked honestly — 2026-09-22, PR #959
+## Status against `## Done when` — 2026-09-22, PR #959
 
 I set this bean `completed` and put it straight back to `in-progress`. Five of
-the six criteria are met; **the first is not**, and it is the one the bean is
-named after.
+the six criteria are met and are now ticked **in the canonical list above**;
+the first is not, and it is the one the bean is named after.
 
-- [ ] **One renderer for a Jekyll page and a mounted page, the difference
-      DECLARED rather than branched on.** NOT met. `navbar.ts` renders the
-      mounted page. The Jekyll sidebar was brought to the same GEOMETRY (one
-      generated region, gated) and the same BEHAVIOUR, but it is still Liquid
-      plus CSS and does not call the renderer. That is a smaller gap than the
-      one this bean opened against — the numbers can no longer disagree — but
-      "cannot disagree about widths" is not "one renderer", and recording it
-      as met would retire the bean on the strength of its easiest half.
-- [x] The three regions are structural, not a styling convention
-- [x] An instance's graphs appear from its DECLARATION
-- [x] An open document's index appears in the fixed top, and disappears with it
-- [x] Harness avatars come from the theme, not from a list in the renderer
-- [x] The rail and the sidebar no longer state any number twice
+That list is the only one. An earlier version of this section restated it here
+with its own ticks, which `check:bean-bodies` correctly refuses as a
+`shadow-checklist`: a reader consulting `## Done when` would have seen six
+open boxes while a section further down claimed five were done. One checklist,
+ticked in place.
 
 **What the remaining half needs**, so the next agent does not re-derive it: the
 Jekyll side would have to render `NavbarModel` — which means either a build

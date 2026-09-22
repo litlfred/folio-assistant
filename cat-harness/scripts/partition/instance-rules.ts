@@ -720,6 +720,10 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, plus one of its own: its `--github`
+      // half asks the forge which PRs are open, and a PR is a fact about
+      // this checkout and the forge, not about any folio's material.
+      "scripts/check-bean-rollup.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",

@@ -766,6 +766,19 @@
       }
     },
     {
+      "id": "smart-base-library",
+      "path": "smart-base/library/",
+      "scope": "repository",
+      "dependents": "reproduce",
+      "description": "The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "skill": "library-ingestion"
+      }
+    },
+    {
       "id": "translation-sources",
       "coverage": {
         "docs": "cat-harness/docs/translation-support.md",
@@ -805,6 +818,32 @@
         "methodology"
       ],
       "scope": "repository"
+    },
+    {
+      "id": "smart-base-methodologies",
+      "path": "smart-base/methodologies/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
+      "id": "smart-base-processes",
+      "path": "smart-base/methodologies/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The BPMN `smart-base` derives from its own corpus -- DIIG's nine chapters as an executable process. Declared SEPARATELY from `smart-base-methodologies` for the reason `methodology-crdm-processes` is declared separately from `methodologies/`: `workflowDirs` resolves diagrams from a declared directory, so a nested one that is not itself declared leaves every diagram undiscovered (bean `g43o`). Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
     },
     {
       "id": "docs",
@@ -964,6 +1003,54 @@
       "graphKinds": [
         "glossary"
       ]
+    },
+    {
+      "id": "cat-harness-scripts",
+      "path": "scripts/",
+      "dependents": "skip",
+      "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-src",
+      "path": "src/",
+      "dependents": "skip",
+      "description": "The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-adapters",
+      "path": "adapters/",
+      "dependents": "skip",
+      "description": "The content-type adapters -- `DocumentContentAdapter` and the `PaperContentAdapter` that extends it. Code rather than schema: they are the behaviour the profiles select between, and `content-profiles` is the skill that says which axis they sit on.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-tests",
+      "path": "test/",
+      "dependents": "skip",
+      "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

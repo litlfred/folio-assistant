@@ -239,6 +239,10 @@ about needs **one fixed filename to open first**, so the declaration stays
 `harness.json` exactly as smart-base's config stays `dak.json`; renaming it
 per-repo buys consistency and costs discovery.
 
+(The `dak.json` half of that quoted argument has since gone too: the DAK
+marker is ours and became `dak.config.json` on 2026-09-22. The quote is left
+as it stood, because it is a record of what was argued.)
+
 **The discovery half was answered rather than traded away.**
 `findDeclarationFile()` scans a directory for a `*.json` carrying a `name`
 whose stem EQUALS that name, so a consumer still opens a declaration without
