@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: translation-workflow\n"
-"POT-Creation-Date: 2026-09-22T06:41:32.046Z\n"
+"POT-Creation-Date: 2026-09-22T08:18:10.094Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,167 +14,172 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/translation-workflow.bpmn:163
+#: processes/translation-workflow.bpmn:168
 #. Diagram element documentation
 msgid "A human reviewer signs off the translation at the chosen hierarchy level (block, section, chapter, or folio). Updates status.json: { official: true, signedOffBy: \"...\", signedOffAt: \"...\", sourceHash: \"...\" } Tool: translation_signoff MCP tool"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:125
+#: processes/translation-workflow.bpmn:130
 #. Diagram element documentation
 msgid "A human SME or editor reviews the flagged passage. They may: - Accept the translation as-is (false positive) - Edit the translation and re-run QA - Reject and request re-translation The round trip establishes that two readings differ. Which one is right is a human call."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:208
+#: processes/translation-workflow.bpmn:213
 #. Diagram label
 msgid "Accepted"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:124
+#: processes/translation-workflow.bpmn:129
 #. Diagram label
 msgid "Adjudicate flagged passage (human reviewer)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:37
+#: processes/translation-workflow.bpmn:42
 #. Diagram label
 msgid "Agent / platform (automated)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:34
+#: processes/translation-workflow.bpmn:39
 #. Diagram label
 msgid "Author (source content)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:113
+#: processes/translation-workflow.bpmn:118
 #. Diagram element documentation
 msgid "Bean: folio-assistant-ktt2 Back-translates the target-language .md into the source language and compares meaning with the original. Detects semantic drift and terminology misses that a forward-only fluency check cannot see. Tool: translation_validate MCP tool"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:181
+#: processes/translation-workflow.bpmn:186
 #. Diagram label
 msgid "Check staleness (source hash)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:204
+#: processes/translation-workflow.bpmn:209
 #. Diagram label
 msgid "Clean"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:64
+#: processes/translation-workflow.bpmn:69
 #. Diagram label
 msgid "Content authored (source locale)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:203
+#: processes/translation-workflow.bpmn:208
 #. Diagram label
 msgid "Drift detected"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:121
+#: processes/translation-workflow.bpmn:126
 #. Diagram label
 msgid "Drift or bad terminology?"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:38
+#: processes/translation-workflow.bpmn:43
 #. Diagram element documentation
 msgid "Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence. It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:70
+#: processes/translation-workflow.bpmn:75
 #. Diagram label
 msgid "Extract translatable strings (POT generation)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:54
+#: processes/translation-workflow.bpmn:59
 #. Diagram label
 msgid "Human reviewer / adjudicator"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:155
+#: processes/translation-workflow.bpmn:160
 #. Diagram label
 msgid "Human sign-off?"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:96
+#: processes/translation-workflow.bpmn:101
 #. Diagram label
 msgid "Inject translations (PO → Markdown)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:212
+#: processes/translation-workflow.bpmn:217
 #. Diagram label
 msgid "Not now"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:186
+#: processes/translation-workflow.bpmn:191
 #. Diagram element documentation
 msgid "On source content change: computes sha256(source.md) and compares to each translation's status.json sourceHash. If they differ, sets stale: true. The translation remains visible with a \"stale — needs re-adjudication\" indicator."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:81
+#: processes/translation-workflow.bpmn:86
 #. Diagram label
 msgid "Produce translation (PO file)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:140
+#: processes/translation-workflow.bpmn:145
 #. Diagram label
 msgid "QA passed?"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:207
+#: processes/translation-workflow.bpmn:212
 #. Diagram label
 msgid "Re-translate"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:101
+#: processes/translation-workflow.bpmn:106
 #. Diagram element documentation
 msgid "Reads .po file and source .md, substitutes msgstr for msgid, preserves non-translatable elements, writes translated .md to translations/<locale>/block.md. Tool: translation_inject MCP tool or bun run content/pipeline/po-inject.ts"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:176
+#: processes/translation-workflow.bpmn:181
 #. Diagram element documentation
 msgid "Records the sign-off with the SHA-256 of the source .md, enabling staleness detection on future source changes."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:148
+#: processes/translation-workflow.bpmn:153
 #. Diagram element documentation
 msgid "Records the translation as unofficial in translations/<locale>/status.json: { official: false, generatedBy: \"...\", generatedAt: \"...\" } The translation is usable but carries a visible warning badge."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:108
+#: processes/translation-workflow.bpmn:113
 #. Diagram label
 msgid "Round-trip translation QA (back-translate)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:75
+#: processes/translation-workflow.bpmn:80
 #. Diagram element documentation
 msgid "Scans content nodes and extracts translatable strings to .pot files. Excludes math, labels, code, and Lean companions. Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:158
+#: processes/translation-workflow.bpmn:163
 #. Diagram label
 msgid "Sign off translation (human adjudicator)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:65
+#: processes/translation-workflow.bpmn:70
 #. Diagram element documentation
 msgid "Source content exists in the folio's defaultLocale. A change to source content also triggers this event for staleness re-evaluation."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:55
+#: processes/translation-workflow.bpmn:25
+#. Diagram element documentation
+msgid "The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since. You are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it. Staleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away."
+msgstr ""
+
+#: processes/translation-workflow.bpmn:60
 #. Diagram element documentation
 msgid "The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish. Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice."
 msgstr ""
 
-#: processes/translation-workflow.bpmn:193
+#: processes/translation-workflow.bpmn:198
 #. Diagram label
 msgid "Translation complete"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:194
+#: processes/translation-workflow.bpmn:199
 #. Diagram label
 msgid "Translation marked stale (re-enter at Extract)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:86
+#: processes/translation-workflow.bpmn:91
 #. Diagram element documentation
 msgid "Translation of .pot → .po by one of: 1. Existing PO from smart-base (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
 msgstr ""
@@ -184,17 +189,17 @@ msgstr ""
 msgid "Translation Workflow"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:171
+#: processes/translation-workflow.bpmn:176
 #. Diagram label
 msgid "Write status.json (official)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:143
+#: processes/translation-workflow.bpmn:148
 #. Diagram label
 msgid "Write status.json (unofficial)"
 msgstr ""
 
-#: processes/translation-workflow.bpmn:211
+#: processes/translation-workflow.bpmn:216
 #. Diagram label
 msgid "Yes"
 msgstr ""

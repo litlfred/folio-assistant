@@ -12,6 +12,11 @@
   </bpmn:collaboration>
 
   <bpmn:process id="Process_ContentChangeReview" name="Content Change and Review" isExecutable="false">
+    <bpmn:documentation>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.
+
+You are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the other side of that line, and the distinction matters because a content change is accepted by a REVIEW COMMITTEE on editorial grounds while a platform change is accepted by a code reviewer on engineering ones.
+
+Two things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_ContentChangeReview">
       <bpmn:lane id="Lane_Author" name="Content Author">
         <bpmn:documentation>Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.</bpmn:documentation>

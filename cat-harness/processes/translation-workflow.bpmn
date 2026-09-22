@@ -22,6 +22,11 @@
        ═══════════════════════════════════════════════════════════ -->
 
   <process id="Process_Translation" name="Translation Workflow" isExecutable="false">
+    <documentation>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.
+
+You are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it.
+
+Staleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.</documentation>
 
     <!-- ── Lanes: who is accountable for each step ─────────────
          An activity in no lane is a step nobody owns. The split is by

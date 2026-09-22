@@ -322,6 +322,16 @@ jobs:
       - name: swimlane definitions
         run: bun run check:lane-documentation
 
+      # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
+      # level up. `gen-docs-auto`'s index took the first `<documentation>`
+      # after the process opened, so a process carrying none borrowed its
+      # first LANE's and presented it as what the process was for -- which
+      # became true the day `sqtq` wrote 157 lane documentations. 16 of 61
+      # were in that state; all 61 now define themselves, so `--strict` is
+      # what runs here and a new diagram cannot land undefined.
+      - name: process definitions
+        run: bun run check:process-documentation
+
       # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
       # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
       # because a derived document has no memory: delete a role and its

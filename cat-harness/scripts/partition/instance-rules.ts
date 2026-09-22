@@ -210,6 +210,7 @@ export const RULES: Rule[] = [
       // is a platform concept, and the diagrams it reads are the platform's
       // own processes. A folio that draws none still inherits the rule.
       "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
+      "scripts/check-process-documentation.ts", // ...and the process says what it is FOR
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.

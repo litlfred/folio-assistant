@@ -24,6 +24,11 @@
        ═══════════════════════════════════════════════════════════ -->
 
   <bpmn:process id="Process_NarrativeReview" name="Narrative review" isExecutable="false">
+    <bpmn:documentation>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.
+
+You are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.
+
+Everything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto.</bpmn:documentation>
 
     <bpmn:laneSet id="LaneSet_NarrativeReview">
       <bpmn:lane id="Lane_NarrativeReviewer" name="Narrative reviewer">

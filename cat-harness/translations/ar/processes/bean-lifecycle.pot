@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bean-lifecycle\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.434Z\n"
+"POT-Creation-Date: 2026-09-22T08:18:09.967Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/bean-lifecycle.bpmn:76
+#: processes/bean-lifecycle.bpmn:81
 #. Diagram element documentation
 msgid "`beans create \"<title>\"`. This is the AGENT's call. The workflow engine has no `create` op — its vocabulary is claim, note and resolve, all of which act on an instance's existing bean."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:128
+#: processes/bean-lifecycle.bpmn:133
 #. Diagram element documentation
 msgid "`status: scrapped`, plus a \"Reasons for Scrapping\" section. This is what \"disable\" means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though `beans delete` exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:40
+#: processes/bean-lifecycle.bpmn:45
 #. Diagram label
 msgid "Agent (this session)"
 msgstr ""
@@ -34,152 +34,157 @@ msgstr ""
 msgid "Agent bean lifecycle"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:73
+#: processes/bean-lifecycle.bpmn:78
 #. Diagram label
 msgid "Already exists?"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:163
+#: processes/bean-lifecycle.bpmn:168
 #. Diagram label
 msgid "blocked"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:140
+#: processes/bean-lifecycle.bpmn:145
 #. Diagram element documentation
 msgid "Blocked is not scrapped. Set `--blocked-by`, say in the body what would unblock it, and return it to `todo` so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:64
+#: processes/bean-lifecycle.bpmn:69
 #. Diagram label
 msgid "Check before you create (exact-title search)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:93
+#: processes/bean-lifecycle.bpmn:98
 #. Diagram label
 msgid "Claim it (status: in-progress)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:116
+#: processes/bean-lifecycle.bpmn:121
 #. Diagram label
 msgid "Complete (no unchecked todos left)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:75
+#: processes/bean-lifecycle.bpmn:80
 #. Diagram label
 msgid "Create the bean (agent CLI, not an engine op)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:161
+#: processes/bean-lifecycle.bpmn:166
 #. Diagram label
 msgid "done"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:62
+#: processes/bean-lifecycle.bpmn:67
 #. Diagram label
 msgid "Durable work identified"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:104
+#: processes/bean-lifecycle.bpmn:109
 #. Diagram element documentation
 msgid "Editing a bean is not a separate ceremony: check off todo items as they happen, append measurements with the command and date that produced them, and record what you now know that the next agent does not. A bean whose body is a title is a placeholder, not a plan."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:94
+#: processes/bean-lifecycle.bpmn:99
 #. Diagram element documentation
 msgid "Idempotent. Claim BEFORE working, and note the branch, so a sibling session can see the item is taken rather than discovering it by collision."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:84
+#: processes/bean-lifecycle.bpmn:89
 #. Diagram label
 msgid "Leave it alone (coordinate instead)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:157
+#: processes/bean-lifecycle.bpmn:162
 #. Diagram label
 msgid "mine / unclaimed"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:85
+#: processes/bean-lifecycle.bpmn:90
 #. Diagram element documentation
 msgid "Never resolve, scrap or delete a bean another session or a human owns. Claiming is how two sessions avoid picking the same item; closing someone else's is how one of them loses work it had not finished reporting."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:153
+#: processes/bean-lifecycle.bpmn:158
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:162
+#: processes/bean-lifecycle.bpmn:167
 #. Diagram label
 msgid "not wanted"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:91
+#: processes/bean-lifecycle.bpmn:96
 #. Diagram label
 msgid "Not yours to close"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:117
+#: processes/bean-lifecycle.bpmn:122
 #. Diagram element documentation
 msgid "Only once nothing is unchecked, and with a summary of what changed. The engine's `resolve` completes a bean only after the instance itself has completed — whether work is done is a judgement, and a bean is not closed on someone else's say-so."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:114
+#: processes/bean-lifecycle.bpmn:119
 #. Diagram label
 msgid "Outcome?"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:41
+#: processes/bean-lifecycle.bpmn:46
 #. Diagram element documentation
 msgid "Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:139
+#: processes/bean-lifecycle.bpmn:144
 #. Diagram label
 msgid "Record the blocker and hand back"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:127
+#: processes/bean-lifecycle.bpmn:132
 #. Diagram label
 msgid "Scrap with reasons NEVER delete"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:55
+#: processes/bean-lifecycle.bpmn:60
 #. Diagram label
 msgid "Sibling session or human (not yours to close)"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:155
+#: processes/bean-lifecycle.bpmn:160
 #. Diagram label
 msgid "someone else's"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:149
+#: processes/bean-lifecycle.bpmn:154
 #. Diagram label
 msgid "State recorded"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:65
+#: processes/bean-lifecycle.bpmn:70
 #. Diagram element documentation
 msgid "STRICT. `beans create` is not idempotent: it mints a fresh id every call and dedupes on nothing, so re-entering a step duplicates the plan instead of no-op'ing. In the qou folio an unguarded re-run produced 14,688 duplicate beans — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:56
+#: processes/bean-lifecycle.bpmn:61
 #. Diagram element documentation
 msgid "The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans."
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:82
+#: processes/bean-lifecycle.bpmn:38
+#. Diagram element documentation
+msgid "The whole life of a work-plan item, and the rules that make one agent's bean legible to another: check before you create, claim before you work, keep the body current as you go, and end it in a state that says why. You are in this process the moment durable work is identified — which is before the first tool call, not after the work is done. The second lane exists because a bean you did not open is not yours to close: coordination replaces a decision you are not entitled to make. The one irreversible thing is refused outright. Unwanted work is SCRAPPED with its reasons, never deleted, because a scrapped bean stops the next agent re-entering a dead end while a deleted one leaves a sibling unable to tell abandonment from accident."
+msgstr ""
+
+#: processes/bean-lifecycle.bpmn:87
 #. Diagram label
 msgid "Whose bean?"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:103
+#: processes/bean-lifecycle.bpmn:108
 #. Diagram label
 msgid "Work, keeping the body current (this is 'edit')"
 msgstr ""
 
-#: processes/bean-lifecycle.bpmn:154
+#: processes/bean-lifecycle.bpmn:159
 #. Diagram label
 msgid "yes"
 msgstr ""
