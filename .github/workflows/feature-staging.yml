@@ -380,7 +380,20 @@ jobs:
             SEARCH_STATE="published"
             echo "search index: fetched $(wc -c < /tmp/published-search-data.json) bytes from $SEARCH_SRC"
           else
-            echo "search index: could NOT fetch $SEARCH_SRC — this preview will serve an empty index and say so"
+            # DELETED, so the swap step cannot disagree with this decision.
+            #
+            # That step tests `-s` alone while this one also requires the file
+            # to start with `{`. Left in place, a non-empty NON-JSON body — a
+            # 404 page is the obvious one — would stamp `unavailable` here and
+            # still be copied over `search-data.json` there: the page would
+            # announce that search is unavailable while serving a corrupt
+            # index. Two answers to one question, which is the defect this
+            # whole change is about.
+            #
+            # One decision, one place. Removing the file makes the swap's test
+            # agree BY CONSTRUCTION rather than by both being kept in step.
+            rm -f /tmp/published-search-data.json
+            echo "search index: could NOT fetch a usable index from $SEARCH_SRC — this preview will serve an empty one and say so"
           fi
 
           mkdir -p cat-harness/docs/_data
@@ -478,6 +491,9 @@ jobs:
         run: |
           DEST="./_site/assets/js/search-data.json"
           mkdir -p "$(dirname "$DEST")"
+          # `-s` alone is correct HERE only because the stamp step deletes the
+          # file when it is not a usable index. The validation lives there, with
+          # the decision the page is told about.
           if [ -s /tmp/published-search-data.json ]; then
             cp /tmp/published-search-data.json "$DEST"
             echo "search-data.json: published index, $(wc -c < "$DEST") bytes"

@@ -242,3 +242,56 @@ itself uses, and a test asserts every `var()` it references is declared.
       session, and now ALSO true of CI unless something measures and records
       the index size
 - [ ] The budget is declared with its BASIS
+
+## MEASURED at last — the index is 3,605,319 bytes (3.44 MiB)
+
+Read from the `stage` job's own log on PR #946, not estimated:
+
+    search-data.json: published index, 3605319 bytes
+
+This is the number the sharding Done-when was blocked on, and it could not be
+obtained from a sandboxed session at all — no Jekyll to build with, and egress
+to the published site denied by proxy policy. **CI was the only environment
+that could answer it**, and it answered as a side effect of doing the work
+rather than through a measurement built for the purpose.
+
+### What it settles
+
+| | |
+|---|---|
+| published search index | **3.44 MiB** |
+| GitHub Pages limit the whole site shares | 1 GB |
+| index as a share of that | **0.34 %** |
+
+**So: one file. No sharding.** The bean's own instruction was "one file while
+it is small, shards only once a measured index exceeds a declared budget", and
+0.34 % of the budget is not close to any threshold worth the machinery.
+Sharding was the right thing to refuse to decide in advance, and the
+measurement is what makes refusing it permanent rather than pending.
+
+It also puts a figure on this bean's original size claim. The index is 3.44 MiB
+against a preview's ~92 MiB — **under 4 %**. Dropping it from staging would
+never have been the lever this bean opened by calling it.
+
+### A defect found by reading my own diff against that log
+
+The stamp step validated the fetch with `[ -s ] && head -c 1 | grep -q '{'`;
+the swap step tested `[ -s ]` alone. A non-empty NON-JSON body — a 404 page is
+the obvious one — would have stamped `unavailable` while still being copied
+over `search-data.json`: **the page would announce that search is unavailable
+while serving a corrupt index.** Two answers to one question, in the change
+whose whole subject is that shape.
+
+Fixed by deleting the temp file when validation fails, so the swap's test
+agrees by CONSTRUCTION rather than by both being kept in step.
+
+## Done when — updated
+
+- [x] Staging uses the last published index, with a warning on the search
+      surface itself
+- [ ] The index is built in the RELEASE path and published as a release asset
+      — still not done
+- [x] Sharding decided on MEASUREMENT — **measured 3.44 MiB, 0.34 % of the
+      Pages budget, so ONE FILE and no sharding**
+- [ ] The budget is declared with its BASIS — the basis now exists (the
+      measurement above); the declaration does not
