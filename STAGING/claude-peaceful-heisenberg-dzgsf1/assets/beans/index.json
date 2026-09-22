@@ -3442,7 +3442,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:42:35Z",
-      "updatedAt": "2026-09-21T21:42:35Z",
+      "updatedAt": "2026-09-21T23:15:22Z",
       "preview": "## What — the owner's ask, verbatim\n\n2026-09-21:\n\n> bean: develop otpions onhow could we \"install\" i guess at render time new\n> skills to antigravity, caludecode as tools to improve discussion clairty\n> between huamn and agent in dicsussion\n>\n> (e.g. so /coordinate work and /prepare-merge,  different model -> diffent\n> tools)\n\n## The gap, MEASURED rather than argued\n\n| | count |\n|---|---|\n| skills",
       "file": "beans/defs/folio-assistant-j6t3--install-skills-as-tools-at-render-time-34-skills-d.md"
     },
@@ -3614,7 +3614,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:10:00Z",
-      "updatedAt": "2026-09-21T19:04:59Z",
+      "updatedAt": "2026-09-21T23:06:21Z",
       "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
       "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
@@ -3995,6 +3995,20 @@
       "updatedAt": "2026-09-20T17:06:37Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
+    },
+    {
+      "id": "folio-assistant-mm36",
+      "title": "The library view ALREADY renders the three materialisation states — I recorded it open twice",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T05:50:00Z",
+      "updatedAt": "2026-09-22T05:50:00Z",
+      "preview": "## The claim that was wrong, and where it went\n\nTwice — in `vhmz` (#828) and again in `jpjt` (#837) — the design record's\n\"still open\" section carried this:\n\n> **Whether the library view distinguishes materialised from\n> not-materialised.** The states now have a name and a schema … so the\n> question is no longer *is there a distinction* but *does the reader's view\n> render it*. Nothing yet says.\n\n",
+      "file": "beans/defs/folio-assistant-mm36--the-library-view-already-renders-the-three-materia.md"
     },
     {
       "id": "folio-assistant-n0nf",
@@ -5475,14 +5489,14 @@
     {
       "id": "folio-assistant-v18c",
       "title": "Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness's library is empty",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:09:01Z",
-      "updatedAt": "2026-09-21T21:09:01Z",
+      "updatedAt": "2026-09-21T23:17:17Z",
       "preview": "Found 2026-09-21 while fixing the library viewers' parse error (the owner:\n*\"way too many tiles (non functional) on LHS explode menu\"*). **The parse error\nis fixed and shipped separately**; this is what is left after it.\n\n## Measured in a browser, after the fix — 12 navbar tiles\n\n| tile | renders |\n|---|---|\n| `schemas` (cat-harness) | 773 declarations |\n| `detangle-schemas` / `large-datasets-sche",
       "file": "beans/defs/folio-assistant-v18c--navbar-tiles-uploads-and-library-are-two-tiles-for.md"
     },
@@ -6237,14 +6251,14 @@
     {
       "id": "folio-assistant-yunp",
       "title": "VIEWERS FOR THE REST: 16 declared graph kinds have no visualiser — fsh-guts among them — so the navbar lists them disabled",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:34Z",
-      "updatedAt": "2026-09-21T21:59:34Z",
+      "updatedAt": "2026-09-22T01:16:15Z",
       "preview": "## What — owner, 2026-09-21\n\n> i eant to see beans/ todos/ fsh-guts/\n>\n> catalogue = libraru?   move?\n>\n> yes need viewer made for rest. bean up.. add links but disabled to LHS\n> navbar on the \"harneesd\" dirs/sub-graphs\n\nThe last clause is **already done** (`sjic`, PR #802): every declared graph\nreaches the navbar, and one with no published viewer renders as a non-link.\nThis bean is the other half",
       "file": "beans/defs/folio-assistant-yunp--viewers-for-the-rest-16-declared-graph-kinds-have.md"
     },
