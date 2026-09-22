@@ -716,7 +716,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Analyst",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst"
       ]
     },
     {
@@ -799,6 +800,15 @@
       "label": "Business analyst",
       "scopeNote": "This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell \"not needed\" from \"we chose X\" cannot audit either one.",
       "source": "cat-harness/processes/options-analysis.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/business-analyst",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_SwotAnalysis",
+      "label": "Business analyst",
+      "scopeNote": "Performs the scan and the crossing. This lane owns the analysis and owns nothing else: it does not authorise, and it does not choose between options. Its deliverable is four lists, the four matched strategies, and an explicit record of what could not be classified.",
+      "source": "cat-harness/processes/swot-analysis.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/terminologist",
@@ -964,7 +974,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder"
       ]
     },
     {
@@ -1011,6 +1022,15 @@
       "label": "Stakeholders",
       "scopeNote": "The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn's final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it.",
       "source": "cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/stakeholder",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_SwotAnalysis",
+      "label": "Stakeholder",
+      "scopeNote": "Consulted, in a lane of their own because the source names group discussion as a property of the method rather than as good practice around it: SWOT \"promotes group discussion about strategic issues\" and pools knowledge through participatory techniques. It is also the mitigation for the limitation the source states most sharply — that a list of strengths is \"bound up with aspirations, biases, and hope of the individuals involved\". A single analyst producing four lists alone has performed the technique's shape without the part that checks it.",
+      "source": "cat-harness/processes/swot-analysis.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/authoring-agent",
