@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "claude/eager-thompson-3bb3kq",
+    "sha": "31f0b64a5d0c307e6c0b5715a21edf0c7f6bfc95",
+    "pr": "938/merge",
+    "run": "35720339866"
+  }
+}
