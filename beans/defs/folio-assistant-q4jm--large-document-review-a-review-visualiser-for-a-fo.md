@@ -5,7 +5,7 @@ status: todo
 type: epic
 priority: high
 created_at: 2026-09-22T21:02:29Z
-updated_at: 2026-09-22T21:04:12Z
+updated_at: 2026-09-22T21:09:45Z
 ---
 
 ## What this is
@@ -162,3 +162,8 @@ Filed `todo`, not `in-progress`. Three streams are already queued
 Nothing here is claimed until a session actually takes it. **Which goal this
 epic joins (p5wm, yg29, or a new one) is unasked**: it is parented to nothing,
 like 1swy.
+
+
+### R9. The owner already filed half of this, as issue #197 (2026-09-17), and the plan missed its other half
+
+#197 covers DOCX ingest with page/line provenance (now on xtpc) **and** a Public Comment process: a line-numbered frozen draft goes out, and comments come back as CSV/XLSX to be triaged, reassigned, assigned and dispensed. The first draft of this plan had only in-page comments. That is not how DAK and L1 consultations are run. It is a new child, and it shares 423d's Finding store rather than getting its own.

@@ -3,8 +3,9 @@
 title: 'DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:02:54Z
+updated_at: 2026-09-22T21:09:45Z
 parent: folio-assistant-q4jm
 ---
 
@@ -39,3 +40,10 @@ the entry point it plugs into.
 - [ ] document-intake is reachable from the document adapter
 - [ ] re-ingesting an unchanged document passes `id-reingest-stable` (child 01)
 - [ ] re-ingesting with one inserted section changes the ids of exactly that section's blocks
+
+
+## Also issue #197 (roast R9)
+
+The owner's #197 asks for exactly this, plus provenance **to page and line of the rendered source** on every extracted node, applied to PDF ingestion too, *"to make review and adjuducation processes easier to follow"*. Also *"basic formatting (bold, italic) preserved … not 1:1"*, and *"open format versions only for now"* (.docx, not .doc). Its comment tags @ritikarawlani for any schema change to the paper .ts content type.
+
+- [ ] every ingested node carries source page and line provenance
