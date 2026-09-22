@@ -264,25 +264,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T19:28:56.819Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ab40914794bf4982081bb7d8f58a09b8d5f3984e",
-  "sourceCommitSha": "ab40914794bf4982081bb7d8f58a09b8d5f3984e",
-  "sourceCommitAt": "2026-09-22T19:26:38Z",
+  "generatedAt": "2026-09-22T21:28:15.312Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3bb1193c191c26b97a88757fd494332e08b6983d",
+  "sourceCommitSha": "3bb1193c191c26b97a88757fd494332e08b6983d",
+  "sourceCommitAt": "2026-09-22T21:25:49Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 234,
+    "Skill": 238,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
-    "Process": 60,
-    "SequenceFlow": 763,
+    "Process": 61,
+    "SequenceFlow": 777,
     "Role": 139,
-    "ProcessNode": 726,
+    "ProcessNode": 739,
     "Tool": 69,
-    "Schema": 93,
-    "GraphKind": 28,
-    "Directory": 36,
+    "Schema": 94,
+    "GraphKind": 29,
+    "Directory": 43,
     "Asset": 3
   },
   "@graph": [
@@ -305,6 +305,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/smart-stack-layering",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "smart-stack-layering",
+      "title": "smart-stack-layering",
+      "description": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "instructionLines": 162,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/smart-stack-layering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/dak-preprocessing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "dak-preprocessing",
+      "title": "dak-preprocessing",
+      "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/dak-preprocessing.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dak-preprocessing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/terminology-management",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "terminology-management",
@@ -323,6 +357,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/terminology-management"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/dak-postprocessing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "dak-postprocessing",
+      "title": "dak-postprocessing",
+      "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/dak-postprocessing.md",
+      "instructionLines": 155,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dak-postprocessing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/ig-publication",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "ig-publication",
@@ -331,7 +382,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/ig-publication.md",
-      "instructionLines": 78,
+      "instructionLines": 113,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/skills/ig-publication/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
@@ -349,7 +400,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/smart-base-tools.md",
-      "instructionLines": 66,
+      "instructionLines": 90,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -373,6 +424,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fhir-validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/toolchain-ownership",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "toolchain-ownership",
+      "title": "toolchain-ownership",
+      "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "instructionLines": 136,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/toolchain-ownership"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/l2-dak-authoring",
@@ -1857,7 +1925,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 802,
+      "instructionLines": 808,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2446,7 +2514,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 351,
+      "instructionLines": 355,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3271,7 +3339,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/coordinate.md",
-      "instructionLines": 340,
+      "instructionLines": 393,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5389,6 +5457,8 @@
       "path": "skills/authoring-who-smart-guidelines",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/dak-postprocessing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/dak-preprocessing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/fhir-validation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/ig-artifact-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/ig-publication",
@@ -5396,7 +5466,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/l3-fhir-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/smart-base-tools",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/terminology-management"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/smart-stack-layering",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/toolchain-ownership"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#capability/ig-publisher",
@@ -29746,6 +29818,437 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM/node/End_CRDM"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "DIIG — from a health system bottleneck to a costed implementation plan",
+      "enforcement": "advisory",
+      "sourcePath": "../smart-base/methodologies/processes/diig-investment-path.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/Start_Process_DIIG"
+      ],
+      "nodeCount": 13,
+      "flowCount": 14,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no — revisit the bottlenecks",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no — adapt",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A health programme needs digital support",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/Start_Process_DIIG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Form the team and establish goals",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_FormTeam"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Map the current state and confirm bottlenecks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Prioritize, and map to health system challenges",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_04"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Determine appropriate digital health interventions",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_DetermineInterventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Progress check 4.5: requirements settled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Plan the implementation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_PlanImplementation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Link to the enterprise architecture",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Business%20analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Develop a budget",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_DevelopBudget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Monitor, and use data effectively",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Progress check 8.5: implementation on track?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Make the value proposition and set next steps",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_ValueProposition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Costed implementation plan, and its case",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#tool/discuss",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "discuss",
@@ -33986,6 +34489,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/python-deps"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#schema/qa-report",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "qa-report",
+      "title": "QA reports — what a pipeline TOOL recorded about its own run.",
+      "module": "schemas/qa-report.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-report"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "qa-review",
@@ -34527,6 +35039,14 @@
       "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "code",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#CodeGraph",
+      "renderable": false,
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "glossary",
@@ -34895,9 +35415,10 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/content-plan",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/content-retire",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/content-publish",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#skill/methodology-adoption"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#role/Programme%20manager",
@@ -35992,6 +36513,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "smart-base-library",
+      "path": "smart-base/library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
+      ],
+      "description": "The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-library"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
@@ -36025,6 +36557,28 @@
       ],
       "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-kg-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-methodologies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "smart-base-methodologies",
+      "path": "smart-base/methodologies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
+      ],
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/smart-base-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "smart-base-processes",
+      "path": "smart-base/methodologies/processes/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
+      ],
+      "description": "The BPMN `smart-base` derives from its own corpus -- DIIG's nine chapters as an executable process. Declared SEPARATELY from `smart-base-methodologies` for the reason `methodology-crdm-processes` is declared separately from `methodologies/`: `workflowDirs` resolves diagrams from a declared directory, so a nested one that is not itself declared leaves every diagram undiscovered (bean `g43o`). Issue #877, bean `qnvy`.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/docs",
@@ -36144,6 +36698,54 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/glossary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-scripts",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-scripts",
+      "path": "scripts/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-src",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-src",
+      "path": "src/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-src",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-adapters",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-adapters",
+      "path": "adapters/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "The content-type adapters -- `DocumentContentAdapter` and the `PaperContentAdapter` that extends it. Code rather than schema: they are the behaviour the profiles select between, and `content-profiles` is the skill that says which axis they sit on.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-adapters",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-tests",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-tests",
+      "path": "test/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#directory/cat-harness-tests",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-4-instruments/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -36177,8 +36779,8 @@
   ],
   "staging": {
     "branch": "claude/stream-4-instruments",
-    "sha": "1ac029e745dd8c2d756994a89e1d4a40c4f48c01",
+    "sha": "18e4eb4be5ab5fec6fdbe234c79e1748160c2369",
     "pr": "962/merge",
-    "run": "35773831112"
+    "run": "35786604341"
   }
 }
