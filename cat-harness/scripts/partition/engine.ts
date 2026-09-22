@@ -70,6 +70,21 @@ export interface PartitionSpec {
   repos: Array<{ id: string; name: string }>;
   /** What each repo may import from — itself plus its ancestors in the DAG. */
   allowed: Record<string, string[]>;
+  /**
+   * Edges permitted DESPITE the direction rule, each with its reason.
+   *
+   * One entry, and the bar for a second is high: a permit is a hole, and the
+   * reason this shape is defensible where a blanket rule was not is that it
+   * names both endpoints. Anything else crossing the same boundary still
+   * fails, which is the property an "exempt side-effect imports" rule would
+   * have thrown away.
+   *
+   * A permit for an edge that no longer exists is a FINDING, not a silent
+   * no-op — the same `ALLOWED`-list discipline `check-invocation-parity`
+   * follows, and for the same reason: the hand-maintained part of a check is
+   * the part that rots, so it has to be the part that reports.
+   */
+  permittedEdges?: readonly PermittedEdge[];
   /** Ordered; first match wins, so explicit path rules precede keyword rules. */
   rules: Rule[];
   /** Directories scanned for TypeScript modules, relative to `root`. */
@@ -83,6 +98,15 @@ export interface Assignment {
   provenance: Provenance;
 }
 
+export interface PermittedEdge {
+  /** Repo-relative path of the importing module. */
+  from: string;
+  /** Repo-relative path of the imported module. */
+  to: string;
+  /** Why this edge is allowed to cross. Required — a permit with no reason is a hole. */
+  reason: string;
+}
+
 export interface CrossEdge {
   from: string;
   fromRepo: string;
@@ -91,6 +115,8 @@ export interface CrossEdge {
 }
 
 export interface PartitionReport {
+  /** Permits naming an edge that is no longer in the graph — stale, and a finding. */
+  stalePermits: PermittedEdge[];
   modules: Map<string, Assignment>;
   crossEdges: CrossEdge[];
   /** Edges whose target this tool could not classify. */
@@ -274,6 +300,8 @@ export function analyse(spec: PartitionSpec): PartitionReport {
   }
 
   const crossEdges: CrossEdge[] = [];
+  // Which permits were actually used, so the unused ones can be reported.
+  const honoured = new Set<string>();
   const unresolvedEdges: Array<{ from: string; to: string }> = [];
   let totalEdges = 0;
 
@@ -306,10 +334,18 @@ export function analyse(spec: PartitionSpec): PartitionReport {
       // blindness `q2wn` was opened about, one level up.
       if (composes) continue;
       if (!(spec.allowed[fromA.repo] ?? []).includes(toA.repo)) {
+        const permit = (spec.permittedEdges ?? []).find((p) => p.from === rel && p.to === target);
+        if (permit) {
+          honoured.add(`${permit.from}\u0000${permit.to}`);
+          continue;
+        }
         crossEdges.push({ from: rel, fromRepo: fromA.repo, to: target, toRepo: toA.repo });
       }
     }
   }
 
-  return { modules, crossEdges, unresolvedEdges, totalEdges };
+  const stalePermits = (spec.permittedEdges ?? []).filter(
+    (p) => !honoured.has(`${p.from}\u0000${p.to}`),
+  );
+  return { modules, crossEdges, unresolvedEdges, totalEdges, stalePermits: [...stalePermits] };
 }
