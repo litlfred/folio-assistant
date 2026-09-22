@@ -945,6 +945,7 @@ export const RULES: Rule[] = [
       //    folio's content model.
       "scripts/check-actor-reach.ts",       // reads role-graph
       "scripts/check-avatar-coverage.ts",   // avatars belong to roles
+      "scripts/check-avatar-instances.ts",  // the same, on the INSTANCE axis
       "scripts/check-declared-assets.ts",   // the instance declaration
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph

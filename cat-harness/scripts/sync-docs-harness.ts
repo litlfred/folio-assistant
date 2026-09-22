@@ -90,6 +90,11 @@ const smallIcon = imageForRole(decl.images, "browser-icon");
 // every instance did before this existed. `imageForRole` returns undefined
 // and nothing downstream has to special-case a folio that never opted in.
 const iconDark = imageForRole(decl.images, "mark-dark");
+// THE MASK FORM, which replaces the light/dark PAIR when an instance declares
+// it. Resolved by role like `mark-dark`, so an instance that declares no mask
+// keeps the two-image path and nothing changes for it — absent is a real
+// state, the same rule `mark-dark` itself follows.
+const iconMask = imageForRole(decl.images, "mark-mask");
 
 // The landing backdrop's variants, keyed by layout, so the template can pick
 // by viewport rather than parse a filename. An instance with none gets `{}`,
@@ -167,6 +172,9 @@ const payload = {
   title: decl.title ?? decl.name,
   description: decl.description ?? "",
   icon: icon ? { src: siteRelative(icon.src), title: icon.title ?? "", description: icon.description ?? "" } : null,
+  iconMask: iconMask
+    ? { src: siteRelative(iconMask.src), title: iconMask.title ?? "", description: iconMask.description ?? "" }
+    : null,
   iconDark: iconDark
     ? { src: siteRelative(iconDark.src), title: iconDark.title ?? "", description: iconDark.description ?? "" }
     : null,
