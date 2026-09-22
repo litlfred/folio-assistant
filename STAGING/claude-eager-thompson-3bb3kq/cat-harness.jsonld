@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T08:39:39.957Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/742a2c18901576f6d1046e4bad42e4bf103262f1",
-  "sourceCommitSha": "742a2c18901576f6d1046e4bad42e4bf103262f1",
-  "sourceCommitAt": "2026-09-22T08:33:34Z",
+  "generatedAt": "2026-09-22T08:46:48.246Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/996080c498705f781d6d44278625ee3493b75f07",
+  "sourceCommitSha": "996080c498705f781d6d44278625ee3493b75f07",
+  "sourceCommitAt": "2026-09-22T08:44:56Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 227,
@@ -1840,7 +1840,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 760,
+      "instructionLines": 799,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2009,7 +2009,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 394,
+      "instructionLines": 407,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2579,7 +2579,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-contribution-offer.md",
-      "instructionLines": 224,
+      "instructionLines": 238,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2679,7 +2679,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 414,
+      "instructionLines": 438,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2708,12 +2708,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "symbiotic-interaction",
       "title": "symbiotic-interaction — the three registers of author input",
-      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Generic folio-assistant platform skill.",
+      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/symbiotic-interaction.md",
-      "instructionLines": 80,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2847,7 +2847,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 246,
+      "instructionLines": 295,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -35106,7 +35106,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs"
       ],
-      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's \"only uploads/ on this repo's root\". `n0nf` says the root's docs \"is not its own: cat-harness installs it\", which needs a dependency edge that does not exist. That is left for the owner rather than settled here.",
+      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's \"only uploads/ on this repo's root\". `n0nf` says the root's docs \"is not its own: cat-harness installs it\", which needs a dependency edge that does not exist. That is left for the owner rather than settled here. A viewer IS declared for this `docs` directory, and `owesVisualiser` not demanding one is not the same as forbidding one. The kind is `renderable`, so it does not OWE a viewer — but the owner's rule, quoted in full in `mount-instance-docs.ts`'s module note, is that a harness which instantiates a directory MAKES a visualiser for it, docs and library included. It points at the `docs-auto` index, NOT at the mount route `/docs/<instance>/`: that mount is a VERBATIM copy of the directory, and `visualiserHref` exists precisely because linking a rail to it lands on a byte-identical page — the owner's *\"clicking on doc/ ... under who-iris navbar did nothing\"*. The owner's sentence is CITED rather than quoted here on purpose: it names a graph whose viewer is `publish: \"staging-only\"`, and a test asserts that name appears NOWHERE in the built export — including in a declaration's own prose, which is where quoting it put it. The test caught that, and this paragraph is the second attempt.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -35237,8 +35237,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "5a1d710f037dc4137bd1bf84a742b37c1552db59",
+    "sha": "2d3f1f62481a4633819648c5fdbc09bff6929924",
     "pr": "876/merge",
-    "run": "35705864749"
+    "run": "35706508833"
   }
 }
