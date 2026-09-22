@@ -18,21 +18,54 @@ published source that no amount of reading the rules will tell you.</p>
 <li><code>assertion</code> — a publisher describing its own product or house style. True
 by declaration, revisable without notice, and in one case in this
 repository describing a product that no longer exists.</li>
-<li><code>evidence</code> — a measurement somebody else can repeat. An arXiv paper
-reporting what 138,000 <a href="http://SKILL.md">SKILL.md</a> files actually contain is a different kind
-of claim from a vendor page saying what they should contain.</li>
-<li><code>house</code> — a standard this project set for itself, citing the node that
-states it rather than an ingested document. The <code>milnor</code> voice is the
-case.</li>
+<li><code>evidence</code> — the voice's rules are CITED. Each one names the document and
+the place in it that the rule was read from, and carries the passage
+verbatim, so a reader can go and check. Owner, 2026-09-21: <em>&quot;start
+formalizeing evidence. already a process…. citation is evidence&quot;</em> — which
+is why this is not the narrower &quot;a measurement somebody else can repeat&quot;
+it said until then. A measurement is one kind of citable source and not
+the only one: a judgement about exposition, read off a named page of a
+named paper, is evidence in exactly the sense that matters here — somebody
+else can open the page. The apparatus already exists and is REQUIRED by
+<a href="schemas_voices.VoiceRuleSourceSchema.html" class="tsd-kind-variable">VoiceRuleSourceSchema</a>: a <code>libraryId</code> + <code>sectionId</code> or a <code>kgRef</code>,
+plus the quote. Formalising <code>evidence</code> means naming that apparatus as what
+the value MEANS, not building a second one.</li>
+<li><code>house</code> — a standard THIS PROJECT set for itself. The <code>milnor</code> voice is
+the case, and it keeps the value although all twelve of its rules cite an
+ingested paper, because the citations are evidence FOR the standard rather
+than its source: Milnor did not write a style guide, and the decision to
+adopt his exposition as this project's is ours. Owner, 2026-09-21, asked
+whether <code>milnor</code> should be reclassified: <em>&quot;c) keep, but is a QA flag&quot;</em>.</li>
 </ul>
+<h2 id="the-value-is-a-property-of-the-voice-not-of-its-rules" class="tsd-anchor-link">The value is a property of the VOICE, not of its rules<a href="#the-value-is-a-property-of-the-voice-not-of-its-rules" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Asked on 2026-09-21 whether <code>provenance</code> should move onto the rule — a
+corpus sweep had found <code>milnor</code> declaring <code>house</code> with 12/12 rules citing an
+ingested document, and <code>technical-writer</code> declaring <code>assertion</code> with 3/9
+citing a node in this project — the owner refused it, and the reason is the
+part worth keeping:</p>
+<blockquote>
+<p>voices may be comprised of many composite voices w/ unclear attribution.
+attrinution by rule makes no sense in a collaborative/synethsizing process.</p>
+</blockquote>
+<p>A voice is a SYNTHESIS. Its rules are read, merged, narrowed and re-derived
+from several sources by several hands, and the attribution of any one rule
+to any one of them is frequently not recoverable — so a per-rule field would
+be precise about something nobody can actually determine, which is worse
+than a coarse field that is honest. <code>overrides</code> already carries composition;
+this carries the character of the result.</p>
+<p><strong>The divergence is therefore a QA FLAG, never a schema error.</strong> A voice
+whose declared value sits oddly against its rules' citations is a question
+for a person, and VOICE_PROVENANCE_FLAGS is where that is computed.
+Refusing such a voice at parse time would encode the per-rule model the
+owner just refused, one level down.</p>
 <p>REQUIRED, with no default. A rule read from a vendor page is a CONVENTION
-and a rule read from a measurement is a FINDING; treating the first as the
+and a cited rule is one a reader can go and check; treating the first as the
 second is how &quot;best practice&quot; acquires the authority of a result. Nothing in
 the rule text distinguishes them, and a default would pick one silently for
 every voice somebody forgets to classify.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9938c272e59d77399e30bf96a1b4291b33b98994/cat-harness/schemas/voices.ts#L238">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:238</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3341108ade0200126d3a7250ebca8a429e51bc89/cat-harness/schemas/voices.ts#L281">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:281</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -44,7 +77,10 @@ every voice somebody forgets to classify.</p>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
-<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#the-value-is-a-property-of-the-voice-not-of-its-rules"><span>The value is a property of the <wbr/>VOICE, not of its rules</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
