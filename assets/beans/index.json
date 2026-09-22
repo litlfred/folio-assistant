@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 502,
+      "count": 503,
       "unit": "beans"
     }
   },
@@ -641,6 +641,20 @@
       "updatedAt": "2026-09-20T16:13:11Z",
       "preview": "Found while resolving `hfkl`'s recorded contradiction about where bootstrap's\ngraph artefact lives. That contradiction turned out to be one stale comment\n(fixed); **this is the real defect underneath it.**\n\n## A staging preview cannot serve the documents its own graph points at\n\nMeasured 2026-09-20 by diffing every `./_site/...` path the two workflows\nwrite. `docs-site.yml` publishes all of these;",
       "file": "beans/defs/folio-assistant-35kc--staging-parity-a-preview-serves-none-of-the-namesp.md"
+    },
+    {
+      "id": "folio-assistant-3d78",
+      "title": "ingest:ig:check exited 2 on every run — three guards missed it, each differently",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:10:53Z",
+      "updatedAt": "2026-09-22T10:10:53Z",
+      "preview": "A registered script nobody ran, which would have failed if anybody had. Found 2026-09-22 while working 10s1 and recorded then; fixed now.\n\n## The defect\n\n`ingest:ig:check` was registered as:\n\n    bun run …/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --check --source\n\n`--source` takes a value and had none, so **every run** took the\nmissing-argument branch, printed a usage string and ",
+      "file": "beans/defs/folio-assistant-3d78--ingestigcheck-exited-2-on-every-run-three-guards-m.md"
     },
     {
       "id": "folio-assistant-3g13",
@@ -4649,14 +4663,14 @@
     {
       "id": "folio-assistant-osyc",
       "title": "ROAST: adversarial pass over this session's navbar work, the skill-reachability bean, and the claims made to the owner",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:43:53Z",
-      "updatedAt": "2026-09-21T21:43:53Z",
+      "updatedAt": "2026-09-22T11:04:11Z",
       "preview": "## What\n\nOwner, 2026-09-21: *\"queue roast\"* — queued, not started, per the standing\ninstruction to queue a new task rather than pivot.\n\nAn adversarial pass over what this session produced and, more usefully, over\nwhat it CLAIMED. Scope is deliberately the session rather than a file, because\nthe failures worth finding here were failures of verification and of reading,\nnot of code.\n\n## Where to aim ",
       "file": "beans/defs/folio-assistant-osyc--roast-adversarial-pass-over-this-sessions-navbar-w.md"
     },
