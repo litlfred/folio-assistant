@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/bpmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/bpmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/bpmn-authoring.html).
+> Generated from [`cat-harness/skills/workflow/bpmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/bpmn-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/bpmn-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/bpmn-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # bpmn-authoring

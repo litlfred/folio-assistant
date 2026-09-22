@@ -175,7 +175,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "todo-manager",
       label: "Session Task Manager (folio-core)",
-      repoPrefix: "skills/folio-core",
+      repoPrefix: "cat-harness/skills/folio-core",
       canonical: true,
     },
     {
@@ -204,7 +204,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "bean-coordination",
       label: "Bean Coordination (folio-core)",
-      repoPrefix: "skills/folio-core",
+      repoPrefix: "cat-harness/skills/folio-core",
       canonical: true,
     },
     {
@@ -356,9 +356,25 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
+  // REPO-relative, not INSTANCE-relative. Bean `oe98`: these values become
+  // `blob/main/<rel>/<file>` and `edit/main/<rel>/<file>`, which are paths
+  // from the REPOSITORY root, so measuring them from `cat-harness/` produced
+  // 480 dead links across 240 of 244 pages — every one of them the "Edit this
+  // page's source" affordance a reader uses to contribute.
+  //
+  // ONE line, BOTH symptoms, which is not what the bean predicted. It read
+  // the 231 missing-prefix pages and the 9 carrying `..` as "two different
+  // prefix computations wrong in two different ways", and concluded a single
+  // substitution could not cover both. They are the same substitution:
+  // `relative(cat-harness, cat-harness/skills/folio-core)` drops the prefix,
+  // and `relative(cat-harness, bootstrap/skills)` has to climb out to reach a
+  // sibling instance — so it emits `../bootstrap/skills`, which a GitHub blob
+  // URL cannot express. Measured from the repository root, both are already
+  // the path the URL wants.
+  const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
   for (const decl of kgDirectories(INSTANCE_ROOT)) {
     const skillsRoot = decl.absPath;
-    const rel = relative(INSTANCE_ROOT, skillsRoot);
+    const rel = relative(REPO_ROOT, skillsRoot);
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
       if (direct === undefined) undeclared.push(decl.id);

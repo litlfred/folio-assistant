@@ -11,7 +11,7 @@ parent: Skill instructions
 
 {% raw %}
 > **This is a stub, not the skill.** The skill is
-> [Session Task Manager (folio-core)](todo-manager.html), from `skills/folio-core`,
+> [Session Task Manager (folio-core)](todo-manager.html), from `cat-harness/skills/folio-core`,
 > which is what `skill_fetch` serves. Read that one; this page exists
 > only so an old link still lands somewhere truthful.
 

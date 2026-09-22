@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../large-datasets/skills/copy-out-materialized.md`](https://github.com/litlfred/folio-assistant/blob/main/../large-datasets/skills/copy-out-materialized.md) — do not edit here.
+> Generated from [`large-datasets/skills/copy-out-materialized.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../large-datasets/skills/copy-out-materialized.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/copy-out-materialized.md){: .fa-edit-source }
 
 {% raw %}
 # Working on materialized content — copy it out

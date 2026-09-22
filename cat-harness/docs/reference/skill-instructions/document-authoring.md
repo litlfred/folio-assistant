@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-document-adapter/document-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/document-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/document-authoring.html).
+> Generated from [`cat-harness/skills/folio-document-adapter/document-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/document-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/document-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-document-adapter/document-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # document-authoring

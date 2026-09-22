@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-document-adapter/document-structure.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/document-structure.md) — do not edit here. Typed contract: [schema reference](../skills/document-structure.html).
+> Generated from [`cat-harness/skills/folio-document-adapter/document-structure.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-structure.md) — do not edit here. Typed contract: [schema reference](../skills/document-structure.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/document-structure.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-document-adapter/document-structure.md){: .fa-edit-source }
 
 {% raw %}
 # document-structure

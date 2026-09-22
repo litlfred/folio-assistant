@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/raci/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/raci/raci.md) — do not edit here.
+> Generated from [`cat-harness/methodologies/raci/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/raci/raci.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/raci/raci.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/methodologies/raci/raci.md){: .fa-edit-source }
 
 {% raw %}
 # RACI — involvement, over the graph that already exists

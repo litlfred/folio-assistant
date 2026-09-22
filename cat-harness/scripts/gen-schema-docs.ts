@@ -19,8 +19,8 @@
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
-import { join, resolve } from "path";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { join, relative, resolve } from "path";
+import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -52,6 +52,24 @@ const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const EDIT_GLYPH = "\u270E";
 
 const SKILLS_DIR = join(schemasRoot(INSTANCE_ROOT), "skills");
+/**
+ * Where {@link SKILLS_DIR} sits FROM THE REPOSITORY ROOT, for the `blob/main`
+ * and `edit/main` links below.
+ *
+ * Bean `oe98`. Those four URLs spelled `schemas/skills/` as a literal, which
+ * has not been a real path since the split moved this instance under
+ * `cat-harness/` — so all 88 links across 22 pages 404'd, including every
+ * "Edit" affordance. The bean measured the sibling generator's 480 and did
+ * not reach this directory; these are 88 more of the same defect.
+ *
+ * DERIVED from the constant that reads the files rather than re-spelled, so
+ * the link cannot disagree with the source it names. A literal was wrong here
+ * the moment the directory moved and nothing said so, because the two
+ * `--check` gates over this tree compare committed bytes against what the
+ * generator would write — and a generator emitting a dead link emits it
+ * consistently.
+ */
+const SKILLS_REPO_PREFIX = relative(repoRootFor(INSTANCE_ROOT), SKILLS_DIR);
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skills");
 
 /**
@@ -239,8 +257,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(input, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/input.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/input.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
@@ -252,8 +270,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(output, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/output.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/output.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
