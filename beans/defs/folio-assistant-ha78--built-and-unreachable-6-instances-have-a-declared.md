@@ -44,10 +44,11 @@ missing is somebody deciding which of the two repairs is right.
 
 ## Done when
 
-- [ ] the owner has decided: move the viewers, or teach the tiles to follow a
-      declared path
-- [ ] whichever way, the count in `docs/_data/harness.json` drops to zero and a
-      test pins it there — a finding that is merely rarer is not fixed
+- [x] the owner has decided: move the viewers, or teach the tiles to follow a
+      declared path — **move**, 2026-09-22 (issue #886, PR #888)
+- [x] whichever way, the count in `docs/_data/harness.json` drops to zero and a
+      test pins it there — a finding that is merely rarer is not fixed.
+      Zero corpus-wide; pinned by `viewer-undiscovered.test.ts`
 
 ---
 
@@ -113,10 +114,3 @@ which is the robustness the move buys. The real falsification is moving the
 PAGE back inside who-iris's tree: that turns 3 assertions red, including the
 zero-pin. Recorded because a falsification that fails to fire is evidence
 about the test, not about the code, and mine did not fire on the first try.
-
-## Done when
-
-- [x] the owner has decided: move the viewers, or teach the tiles to follow a
-      declared path — **move**, 2026-09-22
-- [x] whichever way, the count in `docs/_data/harness.json` drops to zero and a
-      test pins it there — a finding that is merely rarer is not fixed
