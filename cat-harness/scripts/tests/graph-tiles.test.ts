@@ -11,6 +11,7 @@ import {
   tileFindings,
   tilesOn,
   undeclaredProjections,
+  directoryByVisualisationRef,
   withTileCounts,
   type GraphTile,
   type TiledDirectory,
@@ -314,5 +315,78 @@ describe("a tile's count is attached, never derived", () => {
     expect(many.length).toBeGreaterThan(1);
     const got = withTileCounts(many, new Map([["beans", { count: 466, unit: "beans" }]]));
     expect(got.every((t) => t.count === 466)).toBe(true);
+  });
+});
+
+
+/**
+ * Issue #863. A scoped viewer's generator knows the SUBJECT it renders, not
+ * the directory id whose declaration produced the tile. This is the bridge,
+ * and both tests below are for mistakes that were actually made building it.
+ */
+describe("a page's declared ref names the directory that declared it", () => {
+  test("the ref resolves to its directory id", () => {
+    const got = directoryByVisualisationRef([
+      dir("beans", { visualiser: "docs/beans/index.html" }),
+      dir("todos", { visualiser: "docs/todos/index.html" }),
+    ]);
+    expect(got.get("docs/beans/index.html")).toBe("beans");
+    expect(got.get("docs/todos/index.html")).toBe("todos");
+  });
+
+  test("a ref nobody declared is ABSENT, not a guess", () => {
+    // The third state, at the layer that decides whether a page gets a badge
+    // at all. A page no declaration names has no tile, so there is nothing to
+    // badge; inventing an id here would mint a count for a directory nobody
+    // declared.
+    const got = directoryByVisualisationRef([dir("beans", { visualiser: "docs/beans/index.html" })]);
+    expect(got.get("docs/nobody/index.html")).toBeUndefined();
+  });
+
+  test("the id is NOT the subject name with a suffix", () => {
+    // The corpus that rules composition out, asserted rather than described.
+    // Three of this repository's four scoped schema directories follow
+    // `${subject}-schemas`; `folio-assistant-core` declares
+    // `folio-assist-core-schemas`. A composed key badges three and silently
+    // drops the fourth -- right enough to look correct, which is the failure
+    // mode #856 refused.
+    const got = directoryByVisualisationRef([
+      dir("folio-assist-core-schemas", {
+        visualiser: "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
+      }),
+    ]);
+    const subject = "folio-assistant-core";
+    expect(got.get(`cat-harness/docs/cat-harness/schemas/${subject}/index.html`))
+      .toBe("folio-assist-core-schemas");
+    expect(`${subject}-schemas`).not.toBe("folio-assist-core-schemas");
+  });
+
+  test("a directory declaring SEVERAL visualisations claims each page", () => {
+    const got = directoryByVisualisationRef([
+      dir("library", {
+        visualiser: [{ ref: "docs/library/a.html" }, { ref: "docs/library/b.html" }],
+      }),
+    ]);
+    expect(got.get("docs/library/a.html")).toBe("library");
+    expect(got.get("docs/library/b.html")).toBe("library");
+  });
+
+  test("two directories over ONE page keep the first, rather than racing", () => {
+    // A page is NOT uniquely owned, and assuming it was is the defect this
+    // test exists for. `.../library/agent-skills/` is `agent-skills-library`
+    // to this instance and plain `library` to the agent-skills instance, which
+    // declares its own view of the same page. Building the lookup across every
+    // instance therefore returned an id that is not a tile HERE -- which is
+    // why callers pass the ONE declaration their tiles came from.
+    const got = directoryByVisualisationRef([
+      dir("agent-skills-library", { visualiser: "docs/library/agent-skills/index.html" }),
+      dir("library", { visualiser: "docs/library/agent-skills/index.html" }),
+    ]);
+    expect(got.get("docs/library/agent-skills/index.html")).toBe("agent-skills-library");
+    expect(got.size).toBe(1);
+  });
+
+  test("a directory declaring nothing contributes nothing", () => {
+    expect([...directoryByVisualisationRef([dir("undeclared")])]).toEqual([]);
   });
 });

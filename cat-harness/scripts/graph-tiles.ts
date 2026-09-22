@@ -337,4 +337,58 @@ export function withTileCounts(
   });
 }
 
+/**
+ * Declared visualisation ref → the directory id that declared it.
+ *
+ * ## Why a generator needs this, and why it is a LOOKUP rather than a rule
+ *
+ * Issue #863. A tile's count is keyed by directory id ({@link withTileCounts}),
+ * but a scoped viewer's generator knows the SUBJECT it is rendering — an
+ * instance name like `folio-assistant-core` — not the id of the directory whose
+ * declaration produced the tile. The obvious bridge is to compose one from the
+ * other, and it is wrong on this repository's own corpus:
+ *
+ * | subject | declared directory id |
+ * |---|---|
+ * | `bootstrap-tools` | `bootstrap-tools-schemas` |
+ * | `detangle` | `detangle-schemas` |
+ * | `large-datasets` | `large-datasets-schemas` |
+ * | **`folio-assistant-core`** | **`folio-assist-core-schemas`** |
+ *
+ * Three follow `${subject}-schemas` and the fourth does not. A composed key
+ * would have badged three tiles, left the fourth silently uncounted, and
+ * looked correct — which is the table of guesses #856 refused, arriving one
+ * layer along.
+ *
+ * SO NOTHING IS COMPOSED. The declaration already names the exact page each
+ * directory is visualised by, and a generator already knows the exact page it
+ * is about to write. Matching on that page is an identity, not a heuristic: it
+ * cannot be right for three ids and wrong for a fourth, and a directory
+ * renamed tomorrow carries its own answer.
+ *
+ * ## Refs are compared as declared
+ *
+ * No normalising, no resolution: the caller passes the same repo-relative
+ * path the declaration holds, which is what `viewerPlacement` already
+ * composes. Normalising here would be this function inventing an equivalence
+ * the declaration never stated — and a ref that does not match is absent,
+ * which is the third state and gets no badge rather than a wrong one.
+ *
+ * A ref declared by two directories keeps the FIRST, for the reason
+ * `scanTileCounts` keeps the first of a duplicated key: two declarations over
+ * one page is a defect in the declarations, not something to settle by
+ * iteration order.
+ */
+export function directoryByVisualisationRef(
+  dirs: readonly TiledDirectory[],
+): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const d of dirs) {
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!out.has(v.ref)) out.set(v.ref, d.id);
+    }
+  }
+  return out;
+}
+
 export type { CatHarnessDeclaration };
