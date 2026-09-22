@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/terminology-management/output.schema.json",
+  "title": "Terminology Management Output",
+  "description": "Output schema for terminology management operations.",
+  "type": "object",
+  "required": [
+    "resources"
+  ],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string",
+            "enum": [
+              "CodeSystem",
+              "ValueSet",
+              "ConceptMap"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "conceptCount": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "unmappedConcepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Concepts that could not be mapped to the target standard."
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "a8f2f581d97129e109524d56a03a1339e2cdc15b",
+    "pr": "964/merge",
+    "run": "35774329384"
+  }
+}

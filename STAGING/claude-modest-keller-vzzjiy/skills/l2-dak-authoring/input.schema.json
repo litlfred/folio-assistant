@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/l2-dak-authoring/input.schema.json",
+  "title": "L2 DAK Authoring Input",
+  "description": "Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical guidelines into structured digital artifacts.",
+  "type": "object",
+  "required": [
+    "dakComponent",
+    "sourceGuideline"
+  ],
+  "properties": {
+    "dakComponent": {
+      "type": "string",
+      "enum": [
+        "personas",
+        "user-scenarios",
+        "business-processes",
+        "data-dictionary",
+        "decision-logic",
+        "scheduling-logic",
+        "indicators",
+        "functional-requirements",
+        "non-functional-requirements"
+      ],
+      "description": "Which DAK component to author."
+    },
+    "sourceGuideline": {
+      "type": "string",
+      "description": "Reference to the WHO L1 guideline being adapted."
+    },
+    "existingContent": {
+      "type": "string",
+      "description": "Path to existing content being iterated on (if any)."
+    },
+    "sprintNumber": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Current sprint/iteration number."
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "a8f2f581d97129e109524d56a03a1339e2cdc15b",
+    "pr": "964/merge",
+    "run": "35774329384"
+  }
+}

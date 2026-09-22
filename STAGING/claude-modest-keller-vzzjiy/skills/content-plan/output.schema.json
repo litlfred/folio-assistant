@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/content-plan/output.schema.json",
+  "title": "Content Plan Output",
+  "description": "Output schema for content planning.",
+  "type": "object",
+  "required": [
+    "plan"
+  ],
+  "properties": {
+    "plan": {
+      "type": "object",
+      "required": [
+        "projectName",
+        "sprints",
+        "team"
+      ],
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "sprints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actorId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "responsibilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "a8f2f581d97129e109524d56a03a1339e2cdc15b",
+    "pr": "964/merge",
+    "run": "35774329384"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/latex-authoring/output.schema.json",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "a8f2f581d97129e109524d56a03a1339e2cdc15b",
+    "pr": "964/merge",
+    "run": "35774329384"
+  }
+}

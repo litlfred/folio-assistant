@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/document-structure/output.schema.json",
+  "title": "Document Structure Output",
+  "type": "object",
+  "required": [
+    "manifestsChanged"
+  ],
+  "properties": {
+    "manifestsChanged": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Chapter directory names in their new reading order."
+    },
+    "forwardReferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail."
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "a8f2f581d97129e109524d56a03a1339e2cdc15b",
+    "pr": "964/merge",
+    "run": "35774329384"
+  }
+}
