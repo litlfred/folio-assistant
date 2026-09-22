@@ -1485,6 +1485,19 @@
       searchHolder = el("div", { class: "fa-search-holder" });
       searchHolder.appendChild(adopted);
 
+      /* The notice goes ON THE SEARCH SURFACE, not only in the staging banner.
+       * Somebody who types into the box has not necessarily read the banner at
+       * the top of the page — and the banner is about the PREVIEW, while this
+       * is about the INDEX, which are different claims. `role="status"` so a
+       * screen reader hears it when the field is reached, matching this
+       * instance's declared low-dexterity / assistive interaction profile. */
+      var searchNotice = searchIndexNotice(searchIndexState());
+      if (searchNotice) {
+        var noticeEl = el("p", { class: "fa-search-notice", role: "status" });
+        noticeEl.textContent = searchNotice;
+        searchHolder.appendChild(noticeEl);
+      }
+
       searchHome = el("div", { class: "fa-search-home", "data-place": "navbar", "data-open": "true" });
 
       /* The corner's collapsed face. Only ever visible in the corner state,
@@ -2316,6 +2329,45 @@
   function isStagingPreview() {
     var meta = document.querySelector('meta[name="fa-staging"]');
     return !!(meta && (meta.getAttribute("content") || "").trim());
+  }
+
+  /* ── What the search box is actually searching ───────────────────────
+   *
+   * Bean `eof6`, on the owner's ruling of 2026-09-22: *"staging uses last
+   * published index (w/ wanrnig)"*.
+   *
+   * That bean had first concluded the opposite — staging must DISABLE search,
+   * "never inherit an old index" — because a stale hit is *"a wrong PASS,
+   * BELIEVED"*. **Belief is the load-bearing word**, and a warning is what
+   * attacks it. The narrower rule the ruling leaves standing:
+   *
+   *   Unmarked staleness is worse than absence. Marked staleness is not.
+   *
+   * So the swap is never silent. `searchIndexNotice` is a PURE function of the
+   * stamped value precisely so it can be tested without a browser — the
+   * rendering below needs a built page, the decision does not.
+   *
+   * `null` for every unrecognised value, INCLUDING the empty one. The empty
+   * case is the canonical deploy, where the index is the site's own and there
+   * is nothing to warn about; an unrecognised one is a stamp this build does
+   * not understand, and inventing a warning for it would put words on the page
+   * that no step wrote.
+   */
+  function searchIndexNotice(state) {
+    if (state === "published") {
+      return "Results come from the published site, not from this preview. " +
+        "A page changed on this branch may be missing, stale, or absent from these hits.";
+    }
+    if (state === "unavailable") {
+      return "Search is unavailable on this preview: the published index could not be fetched.";
+    }
+    return null;
+  }
+
+  /** The stamped search-index state, or "" when this build wrote none. */
+  function searchIndexState() {
+    var meta = document.querySelector('meta[name="fa-search-index"]');
+    return (meta && (meta.getAttribute("content") || "").trim()) || "";
   }
 
   /**
