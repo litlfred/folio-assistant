@@ -98,8 +98,9 @@
     }
   ],
   "needs": [
-    "folio-assistant-core"
+    "fhir-harness"
   ],
   "_canonicalUrl_comment": "smart-base's published base, as `sushi-config.yaml` declares it (`canonical: http://smart.who.int/base`). Added 2026-09-22 with `tools/`, because a Tool node's I/O type IRIs are minted against this at load and Zod refuses a relative one. It is READ from upstream rather than chosen here, so it is a fact about smart-base and not a decision about where this staging directory publishes.",
-  "canonicalUrl": "http://smart.who.int/base"
+  "canonicalUrl": "http://smart.who.int/base",
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `fhir-harness`, per the owner's stack ruling. It read `folio-assistant-core` because it was staged (PR #881) BEFORE `fhir-harness` existed, and taking no position on the pipeline layering was that PR's explicit scope. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here."
 }
