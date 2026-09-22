@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 489,
+      "count": 490,
       "unit": "beans"
     }
   },
@@ -230,7 +230,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-21T22:01:44Z",
+      "updatedAt": "2026-09-22T06:55:01Z",
       "preview": "## What — owner, 2026-09-21, verbatim\n\n> note:  if we have a mateiralized <stub>/<sub-graph>, the contents of it\n> should be immutable (expect for publication worfklow purposes or so)... so if\n> you browsw to it through whatever interface, it is functionally\n> diabled/read only/greyed out.   you would need to copy/mateiralize it to\n> your own folio/ in order to mess around with it.   docuemnt the ",
       "file": "beans/defs/folio-assistant-10s1--materialized-is-read-only-a-copy-of-someone-elses.md"
     },
@@ -3594,7 +3594,7 @@
     },
     {
       "id": "folio-assistant-j41m",
-      "title": "SUPPLY CHAIN: 11 of 18 install steps fall back from --frozen-lockfile to an unpinned resolve, and there is no audit or dependabot",
+      "title": "SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable",
       "status": "in-progress",
       "type": "task",
       "priority": "high",
@@ -3602,7 +3602,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T09:05:00Z",
       "preview": "## Measured 2026-09-21\n\n**11 of 18 install steps defeat their own pin.**\n\n    bun install --frozen-lockfile || bun install\n    bun install --frozen-lockfile 2>/dev/null || bun install\n\nin `lean_ci`, `docs-site`, `publish`, `qa-sweep`, `feature-staging` (×3),\n`blueprint`, `lean-build`, `qa-sweep-nightly`, `section-title-audit`.\n\n`--frozen-lockfile` exists to fail when the lockfile does not satisfy ",
       "file": "beans/defs/folio-assistant-j41m--supply-chain-11-of-18-install-steps-fall-back-from.md"
     },
@@ -4437,6 +4437,20 @@
       "file": "beans/defs/folio-assistant-o3xy--ui-accessibility-the-rendered-site-is-the-artefact.md"
     },
     {
+      "id": "folio-assistant-o6vj",
+      "title": "OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:27:56Z",
+      "updatedAt": "2026-09-22T09:38:02Z",
+      "preview": "Issue #895. Found during #886/#888 (bean `ha78`) and deliberately not fixed\nthere — moving a viewer and reworking a generator's ownership model are\ndifferent changes.\n\n## The defect\n\n`gen-iris-pages.ts` prunes its own orphans against two regexes.\n`catalogue.html` was written to `docs/` and named in NEITHER, so the sweep that\nexists to reclaim stale output could never have reclaimed it.\n\nThat sweep",
+      "file": "beans/defs/folio-assistant-o6vj--owned-patterns-six-enumerations-of-one-fact-and-th.md"
+    },
+    {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
       "status": "todo",
@@ -4735,14 +4749,14 @@
     {
       "id": "folio-assistant-prhr",
       "title": "PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-21T22:01:44Z",
+      "updatedAt": "2026-09-22T08:20:36Z",
       "preview": "## What — owner, 2026-09-21\n\n> bean, we also need a processes/ visualization as it is controlled.... its\n> basically a bpmn searcher tool or so. with various filters.\n\n## THE TITLE SAYS 58 AND THE NUMBER IS 61\n\nNot a typo worth quietly fixing — it is this repository's own rule catching\nits author mid-sentence. `bpmn-processes` says *\"Count the directory rather\nthan quoting a number from this parag",
       "file": "beans/defs/folio-assistant-prhr--processes-visualiser-58-bpmn-diagrams-and-no-viewe.md"
     },

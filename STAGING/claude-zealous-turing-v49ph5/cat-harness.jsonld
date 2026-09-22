@@ -264,21 +264,21 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:41:29.839Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/01b8267f2fc6a801f83cc6cf46b28d5cda004595",
-  "sourceCommitSha": "01b8267f2fc6a801f83cc6cf46b28d5cda004595",
-  "sourceCommitAt": "2026-09-22T09:39:51Z",
+  "generatedAt": "2026-09-22T10:02:53.791Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dd7b9e0f55f59dac430664e5235108b41b834438",
+  "sourceCommitSha": "dd7b9e0f55f59dac430664e5235108b41b834438",
+  "sourceCommitAt": "2026-09-22T09:53:58Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 229,
+    "Skill": 230,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
-    "Process": 58,
-    "SequenceFlow": 741,
-    "Role": 131,
-    "ProcessNode": 705,
+    "Process": 59,
+    "SequenceFlow": 751,
+    "Role": 135,
+    "ProcessNode": 715,
     "Tool": 69,
     "Schema": 93,
     "GraphKind": 26,
@@ -1637,7 +1637,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-review.md",
-      "instructionLines": 201,
+      "instructionLines": 235,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4139,6 +4139,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/kg-navigation",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "copy-out-materialized",
+      "title": "Working on materialized content — copy it out",
+      "description": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/copy-out-materialized.md",
+      "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/materialize-remote",
@@ -10579,7 +10596,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Re-materialize, re-asking the five gates",
+      "name": "Re-materialize, re-asking the five gates — and record the new fixity",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_RefreshMaterialized",
@@ -14744,8 +14761,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -14878,6 +14895,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_13"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -14898,7 +14933,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All five,&#10;in parallel",
+      "name": "All six,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -14914,7 +14949,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -15030,6 +15066,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dependency advisories&#10;(WARN-ONLY)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -15045,7 +15103,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -23719,6 +23778,308 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AtomicMassDrift/node/End_Drift"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Copy out materialized content — to work on somebody else's bytes",
+      "enforcement": "strict",
+      "sourcePath": "processes/copy-out-materialized.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes — read-only",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no, or not declared",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reader (any actor)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Source graph — read-only",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Source%20graph%20—%20read-only"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Copier's own folio/",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Verification",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Somebody wants to work on held content",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Is the target materialized / read-only?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edit it in place — it is your own content",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Read the original — and write nothing",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Land the bytes in the copier's own folio/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record provenance.local — what this is a copy OF",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Verify the ORIGINAL still hashes to its digest",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Verification",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A working copy, saying what it is a copy of",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Verification",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edited where it lives — no copy needed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#process/Process_DocumentAuthoring",
@@ -35273,8 +35634,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-turing-v49ph5",
-    "sha": "3a6d457a242d4ef136688079bb2b2c382d956445",
+    "sha": "03f425e4a59d7f885bbe2bfef871833a43bffdb7",
     "pr": "889/merge",
-    "run": "35711666997"
+    "run": "35713664697"
   }
 }
