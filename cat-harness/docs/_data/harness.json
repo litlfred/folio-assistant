@@ -70,7 +70,6 @@
     "docs",
     "folio",
     "fsh-guts",
-    "glossary",
     "health",
     "interaction",
     "issue-marks",
@@ -129,7 +128,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 486,
+      "count": 482,
       "unit": "beans"
     },
     {
@@ -230,18 +229,6 @@
       "publish": "staging-only"
     },
     {
-      "id": "glossary",
-      "directory": "glossary",
-      "title": "glossary",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
-      "surfaces": [
-        "navbar",
-        "board"
-      ],
-      "href": "/cat-harness/docs-auto/glossary/glossary/",
-      "hidden": false
-    },
-    {
       "id": "kg-navigation",
       "directory": "kg-navigation",
       "title": "Skills — kg-navigation",
@@ -316,6 +303,18 @@
       "href": "/cat-harness/docs-auto/index/skills/methodology-raci/",
       "hidden": false,
       "theme": "analyst"
+    },
+    {
+      "id": "processes",
+      "directory": "processes",
+      "title": "processes",
+      "ref": "cat-harness/docs/processes/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/processes/",
+      "hidden": false
     },
     {
       "id": "schemas",
@@ -449,11 +448,13 @@
           "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
         },
         {
-          "kind": "fhir-artifact-index"
+          "kind": "fhir-artifact-index",
+          "readOnly": true
         }
       ],
       "findings": [
         "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
     },
@@ -763,7 +764,8 @@
       "visualisations": [
         {
           "kind": "catalogue",
-          "path": "/cat-harness/catalogue/who-iris/"
+          "path": "/cat-harness/catalogue/who-iris/",
+          "readOnly": true
         },
         {
           "kind": "docs",
@@ -781,11 +783,13 @@
         },
         {
           "kind": "uploads",
-          "path": "/cat-harness/library/who-iris/"
+          "path": "/cat-harness/library/who-iris/",
+          "readOnly": false
         }
       ],
       "findings": [
         "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -865,11 +869,13 @@
       ],
       "visualisations": [
         {
-          "kind": "fhir-artifact-index"
+          "kind": "fhir-artifact-index",
+          "readOnly": true
         }
       ],
       "findings": [
         "smart-immunizations: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-immunizations: no avatar declared for this instance — showing the generic mark."
       ]
     },
@@ -994,12 +1000,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 36
+          "value": 35
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 21
         },
         {
           "id": "views",
@@ -1028,10 +1034,6 @@
           "path": "/fsh-guts/index.md"
         },
         {
-          "kind": "glossary",
-          "path": "/glossary/"
-        },
-        {
           "kind": "health",
           "path": "/health/"
         },
@@ -1053,7 +1055,8 @@
           "kind": "methodology"
         },
         {
-          "kind": "processes"
+          "kind": "processes",
+          "path": "/processes/index.md"
         },
         {
           "kind": "qa",
@@ -1091,7 +1094,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — folio, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
@@ -1112,12 +1115,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 8
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 5
         },
         {
           "id": "views",
@@ -1126,12 +1129,6 @@
         }
       ],
       "visualisations": [
-        {
-          "kind": "glossary"
-        },
-        {
-          "kind": "models"
-        },
         {
           "kind": "processes"
         },
@@ -1149,7 +1146,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` — the exact path its `@id` names. Governed by `tools/bootstrap-graph-emission.md` and `tools/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`.",
+        "bootstrap: 5 graph(s) render no viewer — processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` — the exact path its `@id` names. Governed by `tools/bootstrap-graph-emission.md` and `tools/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ]
     }
