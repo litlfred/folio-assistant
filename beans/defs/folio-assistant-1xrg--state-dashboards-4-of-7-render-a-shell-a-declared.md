@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1xrg
 title: 'STATE DASHBOARDS: 4 of 7 render a shell — a declared page that displays nothing is dh4f with a URL'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T06:48:40Z
-updated_at: 2026-09-22T06:49:02Z
+updated_at: 2026-09-22T08:24:50Z
 parent: folio-assistant-zzmr
 ---
 
@@ -82,3 +82,77 @@ from a graph the visualizer never learned to read.
 
 Related: `lqo9` (which surfaced it), `ankg` (subgraph viewer generators write
 but nothing reads), `dh4f` and `6tkl` as the named shapes.
+
+## RETRACTED 2026-09-22 — the central claim was FALSE
+
+I checked before building the fix this bean proposed, and the fix already
+exists. **The claim that these pages render "a heading over nothing" is
+wrong**, and a false finding in a bean is the thing this bean itself
+complains about one artefact over.
+
+`state-visualizer.ts` has `notDrawnHere()`, which distinguishes **three**
+states and says which applies, with its reason — more nuance than this bean
+proposed adding:
+
+| page | what it actually says |
+|---|---|
+| `health` | *"declared and nothing publishes a projection for it yet, so there is nothing to draw"*, citing bean `2krx` |
+| `uploads` | *"rendered elsewhere … the declaration names a visualiser for it: `/cat-harness/uploads/`"* |
+| `glossary` | the same, now linking the docs-auto index |
+
+And `unresolved` is a fourth: a declaration naming a visualiser that is **not
+there** is reported as a defect in the declaration rather than as either
+neighbouring state — which the source says explicitly, citing bean `flh4`.
+
+### How the false finding was produced
+
+I grepped the rendered pages for `sv-empty`, `No .* found` and `not
+published`, got nothing, and concluded the pages said nothing. **The real
+class is `sv-sub` and the real wording is prose.** A grep for a guessed
+spelling, reported as an absence — the same shape as the `<bpmn:` blind spot
+this session already found four times, and I walked into it while writing up a
+complaint about exactly that.
+
+The size comparison that opened this bean is still true and still means
+nothing: a page saying "rendered elsewhere" is legitimately about the same
+size as one saying "declared".
+
+### What checking DID find, and it was mine
+
+The `glossary` entry's `coverage.visualiser` was
+`cat-harness/docs/glossary/index.html` — **which IS the state-visualiser's own
+page for that graph.** So the page read *"This graph is rendered elsewhere …
+the declaration names a visualiser for it: `/glossary/`"*, pointing at the
+page you were reading.
+
+I declared it during `lqo9` slice 2 to make `published-graphs.md` count the
+graph as published. It made the count look right and the page say something
+false — a self-referential claim no check could catch, because every link in
+it resolves.
+
+Fixed: it now names the docs-auto glossary index, which is a real rendering of
+that graph — 44 terms, each with its definition. Nothing else in this bean's
+Done-when needs doing.
+
+### Done when — revised
+
+[x] A state graph with no data projection says so ON THE PAGE — it already
+    did, in four distinguished states. Claim retracted.
+[x] The `glossary` visualiser declaration is not circular
+[ ] `state:visualizer:check` can fail on an empty page — STILL OPEN as a
+    narrower question than this bean framed it. The pages are not empty, so
+    the check is not green over nothing; what it cannot catch is a
+    declaration pointing at ITSELF, which is what happened here and what a
+    person had to notice. That is the finding worth keeping.
+[~] Whether each of the four gets a real feed — not a defect, so not urgent.
+    A graph rendered elsewhere is rendered; `health` is the only one in the
+    "nothing yet" state, and bean `2krx` already tracks that class.
+[~] `published-graphs.md` counting — it counts a DECLARED visualiser, which is
+    the right thing now that the declaration is not lying.
+
+## Summary of Changes
+
+Retracted the central claim with evidence; fixed the one real defect it
+surfaced (a self-referential visualiser declaration I had introduced); and
+narrowed the remaining open item from "the check is green over empty pages" to
+"the check cannot catch a declaration that points at its own page".
