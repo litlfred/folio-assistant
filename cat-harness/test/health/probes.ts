@@ -56,6 +56,7 @@ import type {
   HealthContext,
   Probe,
   RepoSizeEvidence,
+  SearchIndexEvidence,
   StagingEvidence,
   StagingPreview,
   TodoEvidence,
@@ -513,6 +514,53 @@ function dirBytes(path: string): number | undefined {
   return walk(path) ? total : undefined;
 }
 
+/**
+ * How big the PUBLISHED search index is.
+ *
+ * Bean `eof6`. The index is carried once per deploy tree — the canonical site
+ * and every `STAGING/` preview — so it is charged against the 1 GB Pages
+ * ceiling as many times as there are trees. That makes its size a budget
+ * question rather than a page-weight one, and `eof6`'s Done-when asks for the
+ * budget to be declared WITH ITS BASIS, which needs a measurement.
+ *
+ * ## `HEAD`, not `GET`
+ *
+ * Only the length is wanted, and the index is megabytes. Downloading it to
+ * measure it would make a daily health check the largest thing the job does.
+ *
+ * ## Unreachable is `unknown`, and that is the common case
+ *
+ * A sandboxed session cannot reach the published site at all — this
+ * repository's own egress proxy denies it — so this probe returns `unknown`
+ * far more often than it returns a number. That is correct and is why the
+ * reason is specific: `AGENTS.md`'s rule is that could-not-determine is never
+ * rendered as clean, and a check that silently passed when it could not look
+ * would be `xom7` with a different subject.
+ */
+export async function probeSearchIndex(slug: string | undefined): Promise<Probe<SearchIndexEvidence>> {
+  if (slug === undefined) {
+    return { state: "unknown", reason: "no GitHub `origin` remote, so the published site's address is unknown." };
+  }
+  const [owner, repo] = slug.split("/");
+  const url = `https://${owner}.github.io/${repo}/assets/js/search-data.json`;
+  const command = `HEAD ${url}`;
+  try {
+    const res = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(20_000) });
+    if (!res.ok) {
+      return { state: "unknown", reason: `${command} returned ${res.status} — the published index could not be measured.` };
+    }
+    const len = res.headers.get("content-length");
+    if (!len || !/^\d+$/.test(len)) {
+      // A response with no length is not a zero-byte index. Reporting 0 would
+      // put the healthiest possible number on a measurement that failed.
+      return { state: "unknown", reason: `${command} sent no usable content-length, so the size is not known.` };
+    }
+    return { state: "ok", value: { bytes: Number(len), url, command } };
+  } catch (e) {
+    return { state: "unknown", reason: `${command} failed: ${e instanceof Error ? e.message : String(e)}` };
+  }
+}
+
 export function probeRepoSize(repoRoot: string): Probe<RepoSizeEvidence> {
   const listed = git(repoRoot, ["ls-tree", "-r", "-l", "HEAD"]);
   if (listed.code !== 0) {
@@ -849,5 +897,6 @@ export async function gatherContext(o: GatherOptions): Promise<HealthContext> {
     repoSize: probeRepoSize(o.repoRoot),
     beans: probeBeans(o.repoRoot),
     todos: probeTodos(o.repoRoot),
+    searchIndex: await probeSearchIndex(slug),
   };
 }

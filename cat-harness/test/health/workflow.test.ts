@@ -162,6 +162,7 @@ describe("the issue body", () => {
       repoSize: { state: "unknown", reason: "git count-objects -v exited 128: not a git repository" },
       beans: { state: "ok", value: [{ id: "b1", title: "one", status: "todo" }] },
       todos: { state: "ok", value: [] },
+      searchIndex: { state: "ok", value: { bytes: 3_605_319, url: "https://example.invalid/s.json", command: "HEAD https://example.invalid/s.json" } },
     };
   }
 

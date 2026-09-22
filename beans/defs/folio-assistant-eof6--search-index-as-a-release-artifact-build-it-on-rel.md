@@ -295,3 +295,67 @@ agrees by CONSTRUCTION rather than by both being kept in step.
       Pages budget, so ONE FILE and no sharding**
 - [ ] The budget is declared with its BASIS — the basis now exists (the
       measurement above); the declaration does not
+
+## Budget declared 2026-09-22 — with the arithmetic, not a bare number
+
+The last actionable Done-when. Its basis did not exist until the measurement
+above; now it does, so the threshold can show its working rather than assert a
+round figure.
+
+`search-index-size`, a `test/health/` check like the rest, threshold
+**10 MiB**, severity `major`.
+
+### The arithmetic that IS the basis
+
+The index is carried once per **deploy tree** — the canonical site and every
+`STAGING/` preview each materialise a copy — so it is charged against the 1 GB
+Pages ceiling as many times as there are trees.
+
+| | |
+|---|---|
+| today, 3.44 MiB × 9 trees | ~31 MiB — **3 %** of the ceiling |
+| at 10 MiB × 9 trees | ~90 MiB — **about one whole extra preview** |
+
+10 MiB is where the index stops being a rounding error and starts competing
+with what the staging budget exists to protect. **Calibrated against this
+repository, not an external standard** — there is none for how big a site
+search index may be, and a stated arbitrary threshold is honest where an
+unstated one is not.
+
+### What a breach means, and what it does NOT
+
+It does **not** mean "shard". This bean decides sharding on measurement rather
+than in advance, and at 0.34 % of the ceiling the answer is one file. A breach
+means the question is worth reopening — and the lever is the release-asset
+half, which takes the index out of the Pages budget entirely. The finding's
+`action` says so in as many words, including "Do NOT shard".
+
+### `unknown` is the common case, and that is correct
+
+The probe `HEAD`s the published URL. From a sandboxed session that is denied
+outright, so the check reports `unknown` with the reason far more often than it
+reports a number. A check returning a comfortable size when it could not look
+would be green exactly where nobody could verify it — `xom7` with a different
+subject.
+
+### Falsified
+
+| break | result |
+|---|---|
+| `unknown` reported as a passing measurement | **1 fail** |
+| the basis reduced to a bare "10 MiB." | **2 fail** |
+| restored | **60 pass** |
+
+`bun run gates` — 123 of 123.
+
+## Done when — updated
+
+- [x] Staging uses the last published index, with a warning on the search
+      surface itself
+- [ ] The index is built in the RELEASE path and published as a release asset
+      — **the one item left**, and the health check above names it as the
+      lever a breach calls for
+- [x] Sharding decided on MEASUREMENT — 3.44 MiB, 0.34 % of the ceiling, so
+      one file
+- [x] The budget is declared with its BASIS — `search-index-size`, 10 MiB,
+      `major`, with the per-deploy-tree arithmetic in the basis itself

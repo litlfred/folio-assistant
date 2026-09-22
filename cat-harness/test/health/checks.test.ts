@@ -37,6 +37,7 @@ import {
   formatBytes,
   repositorySizeCheck,
   runHealthChecks,
+  searchIndexCheck,
   previewLiveness,
   stagingOrphanCheck,
   stagingSizeCheck,
@@ -67,6 +68,9 @@ function healthyContext(over: Partial<HealthContext> = {}): HealthContext {
       value: [{ id: "b1", title: "one", status: "todo" }],
     },
     todos: { state: "ok", value: [{ id: "t1", status: "open", createdAt: "2026-09-18" }] },
+    // Well under the 10 MiB budget, so a healthy context stays healthy — the
+    // real measured value is 3.44 MiB (bean `eof6`).
+    searchIndex: { state: "ok", value: { bytes: 3_605_319, url: "https://example.invalid/search-data.json", command: "HEAD https://example.invalid/search-data.json" } },
     ...over,
   };
 }
@@ -911,5 +915,58 @@ describe("the registry and the report", () => {
   it("formats bytes the way the report reads them", () => {
     expect(formatBytes(222 * MB)).toBe("222.0 MB");
     expect(formatBytes(2 * 1024 * MB)).toBe("2.00 GB");
+  });
+});
+
+describe("search-index-size", () => {
+  /**
+   * Bean `eof6`. The index is carried once per DEPLOY TREE — the canonical
+   * site and every preview — so its size is a budget question, and the budget
+   * needed a basis before it could be declared. That basis is the 3.44 MiB
+   * measured from PR #946's `stage` log.
+   */
+  it("the measured size passes, and is reported either way", () => {
+    const r = searchIndexCheck(healthyContext());
+    expect(r.state).toBe("ok");
+    // Reported whether or not it breached: a threshold with no measurement
+    // beside it cannot be re-derived by a reader.
+    expect(r.measurements.find((m) => m.metric === "search-index-bytes")?.value).toBe(3_605_319);
+    expect(r.findings).toEqual([]);
+  });
+
+  it("past the budget it is a MAJOR finding that does not say 'shard'", () => {
+    const r = searchIndexCheck(
+      healthyContext({
+        searchIndex: { state: "ok", value: { bytes: 11 * MB, url: "u", command: "HEAD u" } },
+      }),
+    );
+    expect(r.state).toBe("finding");
+    expect(r.findings[0]!.severity).toBe("major");
+    // `eof6` decides sharding on measurement rather than in advance, so the
+    // action names the release-asset half and explicitly refuses to conclude
+    // sharding from one number.
+    expect(r.findings[0]!.action).toContain("release asset");
+    expect(r.findings[0]!.action).toContain("Do NOT shard");
+  });
+
+  it("unreachable is UNKNOWN with a reason, never a comfortable number", () => {
+    // The common case from a sandboxed session, where egress to the published
+    // site is denied outright. A check that returned a passing size when it
+    // could not look would be green exactly where nobody could verify it.
+    const r = searchIndexCheck(
+      healthyContext({ searchIndex: { state: "unknown", reason: "HEAD ... failed: proxy denied" } }),
+    );
+    expect(r.state).toBe("unknown");
+    expect(r.reason).toContain("proxy denied");
+    expect(r.measurements).toEqual([]);
+  });
+
+  it("the threshold carries its arithmetic, not just a number", () => {
+    // `HealthThresholdSchema` requires SOME basis; this asserts the basis
+    // actually shows the working, which is what makes it re-derivable.
+    const b = searchIndexCheck(healthyContext()).thresholds[0]!.basis;
+    expect(b).toContain("3,605,319");
+    expect(b).toContain("per DEPLOY");
+    expect(b).toContain("ONE WHOLE EXTRA PREVIEW");
   });
 });

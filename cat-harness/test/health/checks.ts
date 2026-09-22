@@ -54,6 +54,19 @@ import type {
 /** A gathered fact, or the reason it could not be gathered. Never both, never neither. */
 export type Probe<T> = { state: "ok"; value: T } | { state: "unknown"; reason: string };
 
+/**
+ * The published search index, as served.
+ *
+ * Here with the other evidence types rather than beside its probe: `probes.ts`
+ * imports from this file, not the other way round, so an interface declared
+ * there cannot be named in `HealthContext`.
+ */
+export interface SearchIndexEvidence {
+  bytes: number;
+  url: string;
+  command: string;
+}
+
 /** One preview directory on the publish branch. */
 export interface StagingPreview {
   /** The directory name under `STAGING/` — the sanitised branch slug. */
@@ -199,6 +212,8 @@ export interface HealthContext {
   repoSize: Probe<RepoSizeEvidence>;
   beans: Probe<BeanEvidence[]>;
   todos: Probe<TodoEvidence[]>;
+  /** The published search index's size — bean `eof6`. */
+  searchIndex: Probe<SearchIndexEvidence>;
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -1375,6 +1390,102 @@ export function todoStoreCheck(ctx: HealthContext): HealthCheckResult {
   return settle(id, summary, TODO_THRESHOLDS, measurements, findings);
 }
 
+/**
+ * When the search index stops being free.
+ *
+ * MEASURED 2026-09-22 (bean `eof6`), read from PR #946's `stage` job log
+ * rather than estimated: the published index is **3,605,319 bytes = 3.44 MiB**.
+ *
+ * ## The arithmetic, which is the whole basis
+ *
+ * The index is carried once per DEPLOY TREE — the canonical site and every
+ * `STAGING/` preview each materialise their own copy — so it is charged
+ * against the 1 GB Pages ceiling as many times as there are trees. A full
+ * preview is ~88 MiB (bean `tebu`, re-measured in #839), and this repository
+ * routinely runs seven to ten concurrent previews.
+ *
+ *   today, 3.44 MiB x 9 trees   ~31 MiB    3 % of the ceiling
+ *   at 10 MiB x 9 trees         ~90 MiB    about ONE WHOLE EXTRA PREVIEW
+ *
+ * 10 MiB is where the index stops being a rounding error and starts competing
+ * with the thing the staging budget exists to protect. That is the calibration
+ * point, and it is calibrated against what this repository does rather than
+ * against any external standard — there is none for "how big may a site search
+ * index be", and saying so is the honest form.
+ *
+ * `major`, not `critical`: crossing it costs a concurrent review slot, which is
+ * a real problem somebody must act on and not something being lost this minute.
+ *
+ * ## What a breach means, and what it does NOT
+ *
+ * It does not mean "shard the index". `eof6` is explicit that sharding is
+ * decided on measurement rather than in advance, and at 0.34 % of the ceiling
+ * the answer today is ONE FILE. A breach means the question is worth reopening
+ * — publishing the index as a release asset, which is `eof6`'s other open
+ * half, takes it out of the Pages budget entirely.
+ */
+export const SEARCH_INDEX_WARN_BYTES = 10 * 1024 * 1024;
+
+const SEARCH_INDEX_THRESHOLDS: HealthThreshold[] = [
+  {
+    metric: "search-index-bytes",
+    value: SEARCH_INDEX_WARN_BYTES,
+    unit: "bytes",
+    severity: "major",
+    basis:
+      "MEASURED 2026-09-22 (bean `eof6`), from PR #946's `stage` job log rather than estimated: " +
+      "the published index is 3,605,319 bytes = 3.44 MiB. The index is carried once per DEPLOY " +
+      "TREE — the canonical site and every STAGING/ preview each materialise a copy — so it is " +
+      "charged against the 1 GB Pages ceiling as many times as there are trees. A full preview is " +
+      "~88 MiB (bean `tebu`, re-measured in #839) and this repository routinely runs seven to ten " +
+      "concurrent previews. At today's size, nine trees cost ~31 MiB, about 3 % of the ceiling. At " +
+      "10 MiB they would cost ~90 MiB — ABOUT ONE WHOLE EXTRA PREVIEW, which is where the index " +
+      "stops being a rounding error and starts competing with what the staging budget protects. " +
+      "CALIBRATED AGAINST THIS REPOSITORY, NOT AN EXTERNAL STANDARD: there is none for how big a " +
+      "site search index may be, and a stated arbitrary threshold is honest where an unstated one " +
+      "is not. A BREACH DOES NOT MEAN SHARD: `eof6` decides sharding on measurement rather than in " +
+      "advance, and at 0.34 % of the ceiling the answer today is one file. It means the question is " +
+      "worth reopening — publishing the index as a release asset takes it out of this budget " +
+      "entirely, and that is `eof6`'s other open half.",
+  },
+];
+
+/**
+ * How big the published search index is, against the budget above.
+ *
+ * Reports `unknown` whenever the published site cannot be reached, which from
+ * a sandboxed session is always. That is the point rather than a shortcoming:
+ * a check that returned a comfortable number when it could not look would be
+ * green in exactly the place nobody could verify it.
+ */
+export function searchIndexCheck(ctx: HealthContext): HealthCheckResult {
+  const id = "search-index-size";
+  const summary =
+    "The published search index's size, against the budget its per-deploy-tree cost sets (bean `eof6`).";
+  if (ctx.searchIndex.state === "unknown") {
+    return unknownResult(id, summary, SEARCH_INDEX_THRESHOLDS, ctx.searchIndex.reason);
+  }
+  const { bytes, command } = ctx.searchIndex.value;
+  const measurements: HealthMeasurement[] = [
+    { metric: "search-index-bytes", value: bytes, unit: "bytes", command },
+  ];
+  const findings: HealthFinding[] = [];
+  if (bytes > SEARCH_INDEX_WARN_BYTES) {
+    findings.push({
+      metric: "search-index-bytes",
+      severity: "major",
+      summary:
+        `The published search index is ${(bytes / 1024 / 1024).toFixed(2)} MiB, past the ` +
+        `${SEARCH_INDEX_WARN_BYTES / 1024 / 1024} MiB calibration point.`,
+      action:
+        "Reopen `eof6`'s release-asset half: published as a release asset the index leaves the " +
+        "Pages budget entirely. Do NOT shard on this finding alone — `eof6` decides sharding on " +
+        "measurement, and this number is the measurement to decide it WITH, not a verdict.",
+    });
+  }
+  return settle(id, summary, SEARCH_INDEX_THRESHOLDS, measurements, findings);
+}
+
 // ── The registry ────────────────────────────────────────────────
 
 /**
@@ -1422,6 +1533,12 @@ export const HEALTH_CHECKS: readonly {
     id: "todo-store",
     summary: "Open and stale items in the human todo store.",
     run: todoStoreCheck,
+  },
+  {
+    id: "search-index-size",
+    summary:
+      "The published search index's size, against the budget its per-deploy-tree cost sets (bean `eof6`).",
+    run: searchIndexCheck,
   },
 ];
 
