@@ -48,6 +48,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, relative, resolve, sep } from "path";
 
 import { readDeclaration, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
+import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
@@ -497,6 +498,59 @@ function banner(): string {
 }
 
 /**
+ * The pattern that finds the SITE ROOT from one of these pages' own URLs, and
+ * the folio mount built from it.
+ *
+ * F8/F9, bean `jpjt`. Owner: *"who-iris, smart-* etc are content libraries a
+ * user is browsing and their 'folio' from the cat-harness is consistent
+ * across them."* The reader carries their folio into the library; the library
+ * does not implement one. `board-windows` puts the test plainly — *"the test
+ * is not 'is this folio good' but 'is this the same folio'"* — so the page
+ * loads the platform's own stylesheet and script and there is no second
+ * implementation here to drift.
+ *
+ * **The pattern lives in this file and not in the platform**, because it is a
+ * statement about THIS instance's routes: `who-iris/library/` is served at
+ * `/who-iris/` and `who-iris/docs/` at `/docs/who-iris/`, exactly as the
+ * comment below records. A platform module that knew that would be the
+ * platform knowing about one library.
+ *
+ * Both mounts, and the two bases this site is actually served under:
+ *
+ * | URL | site root |
+ * |---|---|
+ * | `/who-iris/item-x.html` | `/` |
+ * | `/docs/who-iris/ingestion-notes.html` | `/` |
+ * | `/folio-assistant/who-iris/item-x.html` | `/folio-assistant/` |
+ * | `/STAGING/<branch>/who-iris/item-x.html` | `/STAGING/<branch>/` |
+ *
+ * That last row is why this is derived in the browser rather than written as
+ * an absolute URL: a baked site URL is correct on exactly one of those four.
+ */
+const FOLIO_ROUTE = /^(.*?)(?:docs\/)?who-iris\//;
+/**
+ * The folio mount, emitted on who-iris's OWN pages and withheld on the
+ * `harness` side. The withholding is measured, not stylistic.
+ *
+ * `FOLIO_ROUTE` is `^(.*?)(?:docs\/)?who-iris\/`, which MATCHES
+ * `/cat-harness/catalogue/who-iris/` — the route the catalogue viewer moved to
+ * for bean `ha78` — and derives the site root as `/cat-harness/catalogue/`.
+ * The mount would then request its two assets from a path that 404s. A script
+ * that matches the WRONG thing is worse than one that does not match at all:
+ * it runs, it fails, and it looks installed.
+ *
+ * Widening the pattern is not the repair either. The mount exists so a reader
+ * browsing WHO-IRIS carries their folio (#796, F8/F9); a kind viewer published
+ * under cat-harness's handler is on cat-harness's site, which has its own
+ * chrome. Matching it would put who-iris's furniture on a cat-harness route.
+ *
+ * #879's own gate agrees by construction: who-iris declares
+ * `folioMount.roots` as `["library/", "docs/"]`, and the viewer is under
+ * neither, so nothing asks that page for the marker.
+ */
+const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
+
+/**
  * One replica page.
  *
  * `side` is not decoration: the two sides are MOUNTED AT DIFFERENT ROUTES —
@@ -519,7 +573,14 @@ function page(
   title: string,
   crumbs: { label: string; href?: string }[],
   body: string,
-  side: "library" | "docs",
+  /**
+   * WHICH SITE THIS PAGE IS ON, which is now three answers rather than two.
+   *
+   * `library` and `docs` are who-iris's own tree, mounted under its routes.
+   * `harness` is a kind viewer published into cat-harness's site at
+   * `/<handler>/<kind>/<subject>/` — a different site, with its own chrome.
+   */
+  side: "library" | "docs" | "harness",
 ): string {
   const crumbHtml = crumbs
     .map((c, i) =>
@@ -855,7 +916,7 @@ ${body}
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
   This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
-
+${side === "harness" ? "" : FOLIO_MOUNT}
 </body>
 </html>
 `;
@@ -2025,7 +2086,7 @@ function main(): number {
       "The catalogue, as a graph",
       [{ label: "who-iris" }, { label: "Catalogue" }],
       cataloguePage(all),
-      "docs",
+      "harness",
     ),
   );
 
