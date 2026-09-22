@@ -634,6 +634,28 @@
 @media (min-width: 50rem) {
   .side-bar {
     width: var(--fa-nav-collapsed);
+    /* MIN-WIDTH BEATS WIDTH, and the theme sets one this never answered.
+     *
+     * `layout.scss` carries `.side-bar { min-width: 16.5rem }` inside its own
+     * `mq(lg)` (66.5rem). Overriding `width` alone therefore collapsed the
+     * sidebar at 820-1063px and did NOTHING at 1064px and up, where the
+     * cascade is irrelevant because a `min-width` floor is not something a
+     * later `width` can cross.
+     *
+     * MEASURED 2026-09-22, by rendering the built site at six viewports
+     * rather than by reading this file:
+     *
+     *   viewport 1063 -> width 56px,  min-width 0px     collapsed
+     *   viewport 1064 -> width 264px, min-width 264px   NOT collapsed
+     *
+     * And it was worse than a control that did not work, because
+     * `.side-bar + .main` still reserves `--fa-nav-collapsed`: the sidebar
+     * sat 264px wide over content that began at 56px, so its own
+     * `border-right` was painted ACROSS the page. The owner reported that as
+     * "there is stray border when collasped" — the border is the theme's and
+     * is correct; what was wrong is that the sidebar was over the page.
+     */
+    min-width: 0;
     align-items: flex-start;
     overflow-y: auto;
     overflow-x: hidden;
@@ -682,21 +704,36 @@
   /* THE OPEN CONTROL. A pointer is not the only input: `:hover` does nothing
      on a tablet, and `:focus-within` there only fires once a tap has already
      landed on a link the reader could not read. */
+  /* AT THE TOP OF THE STRIP, aligned to `navbar.ts`'s `.fa-nav-head`, which
+   * who-iris and every generated standalone page render. Owner's choice,
+   * 2026-09-22, from four offered: a bare glyph at the top, no words.
+   *
+   * POSITIONED rather than re-ordered. The control is a `<label>` inside
+   * `.site-footer`, the LAST of `.side-bar`'s four flex children, so `order`
+   * cannot lift it out of its parent — and moving the markup means overriding
+   * the theme's `sidebar.html`, which this file's own note refuses for a
+   * placement. A label drives its checkbox from anywhere in the document, so
+   * where it is PAINTED is free.
+   *
+   * `top` clears the site mark, whose height is the theme's own header. The
+   * strip is `--fa-nav-collapsed` wide and the glyph is centred in it, so it
+   * lands under the mark rather than beside it. */
   .fa-nav-toggle {
+    position: absolute;
+    top: 3.25rem;
+    left: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0 0.4rem 1rem;
+    justify-content: center;
+    width: var(--fa-nav-collapsed);
+    height: 1.75rem;
     cursor: pointer;
     user-select: none;
-    font-size: 0.75rem;
-    opacity: 0.8;
+    opacity: 0.7;
   }
-  .fa-nav-toggle .fa-nav-glyph { flex: none; width: 2rem; text-align: center; }
-  .fa-nav-toggle .fa-nav-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
-  .side-bar:hover .fa-nav-text,
-  .side-bar:focus-within .fa-nav-text,
-  .side-bar:has(.fa-nav-open:checked) .fa-nav-text { opacity: 1; }
+  .fa-nav-toggle:hover { opacity: 1; }
+  .fa-nav-toggle .fa-nav-glyph { flex: none; text-align: center; }
   /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
      so showing both would be two controls for one state. */
   .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }
@@ -3997,6 +4034,52 @@ a.fa-harness-tab__body:focus-visible {
 .fa-harness-tabs--deps {
   margin-top: 0.25rem;
   opacity: 0.8;
+}
+
+/* WHAT EACH HARNESS HOLDS, in the sidebar — the owner's *"also missing the
+ * doc/, librayr/ etc."*
+ *
+ * Indented under its tab rather than given a disclosure of its own. A harness
+ * carries two or three kinds here, and a `<details>` per tab would put a
+ * chevron on every row to hide two lines behind it — the "they eat up all the
+ * nav bar sspace" complaint answered by adding a click instead of removing
+ * one. The DEPENDENCIES group above is already the disclosure that keeps this
+ * list short.
+ *
+ * Quieter than the tab: the tab is the destination and these are what is
+ * inside it, so they read as a sub-list and not as four more tabs. */
+.fa-harness-tab__graphs {
+  margin: 0.15rem 0 0.35rem;
+  padding: 0 0 0 1.75rem;
+  list-style: none;
+  font-size: 0.6875rem;
+}
+
+.fa-harness-graph {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.fa-harness-graph__link {
+  color: inherit;
+  opacity: 0.72;
+  text-decoration: none;
+}
+
+.fa-harness-graph__link:hover,
+.fa-harness-graph__link:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`. Marked
+ * with a rule rather than only by opacity, because opacity alone is the same
+ * signal this file already uses for "quiet" and would make "declared but
+ * unbuilt" indistinguishable from "just a sub-item". */
+.fa-harness-graph__link--unlinked {
+  opacity: 0.45;
+  text-decoration: line-through;
+  cursor: help;
 }
 
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════

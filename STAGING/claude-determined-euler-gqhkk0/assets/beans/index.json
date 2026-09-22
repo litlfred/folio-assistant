@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 497,
+      "count": 499,
       "unit": "beans"
     }
   },
@@ -799,14 +799,14 @@
     {
       "id": "folio-assistant-3x2n",
       "title": "UNTAINTED VERIFICATION: one dispatch mechanism for code QC and for evidence review, and qa-reporting is declared with zero consumers",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:53:39Z",
-      "updatedAt": "2026-09-21T21:53:39Z",
+      "updatedAt": "2026-09-22T10:45:31Z",
       "preview": "Opened 2026-09-21 on the owner's instruction, given over four messages that\nwidened it each time:\n\n1. *\"new/genericize skill (see translator roundtrip) if need untainted,\n   dispatch agent(s) with controlled context (e.g. as extracted from the KG\n   with a set prompt and parameterized input). that should be a part on\n   internal QC before merging (do not write the QC reports yourself as a Coder\n  ",
       "file": "beans/defs/folio-assistant-3x2n--qc-before-commit-untainted-verification-is-one-bes.md"
     },
@@ -1567,6 +1567,20 @@
       "updatedAt": "2026-09-20T13:18:15Z",
       "preview": "Owner, 2026-09-20: *\"please adopt RACI chart as part of generic project\nmanagement as a sub-graph — set of skills. use it as a way to work w/\nstakeholders and determine involvement in project being initiated\"*,\n*\"to help sketch project breakdown\"*.\n\n## Why this fits here rather than being a new vocabulary\n\nRACI assigns **involvement** — Responsible, Accountable, Consulted,\nInformed — to a *(task, ",
       "file": "beans/defs/folio-assistant-7o7i--raci-declare-involvement-a-c-i-over-the-roles-and.md"
+    },
+    {
+      "id": "folio-assistant-7ofc",
+      "title": "folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:48:40Z",
+      "updatedAt": "2026-09-22T10:48:40Z",
+      "preview": "Owner, 2026-09-22: *\"folio must be in cat-harness and visualizer owned by it. transations too... there should be visualizer.\"*\n\nMeasured against that ruling — the three graphs the ruling names:\n\n| graph | in cat-harness | visualiser declared | present |\n|---|---|---|---|\n| `library/` | yes | `docs/cat-harness/library/cat-harness/index.html` | yes |\n| `translations/` | yes | `docs/translation-statu",
+      "file": "beans/defs/folio-assistant-7ofc--folio-is-the-only-cat-harness-graph-with-no-visual.md"
     },
     {
       "id": "folio-assistant-7pdi",
@@ -2495,14 +2509,14 @@
     {
       "id": "folio-assistant-bx6q",
       "title": "A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:48:55Z",
-      "updatedAt": "2026-09-21T22:54:21Z",
+      "updatedAt": "2026-09-22T10:08:47Z",
       "preview": "The owner, 2026-09-21: *\"give structed Q&A w/ context. update skills in fedback\nlike this.\"*\n\nThe second clause is a rule and had no home. `symbiotic-interaction` §1 already\nsaid a steer means *\"do not require the author to repeat the correction\"*, but\napplied to the artefact alone that clause only holds inside one session: the\nproposal is fixed, the rule that produced it is not, and a fresh conte",
       "file": "beans/defs/folio-assistant-bx6q--a-steer-that-corrects-a-rule-must-land-in-the-skil.md"
     },
@@ -2881,14 +2895,14 @@
     {
       "id": "folio-assistant-ebvl",
       "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:12:58Z",
-      "updatedAt": "2026-09-22T09:13:04Z",
+      "updatedAt": "2026-09-22T10:02:36Z",
       "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
       "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
     },
@@ -3280,7 +3294,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T00:47:08Z",
-      "updatedAt": "2026-09-22T00:47:22Z",
+      "updatedAt": "2026-09-22T10:57:18Z",
       "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
       "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
     },
@@ -3539,14 +3553,14 @@
     {
       "id": "folio-assistant-itka",
       "title": "check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:36Z",
-      "updatedAt": "2026-09-21T21:59:36Z",
+      "updatedAt": "2026-09-22T11:46:10Z",
       "preview": "Found 2026-09-21 by tripping it: a new epic was parented to another epic, and\n`check:bean-parents` printed *\"✓ every open bean is placed under an epic or a\nmilestone, **and no epic hangs from another**\"* over it.\n\n## Finding 1 — the epic-under-epic rule is structurally unreachable\n\nThe rule exists, at `check-bean-parents.ts`:\n\n```ts\n} else if (b.type === \"epic\" && p.type === \"epic\") {\n```\n\nThe set",
       "file": "beans/defs/folio-assistant-itka--checkbean-parents-asserts-two-rules-it-cannot-reac.md"
     },
@@ -3665,14 +3679,14 @@
     {
       "id": "folio-assistant-j41m",
       "title": "SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-22T09:05:00Z",
+      "updatedAt": "2026-09-22T10:01:35Z",
       "preview": "## Measured 2026-09-21\n\n**11 of 18 install steps defeat their own pin.**\n\n    bun install --frozen-lockfile || bun install\n    bun install --frozen-lockfile 2>/dev/null || bun install\n\nin `lean_ci`, `docs-site`, `publish`, `qa-sweep`, `feature-staging` (×3),\n`blueprint`, `lean-build`, `qa-sweep-nightly`, `section-title-audit`.\n\n`--frozen-lockfile` exists to fail when the lockfile does not satisfy ",
       "file": "beans/defs/folio-assistant-j41m--supply-chain-11-of-18-install-steps-fall-back-from.md"
     },
@@ -4201,14 +4215,14 @@
     {
       "id": "folio-assistant-m8gz",
       "title": "BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-09-20T07:35:41Z",
+      "updatedAt": "2026-09-22T10:57:22Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `fsh-guts/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wiring to ext",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -5640,7 +5654,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:03:07Z",
-      "updatedAt": "2026-09-22T09:03:43Z",
+      "updatedAt": "2026-09-22T10:51:00Z",
       "preview": "`health` reports `staging-preview-size` **critical**: 10 previews, **878.7 MiB**,\npast three-quarters of GitHub's 1 GB Pages limit, which the main site shares.\n\n## Pruning cannot fix it, and the check's own action says to prune\n\nEvery one of the ten belongs to an **open and active** pull request — oldest\nidle 12.9 h, six touched within six minutes of measuring. So the finding's\naction —\n\n> Ask whi",
       "file": "beans/defs/folio-assistant-tebu--staging-previews-are-at-8787-mib-of-a-1-gb-pages-l.md"
     },
@@ -6521,6 +6535,20 @@
       "file": "beans/defs/folio-assistant-xfoh--crdm-detect-add-missing-exclusions-and-re-measure.md"
     },
     {
+      "id": "folio-assistant-xfyk",
+      "title": "ci-health asserts a bean's status in printed output and it went stale — yzsj reads 'is not done' while completed",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:31:57Z",
+      "updatedAt": "2026-09-22T09:39:18Z",
+      "preview": "_2026-09-22T09:45:00Z_ — Found by being misled by it, ~10 minutes before fixing it. `bun run check:ci-health` printed:\n\n> Cancellations NOT listed here are several sessions racing for the publish ref (`yzsj`), **which is a different fix and is not done.**\n\n`yzsj` has been `completed` since 2026-09-21. I read that sentence, opened the bean, and read 200 lines of finished work — including its own cl",
+      "file": "beans/defs/folio-assistant-xfyk--ci-health-asserts-a-beans-status-in-printed-output.md"
+    },
+    {
       "id": "folio-assistant-xgd8",
       "title": "SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired",
       "status": "in-progress",
@@ -6719,14 +6747,14 @@
     {
       "id": "folio-assistant-yv4z",
       "title": "3pqn cause: why does a PR sometimes get NO pull_request-event run at all?",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-22T06:11:40Z",
+      "updatedAt": "2026-09-22T10:41:35Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },
@@ -6831,14 +6859,14 @@
     {
       "id": "folio-assistant-zakj",
       "title": "SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T10:44:42Z",
       "preview": "## Measured 2026-09-21 — there is none\n\nNo `gitleaks`, no `trufflehog`, no `detect-secrets`, no GitHub secret-scanning\nstep, no pre-commit hook. Every hit for `secret` across `.github/workflows/` is\n`secrets.GITHUB_TOKEN` being *consumed*, which is the opposite of a scan.\n\nThis repository publishes a Pages site from generated content, publishes an npm\npackage with provenance (`hecke-engine-wasm.ym",
       "file": "beans/defs/folio-assistant-zakj--secrets-no-leaked-token-or-credential-scanning-exi.md"
     },
