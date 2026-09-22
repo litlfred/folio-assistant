@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 549,
+      "count": 550,
       "unit": "beans"
     }
   },
@@ -1215,6 +1215,20 @@
       "updatedAt": "2026-09-22T21:05:00Z",
       "preview": "Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),\n\"self-sovereign compute + test harness deployments\", at the owner's direction:\n\"bean up to may strwperson and create issue to review these\".\n\n## The claim this epic rests on\n\n#363 lists roughly ten deployment and utilization scenarios — local git only,\nprivate GitHub, sovereign cloud, self-sovereign, devel",
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
+    },
+    {
+      "id": "folio-assistant-5kn6",
+      "title": "NEEDS ORDERS, DEPENDENCIES OVERLAY: no smart-* instance declares config dependencies, so no skill overlay composes in the stack",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:51:54Z",
+      "updatedAt": "2026-09-22T21:51:54Z",
+      "preview": "Found while verifying issue #975's own claim, and it **falsifies that claim**.\n\n## Two mechanisms, two files, and I conflated them\n\n| | file | drives |\n|---|---|---|\n| `needs` | `<name>.json` (the declaration) | layer ORDER — `dependency-order.ts` topological sort, `harness-tiles.ts` navbar spine |\n| `dependencies.folioAssistant` | `<name>.config.json` (the config) | the skill and content OVERLAY ",
+      "file": "beans/defs/folio-assistant-5kn6--needs-orders-dependencies-overlay-no-smart-instanc.md"
     },
     {
       "id": "folio-assistant-5mg5",
@@ -6314,7 +6328,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T07:19:07Z",
+      "updatedAt": "2026-09-22T21:40:00Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
