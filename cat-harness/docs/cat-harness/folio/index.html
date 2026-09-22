@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>folio — the graph</title>
+<meta name="description" content="Every node of the folio graph: what it anchors to, the theme it claims, and where it was declared.">
+<style>
+  :root { --bg:#ffffff; --fg:#21252b; --muted:#6c757d; --edge:#d7dbe0; --box:#f7f8fa;
+          --accent:#4a34b8; --warn:#7a4a10; --warn-edge:#ec9433; --warn-bg:#fdf4e8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1d21; --fg:#e8eaed; --muted:#9aa0a6; --edge:#3a3d42; --box:#27262b;
+            --accent:#8c74f0; --warn:#f0c27a; --warn-edge:#8a6420; --warn-bg:#2e2417; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-size:1rem; line-height:1.5;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+  .wrap { max-width:70rem; margin:0 auto; padding:1.5rem 1.2rem 6rem; }
+  h1 { font-size:1.5rem; margin:0 0 .2rem; }
+  .lede { color:var(--muted); margin:0 0 1.2rem; }
+  .badge { display:inline-block; border:1px solid var(--edge); background:var(--box);
+           border-radius:0; padding:.2rem .5rem; margin:0 .4rem .4rem 0; font-size:.85rem; }
+  table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem; }
+  th,td { text-align:left; padding:.5rem .55rem; border-bottom:1px solid var(--edge); vertical-align:top; }
+  th { font-weight:600; white-space:nowrap; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85em; }
+  .muted { color:var(--muted); }
+  .pill { display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.04em;
+          text-transform:uppercase; padding:.12rem .45rem; border:1px solid var(--edge); }
+  .pill.warn { color:var(--warn); border-color:var(--warn-edge); background:var(--warn-bg); }
+  .empty { color:var(--muted); }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>folio — the graph</h1>
+  <p class="lede">Every node the folio graph holds: what it anchors to, the theme it claims,
+     where it was declared, and the links it carries. The folio's <em>content</em> renders as
+     the landing board; this is a view of the graph behind it.</p>
+  <div id="badges"></div>
+  <div id="dirs"></div>
+  <div id="nodes"><p class="empty">loading…</p></div>
+</div>
+<script>
+var DATA_HREF = "../../assets/folio/index.json";
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+fetch(DATA_HREF).then(function(r){ if(!r.ok) throw new Error(r.status + " " + r.statusText); return r.json(); })
+.then(function(G){
+  $("badges").innerHTML =
+    '<span class="badge"><b>' + G.nodes.length + "</b> stick" + (G.nodes.length===1?"y":"ies") + "</span>" +
+    '<span class="badge"><b>' + G.directories.length + "</b> declared director" +
+    (G.directories.length===1?"y":"ies") + "</span>";
+
+  /* A DECLARED-BUT-ABSENT DIRECTORY GETS A ROW. Omitting it is the dh4f
+     shape: a consumer scans nothing and reports a clean run over it. */
+  $("dirs").innerHTML = "<table><thead><tr><th>declared directory</th><th>state</th><th>stickies</th></tr></thead><tbody>" +
+    G.directories.map(function(d){
+      return "<tr><td><code>" + esc(d.dir) + "</code></td><td>" +
+        (d.present ? "present" : '<span class="pill warn">declared, absent</span>') +
+        "</td><td>" + d.nodes + "</td></tr>";
+    }).join("") + "</tbody></table>";
+
+  if (G.nodes.length === 0) {
+    $("nodes").innerHTML = '<p class="empty">No stickies. That is a folio graph with no nodes, ' +
+      "not a graph that could not be read \u2014 the directories above say which were found.</p>";
+    return;
+  }
+
+  $("nodes").innerHTML = "<table><thead><tr><th>id</th><th>summary</th><th>anchor</th>" +
+    "<th>theme</th><th>declared in</th><th>links</th><th>prose</th></tr></thead><tbody>" +
+    G.nodes.map(function(n){
+      return "<tr>" +
+        "<td><code>" + esc(n.id) + "</code></td>" +
+        "<td>" + esc(n.summary) + "</td>" +
+        "<td>" + (n.anchor ? "<code>" + esc(n.anchor) + "</code>"
+                           : '<span class="muted">none</span>') + "</td>" +
+        "<td>" + (n.theme ? esc(n.theme) : '<span class="muted">none</span>') + "</td>" +
+        "<td><code class=\"muted\">" + esc(n.declaredIn || "\u2014") + "</code></td>" +
+        "<td>" + (n.links.length
+          ? n.links.map(function(l){ return esc(l.label); }).join("<br>")
+          : '<span class="muted">none</span>') + "</td>" +
+        '<td class="muted">' + n.chars.toLocaleString() + " chars</td>" +
+      "</tr>";
+    }).join("") + "</tbody></table>";
+})
+.catch(function(e){
+  /* COULD NOT LOAD IS NOT EMPTY, and the page says which. */
+  $("nodes").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) +
+    "</code> could not be read: " + esc(e.message) +
+    ". That is not an empty folio \u2014 it is a folio that could not be loaded.</p>";
+});
+</script>
+<script data-fa-folio-mount>(function(){
+var m=location.pathname.match(new RegExp("^(.*?)cat-harness\\/folio\\/"));
+if(!m||m[1]==null)return;
+var r=m[1];
+var l=document.createElement('link');
+l.rel='stylesheet';l.href=r+'assets/css/docs-ui.css';
+document.head.appendChild(l);
+var s=document.createElement('script');
+s.src=r+'assets/js/docs-ui.js';s.defer=true;
+document.head.appendChild(s);
+})();</script>
+</body>
+</html>

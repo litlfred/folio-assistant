@@ -1034,6 +1034,17 @@ jobs:
       - name: voices projection and viewer are current
         run: bun run voices:viz:check
 
+      # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
+      # whole reason this is gated while `library:viz:check` twenty lines
+      # below is not. The folio projection derives from the declared `folio`
+      # directories and the JSON nodes in them — three stickies in one
+      # directory today — so it changes when somebody edits or adds a landing
+      # sticky, and NOT when somebody else merges. A red here is an omission
+      # by the author of the diff, every time, which is the test the comment
+      # above states. Bean `7ofc`.
+      - name: folio projection and viewer are current
+        run: bun run folio:viz:check
+
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each
       # instance declares, and whether a `coverage.visualiser` names a
