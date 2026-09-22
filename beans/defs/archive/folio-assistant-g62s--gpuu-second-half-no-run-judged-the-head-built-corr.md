@@ -128,3 +128,67 @@ above the cap is therefore treated as unknown, and a large commit gets silence.
 
 Verified: `bun test` 2104 tests / 0 fail, tsc and eslint clean, and a live run
 against `main` reports three workflows green with no false fire.
+
+## 2026-09-22 — THE SILENCE HAPPENED, through the door this does not watch
+
+Reopening the conclusion rather than the build. `headUnjudged` is correct and
+its measurement was correct; what was wrong was the inference drawn from it.
+
+This bean closed on *"`headUnjudged` **cannot fire in this repository**"* — 0 of
+36 workflows are `pushTriggerOf: true`, so nothing is flaggable. True, and it
+reads as *"therefore the exposure is theoretical here"*. It is not.
+
+**Measured on PR #858, 2026-09-22.** `Code-quality gates` and
+`Feature Staging` did not run for **six consecutive pushes** across roughly
+forty minutes. Not queued, not failed, not cancelled — **never created**, which
+is exactly the state this bean exists to name.
+
+Both are `pull_request`-triggered, so `pushTriggerOf` is `false` and
+`headUnjudged` rightly stayed quiet. The detector watches the **push** door;
+this repository's real exposure is the **pull_request** door, and they are not
+the same door.
+
+### The mechanism, which is not a GitHub outage
+
+A PR whose branch has gone **un-mergeable** gets no merge ref, and without one
+GitHub does not fire `pull_request` events. So:
+
+    branch falls behind main -> conflicts -> mergeable_state: "dirty"
+      -> no pull_request events -> no gates run, no staging deploy
+      -> and the PR page looks quiet rather than broken
+
+It is `xom7` one door along: *a workflow that never ran looks exactly like one
+that passed*, and from inside a checkout it looks like nothing at all. I only
+found it by listing workflow runs and noticing the newest was forty minutes old.
+
+### Why it is not a one-off here
+
+The conflicts were structural, in the same two places every time:
+
+- **`package.json`'s scripts block** — alphabetical, and every concurrent agent
+  appends `check:*` entries to it;
+- **committed generated artefacts** — `harness.json`, `docs-auto`, `voices`,
+  the QA and beans indexes — which both sides regenerate.
+
+Cadence measured in one session: **70 commits behind → merge → 38 → merge → 3
+→ merge → 10 → merge → 0**. Four merges in about an hour, each valid for
+minutes. More merging does not fix it; the window closes faster than a sweep
+runs.
+
+### What would close the gap, NOT designed here
+
+`pushTriggerOf` has a sibling question — *does this workflow trigger on
+`pull_request`, and is the PR mergeable?* — and the second half is a fact
+GitHub holds **about** the PR rather than one the repository holds, so it must
+be asked externally like the Pages question already is. `mergeable_state` is
+the field. Recorded as the shape, not as a decision: the owner chose to record
+this in an existing bean rather than open a new one, so it sits here as a
+correction to this bean's conclusion for whoever picks the detector up.
+
+### One consequence worth stating plainly
+
+Every green result reported on #858 between 08:14 and the final merge was a
+**local** `bun run gates` — said as such in each commit and each PR comment —
+and **CI confirmed none of it**. That is not a reporting failure, but it is a
+weaker claim than it reads as, and the difference was invisible until somebody
+went looking for runs that did not exist.

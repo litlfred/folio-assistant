@@ -93,8 +93,13 @@ describe("a THUMBNAIL that does not declare itself derived is refused", () => {
     for (const n of all) {
       const thumb = n.bitstreams?.find((b) => b.bundle === "THUMBNAIL");
       if (!thumb) continue;
-      expect(thumb.materialization.of).toStartWith("local:");
-      expect(thumb.materialization.of).not.toContain("iris.who.int");
+      // The `local:` SCHEME is gone: a local original is now `provenance.local`,
+      // asked for by name rather than distinguished from an upstream URI by its
+      // prefix. This asserted the prefix because the prefix was the only thing
+      // carrying the distinction — which is exactly why it was worth splitting.
+      expect(thumb.materialization.provenance.local).toBeDefined();
+      expect(thumb.materialization.provenance.upstream).toBeUndefined();
+      expect(JSON.stringify(thumb.materialization.provenance)).not.toContain("iris.who.int");
     }
   });
 
