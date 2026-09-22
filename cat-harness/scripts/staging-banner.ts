@@ -96,6 +96,8 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 
+import { commentGuard } from "./html-comments.ts";
+
 /** The per-preview facts. One file per build, read by the banner at load time. */
 export interface StagingFacts {
   /** Raw branch name — the slug is sanitised, this is not. */
@@ -291,11 +293,7 @@ function htmlFiles(dir: string, out: string[] = []): string[] {
  * no real `<body>` at all.
  */
 export function bodyInsertionPoint(html: string): number {
-  const comments: Array<[number, number]> = [];
-  for (const m of html.matchAll(/<!--[\s\S]*?-->/g)) {
-    comments.push([m.index!, m.index! + m[0].length]);
-  }
-  const inComment = (i: number): boolean => comments.some(([a, b]) => i >= a && i < b);
+  const inComment = commentGuard(html);
   for (const m of html.matchAll(/<body[^>]*>/gi)) {
     if (!inComment(m.index!)) return m.index! + m[0].length;
   }

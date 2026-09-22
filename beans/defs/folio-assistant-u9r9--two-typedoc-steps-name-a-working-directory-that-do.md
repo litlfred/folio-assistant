@@ -1,12 +1,12 @@
 ---
 # folio-assistant-u9r9
 title: TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so
-status: todo
+status: in-progress
 type: bug
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-22T05:57:48Z
-updated_at: 2026-09-22T05:57:48Z
+updated_at: 2026-09-22T07:19:07Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the
@@ -117,3 +117,47 @@ fire on their own and are unjudged for a second, independent reason.
 
 No dispatch, no path edited, no baseline entry touched. The `## Done when`
 below is unchanged and still needs the owner's go-ahead for the dispatch.
+
+## 2026-09-22, a THIRD session — the dispatch this bean asks for cannot settle `publish.yml`
+
+Worked in parallel with the section above, on `claude/peaceful-heisenberg-dzgsf1`, neither session seeing the other until the merge. That is `bean-coordination` §"A claim is branch-local" happening exactly as written: I claimed this bean at 07:20 UTC, the section above landed on `main` at 07:38, and a claim on a branch announces rather than reserves. **The duplication is the rule's own worked example, not an argument against it** — and the two readings disagree in both directions, which is the case for recording both rather than deferring to whichever landed first.
+
+### Correcting my own reading first
+
+I reported that `computations/` and `snappea-wasm/` *"exist under no prefix"*. **Wrong for `computations/`** — it is at `cat-harness/computations`, and the section above is right. I checked `folio-assistant/computations` and the bare root and stopped, which is the grep-and-stop the section above names in its own near-miss. Its measurement is also the better one: the directory exists and holds one `.json` with **zero `.py`** while the step `cd`s there and runs Python, so "absent" was never the reason — "present and unusable" is. `snappea-wasm/` genuinely exists nowhere.
+
+### What §"What would settle it" asks for cannot be done for `publish.yml`
+
+Both sections above treat a dispatch as the open move. For `publish.yml` it is not available, and the forge already says so.
+
+`publish.yml`'s `schema-docs` carries **`needs: content-pipeline`** (:558). There is exactly **one run of `publish.yml` in this repository's entire history** — 2026-06-24, `workflow_dispatch`, run `28075159865`, conclusion `failure`. In it `content-pipeline` failed 23 s in at *"Check references.bib is in sync with references.ts"*, and **`TypeDoc — schema-docs/` is recorded `skipped`**, with every other downstream job.
+
+That preflight (:209) reads `content/schema/references.ts`, and `content/` does not exist here. So content-pipeline cannot pass in the platform repo, `schema-docs` cannot start, and a dispatch returns another `skipped` — **not an outcome**. This bean's first Done-when box is unachievable as written for one of its two workflows.
+
+`discoverability-docs.yml` is the opposite and is the one worth the owner's authorisation: its three jobs carry **no `needs:`** (its comment at :186 records `pdxk`'s objection to grouping them), so its `schema-docs` would really execute. It has **never run — `total_count: 0`, not once**. The cost is that all three of its jobs push to `gh-pages` via `peaceiris/actions-gh-pages@v4`, so authorising it is authorising a publish from a workflow with no run history.
+
+### The one-line fix holds, checked rather than assumed
+
+Both steps name entry points `schemas/ adapters/paper/schemas/`, and `adapters/paper/schemas/` exists nowhere (`cat-harness/adapters/` has no `paper/schemas`). I expected that to make the fix bigger than one line, so I ran the invocation verbatim from `cat-harness/`:
+
+    npx typedoc --entryPointStrategy expand --readme none --hideGenerator \
+        schemas/ adapters/paper/schemas/
+    → Found 0 errors and 215 warnings, html generated, EXIT 0
+
+**TypeDoc tolerates a missing entry point.** So this bean's own prediction — *"the fix is a one-line path correction"* — is right and my worry was wrong. Recorded so the next reader does not re-derive it.
+
+For contrast, the TypeDoc step that demonstrably DOES run is `feature-staging.yml:501`: **no `working-directory` at all**, eight explicit files named from the repository root. That is the working shape, and it got there by not `cd`-ing.
+
+### The gate for this class exists and is GREEN over all eight — a finding neither section had
+
+`cat-harness/scripts/check-workflow-paths.ts`, 701 lines, bean `52dz`, subject *"every script path a workflow invokes must RESOLVE — from the directory the step actually runs in"*:
+
+    72 invocation(s): 55 resolve, 17 need a folio, 0 missing, 0 undetermined
+    ✓ every workflow script path resolves, or is declared folio-only with a reason.
+
+Two reasons it cannot see this, and they compound:
+
+1. It **computes** the cwd from `working-directory` and never asks whether that directory exists. The value is trusted input to path resolution, never a subject of it.
+2. Both TypeDoc steps run `npx typedoc` — not a script path — so `invokedPath` declines the line and the step is never examined at all.
+
+A step whose `working-directory` is absent fails 100 % of the time whatever it runs. This is `1xhc` one level up from where the bean looked: not a gate that does not fire, but a gate that fires, passes, and is structurally blind to the case. Tracked separately rather than folded in here, because it is a platform gate's gap and not this bean's two paths.

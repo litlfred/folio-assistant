@@ -264,6 +264,12 @@ export const RULES: Rule[] = [
       // index, and nothing in it is about any folio's subject matter — a folio
       // could not make it resolve differently, only give it more files.
       "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
+      // Its clean-merge counterpart, and harness-level for the same reason: it
+      // loads the GATE SET from the workflow and re-runs whichever writers
+      // their checks report stale. It knows nothing about any folio's subject
+      // matter — a folio could not make it repair differently, only give it
+      // more gates.
+      "scripts/regen-after-merge.ts",        // artefacts a merge left wrong, repaired by asking the gates
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -994,6 +1000,9 @@ export const RULES: Rule[] = [
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
+      "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
+      "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
+      "scripts/check-folio-mount.ts",       // ...and the gate that every declared page carries it
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",

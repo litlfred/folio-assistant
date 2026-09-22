@@ -123,14 +123,48 @@ jobs:
             | awk '/^  ✗ #/ { gsub("#","",$2); print $2 }' > "$RUNNER_TEMP/affected.txt" || true
           while read -r pr; do
             [ -n "$pr" ] || continue
-            sha="$(gh pr view "$pr" --json headRefOid --jq .headRefOid)"
+            # STATE and head in one call. A pull request that closed between
+            # the sweep and this loop has nothing owed to it, and saying so
+            # matters for the probe below: `refs/pull/N/head` SURVIVES a close
+            # while `refs/pull/N/merge` is reaped, so on a merged PR the pair
+            # reads exactly like an open conflicted one. Measured: 681 head
+            # refs against 12 merge refs on this repository, the twelve being
+            # precisely the then-open PRs.
+            pr_json="$(gh pr view "$pr" --json state,headRefOid 2>/dev/null || echo '{}')"
+            state="$(printf '%s' "$pr_json" | jq -r '.state // "UNKNOWN"')"
+            sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid // empty')"
+            if [ "$state" != "OPEN" ] || [ -z "$sha" ]; then
+              echo "#$pr is no longer open (state=$state) — nothing owed"
+              continue
+            fi
             # MERGEABILITY, asked before any advice is given. Bean `sddf`:
             # a `pull_request` run checks out `refs/pull/N/merge`, which a
             # conflicted PR has none of, so telling its author to dispatch
             # hands them a green signal for a tree that will never exist.
             # Measured on #813 — conflicted: no merge ref for 433s and no run;
             # resolved: merge ref in 15s and runs in 7s.
-            mergeable="$(gh pr view "$pr" --json mergeable --jq .mergeable 2>/dev/null || echo UNKNOWN)"
+            #
+            # THE MERGE REF, not `gh pr view --json mergeable`. Bean `h2s9`:
+            # that field is computed LAZILY, so a read returns `UNKNOWN`
+            # because nothing has computed it yet — which is not the same as
+            # "this PR's mergeability cannot be determined". Measured on the
+            # first run carrying sddf's fix: the API said `unknown` for #731
+            # while the forge was publishing refs/pull/731/merge, and the
+            # comment went out on the UNKNOWN branch. That is sddf's own
+            # defect class reappearing inside sddf's remedy.
+            #
+            # The ref is deterministic and needs no token, and it is the same
+            # instrument `mergeStateForHead` uses in check-head-has-run.ts —
+            # so the two halves cannot disagree, which is what sddf was for.
+            # Reached only for a CONFIRMED-OPEN pull request, which is what
+            # makes an absent merge ref mean "conflicted" rather than "closed".
+            if ! merge_ref="$(git ls-remote origin "refs/pull/$pr/merge" 2>/dev/null)"; then
+              mergeable=UNKNOWN            # the probe itself failed
+            elif [ -n "$merge_ref" ]; then
+              mergeable=MERGEABLE
+            else
+              mergeable=CONFLICTING
+            fi
             marker="<!-- pr-no-checks:$sha -->"
             if gh pr view "$pr" --json comments --jq '.comments[].body' | grep -qF "$marker"; then
               echo "already told #$pr about $sha"
