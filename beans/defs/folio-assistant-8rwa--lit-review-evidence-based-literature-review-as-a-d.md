@@ -1,7 +1,7 @@
 ---
 # folio-assistant-8rwa
 title: 'LIT REVIEW: evidence-based literature review as a dispatched, untainted step in guideline development — WHO living guidelines'
-status: todo
+status: in-progress
 type: task
 priority: high
 parent: folio-assistant-3x2n
@@ -44,13 +44,46 @@ and say so.
 
 ## Done when
 
-- [ ] The recurring-surveillance shape is expressed against `0grh` rather than
-      as a parallel mechanism
-- [ ] Each candidate rule is run through `domain-fencing`'s three questions, and
-      anything that fails all three is fenced behind an opt-in axis, not shipped
-      on the platform's default path
-- [ ] The separation-of-parties rule is stated where a guideline author will
-      find it, and is the SAME rule as `a58y` enforces for code — one rule, two
-      instances
-- [ ] Nothing asserts an empirical or clinical claim on the platform's behalf;
-      the mechanism carries process, the folio carries evidence
+- [x] The recurring-surveillance shape is expressed against `0grh` rather than
+      as a parallel mechanism — and the **gap is stated rather than papered
+      over**: the spine's `field_hash` covers inputs in the repository, and an
+      external evidence base is not one. What the two share is the shape a
+      consumer must respect either way
+- [x] Each candidate rule is run through `domain-fencing`'s three questions —
+      seven rules, **three earn a place and four are fenced** (table below)
+- [x] The separation-of-parties rule is stated where a guideline author will
+      find it — `skills/folio-core/evidence-review.md`, bound to `qc-reviewer`
+- [x] Nothing asserts an empirical or clinical claim on the platform's behalf.
+      **Nothing is shipped for the four fenced rows either**: declaring empty
+      criteria for them would be `dh4f` exactly — a consumer scanning nothing
+      and reporting a clean run over it
+
+## The fencing analysis
+
+| candidate rule | Q1 | Q2 | Q3 | verdict |
+|---|---|---|---|---|
+| appraiser ≠ drafter | survives | vocabulary | no | **platform** — it IS the spine |
+| a verdict carries what it was verified against, and when | survives | vocabulary | no | **platform** |
+| a finding is upheld by opening the cited source | survives | vocabulary | no | **platform** |
+| GRADE certainty domains | no | mechanism | yes | **fence** |
+| PICO question formulation | no | mechanism | yes | **fence** |
+| evidence-to-decision tables | no | mechanism | yes | **fence** |
+| a search strategy is re-runnable | rationale only | bibliographic mechanism | yes | **fence the mechanism, keep the rationale** |
+
+## The useful finding
+
+**The platform did not need a rule for evidence review. It needed to notice
+that the rule it already had was the same one.** Guideline methodology
+separates the systematic review team from the guideline development group for
+exactly the reason `0grh` gives, and has done so far longer than this
+repository has existed.
+
+## Where the boundary sits against what main just gained
+
+`who-style-guide/skills/voices/who-guideline-development` states its own limit:
+*"This voice governs the language of normative statements, not the process that
+produces them — the process is the handbook's subject and belongs in a
+workflow, not a style rule."* This skill is on the other side of that line, so
+the two do not overlap. It also already practises the spine's discipline from
+its own direction: a finding is upheld by **opening the cited page**, never by
+trusting the rule's wording.

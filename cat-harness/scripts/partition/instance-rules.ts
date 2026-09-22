@@ -774,6 +774,19 @@ export const RULES: Rule[] = [
       // is a fact about the checkout's build wiring, not about any folio's
       // material — it imports `repoRootFor` and nothing else.
       "scripts/check-workflow-script-paths.ts",
+      // The supply-chain gate, and harness by the same argument: it reads this
+      // repository's own `.github/workflows/` and grades whether a pinned
+      // install can silently degrade to an unpinned one. A fact about the
+      // checkout's build wiring, not about any folio's material — it imports
+      // node builtins and nothing else.
+      "scripts/check-lockfile-pinning.ts",
+      // The credential gate. Harness by SUBJECT rather than by import: it
+      // walks this checkout's declared roots and grades the bytes committed
+      // there. It reads a folio's files where one is present, but what it
+      // asserts is a property of the CHECKOUT — "no credential is committed
+      // here" — which is the same claim `check-portable-paths.ts` makes about
+      // filenames. Imports node builtins only.
+      "scripts/check-secret-leaks.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
@@ -1001,6 +1014,19 @@ export const RULES: Rule[] = [
       // is the second file that has caught — a reminder that the keyword rule
       // is a heuristic and the triage list is where its misses are corrected.
       "content/pipeline/qa-witness.ts",
+      // `qa-reporting`'s first consumer — the gate that refuses a QA verdict
+      // whose reviewer acts as an actor lacking the permission.
+      //
+      // CORE rather than harness, and the reason is an import direction rather
+      // than a subject. Its subject would argue for harness: it grades the
+      // actor/permission graph, which is harness material. But it imports
+      // `schemas/block-qa.ts` for `QaReviewer` and
+      // `content/pipeline/untainted-verification.ts` for the could-not-dispatch
+      // predicate, and both are core. Core may import the harness; the harness
+      // may not import core. Placing it in harness would reintroduce exactly
+      // the wrong-direction edge `schemas/namespaces.ts` was extracted to
+      // remove, a few rules up.
+      "scripts/check-qa-reviewer-permission.ts",
     ],
   },
 

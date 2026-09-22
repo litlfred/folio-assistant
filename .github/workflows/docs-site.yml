@@ -123,7 +123,7 @@ jobs:
           bun-version: latest
 
       - name: Install deps
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Regenerate skill schema reference
         run: bun run cat-harness/scripts/gen-schema-docs.ts
