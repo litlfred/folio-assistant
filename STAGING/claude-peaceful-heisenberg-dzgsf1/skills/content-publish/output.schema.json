@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "failed"
+      ]
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "54bbad8e28981cf045a8cec0e077793865d8b992",
+    "pr": "906/merge",
+    "run": "35712428079"
+  }
+}
