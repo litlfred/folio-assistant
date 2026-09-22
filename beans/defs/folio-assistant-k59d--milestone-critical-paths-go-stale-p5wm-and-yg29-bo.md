@@ -198,3 +198,38 @@ Entered here rather than by editing the checklist above, because this bean is
 another session's and an append cannot collide. The remaining Done-when —
 *"`p5wm` and `yg29` are repaired by their owners"* — is untouched and is not
 an agent's.
+
+## Half of the remaining Done-when is closed, 2026-09-22 — `yg29` repaired by its owner
+
+> [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
+> edit them; baseline entries come out as they are
+
+**`yg29` is repaired.** Stream 3 of the #956 consolidation (`w0cr`) owns GOAL 3,
+so the repair was made by the milestone's owner, which is exactly the condition
+this clause states. `p5wm` is stream 2's and is **untouched** — the clause stays
+open for it.
+
+This bean's judgement was right on both halves and is worth recording as having
+held rather than as having been overtaken:
+
+- **The defect was real and worse than measured here.** This bean found `yg29`
+  routing through `z7ev` and `jbx2`. Re-measuring the whole body found two more:
+  `hqku`, carried as a live *"blocked on the owner"* for two days after it
+  completed, and *"`who-iris/` has no `docs/`"* against a directory holding three
+  rendered pages. A milestone's staleness is not confined to the lines a path
+  detector can see, which is the argument for repairing the body rather than only
+  the path.
+- **Declining to edit it was also right.** The repair needed `check:voices`,
+  `check:catalogue`, `iris:pages:check` and a *built site* re-run to state what is
+  true now. A checker could not have written that, and a checker that guessed
+  would have replaced a stale belief with an invented one.
+
+`stale-paths-baseline.json` shrank from 3 entries to 1 by the route the file
+describes — the entry was removed when its milestone was repaired, and the run
+reported **no stale unmatched entry**, which is the property that exists so the
+baseline cannot quietly become empty.
+
+Entered as an append, on this bean's own stated precedent: it is another
+session's, and an append cannot collide.
+
+*Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
