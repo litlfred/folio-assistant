@@ -312,3 +312,64 @@ test.describe("a hostile href never reaches the glass", () => {
       .toHaveAttribute("href", "/who-iris/item-a.html");
   });
 });
+
+test.describe("rows that are rebuilt, which is what the real library view does", () => {
+  /**
+   * `gen-library-viz` renders rows client-side and replaces them WHOLESALE on
+   * every filter keystroke and every sort — `$("listing").innerHTML = …`.
+   *
+   * Every spec above uses static fixture rows, and that is exactly why the
+   * first implementation's per-row `document.addEventListener` passed all 18
+   * of them while being an unbounded leak on the real page. Bean `ebvl`. The
+   * fixture below is the shape the author did not have in mind.
+   */
+  const rebuild = async (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const body = document.querySelector("tbody")!;
+      body.innerHTML = body.innerHTML; // eslint-disable-line no-self-assign
+    });
+
+  test("the control survives a wholesale re-render", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await rebuild(page);
+    await expect(page.locator(`${rowA} .fa-pullout`)).toHaveText("Pull out to folio");
+  });
+
+  test("and state survives it — a rebuilt row still knows the asset is the reader's", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await rebuild(page);
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+    await expect(page.locator(`${rowA} .fa-pullout-state`)).toHaveText("On your folio glass");
+  });
+
+  test("a rebuilt row is still clickable — delegation, not a re-bound handler", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await rebuild(page);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+  });
+
+  test("ten re-renders leave ONE control per row, not ten", async ({ page }) => {
+    // The visible half of the leak. The listener half cannot be counted from
+    // here, which is why the fix is structural: delegation has no per-row
+    // registration to leak.
+    await serve(page, LIBRARY);
+    for (let i = 0; i < 10; i++) await rebuild(page);
+    await expect(page.locator(`${rowA} .fa-pullout`)).toHaveCount(1);
+    await expect(page.locator(".fa-pullout")).toHaveCount(2); // two rows
+  });
+
+  test("the painter does not re-enter on its own mutations", async ({ page }) => {
+    // The observer watches childList; the painter writes textContent, which
+    // IS a childList mutation. Unguarded, it re-enters and never returns —
+    // measured, not feared: the first spec run hung and was killed. If this
+    // regresses, this spec times out rather than failing quietly.
+    await serve(page, LIBRARY);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+    // The page is still responsive: a second interaction completes.
+    await page.locator(`${rowB} .fa-pullout`).click();
+    await expect(page.locator(rowB)).toHaveAttribute("data-fa-folio-state", "glass");
+  });
+});
