@@ -34,6 +34,7 @@
  * @module scripts/lib/harness-rail
  */
 export {
+  documentIndexOf,
   NAV_COLLAPSED_PX,
   NAV_GLYPH_PX,
   NAV_OPEN_PX,
@@ -44,7 +45,7 @@ export {
 } from "./navbar.js";
 export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
 
-import { injectNavbar, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
+import { documentIndexOf, injectNavbar, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
 
 /** What a mounted page needs in order to describe its own navbar. */
 export interface RailOptions {
@@ -66,6 +67,14 @@ export interface RailOptions {
    * that could not find out.
    */
   harnesses?: readonly NavItem[];
+  /**
+   * The open document's own index, for the fixed top.
+   *
+   * Optional, and ABSENT rather than empty when the page has fewer than two
+   * addressable headings — `documentIndexOf` makes that call, because "this
+   * page has no index" and "we did not look" must not render the same.
+   */
+  documentIndex?: NavGroup;
 }
 
 /**
@@ -83,6 +92,7 @@ export function railModel(o: RailOptions): NavbarModel {
   return {
     instance: o.instance,
     ...(o.root ? { root: o.root } : {}),
+    ...(o.documentIndex ? { documentIndex: o.documentIndex } : {}),
     // Collapsible so the whole stack folds in one click -- the owner's
     // "librarues should be in hambuger menu so can collase all" -- and OPEN
     // by default, because a navbar whose content arrives folded looks empty.
@@ -92,7 +102,19 @@ export function railModel(o: RailOptions): NavbarModel {
   };
 }
 
-/** Put the rail into a finished document. Refuses a page with no `<body>`. */
+/**
+ * Put the rail into a finished document. Refuses a page with no `<body>`.
+ *
+ * THE DOCUMENT INDEX IS READ OFF `html` HERE, not passed in, and that is the
+ * point: this function already holds the finished page, so the caller cannot
+ * hand it an index belonging to a different document. `mount-instance-docs.ts`
+ * loops over hundreds of files, and "the right nav with the previous page's
+ * contents" is the failure that shape invites.
+ *
+ * An explicit `o.documentIndex` still wins, for a caller that has a better
+ * answer than the headings — a declared index in the graph, say.
+ */
 export function injectRail(html: string, o: RailOptions): string | undefined {
-  return injectNavbar(html, railModel(o));
+  const documentIndex = o.documentIndex ?? documentIndexOf(html);
+  return injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
 }

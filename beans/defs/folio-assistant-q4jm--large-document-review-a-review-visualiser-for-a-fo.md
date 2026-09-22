@@ -5,7 +5,7 @@ status: todo
 type: epic
 priority: high
 created_at: 2026-09-22T21:02:29Z
-updated_at: 2026-09-22T21:25:28Z
+updated_at: 2026-09-22T21:44:56Z
 ---
 
 ## What this is
@@ -172,3 +172,8 @@ like 1swy.
 ## Owner ruling 2026-09-22: not under a goal
 
 Asked which goal this epic joins (p5wm, yg29, a new one), the owner answered *"its not under goal"*. It stays a root epic, like 1swy and 2upx, and that is **decided, not unasked**. A later sweep that finds it unparented should read this rather than file it under a milestone.
+
+
+## Tracking issue
+
+https://github.com/litlfred/folio-assistant/issues/971 (#971). Round summaries go there.

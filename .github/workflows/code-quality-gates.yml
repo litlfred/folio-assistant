@@ -963,6 +963,15 @@ jobs:
           bun run readme:sync:check
           bun run avatars:css:check
           bun run themes:css:check
+          # The navbar's geometry (`sjic`). GATED because the defect it closes
+          # was invisible to every test that existed: `navbar.ts` and
+          # `docs-ui.css` each stated the widths and each had a test asserting
+          # its OWN copy, so both were green while the rail rested at 40px and
+          # the sidebar at 56px -- two navbars the owner had asked to be
+          # "presented same way". The generated file is only half the fix; a
+          # snapshot that may go stale silently is the same defect with an
+          # extra step.
+          bun run navbar:geometry:check
           # The ingested-IRIS replica pages, generated from who-iris/catalogue/.
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the

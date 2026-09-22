@@ -318,6 +318,24 @@
       container.appendChild(tab);
     }
 
+    // GUARDED, and this is a live crash rather than a precaution.
+    //
+    // `insertTarget` is `h1.nextSibling`, and the `h1` is not always inside
+    // `mainContent` -- so `insertBefore` throws `NotFoundError` and takes the
+    // REST of `init()` down with it. On this site that is `inlineDiagrams`
+    // and `mountFigures`, which is why no figure on the front page has zoom
+    // or full-width.
+    //
+    // MEASURED AS PRE-EXISTING, not inferred: the same throw, at this same
+    // line, reproduces on a build of `origin/main` (2026-09-22, Chromium, a
+    // `pageerror` listener on `/index.html`). It is fixed here rather than
+    // left because this change adds three more mounts to the same `init()`,
+    // and a function that eats everything downstream of it is a trap for the
+    // next one.
+    //
+    // `null` is a VALID second argument -- it appends -- so the fallback is
+    // the correct placement rather than a bail-out.
+    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = null;
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -1233,6 +1251,20 @@
     'l-1.3 1.9h-3.4l-1.3-1.9z"/>' +
     '<path d="M12 3.6v7.7"/><path d="M8.7 8.1 12 11.4l3.3-3.3"/>' +
     "</g></svg>";
+
+  // THE FACTORY FLOW — owner: *"one for processes viewer/ (the factory flow)"*.
+  //
+  // Two rounded tasks and the sequence flow between them: the smallest thing
+  // that reads as BPMN rather than as a generic diagram. Drawn rather than
+  // borrowed because every other glyph here is already spoken for, and two
+  // icons sharing one drawing in a six-slot row is a row where two slots look
+  // like one control.
+  var PROCESS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<rect x="2.5" y="8" width="7" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<rect x="14.5" y="8" width="7" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<path d="M9.5 11h5M13 9.5 14.5 11 13 12.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    "</svg>";
 
   var TILE_GLYPHS = { beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH };
 
@@ -6236,6 +6268,317 @@
 
 
 
+  /* ── THE OPEN DOCUMENT'S INDEX, in the navbar's fixed top ────────────────
+   *
+   * Owner, 2026-09-21: *"when a document or other indexed object is opened,
+   * the document index/idices are shown in a navbar tab/menu."*
+   *
+   * `navbar.ts` has carried a `documentIndex` region since it was written and
+   * NOTHING SUPPLIED ONE -- a repo-wide search on 2026-09-22 found the type,
+   * the render branch and a single test. `documentIndexOf` now supplies it on
+   * every mounted page, server-side, from the HTML being injected into.
+   *
+   * THIS HALF IS SCRIPTED AND THAT ASYMMETRY IS DELIBERATE, not an oversight.
+   * The rail is injected into documents copied verbatim from instances the
+   * harness does not control, where "injecting a nav is one claim and
+   * injecting script is a larger one" -- so it must be server-side. This site
+   * is ours, already loads this file, and Jekyll hands Liquid no way to see a
+   * page's rendered headings: kramdown assigns the ids downstream of the
+   * template. A build step that re-parsed our own output to learn what
+   * kramdown had just done would be a second renderer.
+   *
+   * The SELECTION RULE is `navbar.ts`'s, restated rather than approximated:
+   * `h2`/`h3` that carry an `id`, because a heading with no id is not a
+   * destination (`pb04`); nested by level; and the region is ABSENT rather
+   * than empty below two rows, since a "Contents" holding the one section the
+   * reader is looking at is a row that buys nothing in a region that does not
+   * scroll.
+   *
+   * It mounts as a `.side-bar` child so the region rules in docs-ui.css make
+   * it fixed-top with no further styling: `.side-bar > * { flex: 0 0 auto }`.
+   */
+  function mountDocumentIndex() {
+    var bar = document.querySelector(".side-bar");
+    var main = document.querySelector(".main-content");
+    if (!bar || !main) return;
+    if (bar.querySelector(".fa-doc-index")) return;
+
+    var heads = main.querySelectorAll("h2[id], h3[id]");
+    var rows = [];
+    for (var i = 0; i < heads.length; i++) {
+      var text = (heads[i].textContent || "").replace(/\s+/g, " ").trim();
+      if (!text) continue;
+      rows.push({ id: heads[i].id, text: text, depth: heads[i].tagName === "H3" ? 1 : 0 });
+    }
+    if (rows.length < 2) return;
+
+    var box = document.createElement("details");
+    box.className = "fa-doc-index";
+    var sum = document.createElement("summary");
+    sum.className = "fa-doc-index__heading";
+    // textContent throughout: a heading is page content, and this script's own
+    // header records that nothing here interpolates into markup.
+    sum.textContent = "On this page";
+    var count = document.createElement("span");
+    count.className = "fa-doc-index__count";
+    count.textContent = String(rows.length);
+    sum.appendChild(count);
+    box.appendChild(sum);
+
+    var list = document.createElement("ul");
+    list.className = "fa-doc-index__list";
+    for (var j = 0; j < rows.length; j++) {
+      var li = document.createElement("li");
+      li.className = "fa-doc-index__item";
+      if (rows[j].depth) li.className += " fa-doc-index__item--sub";
+      var a = document.createElement("a");
+      a.className = "fa-doc-index__link";
+      a.setAttribute("href", "#" + rows[j].id);
+      a.textContent = rows[j].text;
+      li.appendChild(a);
+      list.appendChild(li);
+    }
+    box.appendChild(list);
+
+    // AFTER the header, BEFORE the nav -- the fixed top, with the instance.
+    // It is about the thing the reader is looking at rather than about the
+    // graph they are in, which is `navbar.ts`'s reason for the same placement.
+    // Inserted relative to the nav's OWN parent, whatever that is. `.site-nav`
+    // is a direct child of `.side-bar` until `mountInstanceGraphs` wraps it,
+    // and an `insertBefore` that assumes the old shape throws and takes the
+    // rest of init() with it. The fixed top is where this belongs either way:
+    // if the nav has been wrapped, the wrapper is in the middle and inserting
+    // before IT is still the fixed top.
+    var nav = bar.querySelector(".site-nav");
+    var host = nav && nav.parentNode === bar ? nav : bar.querySelector(".fa-nav-middle");
+    if (host && host.parentNode === bar) bar.insertBefore(box, host);
+    else bar.appendChild(box);
+  }
+
+  /* ── THE NAVBAR ICON ROW — line 2 of the fixed top ───────────────────────
+   *
+   * Owner, 2026-09-22: *"[x] should be on the navbar w/ other icons, can make
+   * two lines avatar+name of harness/catalogue/sub-grrraph as approrirate, the
+   * second line are the icons. max is 6 and one for todos one for beans one
+   * for processes viewer/ (the factory flow) one for KG viewer"* — and on
+   * where the list lives: *"should be in each harness config which are shown
+   * (so some could show none, but make this default in cat-harness that is
+   * inherited)."*
+   *
+   * WHICH ICONS IS NOT DECIDED HERE. `#fa-navbar-row` carries the resolved
+   * list and the resolved destinations, from `sync-docs-harness.ts`. This
+   * function draws what it is handed, in the order it is handed, and knows no
+   * default — a fallback list here would be the hardcoded-names failure the
+   * declaration exists to end, and it would silently outvote an instance that
+   * chose `[]`.
+   *
+   * `null` IS A THIRD STATE. The instance has not decided and nothing up its
+   * `needs` chain has either. It renders NO ROW and says so once, because
+   * drawing an empty row would report an un-migrated instance as a deliberate
+   * one — the distinction the schema's own docs are about.
+   *
+   * THE `[x]` IS NOT DRAWN HERE and is not missing. It is a `<label>` for the
+   * pure-CSS open/close checkbox, and it must keep working with no script at
+   * all; the stylesheet places it into this row's last slot while pinned. That
+   * is the same "where a label is PAINTED is free" argument `.fa-nav-toggle`
+   * already makes — the row is a layout, and a control does not have to be
+   * built by the thing that positions it.
+   */
+  function readNavbarRow() {
+    var node = document.getElementById("fa-navbar-row");
+    if (!node) return undefined;
+    var text = (node.textContent || "").trim();
+    if (text === "" || text === "null") return null;   // declared nothing
+    try {
+      var parsed = JSON.parse(text);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch (_e) {
+      console.warn("docs-ui: #fa-navbar-row is not valid JSON; the navbar icon row " +
+                   "was not mounted.");
+      return undefined;
+    }
+  }
+
+  function mountNavIconRow() {
+    var bar = document.querySelector(".side-bar");
+    if (!bar || bar.querySelector(".fa-nav-icons")) return;
+    var row = readNavbarRow();
+    if (row === undefined) return;
+    if (row === null) {
+      // Said once, at info level: this is a declaration gap in the instance,
+      // not a fault in the page, and a warning would push a reader toward the
+      // console for something only an author can fix.
+      console.info("docs-ui: this instance declares no navbarIcons and inherits none; " +
+                   "no navbar icon row was mounted.");
+      return;
+    }
+    var icons = Array.isArray(row.icons) ? row.icons : [];
+    var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
+
+    var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
+
+    var LABELS = {
+      todos: "Todos", beans: "Beans", processes: "Processes",
+      kg: "Knowledge graph", launcher: "More actions"
+    };
+
+    // BUILT HERE, not at module scope, and the reason is ordering: STICKY_GLYPH
+    // and TILES_GLYPH are declared BELOW `TILE_GLYPHS`, so a map initialised
+    // beside that one would capture `undefined` for both. This runs at init,
+    // by which point every `var` in this IIFE is assigned.
+    //
+    // FIVE DISTINCT DRAWINGS. `glyphFor` falls back to NET_GLYPH, which would
+    // have given four of these five the same picture -- a row where four slots
+    // are indistinguishable is a row that says nothing.
+    var ROW_GLYPHS = {
+      todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
+      kg: NET_GLYPH, launcher: TILES_GLYPH
+    };
+    var rowGlyph = function (id) {
+      return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
+    };
+
+    for (var i = 0; i < icons.length; i++) {
+      var id = icons[i];
+      // `close` is the CSS-placed label described above. Skipped rather than
+      // dropped from the declaration, so the instance's list still says six.
+      if (id === "close") continue;
+
+      if (id === "launcher") {
+        // The launcher is the EXISTING control, moved -- not a second one.
+        // `mountActionTiles` owns the panel and its open/close state, so this
+        // clicks that button rather than minting a rival with its own idea of
+        // whether the panel is open. Two toggles over one state is the `l4zi`
+        // defect from the other direction.
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher });
+        proxy.innerHTML = rowGlyph("launcher");
+        proxy.addEventListener("click", function () {
+          var real = document.querySelector(".fa-tiles-toggle");
+          if (real) real.click();
+          else console.warn("docs-ui: the actions panel launcher is not mounted; " +
+                            "the navbar's More button has nothing to open.");
+        });
+        host.appendChild(proxy);
+        continue;
+      }
+
+      var label = LABELS[id] || id;
+      // THROUGH `safeHref`, like every other href in this file. The value comes
+      // from `_data/harness.json`, which is generated -- but "generated" is not
+      // "trusted": the destinations are declared coverage paths, and a
+      // declaration is authored. `href-safety.test.ts` enforces this over the
+      // whole client for that reason, and it caught this exact line.
+      //
+      // `undefined` falls through to the non-link branch below, which is
+      // already the right rendering for a destination the row cannot use.
+      var at = safeHref(hrefs[id]);
+      if (at) {
+        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
+        a.innerHTML = rowGlyph(id);
+        host.appendChild(a);
+      } else {
+        // DECLARED AND NOT PUBLISHED -- rendered, not dropped, and not a link.
+        // `pb04`: a dead link invites a click and then reads as a broken site,
+        // while a silent omission answers "where is beans" with nothing. The
+        // same choice the graph list in the harness tabs already makes.
+        var dead = el("span", {
+          class: "fa-nav-icon fa-nav-icon--dead", "aria-label": label,
+          title: label + " — declared, with no published viewer"
+        });
+        dead.innerHTML = rowGlyph(id);
+        host.appendChild(dead);
+      }
+    }
+
+    // AFTER the header: line 1 is the avatar and the name, line 2 is this.
+    var header = bar.querySelector(".site-header");
+    if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
+    else bar.appendChild(host);
+  }
+
+  /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──
+   *
+   * Owner, 2026-09-22: *"next on navbar then is is library docs/ and other
+   * controlled folders next would the navigation for the current harness (per
+   * its rules)."*
+   *
+   * Two blocks, ONE SCROLL. The owner's three-region layout is explicit that
+   * the middle is *"a scrollable stacks between fixed top an bottom parts"* —
+   * singular. Leaving the folders outside the scroll would make a fourth fixed
+   * region and take the space from the navigation; giving each its own scroll
+   * would put two scrollbars in a 248px column.
+   *
+   * WHY A WRAPPER RATHER THAN TWO SIBLINGS. `.site-nav` is the theme's
+   * element and `sidebar.html` is not ours to override — this file's own rules
+   * refuse that for a placement. So the wrapper is built here and `.site-nav`
+   * is moved into it, which is a move within our own site's DOM rather than a
+   * fork of a theme file.
+   *
+   * IT DEGRADES. If this never runs, `.site-nav` stays a direct child of
+   * `.side-bar` and keeps the middle's flex rule, so the navbar is the
+   * previous round's — three regions, no folder block — rather than broken.
+   * The stylesheet carries both selectors for that reason.
+   *
+   * THE FOLDERS COME FROM THE DECLARATION, via this instance's own tile in
+   * `_data/harness.json`. A kind with no published viewer is rendered as a
+   * NON-LINK rather than dropped — `pb04`, and the same choice the harness
+   * tabs and the rail already make.
+   */
+  function mountInstanceGraphs() {
+    var bar = document.querySelector(".side-bar");
+    // `:scope >` ON PURPOSE: if the nav is already inside a wrapper this has
+    // nothing to do, and a descendant match would move it a second time.
+    var nav = bar && bar.querySelector(":scope > .site-nav");
+    if (!bar || !nav || bar.querySelector(".fa-nav-middle")) return;
+
+    var row = readNavbarRow();
+    // `undefined` is "could not read", `null` is "declared none" — and NEITHER
+    // is a reason to draw an empty folder list. Both leave the middle as the
+    // navigation alone, which is what it was.
+    if (row === undefined || row === null) return;
+    var graphs = Array.isArray(row.folders) ? row.folders : [];
+
+    var middle = el("div", { class: "fa-nav-middle" });
+    if (graphs.length > 0) {
+      var box = el("details", { class: "fa-nav-folders", open: "" });
+      var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
+      var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
+      sum.appendChild(count);
+      box.appendChild(sum);
+      var list = el("ul", { class: "fa-nav-folders__list" });
+      for (var j = 0; j < graphs.length; j++) {
+        var g = graphs[j];
+        var li = el("li", { class: "fa-nav-folders__item" });
+        if (g && g.path) {
+          // `safeHref` for the same reason as the icon row above, and applied
+          // AFTER `withBase` so what is checked is the href that is actually
+          // written -- checking the bare path would clear a value the baseurl
+          // could still turn into something else.
+          var at = safeHref(withBase(g.path));
+          if (at) {
+            li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, g.kind));
+          } else {
+            li.appendChild(el("span", {
+              class: "fa-nav-folders__link fa-nav-folders__link--dead",
+              title: "declared, and its path is not one this page may link to"
+            }, g.kind));
+          }
+        } else {
+          li.appendChild(el("span", {
+            class: "fa-nav-folders__link fa-nav-folders__link--dead",
+            title: "declared, with no published viewer"
+          }, (g && g.kind) || "?"));
+        }
+        list.appendChild(li);
+      }
+      box.appendChild(list);
+      middle.appendChild(box);
+    }
+
+    bar.insertBefore(middle, nav);
+    middle.appendChild(nav);
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -6248,6 +6591,21 @@
     }
 
     mountActionTiles();
+    // AFTER the tiles: the row's launcher proxies that panel's button, so the
+    // button has to exist before anything can click it.
+    mountNavIconRow();
+    // BEFORE `mountInstanceGraphs`, and the order is load-bearing rather than
+    // tidy: that function MOVES `.site-nav` into a wrapper, and this one
+    // inserts before `.site-nav`. Run the other way round, `insertBefore` gets
+    // a reference node that is no longer a child of `.side-bar` and throws
+    // `NotFoundError` -- which took down the REST of init() with it, so the
+    // document index, the QA panels and the figures all silently vanished from
+    // one DOM move. Measured with a pageerror listener, not reasoned about.
+    //
+    // The insert below is also defensive now, so this ordering is a second
+    // line rather than the only one.
+    mountDocumentIndex();
+    mountInstanceGraphs();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();

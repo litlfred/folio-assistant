@@ -77,8 +77,61 @@ describe("at rest it is a strip, not an absence", () => {
     expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("align-items: flex-start");
   });
 
-  it("scrolls its CONTENTS, because the bar is fixed to the glass", () => {
-    expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("overflow-y: auto");
+  it("does NOT scroll as one box — the MIDDLE region does", () => {
+    // REPLACES an assertion that required `overflow-y: auto` on `.side-bar`
+    // itself. That was correct for the design it defended and is the defect
+    // now: one scroll box means the harness tabs and home scroll off the
+    // bottom with everything else, against the owner's *"KG libraries is a
+    // scrollable stacks between fixed top an bottom parts"*. This file's own
+    // header is about exactly this — a rigorous test defending the wrong
+    // design.
+    //
+    // MEASURED in Chromium at 1280x900 before the change: `.side-bar`
+    // scrollHeight 1200 against clientHeight 900, with `.site-nav` squeezed
+    // to 64px holding 944px of navigation.
+    expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("overflow: hidden");
+    expect(ruleWith("width: var(--fa-nav-collapsed)")).not.toContain("overflow-y: auto");
+  });
+
+  it("gives the middle the scroll, a FLOOR, and room to shrink", () => {
+    const nav = ruleWith("min-height: 8rem");
+    expect(nav).toContain("flex: 1 1 auto");
+    expect(nav).toContain("overflow-y: auto");
+  });
+
+  it("every other child is fixed, so neither edge region can scroll away", () => {
+    expect(ruleWith("flex: 0 0 auto")).toContain(".side-bar > *");
+  });
+
+  it("the two capped regions YIELD to that floor", () => {
+    // `0 1 auto`, not `0 0 auto`: each scrolls inside its own cap, so giving
+    // space back costs no reachability — while refusing to took the middle to
+    // 93px in a 900px column, measured with the document index open.
+    //
+    // Against the WHOLE stylesheet rather than `block`: the fixed bottom and
+    // the document index are their own sections, outside the strip slice this
+    // file otherwise reads. Comments stripped for the reason `block` strips
+    // them — a stylesheet that documents the declaration it avoids fails any
+    // test that greps for the declaration.
+    const whole = css.replace(/\/\*[\s\S]*?\*\//g, "");
+    const ruleIn = (needle: string): string => {
+      const at = whole.indexOf(needle);
+      expect({ needle, found: at > -1 }).toEqual({ needle, found: true });
+      return whole.slice(whole.slice(0, at).lastIndexOf("}") + 1, whole.indexOf("}", at) + 1);
+    };
+    for (const cap of ["max-height: 50%", "max-height: 25%"]) {
+      expect(ruleIn(cap)).toContain("flex: 0 1 auto");
+    }
+  });
+
+  it("the [x] anchors to the bar, not to a scroll that no longer exists", () => {
+    // `sticky; top: 0` lifted it to the top of `.side-bar`'s scroll, which
+    // worked only while `.side-bar` WAS the scroll container. It is painted
+    // from `.site-footer`, the last child, so a sticky one now sits at the
+    // BOTTOM of the navbar.
+    const close = ruleWith("width: 1.75rem");
+    expect(close).toContain("position: absolute");
+    expect(close).not.toContain("position: sticky");
   });
 
   it("is scoped above the theme's breakpoint, never applied to the phone", () => {
