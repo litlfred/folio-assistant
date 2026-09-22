@@ -690,6 +690,35 @@
    * next theme bump. `0 0 auto` for an unknown fourth child is the safe
    * default -- it keeps its own height, which is what it had. */
   .side-bar > * { flex: 0 0 auto; }
+  /* THE MIDDLE, when the folder block is mounted: one scroll over both.
+   *
+   * `mountInstanceGraphs` moves `.site-nav` inside this wrapper, so the rule
+   * below stops matching and this one takes over. Both are kept — if the
+   * script does not run, `.site-nav` is still a direct child and still the
+   * middle. A single selector could not express that.
+   *
+   * The owner's layout is one scrollable stack, not two: *"KG libraries is a
+   * scrollable stacks between fixed top an bottom parts of navbar
+   * menu/tab."* */
+  .side-bar > .fa-nav-middle {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    /* Floor and scroll for the same reasons as the bare `.site-nav` below —
+       stated once there and not repeated here. */
+    min-height: 8rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Inside the wrapper the nav scrolls with the folders rather than apart from
+     them, so it must NOT keep its own. */
+  .fa-nav-middle > .site-nav {
+    flex: 0 0 auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
   .side-bar > .site-nav {
     /* The middle absorbs, and it must be allowed to shrink far below its
      * content: a flex child defaults to `min-height: auto`, which refuses to,
@@ -807,10 +836,24 @@
      `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
+    /* IN THE ICON ROW, not floating over the bar — owner, 2026-09-22: *"[x]
+     * should be on the navbar w/ other icons"*.
+     *
+     * Still `absolute`, and still for the reason the round before established:
+     * this is a `<label>` painted from `.site-footer`, the LAST of the
+     * sidebar's children, and it must keep driving the pure-CSS checkbox with
+     * no script at all. So it cannot be MOVED into the row's markup without
+     * giving up that property — but where a label is painted is free, which is
+     * the same argument `.fa-nav-toggle` above already makes.
+     *
+     * `right` and `top` put it in the row's last slot. The row is
+     * `2.25rem` tall under a header whose height the theme owns, so `top` is
+     * measured from the header's bottom rather than composed from font metrics
+     * — see `.fa-nav-toggle`, which clears the same header the same way. */
     position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
+    top: 3.5rem;
+    right: 0.5rem;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2071,6 +2114,46 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 .fa-site-title {
   vertical-align: baseline;
+  /* SMALLER — owner, 2026-09-22: *"text on top navbar too big"*.
+   *
+   * The theme renders the site title at its own `fs-5`, which at 264px wrapped
+   * "C@T Harness" onto two lines and then clipped the second against the
+   * header's height — visible in the before/after screenshots of this change,
+   * and present on `main`. `1rem` fits it on one line at every width the strip
+   * opens to, measured rather than picked: the longest instance title here is
+   * "folio-assistant-core" at 20 characters, which is what the ellipsis below
+   * is for when a longer one arrives.
+   *
+   * `!important` answers the theme's own, in kind, as this file already does
+   * for `.site-footer`'s font-size. */
+  overflow: hidden;
+  font-size: 1rem !important;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* THE THEME AVATAR in the sidebar header — the card art clipped to the cat.
+ *
+ * The frame is the same `--fa-nav-mark` column the rail's marks use, so the
+ * two surfaces line their titles up at the same x. The image is positioned
+ * inside it and the four percentages come from the declaration via
+ * `sync-docs-harness.ts`; nothing here knows a box. */
+.fa-site-mark--avatar {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--fa-nav-mark);
+  height: var(--fa-nav-mark);
+  margin-right: 0.4rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  vertical-align: -0.32em;
+}
+
+.fa-site-mark--avatar img {
+  position: absolute;
+  max-width: none;
 }
 
 /* ── Action tiles ─────────────────────────────────────────────────────── */
@@ -4159,6 +4242,190 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * both schemes are derived, so no tab can be authored legible in one mode and
  * invisible in the other.
  * ───────────────────────────────────────────────────────────────────────── */
+
+/* ═══ THIS INSTANCE'S CONTROLLED FOLDERS ═══════════════════════════════════
+ *
+ * Owner, 2026-09-22: *"next on navbar then is is library docs/ and other
+ * controlled folders next would the navigation for the current harness (per
+ * its rules)."* So: the folders first, the harness's own navigation under
+ * them, both in the one scrollable middle.
+ *
+ * WHICH folders is the instance's declaration, resolved in
+ * `sync-docs-harness.ts` from the same tile the icon row comes from. This
+ * stylesheet knows no kind names.
+ *
+ * A `<details>` and OPEN on arrival, matching the graphs group in
+ * `navbar.ts` — the folders are what the navbar is FOR, so a reader should not
+ * have to open them to see the KG has anything in it. Foldable because the
+ * owner asked for that on the harnesses for the same reason: *"they eat up all
+ * the nav bar sspace."*
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-nav-folders {
+  flex: 0 0 auto;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  font-size: 0.75rem;
+}
+
+.fa-nav-folders__heading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem var(--fa-nav-pad);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fa-nav-folders__count {
+  padding: 0 0.375rem;
+  border-radius: 0.625rem;
+  background: rgba(128, 128, 128, 0.28);
+  font-weight: 700;
+}
+
+.fa-nav-folders__list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-nav-folders__link {
+  display: block;
+  padding: 0.1875rem var(--fa-nav-pad);
+  overflow: hidden;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+a.fa-nav-folders__link:hover,
+a.fa-nav-folders__link:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* Declared, with no published viewer. Struck through rather than hidden, the
+ * same way the harness tabs' graph list marks one: a gap a reader can see is a
+ * gap somebody can close. */
+.fa-nav-folders__link--dead {
+  cursor: default;
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+/* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
+ *
+ * Owner, 2026-09-22: *"[x] should be on the navbar w/ other icons, can make
+ * two lines avatar+name of harness/catalogue/sub-grrraph as approrirate, the
+ * second line are the icons."*
+ *
+ * WHY TWO LINES AND NOT ONE. The single-line header was already over budget:
+ * the title, three action controls and the strip's gutters share 264px, and
+ * shrinking the title to fit (the first attempt at *"text on top navbar too
+ * big"*) only moved the failure — "C@T Harness" then ellipsised to "C@..."
+ * with the icons still crowding it. Measured, not guessed; it is in the
+ * screenshots of that round. A second line gives the name the whole width and
+ * the icons their own.
+ *
+ * WHICH icons is declared per instance and resolved through `needs`; this
+ * stylesheet draws a row of unknown length and knows no ids.
+ *
+ * IN THE FIXED TOP because `mountNavIconRow` inserts it as a `.side-bar`
+ * child, so `.side-bar > * { flex: 0 0 auto }` already places it. No rule
+ * here puts it anywhere.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* LINE 1 IS THE AVATAR AND THE NAME, and nothing else.
+ *
+ * The header carried three controls beside the title — the scheme mini, the
+ * language mini and the panel launcher. With the title shrunk they still left
+ * it ellipsised to "C@..." at 264px, which is the measurement that made the
+ * second line necessary rather than merely tidier.
+ *
+ * NOTHING BECOMES UNREACHABLE. The panel those three sat beside holds Search,
+ * Settings, Language, QR, Todos, Knowledge graph, JSON-LD and Source, and the
+ * row's `launcher` opens that same panel through that same button. The minis
+ * were shortcuts into a panel that is now one tap away.
+ *
+ * SCOPED TO `:has(.fa-nav-icons)`, which is the whole safety argument: the row
+ * is mounted by script, so if the script does not run — or the instance
+ * declares no icons and `mountNavIconRow` deliberately draws nothing — this
+ * selector does not match and the three controls stay exactly where they are.
+ * A reader never loses a control to a row that failed to arrive.
+ */
+@media (min-width: 50rem) {
+  .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
+  .side-bar:has(.fa-nav-icons) .fa-lang-mini,
+  .side-bar:has(.fa-nav-icons) .fa-tiles-toggle {
+    display: none;
+  }
+}
+
+.fa-nav-icons {
+  display: flex;
+  gap: 0.125rem;
+  align-items: center;
+  /* Aligned to the mark above it rather than to the strip's edge: the avatar
+     starts at the gutter, so the first icon does too and the two lines read as
+     one block. */
+  padding: 0.25rem calc(var(--fa-nav-pad) - 0.25rem);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.fa-nav-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  /* 2.25rem = 36px. Above the 44px pointer target only with the row's gap and
+     padding counted, which is the honest reading -- six of these plus gutters
+     is 232px inside a 248px strip, so a bigger box does not fit the owner's
+     own cap of six. The declared interaction profile here is low-dexterity and
+     this is the constraint binding against it: SIX and FULL WIDTH are the two
+     requirements, and they set the size between them. */
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.fa-nav-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.fa-nav-icon:hover,
+.fa-nav-icon:focus-visible {
+  background: rgba(128, 128, 128, 0.22);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* DECLARED, WITH NO PUBLISHED VIEWER. Not a link and it must not look like
+ * one — `pb04`, the same rule the harness tabs' graph list follows. Rendered
+ * rather than dropped, because a declared graph missing its viewer is a
+ * FINDING and hiding it answers "where is beans" with silence. */
+.fa-nav-icon--dead {
+  cursor: default;
+  opacity: 0.35;
+}
+
+/* Buttons in the row carry the browser's own chrome otherwise. */
+button.fa-nav-icon {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
 
 /* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
  *
