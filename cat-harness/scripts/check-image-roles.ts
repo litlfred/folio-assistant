@@ -66,13 +66,14 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-/* THE `folio` GRAPH KIND, registered for its SIDE EFFECT so `readDeclaration`
-   accepts a declaration that names it. Without this, reading `cat-harness.json`
-   THROWS — and the first draft of this file caught that and carried on, which
-   silently reduced the corpus to zero and is the exact `dh4f` shape this gate
-   exists to catch, committed inside the gate itself.
-   The import takes no binding and must not be elided. */
-import "../schemas/folio-graph-kind.js";
+/* NO `folio-graph-kind` IMPORT IS NEEDED HERE, and that is recent: until #840
+   `readDeclaration` THREW on this repository's own declaration unless the
+   caller had imported core's registration for its side effect. #840 moved the
+   registry to a leaf and put the trigger at `cat-harness.ts`'s foot, so
+   loading the reader is now a precondition of calling it. The first draft of
+   this file carried that import AND swallowed the throw in a `catch`, which
+   silently reduced the corpus to zero — the `dh4f` shape, committed inside the
+   gate built to catch it. Only the `examined === 0` guard found it. */
 
 /** What became of one declared role. */
 export type Verdict =

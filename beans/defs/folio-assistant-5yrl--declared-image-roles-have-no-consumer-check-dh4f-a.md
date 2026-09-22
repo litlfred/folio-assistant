@@ -177,3 +177,20 @@ classification, not only here.
   named, because both fixes are the owner's: adding an `architecture` theme
   needs a mobile crop that does not exist, and removing the two declarations is
   deleting a durable artefact.
+
+## 2026-09-22, same session — #840 landed and the coordination note paid off
+
+The note written into `partition/instance-rules.ts` said the side-effect
+import `import "../schemas/folio-graph-kind.js"` would become both
+UNNECESSARY and VISIBLE when `q2wn`'s PR #840 merged, and should be deleted
+then rather than rediscovered as a violation.
+
+#840 merged within the hour. The import is **removed**, and the removal was
+**tested rather than assumed**: with it gone, `readDeclaration` still resolves
+the `folio` kind and the gate reports the identical 10 roles — because #840
+moved the registry to a leaf and put the trigger at `cat-harness.ts`'s foot,
+so loading the reader is now a precondition of calling it.
+
+`gates` 108/108 on the merged tree. The note in `instance-rules.ts` is
+rewritten from a prediction into a record of what happened; a coordination
+note that survives its own event is the stale-permit defect in prose.

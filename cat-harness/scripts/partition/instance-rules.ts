@@ -154,15 +154,15 @@ export const RULES: Rule[] = [
       // declarations through `cat-harness.ts` and walks `.ts` sources with a
       // regex; no folio content is opened (bean `5yrl`).
       //
-      // COORDINATION NOTE, because this WILL go stale: it carries
-      // `import "../schemas/folio-graph-kind.js"` for its side effect, since
-      // `readDeclaration` throws on this repo's own declaration without it.
-      // That is one of the 25 harness -> core registration edges bean `q2wn`
-      // measured and PR #840 removes by moving the graph-kind registry to a
-      // leaf and putting the trigger at `cat-harness.ts`'s foot. When #840
-      // lands, this import becomes unnecessary here AND becomes an edge the
-      // fixed regex can finally see — so it should be DELETED then, not left
-      // to be rediscovered as a violation.
+      // IT CARRIED a bare `import "../schemas/folio-graph-kind.js"` until
+      // #840 merged, because `readDeclaration` threw on this repo's own
+      // declaration without it — one of the 25 harness -> core registration
+      // edges bean `q2wn` measured. #840 moved the graph-kind registry to a
+      // leaf and put the trigger at `cat-harness.ts`'s foot, so the import
+      // became unnecessary AND became an edge the fixed regex can see. It was
+      // REMOVED here in the same merge that brought #840 in, and the gate was
+      // re-run to prove the registration still resolves without it rather
+      // than assumed to.
       "scripts/check-image-roles.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
