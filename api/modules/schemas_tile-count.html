@@ -1,0 +1,145 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>schemas/tile-count | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">schemas/tile-count</a></li></ul>
+<h1>Module schemas/tile-count</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>The number a graph tile shows, DECLARED BY THE PROJECTION.</p>
+<h2 id="why-this-is-declared-and-not-computed" class="tsd-anchor-link">Why this is declared and not computed<a href="#why-this-is-declared-and-not-computed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>graph-tiles.ts</code> builds a tile from the DECLARATION and never from the
+projection — <code>flh4</code>, where <em>&quot;no projection at my path&quot;</em> had been collapsed
+into <em>&quot;nothing renders this&quot;</em>, two different facts. A badge has to read the
+projection, so the split is restated rather than crossed: a tile's
+EXISTENCE stays declaration-derived, and only its NUMBER is read from here.
+A live projection with no declared visualiser is still a finding, not a
+tile.</p>
+<p>The number itself is declared rather than inferred because <strong>there is no
+uniform entry count</strong>. Measured across every projection this site published
+on 2026-09-22:</p>
+<table>
+<thead>
+<tr>
+<th>projection</th>
+<th>arrays it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beans</code></td>
+<td><code>items</code> 459, <code>findings</code> 7</td>
+</tr>
+<tr>
+<td><code>library</code></td>
+<td><code>entries</code> 8, <code>uploads</code> 28, <code>queues</code> 3</td>
+</tr>
+<tr>
+<td><code>qa</code></td>
+<td><code>families</code> 7, plus <code>files</code>, <code>unclassified</code>, <code>unreadable</code></td>
+</tr>
+<tr>
+<td><code>schemas</code></td>
+<td><code>roots</code> 5, <code>modules</code> 121, <code>decls</code> 842, <code>edges</code> 525</td>
+</tr>
+<tr>
+<td><code>todos</code></td>
+<td><code>items</code> 3</td>
+</tr>
+<tr>
+<td><code>voices</code></td>
+<td><code>directories</code> 4, <code>voices</code> 5</td>
+</tr>
+</tbody>
+</table>
+<p><code>schemas</code> has four plausible answers and <code>library</code> three. Worse, <code>uploads</code>'
+meaningful number is not an array length at all — it is WAITING, 20 of 28,
+and that distinction is the whole of #836. A reader that picked an array by
+name per graph would be a table of guesses: right the day it was written,
+and silently wrong the first time a projection changed shape. Only the
+generator knows which number is the one, so the generator says.</p>
+<h2 id="keyed-by-directory-because-one-projection-can-serve-two-tiles" class="tsd-anchor-link">KEYED BY DIRECTORY, because one projection can serve two tiles<a href="#keyed-by-directory-because-one-projection-can-serve-two-tiles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>This is not a generalisation kept for later — it is the corpus today.
+<code>uploads</code> and <code>library</code> are <strong>two tiles over one dataset</strong>: <code>flh4</code> settled
+that the queue block lives in <code>assets/library/index.json</code>, <em>&quot;since two
+projections over it would be two answers to how many are queued&quot;</em>, and
+<code>gen-uploads-viz.ts</code> therefore publishes a viewer and no projection of its
+own. So <code>assets/library/index.json</code> owes two different numbers — 8 entries
+for the corpus tile and 20 waiting for the queue tile — and a single
+<code>{count, unit}</code> per file could serve only one of them.</p>
+<p>A bare count would also have forced exactly the mistake the split exists to
+prevent: whichever tile lost would have grown a second projection to hold
+its number.</p>
+<h2 id="is-not-decoration" class="tsd-anchor-link"><code>unit</code> is not decoration<a href="#is-not-decoration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>8</code> on a tile is ambiguous in a way <code>8 entries</code> is not, and the ambiguity is
+load-bearing here: <code>library</code> publishes 8 entries beside 28 uploads, so a
+bare number on that tile is a number the reader cannot check. The unit is
+also what reaches the accessible name.</p>
+<h2 id="absent-is-a-third-state" class="tsd-anchor-link">Absent is a THIRD STATE<a href="#absent-is-a-third-state" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><a href="../functions/schemas_tile-count.readTileCounts.html" class="tsd-kind-function">readTileCounts</a> yields nothing for a projection that declares no
+counts, declares malformed ones, or cannot be read — and <strong>never <code>0</code></strong>. An
+absent count and an empty graph are opposite facts, and <code>dh4f</code> is this
+repository's name for scanning nothing and reporting it clean. Every
+consumer must render the two differently; the UI does it by drawing no
+badge at all.</p>
+<p>A malformed entry is dropped WITHOUT dropping its siblings, so one bad
+declaration in a shared projection cannot silence the tile beside it.</p>
+<h2 id="a-badge-is-exactly-as-fresh-as-its-projection-and-that-is-the-point" class="tsd-anchor-link">A badge is exactly as fresh as its projection, and that is the point<a href="#a-badge-is-exactly-as-fresh-as-its-projection-and-that-is-the-point" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The count is read from the projection, so it inherits whatever freshness the
+projection has. That is the correct coupling rather than a weakness: the
+badge and the page it opens read the SAME document, so they cannot disagree.
+A tile that recomputed its own number would be a second answer, which is the
+<code>flh4</code> defect arriving through the badge.</p>
+<p>It does mean a committed projection's lag shows on the tile. Measured
+2026-09-22: <code>beans/defs/</code> held 478 files while the committed
+<code>assets/beans/index.json</code> projected 466. That projection is EXISTENCE-gated
+on purpose — every session writes to <code>beans/</code>, so a content gate would go
+red on a projection fresh on the branch and fresh on main and stale only
+against their union (bean <code>d2kp</code>) — and <code>docs-site.yml</code> regenerates before
+publishing, so a reader fetches the current number even while the committed
+copy lags.</p>
+<p>The consequence for anyone checking a badge: a number read from a LOCAL
+checkout is the committed projection's, not the site's. Compare against the
+deployed page, or regenerate first.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-graphNode">
+<h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p>
+</div></div></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="interfaces">Interfaces<a href="#interfaces" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="tilecount"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../assets/icons.svg#icon-256"></use></svg><a href="../interfaces/schemas_tile-count.TileCount.html">TileCount</a><a href="#tilecount" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="variables">Variables<a href="#variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="tile_count_field"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_tile-count.TILE_COUNT_FIELD.html">TILE_COUNT_FIELD</a><a href="#tile_count_field" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="tilecountsschema"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_tile-count.TileCountsSchema.html">TileCountsSchema</a><a href="#tilecountsschema" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="readtilecounts"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_tile-count.readTileCounts.html">readTileCounts</a><a href="#readtilecounts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="tilecounts"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_tile-count.tileCounts.html">tileCounts</a><a href="#tilecounts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-this-is-declared-and-not-computed"><span>Why this is declared and not computed</span></a><a href="#keyed-by-directory-because-one-projection-can-serve-two-tiles"><span>KEYED <wbr/>BY <wbr/>DIRECTORY, because one projection can serve two tiles</span></a><a href="#is-not-decoration"><span> is not decoration</span></a><a href="#absent-is-a-third-state"><span>Absent is a <wbr/>THIRD <wbr/>STATE</span></a><a href="#a-badge-is-exactly-as-fresh-as-its-projection-and-that-is-the-point"><span>A badge is exactly as fresh as its projection, and that is the point</span></a>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Interfaces</summary>
+<div><a href="#tilecount"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../assets/icons.svg#icon-256"></use></svg><span>Tile<wbr/>Count</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Variables</summary>
+<div><a href="#tile_count_field"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>TILE_<wbr/>COUNT_<wbr/>FIELD</span></a><a href="#tilecountsschema"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>Tile<wbr/>Counts<wbr/>Schema</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#readtilecounts"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>read<wbr/>Tile<wbr/>Counts</span></a><a href="#tilecounts"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>tile<wbr/>Counts</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

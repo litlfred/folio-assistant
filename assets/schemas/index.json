@@ -1,5 +1,11 @@
 {
   "$schema": "folio-schema-graph/v1",
+  "tile": {
+    "schemas": {
+      "count": 139,
+      "unit": "modules"
+    }
+  },
   "roots": [
     "bootstrap-tools/schemas",
     "cat-harness/schemas",
@@ -828,6 +834,22 @@
       "name": "themes",
       "graphNode": "schema",
       "summary": "The themes this instance ships, and the default.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tile-count.test.ts",
+      "instance": "cat-harness",
+      "name": "tile-count.test",
+      "graphNode": "undeclared",
+      "summary": "A tile's declared count, and the third state that is the whole point.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tile-count.ts",
+      "instance": "cat-harness",
+      "name": "tile-count",
+      "graphNode": "schema",
+      "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
       "isTest": false
     },
     {
@@ -22495,6 +22517,49 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tile-count.ts#TileCount",
+      "name": "TileCount",
+      "module": "cat-harness/schemas/tile-count.ts",
+      "kind": "interface",
+      "doc": "What a projection says about one tile's headline number.",
+      "fields": [
+        {
+          "name": "count",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "The headline number. `0` is a legitimate, meaningful value."
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "What is being counted, as a noun the reader sees — `\"entries\"`,"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "name": "TileCountsSchema",
+      "module": "cat-harness/schemas/tile-count.ts",
+      "kind": "zod-record",
+      "doc": "The field, for a projection schema that is `.strict()` — which every one of",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo-graph.ts#TodoGraph",
       "name": "TodoGraph",
       "module": "cat-harness/schemas/todo-graph.ts",
@@ -22736,6 +22801,13 @@
           "array": false
         },
         {
+          "name": "tile",
+          "type": "TileCountsSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The tile's declared headline number, keyed by directory — issue #856."
+        },
+        {
           "name": "repoWeb",
           "type": "z.string().min(1)",
           "optional": false,
@@ -22764,6 +22836,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/tile-count.ts#TileCountsSchema",
         "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema"
       ],
       "unresolved": [],
@@ -34622,6 +34695,14 @@
       "via": "target",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "to": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "via": "tile",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
