@@ -40,9 +40,31 @@ raw declaration rather than the resolver:
 | absent | 3 (`library/`, `translations/`, `folio/`) | **0** |
 
 `cat-harness/folio/` (3 entries), `cat-harness/library/` (1) and
-`cat-harness/translations/` (5) are all on disk. Sibling sessions landed them
-while this bean sat. So the first three Done-when items are moot — there is
-nothing to establish about whether `folio/` should exist, because it does.
+`cat-harness/translations/` (5) are all on disk. So the first three Done-when
+items are moot — there is nothing to establish about whether `folio/` should
+exist, because it does.
+
+**WHY they were reported absent is TWO different errors, and an earlier draft
+of this paragraph gave one explanation for all three.** It said sibling
+sessions landed them while the bean sat. Measured from `git log
+--diff-filter=A`, 2026-09-22, against this bean's own 08:21 UTC timestamp:
+
+| directory | first appeared | vs 08:21 |
+|---|---|---|
+| `cat-harness/folio/` | 2026-09-20 09:09 | **already there, two days** |
+| `cat-harness/library/` | 2026-09-20 13:06 | **already there, two days** |
+| `cat-harness/translations/` | 2026-09-22 10:21 | landed after — a sibling did |
+
+So the sibling explanation is true of exactly one of the three. The other two
+were never absent: they were declared **instance-relative** and checked at the
+REPOSITORY ROOT, which reads `cat-harness/folio/` as `folio/` and finds
+nothing.
+
+That is the same class as the `scope: "repository"` phantoms below, pointed
+the other way — one reading resolved too high, the other too low — and it is
+why the surviving item is a CHECK rather than a correction. Neither error is
+the kind a careful reader avoids; both are the kind a resolver gets right
+once.
 
 **One measurement error worth recording, because it was the checker's.** The
 first re-measurement joined every declared path onto the INSTANCE root and

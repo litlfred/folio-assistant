@@ -194,7 +194,25 @@ function renderList(){
        ignores every page that has none -- so this generator knows nothing
        about the folio beyond emitting three attributes. R30, bean j2if. */
     var key = e.instance + "/" + e.id;
+    /* THE HREF IS THIS PAGE, ANCHORED -- and it is composed from
+       location.pathname rather than declared anywhere.
+
+       Measured 2026-09-22 before choosing: an ingested library document has
+       NO published page of its own. Nothing writes one; this viewer is the
+       only thing that renders these entries at all. So there was no stale
+       URL to fix, there was no URL. The owner named the reason a per-asset
+       route was the wrong shape -- "asset has too much drift" -- and ruled
+       the route belongs to the HARNESS.
+
+       cat-harness owns this viewer, so the viewer IS the asset's address.
+       Composing it from the page's own location means the same generator
+       emits both the row and the page it points at, and a reader arriving
+       at the anchor gets the row selected rather than a 404. Nothing to
+       declare, so nothing to drift -- the folio-mount's argument for
+       deriving its root, applied one level in. */
+    var href = location.pathname + "#" + encodeURIComponent(key);
     return '<tr data-fa-library-item="' + esc(key) + '"' +
+      ' data-fa-library-href="' + esc(href) + '"' +
       ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c){
       return "<td"+(c.n?' class="num"':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
@@ -246,6 +264,48 @@ function renderQueue(){
 
 function render(){ if (VIEW === "list") renderList(); else renderDesk(); }
 
+/* A LINK TO #<id> SELECTS THAT ROW, or says it is not on this page.
+
+   The folio composes an asset's address as this page plus a fragment, so
+   this is the other half of that contract. Without it the link resolves to
+   the page and lands the reader at the top of an unfiltered table -- which
+   is pb04: an affordance that goes somewhere, just not where it said.
+
+   THREE OUTCOMES, not two. The row is here and is selected; the id names an
+   entry this page does not scope, and the page says so rather than showing
+   an empty table with no explanation; or there is no fragment at all and
+   nothing happens. The middle one is the case a reader actually hits --
+   a folio carries assets across libraries, so an anchor for another
+   instance's asset is ordinary rather than exceptional. */
+function honourAnchor(){
+  var raw = location.hash.replace(/^#/, "");
+  if (!raw) return;
+  var key;
+  try { key = decodeURIComponent(raw); } catch (_e) { key = raw; }
+
+  var known = G.entries.filter(function(e){ return e.instance + "/" + e.id === key; })[0];
+  if (!known) return;                       /* not ours to explain */
+
+  if (!inScope(known)) {
+    $("status").textContent =
+      key + " is in your folio but is not shown on this page — it belongs to " +
+      known.instance + ". Open that library to see it.";
+    return;
+  }
+
+  /* Filter to it rather than scrolling: the table is sortable and paged by
+     nothing, so a scroll target moves the next time somebody sorts, while a
+     filter puts the row under the reader's eye whatever the order. */
+  if (VIEW !== "list") setView("list");
+  $("q").value = known.id;
+  renderList();
+  var row = document.querySelector('[data-fa-library-item="' + key.replace(/"/g, '\"') + '"]');
+  if (row) {
+    row.setAttribute("data-fa-anchored", "1");
+    row.scrollIntoView({ block: "center" });
+  }
+}
+
 function setView(v){
   VIEW = v;
   $("vList").setAttribute("aria-pressed", String(v === "list"));
@@ -295,6 +355,8 @@ fetch(DATA_HREF).then(function(r){
   });
   render();
   renderQueue();
+  honourAnchor();
+  window.addEventListener("hashchange", honourAnchor);
 }).catch(function(e){
   $("status").textContent = "could not load the projection: " + e.message;
   $("listing").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
