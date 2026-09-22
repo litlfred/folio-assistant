@@ -60,6 +60,12 @@ document can apply it rather than re-deriving it.
 
 ## Blocked on promotion, not on judgement
 
+- **waits on:** `2602.12670v4` being promoted out of `uploads/` into `agent-skills/library/`
+- **since:** 2026-09-21
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, check whether the promotion happened. If it has, apply the verdicts and close. If not, this is sequencing rather than a decision — extend and note who owns the promotion.
+
+
 `apply-image-verdicts.ts` writes into a library entry's `images.json`, and
 `2602.12670v4` is not promoted — it sits in `uploads/` with
 `agent-skills/library/` holding only the two arXiv papers that passed. So the

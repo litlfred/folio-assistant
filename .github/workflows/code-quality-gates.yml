@@ -747,6 +747,7 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          bun run check:bean-blocks
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
           # block scalar that swallowed the body's first lines, and a prose

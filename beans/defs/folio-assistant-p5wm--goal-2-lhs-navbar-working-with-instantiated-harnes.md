@@ -52,6 +52,12 @@ todo theme both need.
 
 ## Blocked on the owner
 
+- **waits on:** the owner — `yj32`, `6lb8`, `v1hw`, `jbx2`, `h32d`, `g196`, plus three items needing a look at a deployed page
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-raise the list with the owner rather than deciding any of it. A milestone's critical path going stale is exactly what `k59d` was opened to catch.
+
+
 `yj32` (*"i wanted bootsrap/ harness/ etc as todos, not landing page info"*,
 and what the writable store is), `6lb8` (the board's persistence — a position
 is state, and `todos/` is committed, so two sessions moving one note is a

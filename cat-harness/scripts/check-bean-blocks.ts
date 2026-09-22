@@ -1,0 +1,198 @@
+#!/usr/bin/env bun
+/**
+ * A bean that declares a block must say when it goes stale — ENFORCED.
+ *
+ * @module scripts/check-bean-blocks
+ * @graphNode none — a checker over the `bean-defs` graph
+ *
+ * ## What was already here, and what was missing
+ *
+ * Almost all of this existed. `scripts/beans.ts` carries `readBeans`,
+ * `hasExpiry` and `beanFindings`, and `beanFindings` already emits
+ * **`blocked-without-expiry`** — firing on 4 of the 4 beans that hold a
+ * relation-block. This module imports all three rather than restating any:
+ * two answers to "where are the beans" or "does this bean state an expiry"
+ * would be two answers free to disagree, which is the defect this repository
+ * keeps paying for.
+ *
+ * **What was missing is that nothing FAILS.** `beanFindings`' only consumer is
+ * `gen-docs-pages.ts`, which publishes it to a docs page. A finding that
+ * reaches a page nobody is required to read is a finding with no teeth, and
+ * `blocked-without-expiry` firing on 100 % of its subjects for as long as it
+ * has existed is what that looks like.
+ *
+ * ## And the reason compliance was zero: the prescribed form did not parse
+ *
+ * `bean-blocking.md`'s worked example said to write **`status: blocked`**.
+ * That status does not exist — `beans update --help` accepts *"in-progress,
+ * todo, draft, completed, scrapped"*, and `BeanStatusSchema` is the same five,
+ * describing itself as *"Exactly what `beans update --status` accepts"*.
+ *
+ * Measured over the 99 in-progress beans on `main`, 2026-09-22: **0** carried
+ * `expires`, **0** carried `status: blocked`, **4** asserted a block
+ * structurally (a `## Blocked on` heading, invented independently by those
+ * four), and **26** used blocking language in prose only. A prescribed form
+ * the tool refuses is a rule with a **0 % compliance ceiling**. Bean `zldg`.
+ *
+ * ## What this gates, and what it deliberately only reports
+ *
+ * | shape | treatment |
+ * |---|---|
+ * | a `## Blocked on` section | **ENFORCED** — all four fields or the gate fails |
+ * | a relation-block with no expiry (`beanFindings`) | surfaced on every run |
+ * | blocking language in prose only | counted, never failed |
+ *
+ * **Prose is not gated, and that is not timidity.** The corpus contains
+ * *"page wiring is genuinely blocked"* beside *"this unblocked `68dt`"* and
+ * *"the block was re-measured and is still real"* — one asserts a block, one
+ * retracts one, one reports on another's. A gate firing on the word would go
+ * red on beans that are not blocked, and **a gate nobody can keep green is a
+ * gate that gets switched off** — the argument `check-secret-leaks` used to
+ * reject entropy scanning on this same corpus.
+ *
+ * So the structured form is enforceable and the prose is visible. That split
+ * is the point: it gives a block a way to be checkably stale, without
+ * pretending to adjudicate the ones that are not.
+ *
+ * Usage:
+ *   bun run check:bean-blocks
+ *   bun run check:bean-blocks --list   # ...and name every unstructured bean
+ */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import { beanFindings, hasExpiry, readBeans, resolveBeanDefs, type BeanNode } from "./beans.ts";
+import { repoRootFor } from "../schemas/cat-harness.ts";
+import "../schemas/folio-graph-kind.js";
+
+const ROOT = join(import.meta.dir, "..");
+
+/** The heading that makes a block CHECKABLE. */
+export const BLOCK_HEADING = /^##+\s*blocked\s+on\b/im;
+
+/**
+ * The three fields this module checks for itself.
+ *
+ * `expires` is NOT here — `hasExpiry` in `beans.ts` owns that question, and it
+ * matches `expires`/`expiry`/`expire` deliberately loosely so a detector never
+ * accuses somebody who complied. Restating the pattern here would be a second
+ * answer to it.
+ */
+export const REQUIRED_FIELDS = [
+  { key: "waits on", why: "so a reader can tell whether the thing has since happened" },
+  { key: "since", why: "so staleness is visible" },
+  { key: "handoff", why: "what a DIFFERENT agent should do on picking it up" },
+] as const;
+
+/** Generous on purpose: its false positives cost a line, not a red gate. */
+const PROSE_BLOCK = /\b(blocked|waits on|waiting on)\b/i;
+
+export type Verdict = "ok" | "incomplete" | "unstructured";
+
+export interface BeanBlock {
+  id: string;
+  verdict: Verdict;
+  /** For `incomplete`: which fields are absent, `expires` included. */
+  missing: string[];
+}
+
+/**
+ * Read one bean's block record.
+ *
+ * Takes the `BeanNode` so the expiry question goes through `hasExpiry`, and
+ * the raw text because the heading is a property of the file rather than of
+ * the parsed node.
+ */
+export function inspect(b: BeanNode, text: string): BeanBlock | undefined {
+  if (BLOCK_HEADING.test(text)) {
+    const lower = text.toLowerCase();
+    const missing: string[] = REQUIRED_FIELDS.filter((f) => !lower.includes(f.key)).map(
+      (f) => f.key as string,
+    );
+    if (!hasExpiry(b)) missing.push("expires");
+    return { id: b.id, verdict: missing.length === 0 ? "ok" : "incomplete", missing };
+  }
+  // Only an in-progress bean is a live stall: a `todo` mentioning blocking
+  // describes future work and a `completed` one describes history.
+  if (b.status === "in-progress" && PROSE_BLOCK.test(text)) {
+    return { id: b.id, verdict: "unstructured", missing: [] };
+  }
+  return undefined;
+}
+
+/** Every bean carrying a block. */
+export function scan(repoRoot: string, beans: readonly BeanNode[]): BeanBlock[] {
+  const out: BeanBlock[] = [];
+  for (const b of beans) {
+    let text: string;
+    try {
+      text = readFileSync(join(repoRoot, b.file), "utf-8");
+    } catch {
+      continue;
+    }
+    const v = inspect(b, text);
+    if (v !== undefined) out.push(v);
+  }
+  return out;
+}
+
+if (import.meta.main) {
+  const repoRoot = repoRootFor(ROOT);
+  const where = resolveBeanDefs(repoRoot);
+  if (where.dir === null) {
+    // NOT a pass. Nothing was examined, and saying so differs from saying
+    // every block is well formed.
+    console.log("Bean blocks — no `bean-defs` graph is declared, so nothing was checked");
+    process.exit(0);
+  }
+  const beans = readBeans(repoRoot);
+  if (beans === null) {
+    console.error("Bean blocks — the `bean-defs` graph is declared and could not be read");
+    process.exit(2);
+  }
+
+  const found = scan(repoRoot, beans);
+  const bad = found.filter((b) => b.verdict === "incomplete");
+  const prose = found.filter((b) => b.verdict === "unstructured");
+  const ok = found.filter((b) => b.verdict === "ok");
+  const relation = beanFindings(beans).filter((f) => f.kind === "blocked-without-expiry");
+
+  console.log(
+    `Bean blocks (${ok.length} structured and complete, ${bad.length} incomplete, ` +
+      `${prose.length} in prose only, over ${beans.length} bean(s))`,
+  );
+
+  for (const b of bad) {
+    console.error(`  ✗ ${b.id} declares a block and omits: ${b.missing.join(", ")}`);
+  }
+
+  if (relation.length > 0) {
+    // Surfaced here because `beanFindings`' only other consumer publishes it
+    // to a docs page. Advisory: a relation-block is a different shape from a
+    // declared one, and gating it would fail beans nobody has asked to change.
+    console.log(
+      `  · ${relation.length} relation-block(s) carry no expiry — \`beanFindings\`' ` +
+        "`blocked-without-expiry`, which until now reached only a docs page",
+    );
+  }
+
+  if (prose.length > 0) {
+    console.log(
+      `  · ${prose.length} in-progress bean(s) use blocking language with no ` +
+        "`## Blocked on` section, so no date can expire them. Advisory — prose is too " +
+        "varied to gate on, and a gate that fires on “no longer blocked” gets switched off.",
+    );
+    if (process.argv.includes("--list")) for (const b of prose) console.log(`      ${b.id}`);
+    else console.log("      Run with `--list` to name them.");
+  }
+
+  if (bad.length > 0) {
+    console.error(
+      "\nA block with no expiry cannot be told from abandoned work. " +
+        "See `skills/folio-core/bean-blocking.md` for the four fields.",
+    );
+    process.exit(1);
+  }
+  if (found.length === 0 && relation.length === 0) console.log("  ✓ no bean declares a block");
+  process.exit(0);
+}

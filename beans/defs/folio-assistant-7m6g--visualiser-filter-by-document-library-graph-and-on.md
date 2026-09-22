@@ -44,5 +44,11 @@ being conflated into one. Do not repeat it one level down.
 
 ## Blocked on
 
+- **waits on:** O2 on issue #764 — where the visualiser axis is declared
+- **since:** 2026-09-21
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-ask on #764. Do not pick the axis unilaterally: a filter over visualisers needs the declaration to exist first, and guessing it here would mint a second answer to where it lives.
+
+
 O2 on issue #764 — where the visualiser axis is declared — because a filter
 over visualisers needs to know what a visualiser is declared against.

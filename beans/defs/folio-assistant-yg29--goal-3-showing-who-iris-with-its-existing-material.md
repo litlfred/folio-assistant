@@ -52,6 +52,12 @@ are its delivery mechanism, not separate work.
 
 ## Blocked on the owner
 
+- **waits on:** the owner — `hqku`, and the disposition of `xffc` / `d3yq`
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-raise. NOTE: `hqku` is already `completed` on main, so the stated blocker has partly happened — re-derive before assuming this is still waiting on it.
+
+
 `hqku` (*"is `library/` active content a sweep should judge, or derived
 material it should skip?"* — it bears directly on the rendering), and the
 disposition of `xffc` and `d3yq`, whose premise the owner withdrew with
