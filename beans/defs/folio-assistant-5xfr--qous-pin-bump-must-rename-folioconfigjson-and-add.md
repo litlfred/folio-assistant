@@ -260,3 +260,48 @@ exactly the silent-off failure this bean exists to prevent.
 - [ ] `qa-sweep` confirms an archimedean-wall criterion RUNS, on a named block.
 - [ ] The before/after table is in that commit's message, per
       `.folio-assistant-pin`'s own rule.
+
+## 2026-09-22 — MEASURED against qou's live file, not asked about
+
+Read directly from `litlfred/qou@main:harness.config.json` (blob
+`a2d53130`) rather than put to the owner as a question, per
+`interaction-modality` §4.2: *"do not ask a question whose answer you could
+look up."*
+
+**Half of this bean has already landed, and the half that has not is the half
+that silently loses a check.**
+
+| | state |
+|---|---|
+| `folio.config.json` → `harness.config.json` | **DONE** — the file exists under the new name and carries a `_comment` explaining the rename and that the old name is not a fallback |
+| `feedbackDir` corrected to `.folio-feedback` | **DONE** |
+| `"qaAxes": ["archimedean-wall"]` | **ABSENT** — there is no `qaAxes` key at all |
+
+### What is actually lost, which is LESS than this bean assumed
+
+The bean says the archimedean-wall criteria "silently stop running". Checked
+against the registry, that is true of one of the two domains and not the
+other, and the distinction is written on the fence itself
+(`qa-criteria-registry.ts`, above the `framework` block):
+
+- **`wall` survives.** `q-usage-audit.ts` calls `checkWallSide` and
+  `checkBaseRingMinimal` directly, so closing the axis leaves qou's own audit
+  computing them. The registry comment calls this its "direct-call safety net".
+- **`framework` does not.** `checkFrameworkCanonical` has no caller outside the
+  registry's dispatch table, so with no `qaAxes` key qou is not running it at
+  all, and nothing says so.
+
+So the live consequence is one domain, not two — and it is the domain the
+registry already flagged as having no net.
+
+### The fix, and why it is not mine to apply
+
+One key in one file:
+
+```json
+"qaAxes": ["archimedean-wall"]
+```
+
+`litlfred/qou` is a mathematics repository, where the owner's standing rule is
+to ask before opening a PR and to make no speculative change without explicit
+consent. So this is reported, not done.
