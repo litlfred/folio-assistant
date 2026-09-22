@@ -704,21 +704,36 @@
   /* THE OPEN CONTROL. A pointer is not the only input: `:hover` does nothing
      on a tablet, and `:focus-within` there only fires once a tap has already
      landed on a link the reader could not read. */
+  /* AT THE TOP OF THE STRIP, aligned to `navbar.ts`'s `.fa-nav-head`, which
+   * who-iris and every generated standalone page render. Owner's choice,
+   * 2026-09-22, from four offered: a bare glyph at the top, no words.
+   *
+   * POSITIONED rather than re-ordered. The control is a `<label>` inside
+   * `.site-footer`, the LAST of `.side-bar`'s four flex children, so `order`
+   * cannot lift it out of its parent — and moving the markup means overriding
+   * the theme's `sidebar.html`, which this file's own note refuses for a
+   * placement. A label drives its checkbox from anywhere in the document, so
+   * where it is PAINTED is free.
+   *
+   * `top` clears the site mark, whose height is the theme's own header. The
+   * strip is `--fa-nav-collapsed` wide and the glyph is centred in it, so it
+   * lands under the mark rather than beside it. */
   .fa-nav-toggle {
+    position: absolute;
+    top: 3.25rem;
+    left: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0 0.4rem 1rem;
+    justify-content: center;
+    width: var(--fa-nav-collapsed);
+    height: 1.75rem;
     cursor: pointer;
     user-select: none;
-    font-size: 0.75rem;
-    opacity: 0.8;
+    opacity: 0.7;
   }
-  .fa-nav-toggle .fa-nav-glyph { flex: none; width: 2rem; text-align: center; }
-  .fa-nav-toggle .fa-nav-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
-  .side-bar:hover .fa-nav-text,
-  .side-bar:focus-within .fa-nav-text,
-  .side-bar:has(.fa-nav-open:checked) .fa-nav-text { opacity: 1; }
+  .fa-nav-toggle:hover { opacity: 1; }
+  .fa-nav-toggle .fa-nav-glyph { flex: none; text-align: center; }
   /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
      so showing both would be two controls for one state. */
   .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }
