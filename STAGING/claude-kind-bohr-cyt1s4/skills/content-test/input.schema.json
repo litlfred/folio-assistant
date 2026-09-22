@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/skills/content-test/input.schema.json",
+  "title": "Content Test Input",
+  "description": "Input schema for end-to-end content testing.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string",
+      "description": "Path to test plan file."
+    },
+    "testData": {
+      "type": "string",
+      "description": "Path to test data directory."
+    },
+    "regressionBaseline": {
+      "type": "string",
+      "description": "Git ref for regression baseline."
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-bohr-cyt1s4",
+    "sha": "70d22a57bfb6a7a8aed10accdf3e54921e708d9a",
+    "pr": "887/merge",
+    "run": "35707769853"
+  }
+}
