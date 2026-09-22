@@ -176,7 +176,7 @@
     <bpmn:task id="Task_LogFindings" name="Log findings on the bean&#10;[todo-manager]">
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>F11</bpmn:incoming>
       <bpmn:outgoing>F12</bpmn:outgoing>
@@ -235,7 +235,7 @@
     <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>F20</bpmn:incoming>
       <bpmn:outgoing>F21</bpmn:outgoing>

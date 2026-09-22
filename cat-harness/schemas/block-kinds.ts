@@ -145,6 +145,72 @@ export const PAPER_BLOCK_KINDS = BLOCK_KINDS;
 export const CONTENT_PROFILES = ["document", "paper"] as const;
 export type ContentProfile = (typeof CONTENT_PROFILES)[number];
 
+// ── The third and fourth axes ────────────────────────────────────
+//
+// Issue #764 §1 tabulates THREE axes and warns that conflating any two is the
+// defect; the owner then settled a fourth on 2026-09-22 (O1). All four are
+// declared here, together, because the thing a reader most needs is to see
+// that they ARE different questions:
+//
+//   adapter        whose vocabulary is this word from?      DISJOINT
+//   profile        may THIS folio use that word?            NESTED
+//   visualiser     how is it shown, and what can be done?   NOT HERE
+//   interactivity  is the content static or interactive?    CROSS-CUTTING
+//
+// THREE OF THE FOUR LIVE HERE, and the fourth's absence is the point rather
+// than an oversight. `VISUALISER_KINDS` is declared in `cat-harness.ts`,
+// because the owner's sentence is *"folio is the only visualizer provided by
+// CAT-HARNESS"* — a visualiser is something the HARNESS provides, while an
+// adapter, a profile and an interactivity are facts about CONTENT.
+//
+// `check:partition` is what settled it: this module is folio-assist-core and
+// `cat-harness.ts` is agentic-harness, so the harness may not import the
+// content vocabulary. The first draft put all four here and the gate refused
+// the edge. Reading the refusal as a classification error rather than an
+// obstacle is what produced the better placement.
+//
+// `where-does-this-go` rows 6 and 7 exist because the middle two read as one
+// question and are not. Splitting these four across four files would make
+// that confusion cheaper rather than dearer.
+
+/**
+ * Is this content static, or does it carry interfaces?
+ *
+ * Owner, 2026-09-21: *"webpages not necc static contnet, content with
+ * interfaces"*, and *"not a 'pure' distinction. judgement"*. Settled as a
+ * FOURTH AXIS on 2026-09-22 (issue #764, O1).
+ *
+ * ## Why not a profile, which is what it looks like
+ *
+ * Profiles NEST and only ever narrow — `document` ⊃ `paper`, and
+ * `profile-check.ts` rests on that. "A document plus interfaces" is a
+ * WIDENING, so expressing it as a profile would mean breaking the invariant
+ * every profile check is written against. It is not an adapter either:
+ * adapters partition by VOCABULARY, and a webpage's words come from the same
+ * vocabulary as a document's.
+ *
+ * ## `undetermined` is a VALUE, and that is the whole point
+ *
+ * The owner ruled in advance that the boundary is judgement. So the axis has
+ * to be able to say **could not determine** — reported, never resolved to a
+ * default — and a profile has nowhere to put that.
+ *
+ * It is a value rather than merely an absent field because ABSENT and
+ * UNDETERMINED are different answers, the same distinction
+ * {@link CatHarnessDeclaration.needs} already draws:
+ *
+ *   absent          nobody has said
+ *   "undetermined"  somebody looked and could not decide
+ *
+ * Folding the second into the first loses exactly the fact the owner asked
+ * to be kept. A consumer that treats either as `static` is reading a
+ * could-not-determine as clean, which this repository forbids everywhere
+ * else and forbids here for the same reason.
+ */
+export const CONTENT_INTERACTIVITY = ["static", "interactive", "undetermined"] as const;
+export type ContentInteractivity = (typeof CONTENT_INTERACTIVITY)[number];
+
+
 /**
  * The kinds whose assertion *is* a formal mathematical claim.
  *
