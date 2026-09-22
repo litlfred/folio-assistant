@@ -1,7 +1,7 @@
 /**
  * Read a `.bpmn` file into a graph the interpreter can walk.
  *
- * The workflow diagrams under `skills/workflows/` are already the normative
+ * The workflow diagrams under `processes/` are already the normative
  * picture of how a change reaches the corpus, and every activity already names
  * the skill that implements it (`<folio:skill ref="…"/>`) and whether it
  * touches the work plan (`<folio:bean/>`). Until now nothing read them at
@@ -243,7 +243,7 @@ export interface LaneDef {
    * would assert the opposite.
    *
    * Before this flag, that decision lived in a prose `_comment` inside
-   * `bootstrap/skills/roles/roles.json` — which no tool reads, so
+   * `bootstrap/scenarios/roles.json` — which no tool reads, so
    * "deliberately unbound" and "nobody got round to it" were the same thing
    * to every consumer. A declared answer and an absent one are different
    * facts, exactly as an empty `roles` list differs from a missing one.

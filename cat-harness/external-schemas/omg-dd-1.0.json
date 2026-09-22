@@ -11,7 +11,7 @@
   ],
   "use": "conforms",
   "usedBy": [
-    "skills/workflows/*.bpmn — the BPMNDI layout every diagram carries",
+    "processes/*.bpmn — the BPMNDI layout every diagram carries",
     "scripts/render-bpmn.ts — bpmn-js reads DI to place shapes"
   ],
   "note": "Separate from BPMN even though the release date matches: DD is its own OMG specification and BPMN's DI namespace builds on it. Recording them as one would make a DD bump invisible. `DD/.../DC` is Diagram Common — NOT Dublin Core, which is `dcmi-terms` in this registry and shares nothing with it but a two-letter prefix. That collision is exactly why a namespace URI is the identity here and a prefix is not.",

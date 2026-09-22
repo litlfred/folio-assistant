@@ -36,8 +36,8 @@ import {
 const ROOT = join(import.meta.dir, "..", "..");
 const read = (p: string): Record<string, unknown> => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
 
-const INPUT = read("bootstrap/skills/discussion.input.schema.json");
-const OUTPUT = read("bootstrap/skills/discussion.output.schema.json");
+const INPUT = read("bootstrap/schemas/discussion.input.schema.json");
+const OUTPUT = read("bootstrap/schemas/discussion.output.schema.json");
 
 /** `strict: false` — these are draft-07 documents, not ajv-flavoured ones. */
 const ajv = new Ajv({ strict: false, allErrors: true });

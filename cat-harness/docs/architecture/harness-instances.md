@@ -173,7 +173,7 @@ expensive to get wrong:
 
 ## KG-DS is the Knowledge Graph Data Store, and its machine is **git**
 
-Not a new concept: `bootstrap/skills/roles/roles.json` has declared a role with
+Not a new concept: `bootstrap/scenarios/roles.json` has declared a role with
 exactly this id and title all along. Its description names the machine:
 
 > A git repository, reached either through the git CLI or through a forge's

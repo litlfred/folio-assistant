@@ -27,7 +27,7 @@
  * ## Not to be confused with `render-bpmn.ts`
  *
  * The names are unhelpfully close, so: `render-bpmn.ts` is the **docs
- * pipeline** — fixed input (`skills/workflows/`), fixed output
+ * pipeline** — fixed input (`processes/`), fixed output
  * (`docs/assets/img/workflows/`), and a `--check` staleness gate CI runs. This
  * file is the **library** — arbitrary inputs, exported functions, sub-process
  * plane handling — and is what WHO DAK content goes through. `render-bpmn.ts`

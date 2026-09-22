@@ -329,7 +329,7 @@ interaction profile; drag may be added on top, never as the only way in.
 ## In CRDM — instance `crdm--folio-assistant-6lb8`, waiting on the requestor
 
 The remaining scope is not being implemented. It is **in the requirements
-process**, driven by `methodologies/crdm/workflows/crdm-requirements.bpmn`
+process**, driven by `methodologies/crdm/processes/crdm-requirements.bpmn`
 through the real engine — `loadProcessModel`, `startInstance`, `complete` —
 rather than by a hand-rolled phase tracker, which `AGENTS.md` forbids in
 exactly these words. State is committed at

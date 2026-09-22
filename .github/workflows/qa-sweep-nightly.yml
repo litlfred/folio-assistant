@@ -81,7 +81,7 @@ jobs:
 
       - name: Install content deps
         working-directory: content
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Run QA sweep across non-proof axes
         env:

@@ -1,0 +1,90 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ActorRoleAdministration",
+    "path": "processes/actor-role-administration.bpmn"
+  },
+  "source_hash": "sha256:1a93aab59084f0a9e9090932f9b791a1c1056dfd4a2d4ac988e94e5b5142239f",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "CallActivity_CodeChangeReview",
+          "detail": "needs skill \"prepare-merge\", but its lane's role \"administrator\" does not carry it."
+        },
+        {
+          "where": "CallActivity_CodeChangeReview",
+          "detail": "needs skill \"continual-progress\", but its lane's role \"administrator\" does not carry it."
+        },
+        {
+          "where": "Task_RunKgAudit",
+          "detail": "needs skill \"role-model\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 8,
+    "fail": 1,
+    "n/a": 6,
+    "unknown": 0
+  }
+}

@@ -614,7 +614,7 @@ Merged main (11 commits; resolved an additive package.json conflict, installed
 new dep dmn-moddle). 992 pass / 0 fail after.
 
 Main's DMN work let me finally exercise `dak-dmn-has-decision-table` against
-REAL DMN — the repo now authors `skills/workflows/decisions/*.dmn`. Both pass.
+REAL DMN — the repo now authors `processes/decisions/*.dmn`. Both pass.
 That checker had never fired.
 
 `scripts/dak-pdf.ts`: the third render target, which existed nowhere.

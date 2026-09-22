@@ -19,7 +19,7 @@ import { join, relative, resolve } from "node:path";
 import { checkXmlComments, xmlSourcesUnder } from "../xml-comment-check.js";
 
 const root = resolve(import.meta.dir, "../..");
-const WORKFLOW_DIR = join(root, "skills", "workflows");
+const WORKFLOW_DIR = join(root, "processes");
 
 describe("XML comments in the diagram corpus", () => {
   test("there are diagrams to check — otherwise this proves nothing", () => {

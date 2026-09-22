@@ -9,7 +9,7 @@ updated_at: 2026-08-26T15:28:53Z
 ---
 
 The agentic workflows are ad hoc: skills are documents an agent is trusted to
-follow, and nothing connects them to the BPMN processes now in skills/workflows/.
+follow, and nothing connects them to the BPMN processes now in processes/.
 Ask: can workflow execution be made more deterministic, via MCP?
 
 Building phase 1 first so the proposal is decided on measurements rather than

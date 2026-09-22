@@ -20,11 +20,11 @@ export default webpage({
       title: "The L3 pipeline",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/l3-fhir-pipeline.bpmn",
+        source: "processes/l3-fhir-pipeline.bpmn",
         rendered: "../assets/img/workflows/l3-fhir-pipeline.svg",
         alt: "BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l3-fhir-pipeline.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn" },
           { text: "full-size SVG", href: "../assets/img/workflows/l3-fhir-pipeline.svg" },
         ],
         linkStyle: "caption",
@@ -41,11 +41,11 @@ export default webpage({
       title: "Making the build incremental",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/ig-incremental-build.bpmn",
+        source: "processes/ig-incremental-build.bpmn",
         rendered: "../assets/img/workflows/ig-incremental-build.svg",
         alt: "BPMN swimlane diagram: a source change restores the derived state; if the cache is usable the build computes the change's dependency cone, posts the cone report for the reviewer, checks out and compiles only the cone, validates it against the warm validator service, re-renders the cone's records, merges them with the restored ones, rebuilds the meta-index and assembles the site; a cache miss or a moved toolchain falls back to a full publisher build; QC gates run on the aggregate QA and file findings as beans; a PR branch deploys a preview and never seeds, while main or a release deploys the site and seeds the cache from the green build.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ig-incremental-build.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/ig-incremental-build.bpmn" },
           { text: "full-size SVG", href: "../assets/img/workflows/ig-incremental-build.svg" },
         ],
         linkStyle: "caption",

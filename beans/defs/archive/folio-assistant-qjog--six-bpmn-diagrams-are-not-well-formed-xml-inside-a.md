@@ -43,7 +43,7 @@ diagram.
 ## Summary of Changes
 
 **Seven artefacts, not six.** Widening the scan from `.bpmn` to `.dmn` found
-`skills/workflows/decisions/pages-live-gate.dmn` carrying `--` too — in
+`processes/decisions/pages-live-gate.dmn` carrying `--` too — in
 `` `bun run scripts/pages-bootstrap.ts --json` ``, a real CLI flag, so it
 needed rewording rather than a character swap. The bean's count was of the
 file type it happened to look at.

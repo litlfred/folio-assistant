@@ -5,7 +5,7 @@ gap actually sits.
 **What the agent does in this phase:**
 
 1. **Map the current workflow** — use the existing BPMN diagrams under
-   `skills/workflows/` as a starting point. If the affected workflow is already
+   `processes/` as a starting point. If the affected workflow is already
    diagrammed (e.g. the content lifecycle, the publication pipeline, the
    document ingestion flow), read it and identify the specific activity or
    decision point where the gap appears.

@@ -145,7 +145,7 @@ describe("skill coverage", () => {
     // here is only that each NAME resolves and has a page; whether the diagram
     // is well-formed, and whether the ref sits on a real activity, is
     // `check-workflow-refs`'s and `kg:audit`'s to make.
-    const wf = join(ROOT, "skills", "workflows");
+    const wf = join(ROOT, "processes");
     const refs = new Set<string>();
     const scan = (dir: string) => {
       for (const e of readdirSync(dir, { withFileTypes: true })) {

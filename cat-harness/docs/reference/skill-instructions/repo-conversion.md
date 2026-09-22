@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # /repo-conversion — folio-assistant over a repo that already has a life
 
-Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
 Scanner: `bun run scripts/scan-repo-content.ts`.
 
@@ -86,7 +86,7 @@ preference; a broken relative link in somebody's README is a defect.
 ## 3. Dispatch the ingestion
 
 Ingestion proper is [`document-intake`](../folio-paper-adapter/document-intake.md)
-and `skills/workflows/document-ingestion.bpmn`. What this skill decides is *how
+and `processes/document-ingestion.bpmn`. What this skill decides is *how
 much parallelism*, and it is a question for the author because it spends their
 tokens:
 
