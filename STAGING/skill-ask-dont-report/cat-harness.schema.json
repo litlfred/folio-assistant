@@ -191,6 +191,21 @@
           "type": "string",
           "minLength": 1
         },
+        "navbarIcons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "close",
+              "todos",
+              "beans",
+              "processes",
+              "kg",
+              "launcher"
+            ]
+          },
+          "maxItems": 6
+        },
         "stub": {
           "type": "string",
           "minLength": 1
@@ -667,8 +682,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/skill-ask-dont-report/cat-harness.jsonld",
   "staging": {
     "branch": "skill/ask-dont-report",
-    "sha": "ee226198b443cfdc2f668336caf06aefd4367f9c",
+    "sha": "00a745ea54b57deb2d90e1dc0993d8cfb1a2b27d",
     "pr": "978/merge",
-    "run": "35789813149"
+    "run": "35792836951"
   }
 }
