@@ -83,7 +83,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
-import { isSkillMd, skillMdDirs } from "./known-skills.ts";
+import { isSkillMd, kgRoots, skillMdDirs } from "./known-skills.ts";
+import { readRoleGraph } from "../schemas/role-graph.ts";
 import { readDeclaration, resolveDirectories, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
 
@@ -200,10 +201,13 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  * sub-graph has no single order to take one over. Recorded here as well as on
  * the bean, since this array is what a reader checks against that list.
  *
- * Declared but NOT built: `glossary` (bean `lqo9` holds a roast that gates
- * it), `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`.
- * Absent rather than stubbed: a type that emits an empty page is indis-
- * tinguishable from one whose sub-graphs are empty.
+ * `glossary` was "declared but not built, bean `lqo9` holds a roast that gates
+ * it". **That roast is held and slice 2 shipped**, so it is built below and
+ * reads the ledger that slice writes.
+ *
+ * Still declared but NOT built: `index`, `index/bpmn`, `index/dmn`,
+ * `index/tasks`, `index/roles`. Absent rather than stubbed: a type that emits
+ * an empty page is indistinguishable from one whose sub-graphs are empty.
  */
 export const TYPES: AutoDocType[] = [
   {
@@ -266,11 +270,47 @@ export const TYPES: AutoDocType[] = [
         seen.add(d.absPath);
         for (const f of walk(d.absPath, (n) => n.endsWith(".bpmn"))) {
           const xml = readFileSync(f, "utf-8");
-          const name = /<bpmn:process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];
-          const doc = /<bpmn:documentation>([\s\S]*?)<\/bpmn:documentation>/.exec(xml)?.[1];
-          const lanes = [...xml.matchAll(/<bpmn:lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
+          // `(?:bpmn:)?` on EVERY element, because the prefix is a document's
+          // choice and not a fact about BPMN. `translation-workflow.bpmn`
+          // declares BPMN as the DEFAULT namespace and writes `<lane>`,
+          // `<userTask>`, `<documentation>` unprefixed — valid, and invisible
+          // to a prefixed regex.
+          //
+          // It did not vanish from this index, which is why it survived: the
+          // entry appeared, fell back to its FILENAME for a name, and showed
+          // no lanes, no skills and no summary. An absent row might have been
+          // noticed; an empty one reads as a diagram with nothing to say.
+          // Found 2026-09-22 — the same defect in a fourth reader, after
+          // `check-lane-documentation` and `glossary-export`.
+          const name = /<(?:bpmn:)?process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];
+          // The process's OWN documentation — a DIRECT child, not the first
+          // `<documentation>` anywhere after the process opens.
+          //
+          // Measured 2026-09-22: **16 of 61 diagrams** were showing a LANE's
+          // documentation as the process summary. The old regex took the
+          // first match in the file, and a process with no documentation of
+          // its own therefore borrowed its first lane's.
+          //
+          // It was correct until two days earlier, and that is the instructive
+          // part: bean `sqtq` wrote 157 lane `<documentation>` elements, and
+          // every diagram whose process carried none started presenting a
+          // lane's instead. A generated index, compared by a check against its
+          // own generator, so nothing went red — the defect arrived with the
+          // fix to a different one.
+          const procOpen = /<(?:bpmn:)?process\b[^>]*>/.exec(xml);
+          const doc = ((): string | undefined => {
+            if (procOpen === null) return undefined;
+            const after = xml.slice(procOpen.index + procOpen[0].length);
+            const d = /<(?:bpmn:)?documentation>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(after);
+            if (d === null) return undefined;
+            // Only whitespace and comments may sit between: anything else
+            // means this documentation belongs to a child element.
+            const between = after.slice(0, d.index).replace(/<!--[\s\S]*?-->/g, "").trim();
+            return between === "" ? d[1] : undefined;
+          })();
+          const lanes = [...xml.matchAll(/<(?:bpmn:)?lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
           const skills = [...new Set([...xml.matchAll(/<folio:skill\s+ref="([^"]+)"/g)].map((m) => m[1]!))];
-          const acts = (xml.match(/<bpmn:(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
+          const acts = (xml.match(/<(?:bpmn:)?(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
           const facts: Record<string, string> = { activities: String(acts) };
           if (lanes.length) facts.lanes = lanes.join(" · ");
           if (skills.length) facts.skills = skills.sort().join(", ");
@@ -283,6 +323,91 @@ export const TYPES: AutoDocType[] = [
         }
       }
       return dedupeByPath(items);
+    },
+  },
+  {
+    id: "glossary",
+    title: "Glossary",
+    graph: "glossary",
+    extracts:
+      "every term this instance's swimlanes define — the role's title and description, " +
+      "the lane names that bind it, and whether the term has been retired",
+    collect(): AutoDocItem[] {
+      // Reads the LEDGER, not the glossary document.
+      //
+      // The document is derived and lives in `_kg/` (or `_site/` on a
+      // deploy), so it is absent from a plain checkout — an index built from
+      // it would be empty locally and full in CI, which is the worst of both.
+      // The ledger is committed, is the declared `glossary` graph, and is the
+      // one artefact that carries retirement. Reading it also means this page
+      // shows a RETIRED term, which a reader looking up a word they met in an
+      // old commit needs more than a reader of live terms does.
+      //
+      // `glossary-export.ts` is deliberately NOT imported: it builds the whole
+      // KG export to do its job, which is seconds of work for a page that
+      // needs four fields. `06e3`'s own rule — an index reuses assets rather
+      // than recomputing them.
+      // The DEFINITION, joined from the role registry.
+      //
+      // The ledger stores identity and retirement and nothing else, on
+      // purpose: a definition copied into it would be a second copy free to
+      // drift from `roles.json`, which is the authored source. So this joins
+      // the two exactly as `glossary-export.ts` does — ledger for memory,
+      // registry for meaning — rather than widening the ledger.
+      //
+      // The first version omitted this and every one of the 44 rows read "no
+      // description in the artefact": a glossary index that defines nothing,
+      // which is the thing issue #596 asked for the opposite of. Caught by
+      // opening the page rather than by reading the count.
+      const descriptions = new Map<string, string>();
+      for (const kgRoot of kgRoots(ROOT)) {
+        for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+          if (!descriptions.has(r.id) && r.description) descriptions.set(r.id, r.description);
+        }
+      }
+
+      const items: AutoDocItem[] = [];
+      for (const d of declaredDirectories("glossary")) {
+        for (const f of walk(d.absPath, (n) => n === "glossary-ledger.json")) {
+          let parsed: { instance?: string; concepts?: Record<string, { prefLabel?: string; firstSeen?: string; retiredOn?: string | null }> };
+          try {
+            parsed = JSON.parse(readFileSync(f, "utf-8"));
+          } catch {
+            // A ledger this code cannot read is NOT an instance with no terms.
+            // Skipping it silently would report a clean, empty glossary over a
+            // broken file — `dh4f`, which is the shape this whole handler is
+            // careful about.
+            items.push({
+              path: relative(REPO, f).split("\\").join("/"),
+              name: "(unreadable ledger)",
+              summary: "This file could not be parsed, so its terms are unknown — not absent.",
+            });
+            continue;
+          }
+          for (const [key, entry] of Object.entries(parsed.concepts ?? {}).sort(([a], [b]) => a.localeCompare(b, "en"))) {
+            const retired = typeof entry.retiredOn === "string";
+            items.push({
+              // The ledger is one file holding many terms, so each item points
+              // at the file and distinguishes itself by `name`. `dedupeByPath`
+              // keys on path, so it is deliberately not applied here.
+              path: `${relative(REPO, f).split("\\").join("/")}#${key}`,
+              name: entry.prefLabel ?? key,
+              summary: retired
+                ? `Retired ${entry.retiredOn} — kept, never deleted, so retirement and accident do not look alike.`
+                : // A retired term has no role to define it any more, which is
+                  // why the branch above wins: its label comes from the ledger
+                  // and its definition is genuinely gone.
+                  (key.startsWith("role/") ? descriptions.get(key.slice("role/".length)) : undefined),
+              facts: {
+                notation: key,
+                ...(entry.firstSeen ? { "first seen": entry.firstSeen } : {}),
+                status: retired ? "retired" : "current",
+              },
+            });
+          }
+        }
+      }
+      return items;
     },
   },
 ];

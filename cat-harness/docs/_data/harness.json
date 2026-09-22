@@ -65,6 +65,7 @@
     "docs",
     "folio",
     "fsh-guts",
+    "glossary",
     "health",
     "interaction",
     "issue-marks",
@@ -184,6 +185,18 @@
       "href": "/fsh-guts/",
       "hidden": false,
       "publish": "staging-only"
+    },
+    {
+      "id": "glossary",
+      "directory": "glossary",
+      "title": "glossary",
+      "ref": "cat-harness/docs/glossary/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/glossary/",
+      "hidden": false
     },
     {
       "id": "large-datasets-schemas",
@@ -867,17 +880,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 35
+          "value": 36
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 21
+          "value": 22
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 12
+          "value": 13
         }
       ],
       "visualisations": [
@@ -898,6 +911,10 @@
         {
           "kind": "fsh-guts",
           "path": "/fsh-guts/index.md"
+        },
+        {
+          "kind": "glossary",
+          "path": "/glossary/"
         },
         {
           "kind": "health",
@@ -979,12 +996,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 6
         },
         {
           "id": "views",
@@ -993,6 +1010,12 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "glossary"
+        },
+        {
+          "kind": "models"
+        },
         {
           "kind": "processes"
         },
@@ -1007,7 +1030,7 @@
         }
       ],
       "findings": [
-        "bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap: declares 6 graph(s) with no published viewer — glossary, models, processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ]
     }

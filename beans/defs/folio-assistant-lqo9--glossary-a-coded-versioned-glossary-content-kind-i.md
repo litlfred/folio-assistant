@@ -465,3 +465,61 @@ which is `6tkl`.
 - **Per-locale rendering** is `jmpb`. This document is English-only today, and
   the verbatim scope notes are what make it translatable without a re-extract.
 - Ruling 2 — does `build-glossary.ts` converge? — still open, still untouched.
+
+## PIECE 1 SHIPPED 2026-09-22 — the defined-terms index in docs/
+
+The owner's first piece — *"justthedocs docs/ rendering should include an index
+of all defined terms extracted from KG assets"* — reframed by them later as one
+`docs-auto` auto-doc-type at `cat-harness/docs-auto/glossary/<path>`.
+
+Built as exactly that. `gen-docs-auto.ts`'s own header had listed it as
+*"declared but NOT built: `glossary` (bean `lqo9` holds a roast that gates
+it)"*. **That roast is held and slice 2 shipped**, so the gate lifted and the
+type went in beside `index/skills` and `index/processes`. No new URL rule, no
+fourth pruner — `viewerPlacement` and `orphanSubjectPages` already route it.
+
+**44 terms across 1 sub-graph**, every one carrying its real definition.
+
+### It reads the LEDGER, joined with the REGISTRY
+
+Two sources, each for what only it has:
+
+| source | gives | why not the other |
+|---|---|---|
+| `glossary/glossary-ledger.json` | identity, `firstSeen`, retirement | the glossary DOCUMENT lives in `_kg/`, absent from a checkout — an index built from it would be empty locally and full in CI |
+| `scenarios/roles.json` | the definition | copying definitions into the ledger would be a second copy free to drift from the authored source |
+
+Same join `glossary-export.ts` makes. `glossary-export.ts` itself is
+deliberately NOT imported: it builds the whole KG export to do its job, which
+is seconds of work for a page needing four fields — and `06e3`'s own rule is
+that an index reuses assets rather than recomputing them.
+
+### The first version defined nothing, and only the PAGE showed it
+
+It read the ledger alone, and all 44 rows said *"no description in the
+artefact"* — a glossary index that defines nothing, which is the opposite of
+what #596 asked for. The generator ran clean, the count was right, and the
+defect was visible only by opening the page. `continual-progress` again:
+a description of a rendered artefact is not the artefact.
+
+### And it found a defect in the sibling index
+
+`index/processes` shared the `<bpmn:`-prefixed regexes — the fourth reader
+with that blind spot — so `translation-workflow.bpmn` appeared in the index
+with **its filename for a name and no lanes, skills or summary**. Worse than
+absent: a row is there, so nothing looks missing.
+
+Fixing it exposed a second, larger one: the summary regex took the first
+`<documentation>` anywhere after the process opened, so **16 of 61 diagrams
+were showing a LANE's documentation as the process summary** — which became
+true the day `sqtq` wrote 157 lane documentations. Filed as `7rna`; the
+extractor now takes only a DIRECT child and the 16 say so honestly.
+
+### Done when — status
+
+[x] The docs/ rendering carries a defined-terms index built from KG assets
+
+Extracted-vs-authored is not yet distinguished on the page: every term here is
+AUTHORED (a role in the registry), because slice 2 mints a concept only from a
+declared role or a declared varying lane. The *candidate* state the roast
+described arrives with a source that can produce one, which this is not.

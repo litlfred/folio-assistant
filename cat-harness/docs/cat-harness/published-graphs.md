@@ -91,8 +91,8 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 2 published.
 {: .fa-hx-dim }
 
-- bootstrap — *declared, not published*
-- [folio-assistant (cat-harness)]({{ '/glossary/' | relative_url }})
+- Bootstrap — *declared, not published*
+- [C@T Harness]({{ '/glossary/' | relative_url }})
 
 ### `health`
 
@@ -144,7 +144,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- bootstrap — *declared, not published*
+- Bootstrap — *declared, not published*
 
 ### `processes`
 
