@@ -130,8 +130,44 @@ function main(): void {
   const out = arg("out");
   const check = process.argv.includes("--check");
   const materializeDak = process.argv.includes("--materialize-dak");
+  const USAGE =
+    "usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] " +
+    "[--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]";
+
+  // A MISINVOCATION AND "NOTHING HERE TO CHECK" ARE DIFFERENT, and printing one
+  // usage string for both is why `ingest:ig:check` read as a broken script for
+  // as long as it did.
+  //
+  // Measured 2026-09-22: the registered `ingest:ig:check` ended in a dangling
+  // `--source` with no value, so every run printed the line above and exited 2.
+  // It escaped the "no check script is unrun" test because that covers
+  // `check:*`-prefixed scripts only, and no workflow invokes it — a registered
+  // script nobody runs, which would have failed if anybody had.
+  //
+  // The dangling flag is fixed in `package.json`. What is fixed HERE is the
+  // report: with `--out` naming an index whose `source.of` is a REMOTE URL,
+  // there is no local directory to diff against, and saying so is a different
+  // statement from "you typed the command wrong". `--check` cannot pass over
+  // nothing either — a checker with no input that exited 0 would be the `dh4f`
+  // shape, a clean run over a corpus it never saw.
+  if (!source && out && check) {
+    const idxPath = join(out, "fhir-artifact-index", "index.json");
+    const of = existsSync(idxPath)
+      ? (JSON.parse(readFileSync(idxPath, "utf8")) as Partial<FhirArtifactIndex>).source?.of
+      : undefined;
+    console.error(
+      of
+        ? `--check needs a local IG build to compare against, and none was given.\n` +
+          `  ${idxPath} records its source as ${of}\n` +
+          `  — a REMOTE build, so there is nothing on disk to diff. Fetch it and pass\n` +
+          `  --source <dir>, or run this where the IG output lives. Not a pass: a\n` +
+          `  checker with no input cannot report a clean corpus.`
+        : `--check needs --source <dir>, and ${idxPath} records no source to name one.\n${USAGE}`,
+    );
+    process.exit(1);
+  }
   if (!source || !out) {
-    console.error("usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] [--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]");
+    console.error(USAGE);
     process.exit(2);
   }
 
