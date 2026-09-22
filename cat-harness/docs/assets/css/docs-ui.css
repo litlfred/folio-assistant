@@ -2729,14 +2729,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   left: 50%;
   transform: translateX(-50%);
   z-index: 91;
-  /* SC 2.5.8's 24px floor, and this instance's profile is low-dexterity, so
-     the floor is the point rather than a minimum to argue down from. */
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* PRONOUNCED, on the owner's instruction: *"Not too subtle but
+     pronounced."* The first draft was an 0.8rem label in the chrome colour,
+     which reads as a stray tab rather than as the way to your folio. This is
+     the same control asserting itself: bigger target, heavier label, and an
+     ACCENT fill so it is the one thing on the page that is not page.
+
+     SC 2.5.8's 24px floor was already cleared at 2.75rem and is cleared by
+     more now. That floor is a minimum, not a target, and this instance's
+     profile is low-dexterity — a control a reader is meant to find without
+     looking for it should be bigger than the rule requires. */
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border: 2px solid #8c74f0;
   border-top: 0;
   border-radius: var(--fa-folio-radius, 0);
-  background: var(--sidebar-color, #27262b);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* A shadow, because the handle overhangs content rather than sitting in a
+     bar of its own — without one it reads as printed ON the page instead of
+     as something held above it and pullable. */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  background: #4a34b8;
   /* AN EXPLICIT FOREGROUND, never `inherit`, and this cost an a11y failure
      before it was written: axe measured 1.39:1, `#000000` on `#27262b`.
      The handle is appended to `document.body`, so there is nothing above it
@@ -2744,15 +2758,31 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
      BACKGROUND and leans on an inherited FOREGROUND is `23bc` again, and
      being body-level is what makes it certain rather than likely.
      12.46:1 on the dark chrome, computed rather than eyeballed. */
-  color: #e8eaed;
-  font-size: 0.8rem;
+  color: #ffffff;
+  font-size: 0.95rem;
   cursor: pointer;
 }
-:root[data-fa-scheme="light"] .fa-glass-handle {
-  background: #e8eaed;
-  border-color: #767d88;           /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                  /* 12.24:1 */
-}
+
+/* ONE PALETTE FOR BOTH SCHEMES, and no light override — which is the fix for
+ * a defect the first draft had rather than a shortcut. A control that is
+ * violet in one scheme and grey in the other is TWO controls, and a reader
+ * switching schemes has to learn it twice.
+ *
+ * THE BORDER IS LOAD-BEARING IN DARK, and that is the measurement worth
+ * keeping. Every ratio below is computed, because this file has now shipped
+ * TWO contrast failures from pairs that looked fine: `23bc`, and this very
+ * handle at 1.39:1 when it carried `color: inherit`. A third draft claimed
+ * "10.4:1" and "the edge clears 3:1"; both were wrong — 7.32:1, and 1.41:1
+ * against its own fill, which is not what SC 1.4.11 asks about anyway.
+ *
+ *   #ffffff on #4a34b8 ............ 8.49:1   text, needs 4.5
+ *   #4a34b8 vs the LIGHT page ..... 8.49:1   the fill separates it
+ *   #4a34b8 vs the DARK page ...... 1.77:1   the fill does NOT
+ *   #8c74f0 vs the DARK page ...... 4.20:1   ← so the BORDER does, SC 1.4.11
+ *   #8c74f0 vs the LIGHT page ..... 3.58:1
+ *
+ * Drop the border and the handle vanishes into a dark page. It is not
+ * decoration. */
 .fa-glass-handle:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
