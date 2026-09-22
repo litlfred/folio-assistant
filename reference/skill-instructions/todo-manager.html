@@ -415,25 +415,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790067327">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790068110">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790067327">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790068110">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790067327">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790068110">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790067327">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790068110">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -450,7 +450,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790067327" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790068110" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -968,6 +968,83 @@ apparent 54 and nearly landing a false correction in a PR body.</li>
 
 <p>The runaway loop is not something a doc can prevent; an unguarded <code class="language-plaintext highlighter-rouge">create</code> is.
 This rule is platform-level so every folio inherits it.</p>
+<h2 id="check-before-you-update----body-file-replaces-the-body-strict">
+  
+  
+    <a href="#check-before-you-update----body-file-replaces-the-body-strict" class="anchor-heading" aria-labelledby="check-before-you-update----body-file-replaces-the-body-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you UPDATE — <code class="language-plaintext highlighter-rouge">--body-file</code> REPLACES the body (STRICT)
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent; <code class="language-plaintext highlighter-rouge">beans update</code> is not additive. They are
+different failures and both cost a durable artefact, so they sit together.</p>
+
+<p><strong>A bean’s body is an append-only record of who found what, when.</strong> Every note
+in it is dated and signed, and later notes cite earlier ones — the closing note
+on <code class="language-plaintext highlighter-rouge">gjli</code> opens <em>“the 2026-09-19 note above did”</em>. Replace the body and you
+have not edited a field; you have deleted findings that other beans, commits
+and issues point at.</p>
+
+<p><code class="language-plaintext highlighter-rouge">beans update</code> offers four ways to write one, and <strong>only one of them appends</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>flag</th>
+      <th>what it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--body-append &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body-append -</code></td>
+      <td><strong>appends.</strong> <code class="language-plaintext highlighter-rouge">-</code> reads stdin</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--body-file &lt;path&gt;</code></td>
+      <td><strong>REPLACES the whole body</strong> with the file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--body &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body -</code></td>
+      <td><strong>REPLACES</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--body-replace-old/-new</code></td>
+      <td>replaces one substring; leaves the rest</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Measured 2026-09-22 on a scratch store: a bean carrying two notes, given
+<code class="language-plaintext highlighter-rouge">--body-file</code> with a third, kept the third alone. <strong>Exit 0, no warning, no
+diff, no prompt.</strong> Nothing in the output distinguishes it from an append.</p>
+
+<p><strong>For a long, multi-paragraph note, use <code class="language-plaintext highlighter-rouge">--body-append -</code>:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> completed <span class="nt">--body-append</span> - <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">NOTE</span><span class="sh">'
+_2026-09-22T06:51:22Z_ — what you found, and how you know it.
+</span><span class="no">NOTE
+</span></code></pre></div></div>
+
+<p>That is the form the long-note case actually needs, and naming only
+<code class="language-plaintext highlighter-rouge">--body-append "Your note"</code> is why this skill did not prevent the loss it is
+now recording: an agent with four paragraphs to write reaches past an inline
+string argument for the flag that takes a <strong>file</strong>, and <code class="language-plaintext highlighter-rouge">--body-file</code> is
+sitting right there, one letter’s difference from <code class="language-plaintext highlighter-rouge">--body-append</code>, doing
+something else entirely. (<code class="language-plaintext highlighter-rouge">beans create</code> <strong>rejects</strong> <code class="language-plaintext highlighter-rouge">--body-file -</code> with a
+heredoc — bean <code class="language-plaintext highlighter-rouge">5wrg</code> found that separately. So the two subcommands disagree
+about the same flag name, which is one more reason not to reach for it.)</p>
+
+<p>The timestamp prefix is an <strong>authored convention, not a CLI feature</strong> — no flag
+adds it. Write it yourself or the note joins the previous paragraph undated.</p>
+
+<p><strong>Recovery, if it has already happened.</strong> The store is committed, which is the
+whole reason this is survivable: <code class="language-plaintext highlighter-rouge">git show HEAD:&lt;bean-file&gt;</code> returns the body
+as of the last commit, and the lost notes can be reassembled with the new front
+matter. Recover from <strong>git</strong>, not from your own scrollback — a transcript is a
+copy you made, and the repository is the artefact. Then say plainly what was
+lost and restored; a silent repair leaves the next reader unable to tell a
+reconstruction from an original.</p>
 <h2 id="which-parent--the-criterion-nobody-wrote-down">
   
   
@@ -1294,7 +1371,10 @@ You can map out sequence blockers using:
 <ul>
   <li>When starting work: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status in-progress</code></li>
   <li>When completed: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status completed</code></li>
-  <li>To add notes or discussion: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --body-append "Your note"</code></li>
+  <li>To add notes or discussion: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --body-append "Your note"</code>,
+or <code class="language-plaintext highlighter-rouge">--body-append -</code> with a heredoc when it runs to paragraphs. <strong>Never
+<code class="language-plaintext highlighter-rouge">--body-file</code></strong> — it replaces the whole body, silently, exit 0:
+§”Check before you UPDATE”.</li>
 </ul>
 <h2 id="archiving--two-dispositions-and-they-answer-different-questions">
   
@@ -1663,7 +1743,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35707342232"><code>b473200</code></a> &middot; 2026-09-22T08:55:25Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35708605159"><code>ca457fc</code></a> &middot; 2026-09-22T09:08:26Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
