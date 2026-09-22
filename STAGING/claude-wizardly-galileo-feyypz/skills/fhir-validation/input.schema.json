@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/skills/fhir-validation/input.schema.json",
+  "title": "FHIR Validation Input",
+  "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+  "type": "object",
+  "required": [
+    "igRoot"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "validationLevel": {
+      "type": "string",
+      "enum": [
+        "sushi-only",
+        "publisher-qa",
+        "full"
+      ],
+      "default": "full",
+      "description": "Level of validation to perform."
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+    }
+  },
+  "staging": {
+    "branch": "claude/wizardly-galileo-feyypz",
+    "sha": "f7970a42d132706b51d2bdc1a2b02a1c2ee758bd",
+    "pr": "827/merge",
+    "run": "35692426565"
+  }
+}
