@@ -128,6 +128,20 @@ export interface GraphTile {
    * working tile. See `VisualisationSchema.icon`.
    */
   icon?: string;
+  /**
+   * The projection's DECLARED headline number, and what it counts.
+   *
+   * Both present or both absent — a count with no unit is the ambiguity
+   * `schemas/tile-count.ts` exists to remove, and {@link withTileCounts} is
+   * the only writer, so the pair cannot come apart.
+   *
+   * ABSENT is a third state and must not be rendered as `0`. A tile whose
+   * projection declares no count, or whose projection could not be read, is
+   * not a tile over an empty graph — opposite facts, and `dh4f` is this
+   * repository's name for conflating them.
+   */
+  count?: number;
+  unit?: string;
 }
 
 /** The directory fields a tile is derived from — named rather than imported. */
@@ -243,6 +257,46 @@ export function tileFindings(
       `${instance}/${id}: a viewer is published at /${id}/ and the directory declares no ` +
       `visualiser, so it gets no tile. Declare it in \`coverage.visualiser\` and the tile follows.`,
   );
+}
+
+/**
+ * Attach each tile's declared count, where its directory declared one.
+ *
+ * ## Why this is a separate pass rather than part of `graphTiles`
+ *
+ * `graphTiles` derives a tile from the DECLARATION and reads no projection —
+ * the header of this file says why, and `flh4` is the bean. A count comes
+ * from the projection, so folding the read into that function would make the
+ * rule this file states untrue of the function it states it about.
+ *
+ * Kept apart, the split is legible in the types: the tile EXISTS because a
+ * visualiser was declared, and it carries a NUMBER because a projection
+ * offered one. A directory with a projection and no declaration still gets no
+ * tile — it is {@link undeclaredProjections}, a finding.
+ *
+ * ## Pure, like `undeclaredProjections`
+ *
+ * The map is handed in rather than read from disk, for the reason stated on
+ * that function: testable without a filesystem, and the definition of "the
+ * projections" stays the caller's. `sync-docs-harness.ts` supplies this
+ * repository's.
+ *
+ * Keyed by `directory`, NOT by `id`. A directory declaring several
+ * visualisations mints ids like `library/2`, and every one of them is a view
+ * of the same graph — so they share its number, and a projection does not
+ * have to know how many tiles were drawn over it.
+ */
+export function withTileCounts(
+  tiles: readonly GraphTile[],
+  counts: ReadonlyMap<string, { count: number; unit: string }>,
+): GraphTile[] {
+  return tiles.map((t) => {
+    const c = counts.get(t.directory);
+    // Spread only when present. An explicit `count: undefined` would serialise
+    // as a `"count": null` in the emitted JSON on some paths and read back as
+    // a declared value; absent must stay absent all the way to the browser.
+    return c === undefined ? t : { ...t, count: c.count, unit: c.unit };
+  });
 }
 
 export type { CatHarnessDeclaration };

@@ -55,13 +55,22 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
 /** The projection. Everything the reader found; it is already small. */
 export function projection(g: VoicesGraph): unknown {
-  return { $schema: "folio-voices-index/v1", ...g };
+  return {
+    $schema: "folio-voices-index/v1",
+    // `totals.voices`, which the graph already computes for the badge row, so
+    // the tile and the page cannot disagree — rather than `voices.length`,
+    // which would be the same number arrived at twice. `directories` is the
+    // container the voices were found in, not a count of voices.
+    ...tileCounts({ voices: [g.totals.voices, "voices"] }),
+    ...g,
+  };
 }
 
 export function viewerHtml(dataHref: string, scope = ""): string {

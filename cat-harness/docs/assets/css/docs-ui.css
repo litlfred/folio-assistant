@@ -2998,6 +2998,27 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   font-variant-numeric: tabular-nums;
 }
 
+/* ZERO, on a graph tile, is the state the badge exists to surface.
+ *
+ * It is not styled as an error -- an empty graph is often correct, and a tile
+ * shouting about it would train the reader to ignore the badge. It is styled
+ * as QUIET: the pill loses its fill and keeps only an outline, so a row of
+ * tiles reads as "these have things in them, that one does not" at a glance.
+ *
+ * `currentColor` for the outline rather than a literal, so this needs no
+ * second definition under the dark theme and cannot drift from one.
+ *
+ * NOT the same as a tile with no badge at all. A missing badge means the
+ * projection declared no count or could not be read -- the opposite fact from
+ * an empty graph, and `dh4f` is this repository's name for conflating them.
+ * The difference has to survive at the pixel level, which is why absent draws
+ * nothing rather than drawing a dimmer zero. */
+.fa-tile-count[data-fa-empty] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px currentColor;
+  opacity: 0.55;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .fa-sticky-floating { transition: box-shadow 120ms ease; }
 }
