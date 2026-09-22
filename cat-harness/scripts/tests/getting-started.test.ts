@@ -25,7 +25,7 @@ import { classify, scanRepo } from "../scan-repo-content.js";
 import { derivePagesUrl, outcomeFor, parseRemote, type PagesOutcome } from "../pages-bootstrap.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
-const WORKFLOWS = join(INSTANCE_ROOT, "skills", "workflows");
+const WORKFLOWS = join(INSTANCE_ROOT, "processes");
 
 describe("folio-intent.dmn — five requests, one sentence", () => {
   const load = () =>

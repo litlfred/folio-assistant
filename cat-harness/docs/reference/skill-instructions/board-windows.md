@@ -184,8 +184,22 @@ A thing on that glass can be closed. **What closing does is the rule:**
 | state | where the asset is | how it got there |
 |---|---|---|
 | **in the library** | not the reader's at all | the default |
-| **in the folio, not displayed** | materialised under `folio/`, off the glass | the reader closed it, *"back in library"* |
+| **in the folio, not displayed** | materialised into the folio's own `reproduce` directories — `library/` for the bytes, `uploads/` for a source — off the glass | the reader closed it, *"back in library"* |
 | **on the glass** | displayed in the pulled-down folio | the reader pulled it out of the library |
+
+**"In the folio" is not `folio/`, and the difference is load-bearing.** R27
+says *"materialized should live in folio"*, and the folio is the reader's
+REPOSITORY, of which `library/` and `uploads/` are already declared parts —
+both carry `dependents: "reproduce"`, which is the schema saying *this is the
+reader's own copy*. `folio/` is a different graph kind: **renderable** authored
+content.
+
+Reading it as the directory would break a consumer that exists.
+`schemas/materialization.ts` states the dependency outright — ***`corpus-grep`
+searches `library/` only***, so a node materialised anywhere else reads as
+ABSENT to every consumer. That is the same defect the schema already forbids
+one state up, where collapsing `referenced` into `materialized` hides a node
+nobody holds.
 
 **Closing returns an asset to the middle state and NEVER to the first.** The
 asset stays in `folio/`; only its display goes. Putting it back on the glass is
@@ -210,5 +224,5 @@ not that the glass does.
 The layout layer and why a note carries no coordinates:
 [`board-diagram-interchange`](board-diagram-interchange.md). Relocating content
 out of a folio is `deletion-requires-confirmation`, applied by
-`skills/workflows/board-relocate.bpmn` rather than restated here.
+`processes/board-relocate.bpmn` rather than restated here.
 {% endraw %}

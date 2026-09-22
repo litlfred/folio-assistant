@@ -16,11 +16,11 @@ import { enabled, startInstance, describe as renderInstance } from "../../src/wo
 import { readRoleGraph, resolveRoleSkills } from "../../schemas/role-graph.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const graph = readRoleGraph(join(ROOT, "skills"));
+const graph = readRoleGraph(join(ROOT, "scenarios"));
 
 describe("enabled() joins a lane to its declared role", () => {
   test("reports the role, not only the lane's spelling", async () => {
-    const model = await loadProcessModel(join(ROOT, "skills", "workflows", "getting-started.bpmn"));
+    const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const open = enabled(model, state, graph);
     expect(open.length).toBeGreaterThan(0);
@@ -31,7 +31,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("an activity's roleSkills is the role's closure, not the activity's own refs", async () => {
-    const model = await loadProcessModel(join(ROOT, "skills", "workflows", "editing-hci-validation.bpmn"));
+    const model = await loadProcessModel(join(ROOT, "processes", "editing-hci-validation.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     for (const e of enabled(model, state, graph)) {
       if (e.kind !== "activity" || !e.role) continue;
@@ -40,7 +40,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("without a role graph the interpreter still works — unmigrated is not broken", async () => {
-    const model = await loadProcessModel(join(ROOT, "skills", "workflows", "getting-started.bpmn"));
+    const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const open = enabled(model, state);
     expect(open.length).toBeGreaterThan(0);
@@ -51,7 +51,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("describe() and enabled() cannot disagree about who performs a step", async () => {
-    const model = await loadProcessModel(join(ROOT, "skills", "workflows", "getting-started.bpmn"));
+    const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const rendered = renderInstance(model, state, graph);
     for (const e of enabled(model, state, graph)) {
@@ -62,7 +62,7 @@ describe("enabled() joins a lane to its declared role", () => {
 
 describe("every activity in every diagram is performed by a declared role", () => {
   test("no enabled step in any process would report an unbound lane", async () => {
-    const dir = join(ROOT, "skills", "workflows");
+    const dir = join(ROOT, "processes");
     const { readdirSync } = await import("node:fs");
     const unbound: string[] = [];
     for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {

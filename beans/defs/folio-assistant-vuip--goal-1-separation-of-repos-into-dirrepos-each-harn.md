@@ -96,7 +96,7 @@ paid for tonight: I searched `skills/folio-core/` for a FILENAME matching
 
 | part | what it is |
 |---|---|
-| a skill that governs them | **`getting-started.md`** — *"Use whenever a user asks to create, start, set up, or initialise a folio"* — with a BPMN process, `skills/workflows/getting-started.bpmn` |
+| a skill that governs them | **`getting-started.md`** — *"Use whenever a user asks to create, start, set up, or initialise a folio"* — with a BPMN process, `processes/getting-started.bpmn` |
 | a Tool node that performs them | **`folio_init`**, registered in `src/tools/folio-init.ts` |
 | a test | **`init-folio.test.ts`**, and `workflow-roles.test.ts` loads the BPMN |
 

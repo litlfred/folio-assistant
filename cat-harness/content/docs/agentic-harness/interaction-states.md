@@ -16,13 +16,13 @@ Active workflows in this platform:
 
 | Workflow | BPMN source | Entered when |
 |---|---|---|
-| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../../skills/workflows/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
-| **Authoring (document)** | [`authoring-a-document.bpmn`](../../skills/workflows/authoring-a-document.bpmn) | User requests content authoring in a document folio |
-| **Content lifecycle** | [`content-lifecycle.bpmn`](../../skills/workflows/content-lifecycle.bpmn) | Content moves through validate → render → publish |
-| **Document ingestion** | [`document-ingestion.bpmn`](../../skills/workflows/document-ingestion.bpmn) | User drops a file in `uploads/` |
-| **Draft to publication** | [`draft-to-publication.bpmn`](../../skills/workflows/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../../methodologies/crdm/workflows/crdm-requirements.bpmn) | Agent detects a feature request |
-| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../skills/workflows/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
+| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
+| **Authoring (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | User requests content authoring in a document folio |
+| **Content lifecycle** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Content moves through validate → render → publish |
+| **Document ingestion** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | User drops a file in `uploads/` |
+| **Draft to publication** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Content moves from draft to published |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn) | Agent detects a feature request |
+| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
 switch context. The agent records where it was (the current BPMN activity) and

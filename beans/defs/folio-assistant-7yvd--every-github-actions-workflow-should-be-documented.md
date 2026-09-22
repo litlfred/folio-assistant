@@ -14,7 +14,7 @@ Owner, 2026-09-20: *"make sure all workflows documented as bpmn"*. Queued rather
 
 ## What this is NOT
 
-There are already ten BPMN beans, and none of them is this one. `skills/workflows/*.bpmn` documents **agent processes** — how an agent decides what to do, the CRDM phases, the publication path. This is about the **`.github/workflows/*.yml`**: the mechanical processes that actually run, which are documented today only in YAML comments.
+There are already ten BPMN beans, and none of them is this one. `processes/*.bpmn` documents **agent processes** — how an agent decides what to do, the CRDM phases, the publication path. This is about the **`.github/workflows/*.yml`**: the mechanical processes that actually run, which are documented today only in YAML comments.
 
 ## Why it is worth doing
 

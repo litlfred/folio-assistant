@@ -40,7 +40,7 @@ say is the other three:
 
 RACI needs tasks and parties. **This repository already declares both** —
 BPMN activities under the declared workflow directories, and roles in
-`skills/roles/roles.json`. What was missing is only the relation between
+`scenarios/roles.json`. What was missing is only the relation between
 them, and only three quarters of it.
 
 A RACI implemented as its own table of names would be a **second answer to

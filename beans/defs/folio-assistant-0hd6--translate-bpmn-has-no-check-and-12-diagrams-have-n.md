@@ -20,4 +20,4 @@ WHAT A FIX LOOKS LIKE, and it is the same shape as its sibling: a `--check` mode
 
 NOT FIXED IN THE REWIRE PR deliberately. The rewire is about WHERE diagrams are found; this is about WHETHER their templates are current. Committing twelve generated files inside a directory-discovery change would bury a content question in a plumbing diff, and the twelve files are worth nothing until the gate exists to keep them current — otherwise the next twelve diagrams repeat this exactly.
 
-VERIFIED NEUTRAL, which is what made the finding visible at all: after the rewire, regenerating every .pot changed ONLY the timestamp line in all 32 existing files. So `relative(root, file)` yields the same source reference the old `skills/workflows/${file}` interpolation did, and the rewire moves no translator-visible content.
+VERIFIED NEUTRAL, which is what made the finding visible at all: after the rewire, regenerating every .pot changed ONLY the timestamp line in all 32 existing files. So `relative(root, file)` yields the same source reference the old `processes/${file}` interpolation did, and the rewire moves no translator-visible content.

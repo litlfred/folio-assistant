@@ -115,7 +115,7 @@ export interface ActorDefinition {
    *
    * This field carried a role lattice under an actor's name — `author`
    * inherits `reviewer` inherits `viewer` — which is a property of a position,
-   * not of a person. The lattice now lives in `skills/roles/roles.json`
+   * not of a person. The lattice now lives in `scenarios/roles.json`
    * (`schemas/role-graph.ts`), where `inherits` means what it says. Optional
    * so an unmigrated registry still validates.
    */

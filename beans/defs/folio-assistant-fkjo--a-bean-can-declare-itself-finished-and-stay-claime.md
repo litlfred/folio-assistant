@@ -142,3 +142,23 @@ PR #803's bean — merged twenty minutes earlier, still claimed. Re-derived
 against `main` and closed. `jijc` and `06kg` remain reported and are for
 whoever re-derives them.
 
+## A limitation the check found by reporting its own author
+
+Running `bean-store` after merging `main` on 2026-09-22, the finding list
+includes **`fkjo` itself** — all four boxes ticked, still `in-progress`.
+
+That is correct by the check's rule and is a real limitation of it: a bean
+whose work is **done but not yet merged** is indistinguishable from one whose
+work **landed**. Both read as "criteria met, claim still held".
+
+Not a defect to fix here, and deliberately not fixed by adding a
+"has an open PR" escape: that would make the check consult forge state, which
+is a different kind of fact from the store it reads, and `ci-health` already
+carries why a repository cannot see its own forge without asking. It is a
+limitation of what a store-only check can conclude, and the action text
+already says the right thing — RE-DERIVE, which for this bean means noticing
+the PR is open.
+
+Recorded because the check reporting its own author is the cheapest possible
+demonstration of the boundary.
+

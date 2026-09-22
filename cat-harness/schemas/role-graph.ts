@@ -66,7 +66,7 @@
  *
  * ## Lanes are free text, and that is the defect this module addresses
  *
- * Measured on 2026-09-18 across the twenty diagrams in `skills/workflows/`:
+ * Measured on 2026-09-18 across the twenty diagrams in `processes/`:
  * **60 distinct lane names for roughly two dozen actual roles.** "Reviewer /
  * SME", "Reviewer / subject-matter expert", "Reviewer (SME or editor)" and
  * "Review Committee" are four spellings of one position; "Work plan — beans
@@ -464,8 +464,23 @@ function withoutComments(raw: unknown): unknown {
 }
 
 export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
-  const p = join(kgRoot, ROLE_GRAPH_DIR, ROLE_GRAPH_FILENAME);
-  if (!existsSync(p)) return undefined;
+  // TWO PLACES, because the role graph became a DECLARED DIRECTORY on
+  // 2026-09-21 instead of a subdirectory of one.
+  //
+  // It used to sit at `<skills root>/roles/roles.json`, found by convention
+  // from the skills directory. It is now `scenarios/roles.json`, a directory
+  // of kind `scenarios` in its own right — so callers that hand this function
+  // every declared graph root pass the scenarios directory ITSELF, and
+  // joining `roles/` onto it looks one level too deep.
+  //
+  // Both are tried rather than the old one being dropped: a DOWNSTREAM
+  // instance has not moved its file, and every caller here passes all roots
+  // and takes the first that answers, so an instance on either layout
+  // resolves. Convention first, since that is where an unmigrated instance
+  // keeps it.
+  const p = [join(kgRoot, ROLE_GRAPH_DIR, ROLE_GRAPH_FILENAME), join(kgRoot, ROLE_GRAPH_FILENAME)]
+    .find((c) => existsSync(c));
+  if (p === undefined) return undefined;
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(p, "utf-8"));

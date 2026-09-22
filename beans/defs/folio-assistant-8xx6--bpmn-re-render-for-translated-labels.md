@@ -13,7 +13,7 @@ The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated
 labels appear, handling text overflow.
 
 **Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`
-listed `skills/workflows/publication-workflow.bpmn` in the `dak` entry's
+listed `processes/publication-workflow.bpmn` in the `dak` entry's
 `bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`
 is a PAGE embedding three diagrams. An unresolvable path makes the re-render
 SKIP it, and a skipped diagram is indistinguishable from one that needed no

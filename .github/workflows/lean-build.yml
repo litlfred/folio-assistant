@@ -72,7 +72,14 @@ jobs:
       - name: Build content objects to LaTeX chapters
         continue-on-error: true
         run: |
-          cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+          if [ ! -d content ]; then
+            echo "::notice::no content/ in this checkout — nothing to install (this instance carries no folio)"
+          elif [ -f content/bun.lock ]; then
+            (cd content && bun install --frozen-lockfile)
+          else
+            echo "::warning::content/ carries no bun.lock — installing UNPINNED"
+            (cd content && bun install)
+          fi
           bun run pipeline/build.ts \
             quantum-observable-universe/quantum-observable-universe.ts \
             --out-dir ../chapters/ \

@@ -1,6 +1,6 @@
 {
   "$schema": "folio-upstream-pins/v1",
-  "_comment": "Pinned upstream dependencies, and what has to be true before one of them moves. Read by `bun run check:upstream-pins` and by the `upstream-pin-watch` / `upstream-version-adoption` processes under skills/workflows/. NOTE WHAT IS NOT HERE: the pinned version. It lives in the file the build reads, and `pinnedIn` + `pattern` say how to read it from there — a registry with its own copy would be a second answer to \"what are we running\", free to disagree with the build.",
+  "_comment": "Pinned upstream dependencies, and what has to be true before one of them moves. Read by `bun run check:upstream-pins` and by the `upstream-pin-watch` / `upstream-version-adoption` processes under processes/. NOTE WHAT IS NOT HERE: the pinned version. It lives in the file the build reads, and `pinnedIn` + `pattern` say how to read it from there — a registry with its own copy would be a second answer to \"what are we running\", free to disagree with the build.",
   "pins": [
     {
       "id": "just-the-docs",

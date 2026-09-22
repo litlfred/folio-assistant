@@ -116,7 +116,7 @@ the same declaration, so what is reachable depends on where you are standing.
 
 **[Every skill, by sub-graph →]({{ '/cat-harness/docs-auto/index/skills/' | relative_url }})**
 
-Roles are declared in `skills/roles/roles.json` and bound to lanes by the
+Roles are declared in `scenarios/roles.json` and bound to lanes by the
 diagrams; permissions are declared on the **actor**, because what somebody may
 do cross-cuts the lanes they act in. `bun run kg:audit` checks one criterion
 per join between them and writes its findings as committed sidecars rather than

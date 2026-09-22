@@ -19,11 +19,11 @@ import { describe, expect, test } from "bun:test";
 import { join, resolve } from "path";
 
 import { loadProcessModel } from "../../src/workflow/process-model";
-import { fulfilmentKindsForBpmnType, readRoleGraph, findRole } from "../../schemas/role-graph";
-import { kgRoots } from "../known-skills";
+import { fulfilmentKindsForBpmnType, findRole } from "../../schemas/role-graph";
+import { roleGraphFor } from "../known-skills";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const WF = join(ROOT, "skills", "workflows");
+const WF = join(ROOT, "processes");
 const model = () => loadProcessModel(join(WF, "actor-role-administration.bpmn"));
 
 describe("what it adds over code-change-review", () => {
@@ -66,7 +66,7 @@ describe("the administrator lane", () => {
   });
 
   test("the role it binds admits only people", async () => {
-    const graph = readRoleGraph(kgRoots(ROOT)[0]);
+    const graph = roleGraphFor(ROOT);
     const role = findRole(graph!, "administrator");
     expect(role?.actorKinds).toEqual(["person"]);
   });
@@ -75,7 +75,7 @@ describe("the administrator lane", () => {
     // `role-carries-activity-skill` audits this across the corpus; asserting
     // it here names the failure against THIS diagram, where it is fixable.
     const m = await model();
-    const graph = readRoleGraph(kgRoots(ROOT)[0]);
+    const graph = roleGraphFor(ROOT);
     const role = findRole(graph!, "administrator");
     const lane = m.nodes.get("Task_GrantOrRevoke");
     expect(lane?.skills ?? []).toContain("role-model");

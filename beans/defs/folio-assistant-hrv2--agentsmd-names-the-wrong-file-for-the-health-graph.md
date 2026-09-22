@@ -108,7 +108,7 @@ corpus **1 → 6 on the same tree, and all six were wrong**.
    reported as clean — `dh4f` arriving through a convenience.
 4. **A false positive, found the moment the real defect was fixed.**
    `AGENTS.md`'s actor/role table puts the `` `cat-harness` graph `` in the
-   **Skill** row and `skills/roles/roles.json` in the **Role** row. Flattened,
+   **Skill** row and `scenarios/roles.json` in the **Role** row. Flattened,
    they paired. A table row is now its own block — the same shape as `k59d`'s
    *"an arrow is not always a dependency"* guard, and six of the ten tests are
    false-positive guards for that reason.

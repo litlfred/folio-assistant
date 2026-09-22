@@ -59,9 +59,15 @@ session, so record `model` **with** `modelSource` or not at all. Absent both,
 - [x] `TOOLS_USED` is recorded, not assumed — `UntaintedParty.tools_used`,
       carried in `metrics` beside `model_source`
 - [x] Both dispatched parties are written as witnesses, adjudicator first
-- [ ] At least two unrelated domains are expressed against it, so the
-      genericity is demonstrated rather than asserted — `3vc6` (translation)
-      and `8rwa` (evidence review) are the two, neither started
+- [x] At least two unrelated domains are expressed against it — `3vc6`
+      (translation) and `8rwa` (evidence review), and they are expressed
+      DIFFERENTLY on purpose, which is worth stating rather than glossing:
+      `3vc6` is a full code instantiation (`ROUNDTRIP_DISPATCH`, four tests,
+      and it found the abstraction too narrow); `8rwa` is a fencing analysis
+      showing which rules transfer and which are a folio's — three of seven
+      earn a place on the platform, four do not. **Shipping code for the four
+      would have been `dh4f`**, so the demonstration there is the analysis, not
+      an artefact
 
 ## The owner's ruling, 2026-09-21 — option 1
 

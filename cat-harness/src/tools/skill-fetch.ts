@@ -77,7 +77,7 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // `content-validate`, `content-review`, `content-publish`, `content-plan`,
 // `content-test`, `content-feedback`, `content-retire` — are named by **52**
 // `<folio:skill ref>` activities across the twenty diagrams in
-// `skills/workflows/`. So `workflow_next` handed an agent `content-validate`,
+// `processes/`. So `workflow_next` handed an agent `content-validate`,
 // the agent called `skill_fetch`, and got "package not found". Every step of
 // every content-lifecycle process. `kg:audit`'s `skill-servable` criterion
 // exists to keep that closed.
@@ -117,6 +117,14 @@ function holdsSkill(dir: string): boolean {
  * `requirements`, `framework`, `remote-packages` and `memory` — and `memory`
  * is the one already on the record for making `kg-audit` write **25 bogus
  * sidecars** against agent-memory nodes that are not instruction bodies.
+ *
+ * That list is the 2026-09-19 MEASUREMENT and is kept as measured. Three of
+ * the seven have since left `skills/` — `roles` and `workflows` became the
+ * sibling `scenarios/` and `processes/` on 2026-09-21, and `memory` became a
+ * declared directory of its own — so a scan today meets fewer of them. The
+ * argument is unaffected and is the reason not to re-derive it: the filter
+ * exists because a directory's CONTENTS declare what they are, which is what
+ * makes it hold when the layout moves under it.
  *
  * {@link isSkillMd} is what excludes them, and it is **declaration over
  * location**: a markdown file carrying `$schema:` is stating that it is

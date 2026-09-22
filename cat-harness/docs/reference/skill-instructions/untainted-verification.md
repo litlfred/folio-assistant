@@ -127,15 +127,16 @@ nobody can cheaply re-run it.
 
 ## Why the instrument is the thing to watch
 
-`roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }` shipped
-with a `description` explaining the failures away as expected *"with limited
-vocabulary back-translator"*. The back-translation map held **6 entries for 36
-strings**: every string nobody had back-translated scored 0 and was counted as
-drift, so `fail: 21` was a count of absences.
+A measurement shipped with a `description` explaining its own failures away as
+expected *"with limited vocabulary back-translator"*. The back-translation map
+it scored against held six entries for thirty-six strings, so the failure count
+was a count of absences.
 
 **A measurement whose author has to explain it away is about the instrument,
 not the subject.** All of it was removed — the numbers, the field, the badge
-and both scripts.
+and both scripts. The incident in full, with its numbers, is in
+[`translation-manager`](translation-manager.md) §"The instrument, not the
+translation", where it happened.
 
 ## This is one rule with two homes
 

@@ -28,6 +28,6 @@ WHAT A MATERIALISATION MUST DECIDE, every time, in both instances:
 AND REFRESH IS NOT RE-IMPORT. It needs: what changed upstream, what was modified locally since, and what to do when both. `upstream-pins.json` answers the first for one instance and nothing answers the other two anywhere.
 
 ## Done when
-- `skills/workflows/materialize-remote.bpmn` and `refresh-materialized.bpmn` exist as CALLABLE subprocesses in cat-harness.
+- `processes/materialize-remote.bpmn` and `refresh-materialized.bpmn` exist as CALLABLE subprocesses in cat-harness.
 - `sample-import.bpmn` calls them. `bootstrap`'s initialisation calls them, or a bean records exactly why it cannot yet.
 - One skill covers both callers; neither has its own copy of the four gates.
