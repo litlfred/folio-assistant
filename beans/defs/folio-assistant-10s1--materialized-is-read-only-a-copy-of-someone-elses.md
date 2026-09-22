@@ -367,3 +367,65 @@ page was not inspected — only the data reaching it and the template that reads
 that data. Four assertions in `two-greys.test.ts` pin the finding's presence,
 the kinds it names, the action it offers, and its ABSENCE on instances holding
 nothing frozen.
+
+## The copy-out process exists — `copy-out-materialized.bpmn`
+
+Four lanes, every one bound to a declared role, and the point of drawing it is
+that **a copy-out is two writes and a refusal**, where the common bug is to make
+it one write.
+
+| lane | role | what it does |
+|---|---|---|
+| Reader | `user` | wants to EDIT; the one gate asks about the target, not the actor |
+| Source graph | `corpus` | one task, and it **writes nothing** |
+| Copier's own `folio/` | `author` | lands the bytes, then records `provenance.local` |
+| Verification | `validation-pipeline` | the **source** still hashes to its digest |
+
+**The source lane holds one read-only task on purpose.** A lane that is only
+ever read from is the visible form of the rule: the arrow runs out of it and
+never back. Its emptiness is load-bearing, not incidental — it is where the
+process would go wrong if anybody added a step.
+
+**It starts at an intent to EDIT, not at a request to copy.** A reader does not
+set out to make a copy; they set out to change something, and the rule is what
+turns that into a copy. A diagram starting at "copy this" would never be reached
+by the person who needs it. The writable branch is drawn too, so the process
+does not read as though every edit needs a copy.
+
+**STRICT, for a narrow reason.** Only `Gateway_Frozen` is a gate; everything
+after it is mechanical. What earns strict is that *skipping the process does not
+fail loudly* — an edit in place succeeds, and is caught only later by
+`check:materialized-fixity`. A process whose omission looks exactly like
+compliance is the `vlhk` shape, and advisory would not hold it.
+
+**The copy-out re-opens none of the five materialisation gates.** Those were
+answered when this repository decided it may hold the bytes at all; copying
+something already held is not a second acquisition. The copy does inherit the
+`restrictions` and `copyright` verdicts, and publishing it is the copier's
+folio's decision.
+
+**The copy is NOT read-only.** It is the copier's own content, makes no claim
+about anybody else's bytes, and freezing it would mean the next person needs a
+copy of the copy.
+
+Skill: `large-datasets/skills/copy-out-materialized.md`, registered in that
+package's manifest. All 5 activity skill refs resolve; the kg-qa sidecar is
+clean.
+
+### What a new process owes, learned by failing 8 gates
+
+Not guessed — the gate set named each one. Recorded because the next person
+adding a diagram will otherwise rediscover it the same way:
+
+1. `render:bpmn` — the SVG is generated, never hand-edited
+2. `translate-bpmn --extract` — a `.pot` per gating locale (5)
+3. `gen-skill-docs` — the skill's instruction body is published
+4. `gen-docs-pages` — the process hierarchy and the workflow page
+5. `kg:detangle` — pinned measurements move when a process is added
+6. `translation:status` — the coverage page counts templates
+7. **indexed in the SOURCE chapter**, `content/docs/publication-workflow/every-workflow-in-the-repo.md` — not the generated `docs/publication-workflow.md`, which is where I put it first and which `gen-docs-pages --check` then reported stale
+8. a partition rule for any new script
+
+`check:workflow-refs` states the reason for #7 exactly: *"a diagram no reader of
+the workflow page can find"* — its own history is a page that opened "Nineteen
+BPMN 2.0 files" and listed eight.
