@@ -394,6 +394,10 @@
       }
     }
   ],
+  "_folioMount_comment": "R30, bean j2if. The library VIEW is a page a reader browses, so it carries the folio the same way a who-iris replica does \u2014 board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the generated viewer pages whose rows offer a pull-out; check:folio-mount fails the build for one that lost the mount. Written as docs/cat-harness/library/ rather than a pattern because that is where viewerPlacement actually puts them, and a declaration that guessed would be a second copy of the mount table.",
+  "folioMount": {
+    "roots": ["docs/cat-harness/library/"]
+  },
   "directories": [
     {
       "id": "tools",

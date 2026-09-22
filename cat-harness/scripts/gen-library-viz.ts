@@ -48,6 +48,8 @@
  *   bun run library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+
+import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
@@ -89,7 +91,19 @@ function projection(g: LibraryGraph): unknown {
   };
 }
 
-export function viewerHtml(dataHref: string, scope = ""): string {
+/**
+ * `mount` is the folio mount fragment, passed IN rather than composed here.
+ *
+ * It carries the pattern that finds the site root from one of these pages'
+ * URLs, and that pattern is a fact about where the CALLER publishes — the
+ * handler and segment it chose. Building it inside this shared viewer would
+ * bake one publication layout into a function two generators call, which is
+ * the same boundary `gen-iris-pages` keeps by declaring its own route.
+ *
+ * Empty by default, so a caller that publishes no folio surface emits no
+ * mount and nothing changes for it. Absent is a real state.
+ */
+export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -287,7 +301,15 @@ function renderList(){
       '><button type="button" data-k="'+c.k+'">'+esc(c.t)+"</button></th>";
   }).join("") + "</tr></thead><tbody>";
   h += r.map(function(e){
-    return "<tr>" + COLS.map(function(c){
+    /* THE ROW DECLARES ITSELF, and the folio reads nothing else.
+       A selector guessing at cell positions would bind to this generator's
+       markup and break silently the next time a column moves; an attribute
+       is a contract. docs-ui.js decorates any row carrying these and
+       ignores every page that has none -- so this generator knows nothing
+       about the folio beyond emitting three attributes. R30, bean j2if. */
+    var key = e.instance + "/" + e.id;
+    return '<tr data-fa-library-item="' + esc(key) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c){
       return "<td"+(c.n?' class="num"':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
@@ -393,6 +415,7 @@ fetch(DATA_HREF).then(function(r){
     "That is not an empty corpus \\u2014 it is a corpus that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>
+${mount}
 </body>
 </html>
 `;
@@ -494,8 +517,21 @@ if (import.meta.main) {
     process.exit(0);
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
+
+  // THE FOLIO MOUNT, and the route pattern is composed from the very values
+  // that decided where these pages go — so relocating the viewer moves the
+  // pattern with it rather than leaving a second copy of the mount table to
+  // disagree. `folio-mount.ts` owns the mechanism; this owns the route.
+  //
+  // Non-greedy up to `<handler>/<seg>/`, which is exactly what
+  // `viewerPlacement` was handed. Correct under the bare site, under the
+  // project baseurl, and under `/STAGING/<branch>/` — the four bases an
+  // absolute URL would be right about once.
+  const folioMount = folioMountFragment(
+    new RegExp(`^(.*?)${handler}\\/${seg}\\/`),
+  );
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+  emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
 
   // One page per SUBJECT — the instances whose assets this handler renders.
   // Read from the entries and the queues rather than from the directory list,
@@ -506,7 +542,7 @@ if (import.meta.main) {
   ])].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
   }
 
 
