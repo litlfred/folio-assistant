@@ -70,6 +70,23 @@ export interface FolioAssistantDependency {
   /** Display name of the dependency (e.g. "smart-base", "qou-platform"). */
   name: string;
 
+  /** Reverse-DNS package identity, stable forever. See the schema. */
+  id?: string;
+
+  /** WHAT is depended on — an exact version. See the schema; ranges are refused. */
+  version?: string;
+
+  /**
+   * Was this dependency DERIVED from the declaration's `needs` rather than
+   * authored in the config?
+   *
+   * Set by {@link dependenciesFromNeeds} and never written to a file. It is
+   * here so a consumer can tell a stated dependency from an inferred one —
+   * `check:needs-dependencies` reports on the difference, and a caller that
+   * could not tell them apart would report a derived edge as a declaration.
+   */
+  derivedFromNeeds?: boolean;
+
   /**
    * Local filesystem path to the dependency root. May be absolute or
    * relative to the folio root. Checked first — if present and the
@@ -164,10 +181,78 @@ export interface HarnessConfig {
 
 // ── Zod schemas ─────────────────────────────────────────────────
 
+/**
+ * An EXACT semver version. Ranges are refused.
+ *
+ * Rule 2 of `fsh-guts/proposals/instance-versioning.md` §2, and the one that
+ * matters most: **FHIR pins exact versions and has no way to express a range**,
+ * so a downstream that must align to FHIR cannot be handed `^1.2.0`. The
+ * constraint is alignment, and alignment is not a preference here — the owner
+ * called it a hard constraint on 2026-09-20 because some instances are
+ * consumed from outside this monorepo.
+ *
+ * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
+ * (rule 3). They are deliberately accepted HERE and barred from the published
+ * tier by `check:published-refs`, which is the same line §3.3 draws for a SHA:
+ * a staging reference is fine in a checkout and unresolvable to an external
+ * consumer.
+ */
+export const ExactVersionSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (v) =>
+      v === "current" ||
+      v === "dev" ||
+      /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(v),
+    {
+      message:
+        "an exact semver version, `current` or `dev` — ranges (^, ~, >=, *, ||, x) cannot be expressed in FHIR's dependsOn and are refused",
+    },
+  );
+
 export const FolioAssistantDependencySchema = z.object({
   name: z.string().min(1),
+  /**
+   * The package identity — reverse-DNS, stable forever, never reused.
+   *
+   * SEPARATE FROM `name`, which is a display handle. An id is what an external
+   * consumer resolves; `instance-versioning.md` §3.2. Optional, because §3.1
+   * settles that most instances are NOT publishable and minting an id for one
+   * nothing outside resolves is ceremony with no reader.
+   */
+  id: z.string().min(1).optional(),
+  /**
+   * WHAT IS DEPENDED ON — the exact version, for computing the overlay.
+   *
+   * The owner, 2026-09-22, on consolidating the stack onto dependencies:
+   * *"i want to adopt the sushi/fhir IG(/npm?) versioning dependencies for
+   * computing overlays. SHAs are for provenance, digital signing, staging. we
+   * need both, different needs."*
+   *
+   * So this field and `ref`/`git` below are NOT two spellings of one thing and
+   * must not be collapsed into one: this says WHAT, they say HOW TO FETCH and
+   * WHICH BYTES. A dependency may carry both, and they answer different
+   * questions about it.
+   */
+  version: ExactVersionSchema.optional(),
   path: z.string().optional(),
   git: z.string().url().optional(),
+  /**
+   * HOW TO FETCH WHILE STAGING, and the provenance of the bytes — not what is
+   * depended on.
+   *
+   * A SHA is a perfectly good pin and a **useless published reference**: it
+   * names a commit in a repository a downstream consumer may not have, may not
+   * be able to fetch, and that FHIR's `dependsOn` has no field for. A published
+   * artefact carrying one is not a stricter pin, it is an unresolvable one —
+   * `instance-versioning.md` §3.3, enforced by `check:published-refs`.
+   *
+   * It DEFAULTS TO THE DEFAULT BRANCH when absent, which makes an unpinned
+   * dependency a different dependency on Tuesday with nothing saying so (bean
+   * `dhvf`). That is why `version` exists rather than this field being made
+   * stricter.
+   */
   ref: z.string().optional(),
   provides: z
     .array(z.enum(["skills", "content", "translations"]))
@@ -287,7 +372,9 @@ import {
   isKgOnlyDirectory,
   materialiseDirectories,
   ownDirectories,
+  instanceRootsIn,
   readDeclaration,
+  repoRootFor,
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
@@ -539,6 +626,90 @@ export function resolveDependencyPath(
  * @param seen - Set of already-visited roots (for cycle detection).
  * @returns Array of resolved dependencies in depth-first order.
  */
+/**
+ * The dependencies implied by an instance's declared `needs`, for edges whose
+ * target is an instance in this same checkout.
+ *
+ * ## Why this exists
+ *
+ * The owner, 2026-09-22: *"can we consolidate needs etc -> dependencies?"*,
+ * then *"i want to adopt the sushi/fhir IG(/npm?) versioning dependencies for
+ * computing overlays. SHAs are for provenance, digital signing, staging. we
+ * need both, different needs."*
+ *
+ * Before this, `needs` and `dependencies` were two relations that nothing
+ * reconciled: `needs` drove `dependency-order`'s sort and `harness-tiles`'
+ * navbar spine, while the skill and content overlay read config
+ * `dependencies` — and **exactly one instance in the repository declared
+ * one**. So the whole `smart-*` stack had a correct navbar spine, a correct
+ * topological order, green gates, and **not one skill crossing a layer
+ * boundary**. `smart-trust` could not reach `ig-build-pipeline`, the skill
+ * governing how its own IG is built. Bean `5kn6`.
+ *
+ * That was invisible precisely because `needs` being right LOOKS like the
+ * stack being wired.
+ *
+ * ## The two tiers, and why a derived edge carries no version
+ *
+ * `instance-versioning.md` §3.3: a SHA may stage, only a version publishes.
+ * An edge between two instances in ONE checkout is a staging-tier reference —
+ * the consumer has the repository, so a path resolves it, and a version would
+ * be asserting a published identity that §3.1 says most instances should not
+ * have. So a derived dependency carries `path` and **no `version`**, and that
+ * is a statement rather than an omission: it is not publishable, and
+ * `check:published-refs` is what stops one reaching an external consumer.
+ *
+ * An edge to something OUTSIDE the checkout cannot be derived — a name gives
+ * no git URL and no version — so it stays authored in the config. That is the
+ * division of labour: **`needs` states the stack, the config states what a
+ * name cannot carry.**
+ *
+ * ## A name that resolves to nothing is REPORTED, never dropped
+ *
+ * It comes back in `unresolved`. Silently skipping it would make "this layer
+ * is external" and "this layer is misspelled" the same observation, and only
+ * one of them is fine.
+ */
+export function dependenciesFromNeeds(instanceRoot: string): {
+  dependencies: FolioAssistantDependency[];
+  unresolved: string[];
+} {
+  const abs = resolve(instanceRoot);
+  let needs: string[] = [];
+  try {
+    needs = readDeclaration(abs)?.needs ?? [];
+  } catch {
+    // A declaration that cannot be read is not this function's to diagnose;
+    // `readDeclaration`'s own callers throw on it. Here it means no derivation.
+    return { dependencies: [], unresolved: [] };
+  }
+  if (needs.length === 0) return { dependencies: [], unresolved: [] };
+
+  const repoRoot = repoRootFor(abs);
+  const byName = new Map<string, string>();
+  for (const root of instanceRootsIn(repoRoot)) {
+    try {
+      const n = readDeclaration(root)?.name;
+      if (n !== undefined) byName.set(n, root);
+    } catch {
+      // An unreadable sibling cannot be matched against; it is not an error
+      // here, and `check:declaration-filename` is what reports it.
+    }
+  }
+
+  const dependencies: FolioAssistantDependency[] = [];
+  const unresolved: string[] = [];
+  for (const name of needs) {
+    const root = byName.get(name);
+    if (root === undefined) {
+      unresolved.push(name);
+      continue;
+    }
+    dependencies.push({ name, path: root, derivedFromNeeds: true });
+  }
+  return { dependencies, unresolved };
+}
+
 export function resolveDependencyTree(
   folioRoot: string,
   seen: Set<string> = new Set(),
@@ -548,7 +719,16 @@ export function resolveDependencyTree(
   seen.add(absRoot);
 
   const config = readHarnessConfig(absRoot);
-  const deps = config?.dependencies?.folioAssistant ?? [];
+  const authored = config?.dependencies?.folioAssistant ?? [];
+
+  // AUTHORED WINS ON NAME. A config entry can say what a derived one cannot —
+  // a git URL, a version, a `provides` narrowing — so letting derivation
+  // override it would silently widen a deliberately narrowed edge.
+  const authoredNames = new Set(authored.map((d) => d.name));
+  const derived = dependenciesFromNeeds(absRoot).dependencies.filter(
+    (d) => !authoredNames.has(d.name),
+  );
+  const deps = [...derived, ...authored];
   const resolved: ResolvedDependency[] = [];
 
   for (const dep of deps) {
