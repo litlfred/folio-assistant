@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jpjt
 title: 'F8/F9 is structurally blocked on R25''s glass: every folio surface today needs just-the-docs furniture'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-21T23:20:00Z
-updated_at: 2026-09-22T08:21:52Z
+updated_at: 2026-09-22T08:54:18Z
 parent: folio-assistant-6lb8
 ---
 
