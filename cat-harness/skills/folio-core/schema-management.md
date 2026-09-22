@@ -221,6 +221,30 @@ The handler is the instance doing the rendering, the kind names what it
 renders, and the **subject is optional** — a page with no subject is the view
 over every subject.
 
+### When the two collide — the handler wins
+
+An instance that is **both** — this one renders every graph here AND has a site
+of its own — makes rules 1 and 2 name the same path, `<base>/<instance>/`, and
+nothing above chooses between them. The owner settled it on 2026-09-21:
+
+> harness handler wins.
+
+So `/cat-harness/` is the handler namespace and nothing else. The authored page
+that sat there moved to `docs/platform.md`, and `gen-handler-index.ts` generates
+the route's index from `harnessTiles`. Bean `8h42`.
+
+**The rule is not "the generated page wins"** — it is that rule 1 is the one
+with a *kind* in it, so it is the rule that can still address everything it
+needs to once it owns the root. Rule 2 has nowhere else to go only if the
+instance has no other name to present itself under, and an instance that is
+doing both has exactly that: `docs/platform.md` is reachable, linked from the
+generated index, and no route was lost.
+
+This ruling was recorded on the generator and in the bean for four hours and
+**not here, beside the rules it arbitrates** — which is
+[`symbiotic-interaction`](symbiotic-interaction.md) §2's third worked example
+and the reason that section exists.
+
 **A subject page must NEVER be published at `<base>/<subject>/<kind>/`.** That
 is rule 2's namespace, and a viewer parked there squats on the instance's own
 site. An earlier draft was about to publish `who-iris/library/` exactly there,
