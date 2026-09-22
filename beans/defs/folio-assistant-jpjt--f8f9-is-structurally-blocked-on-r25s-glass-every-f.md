@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jpjt
-title: "F8/F9 is structurally blocked on R25's glass: every folio surface today needs just-the-docs furniture"
-status: todo
+title: 'F8/F9 is structurally blocked on R25''s glass: every folio surface today needs just-the-docs furniture'
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-21T23:20:00Z
-updated_at: 2026-09-21T23:20:00Z
+updated_at: 2026-09-22T08:21:52Z
 parent: folio-assistant-6lb8
 ---
 
@@ -65,12 +65,18 @@ later. The fragment ships WITH the glass.
 
 ## Done when
 
-- [ ] R25's glass exists (see the warning on R30 before building it)
-- [ ] `cat-harness` exports the folio mount fragment and its marker
-- [ ] `gen-iris-pages.ts` calls it rather than writing the tags itself
-- [ ] a gate fails the build for a generated page with no folio mount
-- [ ] the gate reuses `bodyInsertionPoint()` — `ur84` is not reproduced
-- [ ] a witness test reads a real generated who-iris page, not a fixture
+- [x] R25's glass exists — `funp`, and `mountGlass()` is hoisted out of
+      `mountTodoBoard` so it needs none of a board's page furniture
+- [x] `cat-harness` exports the folio mount fragment and its marker —
+      `scripts/folio-mount.ts`
+- [x] `gen-iris-pages.ts` calls it rather than writing the tags itself
+- [x] a gate fails the build for a generated page with no folio mount —
+      `check:folio-mount`, falsified three ways
+- [x] `ur84` is not reproduced — the comment scan was EXTRACTED to
+      `html-comments.ts` and `bodyInsertionPoint` now uses it, so there is one
+      scanner rather than the second copy this item was written to prevent
+- [x] a witness test reads a real generated who-iris page, not a fixture —
+      `test/folio-mount.e2e.ts`, 9 specs
 
 ## Waits on `folio-assistant-j2if` — and this is a DEPENDENCY, not a block
 
@@ -100,3 +106,55 @@ finds this bean should pick up `j2if`, not wonder whether to take this over.
 `j2if` if the epic allowed a third level; `check:bean-parents` requires every
 open bean to sit directly under an epic or milestone, so it sits under `6lb8`
 beside `j2if` with the dependency written in the body instead.
+
+## Summary of changes
+
+**The blocker was measured gone before anything was built.** This bean's own
+table said F8/F9 waited on three surfaces that all need just-the-docs
+furniture. `funp` hoisted `mountGlass()` out of `mountTodoBoard` and calls it
+from `init()` unconditionally, and `glass.e2e.ts` proves it against a fixture
+with no `<main>`, no `.main-content`, no sidebar header and a todo index that
+404s — every condition a replica page meets. So the ordering recorded here
+("rides after the glass") had become wrong, and the correction is the reason
+this was picked up rather than glass stage 2: the library view is a
+standalone generated page too, so **stage 2 sits behind this, not in front**.
+
+`scripts/folio-mount.ts` — `MARKER`, `siteRootOf`, `fragment`, `hasMount`.
+`who-iris/who-iris.json` declares `folioMount.roots` and one exemption;
+`gen-iris-pages.ts` emits `${FOLIO_MOUNT}` and 11 of 11 generated pages carry
+it. `check:folio-mount` is registered in `package.json` and
+`code-quality-gates.yml`.
+
+**The root is derived in the browser**, because these pages are served from
+two mount routes AND under a baseurl AND under `/STAGING/<branch>/`: an
+absolute URL is correct on exactly one of four, and a relative one on at most
+two. The pattern lives in who-iris, because a route is a fact about that
+instance.
+
+**The scope is declared, not inferred.** Measured first: 67 HTML files, 60
+standalone, over `cat-harness/docs` (38), who-iris (12), `cat-harness/ui` (4),
+`_kg` fixtures (5), the viewer (1). A gate over all of them would fail honest
+pages and accumulate exemptions until it asserted nothing. An instance with no
+`folioMount` block is reported by name as NOT CONFIGURED — a third state, not
+a pass.
+
+## Falsified
+
+**The gate, three ways, each exiting 1:** a page whose marker is removed; a
+page whose marker is present but COMMENTED OUT (the `ur84` shape, which a
+"does the string appear" check passes); an exemption naming a path that holds
+no pages.
+
+**The fidelity test was VACUOUS and said so only under falsification.**
+`docs-ui.css` is 587 selectors and exactly one is globally scoped in a way a
+replica can feel (`:focus-visible`). The e2e compares every element's computed
+box and colour with and against the mount — and it passed a deliberately
+injected `body { font-size: 22px }`. The control was wrong: it renamed the
+marker ATTRIBUTE, which is what the gate reads, not what makes an inline
+script run, so both sides of the comparison loaded the stylesheet. Fixed to
+strip the whole `<script>` element; the same injection now fails it. The
+reason is kept in the file, because a control that does not remove the thing
+under test fails silently in the passing direction.
+
+With the control correct, **no element of the replica moves, resizes or
+changes colour.**

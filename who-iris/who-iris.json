@@ -20,6 +20,16 @@
       "description": "What is here, what is only referenced, and how to tell."
     }
   ],
+  "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse \u2014 board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
+  "folioMount": {
+    "roots": ["library/", "docs/"],
+    "exempt": [
+      {
+        "path": "uploads/",
+        "reason": "captured IRIS source \u2014 the artefact ingestion exists to preserve, not a page this repository authors"
+      }
+    ]
+  },
   "directories": [
     {
       "id": "library",
