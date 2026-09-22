@@ -1,12 +1,12 @@
 ---
 # folio-assistant-gr5h
 title: declared-directory-resolves has been over bun's default 5s timeout the whole time — 9.3s measured, passing only on a fast enough machine
-status: todo
+status: completed
 type: bug
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-22T06:55:59Z
-updated_at: 2026-09-22T06:55:59Z
+updated_at: 2026-09-22T07:22:05Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-22 while driving `a58y` to green. **Pre-existing on `main`, not
@@ -63,3 +63,16 @@ spawns 55 processes — is now stated.
 - [x] Measured: 9.3 s against a 5 s default, three runs within 170 ms
 - [x] Established as pre-existing — 55 modules on `main` and on the branch
 - [x] The budget is derived from the workload, so it cannot go stale by growth
+
+## Summary of Changes
+
+`declared-directory-resolves` was timing out, not failing an assertion — 9.3 s
+of subprocess spawns against bun's 5 s default, so it had been over budget for
+as long as the corpus has been this size and passed only on fast enough
+machines. Established as pre-existing: 55 modules on `main` and on the branch.
+
+The budget is now derived from the module count (`modules.length *
+SPAWN_BUDGET_MS`) rather than written as a number, because a number is exactly
+what went stale. Nothing skipped, disabled or quarantined.
+
+Verified on `main` at `2ce66fc`. Merged in #848.
