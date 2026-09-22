@@ -438,25 +438,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790112158">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790112645">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790112158">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790112645">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790112158">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790112645">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790112158">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790112645">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -473,7 +473,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790112158" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790112645" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -898,6 +898,82 @@ will not run locally (the <code class="language-plaintext highlighter-rouge">jus
 proxy), stub the <strong>theme</strong> and build anyway; never substitute the thing under
 test. <code class="language-plaintext highlighter-rouge">continual-progress</code> §”A template is not a page” carries the discipline.</li>
 </ul><hr />
+<h2 id="and-a-green-gate-is-not-a-verified-fact">
+  
+  
+    <a href="#and-a-green-gate-is-not-a-verified-fact" class="anchor-heading" aria-labelledby="and-a-green-gate-is-not-a-verified-fact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> …and a green gate is not a VERIFIED FACT
+  
+  
+</h2>
+    
+
+<p>The step after that one. The section above is about a gate that could not <em>see</em>
+the artefact; this is about a gate that saw a different question and answered it
+correctly.</p>
+
+<p>Measured 2026-09-22 on the work-plan consolidation’s own first commit
+(issue #956). A session wrote three delegated claims, each citing bean <code class="language-plaintext highlighter-rouge">k59d</code> —
+<em>milestone critical paths go stale here</em> — and each instructing its reader to
+<strong>re-verify the path before acting on it</strong>. It then copied <code class="language-plaintext highlighter-rouge">p5wm</code>’s critical
+path into one of them verbatim, through four <code class="language-plaintext highlighter-rouge">completed</code> beans.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>claim</th>
+      <th>carried the stale content</th>
+      <th><code class="language-plaintext highlighter-rouge">check:stale-paths</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">10uc</code></td>
+      <td>yes, as a numbered path</td>
+      <td><strong>✗ failed the push</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">w0cr</code></td>
+      <td>yes, as prose</td>
+      <td><strong>✓ passed</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two lessons, and they are different failures that look identical from the
+outside.</p>
+
+<p><strong>1. A rule that lives only in prose has a compliance ceiling nobody measures.</strong>
+Knowing about <code class="language-plaintext highlighter-rouge">k59d</code> — citing it, quoting it, instructing three other agents
+about it — did not prevent reproducing <code class="language-plaintext highlighter-rouge">k59d</code> in the same commit. The gate
+worked and the discipline did not. When you find yourself writing a rule into
+prose, ask what would fail if somebody ignored it; if the answer is <em>nothing</em>,
+you have written a wish. The measurable form of the same rule is a check, a
+schema field, or a test — and <code class="language-plaintext highlighter-rouge">bean-blocking</code>’s <code class="language-plaintext highlighter-rouge">status: blocked</code> is the worked
+example of the other outcome: a prescribed form the tool refuses to store has a
+<strong>0 % ceiling</strong>, and across 99 in-progress beans it was honoured exactly 0 times.</p>
+
+<p><strong>2. A gate’s silence is bounded by its stated scope, and <code class="language-plaintext highlighter-rouge">w0cr</code> is why.</strong>
+<code class="language-plaintext highlighter-rouge">check:stale-paths</code> judges two shapes — an id adjacent to an arrow, and a
+numbered step under a path heading — and <strong>declines</strong> everything else, on
+purpose and in writing. Prose that merely mentions a closed bean is outside it.
+So <code class="language-plaintext highlighter-rouge">w0cr</code> passed while carrying the same defect, and a reader who stopped at the
+tick was entitled to believe it.</p>
+
+<p><strong>Green over a narrow rule is worse than red</strong>, because red is examined. This is
+<code class="language-plaintext highlighter-rouge">1xhc</code>’s <em>“a gate that does not fire is indistinguishable from one that passed”</em>,
+and it is the same shape as <code class="language-plaintext highlighter-rouge">check:ci-health</code> reporting eight workflows green
+beside <strong>31 further workflow files that produced no run at all</strong> — which it
+labels <em>unjudged, not green</em>. Anything summarising that as green CI is the
+defect.</p>
+
+<p>So, before quoting a tick as evidence:</p>
+
+<blockquote>
+  <p><strong>What does this gate say it judges, and is my claim inside it?</strong></p>
+</blockquote>
+
+<p>Read the check’s own header — every one here states its scope and its declined
+cases — rather than inferring the scope from the fact that it ran.</p><hr />
 <h2 id="fast-versus-full-and-why-the-split-is-not-a-judgement-call">
   
   
@@ -1334,7 +1410,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35786022126"><code>95e63c1</code></a> &middot; 2026-09-22T21:22:32Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35786977879"><code>295d82b</code></a> &middot; 2026-09-22T21:30:41Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

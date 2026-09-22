@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 530,
+      "count": 545,
       "unit": "beans"
     }
   },
@@ -191,6 +191,20 @@
       "updatedAt": "2026-09-21T10:51:15Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R4 + R8. Unit 5 of 10.\n\nThe owner: *\"this dymanic moving state is overlayed, its an 'extra'. on stndard\nfolio just simple tile based listing.\"* and, from the original ask, *\"but ALWAYS\ncollapsable to linearly rendablee/just the docs.\"*\n\n**This is an accessibility floor, not a fallback.** A board that cannot be read\nlinearly cannot be ",
       "file": "beans/defs/folio-assistant-0jtj--linear-floor-the-tile-listing-is-the-artefact-and.md"
+    },
+    {
+      "id": "folio-assistant-0jtl",
+      "title": "SKILLS: a review package in folio-assistant-core — large-document-review, review-heatmap, review-navigation, learned from WHO SOPs and inspection practice",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:02:55Z",
+      "preview": "Owner: *\"review ... skills for document review for large things like a DAK or\nL1 digital transofrmation hadbook\"* and *\"put into folio-assistant-core\"*.\n\n**What.** A `review` skill package at `folio-assistant-core/skills/review/`,\ndeclared in folio-assistant-core.json:\n- `large-document-review`: the method. Slice the document by the folio/\n  graph, not by page. Assign slices to reviewer roles by s",
+      "file": "beans/defs/folio-assistant-0jtl--skills-a-review-package-in-folio-assistant-core-la.md"
     },
     {
       "id": "folio-assistant-0lmb",
@@ -909,6 +923,20 @@
       "file": "beans/defs/folio-assistant-40fl--docs-site-is-red-on-main-a-foreign-instances-expor.md"
     },
     {
+      "id": "folio-assistant-423d",
+      "title": "REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:04:32Z",
+      "preview": "Owner: *\"and then manage review comments etc.\"*\n\n**The real obstacle, measured.** `docs-ui.js` states it outright: *\"A\npublished page cannot write back to the repo\"* (lines 2077 and 2592). The\nreview page is static on gh-pages, so \"manage comments\" needs a WRITE PATH,\nand choosing it is the owner's decision:\n\n| option | anchors to | cost |\n|---|---|---|\n| A. GitHub PR review comments | a line of a",
+      "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
+    },
+    {
       "id": "folio-assistant-46uh",
       "title": "An agent's opening steps must DETERMINE the language it communicates in, rather than defaulting to the one the tooling happens to be written in",
       "status": "completed",
@@ -1243,6 +1271,20 @@
       "updatedAt": "2026-09-20T14:37:58Z",
       "preview": "## What is true TODAY, measured, because I got it wrong first\n\nI reported in session chat that \"qou is running without that axis as of this\nmerge\", after fencing `detangler-archimedean-wall` behind `qaAxes`. **That was\nwrong, and the reason is the pin.**\n\n`qou/.folio-assistant-pin` → `df28d02` (2026-09-07). Read at that commit:\n\n- `folioOptionalAxes()` exists and reads `join(findContentRepoRoot(),",
       "file": "beans/defs/folio-assistant-5xfr--qous-pin-bump-must-rename-folioconfigjson-and-add.md"
+    },
+    {
+      "id": "folio-assistant-5xzc",
+      "title": "QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:02:54Z",
+      "preview": "Owner: *\"blocks are in the knoledge graph folio/. QA, to manage IDs\"*.\n\n**Why first.** Every other child keys on the block id. A diff matches blocks\nacross `main` and STAGING by id, a review comment anchors to an id, and a heat\nmap aggregates by id. If ids drift, the diff reads everything as removed and\nre-added, and every comment orphans. That is how this whole epic fails.\n\n**Measured 2026-09-22.",
+      "file": "beans/defs/folio-assistant-5xzc--qa-block-ids-in-the-folio-graph-are-unique-and-sta.md"
     },
     {
       "id": "folio-assistant-5y4b",
@@ -2949,6 +2991,20 @@
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
     {
+      "id": "folio-assistant-d903",
+      "title": "DIFF RENDERERS: a registry of per-block-kind renderers the reviewer selects — word, inline, side-by-side, DAK-structural, visual",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:04:32Z",
+      "preview": "Owner: *\"select different diff rednerers/viz\"*.\n\n**What.** A renderer registry, declared as DATA: `{ id, label, appliesTo:\nblock kinds, input: ChangeSet entry }`. The review page offers a selector per\nblock, plus a default per kind. Candidate renderers, cheapest first:\n\n1. **word diff of the source prose**: `<ins>`/`<del>`, no rendering needed.\n2. **inline rendered diff**: the rendered HTML of bot",
+      "file": "beans/defs/folio-assistant-d903--diff-renderers-a-registry-of-per-block-kind-render.md"
+    },
+    {
       "id": "folio-assistant-db7g",
       "title": "FSH-GUTS ACTION: [fishbones] relocates open content into fsh-guts, behind a confirm that names the scope",
       "status": "completed",
@@ -3033,6 +3089,20 @@
       "file": "beans/defs/folio-assistant-dzl3--playwrightconfigts-runs-a-test-servercjs-that-does.md"
     },
     {
+      "id": "folio-assistant-eb4l",
+      "title": "REVIEW NAVIGATION: outline, where-am-I, next change / next unreviewed, minimap — one key or one click each",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:04:32Z",
+      "preview": "Owner: *\"review navigation\"*.\n\n**What a 300-page reader needs that does not exist** (measured 2026-09-22):\n- **Outline.** The owner withdrew a folio-level TOC (\"no toc\"), so this is a\n  NAVIGATION pane on the review page, not a TOC in the content. Confirm that\n  this does not reopen the ruling.\n- **Where am I**: a breadcrumb along the folio/ graph path. Nothing exists; the\n  only breadcrumb hit is",
+      "file": "beans/defs/folio-assistant-eb4l--review-navigation-outline-where-am-i-next-change-n.md"
+    },
+    {
       "id": "folio-assistant-ebvl",
       "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
       "status": "completed",
@@ -3059,6 +3129,20 @@
       "updatedAt": "2026-09-20T12:02:21Z",
       "preview": "The owner's decision on `ulqj` is CSVW. This is the build.\n\n> \"make csvw a skill and associated tool in document ingestion. part of\n> csv/excel processing is extract tabular metadata (tables, rows, headers,\n> cols, data types, location on sheet, row, col, etc) as best as can. generic\n> workflows, specific tools and skill depending on format\"\n\n## The shape the owner asked for\n\n**Generic workflow, f",
       "file": "beans/defs/folio-assistant-eief--csvw-skill-ingestion-tools-tabular-metadata-as-far.md"
+    },
+    {
+      "id": "folio-assistant-en2d",
+      "title": "PROCESS: large-document-review.bpmn composing staging, review-task, adjudication and a coverage gate — and whether editor already is the coordinator",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:04:31Z",
+      "preview": "Owner: *\"process, roels ... integrate into current processes\"*.\n\n**Roles, measured 2026-09-22.** `roles.json` already declares reviewer,\neditor, narrative-reviewer, qc-reviewer, clinical-sme, adjudicator,\nfeedback-provider and stakeholder. `.claude/skills/actors/` adds\ntechnical-officer and content-reviewer. **No new review role is obviously\nneeded.** The candidate is a **review coordinator**: som",
+      "file": "beans/defs/folio-assistant-en2d--process-large-document-reviewbpmn-composing-stagin.md"
     },
     {
       "id": "folio-assistant-en68",
@@ -4073,6 +4157,20 @@
       "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
     {
+      "id": "folio-assistant-jwox",
+      "title": "CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:03:10Z",
+      "preview": "**What.** A `ChangeSet` node computed between two refs (`origin/main` and the\nbranch that STAGING rendered). For each block it records one of: added,\nremoved, modified (prose / structure / metadata), moved (new parent or order),\nor renamed (via `renamedFrom`, child 01). It is keyed on folio/ graph ids,\n**not** on file paths.\n\n**Why not reuse `diff`.** The `diff` skill is `git diff origin/main..HEA",
+      "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
+    },
+    {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
       "status": "in-progress",
@@ -4180,7 +4278,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:29:28Z",
-      "updatedAt": "2026-09-22T18:29:28Z",
+      "updatedAt": "2026-09-22T18:44:00Z",
       "preview": "## What this is\n\nStream 4 of 4 in the 2026-09-22 consolidation, added by the owner after the\nfirst three were launched. It owns **the mechanism that produced the stall**,\nnot a feature area: `1xhc` (CI reliability, 11 open), `1swy` (QA, 17 open) and\n`ahvw` (process, 15 open) — **43 beans** — plus the stale-claim sweep itself.\n\nThe other three streams make the goals move. This one makes the instrum",
       "file": "beans/defs/folio-assistant-kpcl--stream-44-trust-the-instruments-the-stale-claim-sw.md"
     },
@@ -4871,6 +4969,20 @@
       "file": "beans/defs/folio-assistant-oisv--staging-a-build-that-produces-nothing-now-empties.md"
     },
     {
+      "id": "folio-assistant-ojcx",
+      "title": "FOLIO STAGING: a folio in its own repository gets no STAGING build — feature-staging is not reusable and init-folio never writes it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:04:36Z",
+      "updatedAt": "2026-09-22T21:04:36Z",
+      "preview": "Epic q4jm roast, finding R1, measured 2026-09-22.\n\n- `.github/workflows/feature-staging.yml` triggers on `pull_request`, `pull_request_target` and `workflow_dispatch`. There is **no `workflow_call`**, so a folio repository cannot reuse it.\n- `cat-harness/scripts/init-folio.ts` mentions staging **0** times.\n\nSo STAGING, and with it every before/after in this epic, exists only for the platform's own",
+      "file": "beans/defs/folio-assistant-ojcx--folio-staging-a-folio-in-its-own-repository-gets-n.md"
+    },
+    {
       "id": "folio-assistant-op30",
       "title": "DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README",
       "status": "completed",
@@ -5195,6 +5307,34 @@
       "file": "beans/defs/folio-assistant-q2wn--checkpartitions-import-regex-cannot-see-a-bare-si.md"
     },
     {
+      "id": "folio-assistant-q4cm",
+      "title": "EDIT SET: one feature branch per set of document edits, reviewed in review/ — and a tool where accept is a GitHub PR approval that gates publishing",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:20:37Z",
+      "preview": "Owner, 2026-09-22: *\"skill feature branch for set of document edits, uses\nvisuakizer. tool, github/git cli for accept=approve for publishing\"*.\n\n**The unit of review is an EDIT SET**: one feature branch holding one coherent\nset of document edits. It gets a staging build, a ChangeSet (child 02) and a\nreview/ page (child 04). The branch is what gets accepted or not. An\nindividual block edit is not.\n",
+      "file": "beans/defs/folio-assistant-q4cm--edit-set-one-feature-branch-per-set-of-document-ed.md"
+    },
+    {
+      "id": "folio-assistant-q4jm",
+      "title": "LARGE-DOCUMENT REVIEW: a review/ visualiser for a folio's diff from main — pluggable renderers, heat maps, navigation and review comments, keyed on folio/ block ids",
+      "status": "todo",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:29Z",
+      "updatedAt": "2026-09-22T21:09:45Z",
+      "preview": "## What this is\n\nOwner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), verbatim across four\nturns because each one moved the scope:\n\n> learn skills for document review for large things like a DAK or L1 digital\n> transofrmation hadbook. use it to develop tools in redendering/visauatlion as\n> part of docuemnt editiing and review process. will use feature branch\n> /staging for comparison against main",
+      "file": "beans/defs/folio-assistant-q4jm--large-document-review-a-review-visualiser-for-a-fo.md"
+    },
+    {
       "id": "folio-assistant-q6ud",
       "title": "DEGRADATION ENFORCED: join a skill's declared strategy to the capability probes",
       "status": "completed",
@@ -5221,6 +5361,20 @@
       "updatedAt": "2026-09-22T08:58:46Z",
       "preview": "Duplicate of `folio-assistant-2yyh`, which carries the same title and body and is the one the child beans (`ve07`, `3gef`, `wkt1`, `qnvy`, `7mi0`, `fgkb`) are parented to.\n\n## Reasons for Scrapping\n\nCreated by an invocation that SUCCEEDED while its caller failed: `beans create --json` returned `{\"success\": true, \"bean\": {...}}`, the calling shell pipeline read `['id']` off the top level instead of",
       "file": "beans/defs/folio-assistant-qa1p--smart-base-harness-the-who-digital-health-corpus-i.md"
+    },
+    {
+      "id": "folio-assistant-qbfi",
+      "title": "REVIEW HEAT MAPS: section-by-metric matrix of change, coverage, findings, QA and staleness — published, never colour alone",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:03:10Z",
+      "preview": "Owner: *\"heat map skills\"*.\n\n**Measured 2026-09-22.** The only heat map is `render_block_heatmap` in\n`content-graph-analysis.py`. It draws a DOT/SVG of block DEPENDENCIES and\nwrites it to `/tmp`, and it is paper-oriented. Nothing aggregates QA, review\ncoverage or change density, and nothing is published on the site.\n\n**What.** A section × metric matrix on the review page, plus the minimap\n(child 0",
+      "file": "beans/defs/folio-assistant-qbfi--review-heat-maps-section-by-metric-matrix-of-chang.md"
     },
     {
       "id": "folio-assistant-qefk",
@@ -5528,7 +5682,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-09-21T10:29:09Z",
+      "updatedAt": "2026-09-22T18:54:19Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -6025,6 +6179,20 @@
       "file": "beans/defs/folio-assistant-tr1m--glass-handle-overlaps-content-a-fixed-71x44-tab-si.md"
     },
     {
+      "id": "folio-assistant-txut",
+      "title": "REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:04:44Z",
+      "preview": "Owner: *\"need a new visualizer under the harness maybe, like review/ which\nshows things in folio diff from main\"*.\n\n**What.** A `review/` page per folio, reached from the navbar tile for that\nfolio and from the STAGING banner. It reads the ChangeSet (child 02) and shows:\n- the changed blocks, grouped by the folio/ graph's chapter/section tree;\n- counts per change kind;\n- the MAIN and STAGING URLs ",
+      "file": "beans/defs/folio-assistant-txut--review-visualiser-a-review-page-per-folio-showing.md"
+    },
+    {
       "id": "folio-assistant-tyyc",
       "title": "docs-site's paths filter misses 11 of the 22 scripts it runs, so a fix to the publisher never rebuilds the site",
       "status": "completed",
@@ -6319,6 +6487,20 @@
       "updatedAt": "2026-09-20T18:50:25Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> like libray/ and foilio/ (should) and doc/ have visualtions as tools in the\n> harness that defines there schame, we need one for uploads/ that gives\n> count/badge of # uningested, lets you see what's there. lets you upload in\n> various ways.   defined in skills/tools.\n\n## What it asks for\n\nThe `uploads/` visualiser, **a sibling of `jbx2`** (the `library/` one) and o",
       "file": "beans/defs/folio-assistant-v1hw--visualiser-uploads-an-uningested-badge-a-browsable.md"
+    },
+    {
+      "id": "folio-assistant-v26p",
+      "title": "PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:09:45Z",
+      "updatedAt": "2026-09-22T21:09:52Z",
+      "preview": "Owner, issue #197 (2026-09-17), *\"prepare also for draft publication review processes: a fixed version (rendered PDF version w/ line numbers) goes out, then people return with excel/csv/tablular data of comments and feedback that needs to be reviewed and dispensed with\"*, and it asks for *\"show all comments that are on a page, at a line number, re-assign a comment to a more appropriate place, tria",
+      "file": "beans/defs/folio-assistant-v26p--public-comment-tabular-comments-returned-on-a-line.md"
     },
     {
       "id": "folio-assistant-v3se",
@@ -7009,6 +7191,34 @@
       "updatedAt": "2026-09-20T22:53:52Z",
       "preview": "`registry()` in `state-visualizer.ts` writes each graph's declared description through `esc()` only, so the markdown backticks in it reach the page as literal characters: \"what the daily sweep under \\`test/health/\\` wrote\".\n\nMeasured 2026-09-20 across both declarations: **12 of 34** declared descriptions carry a backtick in the first sentence — the part the registry shows — so this is a third of t",
       "file": "beans/defs/folio-assistant-xo3t--state-pages-a-third-of-the-registry-descriptions-r.md"
+    },
+    {
+      "id": "folio-assistant-xp72",
+      "title": "SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:55Z",
+      "updatedAt": "2026-09-22T21:04:32Z",
+      "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
+      "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
+    },
+    {
+      "id": "folio-assistant-xtpc",
+      "title": "DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:09:45Z",
+      "preview": "Owner: *\"doc ingest\"*. A DAK narrative or an L1 handbook arrives as a .docx or\nPDF. Until it is blocks in the folio/ graph, there is nothing to diff, anchor\ncomments to, or heat-map.\n\n**Measured 2026-09-22.**\n- `document-intake` lives in **folio-paper-adapter/**, not\n  folio-document-adapter/. An L1 handbook is a `document` folio, so the skill\n  is in the wrong adapter for its main customer.\n- The",
+      "file": "beans/defs/folio-assistant-xtpc--doc-ingest-docx-and-pdf-handbooks-to-document-bloc.md"
     },
     {
       "id": "folio-assistant-xxku",
