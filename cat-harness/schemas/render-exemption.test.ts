@@ -66,14 +66,22 @@ describe("this repository's actual declaration", () => {
     for (const rel of named) expect(existsSync(join(CAT_BOOTSTRAP, rel))).toBe(true);
   });
 
-  test("the render/ subgraph it owes is DECLARED, not merely present", () => {
+  test("the subgraph it owes is DECLARED, not merely present", () => {
     // A directory that exists and is undeclared is not this instance's graph,
     // however many files sit in it — bootstrap's own declaration says so.
     // So "the skills are on disk" is not the property; "the graph reaches
     // them" is.
+    //
+    // Looked up by ID, not by path. This read `d.path === "render/"` and the
+    // directory moved to `tools/` on 2026-09-22, which broke a test about
+    // DECLARATION on a fact about location — the same "match on id, not path"
+    // rule the declaration schema states for overrides, missed in its own
+    // test. The id is what survives a relocation, so the id is what this
+    // asserts.
     const dirs = readDeclaration(CAT_BOOTSTRAP)?.directories ?? [];
-    const render = dirs.find((d) => d.path === "render/");
-    expect(render?.id).toBe("bootstrap-render");
+    const render = dirs.find((d) => d.id === "bootstrap-render");
+    expect(render, "bootstrap declares no `bootstrap-render` directory").toBeDefined();
+    expect(render?.graphKinds).toContain("skills");
     // A SEPARATE id from `skills/`: overrides match on id, so reusing
     // `cat-harness` would replace bootstrap's skills with these.
     expect(dirs.filter((d) => d.id === render?.id)).toHaveLength(1);

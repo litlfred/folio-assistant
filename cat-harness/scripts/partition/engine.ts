@@ -70,6 +70,21 @@ export interface PartitionSpec {
   repos: Array<{ id: string; name: string }>;
   /** What each repo may import from — itself plus its ancestors in the DAG. */
   allowed: Record<string, string[]>;
+  /**
+   * Edges permitted DESPITE the direction rule, each with its reason.
+   *
+   * One entry, and the bar for a second is high: a permit is a hole, and the
+   * reason this shape is defensible where a blanket rule was not is that it
+   * names both endpoints. Anything else crossing the same boundary still
+   * fails, which is the property an "exempt side-effect imports" rule would
+   * have thrown away.
+   *
+   * A permit for an edge that no longer exists is a FINDING, not a silent
+   * no-op — the same `ALLOWED`-list discipline `check-invocation-parity`
+   * follows, and for the same reason: the hand-maintained part of a check is
+   * the part that rots, so it has to be the part that reports.
+   */
+  permittedEdges?: readonly PermittedEdge[];
   /** Ordered; first match wins, so explicit path rules precede keyword rules. */
   rules: Rule[];
   /** Directories scanned for TypeScript modules, relative to `root`. */
@@ -83,6 +98,15 @@ export interface Assignment {
   provenance: Provenance;
 }
 
+export interface PermittedEdge {
+  /** Repo-relative path of the importing module. */
+  from: string;
+  /** Repo-relative path of the imported module. */
+  to: string;
+  /** Why this edge is allowed to cross. Required — a permit with no reason is a hole. */
+  reason: string;
+}
+
 export interface CrossEdge {
   from: string;
   fromRepo: string;
@@ -91,6 +115,8 @@ export interface CrossEdge {
 }
 
 export interface PartitionReport {
+  /** Permits naming an edge that is no longer in the graph — stale, and a finding. */
+  stalePermits: PermittedEdge[];
   modules: Map<string, Assignment>;
   crossEdges: CrossEdge[];
   /** Edges whose target this tool could not classify. */
@@ -139,13 +165,65 @@ export function classify(spec: PartitionSpec, relPath: string): Assignment {
  * a full parse: we need the edge set, not a type-checked AST, and a missed
  * exotic form is a false negative we can live with — it understates the
  * cross-edge count, which is the safe direction for a worklist.
+ *
+ * **Three alternatives, and the ORDER of the first two is load-bearing.**
+ * Bean `q2wn`, measured 2026-09-21.
+ *
+ * The bare side-effect form — `import "./x.js";`, no binding and no `from` —
+ * matched neither of the two alternatives this had before. That is not an
+ * exotic form here: **every registration edge in this repository is written
+ * that way**, because a module imported to run its side effect has nothing to
+ * bind. So the one mechanism computing this repo's module edges was blind to
+ * exactly the class that carries load-time registration — the class whose
+ * absence produces `unknown graph kind`.
+ *
+ * Measured 2026-09-21, both numbers because they count different things: the
+ * relative specifiers this extracts went **2140 → 2214** (76 gained, 2
+ * dropped), and the partition's resolved internal edges went **1886 → 1961**.
+ * The gained ones are `schemas/folio-graph-kind` almost without exception.
+ *
+ * **And the blindness was hiding a live rule violation**, which this bean had
+ * left explicitly unestablished: wrong-direction edges went **0 → 25**. The
+ * rule is `adapter-layering.test.ts`'s — *core may import the harness; the
+ * harness may not import core* — and all 25 are harness modules
+ * side-effect-importing core's `folio-graph-kind` to get the `folio` kind
+ * registered before they read a declaration. So the check was reporting a
+ * clean partition over 25 edges it could not see.
+ *
+ * **Appending a third alternative does not fix it**, which is why the bare
+ * form is tried FIRST. Alternation is left-to-right at each position: at a
+ * bare import the `from`-scanning alternative would run first, scan forward
+ * past it into a LATER statement, find that one's `from`, and consume both —
+ * so the bare edge stayed missing however the alternative was written.
+ * Measured on the 12-shape corpus in `engine.test.ts`: appending fixes 2 of
+ * the 5 failures and leaves 3, including `import "./a.js"` followed by a
+ * normal import, where two edges collapse into one.
+ *
+ * **`[^;]` rather than `[\s\S]` in that scan** stops the same overreach in
+ * the other direction. A static import statement contains no `;` before its
+ * `from`, so this only narrows — and it removed 2 false edges where the scan
+ * crossed into a TEMPLATE LITERAL: `init-folio.ts` writes
+ * `import … from "../../schema/builders"` into a *generated* folio, and the
+ * scan was attributing that scaffolded import to the platform script. Neither
+ * resolved to a file, so nothing downstream changed; they were noise in the
+ * edge set rather than a wrong verdict.
  */
-const IMPORT_RE = /(?:^|\n)\s*(?:import|export)[\s\S]{0,400}?from\s*["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)/g;
+const IMPORT_RE =
+  /(?:^|\n)\s*import\s+["']([^"']+)["']|(?:^|\n)\s*(?:import|export)[^;]{0,400}?from\s*["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)/g;
 
-function extractSpecifiers(src: string): string[] {
+/**
+ * Every import specifier in one module's source.
+ *
+ * Exported for its TESTS rather than for a caller — `engine.test.ts` asserts
+ * the shapes `IMPORT_RE` must and must not match. Bean `q2wn` is the reason
+ * that is worth an export: the two flaws it records are invisible from
+ * `analyse()`'s output, which reports a smaller edge set and no error.
+ */
+export function extractSpecifiers(src: string): string[] {
   const out: string[] = [];
   for (const m of src.matchAll(IMPORT_RE)) {
-    const spec = m[1] ?? m[2];
+    // Three groups now, one per alternative — bare, `from`-bearing, dynamic.
+    const spec = m[1] ?? m[2] ?? m[3];
     if (spec) out.push(spec);
   }
   return out;
@@ -174,6 +252,41 @@ function resolveSpecifier(spec: PartitionSpec, fromFile: string, ref: string): s
   return null;
 }
 
+/**
+ * Is this module a **composition root** — a command, rather than a library?
+ *
+ * The layering rule (`core may import the harness; the harness may not import
+ * core`) is a rule about LIBRARIES. A command is where an application is
+ * assembled, so it necessarily knows every layer it wires together; that is
+ * what makes it the command and not a library. Reading the edge out of a
+ * composition root as a layering violation asks a binary not to know its own
+ * dependencies.
+ *
+ * **Derived, never listed.** A hand-maintained set of "entry points" is the
+ * kind that rots — the `tyyc` shape, where the symptom of forgetting is
+ * invisible. Measured 2026-09-21 over the 25 modules bean `q2wn` exposed, the
+ * two criteria separate them EXACTLY and with nothing left over:
+ *
+ * | | shebang or `import.meta.main` | |
+ * |---|---|---|
+ * | the 18 commands | **all 18** | `kg-export.ts`, `print-stub.ts`, every `check-*` |
+ * | the 7 libraries | **none** | `repo-root.ts`, `known-skills.ts`, `harness-config.ts` |
+ *
+ * So the split costs no judgement here, and a new command declares itself by
+ * being runnable rather than by being remembered.
+ *
+ * **What this does NOT license.** A library reaching across a layer is still a
+ * violation and still fails — which is the half that was actually load-bearing,
+ * because a library's edge is inherited by every module that imports it, and
+ * `repo-root.ts` alone has 92 importers. `check:composition-roots` is the
+ * other half: it refuses a command that READS a declaration without carrying
+ * the registration, so removing those library imports cannot reintroduce the
+ * `unknown graph kind "folio"` class (#464) by forgetting one.
+ */
+export function isCompositionRoot(src: string): boolean {
+  return /^#!/.test(src) || /\bimport\.meta\.main\b/.test(src);
+}
+
 // ── Analysis ────────────────────────────────────────────────────
 
 export function analyse(spec: PartitionSpec): PartitionReport {
@@ -187,6 +300,8 @@ export function analyse(spec: PartitionSpec): PartitionReport {
   }
 
   const crossEdges: CrossEdge[] = [];
+  // Which permits were actually used, so the unused ones can be reported.
+  const honoured = new Set<string>();
   const unresolvedEdges: Array<{ from: string; to: string }> = [];
   let totalEdges = 0;
 
@@ -199,6 +314,9 @@ export function analyse(spec: PartitionSpec): PartitionReport {
     } catch {
       continue;
     }
+    // Computed once per module, not per edge: the answer is a property of the
+    // file, and `isCompositionRoot` scans the whole source.
+    const composes = isCompositionRoot(src);
     for (const ref of extractSpecifiers(src)) {
       const target = resolveSpecifier(spec, f, ref);
       if (!target) continue;
@@ -209,11 +327,25 @@ export function analyse(spec: PartitionSpec): PartitionReport {
         unresolvedEdges.push({ from: rel, to: target });
         continue;
       }
+      // A composition root assembles layers by definition — see
+      // `isCompositionRoot`. Counted in `totalEdges` above either way, so the
+      // edge stays VISIBLE in the census and is only exempt from the
+      // direction rule; an exemption that also hid the edge would be the
+      // blindness `q2wn` was opened about, one level up.
+      if (composes) continue;
       if (!(spec.allowed[fromA.repo] ?? []).includes(toA.repo)) {
+        const permit = (spec.permittedEdges ?? []).find((p) => p.from === rel && p.to === target);
+        if (permit) {
+          honoured.add(`${permit.from}\u0000${permit.to}`);
+          continue;
+        }
         crossEdges.push({ from: rel, fromRepo: fromA.repo, to: target, toRepo: toA.repo });
       }
     }
   }
 
-  return { modules, crossEdges, unresolvedEdges, totalEdges };
+  const stalePermits = (spec.permittedEdges ?? []).filter(
+    (p) => !honoured.has(`${p.from}\u0000${p.to}`),
+  );
+  return { modules, crossEdges, unresolvedEdges, totalEdges, stalePermits: [...stalePermits] };
 }
