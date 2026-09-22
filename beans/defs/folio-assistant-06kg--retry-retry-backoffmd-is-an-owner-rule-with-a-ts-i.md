@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06kg
 title: 'RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T17:00:45Z
-updated_at: 2026-09-20T17:09:26Z
+updated_at: 2026-09-22T07:23:02Z
 parent: folio-assistant-1xhc
 ---
 
@@ -173,3 +173,17 @@ comments in this very change.
       is sound and is a change to deploy semantics rather than to a wait, so
       it is deliberately not folded into a backoff fix. It stays here so it is
       not lost with the closed PR.
+
+## Closed on re-derived evidence, 2026-09-22
+
+Every `## Done when` item was ticked while the bean stayed open. Re-derived
+against `main` at `2ce66fc` rather than trusted:
+
+| claim | evidence |
+|---|---|
+| all four shell loops call it | `feature-staging.yml` references `backoff-sleep.ts` **4 times** |
+| a gate reads the WORKFLOWS | `check:workflow-paths` — registered in `package.json`, present in `code-quality-gates.yml`, and passing: *"72 invocation(s): 55 resolve, 17 need a folio, 0 missing, 0 undetermined"*. Its own comments cite the backoff calls it was built around |
+| the skill names its call sites | `skills/folio-core/retry-backoff.md`, 4 matches for call-site language |
+
+Closed by **evidence, not authorship** — `bean-coordination` §"Closing a bean
+whose work has already landed".
