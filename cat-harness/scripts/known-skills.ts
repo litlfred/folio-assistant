@@ -190,7 +190,7 @@ export function kgRoots(root: string): string[] {
  * ## judgement to make
  *
  * `kgRoots` resolves a DEPENDENCY's directories too, so it returns paths like
- * `../bootstrap/render`. Walking them is forbidden by
+ * `../bootstrap/tools`. Walking them is forbidden by
  * `instance-graph-isolation.test.ts`, which guards a live 2026-09-19 leak of
  * 88 references: one instance's graph must not carry another's nodes.
  * `unreadNestedInstances` states the same rule in its own finding text — *"do
