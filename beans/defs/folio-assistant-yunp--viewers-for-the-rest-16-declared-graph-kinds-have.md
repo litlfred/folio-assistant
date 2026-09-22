@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:34Z
-updated_at: 2026-09-22T00:07:36Z
+updated_at: 2026-09-22T00:16:37Z
 parent: folio-assistant-p5wm
 ---
 
@@ -264,3 +264,53 @@ checkout", since three call sites now want it: `declarationsIn` in
 `compose-docs.ts` (which got it right), and the two probes that did not.
 Not built here — recorded so the next session finds it rather than writing a
 fourth heuristic.
+
+
+
+---
+
+## The `tools` viewer, and a hypothesis this bean recorded that turned out WRONG
+
+`tools` now has a viewer (`cat-harness/docs/tools/index.md`, 69 Tool nodes) and
+a documentation page of its own (`cat-harness/docs/tool-graph.md`), so
+`coverage.docs` no longer names a page about skills.
+
+Measured while building it: **69 Tool nodes, all 69 carrying `satisfies`,
+naming 49 distinct skills, and all 49 resolve.** No dangling references and no
+tool that satisfies nothing — the graph was in good order, it simply had no
+surface.
+
+### The hypothesis, and its falsification
+
+This bean recorded, a few hours earlier:
+
+> the WEAKER form is: **a `docs` page shared by two entries whose graph kinds
+> are disjoint** is at least suspicious, and that is computable.
+
+**Built, and the corpus falsified it on the first run.** Three hits, all
+legitimate:
+
+| page | shared by | why it is fine |
+|---|---|---|
+| `beans-and-todos.md` | `beans`, `todos` | one page about both, and its NAME says so |
+| `document-ingestion.md` | `uploads`, `library` | the two ends of one process |
+| `subgraph-viewers.md` | `schemas`, `library` | a page about the viewer mechanism itself |
+
+Three of three false positives. Worse, **it would not have caught the defect it
+was written for**: `skills.md` was never another entry's DECLARED docs —
+`tools` pointed at a page that merely describes skills, which this check cannot
+see.
+
+So "disjoint graph kinds" does not imply "unrelated subjects". A check that
+fires only on legitimate cases is worse than no check, because it teaches a
+reader to skip it.
+
+**Not built. Recorded here and in the test file so it is not attempted a third
+time** — the note that proposed it is two sections up, and a reader finding
+that without this would reasonably go and build it.
+
+What does work is a vocabulary approximation — the docs page for a graph must
+use that graph's own terms (`defineTool`, `satisfies`) — which is honest about
+being an approximation and which DID fire when the original defect was planted
+back. "Is this page about this graph" is not mechanisable, and pretending
+otherwise produced the check above.

@@ -726,6 +726,9 @@ jobs:
           # graph exists for. Gated here rather than trusted, same as every
           # other generated page.
           bun run fsh-guts:viz:check
+          # The tools index is generated from the Tool nodes, so it goes stale
+          # the moment one is added or its `satisfies` changes.
+          bun run tools:viz:check
           bun run check:actor-reach
           bun run check:harness-dirs
           # Does a path-filtered workflow rebuild when the scripts it RUNS
