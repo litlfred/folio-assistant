@@ -32,10 +32,13 @@ import {
   selfSupersedes,
   type CitedBean,
   type DeployCommit,
+  type NoRunReason,
   type PagesReport,
   type RunSummary,
   type Window,
 } from "../src/workflow/ci-health.js";
+
+import { whyNoRun } from "../src/workflow/workflow-triggers.js";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { readBeanStore } from "./bean-store-read.js";
@@ -234,6 +237,15 @@ function knownWorkflows(): Array<{ path: string; name: string }> | undefined {
     out.push({ path, name });
   }
   return out;
+}
+
+/** {@link NoRunReason} for a workflow path. Unreadable is `undetermined`. */
+function noRunReason(path: string): NoRunReason {
+  try {
+    return whyNoRun(readFileSync(resolve(repoRoot, path), "utf8"));
+  } catch {
+    return "undetermined";
+  }
 }
 
 /** The workflow's first `cron:` value, or `undefined`. */
@@ -602,6 +614,7 @@ const health = runs
       headSha,
       triggersOnPush,
       knownWorkflows: files,
+      noRunReason,
       hasSchedule,
       probed: (p) => probes.get(p),
       workflowAddedAt,
@@ -676,12 +689,28 @@ if (markdown) {
           : "scheduled, outside the window, and not asked directly";
     console.log(`  ⚠ ${h.workflow.padEnd(40)} UNJUDGED — ${why}. Not green.`);
   }
-  const other = unjudged.filter((h) => !h.scheduled).length;
-  if (other > 0) {
+  const other = unjudged.filter((h) => !h.scheduled);
+  if (other.length > 0) {
+    /* THE CLASSES ARE MEASURED NOW. This read "(dispatch-only, or vendored for
+     * a folio)" over a count of 31 — a cause asserted rather than computed,
+     * which could not distinguish 31 files that cannot fire from 30 that
+     * cannot and one that should have. The benign classes stay counts, because
+     * naming 30 every run is how a reader learns to skip the section; the one
+     * class that is a defect is named. See `whyNoRun`. */
+    const by = (r: NoRunReason) => other.filter((h) => h.noRunReason === r).length;
     console.log(
-      `\n  ${other} further workflow file(s) produced no run in the window ` +
-        `(dispatch-only, or vendored for a folio) — unjudged, not green.`,
+      `\n  ${other.length} further workflow file(s) produced no run in the window — unjudged, not green:`,
     );
+    console.log(
+      `    ${by("dispatch-only")} cannot fire by themselves (\`workflow_dispatch\` / ` +
+        `\`workflow_call\` only), ${by("path-filtered")} fire only when specific paths ` +
+        `change, ${by("undetermined")} could not be read.`,
+    );
+    for (const h of other.filter((x) => x.noRunReason === "auto-triggered")) {
+      console.log(
+        `  ⚠ ${h.workflow.padEnd(40)} UNJUDGED — it CAN fire on this branch and produced no run. Not green.`,
+      );
+    }
   } else if (files === undefined) {
     console.log(
       "\n  (Could not read .github/workflows/ — this report covers the runs it " +

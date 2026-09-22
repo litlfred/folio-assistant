@@ -260,3 +260,75 @@ rule stated there is a rule with no home — not in the generated reference, not
 in the published skill docs, and not found by an agent that went looking for the
 skill first. `platform-gates` is where an agent arrives when it asks what to run
 before pushing, which is the moment both failures happen.
+
+## The 31 unjudged workflows are now judged, and the answer is a result
+
+`check:ci-health` printed *"31 further workflow file(s) produced no run in the
+window **(dispatch-only, or vendored for a folio)** — unjudged, not green."*
+Both halves of that parenthetical are plausible and **neither was measured**. A
+reader cannot tell from it whether the 31 are 31 workflows that cannot fire, or
+30 that cannot and one that should have. That is `1xhc`'s complaint at the level
+of the **report** rather than the gate — a summary asserting a cause.
+
+`noRunReason` is now supplied to `assess` the way `hasSchedule` already was,
+computed by `src/workflow/workflow-triggers.ts`:
+
+| verdict | measured |
+|---|---|
+| `dispatch-only` — no automatic trigger at all | **30** |
+| `path-filtered` — every automatic trigger is `paths:`-restricted | **1** |
+| `auto-triggered` — unrestricted, and still no run. **Named, not counted** | **0** |
+| `undetermined` — no readable `on:` | **0** |
+
+**Nothing was hiding in the 31.** That is a result rather than a reassurance:
+it is re-derived on every run instead of assumed, and the one class that is a
+defect gets a named line rather than a share of a count.
+
+`path-filtered` is **not green** — it says the silence is explained, not that
+the workflow works. When it last ran is a different question this report does
+not answer.
+
+### The class that nearly shipped wrong, kept as a test
+
+The first draft asked *can this workflow fire at all*, by testing whether any
+`paths:` pattern named something present in the checkout. It promoted
+`atomic-mass-gen-check.yml` into the **defect** class — because one of its four
+patterns is **its own workflow file**, which of course exists. The workflow is
+real and can fire; it gates a folio's generated Lean file and nobody touched
+those paths in the window.
+
+A false fire in the report written to stop a report asserting things it had not
+measured. The question is whether no-run is **explained**, not whether the
+workflow is capable of firing — and `every automatic trigger paths:-restricted
+is path-filtered, not a defect` pins it. `paths-ignore` is deliberately *not* a
+restriction: it subtracts from everything, so reading it as one would explain
+away a silence that nothing explains.
+
+### Where it lives, and why not in `ci-health.ts`
+
+`src/workflow/ci-health.ts` states its own boundary — *"reading YAML is not this
+module's business"* — which is why `hasSchedule` reaches it as a callback. So
+the reading went into a sibling module. An earlier draft exported the predicates
+from the script, and the test file then ran the whole CI-health report — a
+hundred GitHub runs — on import. 8 tests, 109 ms, no network.
+
+## Done when
+
+- [x] The 77 stale claims triaged into four populations, every candidate body
+      read; **nothing released**, because 21 of the 47 are blocked work stated
+      in prose that no date can expire. The sweep's output is an input to
+      #951's `check:bean-blocks`, not a parallel effort.
+- [x] `in-progress` means something again — `check:bean-rollup` states what the
+      status asserts, computes it against each bean's own subtree, and fails on
+      a contradiction. The clock-carrying half is `--sweep` and never sets the
+      exit code.
+- [x] `rq8s` — the session-start sweep asks for the listing it cannot fetch, by
+      name, with skipping it `unknown` rather than none; run live, and it fires.
+      One box remains and it is the owner's.
+- [x] The 31 no-run workflows each judged — 30 dispatch-only, 1 path-filtered,
+      0 auto-triggered, 0 undetermined, re-derived every run.
+- [x] The two failures from this consolidation's own first commit written down
+      where the next agent meets them — `platform-gates.md` §"...and a green
+      gate is not a VERIFIED FACT".
+- [ ] `u9r9` — **owner-blocked**, four fields written, expiry is a re-ask date.
+      `publish.yml`'s half is unachievable as written and now says so.
