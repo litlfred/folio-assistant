@@ -1493,6 +1493,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7s52",
+      "title": "staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:33:57Z",
+      "updatedAt": "2026-09-22T06:34:02Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/849\n\n`staging-review` already owns the publish ref, and already names the failure:\nbean `rptk`, a contrast defect that survived two days *\"because the gate that\nswept the page never opened the view\"*. It composes URLs for a reader and stops\nthere.\n\nTHE AGENT CANNOT OPEN THEM. Measured this session, all three routes:\n`curl` -> 403 CONNECT tu",
+      "file": "beans/defs/folio-assistant-7s52--staging-review-hands-a-reader-urls-the-agent-canno.md"
+    },
+    {
       "id": "folio-assistant-7sf1",
       "title": "Move MEMORY.md into the kg graph, with correct skill/task pairings",
       "status": "in-progress",
@@ -2899,6 +2913,20 @@
       "updatedAt": "2026-09-20T08:02:32Z",
       "preview": "Owner, 2026-09-20: two staged top-level dirs, and 'git mv all three now, re-wire consumers in the same PR'.\n\nTHE THREE ARE ALL IRIS ITEMS, which is what makes the catalogue the right home rather than a style-guide repo: `wpr-rdo-2020-003-eng`, `who-pub-tps-931`, `9789241548960-eng`. `milnorlink` is NOT, and does not move here — bean `r1lz` sends it to `folio-asst-sci` as the source text for the de",
       "file": "beans/defs/folio-assistant-frs5--who-iris-stage-the-catalogue-instance-and-git-mv-t.md"
+    },
+    {
+      "id": "folio-assistant-funp",
+      "title": "R25 glass stage 1: the folio layer exists on ANY page, pulled down and put away from the keyboard",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:10:00Z",
+      "updatedAt": "2026-09-22T06:10:00Z",
+      "preview": "R25: *\"the user in visualization should be able to pull down their folio\"*,\nand R30's glass — *\"pulling down folio panel = glass/window on which stikcy\nnotes/avatrs of materialized assets … are visualized.\"*\n\n## The defect was procedural, not structural\n\nThe layer already existed, already on `document.body`, already\n`position: fixed; inset: 0` — structurally a glass. It was **created inside\n`mount",
+      "file": "beans/defs/folio-assistant-funp--r25-glass-stage-1-the-folio-layer-exists-on-any-pa.md"
     },
     {
       "id": "folio-assistant-fuzm",
@@ -5349,14 +5377,14 @@
     {
       "id": "folio-assistant-u9r9",
       "title": "TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T05:57:48Z",
+      "updatedAt": "2026-09-22T07:19:07Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
