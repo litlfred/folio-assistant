@@ -60,8 +60,8 @@ missing; it is evidence that the rule was always general.
 
 | layer | holds | must NOT hold |
 |---|---|---|
-| `fhir-harness` | SUSHI, IG Publisher invocation, Jekyll assembly, publication to a pages branch, the artefact-index reconstruction | any WHO term, `dak.json`, any DAK pre/post step, any `smart.who.int` canonical |
-| `smart-base` | the SMART harness rules, the DAK logical model, `dak.json`'s schema, WHO voices and methodologies, the `smart.who.int.base` IG | subject matter for any one guideline; anything only one sibling needs |
+| `fhir-harness` | SUSHI, IG Publisher invocation, Jekyll assembly, publication to a pages branch, the artefact-index reconstruction | any WHO term, `dak.config.json`, any DAK pre/post step, any `smart.who.int` canonical |
+| `smart-base` | the SMART harness rules, the DAK logical model, `dak.config.json`'s schema, WHO voices and methodologies, the `smart.who.int.base` IG | subject matter for any one guideline; anything only one sibling needs |
 | `smart-l1` | narrative L1 assets, figure narratives, the corpus a DTH is written from | FHIR resources; anything an IG build reads |
 | `smart-dak` | L2 — the DAK components, DMN/BPMN authoring, the DAK-shaped pre-processing | FHIR profiles; publication |
 | `smart-ig` | L3 — FSH, profiles, terminology binding, the IG build for one guideline | L1 narrative; DAK authoring |

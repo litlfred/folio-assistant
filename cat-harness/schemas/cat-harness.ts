@@ -570,7 +570,9 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * the repository, so a reader who knows the repo knows the filename.
    *
    * Note the declaration file itself is **not** stub-named — it stays
-   * `harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * `harness.json`. (The analogy here was `smart-base`'s config "staying"
+   * `dak.json`; that config is ours and became `dak.config.json` on
+   * 2026-09-22, so it argues nothing either way now.) A
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */

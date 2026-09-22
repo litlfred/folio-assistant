@@ -45,7 +45,8 @@ release changes.
 A list, because "generic" is a claim and a list is checkable. `fhir-harness`
 must contain no reference to:
 
-- `dak.json`, the DAK logical model, or any DAK component
+- `dak.config.json` (`dak.json` as upstream still spells it), the DAK logical
+  model, or any DAK component
 - `smart.who.int` canonicals, or any WHO publisher metadata
 - the DAK API surface — `.schema.json`, `.displays.json`, `.openapi.json`, the
   `dak-api.html` hub

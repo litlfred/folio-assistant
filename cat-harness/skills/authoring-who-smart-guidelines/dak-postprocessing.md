@@ -15,7 +15,8 @@ description: >
 > `fhir-harness` — see §"One step is not WHO's".
 
 Everything the WHO build runs between `publisher.jar` finishing and deployment,
-gated by `do_dak` and by `dak.json`. Each step runs **inside the publisher's
+gated by `do_dak` and by `dak.json` (upstream's spelling; ours is
+`dak.config.json`). Each step runs **inside the publisher's
 Docker container** (`docker exec -w /work ig-run python3 …`), against `output/`.
 
 > **Sourcing.** `WorldHealthOrganization/smart-base` —

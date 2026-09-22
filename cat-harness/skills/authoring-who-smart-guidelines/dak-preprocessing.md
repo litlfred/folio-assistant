@@ -16,7 +16,8 @@ description: >
 
 The phase the WHO build calls *DAK Preprocessing*: everything that runs between
 checkout and `publisher.jar`, gated by the `do_dak` input and by the presence of
-`dak.json` at the repository root.
+`dak.json` at the repository root — **upstream's spelling**; ours is
+`dak.config.json` since 2026-09-22 and nothing at WHO has been renamed.
 
 > **Sourcing.** Read from `WorldHealthOrganization/smart-base` —
 > `.github/workflows/ghbuild.yml` and the scripts under `input/scripts/` — on
@@ -110,7 +111,7 @@ Do not remove it on the strength of the page argument alone.
 context"*. That is a workaround for ordering: the branch name is sanitised by a
 later step than the one that first needs it.
 
-`dak.json` is **ours** (bean `cz17`), not a file we merely read, so this is a
+`dak.config.json` is **ours** (bean `cz17`), not a file we merely read, so this is a
 derivation we own and can compute once, in the right order. Do not reproduce the
 double run when lifting this step.
 
