@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lxpq
 title: 'CLEAN MERGE, WRONG ARTEFACT: a generated file neither side would emit, and no conflict to flag it'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T08:41:04Z
-updated_at: 2026-09-22T08:41:04Z
+updated_at: 2026-09-22T08:58:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -58,3 +58,64 @@ because the merge was CLEAN and nothing prompted it.
       declared" step is worth having, versus relying on the gates — the cheap
       version is one script that runs every `*:check`'s writer after a base
       merge, and it is exactly the blast-radius question `520m` left open
+
+## Settled — owner, 2026-09-22: BUILD the post-merge step
+
+`bun run regen` (`cat-harness/scripts/regen-after-merge.ts`), with `--all` and
+`--dry-run`.
+
+### It ASKS the gates rather than regenerating everything
+
+"Regenerate everything declared" was the obvious repair and is wrong twice:
+
+1. **It needs a list, and the list is the defect.** `gates.ts` already settled
+   the authority — the WORKFLOW, not `package.json` — having measured that
+   **21** of this repository's `:check` scripts appear in no workflow at all. A
+   second list here would run generators CI does not gate: a guess that reads
+   as coverage. So the set comes from `loadGates`, and a check CI does not run
+   is not this command's business. **35 verify/write pairs** in the fast set,
+   out of 112 gates.
+2. **A blanket regeneration cannot tell repair from damage.** Rewriting
+   artefacts that were already correct leaves a diff that says nothing about
+   what the merge broke. Asking each check first means the output IS the set of
+   artefacts the merge left wrong — the question a person actually has.
+
+### Four states, and the two that exit non-zero
+
+| state | meaning |
+|---|---|
+| `current` | check passed, nothing run |
+| `regenerated` | check failed, writer ran, check now passes |
+| **`unrepaired`** | check failed, writer ran, **still fails** — a real defect |
+| **`no-writer`** | check failed and has no writer counterpart |
+
+The check is re-run AFTER the writer, deliberately. A writer that ran is not a
+repair that worked, and reporting it as one would be the false-clean this whole
+bean is about.
+
+### Falsified against the real defect, not a hypothetical
+
+Re-injected the exact artefact the clean merge produced — `count: 5` beside six
+listed voices — and ran it:
+
+```
+  ✓ voices:viz:check was stale — regenerated with `bun run voices:viz`
+  34 current, 1 regenerated, 0 unrepaired, 0 without a writer
+```
+
+It found the one broken artefact and left the other 34 alone, which is the
+precision the design is for. 11 unit tests cover the pairing, the
+workflow-derived set, and that a check with no writer is carried through as a
+finding rather than filtered out.
+
+### The discipline, where it will be hit
+
+`prepare-merge.md` §"A clean merge can produce a wrong artefact" (STRICT), and
+in the recipe's merge step: **run it after EVERY base merge, conflicted or
+not.**
+
+## Done when
+
+- [x] `main` is green on `voices:viz:check` again
+- [x] the owner has decided whether a post-merge regeneration step is worth
+      having — yes, and it asks the gates rather than carrying a list

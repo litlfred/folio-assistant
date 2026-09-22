@@ -117,18 +117,27 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    // A SECOND LIST BESIDE `OWNED`, and it went stale the first time a page
-    // was added — `catalogue.html` (2026-09-22) was written, pruned-checked
-    // and gated, and this set still did not know it existed. Kept as a list
-    // rather than derived from `OWNED` because that is a regex and cannot
-    // enumerate; the cost is that adding a page means editing here too, which
-    // the next person discovers exactly the way this was discovered.
+    // A SECOND LIST BESIDE `OWNED`, and it has now gone stale in BOTH
+    // directions within three days — which is the finding, not the chore.
+    //
+    // 2026-09-22 (morning): `catalogue.html` was added, written, pruned-checked
+    // and gated, and this set still did not know it existed.
+    // 2026-09-22 (later, bean `ha78` / issue #886): it MOVED out of who-iris
+    // altogether, to the conventional viewer route under the built site, and
+    // this set still listed it — so the assertion failed on a page whose
+    // absence was the whole point of the change.
+    //
+    // Kept as a list rather than derived from `OWNED` because that is a regex
+    // and cannot enumerate; the cost is that changing the page set means
+    // editing here too, which two separate sessions have now discovered by
+    // being failed by it. That is the guard working, not the guard being
+    // wrong — an enumeration that silently agreed with any change would
+    // assert nothing.
     const wanted = new Set([
       "index.html",
       "community-list.html",
       "ingestion-notes.html",
       "kg-to-portal.html",
-      "catalogue.html",
       ...items,
       ...colls,
     ]);
