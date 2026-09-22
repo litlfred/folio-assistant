@@ -82,7 +82,7 @@
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>B02</bpmn:incoming>
       <bpmn:outgoing>B03</bpmn:outgoing>

@@ -388,7 +388,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:extensionElements>
         <folio:skill ref="watch" />
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -447,7 +447,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:extensionElements>
         <folio:skill ref="watch" />
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>

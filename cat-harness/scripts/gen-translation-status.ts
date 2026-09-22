@@ -51,6 +51,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { join, relative, resolve } from "node:path";
 
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
@@ -391,6 +392,22 @@ function main(): void {
     // table, and a number whose subject is implicit is the one that gets
     // quoted somewhere else as though it covered everything.
     scope: relative(REPO_ROOT, translationsDir),
+    // The tile's headline number — #863, and it is `locales` because that is
+    // what THIS PAGE shows: one row per locale, which the rendered table has
+    // six of, being five locales and a header. The badge mechanism rests on a
+    // count being the count of the page its tile opens, and every other number
+    // here would break it. `templates` (61–64) and `entries` (85–171) both
+    // VARY BY LOCALE, so neither is a property of the page at all;
+    // `untranslated` is reported per row, and a tile carrying it would answer
+    // a question the page answers five times over.
+    //
+    // The key is `translation-sources` — the id of the DIRECTORY the tile was
+    // declared for (`translations/`) — and not this projection's own segment.
+    // `scanTileCounts` reads whatever a projection names, so what it names has
+    // to be the directory, which is the half a reader gets wrong first.
+    ...tileCounts({
+      "translation-sources": [locales.length, locales.length === 1 ? "locale" : "locales"],
+    }),
     locales,
   };
 

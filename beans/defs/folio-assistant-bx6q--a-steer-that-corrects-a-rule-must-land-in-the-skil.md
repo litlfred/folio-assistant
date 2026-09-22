@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bx6q
 title: 'A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:48:55Z
-updated_at: 2026-09-21T22:54:21Z
+updated_at: 2026-09-22T10:08:47Z
 parent: folio-assistant-ahvw
 ---
 
@@ -42,3 +42,35 @@ It had been followed ad-hoc all session and written nowhere:
       *"harness handler wins."* now sits in `schema-management.md` beside the
       two path rules it arbitrates, not only on `gen-handler-index.ts` and in
       bean `8h42`.
+
+
+_2026-09-22T10:10:00Z_ — **CLOSED ON EVIDENCE, not authorship** (`bean-coordination` §"Closing a bean whose work has already landed"). This session did not do this work; it established the claim is still true on today's `main` and that nobody else is holding it.
+
+## Why it was takeable
+
+Surfaced by `bun run health`, which reported **six** `in-progress` beans with every Done-when box ticked — the `fkjo` finding. Four of the six turned out to be **live work, not stale claims**: `sj6m` (07:17), `prhr` (08:20), `03t9` (08:55) and `j41m` (09:05) were all updated within three hours, and #916 is another session actively closing `j41m`. That is exactly the limitation `fkjo` records about its own check — *"a bean whose work is done but not yet merged is indistinguishable from one whose work landed"* — and it is the majority of the finding list rather than an edge case.
+
+`fkjo` itself has an unmerged branch, `origin/claude/sharp-ptolemy-6qxh77-fkjo`, so it is somebody's and was left alone.
+
+That leaves this bean: quiet ~11.5 h, **no unmerged branch naming it**, **no open PR naming it**. Both checks run before touching it, per §"A claim is branch-local" — a claim announces rather than reserves, so the way to tell abandoned from live is to look for the branch.
+
+**The actionable set was 1 of 6.** Worth recording against the raw finding count, because "six beans need re-deriving" and "one does" are different amounts of work and only the second is true.
+
+## The six boxes, each checked against `origin/main`
+
+| box | evidence |
+|---|---|
+| §2 carries the rule and the three questions | `## 2. A steer that corrects a RULE lands in the SKILL — same turn (STRICT)`, with `### Is this steer rule-level? Three questions` under it |
+| two anti-patterns — artefact-only application, and filing as a bean | items **5** and **6** under `## 4. Anti-patterns`, both bolded |
+| front-matter `description` names the rule | present |
+| `kg-contribution-offer.md` states the boundary from its side | present |
+| `interaction-modality.md` §4.3 closes the loop from the asking side | present |
+| the gap found on first application is fixed in the same change | *"harness handler wins"* in `schema-management.md` |
+
+Landed in `e0e067b711`, *"A steer that corrects a RULE lands in the SKILL — same turn, quoted, dated"*, and shipped via #827.
+
+## A correction to my own check, recorded because it nearly produced a wrong verdict
+
+The anti-patterns box first read as **NOT met**: I grepped `^#+ *4\.(5|6)` expecting headings, got zero, and was one step from reporting a box unsatisfied. They are **numbered list items** 5 and 6 under `## 4. Anti-patterns` — the bean's "§4.5, §4.6" meant that numbering, not a heading level. **My regex was wrong, not the bean.**
+
+Worth keeping because the failure mode is the one this whole session has been about: a check that cannot find a thing reporting that the thing is absent. A zero from a pattern is evidence about the pattern first and about the corpus second, and the discriminator cost one `grep -nE '^#{2,4} '`.

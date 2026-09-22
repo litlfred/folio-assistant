@@ -200,7 +200,7 @@ authoring">
       <bpmn:documentation>The first beans: what the author said they want to get started on, one bean per top-level content object they named.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_seed</bpmn:incoming>
       <bpmn:outgoing>Flow_pages</bpmn:outgoing>
