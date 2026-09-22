@@ -1,11 +1,11 @@
 ---
 # folio-assistant-prhr
 title: 'PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:01:44Z
-updated_at: 2026-09-22T08:20:36Z
+updated_at: 2026-09-22T09:34:57Z
 parent: folio-assistant-p5wm
 ---
 
