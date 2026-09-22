@@ -82,3 +82,65 @@ producer — the owner's ruling. Recognised by `metrics.dispatch: "unavailable"`
 never by reviewer name, so the exemption cannot be claimed by asserting it. A
 test plants a plain `n/a` whose notes *say* "Could not dispatch" and confirms
 it is still reported.
+
+## Attribution, ruled by the owner 2026-09-22 — two actors, by WHERE it ran
+
+> *"Two actors: ci-pipeline + local-sweep."*
+
+`QaReviewer.actor` is now stamped by `sweepActor()` in `qa-utils.ts`:
+`ci-pipeline` when `CI` or `GITHUB_ACTIONS` is set, `local-sweep` otherwise.
+Both hold `qa-reporting`; **neither holds `content-authoring`**.
+
+**Why two and not one, and it is not bookkeeping.** A CI verdict is
+reproducible from the `reviewed_sha` it records. A local one may rest on an
+**uncommitted edit**, so the same sha addresses a tree that produced something
+else. Recording which one ruled is what keeps `reviewed_sha` an address rather
+than a decoration.
+
+**No third state here, deliberately.** Every other resolver in that file
+reports "could not determine" rather than guessing. The environment is always
+readable and the partition is total — `CI` is set by every CI system and absent
+locally — so an `unknown-sweep` actor would manufacture a state that cannot
+occur, and a state that cannot occur is one nobody maintains.
+
+### Measured, not asserted
+
+| | before | after |
+|---|---|---|
+| entries naming no actor | 5,896 | **5,869** |
+| unresolved reviewer ids | 9 | **8** |
+| actors holding `qa-reporting` | 5 | 6 |
+
+The gate reported its own baseline entry **stale** when the translation ids
+resolved — the shrink-only mechanism working, unprompted.
+
+### Two properties verified rather than assumed
+
+**The stamp is provenance, not churn.** Re-running a sweep does NOT re-stamp a
+fresh entry; the actor is written when the verdict is produced. Confirmed by
+staling a field hash and re-sweeping under `CI=true` (→ `ci-pipeline`) and then
+locally (→ unchanged, because nothing was stale).
+
+**The `--check` gate is freshness-based**, so a field whose value depends on
+the environment does not turn it red. Confirmed by running
+`translation:block-qa:check` under `CI=true` against locally-stamped sidecars.
+
+A simulation left one sidecar claiming `ci-pipeline` for a verdict produced in
+this container. **Restored** — that is exactly the false provenance this bean
+declined to write by hand, and leaving it would have been worse than never
+attributing at all.
+
+### Why only the translation ids moved
+
+All six script reviewers are wired. Only `translation-block-qa` can be re-run
+here: `qa-sweep` fails by design in this repository (it preflights on
+`content/package.json`, and the platform carries no folio). The five
+`qa-checkers-*.ts` ids resolve on the next sweep wherever one can run — the
+hook is **not retroactive**, and a test pins that.
+
+### Still the owner's — the three agent ids
+
+`voice-editorial-review`, `roundtrip-adjudicator (subagent)` and
+`roundtrip-back-translator (subagent)` have no actor, and none of the thirty
+declared actors obviously IS them. Inventing one is the same call this bean
+already declined once.
