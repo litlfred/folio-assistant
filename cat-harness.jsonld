@@ -260,16 +260,16 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T05:59:39.292Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/616e46838eaff8f6cc53b0b4a71146f261480b85",
-  "sourceCommitSha": "616e46838eaff8f6cc53b0b4a71146f261480b85",
-  "sourceCommitAt": "2026-09-22T07:57:59+02:00",
+  "generatedAt": "2026-09-22T06:04:29.973Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e4f58487d826b3dc19b9ace7a72be258f3c19ecf",
+  "sourceCommitSha": "e4f58487d826b3dc19b9ace7a72be258f3c19ecf",
+  "sourceCommitAt": "2026-09-22T08:02:42+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 223,
-    "Actor": 28,
+    "Skill": 226,
+    "Actor": 29,
     "Capability": 28,
-    "Role": 131,
+    "Role": 132,
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 58,
@@ -1833,6 +1833,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "archiving-arxiv",
+      "title": "Materializing from arXiv",
+      "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/archiving-arxiv.md",
+      "instructionLines": 92,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "glossary-build",
@@ -2780,6 +2796,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "archiving-web-pages",
+      "title": "Archiving a web page",
+      "description": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/archiving-web-pages.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "exposition-swarm-drain",
@@ -2838,6 +2870,22 @@
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
       "instructionLines": 236,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "filing-dublin-core",
+      "title": "Filing a source: what Dublin Core carries, and what it does not",
+      "description": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/filing-dublin-core.md",
+      "instructionLines": 105,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4188,6 +4236,24 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/librarian",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "librarian",
+      "actorKind": "person",
+      "title": "Librarian",
+      "description": "Acquires a source and files it. `person` rather than `agent`, and the distinction is load-bearing: the decisions this actor owns are the ones an unattended engine must NOT make on its own — whether a capture may be redistributed, whether a logged-in view counts as the public document, and when an approximate vocabulary term is worse than a local one. An agent performs the capture; a person settles what it means.",
+      "meta": {
+        "workflow": "skills/workflows/content-acquisition.bpmn#Lane_Contributor"
+      },
+      "hasCapability": [],
+      "roleName": [
+        "librarian"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/end-user",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
       "localId": "end-user",
@@ -5053,6 +5119,8 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/activity-log",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-memory",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
@@ -5092,6 +5160,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/editor",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/github-state-inspection",
@@ -32085,6 +32154,29 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/librarian",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "librarian",
+      "title": "Librarian",
+      "description": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Agent"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/evidence-agent",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "evidence-agent",
@@ -32947,8 +33039,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "616e46838eaff8f6cc53b0b4a71146f261480b85",
+    "sha": "e4f58487d826b3dc19b9ace7a72be258f3c19ecf",
     "pr": "main",
-    "run": "35692782923"
+    "run": "35693111380"
   }
 }
