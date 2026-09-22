@@ -32,20 +32,23 @@ hrefs per locale. So "get the LHS navbar working" is a build, not a fix.
 
 ## Critical path, in dependency order — RE-VERIFIED 2026-09-22
 
-**`b5f0` → `603s` → `hfkl` → `6lb8` → `supn`.**
+**`b5f0` → `603s` → `6lb8` → `supn`.**
 
-Five steps, not eight. The path below is what remains open after the
-withdrawal recorded in the next section; every id in it was checked against
-the store on 2026-09-22, not carried forward.
+Four steps, not eight. Every id in it was checked against the store on
+2026-09-22, not carried forward, and re-checked after `hfkl` closed the same
+day. The withdrawal is recorded in the next section.
 
 - **`b5f0` first**, and it is not a UI bean: it holds the ruling that settles
   `603s`'s own first open question, which file marks an instance. **That
   ruling now exists** — see §"The ruling `603s` was waiting for" below — so
   this step is a propagation, not a decision.
-- **`hfkl` is nearly closed**, and the reason once given for doing it early is
-  void: it was *"it unblocks `2krx`, which otherwise fires 19 findings on day
-  one"*, and `2krx` has been `completed` since 2026-09-20. Do it because it is
-  cheap, not because anything waits on it.
+- **`hfkl` is CLOSED, 2026-09-22**, and was finished before this stream
+  started. Its four requirements were re-derived one by one from `origin/main`
+  at `b7f8945b`; what held it open was a **duplicated Done-when line** — one
+  requirement entered twice, once `[x]` and once `[ ]` with a corrupted tail.
+  The reason once given for doing it early was void anyway: *"it unblocks
+  `2krx`, which otherwise fires 19 findings on day one"*, and `2krx` has been
+  `completed` since 2026-09-20.
 - **`o7eq` is this goal's URL layer** — the owner's rule that rendered assets
   live at `<baseurl>/<instance>/<declared graph>/<path>`. It says what each
   navbar section's href *is*. **Shared with GOAL 3** (`yg29` is delivered
@@ -84,22 +87,60 @@ blocker.** That is the honest shape: a closed bean cannot be a block that
 lifts, so where real work remains it needs an open bean of its own. `tfo1` and
 `lps0` already are that, and are not on this path.
 
-## The ruling `603s` was waiting for — recorded 2026-09-21, never propagated
+## The ruling `603s` was waiting for — settled, REVERSED, and already landed
 
 `603s`'s **first** open question is *"Which file marks an instance —
 `harness.json` or `harness.config.json`?"*, and `b5f0` §1 is the same question
-with its two answers costed. It has been answered. The record is in `hfkl`'s
-2026-09-21 trailer, verbatim:
+with its two answers costed. It is settled. **Read `b5f0` to the end before
+quoting it**, because the answer was ruled one way and then reversed:
 
-> Asked as the `goal-review` sweep's single question, the owner ruled REPLACE
-> on `b5f0` and added, verbatim: *"1 bit should also bootstrap and
-> folio-assistant configs/instantatioon"*.
+| date | ruling |
+|---|---|
+| 2026-09-20 | **REPLACE** — *"1 REPLACE"*. One merged file, `<name>.config.json`; `harness.json` folds into it. Implemented by `6n23`/#695. |
+| 2026-09-21 | reconfirmed and **widened** — bootstrap and the `folio-assistant-*` instances are in scope. |
+| 2026-09-21 | **REVERSED** — *"rename the stub need cat-harness.config.json and cat-harness/cat-harness.json, same for folio-assistant (instance, declration)"*, and *"1"* when the conflict was put back to the owner. |
 
-So: **one file marks an instance, `<name>.config.json`, and it replaces
-`harness.json`** — and bootstrap and folio-assistant each carry their own.
-Propagated to `b5f0` and `603s` on 2026-09-22 rather than left in a third
-bean's trailer, which is where it has been unreadable to every agent that
-started from this milestone.
+**The standing answer is the PAIR, not the merge:**
+
+    <name>.json           the DECLARATION — directories, graphs, dependents,
+                          assets, stickies.        readDeclaration()
+    <name>.config.json    the CONFIG — contentType, adapter, feedbackDir,
+                          viewer, readme.          readHarnessConfig()
+
+The owner took the option `b5f0` §1 had itself described — *"`<name>.json` +
+`<name>.config.json` would at least pair them"*. The merge was worth reversing
+in §1's own terms: it did not remove the "nothing in either name says which is
+which" objection, it **moved** it, leaving two different schemas with two
+different readers under one filename shape, told apart only by which directory
+they sat in.
+
+**And it has landed.** Measured on this checkout, 2026-09-22: six
+`*.config.json` at instantiation roots, paired with `bootstrap/bootstrap.json`,
+`cat-harness/cat-harness.json`, `who-iris/who-iris.json`,
+`folio-assistant.json`. **No `harness.json` remains** — the single hit,
+`cat-harness/docs/_data/harness.json`, is generated data, which `b5f0` names as
+not a declaration.
+
+**A filename is no longer fixed, and that is the part a navbar implementer
+needs.** `findDeclarationFile(dir)` takes the file whose filename **stem equals
+its own declared `name`** (`CONFIG_SUFFIX`, `instanceDeclarationFilename`,
+`cat-harness/schemas/cat-harness.ts:145-185`). A declaration is
+self-identifying, so a renamed clone still resolves — which is what answered
+migration-plan I.8's objection that a per-repo name *"fails silently"*.
+
+**So `603s` question 1 is answered, and `603s`'s own recorded answer is the
+stale one.** It shipped `harness-tiles.ts` discovering instances by scanning for
+`harness.json` and recorded *"this bean's question 1, answered: `harness.json`
+is what names an instance"*. The **code is already correct** —
+`harness-tiles.ts:290` calls `findDeclarationFile`, not a literal. Only the
+bean's prose still says the retired thing, which is `b5f0`'s own open Done-when:
+*"`AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are corrected, or
+each says why it still reads the other way."*
+
+> **Do not quote `hfkl`'s trailer for this.** It records *"the owner ruled
+> REPLACE on `b5f0`"* and is dated before the reversal. It was the most
+> findable statement of the ruling and it is the wrong one — which is the same
+> failure as a stale critical path, one artefact over.
 
 ## Blocked on the owner — RE-VERIFIED 2026-09-22
 

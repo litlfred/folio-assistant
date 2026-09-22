@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hfkl
 title: 'BOOTSTRAP IS THE EXCEPTION: no visualiser, but its .json/.jsonld IS its existence — and it needs a render/ subgraph'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:23Z
-updated_at: 2026-09-20T15:37:22Z
+updated_at: 2026-09-22T18:26:17Z
 parent: folio-assistant-vke6
 ---
 
@@ -94,9 +94,10 @@ rule rather than a new one, and the two should be written down once.
       published to the live site and to NO staging preview, along with every
       namespace document. So on staging, the layer whose existence IS its
       `.json`/`.jsonld` has neither.
-- [ ] The docs page's "conflict" section is rewritten as the resolved rule
-      resolved, one way stated
 - [x] The docs page's "conflict" section is rewritten as the resolved rule
+      — one way stated. **This was ONE box entered twice**, once checked and
+      once not, with a garbled tail ("…as the resolved rule resolved, one way
+      stated"). Reconciled 2026-09-22; see the closing entry.
 
 
 ---
@@ -183,3 +184,63 @@ declaration rule, and "bootstrap is the exception" read as though it were.
 
 **Not edited here** — a sibling's bean, and nothing in its Done-when changes.
 The ruling and its cost are on `b5f0`.
+
+---
+
+## Closed 2026-09-22 — re-derived from `origin/main`, not from this bean's notes
+
+Closed by stream `10uc` (GOAL 2) under `bean-coordination` §"Closing a bean
+whose work has already landed": **a bean closes on evidence, not on
+authorship.** The notes above claiming resolution are the thing under
+suspicion, so each box was re-run rather than read.
+
+**`origin/main` at `b7f8945b989e420e29bf91780539f70c1793a2c4`**, fetched for
+this check. Re-derived from the REMOTE, because grepping a checkout answers
+*"is this in MY base"* — a different question, and the one that produced bean
+`pomp`'s two published false findings.
+
+| box | command | result |
+|---|---|---|
+| `bootstrap/render/` declared | `git show FETCH_HEAD:bootstrap/bootstrap.json` → directory ids | `bootstrap-render` present among 8 |
+| exemption where the QA axis reads it | `… :cat-harness/schemas/cat-harness.ts \| grep -c renderExemption` | **13** |
+| `_kg/` contradiction resolved | `… :cat-harness/scripts/kg-export.ts \| grep -c "COMMITTED artefact"` | **1** — and see below |
+| docs "conflict" section rewritten | `… :cat-harness/docs/architecture/harness-instances.md` | §"Where the requirement starts — bootstrap is the exception" present; **zero** occurrences of "conflict" |
+
+**The third row is why the obligation is re-derivation and not a count.** A
+bare hit for `"COMMITTED artefact"` reads as the stale comment surviving. It is
+not: `kg-export.ts:1290` **quotes the old comment inside the corrected one** —
+*"It said \"a COMMITTED artefact … so its staleness gate would fail\" … That file
+is not committed and has no staleness gate."* Verified the fact, not the
+string. Had this closed on the count it would have reopened a defect that was
+correctly fixed.
+
+### Why it read `in-progress` with the work done
+
+**A duplicated Done-when line.** The checklist carried five entries for four
+requirements: the docs-page box appears twice, once `[x]` and once `[ ]` with a
+corrupted tail. The bean's own body already said that box *"was already ticked
+by somebody else"*. So the only thing holding `hfkl` open was a malformed edit
+— which is `k59d`'s defect class at leaf level, and `fkjo`'s *"a bean can
+declare itself finished and stay claimed"*.
+
+### Mid-flight check, obligation 3
+
+No open PR names `hfkl` except this stream's #960 and the consolidation #957;
+no remote branch of 298 matches `hfkl` or `bootstrap-render`. Nothing is being
+worked here.
+
+### One correction this bean owes its readers
+
+Its 2026-09-21 trailer records *"the owner ruled **REPLACE** on `b5f0`"*. **That
+ruling was reversed by the owner later the same day** — `b5f0` §"§1 REVERSED"
+takes the paired form, `<name>.json` + `<name>.config.json`, and the rename has
+landed (no `harness.json` remains on `main` bar the generated
+`cat-harness/docs/_data/harness.json`).
+
+This trailer is the most *findable* statement of that ruling in the store and
+it is the wrong one; GOAL 2's milestone was routed through it. Corrected on
+`p5wm` and `603s`, and flagged here so a reader who lands on this bean first
+does not carry the retired answer away. **Nothing in `hfkl`'s own scope
+changes** — the trailer's substantive point stands: bootstrap's exception is
+about a *visualiser*, and it is **not** an exemption from carrying its own
+config.

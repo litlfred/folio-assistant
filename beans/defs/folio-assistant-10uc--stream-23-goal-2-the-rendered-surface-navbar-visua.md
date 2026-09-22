@@ -31,18 +31,26 @@ its steps were already finished**: `2krx`, `ivfw`, `5y4b` and `pb04` — plus
 `1hvo`, the declaration layer, and `gjli`, which is a standing rule rather than a
 step. `p5wm` now carries the repair and the withdrawal reasons.
 
-**The live path is `b5f0` → `603s` → `hfkl` → `6lb8` → `supn`.** Five steps.
+**The live path is `b5f0` → `603s` → `6lb8` → `supn`.** Four steps — five when
+this was written, and `hfkl` closed the same day.
 
 Two notes this claim carried, both now corrected:
 
 - **`b5f0` is not a UI bean** — still true, and better than stated. It holds the
   ruling that settles `603s`'s first open question, which file marks an instance,
-  and **that ruling already exists**: the owner ruled REPLACE, recorded in
-  `hfkl`'s 2026-09-21 trailer and propagated to both beans on 2026-09-22.
-- **`hfkl` is the cheapest real win** — the win is real, the reason given was
-  not. *"It unblocks `2krx`, which otherwise fires 19 findings on day one"* is
-  void: `2krx` has been `completed` since 2026-09-20, and it shipped *with*
-  bootstrap's exemption as declared data, so those findings cannot fire.
+  and **that ruling exists and has already landed in code**. It was ruled
+  REPLACE on 2026-09-20 and then **REVERSED** on 2026-09-21: the standing answer
+  is the PAIR, `<name>.json` (declaration) + `<name>.config.json` (config),
+  resolved by `findDeclarationFile` rather than a fixed filename. `hfkl`'s
+  trailer still says REPLACE and is the most findable — and wrong — statement of
+  it. What is left is prose: `603s`'s recorded answer still names `harness.json`,
+  a file that no longer exists.
+- **`hfkl` is the cheapest real win** — cheaper than that: it was **already
+  done**, and closed 2026-09-22 on evidence re-derived from `origin/main`. The
+  reason given for it was void anyway. *"It unblocks `2krx`, which otherwise
+  fires 19 findings on day one"* — `2krx` has been `completed` since
+  2026-09-20, and it shipped *with* bootstrap's exemption as declared data, so
+  those findings cannot fire.
 
 **Pull requests on this surface:**
 
@@ -89,8 +97,16 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
       `p5wm:chain` baseline entry as no longer matching; removed from
       `stale-paths-baseline.json`, which is how that file shrinks rather than
       fossilises
-- [ ] `b5f0` ruling recorded and `603s`'s first open question closed
-- [ ] `hfkl` landed, `2krx`'s 19 day-one findings not fired
+- [x] `b5f0` ruling recorded and `603s`'s first open question closed —
+      2026-09-22. The ruling was ruled, **reversed**, and had already landed;
+      the standing answer is the pair `<name>.json` + `<name>.config.json`,
+      resolved by `findDeclarationFile` rather than any fixed filename. `603s`
+      carried a *superseded* recorded answer AND a supersession note that was
+      itself stale by one ruling; both corrected
+- [x] `hfkl` landed, `2krx`'s 19 day-one findings not fired — `hfkl` was
+      already complete and closed 2026-09-22 on re-derived evidence; `2krx`
+      shipped 2026-09-20 *with* the exemption, so the findings were never
+      going to fire
 - [ ] #955 shipped or held with a stated reason
 - [ ] The six owner-blocked beans asked as questions the owner can answer by
       selecting, with a preview URL where one is needed
