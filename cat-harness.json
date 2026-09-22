@@ -260,21 +260,21 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:29:58.657Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
-  "sourceCommitSha": "a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
-  "sourceCommitAt": "2026-09-22T11:27:55+02:00",
+  "generatedAt": "2026-09-22T09:38:27.566Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2cb60226bd86c3e3af1bff083c668003f869c4b8",
+  "sourceCommitSha": "2cb60226bd86c3e3af1bff083c668003f869c4b8",
+  "sourceCommitAt": "2026-09-22T11:35:50+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 229,
+    "Skill": 230,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
-    "Process": 58,
-    "SequenceFlow": 741,
-    "Role": 131,
-    "ProcessNode": 705,
+    "Process": 59,
+    "SequenceFlow": 749,
+    "Role": 135,
+    "ProcessNode": 714,
     "Tool": 69,
     "Schema": 93,
     "GraphKind": 26,
@@ -1555,7 +1555,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-review.md",
-      "instructionLines": 201,
+      "instructionLines": 235,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3908,6 +3908,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "copy-out-materialized",
+      "title": "Working on materialized content — copy it out",
+      "description": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/copy-out-materialized.md",
+      "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
@@ -9930,7 +9946,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Re-materialize, re-asking the five gates",
+      "name": "Re-materialize, re-asking the five gates — and record the new fixity",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized",
@@ -22170,6 +22186,286 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Copy out materialized content — to work on somebody else's bytes",
+      "enforcement": "strict",
+      "sourcePath": "processes/copy-out-materialized.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes — read-only",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no, or not declared",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reader (any actor)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Source graph — read-only",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Copier's own folio/",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Verification",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Somebody wants to work on held content",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Is the target materialized / read-only?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edit it in place — it is your own content",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Read the original — and write nothing",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Land the bytes in the copier's own folio/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record provenance.local — what this is a copy OF",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Verify the ORIGINAL still hashes to its digest",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A working copy, saying what it is a copy of",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edited where it lives — no copy needed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocumentAuthoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Authoring a document",
@@ -33128,8 +33424,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
+    "sha": "2cb60226bd86c3e3af1bff083c668003f869c4b8",
     "pr": "main",
-    "run": "35710531420"
+    "run": "35711288913"
   }
 }

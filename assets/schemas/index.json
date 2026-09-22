@@ -5565,6 +5565,20 @@
           "doc": "What makes this subgraph reachable — a renderer, a documentation entry,"
         },
         {
+          "name": "readOnly",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "This directory holds MATERIALIZED content: readable, and not editable here."
+        },
+        {
+          "name": "readOnlyBasis",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why — required whenever {@link readOnly} is declared, either value. See the schema field."
+        },
+        {
           "name": "theme",
           "type": "string",
           "optional": true,
@@ -5617,6 +5631,20 @@
           "type": "SubgraphCoverageSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "readOnly",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory holds MATERIALIZED content: readable, and not editable here."
+        },
+        {
+          "name": "readOnlyBasis",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHY, and required whenever `readOnly` is declared — either value."
         },
         {
           "name": "instanceRoot",
@@ -30939,11 +30967,11 @@
           "array": false
         },
         {
-          "name": "of",
-          "type": "z.string().min(1)",
+          "name": "provenance",
+          "type": "ProvenanceSchema",
           "optional": false,
           "array": false,
-          "doc": "The remote thing. A URI, always — never a path, never a bare name."
+          "doc": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}."
         },
         {
           "name": "localPath",
@@ -31011,14 +31039,15 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "Why the state is `unknown`, where it is. An unexplained `unknown` is indistinguishable from an unfilled field."
+          "doc": "Why the record cannot say more than it does."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/materialization.ts#FixitySchema",
-        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+        "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -31040,6 +31069,116 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#Provenance",
+      "name": "Provenance",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "name": "ProvenanceSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "WHERE THIS CAME FROM — a pointer pair, not a flag.",
+      "fields": [
+        {
+          "name": "upstream",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
+        },
+        {
+          "name": "local",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The original **in this repository** this was taken from."
+        },
+        {
+          "name": "signature",
+          "type": "SignatureSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#SignatureSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#Signature",
+      "name": "Signature",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
+      "name": "SignatureSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "A digital signature over the materialized bytes.",
+      "fields": [
+        {
+          "name": "format",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How to interpret `value` — a media type or a named scheme."
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The signature itself, or a URI that resolves to it."
+        },
+        {
+          "name": "signer",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who signed, as a key identifier."
+        },
+        {
+          "name": "verifiedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -35831,6 +35970,22 @@
       "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
       "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
+      "via": "signature",
       "kind": "field",
       "optional": true,
       "array": false
