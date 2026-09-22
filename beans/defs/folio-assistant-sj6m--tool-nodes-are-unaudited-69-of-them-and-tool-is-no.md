@@ -163,6 +163,76 @@ A check built on (1) alone would report the two CSS claims as unproduced and
 be wrong about both, which is the same over-narrow reading `6f1x` was opened
 to correct, in the opposite direction.
 
+## Requirement 4 read against `0grh` — it does NOT cover it, and the engine has no dispatch at all
+
+The Done-when said to read `0grh` against requirement 4 and either defer to it
+or record what it does not cover. **It does not cover it**, and the reason is
+worth stating rather than glossing: the two are about different questions, and
+on the one point they touch they say OPPOSITE things.
+
+`0grh` is about **verification** dispatch — producer / checker / adjudicator —
+and its rule 3 is *"One agent doing both halves is not this check."* That
+FORBIDS the same-agent case. Requirement 4 says a subprocess **may** run in the
+same agent. So `0grh` is not the general model; it is a constraint that binds
+one KIND of subprocess (a verification one). Deferring requirement 4 to it
+would have imported a prohibition into the general case, which is the one
+reading the owner's sentence rules out.
+
+### What the engine actually does — measured, not inferred
+
+| | |
+|---|---|
+| call activities in the `.bpmn` corpus | **26** |
+| ...carrying `folio:skill` | 14 |
+| ...carrying `folio:link` | 4 |
+| ...saying **who runs them** | **0** |
+| `bpmn:multiInstanceLoopCharacteristics` in the repo (diagrams + parser) | **0** |
+
+`enterSubprocesses` (`src/workflow/instance.ts`) starts every child **in
+process**, as a nested `InstanceState` under the parent's `state.children`,
+inheriting `subject` and `bean`. There is no actor, agent, or dispatch field on
+the child, and `ACTIVITY_TYPES` in `process-model.ts` knows `bpmn:CallActivity`
+without any loop characteristics.
+
+So the owner's sentence names **three** states — same agent, dispatch one,
+dispatch more than one — of which the engine implements exactly one, *by never
+asking the question*. And the absence is silent in the `dh4f` way: a diagram
+cannot EXPRESS the other two, so no diagram is wrong and nothing reports a gap.
+
+**The nearest existing declaration is `folio:fulfilment`, and it is not this.**
+`<folio:fulfilment kinds="person agent" reason="…"/>` says which actor KINDS
+may perform an activity. It answers *what sort of thing* runs a step, never
+*how many* or *in whose context*. Reaching for it would give an answer to a
+question nobody asked.
+
+## Requirement 3 — the mechanism already exists, and it is `a58y` again
+
+The bean's own Done-when warned that *"a security gate nothing consults would
+be the same defect with higher stakes"*. Measured today, that is not a risk to
+design against — **it is already the state of the nearest mechanism**.
+
+`<folio:precondition>` is *"what must hold BEFORE the start event"* (bean
+`lv3j`), parsed into `ProcessModel.preconditions`, three-valued with
+`could-not-determine` as a first-class verdict, and a `checkable` kind carrying
+`check: { kind, ref }`. It is exactly the shape requirement 3 asks for, one
+level up: a precondition on RUNNING rather than on publishing.
+
+| | |
+|---|---|
+| processes declaring a precondition | **1** (`bootstrap/processes/initialize-harness.bpmn`) |
+| preconditions declared | 4 — 3 `stated`, 1 `checkable` |
+| **non-test callers of `evaluatePreconditions`** | **0** |
+
+`workflow_start` does not consult it. The mechanism is written, tested against
+the one real diagram that uses it, and **run by nothing**. That is `a58y`'s
+finding — a declaration that reads as a control and enforces nothing — in the
+component requirement 3 would otherwise have been built on top of.
+
+The order this implies is the opposite of the obvious one: **give
+`evaluatePreconditions` a consumer before extending it to tools.** Extending an
+unconsulted check to 69 more subjects widens the silence rather than the
+coverage.
+
 ## Done when — updated
 
 - [ ] `skill.update` is disambiguated, because 1–3 may be scoped by it
@@ -173,6 +243,10 @@ to correct, in the opposite direction.
       not, the relation is `maintains`, and the gap is `6f1x`'s, now doubled
       from 2 uncovered artefacts to 4
 - [ ] The pre-execution security gate has a consumer, and a test that fails
-      when the consumer stops consulting it
-- [ ] `0grh` is read against requirement 4
-
+      when the consumer stops consulting it — **the mechanism is
+      `folio:precondition` and it has 0 non-test callers today**, so the
+      consumer comes first
+- [x] `0grh` is read against requirement 4 — it does **not** cover it (its
+      rule 3 forbids the same-agent case the requirement permits), and the
+      engine has no dispatch concept at all: 26 call activities, 0 saying who
+      runs them, 0 multi-instance
