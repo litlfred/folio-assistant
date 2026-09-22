@@ -454,25 +454,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790113981">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790116119">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790113981">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790116119">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790113981">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790116119">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790113981">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790116119">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -489,7 +489,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790113981" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790116119" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -964,6 +964,81 @@ the agent has just finished an impact analysis, and the vocabulary it built
 doing that <em>feels</em> defined.</strong> It is not. The names you coined an hour ago inside
 an issue are the ones most likely to reach the reader undefined, precisely
 because you can no longer see them as new.</p>
+<h4 id="the-prose-does-not-travel--the-question-object-must-stand-alone-strict">
+  
+  
+    <a href="#the-prose-does-not-travel--the-question-object-must-stand-alone-strict" class="anchor-heading" aria-labelledby="the-prose-does-not-travel--the-question-object-must-stand-alone-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The prose does not travel — the question object must stand alone (STRICT)
+  
+  
+</h4>
+    
+
+<p>The six parts above assume the reader is <strong>in the conversation</strong>, reading the
+prose that precedes the question. Often they are not. A question asked by a
+background session, a cloud session, a subagent or a scheduled run reaches the
+person through a channel that carries <strong>only the structured fields</strong> — the
+question text, the option labels, the option descriptions. Everything written
+around the call stays in a transcript the person would have to go and open.</p>
+
+<p>So the test grows one clause:</p>
+
+<blockquote>
+  <p><strong>Can the reader answer without opening anything — including the session that
+asked?</strong></p>
+</blockquote>
+
+<p><strong>Measured here, 2026-09-22.</strong> Two of four consolidation streams blocked on an
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> and both containers then disconnected. Their reasoning was in
+their own transcripts. A sibling session relaying the block to the owner had to
+<strong>reconstruct</strong> the context from session metadata, PR bodies and bean files —
+and the owner read <em>the relay’s</em> reconstruction rather than the asker’s. The
+askers had done the analysis; none of it travelled. One of the four questions
+would have committed to a different repository, so the reconstruction was
+load-bearing.</p>
+
+<p><strong>Put in the structured fields everything needed to choose:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>carries</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>the question</td>
+      <td>what will <strong>differ</strong> depending on the answer, with every identifier expanded. Never a bare noun phrase — <em>“<code class="language-plaintext highlighter-rouge">kupb</code> scope”</em> is a topic, not a question.</td>
+    </tr>
+    <tr>
+      <td>each option’s description</td>
+      <td>that option’s own consequence and <strong>how reversible</strong> it is. A reader comparing two options must be able to do it from the two descriptions alone.</td>
+    </tr>
+    <tr>
+      <td><strong>one</strong> option’s description</td>
+      <td><strong>what happens if they say nothing</strong>, marked as the default and phrased as what you will then do.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The comparison table still belongs in the prose</strong>, where rows can be read
+against each other — a selection tool shows one option at a time, so a table is
+genuinely better there. What changes is that <strong>nothing may be load-bearing
+<em>only</em> in the prose</strong>. The prose is where a comparison is easier to read; the
+fields are where it survives.</p>
+
+<p>Two things this rules out, both of which read as complete to their author:</p>
+
+<ul>
+  <li><strong>A question whose context sits in the paragraph above the call.</strong> Correct in
+a live conversation, invisible through a relay.</li>
+  <li><strong>An option label carrying the trade-off and a description carrying nothing</strong>
+— or the reverse. A label is a handle; the description is the argument.</li>
+</ul>
+
+<p>And when you are the one <strong>relaying</strong> somebody else’s blocked question: say
+that you are relaying, and say where the answer has to be given. An answer
+typed at the relay does not reach the asker.</p>
 <h4 id="worked-example--a-real-failure-2026-09-18">
   
   
@@ -1505,7 +1580,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35789136263"><code>73a59bd</code></a> &middot; 2026-09-22T21:52:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35792501841"><code>82ebb50</code></a> &middot; 2026-09-22T22:28:31Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

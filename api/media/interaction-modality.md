@@ -155,6 +155,54 @@ doing that *feels* defined.** It is not. The names you coined an hour ago inside
 an issue are the ones most likely to reach the reader undefined, precisely
 because you can no longer see them as new.
 
+#### The prose does not travel — the question object must stand alone (STRICT)
+
+The six parts above assume the reader is **in the conversation**, reading the
+prose that precedes the question. Often they are not. A question asked by a
+background session, a cloud session, a subagent or a scheduled run reaches the
+person through a channel that carries **only the structured fields** — the
+question text, the option labels, the option descriptions. Everything written
+around the call stays in a transcript the person would have to go and open.
+
+So the test grows one clause:
+
+> **Can the reader answer without opening anything — including the session that
+> asked?**
+
+**Measured here, 2026-09-22.** Two of four consolidation streams blocked on an
+`AskUserQuestion` and both containers then disconnected. Their reasoning was in
+their own transcripts. A sibling session relaying the block to the owner had to
+**reconstruct** the context from session metadata, PR bodies and bean files —
+and the owner read *the relay's* reconstruction rather than the asker's. The
+askers had done the analysis; none of it travelled. One of the four questions
+would have committed to a different repository, so the reconstruction was
+load-bearing.
+
+**Put in the structured fields everything needed to choose:**
+
+| field | carries |
+|---|---|
+| the question | what will **differ** depending on the answer, with every identifier expanded. Never a bare noun phrase — *"`kupb` scope"* is a topic, not a question. |
+| each option's description | that option's own consequence and **how reversible** it is. A reader comparing two options must be able to do it from the two descriptions alone. |
+| **one** option's description | **what happens if they say nothing**, marked as the default and phrased as what you will then do. |
+
+**The comparison table still belongs in the prose**, where rows can be read
+against each other — a selection tool shows one option at a time, so a table is
+genuinely better there. What changes is that **nothing may be load-bearing
+*only* in the prose**. The prose is where a comparison is easier to read; the
+fields are where it survives.
+
+Two things this rules out, both of which read as complete to their author:
+
+- **A question whose context sits in the paragraph above the call.** Correct in
+  a live conversation, invisible through a relay.
+- **An option label carrying the trade-off and a description carrying nothing**
+  — or the reverse. A label is a handle; the description is the argument.
+
+And when you are the one **relaying** somebody else's blocked question: say
+that you are relaying, and say where the answer has to be given. An answer
+typed at the relay does not reach the asker.
+
 #### Worked example — a real failure, 2026-09-18
 
 Ending a turn, this agent wrote:

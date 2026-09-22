@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 11,
+      "count": 13,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -1075,6 +1075,22 @@
       "name": "catalogue",
       "graphNode": "schema",
       "summary": "A remote catalogue, modelled in the graph without holding it.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/changeset.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "changeset.test",
+      "graphNode": "undeclared",
+      "summary": "ChangeSet against a real git fixture: one chapter, two sections, and each",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "instance": "folio-assistant-core",
+      "name": "changeset",
+      "graphNode": "schema",
+      "summary": "A ChangeSet: what changed in a folio between two git refs, block by block.",
       "isTest": false
     },
     {
@@ -30095,6 +30111,330 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/changeset.test.ts#Blk",
+      "name": "Blk",
+      "module": "folio-assistant-core/schemas/changeset.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "slug",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockAt",
+      "name": "BlockAt",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema",
+      "name": "BlockAtSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "doc": "Where a block sits on one side of the comparison.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "Manifest path relative to the folio root."
+        },
+        {
+          "name": "kind",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "section",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The section listing it: `<manifest dir>::<section label | title | #n>`."
+        },
+        {
+          "name": "index",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Zero-based position within that section."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockChange",
+      "name": "BlockChange",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+      "name": "BlockChangeSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "change",
+        "added",
+        "removed",
+        "changed"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeAspect",
+      "name": "ChangeAspect",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSet",
+      "name": "ChangeSet",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "name": "ChangeSetSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CHANGESET_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "folio",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "Folio root, relative to the repository root."
+        },
+        {
+          "name": "base",
+          "type": "RefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "head",
+          "type": "RefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.object({ added: z.number().int(), removed: z.number().int(), changed: z.number().int(), unchanged: z.number().int(), …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "changes",
+          "type": "z.array(BlockChangeSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Every block that differs, in head reading order, then removed blocks."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+        "folio-assistant-core/schemas/changeset.ts#RefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CHANGESET_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ComputeOptions",
+      "name": "ComputeOptions",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "repoRoot",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Repository holding the folio."
+        },
+        {
+          "name": "folio",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Folio root, relative to `repoRoot`."
+        },
+        {
+          "name": "base",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Default `origin/main`."
+        },
+        {
+          "name": "head",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A ref, or {@link WORKTREE} (the default) for the files on disk."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "name": "RefSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "What was asked for — `origin/main`, a branch, or `worktree`."
+        },
+        {
+          "name": "commit",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The commit it resolved to; `null` for the uncommitted working tree."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#Snap",
+      "name": "Snap",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "manifestHash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "proseHash",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "BlockAt"
+      ],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/changeset.ts#BlockAt"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/dublin-core.ts#DcField",
       "name": "DcField",
       "module": "folio-assistant-core/schemas/dublin-core.ts",
@@ -36457,6 +36797,38 @@
       "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "via": "materialization",
       "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+      "via": "changes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "via": "base",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "via": "head",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#Snap",
+      "to": "folio-assistant-core/schemas/changeset.ts#BlockAt",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     },
