@@ -995,6 +995,54 @@
       "graphKinds": [
         "glossary"
       ]
+    },
+    {
+      "id": "cat-harness-scripts",
+      "path": "scripts/",
+      "dependents": "skip",
+      "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-src",
+      "path": "src/",
+      "dependents": "skip",
+      "description": "The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-adapters",
+      "path": "adapters/",
+      "dependents": "skip",
+      "description": "The content-type adapters -- `DocumentContentAdapter` and the `PaperContentAdapter` that extends it. Code rather than schema: they are the behaviour the profiles select between, and `content-profiles` is the skill that says which axis they sit on.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-tests",
+      "path": "test/",
+      "dependents": "skip",
+      "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

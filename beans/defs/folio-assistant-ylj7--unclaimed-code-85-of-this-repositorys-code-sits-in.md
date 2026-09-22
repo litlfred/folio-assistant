@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ylj7
 title: 'UNCLAIMED CODE: 85% of this repository''s code sits in no declared directory — declare them, do not move them'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-22T19:40:16Z
-updated_at: 2026-09-22T19:40:16Z
+updated_at: 2026-09-22T20:51:42Z
 parent: folio-assistant-uhkv
 ---
 
@@ -89,3 +89,58 @@ most costly form.
 - [ ] every instance's code directories are declared
 - [ ] a QA axis reports the two questions SEPARATELY, never as one number
 - [ ] `<stub>/src` is written down as the convention for new instances
+
+## Round 1 shipped, 2026-09-22 — 15% → 73%
+
+The `code` graph kind is registered (`schemas/graph-kind-registry.ts`), with
+the avatar and the `directory-conventions` table row a new kind owes, and
+cat-harness's four code directories are declared where they are:
+`scripts/`, `src/`, `adapters/`, `test/`.
+
+**Re-measured after: 847 of 1,154 `.ts` files sit in a declared directory —
+73%, from roughly 15%.** Re-derive rather than quoting; the numbers move.
+
+`holds: "content"` — authored with an intention, re-authored rather than
+regenerated, and it stands on its own. `renderable: false`, and that call is
+the interesting one: code is legible and views of it are published, but
+`renderable` asks whether the graph is wired to the SITE BUILD as pages, and
+the generated references are built from schemas and skills rather than from
+this. Saying `true` would promise a page per module.
+
+### The collision this exposed, and why it was not fixed with a baseline
+
+Declaring the four directories took `check:declared-paths` from 0 refusals to
+**822**, against a recorded baseline of 38.
+
+Not one was a real instance of the defect that gate describes. Its rule is in
+its own header — *a path a declaration could have answered is not written down
+in code* — and every prefix it guarded was a graph whose access pattern is
+**discovery**: `workflowDirs()` answers "where are the processes", so a literal
+`processes/` is a site that breaks under a topical split.
+
+**A declaration cannot answer "which script is the gate runner."** Code
+directories are addressed by path deliberately; `package.json` and the CI
+workflows name them, which is what `check:ci-invocations` and
+`check:command-paths` exist to keep honest. The finding named no remedy
+because there is none to name.
+
+So the gate is narrowed at its premise rather than at its threshold:
+`isAddressedByPath` exempts a directory whose kinds are **all** `code`. Keyed
+on the KIND, never on the path — matching on `scripts` would exempt any future
+directory of that name, including one holding a genuinely discoverable graph,
+and would stop exempting this one the moment it moved. A directory holding
+`code` **and** a discoverable kind is not exempt, because the discoverable half
+is the access pattern that needs guarding.
+
+Bumping the baseline would have hidden the twentyfold jump AND raised the bar
+under every prefix where the rule does apply, which is the failure mode a
+shared baseline has.
+
+## Still to do
+- [ ] the other instances' code directories — this round declared cat-harness's
+      only, which is where the bulk is but not all of it
+- [ ] `content/` is still undeclared as code. It is NOT an oversight: it holds
+      `content/pipeline/` (core's subject) beside `content/docs/` (folio
+      content), so declaring it needs the split settled first — `repo-partition`
+- [ ] `<stub>/src` written down as the convention for new instances
+- [ ] the QA axis reporting the two questions SEPARATELY

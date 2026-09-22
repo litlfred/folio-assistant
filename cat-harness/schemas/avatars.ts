@@ -275,6 +275,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // both outcomes. Deliberately not the `qa` mark and not `health`'s trace —
   // the three are different subjects (an artefact, a repository, an execution)
   // and an avatar that borrowed either would say they are the same question.
+  // Angle brackets around a caret: source, as the thing that is written rather
+  // than the thing that runs. Deliberately not a terminal prompt or a gear --
+  // both read as EXECUTION, and this kind is about code as authored content,
+  // which is exactly the distinction `holds: "content"` records.
+  code: {
+    glyph: "M8 7l-5 5 5 5m8-10l5 5-5 5M13 5l-2 14",
+    tone: 268,
+    reads: "angle brackets around a slash — source as something written, not something running",
+  },
   "qa-report": {
     glyph: "M9 4h6v3H9zM7 6h2m6 0h2a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V7a1 1 0 011-1zm1.5 7l1.5 1.5L13 11m1 5l3 3m0-3l-3 3",
     tone: 168,

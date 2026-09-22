@@ -54,6 +54,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [WHO IRIS]({{ '/cat-harness/catalogue/who-iris/' | relative_url }})
 
+### `code`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `docs`
 
 3 of 3 published.

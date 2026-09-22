@@ -629,6 +629,54 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // is what proves the path still resolves.
     validator: "schemas/health-report.ts#HealthReportSchema",
   },
+  // Source code. Registered 2026-09-22 (bean `ylj7`) after a measurement the
+  // owner asked for: of roughly 1,216 `.ts` files in this repository, about
+  // 180 sat inside a DECLARED directory. Roughly 85% of the code was in no
+  // declared directory at all -- `scripts/`, `content/`, `src/`, `test/` and
+  // `adapters/` among them.
+  //
+  // That is the `v8gh` property, which everything else here already relies on:
+  // AN UNDECLARED FILE IS ONE NO CHECKER HAS A REASON TO LOOK AT. A QA axis
+  // asking "is this code claimed by a Tool node?" was being asked over 15% of
+  // the code while reporting a clean run over the rest, which is `dh4f` in its
+  // most expensive form.
+  //
+  // THE OWNER'S FIRST PROPOSAL WAS A SINGLE `<stub>/src`, and the measurement
+  // is what argued against it as a DESTINATION while confirming it as a
+  // MECHANISM. Three of the four sources resist a move for different reasons:
+  // `schemas/` is already a declared graph (a schema IS a knowledge-graph
+  // node), `content/pipeline/` is core's subject so moving it under
+  // cat-harness crosses the boundary `repo-partition.ts` enforces, and
+  // `scripts/` are entry points named BY PATH in package.json and the CI
+  // workflows -- which `check:ci-invocations` and `check:command-paths` guard.
+  // So: declare them where they are, and keep `<stub>/src` as the convention
+  // for NEW instances.
+  //
+  // `content` by the one question: somebody authors it, with an intention, and
+  // you would re-author rather than regenerate it. It stands on its own -- a
+  // module still computes when detached from everything that calls it.
+  //
+  // NOT renderable, and that is the interesting call. Code is legible and this
+  // repository does publish views of it, but `renderable` asks whether the
+  // graph is wired to the SITE BUILD as pages, and it is not: the generated
+  // references are built from schemas and skills, not from the code graph.
+  // Saying `true` here would promise a page for every module.
+  //
+  // It does NOT answer "is this code claimed". That is a second, separate
+  // question -- declared but bound to no Tool node -- and beans `d308` and
+  // `ce65` own it. Reporting the two as one number is how the cheap one never
+  // gets done.
+  code: {
+    type: termIri("CodeGraph"),
+    renderable: false,
+    holds: "content",
+    summary:
+      "Source code -- the modules, scripts and entry points an instance holds. Declared so that " +
+      "code is scannable at all: an undeclared file is one no checker has a reason to look at. " +
+      "Being declared here says nothing about whether a Tool node claims it, which is a separate " +
+      "question and a separate axis.",
+    skill: "where-does-this-go",
+  },
   // QA reports -- what a pipeline TOOL recorded about its own run. The FIFTH
   // QA-shaped family here, and a separate kind for the same reason `health` is
   // separate from `qa`, one step further out: a `qa` witness judges an
