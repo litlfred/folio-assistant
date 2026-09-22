@@ -801,6 +801,19 @@
       }
     },
     {
+      "id": "smart-base-processes",
+      "path": "smart-base/methodologies/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The BPMN `smart-base` derives from its own corpus -- DIIG's nine chapters as an executable process. Declared SEPARATELY from `smart-base-methodologies` for the reason `methodology-crdm-processes` is declared separately from `methodologies/`: `workflowDirs` resolves diagrams from a declared directory, so a nested one that is not itself declared leaves every diagram undiscovered (bean `g43o`). Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
+    },
+    {
       "id": "docs",
       "path": "docs/",
       "dependents": "reproduce",

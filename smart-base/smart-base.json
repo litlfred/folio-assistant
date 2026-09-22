@@ -40,9 +40,21 @@
       "coverage": {
         "skill": "voice-editorial-review"
       }
+    },
+    {
+      "id": "processes",
+      "path": "methodologies/processes/",
+      "dependents": "skip",
+      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph kinds and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
     }
   ],
-  "_directories_comment": "THREE entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it, and who-iris held its own `library` entry back on the same ground.",
+  "_directories_comment": "FOUR entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
   "assets": [
     {
       "id": "agent-instructions",
