@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO handbook for guideline development — ingested IRIS replica</title>
+<title>The catalogue, as a graph — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -303,57 +303,167 @@
   failing at a line far from the mistake.)
 -->
 <nav class="main"><div class="wrap">
-  <a href="community-list.html">Communities &amp; Collections</a>
+  <span>Communities &amp; Collections</span>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">WHO handbook for guideline development</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">Catalogue</span></div></div>
 
 <main class="wrap">
-<h1>WHO handbook for guideline development</h1>
-<p>Permanent URI for this item
-  <a href="https://iris.who.int/handle/10665/145714">https://iris.who.int/handle/10665/145714</a>
-  <span class="state materialized">materialized</span></p>
+<div class="wrap">
+<h1>The catalogue, as a graph</h1>
 
-<p class="note" style="margin-left:0">In: 1. Headquarters &rsaquo; Publications</p>
+<p class="lede">The replica pages show what IRIS looks like. This one shows what this
+catalogue <em>knows</em> — and, more usefully, what it records that it does not know.</p>
 
-<h2>Files</h2>
-<table class="items">
-<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
-<tbody>
-<tr>
-  <td><code>9789241548960_eng.pdf</code></td>
-  <td>ORIGINAL</td>
-  <td>2.04 MB</td>
-  <td><span class="state materialized">materialized</span></td>
-</tr>
-<tr>
-  <td><code>9789241548960-eng-cover.png</code></td>
-  <td>THUMBNAIL</td>
-  <td>0.01 MB</td>
-  <td><span class="state materialized">materialized</span></td>
-</tr>
-</tbody>
+<div class="note">
+<p><strong>The gap is the point, not a backlog.</strong> This instance models
+<strong>13</strong> node(s) against <strong>273,559</strong> items across <strong>1,057,223</strong> files upstream.
+Cataloguing by reference means recording that something exists without holding it,
+so a small number here is the design rather than a shortfall.</p>
+</div>
+
+<h2>What is held, and what is only named</h2>
+
+<table class="kg">
+<tr><th>state</th><th>nodes</th><th>what it means</th></tr>
+<tr><td><span class="state materialized">materialized</span></td><td>3</td><td>the bytes are in this repository</td></tr>
+<tr><td><span class="state referenced">referenced</span></td><td>10</td><td>upstream, not here — a fact, not a gap</td></tr>
+<tr><td><span class="state unknown">unknown</span></td><td>0</td><td>nobody has looked; never rendered as either of the above</td></tr>
 </table>
 
-<h3>Both links, as asked for</h3>
-<table class="items">
-<thead><tr><th>Where</th><th>Link</th></tr></thead>
-<tbody>
-<tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/145714">https://iris.who.int/handle/10665/145714</a></td></tr>
-<tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">via CDN</a></td></tr>
-<tr><td>In collection</td><td><a href="collection-collection-hq-publications.html">Publications</a><br><code>in 1. Headquarters</code></td></tr>
-<tr><td>Ingested text (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a>
-      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 6.7 KB</code></td></tr>
-</tbody>
+<h2>What the gates say about the 6 held bitstream(s)</h2>
+
+<p><strong>Not everything permitted is everything known.</strong> <code>restrictions</code> is unknown on 6, <code>sourceLoss</code> is unknown on 3, <code>copyright</code> is unknown on 6 of them. A gate that returned <em>unknown</em> is a question
+nobody has answered — which is a different state from a gate that was asked and
+said yes, and collapsing the two would turn an open question into a clearance.</p>
+
+<table class="kg">
+<tr><th>gate</th><th>verdicts</th></tr>
+<tr><td><code>copyright</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
+<tr><td><code>restrictions</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
+<tr><td><code>retention</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
+<tr><td><code>size</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
+<tr><td><code>sourceLoss</code></td><td><span class="state materialized">permitted</span> 3 <span class="state unknown">unknown</span> 3</td></tr>
 </table>
 
+<h2>Every node</h2>
 
+<table class="kg">
+<tr><th>state</th><th>kind</th><th>node</th><th>held as</th><th>record</th><th>bitstreams</th></tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>collection</code></td>
+  <td>Publications<br><code class="dim">collection/hq-publications</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>collection</code></td>
+  <td>Information products<br><code class="dim">collection/wpro-information-products</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>3. Regional Office for the Americas<br><code class="dim">community/270bee8e-d535-4512-86a2-b01850407a23</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>8. WHO Framework Convention on Tobacco Control (FCTC)<br><code class="dim">community/28b22be0-5864-409c-9b83-0442e2a7ca0e</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>1. Headquarters<br><code class="dim">community/5bff2c18-6c2b-4658-9087-93811d2399c0</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>6. Regional Office for South-East Asia<br><code class="dim">community/8f327840-b0f3-4769-a1c2-270b2b5ce7da</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>2. Regional Office for Africa<br><code class="dim">community/e1b206b7-fd4c-4b93-972a-be07850a1cdd</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>7. Regional Office for the Western Pacific<br><code class="dim">community/ebd3b191-c322-4754-9415-469a1a0eb0c3</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>4. Regional Office for the Eastern Mediterranean<br><code class="dim">community/f005d7fc-da21-4f55-9e06-9f65c49b2184</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>5. Regional Office for Europe<br><code class="dim">community/fb66a624-a5dc-4576-8b6b-929639e552d8</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>Publication and information products style guide<br><code class="dim">item/18892cf3-5a4f-42a4-923c-a93f4a594dec</code></td>
+  <td><code>wpr-rdo-2020-003-eng</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>WHO handbook for guideline development<br><code class="dim">item/63e14c27-7448-41ec-be08-a96a25a47db6</code></td>
+  <td><code>9789241548960-eng</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>WHO editorial style manual<br><code class="dim">item/b08c6c19-315a-41a4-a9cb-8edabdbc6791</code></td>
+  <td><code>who-pub-tps-931</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+</table>
 
+<p class="caveat">Generated from <code>catalogue/</code> by
+<code>who-iris/scripts/gen-iris-pages.ts</code>. Every count above is derived from the
+nodes themselves; none is transcribed. <code>bun run check:catalogue</code> separately
+verifies that each node validates and that every <code>metadataRef</code>,
+<code>libraryId</code>, <code>localPath</code> and parent path resolves — so this page
+reports what the catalogue says, and that check reports whether it hangs together.</p>
+</div>
 </main>
 
 <footer class="mast"><div class="wrap">

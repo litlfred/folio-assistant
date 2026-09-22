@@ -2122,6 +2122,44 @@ export const VisualisationSchema = z.object({
    * exactly what it rendered before anybody declared one.
    */
   icon: z.string().min(1).optional(),
+  /**
+   * WHERE this visualisation may be published. Absent means everywhere, which
+   * is what every visualisation did before this field existed.
+   *
+   * `"staging-only"` renders the page and keeps it OUT of the canonical
+   * deploy: visible in a local build and in a `STAGING/<slug>/` preview,
+   * absent from the published site.
+   *
+   * ## Why a graph would want that
+   *
+   * `fsh-guts` is the worked case and the owner's ruling of 2026-09-21. Its
+   * declaration calls it *"the trashcan that is kept"* — deprecated content
+   * relocated rather than deleted, because a scrapped item stops the next
+   * agent re-entering a dead end while a deleted one cannot be told from an
+   * accident. It was DELIBERATELY unrendered so that something could be kept
+   * without being published, and the owner then asked to see it. Both things
+   * are wanted: a reader here can browse it, a reader of the published site
+   * does not meet it.
+   *
+   * ## The default is the SAFE direction, and that is the whole design
+   *
+   * Composition hides a staging-only visualisation unless it is positively
+   * told otherwise (`compose-docs --staging`). So a forgotten flag HIDES TOO
+   * MUCH — a missing page in a preview, immediately visible to whoever is
+   * looking at the preview, and fixed by re-running with the flag.
+   *
+   * The opposite default fails the other way: a canonical build that forgets
+   * its flag PUBLISHES content somebody chose not to publish, which is not
+   * visible from the build at all and is not undone by deleting the page
+   * afterwards. When the two error directions are that asymmetric, the
+   * default belongs on the recoverable side.
+   *
+   * This is deliberately NOT expressed as `hidden`. That field says where a
+   * tile appears among tiles; this says whether the page may be deployed, and
+   * a reader who can reach a page by typing its URL is not helped by a tile
+   * that declined to mention it.
+   */
+  publish: z.enum(["staging-only"]).optional(),
 });
 export type Visualisation = z.infer<typeof VisualisationSchema>;
 

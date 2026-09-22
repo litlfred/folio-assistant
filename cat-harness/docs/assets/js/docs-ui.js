@@ -2041,6 +2041,25 @@
     return v.replace(/\/+$/, "");
   }
 
+  /* ── Is this a STAGING preview? ──────────────────────────────────────
+   *
+   * Non-empty `fa-staging` means a `STAGING/<slug>/` preview; empty means the
+   * canonical deploy, a local build, or a page whose `_data/build.yml` was
+   * never written. All three of those are treated as canonical, which is the
+   * SAFE direction: a build that cannot say it is a preview hides the tile
+   * rather than advertising a page that may not be deployed.
+   *
+   * That matches `compose-docs.ts`, which withholds a staging-only page unless
+   * positively told `--staging`. One direction in both places, so the page and
+   * its tile cannot end up disagreeing about which deploy they are on — and if
+   * they ever did, the failure would be a tile linking to a 404, which is the
+   * thing this exists to prevent.
+   */
+  function isStagingPreview() {
+    var meta = document.querySelector('meta[name="fa-staging"]');
+    return !!(meta && (meta.getAttribute("content") || "").trim());
+  }
+
   /**
    * A site-root path, composed against this deploy's base.
    *
@@ -2086,6 +2105,11 @@
       // another surface.
       if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
       if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
+      // A tile whose PAGE is withheld from this deploy is not rendered at all.
+      // Distinct from `hidden` above, which is a reader's own preference about
+      // a page that exists: this one is about whether the page is there.
+      // Conflating them would let "show hidden" resurrect a link to a 404.
+      if (t.publish === "staging-only" && !isStagingPreview()) continue;
       var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
                           "the declared visualisation of " + t.directory);
       tile.setAttribute("data-fa-tile", t.id);

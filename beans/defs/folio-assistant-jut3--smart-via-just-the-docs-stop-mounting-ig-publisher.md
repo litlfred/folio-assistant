@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-09-21T19:04:59Z
+updated_at: 2026-09-21T23:06:21Z
 parent: folio-assistant-yj32
 ---
 
@@ -76,3 +76,43 @@ fourth was avoided only by asking first.
 - [ ] A stated parity checklist, and MVP declared against it rather than
       against an impression
 - [ ] `smart-trust` no longer mounted as finished HTML
+
+
+
+## Round 1 landed — the pages are markdown (PR #825, issue #824, merged c8c25d0d11)
+
+The **rendering** half, not the pipeline half. Verified on main rather than on
+the branch:
+
+| | before | after |
+|---|---|---|
+| `index.md` | 631 lines, 553 of them HTML | 197 lines, 110 |
+| `<style>` | `body`, a colour scheme, `prefers-color-scheme` | 8 lines, four classes |
+| artefact links | `./artifact/Name/` — all 19 would 404 once built | `.html`, 19 of 19 |
+| representation links | joined `""` → `jsonxmlttlhtml` | ` · `, 70 runs, 0 run-ons |
+
+THE TRAILING-SLASH DEFECT IS THE ONE WORTH CARRYING FORWARD, because it is
+invisible from a checkout. `cat-harness/docs/_config.yml` sets no `permalink`,
+so Jekyll emits `Name.html`; on disk the two spellings are the same file and
+nothing local can tell them apart. The only assertion that catches it reads the
+href out of the rendered page and resolves it back to a source file. Same shape
+as #801 (a tile href right as data, wrong as a URL) and as the `toRootFor` test
+#776 paid for, where the assertion restated the expression it was guarding.
+
+`smart-trust/scripts/tests/pages-markdown.test.ts` pins all four, falsified by
+planting each defect in the GENERATOR and regenerating: 20 / 19 / 20 / 19 tests
+red respectively. Its first assertion is a vacuity guard, since every other one
+loops over the page list.
+
+## Still open — three of the four `Done when`
+
+- [ ] the three measurements, with provenance
+- [ ] `input/pages/` through just-the-docs with Publisher metadata populating
+      the Jekyll variables
+- [ ] a stated parity checklist, MVP declared against it
+
+The fourth — "smart-trust no longer mounted as finished HTML" — is now
+ambiguous rather than done, and saying so is the point: the GENERATED pages are
+Jekyll markdown, but they are still copied in by `mount-instance-docs.ts`
+rather than built by Jekyll. Bean `2b5s` is the same question from the other
+end and is waiting on the owner.
