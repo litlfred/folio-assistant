@@ -16,9 +16,21 @@
       "coverage": {
         "skill": "library-ingestion"
       }
+    },
+    {
+      "id": "methodologies",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
     }
   ],
-  "_directories_comment": "ONE entry, and the three that are coming are deliberately NOT here yet. `methodologies/`, `skills/voices/` and `scenarios/` are declared in the commits that create their content, because a declared-but-absent directory is the `dh4f` defect — every consumer scans nothing and reports a clean run over it, which is worse than a missing declaration because it looks like a clean result. `who-iris` held its `library` entry back for exactly this reason until the documents arrived, and the absence did work: `resolveLibraryRef` answered `no-library-graph`, a different and more actionable finding than \"that section is missing\".",
+  "_directories_comment": "TWO entries now. `skills/voices/` and `scenarios/` remain undeclared until they hold content, for the reason the `methodologies/` description gives: a declared-but-absent directory is the `dh4f` defect, and who-iris held its own `library` entry back on the same ground -- the absence did work, because `resolveLibraryRef` answered `no-library-graph`, a different and more actionable finding than \"that section is missing\".",
   "assets": [
     {
       "id": "agent-instructions",

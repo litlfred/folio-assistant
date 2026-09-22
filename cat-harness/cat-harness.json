@@ -788,6 +788,19 @@
       "scope": "repository"
     },
     {
+      "id": "smart-base-methodologies",
+      "path": "smart-base/methodologies/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
       "id": "docs",
       "path": "docs/",
       "dependents": "reproduce",
