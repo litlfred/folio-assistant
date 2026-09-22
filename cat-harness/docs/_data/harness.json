@@ -758,12 +758,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
         {
-          "kind": "catalogue"
+          "kind": "catalogue",
+          "path": "/cat-harness/catalogue/who-iris/"
         },
         {
           "kind": "docs",
@@ -786,7 +787,6 @@
       ],
       "findings": [
         "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
-        "who-iris: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — catalogue (who-iris/docs/catalogue.html). Built and unreachable is a different gap from unbuilt.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
