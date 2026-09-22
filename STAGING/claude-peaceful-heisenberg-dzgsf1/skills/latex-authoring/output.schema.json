@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/skills/latex-authoring/output.schema.json",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "staging": {
+    "branch": "claude/peaceful-heisenberg-dzgsf1",
+    "sha": "b96e9ba67b10c539f75361ff324ba75ccc498e38",
+    "pr": "839/merge",
+    "run": "35693599679"
+  }
+}
