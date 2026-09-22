@@ -129,7 +129,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 482,
+      "count": 507,
       "unit": "beans"
     },
     {
@@ -893,6 +893,65 @@
       ]
     },
     {
+      "name": "smart-base",
+      "title": "SMART Base",
+      "label": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/voices/smart-base/",
+      "hrefKind": "viewer",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 5
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 5
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "fhir-artifact-index",
+          "readOnly": true
+        },
+        {
+          "kind": "library"
+        },
+        {
+          "kind": "methodology"
+        },
+        {
+          "kind": "processes"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/smart-base/"
+        }
+      ],
+      "findings": [
+        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, library, methodology, processes. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-base: no avatar declared for this instance — showing the generic mark.",
+        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/smart-base/) rather than the instance's own themed root."
+      ]
+    },
+    {
       "name": "folio-assistant",
       "title": "Folio Assistant",
       "label": "Folio Assistant",
@@ -1013,7 +1072,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 36
+          "value": 39
         },
         {
           "id": "kinds",
