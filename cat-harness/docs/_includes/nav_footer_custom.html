@@ -61,9 +61,29 @@
   <span aria-hidden="true">&times;</span>
   <span class="fa-sr-only">Close navigation</span>
 </label>
+{%- comment -%}
+  THE OPEN CONTROL IS A BARE GLYPH AT THE TOP, and the words are gone from the
+  page -- owner, 2026-09-22: *"dont like[keep naviation open placement]. it
+  should be an x link in who-iris navbar. please alisng to it."*
+
+  ALIGNED TO `navbar.ts`, which who-iris and every generated standalone page
+  render: `.fa-nav-head` is a `☰` at the TOP of the strip and `.fa-nav-close`
+  is the `×`. This sidebar had the `×` in the right place already and the `☰`
+  at the far end of the nav from it, carrying a sentence.
+
+  IT IS NOT DELETED, and the reason is in the stylesheet beside it: `:hover`
+  does nothing on a tablet, and `:focus-within` only fires once a tap has
+  already landed on a link the reader could not read. Without a control a
+  touch reader has no way in at all. who-iris does not solve this by having
+  none either -- it has `.fa-nav-head`.
+
+  The label stays for a screen reader. `aria-hidden` on the glyph and a
+  visually-hidden name is the same split `.fa-nav-close` above already uses,
+  so the two controls announce themselves the same way.
+{%- endcomment -%}
 <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open">
   <span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>
-  <span class="fa-nav-text">Keep navigation open</span>
+  <span class="fa-sr-only">Keep navigation open</span>
 </label>
 
 {%- assign tiles = site.data.harness.harnesses -%}
