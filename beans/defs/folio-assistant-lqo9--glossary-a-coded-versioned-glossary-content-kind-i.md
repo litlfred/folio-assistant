@@ -523,3 +523,182 @@ Extracted-vs-authored is not yet distinguished on the page: every term here is
 AUTHORED (a role in the registry), because slice 2 mints a concept only from a
 declared role or a declared varying lane. The *candidate* state the roast
 described arrives with a source that can produce one, which this is not.
+
+## RULING 2 — FULL ANALYSIS, 2026-09-22, on the owner's ask
+
+Owner: *"2 need full analysis, SKOS vs DCAT vs others... anything json(ld)
+centric for our ecosytem or has pre-exsting warppers? need something robust to
+handle medical codeings (a la ICD) with versision of tersm, translation,
+releases, etc."*
+
+### The question changed, because the measurement did
+
+Ruling 2 was *"does `build-glossary.ts` converge on the new kind?"* — a
+question about two glossary mechanisms. **Measured before answering: this
+repository already has TWO TERMINOLOGY SYSTEMS, each incumbent in its own
+layer**, and the ICD requirement lands squarely on the one nobody was talking
+about.
+
+| | what it is | where |
+|---|---|---|
+| **SKOS** | the harness's KG glossary — 135 vocabulary terms (slice 1) + 44 swimlane roles (slice 2) | `ns-export.ts`, `glossary-export.ts` |
+| **FHIR CodeSystem / ValueSet / ConceptMap** | a folio's CLINICAL terminology | `terminology-management` skill, `schemas/skills/terminology-management/`, a `Terminologist` lane in `l2-dak-authoring.bpmn` |
+
+The FHIR half is not a candidate. Its input schema's `operation` enum is
+already `create-codesystem` / `create-valueset` / `create-conceptmap` /
+`validate-bindings` / `map-to-standard`, and its `targetStandard` enum is
+already **`ICD-11`, `SNOMED-CT`, `LOINC`, `IPS`, `WHO-FIC`, `WHO-ATC`**. The
+`terminologist` has their own swimlane because *"a wrong binding is invisible
+downstream"*. `fhir-validation` validates the output, `smart-base-tools` runs
+the toolchain.
+
+So the ICD question has an incumbent answer in this repository, and the real
+ruling is about the RELATION between the two, not a choice between them.
+
+### What ICD-class codings actually demand
+
+The discriminator list, because "robust" has to mean something checkable:
+
+1. **Concept-level versioning** — a code's meaning can change between releases
+2. **Release / edition management** — ICD-11 has dated releases; ICD-10 is a
+   different system, not an older version
+3. **Designations with a USE** — a fully-specified name, a synonym and a
+   display are different things in the same language
+4. **Per-language designations**, not just a label with a language tag
+5. **Post-coordination** — ICD-11 builds compound expressions from a stem plus
+   extension codes
+6. **Foundation vs linearization** — ICD-11 separates the semantic network
+   from the tabular list you actually code against
+7. **Deprecation with a successor**, not just a `deprecated` flag
+8. **Mapping with equivalence semantics** — "narrower than" is not "equals"
+9. **Licensing** — SNOMED requires an affiliate licence, which constrains what
+   may be redistributed in a published graph
+
+### The scorecard
+
+**SKOS** — *right for a glossary, structurally insufficient for ICD.*
+Native RDF/JSON-LD, drops into the existing `@context`; multilingual labels are
+first-class; `notation` IS the code; `broader`/`narrower` handles
+poly-hierarchy. But: **no versioning model at all** (1, 2), no designation
+*use* (3), no post-coordination (5), and its mapping properties
+(`exactMatch`, `broadMatch`) carry no provenance or confidence (8). Reaching
+for extensions to cover those is rebuilding FHIR's terminology layer in a
+vocabulary that was designed not to have one.
+
+**DCAT** — *not a term model, and the best answer to a question SKOS and FHIR
+both answer badly.* It says nothing about what a concept means. What it IS
+good at is (2): `dcat:Dataset` + `dcat:Distribution` +
+`dcterms:hasVersion` + `adms:versionNotes` is exactly how you describe a
+RELEASE of a terminology as a published, discoverable, versioned artefact.
+Complementary, never competing. The who-iris catalogue-by-reference work
+already speaks this shape.
+
+**FHIR CodeSystem / ValueSet / ConceptMap** — *the only candidate that meets
+the list.* `CodeSystem.version` + `status` + `date` (1, 2);
+`concept.designation` with `use` and `language` (3, 4); `property` for typed
+concept properties including `inactive` and `notSelectable` (7);
+`ValueSet.expansion` with a timestamp, which IS a pinned release artefact (2);
+`ConceptMap.relationship` with equivalence semantics (8); and `$lookup`,
+`$validate-code`, `$subsumes`, `$translate` — an OPERATIONAL layer, not only a
+data model. Post-coordination (5) and foundation-vs-linearization (6) are
+handled by the code system's own rules, which is the honest answer: FHIR
+carries them rather than solving them.
+
+Costs, stated: JSON is native and **RDF/JSON-LD is a defined but second-class
+serialization**; and it carries clinical machinery a paper glossary never uses.
+
+**Others, named so they are ruled out by a reason rather than by silence:**
+
+- **SKOS-XL** — labels as resources, so a label can carry provenance. Fixes
+  part of (3). Still nothing for (1), (2), (5).
+- **ISO 25964** — the thesaurus rules; SKOS is its carrier. Adds version
+  notes, not a version model.
+- **OWL** — ICD-11's foundation is OWL-shaped, so this is not absurd. Overkill
+  here: definitions in this repository are prose, not axioms, and nothing runs
+  a reasoner.
+- **CTS2** (OMG) — explicitly designed for versioned terminology services, and
+  genuinely covers (1) and (2). Superseded in practice by FHIR terminology
+  services; adopting it would mean leaving the ecosystem this repo is in.
+- **SSSOM** — Simple Standard for Sharing Ontological Mappings. TSV/JSON with
+  a JSON-LD context, biomedical, and **better than `ConceptMap` at recording
+  HOW a mapping was made** — confidence, justification, author, date. Worth
+  naming as a complement for (8) where provenance of a mapping matters more
+  than its operational use.
+- **schema.org `DefinedTerm` / `DefinedTermSet`** — too thin to author in; the
+  right RENDERED projection for a docs page, because it is what a search
+  engine reads.
+- **OMOP / ATHENA** — relational, not JSON-LD, and a research-analytics model
+  rather than an authoring one.
+- **Wikibase** — statements with qualifiers and references give per-assertion
+  provenance and validity dates, which is genuinely more than any of the
+  above. It is a whole platform, not a vocabulary.
+
+### JSON-LD centricity, and the wrappers — MEASURED
+
+The owner asked what is JSON-LD-centric *for this ecosystem* and what has
+pre-existing wrappers. The measurement is blunt:
+
+**This repository has 28 dependencies and NOT ONE of them is an RDF, JSON-LD,
+SPARQL or FHIR library.** Every JSON-LD document here — the content context,
+`ns-export`, `kg-export`, `glossary-export` — is hand-rolled object literals
+with a hand-written `@context`. Nothing validates them as RDF, and no
+`jsonld.js` expands them.
+
+That is a real finding independent of this ruling: the graph is JSON-LD by
+*convention*, not by *construction*, and a malformed `@context` would be
+caught by no test here.
+
+| standard | JSON-LD | wrapper, if adopted |
+|---|---|---|
+| SKOS | native | none needed; `jsonld.js` to validate |
+| DCAT | native | same |
+| SSSOM | JSON-LD context published | reference impl is Python |
+| FHIR | RDF is defined; **`smart-base` already carries `generate_jsonld_vocabularies`** | `sushi` (FSH→FHIR) is ALREADY in this ecosystem — `l3-fhir-authoring`, `fhir-validation` |
+| ICD-11 | WHO publishes a REST API (OAuth) with per-release URIs | thin clients only; the API is the integration point |
+
+The FHIR bridge is the one that matters and it already exists upstream:
+`smart-base`'s `generate_jsonld_vocabularies`.
+
+### Recommendation — three layers, and the bridge is the answer
+
+**1. SKOS stays the harness's glossary.** A swimlane persona has no release,
+no designation use and no post-coordination, and never will. Adding a version
+model to it would be machinery for a requirement that does not exist here.
+
+**2. FHIR stays a folio's clinical terminology.** It is incumbent, it is the
+only candidate meeting the ICD list, and the `Terminologist` lane already
+exists to work it.
+
+**3. DCAT describes a RELEASE of either**, when one is published as a dataset
+somebody else consumes. This is the piece neither of the other two does, and
+the one genuinely missing today.
+
+**The bridge is `ConceptMap` (operationally) or SSSOM (for provenance):** a
+harness glossary term MAY map to a clinical code, and that mapping is a third
+object with its own equivalence semantics. What must not happen is SKOS
+growing a `version` field, or a swimlane persona acquiring a `CodeSystem`.
+
+### What this does to Ruling 2 as originally posed
+
+**`build-glossary.ts` should converge on the SKOS kind — and that is now the
+SMALL half of the answer.** A paper's glossary and the KG glossary are both
+"what does this word mean to a reader", so one mechanism is right and two is
+the duplication the bean set out to remove.
+
+**Convergence STOPS at SKOS.** The larger half: a clinical code system is a
+different object with different obligations, and the failure mode this
+analysis exists to prevent is somebody reading "one glossary mechanism" as
+"one terminology mechanism" and binding an ICD-11 code to a `skos:Concept`
+with a `notation` and no version. That produces a graph that looks right,
+validates, publishes, and is wrong the next release.
+
+### Open, and genuinely the owner's
+
+- **Does DCAT get built, or only named?** Nothing publishes a release
+  descriptor today. It is the missing third layer, and it is also the least
+  urgent because nothing outside this repo consumes these graphs yet.
+- **Is the hand-rolled JSON-LD worth a real processor?** `jsonld.js` would
+  catch a malformed `@context` that nothing catches now. That is a dependency
+  decision, not a terminology one, and it wants its own bean.
+- **SSSOM alongside `ConceptMap`, or only `ConceptMap`?** Only if mapping
+  PROVENANCE has to be queryable. Do not adopt both without that requirement.

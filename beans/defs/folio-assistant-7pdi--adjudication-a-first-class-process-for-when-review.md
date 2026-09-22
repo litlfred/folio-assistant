@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7pdi
 title: 'ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T23:27:42Z
-updated_at: 2026-09-22T06:28:43Z
+updated_at: 2026-09-22T08:48:05Z
 parent: folio-assistant-1swy
 ---
 
