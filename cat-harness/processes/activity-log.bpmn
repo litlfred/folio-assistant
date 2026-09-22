@@ -39,6 +39,11 @@
   </bpmn:collaboration>
 
   <bpmn:process id="Process_ActivityLog" name="Agent activity log" isExecutable="true">
+    <bpmn:documentation>What an agent writes down about its own run, and what a person can do with it afterwards: task starts and ends, messages and errors, persisted where somebody can read them.
+
+You are in this process on every task, whether or not capture is on — the first gateway is what decides, and an agent that does not check it logs into nothing. The log operator's lane is the other half: a person discards one entry or a whole session, and the scheduled sweep does neither on its own.
+
+This is not the work plan. `beans` records WHAT is being worked on and survives the session; this records what happened during it. The two answer different questions and a reader reaching for one is badly served by the other.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- Advisory, not strict: an agent logging outside any process must
            not be refused, and a missing entry is a gap in a record rather

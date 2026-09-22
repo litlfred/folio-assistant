@@ -242,27 +242,27 @@ export function checkLanes(root = REPO): LaneReport {
 
     // lane id -> { name, hasDoc, members }
     const lanes = new Map<string, { name: string | null; hasDoc: boolean; doc: string | null; members: Set<string> }>();
-    const laneRe = new RegExp(`<bpmn:lane\\b([^>]*?)(?:/>|>([\\s\\S]*?)</bpmn:lane>)`, "g");
+    const laneRe = new RegExp(`<(?:bpmn:)?lane\\b([^>]*?)(?:/>|>([\\s\\S]*?)</(?:bpmn:)?lane>)`, "g");
     for (let m = laneRe.exec(s); m !== null; m = laneRe.exec(s)) {
       const attrs = m[1] ?? "";
       const body = m[2] ?? "";
       const id = /id="([^"]+)"/.exec(attrs)?.[1];
       if (id === undefined) continue;
       const members = new Set<string>();
-      const refRe = /<bpmn:flowNodeRef>([^<]+)<\/bpmn:flowNodeRef>/g;
+      const refRe = /<(?:bpmn:)?flowNodeRef>([^<]+)<\/(?:bpmn:)?flowNodeRef>/g;
       for (let r = refRe.exec(body); r !== null; r = refRe.exec(body)) members.add(r[1]!.trim());
       lanes.set(id, {
         name: /name="([^"]+)"/.exec(attrs)?.[1] ?? null,
         // A `<documentation/>` with no text is NOT documentation. An empty
         // element would otherwise let this check be satisfied by a keystroke,
         // which is the shape of every gate that stops meaning anything.
-        hasDoc: /<bpmn:documentation[^>]*>\s*\S[\s\S]*?<\/bpmn:documentation>/.test(body),
-        doc: /<bpmn:documentation[^>]*>([\s\S]*?)<\/bpmn:documentation>/.exec(body)?.[1]?.trim() ?? null,
+        hasDoc: /<(?:bpmn:)?documentation[^>]*>\s*\S[\s\S]*?<\/(?:bpmn:)?documentation>/.test(body),
+        doc: /<(?:bpmn:)?documentation[^>]*>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(body)?.[1]?.trim() ?? null,
         members,
       });
     }
 
-    const actRe = new RegExp(`<bpmn:(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
+    const actRe = new RegExp(`<(?:bpmn:)?(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
     for (let a = actRe.exec(s); a !== null; a = actRe.exec(s)) {
       activities += 1;
       const id = a[1]!;
@@ -309,7 +309,7 @@ export function checkLanes(root = REPO): LaneReport {
       const lane = lanes.get(u.lane);
       if (lane === undefined) continue;
       let n = 0;
-      const actRe2 = new RegExp(`<bpmn:(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
+      const actRe2 = new RegExp(`<(?:bpmn:)?(?:${ACTIVITY})\\b[^>]*id="([^"]+)"`, "g");
       for (let a = actRe2.exec(s); a !== null; a = actRe2.exec(s)) {
         if (lane.members.has(a[1]!)) n += 1;
       }

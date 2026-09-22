@@ -23,6 +23,11 @@
   </bpmn:collaboration>
 
   <bpmn:process id="Process_HumanTranslation" name="Human Translation Workflow" isExecutable="false">
+    <bpmn:documentation>The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.
+
+You are in this process when a person is doing the translating. `translation-workflow` is the machine half — extraction, injection, staleness — and it hands off to this one at exactly the point a judgement is needed. The two are separate because completeness is mechanical and accuracy is not: the coordinator's gate asks whether enough strings are filled, the reviewer's asks whether they are right, and no amount of the first substitutes for the second.
+
+What makes a translation OFFICIAL is the reviewer's sign-off, never the file being complete.</bpmn:documentation>
 
     <!-- ── Lanes ──────────────────────────────────────────────── -->
     <bpmn:laneSet id="LaneSet_Main">

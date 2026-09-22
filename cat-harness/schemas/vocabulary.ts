@@ -164,6 +164,14 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A BPMN swimlane: the persona an actor takes on because of the lane it is acting in, carrying that lane's skills.",
     seeAlso: "/agentic-harness.html",
   },
+  LaneUsage: {
+    gloss:
+      "One appearance of a glossary concept as a swimlane in one BPMN process — " +
+      "the process it is in, the label that process gave the lane, and that " +
+      "lane's own documentation. A usage is an occurrence, not a term: it is " +
+      "regenerated wholesale and never retired, while a concept is a term " +
+      "somebody may have cited.",
+  },
   Skill: {
     layer: "bootstrap",
     gloss: "The instruction body an actor needs to perform a task.",
@@ -354,6 +362,27 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
   bindsLane: { gloss: "A BPMN lane this role is bound to." },
+  hasLaneUsage: {
+    gloss:
+      "One appearance of this glossary concept as a swimlane in one process. " +
+      "The scope note lives on the usage rather than on the concept because a " +
+      "note answers what the lane is accountable for IN THIS PROCESS: measured " +
+      "2026-09-21, all 26 lane names appearing in more than one diagram carry " +
+      "different documentation in each.",
+  },
+  ofConcept: { gloss: "The glossary concept this lane usage is an appearance of." },
+  inProcess: { gloss: "The BPMN process this lane usage appears in." },
+  performerVaries: {
+    // `bootstrap`, with `Role`, not `harness` with the glossary machinery: it
+    // is a fact a LANE declares about itself, and the only diagram declaring
+    // it is bootstrap's own. A term in the layer above would make bootstrap's
+    // diagram depend on the harness to say what it means.
+    layer: "bootstrap",
+    gloss:
+      "Whether this lane declines to name a persona because its performer is " +
+      "whoever invoked the process. A term so marked has no definition, and " +
+      "that absence is an assertion rather than a gap.",
+  },
   isA: { gloss: "A role this one inherits from, statically and everywhere." },
   roleName: { gloss: "The role's own name, as a lane binds it." },
   performedBy: { gloss: "The role that performs this activity." },

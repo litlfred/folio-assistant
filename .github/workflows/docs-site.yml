@@ -388,6 +388,30 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
+          # The swimlane glossaries, beside the graphs whose role IRIs they
+          # reuse -- bean `lqo9` slice 2, issue #596. PUBLISHED rather than
+          # left as a build output because the document IS its own
+          # `skos:ConceptScheme`: every concept's `inScheme` names this URL, so
+          # an unpublished one would be `blv9` -- a scheme IRI that resolves to
+          # nothing, which is the defect `ns-export` exists to have fixed.
+          #
+          # `.json` alias for the same reason as every document above: Pages
+          # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
+          bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
+          bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+
+          # The graph once per locale -- bean `jmpb`, on the owner's ruling.
+          # Writes NOTHING today and says so: measured 2026-09-22, no locale
+          # carries a catalogue applying to either graph. It is wired now
+          # rather than later so the first diagram `.po` to land publishes its
+          # locale with no workflow edit, and so the gates and the deploy run
+          # the same command. Each document's node `@id`s are the core's --
+          # a translation is not a new term.
+          bun run cat-harness/scripts/kg-locale-export.ts --out-dir ./_site
+          bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,
