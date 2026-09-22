@@ -37,9 +37,6 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-// `folio` is contributed by folio-assist-core through a load-time side effect;
-// without this `readDeclaration` throws on a valid declaration.
-import "../schemas/folio-graph-kind.js";
 import { THEME_LAYOUTS, resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES } from "../schemas/themes.js";
 import type { ImageRegion, KgImage } from "../schemas/kg-node.js";

@@ -106,14 +106,15 @@ const blob = (p: string) => {
   try { return execFileSync("git", ["show", `origin/gh-pages:${ROOT}/${p}`], { maxBuffer: 1 << 28 }); }
   catch { return undefined; }                 // absent is a FINDING, not a 200
 };
+let missing = 0;                              // REPORT THIS. See below.
 await page.route(`${ORIGIN}/**`, (route) => {
   const u = new URL(route.request().url());
   let p = u.pathname.startsWith(BASE) ? u.pathname.slice(BASE.length) : u.pathname;
   p = p.replace(/^\/+/, "");
   if (p === "" || p.endsWith("/")) p += "index.html";
   const b = blob(p) ?? blob(`${p}/index.html`);
-  return b ? route.fulfill({ contentType: typeFor(p), body: b })
-           : route.fulfill({ status: 404, body: "not in the publish ref" });
+  if (!b) { missing++; return route.fulfill({ status: 404, body: "not in the publish ref" }); }
+  return route.fulfill({ contentType: typeFor(p), body: b });
 });
 ```
 
@@ -126,6 +127,47 @@ a count, not an impression. Fetch the ref first (`git fetch --depth=1
 reveal a missing `baseurl`, because *"composed against the base"* and *"not
 composed at all"* are the same string there. That is precisely how #801's e2e
 stayed green over the defect.
+
+**And `BASE` is NOT the site's base when you are reading a preview.** A
+preview is published at `<origin>/folio-assistant/STAGING/<slug>/`, so that
+whole prefix is what its pages compose hrefs against — `BASE` and `ROOT` carry
+the same staging segment, one in the URL and one in the ref:
+
+| reading | `ROOT` (in the ref) | `BASE` (in the URL) |
+|---|---|---|
+| the canonical deploy | `""` | `/folio-assistant` |
+| a STAGING preview | `STAGING/<slug>` | `/folio-assistant/STAGING/<slug>` |
+
+Getting that wrong doubles the segment — `STAGING/<slug>/STAGING/<slug>/...` —
+and every asset 404s.
+
+#### Report the absent count, and read it before anything else
+
+**A run that could not fetch the page's assets has established nothing**, and
+its other numbers are not merely unreliable, they are actively misleading.
+This page's own technique produced, on a deploy that was in fact correct:
+
+```
+STAGED SITE — 0 distinct tiles, 14 asset(s) absent from the ref
+OFF-SITE hrefs (#801): 0
+badged: 0
+```
+
+Read at face value that says the staged site has no tiles — which is the shape
+of the very defect this section exists to catch. It was a broken rig: the
+`BASE` above. The corrected run on the same commit gave 23 tiles, 0 absent,
+12 badged.
+
+So the rule, and it outranks every other number the run prints:
+
+> **`missing > 0` is COULD NOT DETERMINE.** Not clean, and not a finding.
+> Discard the run's other counts rather than reading them, fix the rig, and
+> re-run.
+
+`dh4f` is this repository's name for scanning nothing and reporting it clean.
+This is its mirror — scanning nothing and reporting it *broken* — and it is
+the more expensive of the two, because an agent acting on it goes looking for
+a defect that is not there, or "fixes" one.
 
 #### What this does NOT verify, and it matters
 

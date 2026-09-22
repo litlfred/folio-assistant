@@ -23,7 +23,6 @@ import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import "../../schemas/folio-graph-kind.js";
 import { folioDir } from "../../schemas/cat-harness.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 

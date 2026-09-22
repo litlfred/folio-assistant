@@ -33,7 +33,6 @@
  *
  * Exit 0 clean · 1 a finding · 2 could not determine, which is never a pass.
  */
-import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 

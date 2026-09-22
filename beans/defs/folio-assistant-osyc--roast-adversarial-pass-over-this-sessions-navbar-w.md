@@ -63,6 +63,54 @@ that reopens them is arguing with the author, not auditing the work.
 - [x] Findings are severity-ranked, and a finding that cannot be reproduced is
       recorded as unreproduced rather than dropped
 
+
+## 2026-09-22 — item 2 done by another session; items 1 and 3 need this session's record
+
+A different session (`017MEZnJxx7WeekiNCabx4hx`) re-measured the numbers this
+bean asks about. **Not claiming the bean**: items 1 and 3 are about claims made
+to the owner in the 2026-09-21 session, and tracing those needs that session's
+own transcript, which this one does not have. Recording what IS checkable from
+the tree, ranked as the bean asks.
+
+### MAJOR — `sjic`'s deliverable already exists on `main`
+
+`lib/navbar.ts` is the shared component the bean asks for, and
+`lib/harness-rail.ts` imports and re-exports it — **verified by import, not by
+its comment**. The bean is still `todo` in the ready queue, so the next agent
+to pick it up rebuilds it. Its file path is stale too (`harness-rail.ts` moved
+into `lib/`). Detail on that bean.
+
+Not established: whether the Jekyll/theme half is also unified. Said rather
+than assumed.
+
+### MAJOR — `j6t3`'s "4 reachable" is 3, and the fourth is the inverse defect
+
+The 4 counted `.claude/commands/*.md` FILES, not skills reachable by name.
+Matching by name gives **3**. The fourth, `prepare-merge`, is a working command
+whose skill declares **no front matter at all** — invocable by a human,
+invisible to any enumeration of `user_invocable` skills. The same
+declared-vs-reachable mismatch the bean is about, running the other way, which
+the bean's own Option A would neither produce nor notice. (Also 34 → **35**;
+`main` gained one.)
+
+### MINOR — `2b5s`'s totals are exact; its breakdown does not sum
+
+1,378 / 11 / 1,367 and the three per-entry figures all verify against `find`.
+The corpus breakdown lists the tree-wide `.png` count (26, of which 3 are
+already counted as pages) and omits 6 `.json`, so its rows total 1,364 against
+its own stated 1,367. The argument is unaffected; a reader acting on the table
+double-counts 3 and misses 6.
+
+### UNREPRODUCED — recorded rather than dropped, per this bean's own rule
+
+Item 1 ("every verified/measured claim traced to what was observed") and item 3
+as it applies to the 2026-09-21 session's claims. The specific failures this
+bean lists — the library viewer's unparsed script, `hidden` read as absent, the
+three corrupted sweeps, the hand-composed `"docs"` literal, the wrong collision
+prediction, the two self-matching tests — are about that session's work and its
+record. They are **not checked here**, and that is a gap in this report rather
+than a clean result.
+
 ## Results — 2026-09-22
 
 Every figure below was re-measured in this checkout, not re-quoted. Where a
@@ -160,3 +208,35 @@ committed while auditing for it.
 No claim made to the owner this session was false in a way that would have
 changed a decision. All three findings are minor, and two of them surfaced only
 because a figure was measured a second way rather than confirmed a second time.
+
+## Reconciliation — two sessions, and one of them caught the other
+
+The two reports above were written independently and merged here rather than
+either replacing the other. The sibling had `main` and no transcript; this
+session had the transcript and a branch one commit behind `main`. Each covered
+what the other could not, and the merge is the useful artefact.
+
+**The sibling's UNREPRODUCED gap is now closed.** It could not trace items 1
+and 3 because tracing them needs the 2026-09-21 session's own record. That
+record is this session's, and the tracing is in *Results* above — including the
+library viewer, the corrupted sweeps and the collision prediction it names.
+
+**Two figures differ because the trees differ, not because either is wrong.**
+`user_invocable` is **34** on this branch and **35** on `main`; the BPMN corpus
+is **62** here and **63** on `main` (`adjudication.bpmn`). The published
+`/processes/` page reports `main`'s numbers, which is the generator behaving
+correctly. A figure with no tree attached is the thing to distrust.
+
+**The sibling caught a miss of mine, and it is the roast's own subject one
+layer up.** I re-measured every `2b5s` figure and every one reproduced exactly
+— so I reported it as clean. I never checked whether the breakdown ROWS SUM to
+the total they break down. They do not: 1,364 against a stated 1,367, from two
+errors cancelling (the tree-wide `.png` count double-counting 3 cover images,
+and 6 `.json` omitted). Confirmed here: 813 + 404 + 121 + 23 + 6 = 1,367.
+
+Verifying each number of a table independently is not verifying the table.
+Every cell can reproduce while the relation between them is broken, and a
+per-cell check cannot see that by construction — which is the same shape as
+Finding 2 above, where two ways of counting lanes disagreed and one way alone
+would have confirmed the wrong figure twice.
+

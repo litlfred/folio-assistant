@@ -13,7 +13,6 @@ import { join } from "node:path";
 import { repairableGates, scriptOf, writerFor } from "../regen-after-merge.ts";
 import { loadGates } from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.js";
 
 const INSTANCE = join(import.meta.dir, "..", "..");
 const REPO = repoRootFor(INSTANCE);

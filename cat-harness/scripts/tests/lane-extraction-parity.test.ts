@@ -27,6 +27,7 @@ import { join, relative, resolve } from "node:path";
 
 import { extractBpmn } from "../../content/pipeline/bpmn-translate.js";
 import { checkLanes } from "../check-lane-documentation.js";
+import { loadProcessModel } from "../../src/workflow/process-model.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -138,6 +139,44 @@ describe("the lane check's extractor copy has not drifted", () => {
     // a string the extractor drops, so the gate goes green over text that
     // reaches no catalogue in any locale.
     expect(extra).toEqual([]);
+  });
+
+  test("the regex reader sees every lane bpmn-moddle does", async () => {
+    // THE BLIND SPOT, found 2026-09-22 while roasting bean `7pdi`.
+    //
+    // `translation-workflow.bpmn` writes `<lane>` and `<userTask>` with NO
+    // `bpmn:` prefix — it declares BPMN as the default namespace, which is
+    // valid and which every prefixed regex in this repository missed. The
+    // real parser saw 3 lanes and 15 nodes there; `check-lane-documentation`
+    // saw zero, and reported "157 of 157 documented, 0 undocumented" over a
+    // corpus with 159 task-containing lanes, two of them undocumented.
+    //
+    // A clean run over a set it never scanned — `dh4f` — inside the gate
+    // written to catch exactly that, and green for two days.
+    //
+    // Comparing against `loadProcessModel` rather than against a fixture is
+    // what makes the shortcut legitimate: a fixture proves agreement on the
+    // cases somebody thought to write down, and this one was not thought of.
+    const drift: string[] = [];
+    for (const f of files) {
+      const rel = relative(REPO, f);
+      const model = await loadProcessModel(f).catch(() => null);
+      if (model === null) continue;
+      const xml = readFileSync(f, "utf-8");
+      const seen = [...xml.matchAll(/<(?:bpmn:)?lane\b([^>]*?)(?:\/>|>)/g)].length;
+      if (seen !== model.lanes.length) {
+        drift.push(`${rel}: parser ${model.lanes.length} lane(s), regex ${seen}`);
+      }
+    }
+    expect(drift).toEqual([]);
+  });
+
+  test("at least one diagram uses the UNPREFIXED form", () => {
+    // Without this the test above passes vacuously the day that diagram is
+    // deleted or reformatted, and the guard silently stops guarding — the
+    // `6tkl` shape applied to a regression test.
+    const unprefixed = files.filter((f) => /<lane\b/.test(readFileSync(f, "utf-8")));
+    expect(unprefixed.length).toBeGreaterThan(0);
   });
 
   test("the corpus it is actually run against comes back clean", () => {

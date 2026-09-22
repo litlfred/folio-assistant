@@ -22,17 +22,6 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSy
 import { join, resolve } from "path";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories and the instance
-// DECLARES a folio graph, so without this `resolveDirectories` throws
-// `unknown graph kind "folio"` on a valid declaration.
-//
-// The NINTH module in this PR to need this line, and the class is not fixed by
-// adding a tenth: 52 modules call a declaration reader without it, and the next
-// one reintroduces the failure with no gate to catch it. The architectural fix
-// is open on the PR (issue #464) — this unblocks CI without pre-empting it.
-import "../schemas/folio-graph-kind.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.

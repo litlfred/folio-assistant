@@ -142,10 +142,6 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
-// REQUIRED: `folio` is registered by core on import and this instance declares
-// a folio graph, so `readDeclaration` throws on a valid declaration without it.
-// The same line `print-stub.ts` carries, for the same reason.
-import "../schemas/folio-graph-kind.js";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 

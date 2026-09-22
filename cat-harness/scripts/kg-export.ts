@@ -72,7 +72,6 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
-import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
@@ -659,7 +658,7 @@ function keywordAliases(): Set<string> {
  * 404s. An `@id` that looks dereferenceable and is not is worse than one that
  * is obviously local.
  */
-function makeIri(docIri: string, kind: string, id: string): string {
+export function makeIri(docIri: string, kind: string, id: string): string {
   // `/` is legal in a fragment and is the separator this scheme uses, so it is
   // deliberately NOT escaped — `encodeURIComponent` would turn every process
   // node into `…#process/P%2Fnode%2FT`, which is both unreadable and a

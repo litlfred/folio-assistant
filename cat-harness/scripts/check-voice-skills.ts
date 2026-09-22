@@ -71,7 +71,6 @@ import {
   instanceRootsIn,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 

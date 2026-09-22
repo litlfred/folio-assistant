@@ -262,6 +262,24 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # The same question one level up: declared assets are FILES, these are
+      # DIRECTORIES, and nothing asked about them until bean `8mbk`.
+      #
+      # It could not have been caught by reading a consumer, because every
+      # consumer is correct: `resolveDirectories` is existence-filtered, so an
+      # absent declared directory is dropped before anyone sees it. The
+      # declaration then asserts a directory is ours, and every scan of it
+      # reports a clean run over nothing — the `dh4f` shape inside the resolver
+      # they all share.
+      #
+      # Gating from the first commit, same reasoning as the step above: 66
+      # declared directories across 14 instances, ZERO findings, so this starts
+      # at zero rather than measuring debt. The escape hatch is a declared
+      # `absent: { reason }`, and an exemption whose directory later appears is
+      # a finding too — that is the direction that rots quietly.
+      - name: declared directories exist, or say why not
+        run: bun run check:declared-dirs
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -321,6 +339,49 @@ jobs:
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
         run: bun run check:lane-documentation
+
+      # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
+      # level up. `gen-docs-auto`'s index took the first `<documentation>`
+      # after the process opened, so a process carrying none borrowed its
+      # first LANE's and presented it as what the process was for -- which
+      # became true the day `sqtq` wrote 157 lane documentations. 16 of 61
+      # were in that state; all 61 now define themselves, so `--strict` is
+      # what runs here and a new diagram cannot land undefined.
+      - name: process definitions
+        run: bun run check:process-documentation
+
+      # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
+      # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
+      # because a derived document has no memory: delete a role and its
+      # concept stops appearing, which is what "never existed" also looks
+      # like. This gate is what keeps the ledger current, so retirement stays
+      # distinguishable from accident. Two runs, never one wider scan --
+      # `7u3g`, the isolation two earlier sessions walked into.
+      - name: swimlane glossary ledger
+        run: |
+          bun run glossary:check
+          bun run glossary:check:bootstrap
+
+      # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
+      # is NOT about how much is translated (nothing is, measured 2026-09-22:
+      # 58 of 62 .pot templates are diagrams and none has a .po). It checks
+      # the two properties a translation effort must never break: the CORE
+      # graph references no translation -- no hasTranslation, no
+      # availableLocales, no locale key, no per-locale @id -- and a translated
+      # node keeps its @id, because a translation is not a new term.
+      - name: graph per locale
+        run: |
+          bun run kg:locale:check
+          bun run kg:locale:check:bootstrap
+
+      # A model declares its languages, or it is a finding -- bean `46uh`.
+      # This gate is NOT red on an empty registry: an agent is not a valid
+      # source for the evidence `validation` asks for, so it ships empty and a
+      # person adds entries. It IS red (exit 2) on a registry this code cannot
+      # read, because reporting a malformed file as "no models" would let an
+      # agent fall through to English believing a determination was made.
+      - name: model languages declared
+        run: bun run check:model-languages
 
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory

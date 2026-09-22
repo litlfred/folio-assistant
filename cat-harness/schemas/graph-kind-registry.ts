@@ -612,6 +612,43 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // + `process-state` in #266; the rationale is in this map's doc comment above,
   // and the #263 version it supersedes is preserved there too. PR #266 changed
   // the map and left that comment describing the old five-kind design.
+  glossary: {
+    type: termIri("GlossaryGraph"),
+    renderable: false,
+    // `state`, and NOT `derived` — the interesting call now that `derived`
+    // exists. The glossary DOCUMENT is derived and lives in `_kg/`; what is
+    // committed here is the LEDGER, whose one fact is the thing regeneration
+    // cannot produce: that a term was once minted. A `derived` ledger would
+    // say "regenerate it", and regenerating it erases every retirement. So a
+    // process writes it as it runs, which is `state` by the axis's own
+    // question.
+    holds: "state",
+    // NOT work. A bean is something somebody is partway through; this is a
+    // record that a term exists, true whether or not anybody is doing
+    // anything. `check:graph-kind-work` refuses a `state` kind that has not
+    // decided, and it was right to: "state" alone does not say whether a
+    // reader is looking at a queue or at a fact.
+    recordsWork: false,
+    summary:
+      "The swimlane glossary's retirement ledger — every concept this instance has ever minted, " +
+      "with the date it was first seen and the date it stopped being derivable. Written by " +
+      "scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+  },
+  models: {
+    type: termIri("ModelGraph"),
+    renderable: false,
+    // `context`: READ when a session opens, never written by a process. That
+    // is the whole point of the kind — a person grants a validation, an agent
+    // never does, because a model's own claim about which languages it
+    // handles well is precisely what the validation state exists to distrust.
+    // A `state` kind would say a process may write it, and the first process
+    // that did would be manufacturing its own evidence.
+    holds: "context",
+    summary:
+      "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
+      "as ONE input to the communication-language determination and never as the answer. " +
+      "Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+  },
   beans: {
     type: termIri("BeanGraph"),
     renderable: false,
