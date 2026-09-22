@@ -494,7 +494,7 @@ export const PortSchema = z
  * moment the constraint is discovered.
  */
 export const DecisionFactsSchema = z
-  .record(z.union([z.string(), z.number(), z.boolean()]))
+  .record(z.string(), z.union([z.string(), z.number(), z.boolean()]))
   .describe("Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.");
 
 /** Everything published in the shared types document, keyed by `$defs` name. */
