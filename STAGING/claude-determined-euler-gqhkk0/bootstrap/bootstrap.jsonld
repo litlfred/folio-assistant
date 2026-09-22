@@ -270,10 +270,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-22T08:16:07.669Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0c6c547c67bb1e9cc6b6a74c6e039eccd7d473da",
-  "sourceCommitSha": "0c6c547c67bb1e9cc6b6a74c6e039eccd7d473da",
-  "sourceCommitAt": "2026-09-22T08:14:04Z",
+  "generatedAt": "2026-09-22T09:05:23.630Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bb172ac0738f62f052684245cec57c762c5f4c45",
+  "sourceCommitSha": "bb172ac0738f62f052684245cec57c762c5f4c45",
+  "sourceCommitAt": "2026-09-22T09:03:31Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -281,8 +281,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 4,
-    "Directory": 5,
+    "GraphKind": 5,
+    "Directory": 6,
     "Asset": 2
   },
   "@graph": [
@@ -1395,6 +1395,14 @@
       "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "translation-sources",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TranslationSourceGraph",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/bootstrap/bootstrap.jsonld#role/initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
@@ -1527,6 +1535,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "bootstrap-translations",
+      "path": "translations/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext templates for THIS instance's workflow diagrams — one directory per target locale, holding the `.pot` extracted from each `.bpmn` here. Undeclared until 2026-09-22, and that was the `dh4f` defect: `j28g` moved these out of `cat-harness/translations/` correctly, because the templates belong beside the instance that owns the diagrams, and the declaration did not follow. Fifteen committed files a consumer scanning the declared set would report a clean run over. A SEPARATE id from cat-harness's `translation-sources`: overrides match on id, so reusing it would REPLACE that graph with this one rather than add to it. `reproduce` for the reason cat-harness's entry gives — a downstream instance translating this diagram set needs catalogues of its own, not a pointer to these. Bean `m9zz`.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/bootstrap/bootstrap.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -1549,8 +1569,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "07f879adfa74c9d7abf1546eef5c5a58a861c1bb",
+    "sha": "0e895d5b4f267814cf87a2bf7c34a3c55b2a8bee",
     "pr": "858/merge",
-    "run": "35703710355"
+    "run": "35708226699"
   }
 }
