@@ -72,10 +72,68 @@ external fetch blocked. That is the `staging-review` route, and it works.
 
 ### What remains
 
-- [ ] **(a-successor) the dead CSS** — four rules on 331 pages matching
+- [x] **(a-successor) the dead CSS** — four rules on 331 pages matching
       nothing. Deleting them is provably a no-op for rendering, BUT the block
       carries a long rationale about which way `opacity` blends that is worth
       keeping somewhere. Owner's call: delete, or move the reasoning to the
       sticky backdrop's CSS where a fade would now live.
 - [ ] (b) the onboarding block's placement — unchanged, needs the owner
 - [ ] (c) English only — unchanged; the bean itself says not a defect yet
+
+## DONE 2026-09-22 — the dead CSS is out, and the scope was larger than reported
+
+Owner: *"Do as recommended."* Option 1 — move the reasoning, delete the rules.
+
+### It was eleven selectors, not four
+
+The issue quoted the four fade rules. Checking the whole `<style>` block before
+cutting: **14 selectors, of which 11 matched nothing** — every rule reaching
+for `folio-landing__art`, `folio-landing__text` or `folio-landing--no-region`.
+
+Verified before deleting, not inferred: those three classes appear in **no
+markup** anywhere in this repository, and on **none** of the 331 published
+pages that were inlining CSS for them. Their only other appearance is this
+bean's own prose.
+
+Three selectors survive, and they are the whole live surface:
+
+    .folio-landing
+    .folio-landing--plain
+    .folio-landing--plain p
+
+**106 lines net removed.**
+
+### What moved, and the two things that deliberately did NOT
+
+The blend-direction argument is now at `.fa-sticky--backdrop::before` in
+`docs-ui.css`, reframed as **why a scrim supersedes image opacity**: `opacity`
+blends toward whatever is behind the card, so the old approach needed one value
+per scheme; a scrim is a layer of a KNOWN colour, so it needs one value for
+both. That is the insight worth keeping and it is not obvious — somebody will
+reach for `opacity` there again otherwise.
+
+Not carried over, each for a reason:
+
+- **The region, overflow and breakpoint-parity lessons.** Already re-derived,
+  and better stated, on `.fa-landing-sticky--fixed` — which even records that
+  it restored geometry *"dropped because overflow used to be silent"*. Copying
+  them would be a rule in two places, free to drift.
+- **The `cqw` container-query finding** — that an element declaring
+  `container-type` is not its own query container. True, and advice about a
+  mechanism the successor does not use: it scales through `--fa-text-scale`.
+
+### Verified
+
+`gates` 110/110, `bunx playwright test` **400 passed** — including the
+accessibility suite, which renders real pages. The removal is a no-op for
+rendering by construction: a selector matching nothing has nothing to stop
+matching.
+
+### The silence that allowed it
+
+CSS has no error for a selector that matches nothing. The same silence is
+recorded two hundred lines away in `docs-ui.css`, where
+`.fa-sticky--backdrop > .fa-sticky-art` matched nothing because the `<img>` is
+a grandchild — *"the page built clean, the markup was right, every request
+returned 200"*. Twice in one stylesheet, found both times by looking rather
+than by a gate.
