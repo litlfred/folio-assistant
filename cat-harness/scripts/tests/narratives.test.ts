@@ -25,9 +25,6 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
-// and the corpus test below resolves a DECLARED directory.
-import "../../schemas/folio-graph-kind.ts";
 import { directoriesForGraph } from "../../schemas/cat-harness.ts";
 import {
   NARRATIVE_STATES,

@@ -54,14 +54,22 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
 /** The projection. Everything the reader found; it is already small. */
 export function projection(g: VoicesGraph): unknown {
-  return { $schema: "folio-voices-index/v1", ...g };
+  return {
+    $schema: "folio-voices-index/v1",
+    // `totals.voices`, which the graph already computes for the badge row, so
+    // the tile and the page cannot disagree — rather than `voices.length`,
+    // which would be the same number arrived at twice. `directories` is the
+    // container the voices were found in, not a count of voices.
+    ...tileCounts({ voices: [g.totals.voices, "voices"] }),
+    ...g,
+  };
 }
 
 export function viewerHtml(dataHref: string, scope = ""): string {
@@ -141,6 +149,13 @@ blockquote .cite { display:block; margin-top:6px; color:var(--muted); font-size:
 .chip.sev-major { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
 .chip.mech { color:var(--info); background:var(--info-soft); border-color:var(--info); }
 .chip.ci { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
+/* A provenance FLAG is a question for a person, so it is warn and never crit —
+   the same distinction .nocite below draws from the other side. Backticks stay
+   OUT of this file's page template: it is one template literal, and a stray
+   pair reads as a tagged template and fails the generator. */
+.pflag { color:var(--warn); background:var(--warn-soft); border:1px solid var(--warn);
+  border-radius:6px; padding:.5rem .7rem; margin:.4rem 0 0; font-size:.86rem; }
+.pflag b { font-weight:700; }
 .nocite { color:var(--crit); background:var(--crit-soft); border:1px solid var(--crit);
   border-radius:6px; padding:8px 12px; font-size:.9rem; margin:8px 0; }
 table.dirs { border-collapse:collapse; width:100%; font-size:.86rem; margin:0 0 20px; }
@@ -261,7 +276,8 @@ function render() {
       "<code>" + esc(v.path) + "</code>",
       v.rules.length + " rule(s)",
       "overlay <code>" + esc(v.criterion) + "</code> at <b>" + esc(v.overlaySeverity) + "</b>",
-      v.hasInstructions ? "with a SKILL.md" : "<b>no SKILL.md</b>"
+      v.hasInstructions ? "with a SKILL.md" : "<b>no SKILL.md</b>",
+      "provenance <b>" + esc(v.provenance) + "</b>"
     ];
     if (v.sources && v.sources.length) {
       meta.push("derived from " + v.sources.map(function (s) {
@@ -277,6 +293,7 @@ function render() {
       esc(v.id) + "</span></span>" +
       '<div class="vmeta">' + esc(v.description) + "</div>" +
       '<div class="vmeta">' + meta.join(" &middot; ") + "</div></summary>" +
+      renderFlags(v) +
       '<div class="rules">' + rules.map(renderRule).join("") + "</div></details>"
     );
   });
@@ -287,6 +304,21 @@ function render() {
   document.getElementById("foot").textContent =
     shownVoices + " voice(s), " + shownRules + " rule(s) shown" +
     (SCOPE ? " \\u2014 scoped to " + SCOPE : "");
+}
+
+// A provenance flag, where the declared value sits oddly against what the rules
+// cite. Rendered as a QUESTION and never as a defect: the owner ruled on
+// 2026-09-21 that this is "a QA flag", because a voice is a synthesis of
+// composite voices with unclear attribution, so a mixed citation pattern is
+// normal. Four of the five voices here carry none.
+function renderFlags(v) {
+  if (!v.provenanceFlags || !v.provenanceFlags.length) return "";
+  return v.provenanceFlags.map(function (f) {
+    return '<p class="pflag"><b>Provenance flag \u2014 for a person to settle.</b> ' +
+      "This voice " + esc(f.detail) + ". Rule(s): " +
+      f.ruleIds.map(function (id) { return "<code>" + esc(id) + "</code>"; }).join(", ") +
+      ".</p>";
+  }).join("");
 }
 
 function renderRule(r) {

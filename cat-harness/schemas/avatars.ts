@@ -125,6 +125,29 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "two figures — the Actors and the Roles they take on",
   },
+  // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
+  //
+  // Owner, reporting it: *"folio assistant icon is messed up still. I want
+  // theme like in avaatars"*. It was the GENERIC question mark, which is what
+  // `avatarFor` returns for a name nothing declares, and the table's own
+  // header has carried the instruction the whole time: *"bootstrap has
+  // avatar, so does cat-harness, folio-asst"*. Two of those three were here.
+  //
+  // TONE 236, between `folio` (224) and `tools` (250), and deliberately near
+  // `folio-assistant-core`'s 212 — the same reasoning the three kinds below
+  // `cat-harness` are given: these are parts of one graph and a reader
+  // scanning a legend should see them as a family. Far enough to tell apart,
+  // close enough that neither reads as belonging somewhere else.
+  //
+  // THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of
+  // paper; the root instance is what holds one, so this is that leaf inside a
+  // frame rather than a second unrelated mark. An instance and its core
+  // drawn as two unrelated things would be the same drift the tones avoid.
+  "folio-assistant": {
+    glyph: "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
+    tone: 236,
+    reads: "a leaf of paper held in a frame — the folio, and the instance that holds it",
+  },
   // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
   // and name both spelled in full, per the owner's ruling of 2026-09-20 and
   // as `folio-assistant-core/harness.json` records against itself.
@@ -216,6 +239,27 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4",
     tone: 268,
     reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
+  },
+  // A CHIP, because the subject is the machine rather than what it says. The
+  // tempting glyph — a speech bubble, a globe — draws LANGUAGE, and this
+  // graph is not about language: it is about which languages somebody has
+  // checked a given model is good at. A globe here would read as the
+  // translation pipeline, which is a different kind two rows down.
+  models: {
+    glyph: "M8 8h8v8H8zM4 10h4M4 14h4M16 10h4M16 14h4M10 4v4M14 4v4M10 16v4M14 16v4",
+    tone: 300,
+    reads: "a chip with its pins — the machine an agent is running on, not what it says",
+  },
+  // An OPEN BOOK, and the choice is between two readings of "glossary". A tag
+  // or a label would draw the `notation` — the code a term carries — which is
+  // one field of a concept and not the thing itself. A book draws what a
+  // reader does with it: looks a word up. `tone: 84` is unused and sits
+  // between `qa`'s green verdict and `library`'s, which is right for a
+  // reference rather than a judgement.
+  glossary: {
+    glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
+    tone: 84,
+    reads: "an open book — terms somebody looks up, not terms a machine mints",
   },
   health: {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",

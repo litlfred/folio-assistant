@@ -128,3 +128,108 @@ above the cap is therefore treated as unknown, and a large commit gets silence.
 
 Verified: `bun test` 2104 tests / 0 fail, tsc and eslint clean, and a live run
 against `main` reports three workflows green with no false fire.
+
+## 2026-09-22 — THE SILENCE HAPPENED, through the door this does not watch
+
+Reopening the conclusion rather than the build. `headUnjudged` is correct and
+its measurement was correct; what was wrong was the inference drawn from it.
+
+This bean closed on *"`headUnjudged` **cannot fire in this repository**"* — 0 of
+36 workflows are `pushTriggerOf: true`, so nothing is flaggable. True, and it
+reads as *"therefore the exposure is theoretical here"*. It is not.
+
+**Measured on PR #858, 2026-09-22.** `Code-quality gates` and
+`Feature Staging` did not run for **six consecutive pushes** across roughly
+forty minutes. Not queued, not failed, not cancelled — **never created**, which
+is exactly the state this bean exists to name.
+
+Both are `pull_request`-triggered, so `pushTriggerOf` is `false` and
+`headUnjudged` rightly stayed quiet. The detector watches the **push** door;
+this repository's real exposure is the **pull_request** door, and they are not
+the same door.
+
+### The mechanism, which is not a GitHub outage
+
+A PR whose branch has gone **un-mergeable** gets no merge ref, and without one
+GitHub does not fire `pull_request` events. So:
+
+    branch falls behind main -> conflicts -> mergeable_state: "dirty"
+      -> no pull_request events -> no gates run, no staging deploy
+      -> and the PR page looks quiet rather than broken
+
+It is `xom7` one door along: *a workflow that never ran looks exactly like one
+that passed*, and from inside a checkout it looks like nothing at all. I only
+found it by listing workflow runs and noticing the newest was forty minutes old.
+
+### Why it is not a one-off here
+
+The conflicts were structural, in the same two places every time:
+
+- **`package.json`'s scripts block** — alphabetical, and every concurrent agent
+  appends `check:*` entries to it;
+- **committed generated artefacts** — `harness.json`, `docs-auto`, `voices`,
+  the QA and beans indexes — which both sides regenerate.
+
+Cadence measured in one session: **70 commits behind → merge → 38 → merge → 3
+→ merge → 10 → merge → 0**. Four merges in about an hour, each valid for
+minutes. More merging does not fix it; the window closes faster than a sweep
+runs.
+
+### What would close the gap, NOT designed here
+
+`pushTriggerOf` has a sibling question — *does this workflow trigger on
+`pull_request`, and is the PR mergeable?* — and the second half is a fact
+GitHub holds **about** the PR rather than one the repository holds, so it must
+be asked externally like the Pages question already is. `mergeable_state` is
+the field. Recorded as the shape, not as a decision: the owner chose to record
+this in an existing bean rather than open a new one, so it sits here as a
+correction to this bean's conclusion for whoever picks the detector up.
+
+### One consequence worth stating plainly
+
+Every green result reported on #858 between 08:14 and the final merge was a
+**local** `bun run gates` — said as such in each commit and each PR comment —
+and **CI confirmed none of it**. That is not a reporting failure, but it is a
+weaker claim than it reads as, and the difference was invisible until somebody
+went looking for runs that did not exist.
+
+### The control, 2026-09-22 09:36 — hypothesis confirmed
+
+The note above inferred the mechanism from a correlation: #858 was
+`mergeable_state: "dirty"` and its `pull_request` workflows had stopped. That is
+suggestive, not conclusive — a GitHub-side outage or a queue backlog would look
+the same from here, and `ci-health`'s own first rule is that a
+could-not-determine is never rendered as a finding.
+
+**#899 is the control.** Same repository, same workflows, same branch name, a
+new PR opened minutes later with **0 conflicts** against main. Within one
+minute it had **five check runs** — `TypeScript — tests, lint, types`,
+`End-to-end + accessibility`, and the Python / Rust / Lean gates — every one of
+them `pull_request`-triggered, and every one of them a workflow that had fired
+nothing on #858 for six consecutive pushes.
+
+So the variable is mergeability, not the forge and not the clock:
+
+| PR | conflicts vs main | `pull_request` workflow runs |
+|---|---|---|
+| #858, 08:14 → 09:34 | yes | **0 across 6 pushes** |
+| #899, 09:35 | no | **5 within one minute** |
+
+That is what makes this worth building a detector for rather than filing as
+weather. The gap is real, reproducible, and invisible from a checkout — and
+the only reason it was noticed at all is that somebody listed workflow runs and
+saw the newest was forty minutes old.
+
+### A second cost, measured after the merge
+
+**The staging preview is deleted when its PR closes.** `#858`'s tree went at
+09:36 — `staging(cleanup): remove STAGING/claude-determined-euler-gqhkk0 (PR
+#858 closed)` — which is correct behaviour and the right default.
+
+But it means a preview that only became reachable AFTER the conflict cleared
+(09:05, the first staging deploy in fifty minutes) existed for about half an
+hour and was gone before anybody looked. The rendered `/processes/` page has
+now been unverifiable twice for two different reasons: first because staging
+never ran, then because its output was swept. Not a defect to fix here —
+recorded so the next agent knows the preview is a *perishable* artefact and
+looks while it exists.

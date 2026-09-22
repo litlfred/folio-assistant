@@ -58,9 +58,41 @@
       its library. The tab opens the first; these reach the second.
     {%- endcomment -%}
     {%- if open.size > 0 -%}
+    {%- comment -%}
+      THE TWO GREYS, on the surface where they actually occur.
+
+      A kind with no `path` is already excluded above — there is nothing to
+      open. A kind that IS published and `readOnly` opens perfectly and refuses
+      an edit, and it is the one that offers the copy-out. Marking it here and
+      not only on the graph-tile surface is a correction: the mark shipped on
+      the tiles first, and `readOnly` is never populated on that surface in
+      this repository, so the CSS and the JS were live and the mark appeared
+      ZERO times on any deployed page. Caught by reading the staging deploy
+      rather than by re-reading the diff.
+
+      `== true`, not truthiness: absent means NOT DECLARED — a third state,
+      and not a claim that the kind is writable.
+
+      AND THIS MARK IS ITSELF UNEXERCISED TODAY, which is said here rather
+      than discovered later. This list holds only kinds WITH a `path`, and no
+      kind in this repository is both published and read-only — all three
+      frozen ones lack a viewer. So the fact is also stated as a FINDING by
+      `harness-tiles.ts`, where the gap cannot hide it, and that is what a
+      reader sees now. This branch is kept because it is correct the moment a
+      frozen kind gains a viewer, and because the alternative — adding it then
+      — is how the first attempt came to ship a mark with nothing to style.
+    {%- endcomment -%}
     <ul class="fa-harness-section__viewers">
       {%- for v in open -%}
-      <li><a href="{{ v.path | relative_url }}">{{ v.kind }}</a></li>
+      <li>
+        <a href="{{ v.path | relative_url }}"
+           {%- if v.readOnly == true %} data-fa-readonly
+           title="materialized content: readable, not editable here"{% endif -%}
+        >{{ v.kind }}</a>
+        {%- if v.readOnly == true -%}
+        <span class="fa-readonly-note">read-only</span>
+        {%- endif -%}
+      </li>
       {%- endfor -%}
     </ul>
     {%- else -%}

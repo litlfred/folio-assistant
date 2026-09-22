@@ -59,16 +59,16 @@
  *   bun run schema:viz          # write
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
-import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
-// The `folio` graph kind is registered by CORE on import; this module resolves
-// this instance's directories and the instance declares a folio graph.
-import "../schemas/folio-graph-kind.js";
+import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { directoryByVisualisationRef } from "./graph-tiles.ts";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");
+const REPO_ROOT = repoRootFor(ROOT);
 const check = process.argv.includes("--check");
 
 /**
@@ -81,9 +81,35 @@ const check = process.argv.includes("--check");
 const DOC_MAX = 400;
 
 /** The projection, trimmed for the page. */
-function projection(g: SchemaGraph): unknown {
+function projection(
+  g: SchemaGraph,
+  /** Subject-page counts, `directory id -> [count, unit]`. Empty is normal. */
+  scoped: Readonly<Record<string, readonly [number, string]>>,
+): unknown {
   return {
     $schema: "folio-schema-graph/v1",
+    // EVERY count here is computed for the PAGE A TILE OPENS, and there is
+    // deliberately no whole-graph entry.
+    //
+    // #863 found the reason the hard way. This generator first declared
+    // `schemas: [g.modules.length]` — the whole graph, 139 modules. But the
+    // `schemas` directory declares its visualiser as
+    // `.../schemas/cat-harness/index.html`, the cat-harness-SCOPED page,
+    // which lists 122. So the badge read the graph while the page read a
+    // subset, and it shipped that way in #862.
+    //
+    // A whole-graph number is not "close enough" to a scoped page's: it is a
+    // second answer to the question the tile appears to be answering, which is
+    // `flh4` in the one place this feature was built to prevent it. Deriving
+    // every count from the declared ref makes the class unreachable rather
+    // than merely fixed — a tile cannot disagree with its page when the count
+    // was computed FOR that page.
+    //
+    // `modules`, not `decls`, of the four numbers this graph holds: it is the
+    // first the run's own summary prints, so the tile and the console agree.
+    // `decls` is a number PER module and a tile reading 842 over a page
+    // listing 122 rows is the disagreement a badge exists to surface.
+    ...tileCounts(scoped),
     roots: g.roots,
     modules: g.modules.map((m) => ({
       module: m.module,
@@ -201,74 +227,23 @@ export function viewerPlacement(
   return { pageDir, dataDir, dataHref };
 }
 
-/**
- * The line a generated viewer page uses to say WHICH SUBJECT it is for.
+/* `orphanSubjectPages` MOVED to `./orphan-pages.ts` (bean `s8nu`).
  *
- * `viewerHtml` emits it into every page it writes, so a page carries its own
- * identity rather than borrowing one from the directory it sits in. That is
- * what makes pruning safe: ownership is read off the file.
- */
-const SCOPE_LINE = /^var SCOPE = "([^"]*)";$/m;
+ * It was the third of four selectors answering "did this generator write this
+ * page, here?", and the bean's finding was that the multiplicity is the
+ * defect. It is re-exported from here because `gen-library-viz.ts`,
+ * `gen-docs-auto.ts` and the tests already import it from this module, and a
+ * re-export keeps that a one-line change rather than a sweep.
+ *
+ * The leaf also exists so `state-visualizer.ts` can be a call site WITHOUT
+ * importing this module, which is a 1200-line page generator whose whole body
+ * is one template literal. Same move #840 made for the graph-kind registry,
+ * and for the same reason: a consumer should not have to load a page builder
+ * to ask an ownership question. */
+import { orphanSubjectPages } from "./orphan-pages.ts";
 
-/**
- * Subject pages under `parentPageDir` that no longer answer to a subject.
- *
- * **Bean `ankg`, and it was found live rather than hypothesised.** #604
- * renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs come
- * from the entry's path, so regeneration correctly produced the new page and
- * left the old one behind — a page serving a subject the declaration no longer
- * describes, at a URL nothing links to. It was removed by hand in #603.
- *
- * `--check` could not see it, and the reason is structural: `emit()` compares
- * only the files it is ABOUT TO WRITE, so a file the generator no longer
- * writes is outside what it looks at. It can find a page that is wrong; it can
- * never find a page that should not exist. That is the `yl5w` shape pointed
- * the other way — there a claim resolved to no file, here a file answers to no
- * claim.
- *
- * ## Ownership is READ, never assumed from the directory
- *
- * `deletion-requires-confirmation` is about artefacts an agent did not create,
- * so "everything under `parentPageDir` that is not wanted" would be the wrong
- * rule — it would delete a page somebody hand-added. A directory is prunable
- * only when its `index.html` **declares itself the subject page for that very
- * directory**: `var SCOPE = "<dirname>";`. Anything else is returned as
- * `foreign`, reported, and left alone.
- *
- * Precedent: `OWNED` in `who-iris/scripts/gen-iris-pages.ts` (#607) and
- * `prunableStickies` before it. This is the third instance of one rule, and
- * the bean asked for the shape to be reused rather than a third one invented —
- * hence one helper, shared by both viewer generators, rather than a copy in
- * each.
- *
- * The data directory is NOT at risk: `viewerPlacement` puts it at
- * `<site>/assets/<kind>/`, outside this tree entirely.
- */
-export function orphanSubjectPages(
-  parentPageDir: string,
-  wanted: readonly string[],
-): { owned: string[]; foreign: string[] } {
-  if (!existsSync(parentPageDir)) return { owned: [], foreign: [] };
-  const keep = new Set(wanted);
-  const owned: string[] = [];
-  const foreign: string[] = [];
-
-  for (const e of readdirSync(parentPageDir, { withFileTypes: true })) {
-    if (!e.isDirectory() || keep.has(e.name)) continue;
-    const page = join(parentPageDir, e.name, "index.html");
-    if (!existsSync(page)) {
-      foreign.push(e.name);
-      continue;
-    }
-    const m = SCOPE_LINE.exec(readFileSync(page, "utf-8"));
-    // The page must name ITSELF. A page whose SCOPE says something else is a
-    // page this generator did not write for this location, and guessing is
-    // exactly what the scoping rule exists to stop.
-    if (m && m[1] === e.name) owned.push(e.name);
-    else foreign.push(e.name);
-  }
-  return { owned: owned.sort(), foreign: foreign.sort() };
-}
+export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
+export type { OwnershipTest } from "./orphan-pages.ts";
 
 export function viewerHtml(dataHref: string, scope = ""): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
@@ -1189,7 +1164,84 @@ if (import.meta.main) {
     process.exit(0);
   }
   const seg = basename(own);
-  const data = JSON.stringify(projection(g), null, 2) + "\n";
+
+  // ── Rule 1: a HANDLER rendering a kind's assets ────────────────────────
+  //
+  // `<base>/<handler>/<kind>/<optional subject>` — the owner's own example is
+  // `<base>/cat-harness/docs/who-iris/`. The handler is THIS instance, the
+  // kind names what it renders, the subject scopes it to one instance.
+  //
+  // Rule 2, `<base>/<instance>/`, is the instance presenting ITSELF, and a
+  // subject page must never be published there: it would squat on that
+  // instance's own site.
+  //
+  // Read BEFORE the projection because the projection now carries the subject
+  // pages' tile counts, and their keys are derived from the page paths this
+  // composes. It was read after the projection until #863.
+  const handler = readDeclaration(ROOT)?.name;
+  if (!handler) {
+    console.log("  · this instance declares no name — no handler segment to publish under");
+    process.exit(0);
+  }
+
+  // One page per SUBJECT — read from the modules actually found, so a
+  // declared-but-empty directory gets no page claiming to show it.
+  const subjects = [...new Set(g.modules.map((m) => m.instance))].sort();
+
+  /**
+   * Each subject page's tile count, keyed by the DECLARED directory id.
+   *
+   * Nothing is composed from the subject name. `folio-assistant-core`'s
+   * directory is declared `folio-assist-core-schemas` while its three
+   * siblings follow `${subject}-schemas`, so a composed key would badge three
+   * tiles and leave the fourth silently uncounted — see
+   * `directoryByVisualisationRef`, which carries the table.
+   *
+   * A subject whose page no declaration names contributes NOTHING rather than
+   * a zero: it is a page with no tile, so there is nothing to badge, and an
+   * invented entry would be a count for a directory nobody declared.
+   */
+  // THIS INSTANCE'S declaration only, because that is the one that produces
+  // tiles: `sync-docs-harness.ts` calls `graphTiles(readDeclaration(ROOT)
+  // .directories)`. Scanning every instance was the first draft and it was
+  // wrong in a way worth recording, because it looked more thorough:
+  //
+  // a page is NOT uniquely owned by one directory id. The page at
+  // `.../library/agent-skills/` is `agent-skills-library` to this instance and
+  // plain `library` to the agent-skills instance, which declares its own view
+  // of it. Scanning both meant the first-wins rule picked an id that is not a
+  // tile here, so `agent-skills-library` silently lost its badge while
+  // `uploads` gained a count over the wrong page entirely.
+  //
+  // The rule that falls out: look the ref up in the SAME list the tiles came
+  // from, or the ids do not correspond to tiles at all.
+  const byRef = directoryByVisualisationRef(readDeclaration(ROOT)?.directories ?? []);
+  const scoped: Record<string, readonly [number, string]> = {};
+  /** The repo-relative ref of a page this run emits, as a declaration spells it. */
+  const refOf = (dirPath: string): string =>
+    relative(REPO_ROOT, join(viewerPlacement(site, dirPath, seg).pageDir, "index.html"))
+      .split(sep)
+      .join("/");
+
+  // The UNSCOPED page first: it shows every module, so its count is the whole
+  // graph — and it gets one only if some directory declares it. Nothing does
+  // today, which is why this contributes nothing rather than a stray entry.
+  // Pluralised by the DECLARER, per `tile-count.ts`: only it knows whether its
+  // unit pluralises regularly. `module` does, but the rule is the unit's
+  // owner's to apply, and a tile reading "1 modules" undermines the number.
+  const modules = (n: number): readonly [number, string] =>
+    [n, n === 1 ? "module" : "modules"];
+  const wholeId = byRef.get(refOf(`${handler}/${seg}`));
+  if (wholeId !== undefined) scoped[wholeId] = modules(g.modules.length);
+
+  // Then each SUBJECT page, counted over that subject alone.
+  for (const subject of subjects) {
+    const id = byRef.get(refOf(`${handler}/${seg}/${subject}`));
+    if (id === undefined) continue;
+    scoped[id] = modules(g.modules.filter((m) => m.instance === subject).length);
+  }
+
+  const data = JSON.stringify(projection(g, scoped), null, 2) + "\n";
   // Indented for the reason the todo and bean indices both document: a
   // minified projection is one line, git merges by line, and two branches each
   // adding a schema would conflict on the whole file every time.
@@ -1202,18 +1254,10 @@ if (import.meta.main) {
   // Rule 2, `<base>/<instance>/`, is the instance presenting ITSELF, and a
   // subject page must never be published there: it would squat on that
   // instance's own site.
-  const handler = readDeclaration(ROOT)?.name;
-  if (!handler) {
-    console.log("  · this instance declares no name — no handler segment to publish under");
-    process.exit(0);
-  }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
   emit(join(pageDir, "index.html"), viewerHtml(dataHref));
 
-  // One page per SUBJECT — read from the modules actually found, so a
-  // declared-but-empty directory gets no page claiming to show it.
-  const subjects = [...new Set(g.modules.map((m) => m.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));

@@ -21,7 +21,7 @@ import { join, resolve } from "path";
 import { execFileSync, spawnSync } from "child_process";
 import { createHash } from "crypto";
 
-import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
+import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
 import { pngSize } from "../gen-covers.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
@@ -34,10 +34,16 @@ const DOCS = join(INSTANCE, "docs");
  * and `read()` routes by what the page IS rather than by where it used to be.
  */
 const LIB = join(INSTANCE, "library");
+// WHICH SIDE A TEST'S PAGE LIVES ON — a different question from what the
+// generator OWNS, which is why this is not simply `fixedPagesOf("docs")`.
+//
 // `index.html` exists on BOTH sides — the replica's home and the docs
-// landing. Every test here that names it means the REPLICA's, so it is not in
-// this set; the docs landing is read explicitly by the one test about it.
-const DOC_PAGES = new Set(["ingestion-notes.html", "kg-to-portal.html"]);
+// landing. Every test here that names it means the REPLICA's, so it is
+// excluded; the docs landing is read explicitly by the one test about it.
+// That exclusion is the whole difference, and it is now SUBTRACTED from the
+// generator's own list rather than written out again, so adding a docs page
+// reaches this router without anybody remembering to edit it.
+const DOC_PAGES = new Set(fixedPagesOf("docs").filter((f) => f !== "index.html"));
 const sideOf = (page: string): string => (DOC_PAGES.has(page) ? DOCS : LIB);
 /** Every rendered page, both sides, as `read()` would resolve them. */
 const allHtml = (): string[] => [
@@ -117,18 +123,32 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    // A SECOND LIST BESIDE `OWNED`, and it went stale the first time a page
-    // was added — `catalogue.html` (2026-09-22) was written, pruned-checked
-    // and gated, and this set still did not know it existed. Kept as a list
-    // rather than derived from `OWNED` because that is a regex and cannot
-    // enumerate; the cost is that adding a page means editing here too, which
-    // the next person discovers exactly the way this was discovered.
+    // A SECOND LIST BESIDE `OWNED`, and it has now gone stale in BOTH
+    // directions within three days — which is the finding, not the chore.
+    //
+    // 2026-09-22 (morning): `catalogue.html` was added, written, pruned-checked
+    // and gated, and this set still did not know it existed.
+    // 2026-09-22 (later, bean `ha78` / issue #886): it MOVED out of who-iris
+    // altogether, to the conventional viewer route under the built site, and
+    // this set still listed it — so the assertion failed on a page whose
+    // absence was the whole point of the change.
+    //
+    // NOW DERIVED (bean `o6vj`, issue #895). It was a hand-kept list, on the
+    // reasoning that `OWNED` is a regex and cannot enumerate — true, and the
+    // fix was to export the enumerable part rather than to keep a fourth copy
+    // of it. `fixedPagesOf` is the generator's own declaration; the item and
+    // collection families are still built from the catalogue here, because
+    // those genuinely depend on the data and are what the orphan half of this
+    // test is about.
+    //
+    // This does NOT weaken the assertion into agreeing with any change. The
+    // per-side ownership guard now runs inside the generator on every
+    // invocation, so a page added to a side that does not own it fails before
+    // this test is reached — and what this still pins is that the committed
+    // tree holds exactly the pages the declaration says, no more and no less.
     const wanted = new Set([
-      "index.html",
-      "community-list.html",
-      "ingestion-notes.html",
-      "kg-to-portal.html",
-      "catalogue.html",
+      ...fixedPagesOf("library"),
+      ...fixedPagesOf("docs"),
       ...items,
       ...colls,
     ]);

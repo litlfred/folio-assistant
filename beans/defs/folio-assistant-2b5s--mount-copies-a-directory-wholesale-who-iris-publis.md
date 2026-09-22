@@ -69,3 +69,28 @@ removes published artefacts because a rule said they were redundant.
 - [ ] Whatever the ruling, the count is re-measured rather than quoted from
       this bean
 
+
+## RE-MEASURED 2026-09-22 (bean `osyc`, item 2) — totals exact, breakdown does not sum
+
+Every headline figure verifies against `find who-iris/library -type f`:
+
+| | bean | measured |
+|---|---|---|
+| total files | 1,378 | **1,378** |
+| pages | 11 | **11** (7 `.html`, 3 cover `.png`, 1 `image-verdicts.json`) |
+| L1 corpus | 1,367 | **1,367** |
+| `9789241548960-eng` / `who-pub-tps-931` / `wpr-rdo-2020-003-eng` | 757 / 487 / 123 | **757 / 487 / 123** |
+
+**The corpus BREAKDOWN is wrong, and its rows sum to 1,364 against its own
+stated 1,367.** Two errors cancelling out to a right total:
+
+- it lists **26 `.png`**, which is the TREE-WIDE count — 3 of those are the
+  cover images it already counted among the 11 pages. The corpus has **23**.
+- it omits the **6 `.json`** files that are corpus rather than page.
+
+Correct: 813 `.jsonld` + 404 `.md` + 121 `.txt` + 23 `.png` + 6 `.json` = 1,367.
+
+Nothing about the bean's argument changes — the duplication it reports is real
+and the totals are right. But a reader acting on that table would double-count
+3 files and miss 6, which is why a count in prose is a claim rather than
+evidence.

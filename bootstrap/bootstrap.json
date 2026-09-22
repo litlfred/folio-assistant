@@ -97,6 +97,33 @@
       "graphKinds": [
         "skills"
       ]
+    },
+    {
+      "id": "models",
+      "path": "models/",
+      "dependents": "skip",
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process \u2014 a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "graphKinds": [
+        "models"
+      ]
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "skip",
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived \u2014 that a concept was once minted \u2014 is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "graphKinds": [
+        "glossary"
+      ]
+    },
+    {
+      "id": "bootstrap-translations",
+      "path": "translations/",
+      "dependents": "reproduce",
+      "description": "The gettext templates for THIS instance's workflow diagrams \u2014 one directory per target locale, holding the `.pot` extracted from each `.bpmn` here. Undeclared until 2026-09-22, and that was the `dh4f` defect: `j28g` moved these out of `cat-harness/translations/` correctly, because the templates belong beside the instance that owns the diagrams, and the declaration did not follow. Fifteen committed files a consumer scanning the declared set would report a clean run over. A SEPARATE id from cat-harness's `translation-sources`: overrides match on id, so reusing it would REPLACE that graph with this one rather than add to it. `reproduce` for the reason cat-harness's entry gives \u2014 a downstream instance translating this diagram set needs catalogues of its own, not a pointer to these. Bean `m9zz`.",
+      "graphKinds": [
+        "translation-sources"
+      ]
     }
   ],
   "renderExemption": {

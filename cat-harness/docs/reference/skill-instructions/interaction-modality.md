@@ -301,6 +301,19 @@ And the negative rule: **do not ask a question whose answer you could look up.**
 Every fact `getting-started` reads from the filesystem is a question not asked.
 This is the largest accessibility win available, and it is invisible.
 
+### 4.3 After the answer — a ruling is a skill edit, not just an applied answer
+
+The asking is half the loop. The answer comes back, and if it settles how a
+*kind* of thing is decided rather than only this one, it is a rule and it is
+written into the skill that governs it **in the same turn**, quoted and dated.
+Otherwise the next session asks again, which is this skill's §0 failure arriving
+a week late.
+
+**The rule, the three questions that identify a rule-level answer, and why it
+needs no permission**: [`symbiotic-interaction`](symbiotic-interaction.md) §2.
+It applies to any author correction, not only to answers to questions asked
+here.
+
 ## 5. Driving the questions from DMN — one logic, four surfaces
 
 The ask in issue #232 — *force agentic Q&A into guided questions following DMN

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-l1-completeness-gate\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.491Z\n"
+"POT-Creation-Date: 2026-09-22T09:06:04.863Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ingest-l1-completeness-gate.bpmn:86
+#: processes/ingest-l1-completeness-gate.bpmn:87
 #. Diagram element documentation
 msgid "A machine can detect that two readings differ. Which one is right is a human call."
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "Adjudicate the flagged passage"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:108
+#: processes/ingest-l1-completeness-gate.bpmn:109
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:106
+#: processes/ingest-l1-completeness-gate.bpmn:107
 #. Diagram label
 msgid "drift"
 msgstr ""
@@ -74,7 +74,7 @@ msgstr ""
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:90
+#: processes/ingest-l1-completeness-gate.bpmn:91
 #. Diagram label
 msgid "Record the L1 completeness verdict"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:100
+#: processes/ingest-l1-completeness-gate.bpmn:101
 #. Diagram label
 msgid "Verdict recorded"
 msgstr ""

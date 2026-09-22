@@ -38,6 +38,7 @@ import { z } from "zod";
 import { basename, join, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance } from "../workflow/instance.js";
+import { describePreflight, preflight, preflightRefusal } from "../workflow/preflight.js";
 import { describeCapture, writeLogEntry } from "../logging/log-writer.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
@@ -149,6 +150,19 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
             `starting a second.\n\n${describe(model, existing, roles())}`,
         );
       }
+      // The pre-execution gate, and the FIRST non-test caller `<folio:precondition>`
+      // has ever had (issue #853, requirement 3). Asked here rather than in
+      // `startInstance` because a precondition is what must hold BEFORE the start
+      // event: `startInstance` also runs for every subprocess entered mid-flight,
+      // and re-asking there answers a different question.
+      //
+      // Only `unsatisfied` refuses. `could-not-determine` proceeds and is NAMED
+      // in the output — three of the four preconditions in this repository are
+      // `stated` and structurally unobservable, so blocking on them would not be
+      // a gate, it would be an outage. See `workflow/preflight.ts`.
+      const gate = preflight(model, root);
+      const refusal = preflightRefusal(gate);
+      if (refusal) throw new Error(refusal);
       const state = startInstance(model, { id, subject, bean });
       const path = saveInstance(root, state);
       // The activity log's `task-start`. Reported on the tool's own output
@@ -168,6 +182,10 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       );
       return text(
         `Started. State in \`${path.replace(`${root}/`, "")}\`.\n` +
+          // Said on the tool's own output, on the same argument the capture
+          // state is: a caller that has to go and look somewhere else to find
+          // out whether the gate ran does not have one it can rely on.
+          `${describePreflight(gate)}\n` +
           `${describeCapture(log)}\n\n${describe(model, state, roles())}`,
       );
     },

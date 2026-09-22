@@ -29,7 +29,7 @@
  * @module folio-assistant/scripts/tests/generated-viewer-scripts
  */
 
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { describe, expect, test } from "bun:test";
@@ -72,9 +72,13 @@ function parses(source: string): string | undefined {
   }
 }
 
-const pages = [join(SITE, "cat-harness", "library"), join(SITE, "cat-harness", "schemas")].flatMap((d) =>
-  viewerPages(d),
-);
+// DERIVED, not listed. The first version named `library` and `schemas` — the
+// two families that broke in PR #805 — and that is how a guard ends up
+// narrower than its own docstring: it said "every generated viewer" while
+// covering 12 of 25 pages, leaving `voices`, `uploads` and `docs-auto`
+// unexamined. Walking the generated tree means a new viewer family is covered
+// the day it is generated rather than the day somebody remembers. Bean `jfr6`.
+const pages = viewerPages(join(SITE, "cat-harness"));
 
 describe("generated viewers ship JavaScript that is JavaScript", () => {
   test("the viewer trees are not empty — examined nothing is not a pass", () => {
@@ -100,5 +104,59 @@ describe("generated viewers ship JavaScript that is JavaScript", () => {
     // template literal, leaving a literal line break inside the quotes.
     expect(parses('var x = ["a"].join("\n");')).toMatch(/Invalid or unexpected token|Unexpected/);
     expect(parses('var x = ["a"].join("\\n");')).toBeUndefined();
+  });
+});
+
+describe("a field rendered without `esc()` must be provably numeric", () => {
+  /**
+   * Bean `1wef` surface 2, found 2026-09-22.
+   *
+   * `gen-library-viz` renders two fields WITHOUT `esc()` — `words` and
+   * `bytes` — because both were assumed numeric. `words` was built by
+   * `secs.reduce((n, s) => n + (s.n_words ?? 0), 0)` over `structure.json`,
+   * which comes from an INGESTED corpus this repository did not author.
+   *
+   * `+` on a string is concatenation, so one string `n_words` made `words` the
+   * string `0<img src=x onerror="alert(1)">`, and `toLocaleString()` handed it
+   * straight to `innerHTML`.
+   *
+   * Four lines above, the `pages` line already guarded this exact class with
+   * `typeof n === "number"`. The guard existed; two fields did not get it.
+   *
+   * This asserts the SHAPE rather than the instance: a reduce in a graph
+   * builder that adds a value straight out of parsed JSON is the defect,
+   * whatever the field is called.
+   */
+  const BUILDERS = ["library-graph.ts", "uploads-graph.ts"];
+
+  test("no graph builder sums a raw JSON field without a typeof guard", () => {
+    const offenders: string[] = [];
+    for (const b of BUILDERS) {
+      const p = join(ROOT, "scripts", b);
+      if (!existsSync(p)) continue;
+      const src = readFileSync(p, "utf-8");
+      src.split("\n").forEach((line, i) => {
+        // `reduce((n, s) => n + s.foo)` or `n + (s.foo ?? 0)` — an addition
+        // whose right side is a property read, with no `typeof` on the line.
+        if (/\.reduce\(/.test(line) && /\bn\s*\+\s*\(?\s*\w+\.\w+/.test(line) && !/typeof/.test(line)) {
+          offenders.push(`${b}:${i + 1}: ${line.trim()}`);
+        }
+      });
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  test("...and the guard has teeth — the original line is caught", () => {
+    // The exact text that shipped, checked against the same predicate.
+    const original = "        words: secs.reduce((n, s) => n + (s.n_words ?? 0), 0),";
+    const caught =
+      /\.reduce\(/.test(original) && /\bn\s*\+\s*\(?\s*\w+\.\w+/.test(original) && !/typeof/.test(original);
+    expect(caught).toBe(true);
+  });
+
+  test("the guarded form passes", () => {
+    const fixed = "        words: sumSections((s) => s.n_words),";
+    const caught = /\.reduce\(/.test(fixed) && /\bn\s*\+\s*\(?\s*\w+\.\w+/.test(fixed) && !/typeof/.test(fixed);
+    expect(caught).toBe(false);
   });
 });

@@ -83,9 +83,17 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
-import { isSkillMd, skillMdDirs } from "./known-skills.ts";
-import { readDeclaration, resolveDirectories, siteDirFor } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
+import { classify } from "./check-docs-populated.ts";
+import { isSkillMd, kgRoots, skillMdDirs } from "./known-skills.ts";
+import { readRoleGraph } from "../schemas/role-graph.ts";
+import {
+  findDeclarationFile,
+  instanceRootsIn,
+  readDeclaration,
+  resolveDirectories,
+  siteDirFor,
+  visualisationsOf,
+} from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO = join(ROOT, "..");
@@ -127,6 +135,23 @@ export interface AutoDocType {
    * rather than about its copies.
    */
   graph: string;
+  /**
+   * Where this type's sub-graphs come from, when the ROOT declaration is not
+   * the right source.
+   *
+   * Defaults to {@link declaredDirectories}`(graph)` — the root's own view,
+   * which is correct for every type whose dependents' directories the root
+   * already declares. `docs` is the exception and the reason this hook
+   * exists: the root declares dependents' `skills/` and `library/` but CANNOT
+   * declare their `docs/`, because `compose-docs.docsLayers` treats every
+   * docs-kind entry in that file as a COMPOSITION LAYER — declaring
+   * `smart-trust/docs/` there overlays its `index.md` onto the site's own.
+   * Measured: `compose-docs.test.ts` failed exactly that way when tried.
+   *
+   * So the docs type asks each instance about itself instead, which is what
+   * `mount-instance-docs` already does.
+   */
+  directories?: () => Array<{ id: string; absPath: string; path: string }>;
   /** One line on the page saying what was extracted and from where. */
   extracts: string;
   collect(): AutoDocItem[];
@@ -156,6 +181,89 @@ function frontMatterDescription(text: string): string | undefined {
 }
 
 /** The first sentence of a longer string, for a listing line. */
+/**
+ * A pre-rendered page's `<title>`, for the docs index.
+ *
+ * Docs are not uniformly markdown — `who-iris/docs/` is four `.html` files —
+ * so `frontMatterDescription` has nothing to read there. The title is what
+ * such a page carries instead, and an absent one yields `undefined` rather
+ * than a guess: a listing with no summary says less than a wrong one.
+ */
+/**
+ * Docs directories across EVERY instance, each read from its own declaration.
+ *
+ * `instanceRootsIn` rather than a list: its own docstring records two gates
+ * that each carried `["cat-harness", "bootstrap"]` while four instances
+ * existed, and reported clean runs over half the subject. A list that must be
+ * edited when a directory is added is a list that will be wrong.
+ *
+ * `scope !== "repository"` matches what `mount-instance-docs` publishes, so
+ * this index covers exactly the docs that get a route and no more.
+ *
+ * Ids are the DECLARING instance's own, which is what makes the sub-page a
+ * per-dependency answer — `who-iris-docs`, `smart-trust-docs` — rather than
+ * one page for the root's docs and silence about everyone else's.
+ */
+function docsDirectoriesAcrossInstances(): Array<{ id: string; absPath: string; path: string }> {
+  const out = new Map<string, { id: string; absPath: string; path: string }>();
+  for (const d of declaredDirectories("docs")) out.set(d.absPath, d);
+  for (const instance of instanceRootsIn(REPO)) {
+    // `findDeclarationFile` returns a BASENAME, not a path — join it.
+    // Without the join this reads relative to the process cwd, which silently
+    // "works" for whichever instance happens to sit there and fails for every
+    // other, leaving one sub-graph where there should be three. That is how
+    // the first attempt at this looked correct.
+    const declName = findDeclarationFile(instance);
+    if (declName === undefined) continue;
+    const decl = join(instance, declName);
+    let parsed: { directories?: Array<{ id?: string; path?: string; scope?: string; graphKinds?: string[] }> };
+    try {
+      parsed = JSON.parse(readFileSync(decl, "utf-8"));
+    } catch {
+      continue; // an unreadable declaration is somebody else's finding, not a silent drop of this index
+    }
+    for (const e of parsed.directories ?? []) {
+      if (!e.id || !e.path || e.scope === "repository") continue;
+      if (!(e.graphKinds ?? []).includes("docs")) continue;
+      const absPath = join(instance, e.path);
+      if (!existsSync(absPath) || out.has(absPath)) continue;
+      out.set(absPath, { id: e.id, absPath, path: relative(REPO, absPath).split("\\").join("/") });
+    }
+  }
+  return [...out.values()].sort((a, b) => a.id.localeCompare(b.id, "en"));
+}
+
+/**
+ * Pages a declared visualiser marks `publish: "staging-only"`.
+ *
+ * `compose-docs.ts` withholds these from the CANONICAL build, and a docs
+ * index that reads the source tree walks straight past that decision. It is
+ * not cosmetic: `fsh-guts-unpublished.test.ts` asserts the string `fsh-guts`
+ * appears NOWHERE in the built export, and listing
+ * `cat-harness/docs/fsh-guts/index.md` in this index put it there. The test
+ * caught it.
+ *
+ * Read from the declaration's own `publish` field rather than by name, so a
+ * second staging-only page is withheld without editing this file — naming
+ * `fsh-guts` here would be a rule true only for the instance somebody
+ * remembered.
+ */
+function stagingOnlyRefs(): Set<string> {
+  const out = new Set<string>();
+  for (const d of resolveDirectories([{ name: "(local)", root: ROOT, own: true }])) {
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (v.publish === "staging-only") out.add(v.ref.replace(/\\/g, "/"));
+    }
+  }
+  return out;
+}
+
+function htmlTitle(text: string): string | undefined {
+  const m = /<title>([\s\S]*?)<\/title>/i.exec(text);
+  const t = m?.[1]?.replace(/\s+/g, " ").trim();
+  return t ? t : undefined;
+}
+
 function firstSentence(s: string, max = 220): string {
   const one = s.replace(/\s+/g, " ").trim();
   const stop = one.search(/\.\s|\.$/);
@@ -200,10 +308,13 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  * sub-graph has no single order to take one over. Recorded here as well as on
  * the bean, since this array is what a reader checks against that list.
  *
- * Declared but NOT built: `glossary` (bean `lqo9` holds a roast that gates
- * it), `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`.
- * Absent rather than stubbed: a type that emits an empty page is indis-
- * tinguishable from one whose sub-graphs are empty.
+ * `glossary` was "declared but not built, bean `lqo9` holds a roast that gates
+ * it". **That roast is held and slice 2 shipped**, so it is built below and
+ * reads the ledger that slice writes.
+ *
+ * Still declared but NOT built: `index`, `index/bpmn`, `index/dmn`,
+ * `index/tasks`, `index/roles`. Absent rather than stubbed: a type that emits
+ * an empty page is indistinguishable from one whose sub-graphs are empty.
  */
 export const TYPES: AutoDocType[] = [
   {
@@ -244,6 +355,57 @@ export const TYPES: AutoDocType[] = [
     },
   },
   {
+    id: "index/docs",
+    title: "Docs",
+    graph: "docs",
+    directories: docsDirectoriesAcrossInstances,
+    extracts:
+      "every AUTHORED documentation page an instance publishes, with the title and description its own front matter declares",
+    collect(): AutoDocItem[] {
+      // AUTHORED only, and `classify` from `check-docs-populated.ts` is what
+      // decides — imported rather than re-derived.
+      //
+      // 261 of this instance's 316 docs markdown files are the GENERATED
+      // reference (`docs/reference/**`, written by `gen-schema-docs` and
+      // `gen-skill-docs`), plus this generator's own output under
+      // `docs-auto/`. Listing them would bury the ~55 authored pages a reader
+      // came for, and duplicate `index/skills`, which already lists the skill
+      // instruction bodies those pages are generated FROM.
+      //
+      // The obvious implementation is a list of directory names to skip, and
+      // it is the wrong one twice over: it is the hardcoded path literal
+      // `check:declared-paths` refuses, and it would be a SECOND answer to
+      // "is this page generated" — `check-docs-populated.ts` already owns
+      // that question, having learned the hard way that a substring search
+      // for "generated by" marks an authored page that merely DESCRIBES a
+      // generator. Its anchored markers are the tested rule; this reuses them.
+      // `.html` AS WELL AS `.md`, and that is not defensive breadth.
+      // `who-iris/docs/` holds FOUR pages and every one is `.html` —
+      // pre-rendered rather than Jekyll source. An `.md`-only filter reports
+      // that instance as having no documentation while it publishes four
+      // pages, which is the `dh4f` shape: a consumer scanning nothing and
+      // calling the result clean. Measured before this was written.
+      const items: AutoDocItem[] = [];
+      const withheld = stagingOnlyRefs();
+      for (const d of docsDirectoriesAcrossInstances()) {
+        for (const abs of walk(d.absPath, (n) => n.endsWith(".md") || n.endsWith(".html"))) {
+          const rel = relative(REPO, abs).split("\\").join("/");
+          if (withheld.has(rel)) continue;
+          const text = readFileSync(abs, "utf-8");
+          if (classify(abs, text) === "generated") continue;
+          const md = abs.endsWith(".md");
+          const desc = md ? frontMatterDescription(text) : htmlTitle(text);
+          items.push({
+            path: relative(REPO, abs).split("\\").join("/"),
+            name: basename(abs, md ? ".md" : ".html"),
+            summary: desc ? firstSentence(desc) : undefined,
+          });
+        }
+      }
+      return dedupeByPath(items);
+    },
+  },
+  {
     id: "index/processes",
     title: "Processes",
     graph: "processes",
@@ -266,11 +428,47 @@ export const TYPES: AutoDocType[] = [
         seen.add(d.absPath);
         for (const f of walk(d.absPath, (n) => n.endsWith(".bpmn"))) {
           const xml = readFileSync(f, "utf-8");
-          const name = /<bpmn:process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];
-          const doc = /<bpmn:documentation>([\s\S]*?)<\/bpmn:documentation>/.exec(xml)?.[1];
-          const lanes = [...xml.matchAll(/<bpmn:lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
+          // `(?:bpmn:)?` on EVERY element, because the prefix is a document's
+          // choice and not a fact about BPMN. `translation-workflow.bpmn`
+          // declares BPMN as the DEFAULT namespace and writes `<lane>`,
+          // `<userTask>`, `<documentation>` unprefixed — valid, and invisible
+          // to a prefixed regex.
+          //
+          // It did not vanish from this index, which is why it survived: the
+          // entry appeared, fell back to its FILENAME for a name, and showed
+          // no lanes, no skills and no summary. An absent row might have been
+          // noticed; an empty one reads as a diagram with nothing to say.
+          // Found 2026-09-22 — the same defect in a fourth reader, after
+          // `check-lane-documentation` and `glossary-export`.
+          const name = /<(?:bpmn:)?process[^>]*\sname="([^"]*)"/.exec(xml)?.[1];
+          // The process's OWN documentation — a DIRECT child, not the first
+          // `<documentation>` anywhere after the process opens.
+          //
+          // Measured 2026-09-22: **16 of 61 diagrams** were showing a LANE's
+          // documentation as the process summary. The old regex took the
+          // first match in the file, and a process with no documentation of
+          // its own therefore borrowed its first lane's.
+          //
+          // It was correct until two days earlier, and that is the instructive
+          // part: bean `sqtq` wrote 157 lane `<documentation>` elements, and
+          // every diagram whose process carried none started presenting a
+          // lane's instead. A generated index, compared by a check against its
+          // own generator, so nothing went red — the defect arrived with the
+          // fix to a different one.
+          const procOpen = /<(?:bpmn:)?process\b[^>]*>/.exec(xml);
+          const doc = ((): string | undefined => {
+            if (procOpen === null) return undefined;
+            const after = xml.slice(procOpen.index + procOpen[0].length);
+            const d = /<(?:bpmn:)?documentation>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(after);
+            if (d === null) return undefined;
+            // Only whitespace and comments may sit between: anything else
+            // means this documentation belongs to a child element.
+            const between = after.slice(0, d.index).replace(/<!--[\s\S]*?-->/g, "").trim();
+            return between === "" ? d[1] : undefined;
+          })();
+          const lanes = [...xml.matchAll(/<(?:bpmn:)?lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
           const skills = [...new Set([...xml.matchAll(/<folio:skill\s+ref="([^"]+)"/g)].map((m) => m[1]!))];
-          const acts = (xml.match(/<bpmn:(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
+          const acts = (xml.match(/<(?:bpmn:)?(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
           const facts: Record<string, string> = { activities: String(acts) };
           if (lanes.length) facts.lanes = lanes.join(" · ");
           if (skills.length) facts.skills = skills.sort().join(", ");
@@ -283,6 +481,91 @@ export const TYPES: AutoDocType[] = [
         }
       }
       return dedupeByPath(items);
+    },
+  },
+  {
+    id: "glossary",
+    title: "Glossary",
+    graph: "glossary",
+    extracts:
+      "every term this instance's swimlanes define — the role's title and description, " +
+      "the lane names that bind it, and whether the term has been retired",
+    collect(): AutoDocItem[] {
+      // Reads the LEDGER, not the glossary document.
+      //
+      // The document is derived and lives in `_kg/` (or `_site/` on a
+      // deploy), so it is absent from a plain checkout — an index built from
+      // it would be empty locally and full in CI, which is the worst of both.
+      // The ledger is committed, is the declared `glossary` graph, and is the
+      // one artefact that carries retirement. Reading it also means this page
+      // shows a RETIRED term, which a reader looking up a word they met in an
+      // old commit needs more than a reader of live terms does.
+      //
+      // `glossary-export.ts` is deliberately NOT imported: it builds the whole
+      // KG export to do its job, which is seconds of work for a page that
+      // needs four fields. `06e3`'s own rule — an index reuses assets rather
+      // than recomputing them.
+      // The DEFINITION, joined from the role registry.
+      //
+      // The ledger stores identity and retirement and nothing else, on
+      // purpose: a definition copied into it would be a second copy free to
+      // drift from `roles.json`, which is the authored source. So this joins
+      // the two exactly as `glossary-export.ts` does — ledger for memory,
+      // registry for meaning — rather than widening the ledger.
+      //
+      // The first version omitted this and every one of the 44 rows read "no
+      // description in the artefact": a glossary index that defines nothing,
+      // which is the thing issue #596 asked for the opposite of. Caught by
+      // opening the page rather than by reading the count.
+      const descriptions = new Map<string, string>();
+      for (const kgRoot of kgRoots(ROOT)) {
+        for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+          if (!descriptions.has(r.id) && r.description) descriptions.set(r.id, r.description);
+        }
+      }
+
+      const items: AutoDocItem[] = [];
+      for (const d of declaredDirectories("glossary")) {
+        for (const f of walk(d.absPath, (n) => n === "glossary-ledger.json")) {
+          let parsed: { instance?: string; concepts?: Record<string, { prefLabel?: string; firstSeen?: string; retiredOn?: string | null }> };
+          try {
+            parsed = JSON.parse(readFileSync(f, "utf-8"));
+          } catch {
+            // A ledger this code cannot read is NOT an instance with no terms.
+            // Skipping it silently would report a clean, empty glossary over a
+            // broken file — `dh4f`, which is the shape this whole handler is
+            // careful about.
+            items.push({
+              path: relative(REPO, f).split("\\").join("/"),
+              name: "(unreadable ledger)",
+              summary: "This file could not be parsed, so its terms are unknown — not absent.",
+            });
+            continue;
+          }
+          for (const [key, entry] of Object.entries(parsed.concepts ?? {}).sort(([a], [b]) => a.localeCompare(b, "en"))) {
+            const retired = typeof entry.retiredOn === "string";
+            items.push({
+              // The ledger is one file holding many terms, so each item points
+              // at the file and distinguishes itself by `name`. `dedupeByPath`
+              // keys on path, so it is deliberately not applied here.
+              path: `${relative(REPO, f).split("\\").join("/")}#${key}`,
+              name: entry.prefLabel ?? key,
+              summary: retired
+                ? `Retired ${entry.retiredOn} — kept, never deleted, so retirement and accident do not look alike.`
+                : // A retired term has no role to define it any more, which is
+                  // why the branch above wins: its label comes from the ledger
+                  // and its definition is genuinely gone.
+                  (key.startsWith("role/") ? descriptions.get(key.slice("role/".length)) : undefined),
+              facts: {
+                notation: key,
+                ...(entry.firstSeen ? { "first seen": entry.firstSeen } : {}),
+                status: retired ? "retired" : "current",
+              },
+            });
+          }
+        }
+      }
+      return items;
     },
   },
 ];
@@ -551,7 +834,7 @@ if (import.meta.main) {
   const built = new Map<string, number>();
 
   for (const type of TYPES) {
-    const dirs = declaredDirectories(type.graph);
+    const dirs = (type.directories ?? (() => declaredDirectories(type.graph)))();
     const items = type.collect();
     // Attribute each item to its most specific declared sub-graph, then keep
     // only the sub-graphs that actually have something. An empty one gets no

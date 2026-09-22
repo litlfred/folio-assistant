@@ -1,12 +1,12 @@
 ---
 # folio-assistant-j41m
-title: 'SUPPLY CHAIN: 11 of 18 install steps fall back from --frozen-lockfile to an unpinned resolve, and there is no audit or dependabot'
-status: in-progress
+title: 'SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable'
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T10:01:35Z
+parent: folio-assistant-3x2n
 ---
 
 ## Measured 2026-09-21
@@ -51,9 +51,11 @@ retry. That distinction is this bean's actual deliverable.
 - [x] `check:lockfile-pinning` holds the line, registered in `package.json`
       and `code-quality-gates.yml`. Falsified against the REAL workflows:
       restoring one fallback turns it red and names the file and line
-- [ ] Whether an audit step earns its place — **measured, and left as the
-      owner's call** (below). Not shipped: adding a CI step on my own initiative
-      is the speculative change this repo forbids
+- [x] Whether an audit step earns its place — **measured, put to the owner,
+      and answered 2026-09-22: advisory step AND Dependabot, both.**
+      `check:dependency-advisories` reports on every PR and blocks nothing;
+      `.github/dependabot.yml` turns the same advisories into reviewable PRs.
+      Neither gates a merge — see "The ruling" below
 
 ## CORRECTION, 2026-09-22 — "11 of 18 install steps" had the wrong denominator
 
@@ -124,3 +126,112 @@ is exactly what the 11 fallbacks were doing.
 So the pin fix above is worth more here than an audit step would be, and an
 audit's value is a separate question from its noise cost, which nobody has
 measured on this corpus. **Recorded for the owner rather than acted on.**
+
+## The ruling, 2026-09-22 — advisory step AND Dependabot, both
+
+Put to the owner with the measurement rather than a recommendation dressed as
+one. The answer was **option 1 + option 3**: a warn-only audit step *and*
+Dependabot configured as a real tool, not as a hand-wave at "shift the work".
+
+Both were shipped. They answer **different questions**, and collapsing them
+into one mechanism would have lost one of the answers:
+
+| | question | when it speaks |
+|---|---|---|
+| `check:dependency-advisories` | is anything we depend on known-vulnerable **today, on this PR**? | every PR |
+| `.github/dependabot.yml` | what would **fixing** it look like? | weekly, and immediately for a security advisory |
+
+**Neither gates a merge.** That is the decision, not an omission: a hard gate
+on advisories hands a transitive advisory nobody can patch the power to red
+every PR until somebody adds a suppression — and the suppression is what rots.
+
+### The state that mattered was not "found" vs "not found"
+
+A warn-only step exits 0 in every state, so **the exit code carries no
+information at all**. Everything therefore rests on what it *prints*, and this
+workflow has already paid for getting that wrong once: its own header records
+the ruff step that *"warned about the missing paths and exited 0, so the step
+reported a clean baseline it had never computed."*
+
+So the gate reports **three** states and never conflates the outer two:
+
+| state | meaning | rendered |
+|---|---|---|
+| `clean` | the audit RAN and found nothing | `✓`, **with the package count** |
+| `advisories` | it ran and found something | `::warning::` per advisory |
+| `undetermined` | it did not produce an answer | `::warning::`, and **never** a `✓` |
+
+`{}` is bun's clean shape and **is** an answer; empty *text* is not. A 502 from
+the registry, unparseable output, or packages reported with no readable
+advisory are all `undetermined` — because calling any of them clean is the
+`dh4f` shape, a clean run reported over what was never examined.
+
+**Falsified, not asserted.** Making `undetermined` render a `✓` turns the suite
+red on exactly the assertion that matters (`no undetermined render contains a
+tick`), and restoring it turns it green. 15 tests.
+
+### Measured today, and it corrects this bean's own denominator again
+
+`bun audit` on the current tree: **no vulnerabilities**, across **372** resolved
+packages. A clean run is evidence about the advisory database, not about the
+code — and an advisory not yet published is not one this can see.
+
+**"1 of 28 direct dependencies at an exact version" is the ROOT manifest
+alone.** Across all five manifests that carry dependencies it is **40**: root
+28, `mcp-server` 5, `block-qa-schema` 4, `scripts/tests` 2, `schemas` 1. The
+finding is unchanged — the ranges still dominate — but the denominator was
+narrower than it read, which is the *second* time this bean has had to say
+that. Recorded here rather than quietly corrected, because the pattern is the
+point: a ratio picks its own denominator.
+
+The sixth `package.json`, `cat-harness/viewer`, declares **no** dependencies
+and is deliberately **not** a Dependabot directory. Listing it would be a
+consumer scanning nothing and reporting a clean run over it.
+
+### One thing this does NOT establish, stated rather than assumed
+
+This repository installs with bun and commits `bun.lock`, and
+`check:lockfile-pinning` requires `--frozen-lockfile` to hold. Whether
+Dependabot regenerates a **bun** lockfile is a fact about Dependabot that
+cannot be established from inside this checkout, so it is not claimed — in the
+config or here. If Dependabot's PRs arrive red on `--frozen-lockfile`, that is
+the answer rather than a mystery: run `bun install` on the branch and push the
+lock.
+
+### Why `github-actions` is in the Dependabot config at all
+
+It is not hygiene. An action is code this repository executes **with its own
+token** on every push. `check:workflow-injection` guards what the workflows
+themselves do with untrusted input; nothing guarded the actions they call. That
+was a supply chain with no eyes on it whatsoever.
+
+## Summary of Changes
+
+Merged as `011ea91` ([#893](https://github.com/litlfred/folio-assistant/pull/893)).
+
+**The lockfile half** (landed earlier): `check:lockfile-pinning` fails any pin
+that DEGRADES — `--frozen-lockfile || bun install` — always, never baselined,
+because the failure it swallows is the one it exists to raise. An install with
+no pin at all is baselined and a NEW one fails. Falsified against the real
+workflows: restoring one fallback turns it red and names file and line.
+
+**The audit half** (the owner's ruling, both options): `check:dependency-advisories`
+reports on every PR and blocks nothing; `.github/dependabot.yml` turns the same
+advisories into reviewable PRs. Neither gates a merge. The warn-only gate keeps
+three states apart in its OUTPUT — `clean`, `advisories`, `undetermined` —
+because a step that exits 0 in every state has no other channel, and this
+workflow already has a recorded case of a step reporting "a clean baseline it
+had never computed". Falsified: making `undetermined` render a tick turns the
+suite red on exactly that assertion.
+
+Confirmed externally rather than asserted: GitHub's own Dependabot API validated
+the config (its check run passed), and the advisory job ran green on a real
+runner. Left explicitly open, because this checkout cannot settle it: whether
+Dependabot regenerates a **bun** lockfile.
+
+**What this bean got wrong twice, both recorded above rather than quietly
+fixed.** Its title's "11 of 18" took the denominator from the numerator's shape
+and hid three install steps that never pinned at all. Its "1 of 28 at an exact
+version" was the ROOT manifest alone; across all five manifests carrying
+dependencies it is 40. A ratio picks its own denominator — `w4tq`'s lesson,
+twice in one bean.

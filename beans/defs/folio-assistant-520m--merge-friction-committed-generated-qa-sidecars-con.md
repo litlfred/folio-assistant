@@ -1,11 +1,11 @@
 ---
 # folio-assistant-520m
 title: 'MERGE FRICTION: committed generated QA sidecars conflict on every base merge — 3 of 3 in one session'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T20:08:34Z
-updated_at: 2026-09-21T20:08:34Z
+updated_at: 2026-09-22T05:55:13Z
 parent: folio-assistant-1xhc
 ---
 
@@ -58,3 +58,122 @@ measured here is three merges in one session, not a broken invariant.
       because "regenerate on conflict" applied blindly would
 - [ ] whichever way it goes, the reason is written where the next agent
       resolving one of these will find it
+
+## 2026-09-21 — MEASURED, and it corrects this bean's own premise
+
+This bean said the conflicts "carried no information" — *"what conflicts is a
+hash both sides recomputed against their own tree"*. That is **wrong**, and the
+experiment is one command each:
+
+```sh
+bun run translation:block-qa && git status --porcelain   # empty
+bun run kg:audit              && git status --porcelain   # empty
+```
+
+**Both generators are idempotent.** A no-op re-run over an unchanged tree
+writes nothing, because `sameScriptVerdict` in `qa-utils.ts` keeps the existing
+entry verbatim when a re-run reproduces it, and deliberately ignores
+`reviewed_at`, `reviewed_sha` and `script_commit_sha` when deciding that.
+
+So the three `agent-onboarding.{ar,fr,ru}` conflicts were **real**: both sides
+genuinely changed those sidecars' inputs — this branch regenerated the POT for
+the `lrbx` TOC fix, main edited the guide — and `source_hashes` differs because
+the sources differed. The verdict being unchanged does not make the conflict
+empty; it makes it trivially resolvable.
+
+That kills option (b). The churn is not gratuitous restamping, so narrowing
+what a sidecar stores would remove information without removing a conflict.
+
+### And it quantifies the risk this bean flagged
+
+*"a strategy that cannot silently drop a REAL sidecar change, because
+regenerate-on-conflict applied blindly would"* — measured across all 630
+committed sidecars:
+
+| reviewer kind | entries |
+|---|---|
+| `script` | **5,883** |
+| `agent` | **13** (11 `block-qa/v1`, 2 `translation-qa/v1`) |
+
+Blind regeneration would be correct for 5,883 and would **destroy 13** — two of
+them in `translation-qa`, the family that churns most. The guard is not a
+judgement call, though: a non-script entry is self-identifying
+(`reviewer.kind !== "script"`), so any strategy can refuse exactly the files
+that carry one.
+
+## Settled — owner, 2026-09-21: a resolve SCRIPT, not a merge driver
+
+Asked as four options with the measurements above. The owner chose the script.
+The argument that decided it: a git merge driver needs a `git config` step in
+every clone and CI runner, and the people hitting these conflicts are mostly
+agents in fresh containers — where a setup step nobody ran is a driver that is
+not there, failing open and silently.
+
+### Delivered
+
+- `cat-harness/scripts/qa-resolve-conflicts.ts`, as `bun run qa:resolve-conflicts`
+  (`--dry-run`, `--explain`).
+- The guard, applied **twice**: refuse any file where either side carries a
+  non-script `reviewer.kind`, and verify after regenerating that every such
+  entry survived. A fast path that is the only protection becomes the
+  protection the day its assumption breaks.
+- Conflicts outside the declared `qa` graph are left untouched and unstaged.
+- The generator to re-run is read from the sidecars' own `reviewer.id` and
+  matched against `package.json`; a family whose writer cannot be identified is
+  reported and left conflicted.
+- `skills/folio-core/prepare-merge.md` §"Conflicts in `test/results/`" carries
+  the reason where the next agent resolving one will find it — this bean's
+  third Done-when.
+- 11 tests, built on REAL git conflicts in throwaway repositories rather than
+  hand-built objects, asserting both directions: an agent-carrying file is
+  refused, the same file without it is resolved.
+
+### Two constraints found by resolving a real conflict rather than imagining one
+
+- **A conflicted file is not valid JSON.** The guard reads git's stages
+  (`git show :2:<path>`), never the working tree. Reading the working tree
+  would throw on every input, and a caught throw is indistinguishable from a
+  clean scan — the false-clean this repository keeps paying for. There is a
+  test for it.
+- **Not every family has a `reviewer` at all.** `kg-qa/v1` records
+  `criteria[id].result` with none; it is wholly derived. The guard passes those
+  correctly, and `--explain` distinguishes "found none" from "the shape has
+  none".
+
+### The fourth data point
+
+The merge that produced this session's fourth conflict —
+`kg-qa/skills/folio-core/interaction-modality.kg-qa.json`, main moved 33
+commits — was resolved by hand using exactly the procedure the script
+implements, before the script existed. That is where both constraints above
+came from.
+
+## Done when
+
+- [x] the owner has settled whether this friction is worth machinery
+- [x] a strategy that cannot silently drop a REAL sidecar change
+- [x] the reason is written where the next agent resolving one will find it
+
+## 2026-09-22, merge SIX — the conflicts moved OUT of the `qa` graph
+
+Main moved 23 commits (the `skills/workflows/` → `processes/` rename). Both
+conflicts were in generated artefacts again, and **neither was in the `qa`
+graph**:
+
+| file | generator |
+|---|---|
+| `docs/_data/harness.json` | `sync-docs-harness.ts` |
+| `docs/cat-harness/published-graphs.md` | `handler:index` |
+
+`qa:resolve-conflicts` reported both as outside its scope and changed nothing,
+which is correct — it is scoped to the declared `qa` graph on purpose, and
+silently staging a conflict outside it is the habit this bean warns about,
+mechanised. They were regenerated by hand.
+
+**Six merges, six conflict sets, every one generated, none in authored code.**
+The running tally is now 4 in `qa` and 2 outside it, which is the open question
+this raises: whether the resolver should cover every declared generated
+artefact rather than one graph. NOT decided here — widening a tool that stages
+files is a decision about blast radius, and the same guard would have to be
+re-derived per family (`docs/_data/harness.json` carries no `reviewer` at all,
+so "refuse a non-script verdict" is not the right predicate for it).

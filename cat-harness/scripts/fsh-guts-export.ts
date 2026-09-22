@@ -46,19 +46,6 @@ import {
   resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module reads this instance's declaration and the instance
-// DECLARES a folio graph, so without this it throws `unknown graph kind
-// "folio"` on a valid declaration.
-//
-// Found statically, by listing every script any workflow invokes and checking
-// each for the import — NOT by running them. Running `site-links.ts` from the
-// wrong directory made it fail with "no harness.json; nothing to resolve",
-// which masked this and got it wrongly dismissed as a local-args artefact. A
-// script failing on bad arguments says nothing about whether it fails on good
-// ones.
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 

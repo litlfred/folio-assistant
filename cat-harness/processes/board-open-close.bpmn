@@ -35,6 +35,11 @@
   </bpmn:collaboration>
 
   <bpmn:process id="Process_BoardOpenClose" name="Board: open and close content" isExecutable="true">
+    <bpmn:documentation>What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.
+
+You are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it.
+
+The rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- Advisory: a reader opening a card is not a gate, and refusing a
            step here would refuse a click. The base content processes gate;

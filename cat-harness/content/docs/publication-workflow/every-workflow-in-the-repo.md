@@ -117,6 +117,7 @@ call path only, where `inherits` would carry both specialisms everywhere.
 | `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
 | `options-analysis.bpmn` | A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is `opening-brief`'s — **irreversibility and surprise, not size** — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step. |
 | `voice-review.bpmn` | Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from `review-narrative.bpmn`, and it leaves immediately when no voice is active — the default, and this instance's case. |
+| `adjudication.bpmn` | The review reached no mechanical or consensus agreement, so a **judgement** is needed — and what it must leave behind. Entered only when a criterion's reviewer entries DISAGREE, which `block-qa/v1` makes computable, so the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate. Drawn for bean `7pdi` after the shape was found implemented **seven times** — five adjudicate activities across `processes/`, plus `/api/relevance/adjudicate` and `bib-verification.ts`, which share no code with the diagrams and reached the same rule anyway. Advisory, because a judgement cannot be gated; `Write the entry that LEADS` and `Grant a dispensation, with its reason` are **not relaxable**, because a judgement nobody wrote down is indistinguishable from a checker that was never run |
 
 **Boards** — a board is a **diagram of** a folio, in the OMG sense: the folio
 carries what is true, `board-positions.json` carries where it was drawn, and
@@ -172,6 +173,7 @@ catalogue, and `bootstrap` fetching a harness and landing it locally, with
 |---------|---------|
 | `materialize-remote.bpmn` | May we hold a local copy, what does holding it cost, and for what purpose — `working` or `archival`? Five gates, three states, and a refusal leaves the node `referenced` rather than failing |
 | `refresh-materialized.bpmn` | What changed upstream, what changed locally, and what to do when both. An **archival** copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead |
+| `copy-out-materialized.bpmn` | Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own `folio/` that records, in `provenance.local`, which original it came out of — the edge nothing downstream can reconstruct once it is missing |
 
 **Post-MVP review** — what the delivered thing actually looks like, once
 stakeholders have accepted it and there is a render to judge:

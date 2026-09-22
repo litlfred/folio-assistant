@@ -67,9 +67,17 @@ import {
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
-// COMMAND that runs carries it, and `check:composition-roots` refuses a
-// command that reads a declaration without it — bean `q2wn`, which is also
-// where the measurement lives.
+// COMMAND that runs carries it — and since #840 every caller does, because
+// the trigger sits at the foot of `cat-harness.ts` and a reader lives in that
+// module, so loading it is a precondition of calling one.
+//
+// THIS COMMENT NAMED `check:composition-roots` AS THE GUARANTEE UNTIL
+// 2026-09-22, in SEVEN files, AND THAT SCRIPT DOES NOT EXIST. `bun run
+// check:composition-roots` exits "Script not found". The safety argument for
+// a library omitting the registration rested on a gate nobody built, and no
+// gate failed to say so — the same silence this repository keeps paying for.
+// It is moot now rather than fixed: #840 made the registration automatic, so
+// there is no longer a command that can forget it (bean `z9ax`).
 
 /** One number a tile shows as an icon with a badge. */
 export type HarnessStat = {
@@ -86,6 +94,23 @@ export type HarnessVisualisation = {
   kind: string;
   /** Site-root-relative, for `relative_url`. Absent when nothing is published. */
   path?: string;
+  /**
+   * The kind's content is materialized: openable, and not editable here.
+   *
+   * ## The two greys, at this level
+   *
+   * Absent {@link path} and `readOnly` both render inert and mean different
+   * things: the first has nothing to open, the second opens and refuses an
+   * edit. The second is the one that offers the copy-out, so collapsing them
+   * takes away the only route to working on frozen content.
+   *
+   * ABSENT IS THREE THINGS AT ONCE HERE, and all three are honestly absent:
+   * no directory declaring this kind has answered; or they disagree, which is
+   * reported as its own finding rather than resolved by a rule; or nothing
+   * here is materialized. None of them is "writable", so none of them earns a
+   * `false`.
+   */
+  readOnly?: boolean;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -336,6 +361,28 @@ function tileFor(
   // kind can be published at are considered, because the instance that owns
   // the site elides its own name and every other instance does not — two rules
   // that live in two generators, read here rather than restated.
+  /**
+   * THE READ-ONLY ANSWER FOR A KIND, resolved across the directories declaring
+   * it — and `undefined` when they do not agree.
+   *
+   * A kind can be declared by more than one directory, so it can be declared
+   * read-only by one and writable by another. `who-iris` is exactly that shape
+   * one field along: `catalogue/` is frozen and `uploads/` is the drop zone.
+   * Picking the first answer would make the listing depend on declaration
+   * order; picking `true` if any says so would freeze a kind on the strength of
+   * one directory. Disagreement is a THIRD state and it is reported as one —
+   * undefined here, and named in a finding below, rather than resolved by a
+   * rule nobody chose.
+   */
+  const readOnlyFor = (kind: string): boolean | undefined => {
+    const said = dirs
+      .filter((d) => (d.graphKinds ?? []).includes(kind))
+      .map((d) => d.readOnly)
+      .filter((v): v is boolean => v !== undefined);
+    if (said.length === 0) return undefined;
+    return said.every((v) => v === said[0]) ? said[0] : undefined;
+  };
+
   const visualisations: HarnessVisualisation[] = [];
   for (const kind of kinds) {
     const candidates = ownsSite
@@ -351,8 +398,17 @@ function tileFor(
     // convention leaves every existing link exactly where it was and fills
     // only the gaps, which is the whole of what this is for.
     const path = found ?? declared.get(kind);
-    if (path) visualisations.push({ kind, path });
-    else visualisations.push({ kind });
+    // READ-ONLY IS ORTHOGONAL TO WHETHER A VIEWER WAS FOUND, and keeping the
+    // two independent here is the whole of the two-greys distinction: `path`
+    // answers "is there anything to open", `readOnly` answers "may it be
+    // edited". Both branches carry it, so a kind never loses its read-only
+    // state by failing to resolve a page.
+    const ro = readOnlyFor(kind);
+    visualisations.push({
+      kind,
+      ...(path ? { path } : {}),
+      ...(ro === undefined ? {} : { readOnly: ro }),
+    });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
   //
@@ -413,10 +469,42 @@ function tileFor(
   }
 
   if (unbuilt.length > 0) {
-    findings.push(
-      `${decl.name}: declares ${unbuilt.length} graph(s) with no published viewer — ` +
-        `${unbuilt.join(", ")}. Declared and not rendered is a gap, not a dead link.`,
-    );
+    /* A RENDER-EXEMPT INSTANCE IS NOT MISSING ANYTHING, and this finding said
+     * it was. Bean `sbck`, third done-when.
+     *
+     * bootstrap declares `renderExemption.of: ["visualiser", ...]` — the
+     * owner's 2026-09-20 ruling that the bottom of the stack renders nothing
+     * — and this line went on reporting four graphs as gaps against it, which
+     * is the state the bean names: "reported as gaps against a layer that is
+     * exempt from exactly that, which reads as noise and trains readers to
+     * ignore it."
+     *
+     * `isExemptFrom` is the predicate that already exists for this, and its
+     * own doc comment says so: *"the predicate the `2krx` axis calls before
+     * raising a no-visualiser finding, so the exemption is read from the
+     * declaration rather than from a hardcoded instance name."* This file
+     * IMPORTS it and used it for `footer` while the finding twenty lines away
+     * did not — one file, two answers to "is this instance excused".
+     *
+     * STATED, NEVER DROPPED. `2krx` is that an opt-out without a reason per
+     * entry becomes a silence list, so the kinds are still named and the
+     * exemption's `owes` is named with them: a reader sees what is unrendered
+     * AND what the layer carries instead, which is the whole bargain the
+     * exemption struck. Same shape as `staging-only` above, for the same
+     * reason — an intended state reported as a defect is the same disease as
+     * a real gap hidden.
+     */
+    if (isExemptFrom(decl, "visualiser")) {
+      findings.push(
+        `${decl.name}: ${unbuilt.length} graph(s) render no viewer — ${unbuilt.join(", ")} — ` +
+          `under a declared \`renderExemption\`. Not a gap: it owes ${decl.renderExemption?.owes}`,
+      );
+    } else {
+      findings.push(
+        `${decl.name}: declares ${unbuilt.length} graph(s) with no published viewer — ` +
+          `${unbuilt.join(", ")}. Declared and not rendered is a gap, not a dead link.`,
+      );
+    }
   }
   if (undiscovered.length > 0) {
     findings.push(
@@ -424,6 +512,27 @@ function tileFor(
         `not at a conventional path, so no tile links it — ` +
         `${undiscovered.map((k) => `${k} (${declaredFor(k, false)})`).join(", ")}. ` +
         `Built and unreachable is a different gap from unbuilt.`,
+    );
+  }
+
+  // READ-ONLY IS STATED WHETHER OR NOT A VIEWER EXISTS, and that separation is
+  // the whole point of the two greys.
+  //
+  // Every read-only kind in this repository today ALSO lacks a viewer, so a
+  // mark that rode the viewer list would render zero times — which is exactly
+  // what happened on the first attempt: the mark shipped on the graph-tile
+  // surface, `readOnly` is never populated there, and reading the staging
+  // deploy found it on 0 of 3 pages. Live CSS, live JS, nothing to style.
+  //
+  // So the fact goes where it cannot be hidden by the gap. A reader told only
+  // "catalogue: no published viewer" learns that nothing opens, and not that
+  // what is behind it is frozen and needs a copy-out to work on.
+  const frozen = visualisations.filter((v) => v.readOnly === true).map((v) => v.kind);
+  if (frozen.length > 0) {
+    findings.push(
+      `${decl.name}: ${frozen.length} graph(s) hold materialized content and are READ-ONLY — ` +
+        `${frozen.join(", ")}. Readable, not editable here: copy one out to your own ` +
+        `folio/ to work on it. Separate from whether a viewer is published.`,
     );
   }
 

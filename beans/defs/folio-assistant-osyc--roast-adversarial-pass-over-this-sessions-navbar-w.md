@@ -63,3 +63,50 @@ that reopens them is arguing with the author, not auditing the work.
 - [ ] Findings are severity-ranked, and a finding that cannot be reproduced is
       recorded as unreproduced rather than dropped
 
+
+## 2026-09-22 — item 2 done by another session; items 1 and 3 need this session's record
+
+A different session (`017MEZnJxx7WeekiNCabx4hx`) re-measured the numbers this
+bean asks about. **Not claiming the bean**: items 1 and 3 are about claims made
+to the owner in the 2026-09-21 session, and tracing those needs that session's
+own transcript, which this one does not have. Recording what IS checkable from
+the tree, ranked as the bean asks.
+
+### MAJOR — `sjic`'s deliverable already exists on `main`
+
+`lib/navbar.ts` is the shared component the bean asks for, and
+`lib/harness-rail.ts` imports and re-exports it — **verified by import, not by
+its comment**. The bean is still `todo` in the ready queue, so the next agent
+to pick it up rebuilds it. Its file path is stale too (`harness-rail.ts` moved
+into `lib/`). Detail on that bean.
+
+Not established: whether the Jekyll/theme half is also unified. Said rather
+than assumed.
+
+### MAJOR — `j6t3`'s "4 reachable" is 3, and the fourth is the inverse defect
+
+The 4 counted `.claude/commands/*.md` FILES, not skills reachable by name.
+Matching by name gives **3**. The fourth, `prepare-merge`, is a working command
+whose skill declares **no front matter at all** — invocable by a human,
+invisible to any enumeration of `user_invocable` skills. The same
+declared-vs-reachable mismatch the bean is about, running the other way, which
+the bean's own Option A would neither produce nor notice. (Also 34 → **35**;
+`main` gained one.)
+
+### MINOR — `2b5s`'s totals are exact; its breakdown does not sum
+
+1,378 / 11 / 1,367 and the three per-entry figures all verify against `find`.
+The corpus breakdown lists the tree-wide `.png` count (26, of which 3 are
+already counted as pages) and omits 6 `.json`, so its rows total 1,364 against
+its own stated 1,367. The argument is unaffected; a reader acting on the table
+double-counts 3 and misses 6.
+
+### UNREPRODUCED — recorded rather than dropped, per this bean's own rule
+
+Item 1 ("every verified/measured claim traced to what was observed") and item 3
+as it applies to the 2026-09-21 session's claims. The specific failures this
+bean lists — the library viewer's unparsed script, `hidden` read as absent, the
+three corrupted sweeps, the hand-composed `"docs"` literal, the wrong collision
+prediction, the two self-matching tests — are about that session's work and its
+record. They are **not checked here**, and that is a gap in this report rather
+than a clean result.

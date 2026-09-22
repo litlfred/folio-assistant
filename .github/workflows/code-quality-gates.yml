@@ -262,6 +262,24 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # The same question one level up: declared assets are FILES, these are
+      # DIRECTORIES, and nothing asked about them until bean `8mbk`.
+      #
+      # It could not have been caught by reading a consumer, because every
+      # consumer is correct: `resolveDirectories` is existence-filtered, so an
+      # absent declared directory is dropped before anyone sees it. The
+      # declaration then asserts a directory is ours, and every scan of it
+      # reports a clean run over nothing — the `dh4f` shape inside the resolver
+      # they all share.
+      #
+      # Gating from the first commit, same reasoning as the step above: 66
+      # declared directories across 14 instances, ZERO findings, so this starts
+      # at zero rather than measuring debt. The escape hatch is a declared
+      # `absent: { reason }`, and an exemption whose directory later appears is
+      # a finding too — that is the direction that rots quietly.
+      - name: declared directories exist, or say why not
+        run: bun run check:declared-dirs
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -321,6 +339,49 @@ jobs:
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
         run: bun run check:lane-documentation
+
+      # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
+      # level up. `gen-docs-auto`'s index took the first `<documentation>`
+      # after the process opened, so a process carrying none borrowed its
+      # first LANE's and presented it as what the process was for -- which
+      # became true the day `sqtq` wrote 157 lane documentations. 16 of 61
+      # were in that state; all 61 now define themselves, so `--strict` is
+      # what runs here and a new diagram cannot land undefined.
+      - name: process definitions
+        run: bun run check:process-documentation
+
+      # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
+      # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
+      # because a derived document has no memory: delete a role and its
+      # concept stops appearing, which is what "never existed" also looks
+      # like. This gate is what keeps the ledger current, so retirement stays
+      # distinguishable from accident. Two runs, never one wider scan --
+      # `7u3g`, the isolation two earlier sessions walked into.
+      - name: swimlane glossary ledger
+        run: |
+          bun run glossary:check
+          bun run glossary:check:bootstrap
+
+      # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
+      # is NOT about how much is translated (nothing is, measured 2026-09-22:
+      # 58 of 62 .pot templates are diagrams and none has a .po). It checks
+      # the two properties a translation effort must never break: the CORE
+      # graph references no translation -- no hasTranslation, no
+      # availableLocales, no locale key, no per-locale @id -- and a translated
+      # node keeps its @id, because a translation is not a new term.
+      - name: graph per locale
+        run: |
+          bun run kg:locale:check
+          bun run kg:locale:check:bootstrap
+
+      # A model declares its languages, or it is a finding -- bean `46uh`.
+      # This gate is NOT red on an empty registry: an agent is not a valid
+      # source for the evidence `validation` asks for, so it ships empty and a
+      # person adds entries. It IS red (exit 2) on a registry this code cannot
+      # read, because reporting a malformed file as "no models" would let an
+      # agent fall through to English believing a determination was made.
+      - name: model languages declared
+        run: bun run check:model-languages
 
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
@@ -676,6 +737,15 @@ jobs:
           # variable is DECLINED and listed, because `viewHref`/`editHref`
           # hold absolute forge URLs that the filter would break.
           bun run check:docs-templates
+          # Every declared image `role` is read by something that can actually
+          # REACH it (bean `5yrl`, split out of `blv9`). Scans
+          # declaration -> consumer, the direction `themes.test.ts` cannot:
+          # that walks theme -> role, so a role NO theme names is outside its
+          # domain by construction, which is how `landing-architecture` sat
+          # declared and unnamed. Half two is the half that matters -- the
+          # favicon shape, where a caller EXISTS and cannot match, because
+          # `imagesForRole` is layout-keyed and a mark declares no layout.
+          bun run check:image-roles
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -737,6 +807,15 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          bun run processes:viz:check
+          # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
+          # (owner's ruling, 2026-09-22). Hashes every materialized artefact
+          # against its recorded digest: an edit in place fails here. A
+          # publication step that legitimately rewrites one updates the fixity
+          # in the same change, which is what makes the exception checkable
+          # instead of a carve-out.
+          bun run check:materialized-fixity
+          bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
           # Does a path-filtered workflow rebuild when the scripts it RUNS
@@ -746,6 +825,8 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:artefact-verification
+          bun run check:workflow-injection
           bun run check:secret-leaks
           bun run check:lockfile-pinning
           bun run check:qa-reviewer-permission
@@ -769,6 +850,18 @@ jobs:
           # one harness, so a single `harness.config.json` at the repo
           # root had become an answer to a question with two answers.
           bun run check:instance-config
+          # Every INSTANTIATED harness has a mark of its own. The kind axis is
+          # check-avatar-coverage; this is the instance axis, which nothing
+          # checked until 2026-09-22 — `harness-tiles.ts` claimed the generic
+          # fallback was "reported as a finding" while `genericAvatar` was
+          # computed and read by nobody, so `folio-assistant` rendered a
+          # question mark until the owner saw it. Bean `zc7m`.
+          bun run check:avatar-instances
+          # A reader's folio must be the SAME folio in every library they
+          # browse (F8/F9). A page that forgets the mount is a folio that
+          # silently disappears when they follow a link — the page renders,
+          # the library works, and nothing else reports it. Bean `jpjt`.
+          bun run check:folio-mount
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
@@ -1076,3 +1169,34 @@ jobs:
           else
             echo "OK — no non-test wildcard imports in $count Rust file(s)"
           fi
+
+  dependency-advisories:
+    name: Dependency advisories (warn-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
+      # worth keeping next to the step: a HARD gate on advisories hands a
+      # transitive advisory nobody can patch the power to red every PR until
+      # somebody adds a suppression — and the suppression is what rots.
+      # `.github/dependabot.yml` is the other half: it turns the same
+      # advisories into reviewable PRs rather than into a gate.
+      #
+      # `bun audit` needs the registry, not the modules, so there is no
+      # install step. Adding one would make a dependency resolve a
+      # precondition of asking whether dependencies are safe.
+      #
+      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
+      # state on purpose, and keeps the three states apart in its OUTPUT
+      # instead — which is the only place they can be kept apart once the exit
+      # code carries no information. `|| true` is exactly how "could not
+      # determine" becomes "fine", and this workflow has paid for that once
+      # already: see the ruff note at the top of this file, where a step
+      # "warned about the missing paths and exited 0, so it reported a clean
+      # baseline it had never computed."
+      - name: Known advisories against the resolved tree
+        run: bun run check:dependency-advisories

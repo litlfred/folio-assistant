@@ -114,3 +114,42 @@ until opened. Both are declaration decisions, and both touch what a navbar
 ENTRY means -- so this bean should read that one before it decides how a graph
 with no content renders.
 
+
+## RE-MEASURED 2026-09-22 (bean `osyc`, item 2) — the shared component EXISTS
+
+This bean is `todo` in the ready queue and **its core deliverable is already on
+`main`.** Anyone picking it up would rebuild it, which is the collision this
+session hit four times in one day.
+
+### What is there now
+
+`cat-harness/scripts/lib/navbar.ts` opens *"ONE navbar, for a Jekyll page and
+for a mounted page alike"* and quotes the same owner sentence this bean does.
+`cat-harness/scripts/lib/harness-rail.ts` describes itself as *"a thin ADAPTER
+over the shared navbar"*.
+
+**Verified by IMPORT, not by the comment** — a comment claiming a refactor is
+exactly what a roast should not accept:
+
+    lib/harness-rail.ts:44  } from "./navbar.js";
+    lib/harness-rail.ts:45  export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
+    lib/harness-rail.ts:47  import { injectNavbar, ... } from "./navbar.js";
+
+### Two corrections to this bean's own text
+
+1. **The path is stale.** It says `harness-rail.ts`; the file is at
+   `cat-harness/scripts/lib/harness-rail.ts`. It moved into `lib/` with the
+   extraction.
+2. **"Today there are two" is no longer true of the TS side.** The injector
+   half is unified.
+
+### What I did NOT establish, said rather than assumed
+
+Whether the **Jekyll/theme** half — `docs-ui.css` plus
+`nav_footer_custom.html` — now derives from the same component. Those are CSS
+and a Liquid template, so they cannot import it, and I did not trace whether
+their numbers are generated from `navbar.ts` or still maintained in parallel.
+That is the remaining half of this bean and it may well be all of it.
+
+**Suggested: re-scope rather than close.** The bean as written reads as though
+nothing is built.

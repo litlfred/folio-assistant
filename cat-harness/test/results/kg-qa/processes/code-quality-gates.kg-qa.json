@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:3d410538399a57bb826eac7615e4a5d115aa4b3e0d33dd3bb6305f075238fd52",
+  "source_hash": "sha256:7598efd571dd8b146bec8fcee44b101eb832891dc27af191040f1dcaf1c46de5",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,6 +72,10 @@
         },
         {
           "where": "Task_Rust",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Advisories",
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]

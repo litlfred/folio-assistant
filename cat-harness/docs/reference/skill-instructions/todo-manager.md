@@ -147,6 +147,58 @@ just clutter:
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
 
+## Check before you UPDATE — `--body-file` REPLACES the body (STRICT)
+
+`beans create` is not idempotent; `beans update` is not additive. They are
+different failures and both cost a durable artefact, so they sit together.
+
+**A bean's body is an append-only record of who found what, when.** Every note
+in it is dated and signed, and later notes cite earlier ones — the closing note
+on `gjli` opens *"the 2026-09-19 note above did"*. Replace the body and you
+have not edited a field; you have deleted findings that other beans, commits
+and issues point at.
+
+`beans update` offers four ways to write one, and **only one of them appends**:
+
+| flag | what it does |
+|---|---|
+| `--body-append <text>` \| `--body-append -` | **appends.** `-` reads stdin |
+| `--body-file <path>` | **REPLACES the whole body** with the file |
+| `--body <text>` \| `--body -` | **REPLACES** |
+| `--body-replace-old/-new` | replaces one substring; leaves the rest |
+
+Measured 2026-09-22 on a scratch store: a bean carrying two notes, given
+`--body-file` with a third, kept the third alone. **Exit 0, no warning, no
+diff, no prompt.** Nothing in the output distinguishes it from an append.
+
+**For a long, multi-paragraph note, use `--body-append -`:**
+
+```bash
+beans update <id> --status completed --body-append - <<'NOTE'
+_2026-09-22T06:51:22Z_ — what you found, and how you know it.
+NOTE
+```
+
+That is the form the long-note case actually needs, and naming only
+`--body-append "Your note"` is why this skill did not prevent the loss it is
+now recording: an agent with four paragraphs to write reaches past an inline
+string argument for the flag that takes a **file**, and `--body-file` is
+sitting right there, one letter's difference from `--body-append`, doing
+something else entirely. (`beans create` **rejects** `--body-file -` with a
+heredoc — bean `5wrg` found that separately. So the two subcommands disagree
+about the same flag name, which is one more reason not to reach for it.)
+
+The timestamp prefix is an **authored convention, not a CLI feature** — no flag
+adds it. Write it yourself or the note joins the previous paragraph undated.
+
+**Recovery, if it has already happened.** The store is committed, which is the
+whole reason this is survivable: `git show HEAD:<bean-file>` returns the body
+as of the last commit, and the lost notes can be reassembled with the new front
+matter. Recover from **git**, not from your own scrollback — a transcript is a
+copy you made, and the repository is the artefact. Then say plainly what was
+lost and restored; a silent repair leaves the next reader unable to tell a
+reconstruction from an original.
+
 ## WHICH parent — the criterion nobody wrote down
 
 **A bean's parent is the epic whose SUBJECT it is, not the epic you happen to
@@ -363,7 +415,10 @@ You can map out sequence blockers using:
 **3. Updating Status & Adding Comments**
 - When starting work: `beans update <id> --status in-progress`
 - When completed: `beans update <id> --status completed`
-- To add notes or discussion: `beans update <id> --body-append "Your note"`
+- To add notes or discussion: `beans update <id> --body-append "Your note"`,
+  or `--body-append -` with a heredoc when it runs to paragraphs. **Never
+  `--body-file`** — it replaces the whole body, silently, exit 0:
+  §"Check before you UPDATE".
 
 ## Archiving — two dispositions, and they answer different questions
 

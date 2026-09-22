@@ -90,6 +90,29 @@ export interface GraphTile {
   /** Where it appears, resolved: absent on the declaration means both. */
   surfaces: TileSurface[];
   /**
+   * The directory holds materialized content: openable, and not editable here.
+   *
+   * ## THE TWO GREYS, and why they must not collapse
+   *
+   * A tile with no {@link href} and a tile that is `readOnly` both render
+   * inert, and they are different facts:
+   *
+   * - **no `href`** — nothing to open. Either nobody built a viewer, or the
+   *   declared page is not under the published site (`pb04`: no link beats a
+   *   dead one).
+   * - **`readOnly`** — it opens perfectly. It refuses an EDIT, and it is the
+   *   one that offers the copy-out.
+   *
+   * Collapsing them tells a reader "there is nothing here" about content that
+   * is present, complete, and deliberately frozen — and then the copy-out, the
+   * only way to work on it, has nowhere to be offered from.
+   *
+   * ABSENT MEANS NOT DECLARED, never `false`. Same as the declaration it comes
+   * from, and for the same reason: a directory that has not answered has not
+   * asserted it is writable.
+   */
+  readOnly?: boolean;
+  /**
    * Whether it starts out of frame.
    *
    * The DECLARED default only. A reader's own hiding is theirs alone and is
@@ -128,6 +151,20 @@ export interface GraphTile {
    * working tile. See `VisualisationSchema.icon`.
    */
   icon?: string;
+  /**
+   * The projection's DECLARED headline number, and what it counts.
+   *
+   * Both present or both absent — a count with no unit is the ambiguity
+   * `schemas/tile-count.ts` exists to remove, and {@link withTileCounts} is
+   * the only writer, so the pair cannot come apart.
+   *
+   * ABSENT is a third state and must not be rendered as `0`. A tile whose
+   * projection declares no count, or whose projection could not be read, is
+   * not a tile over an empty graph — opposite facts, and `dh4f` is this
+   * repository's name for conflating them.
+   */
+  count?: number;
+  unit?: string;
 }
 
 /** The directory fields a tile is derived from — named rather than imported. */
@@ -135,6 +172,8 @@ export type TiledDirectory = {
   id: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
   theme?: string;
+  /** The directory holds materialized content. Absent is NOT DECLARED, never `false`. */
+  readOnly?: boolean;
 };
 
 /**
@@ -158,7 +197,15 @@ export function publishedHref(siteDirFromRepoRoot: string, ref: string): string 
   // link being worse than no link. Every visualisation was `.html` until
   // `fsh-guts` was authored as markdown (2026-09-21), which is why this went
   // unnoticed: the bug needed a markdown viewer to exist before it could fire.
-  return `/${rest.replace(/(^|\/)index\.(html|md)$/, "$1")}`;
+  //
+  // A NAMED markdown page is the same 404 and the fix above did not cover it.
+  // `processes-index.md` (2026-09-22) is not `index.md`, so the directory
+  // rewrite left the extension alone and the tile pointed at a source file.
+  // The argument in the paragraph above applies verbatim — Jekyll serves no
+  // `.md` — so the extension is mapped rather than stripped, which is what
+  // Jekyll actually does to a page that is not a directory index.
+  const route = rest.replace(/(^|\/)index\.(html|md)$/, "$1").replace(/\.md$/, ".html");
+  return `/${route}`;
 }
 
 export function graphTiles(
@@ -186,6 +233,11 @@ export function graphTiles(
               return href === undefined ? {} : { href };
             })()),
         hidden: v.hidden === true,
+        // FROM THE DIRECTORY, NOT THE VISUALISATION. Read-only is a property of
+        // the CONTENT — several visualisations of one directory are several
+        // views of the same frozen nodes, so a per-view answer could disagree
+        // with itself about one corpus.
+        ...(d.readOnly === undefined ? {} : { readOnly: d.readOnly }),
         ...(v.icon === undefined ? {} : { icon: v.icon }),
         ...(v.publish === undefined ? {} : { publish: v.publish }),
         ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
@@ -243,6 +295,100 @@ export function tileFindings(
       `${instance}/${id}: a viewer is published at /${id}/ and the directory declares no ` +
       `visualiser, so it gets no tile. Declare it in \`coverage.visualiser\` and the tile follows.`,
   );
+}
+
+/**
+ * Attach each tile's declared count, where its directory declared one.
+ *
+ * ## Why this is a separate pass rather than part of `graphTiles`
+ *
+ * `graphTiles` derives a tile from the DECLARATION and reads no projection —
+ * the header of this file says why, and `flh4` is the bean. A count comes
+ * from the projection, so folding the read into that function would make the
+ * rule this file states untrue of the function it states it about.
+ *
+ * Kept apart, the split is legible in the types: the tile EXISTS because a
+ * visualiser was declared, and it carries a NUMBER because a projection
+ * offered one. A directory with a projection and no declaration still gets no
+ * tile — it is {@link undeclaredProjections}, a finding.
+ *
+ * ## Pure, like `undeclaredProjections`
+ *
+ * The map is handed in rather than read from disk, for the reason stated on
+ * that function: testable without a filesystem, and the definition of "the
+ * projections" stays the caller's. `sync-docs-harness.ts` supplies this
+ * repository's.
+ *
+ * Keyed by `directory`, NOT by `id`. A directory declaring several
+ * visualisations mints ids like `library/2`, and every one of them is a view
+ * of the same graph — so they share its number, and a projection does not
+ * have to know how many tiles were drawn over it.
+ */
+export function withTileCounts(
+  tiles: readonly GraphTile[],
+  counts: ReadonlyMap<string, { count: number; unit: string }>,
+): GraphTile[] {
+  return tiles.map((t) => {
+    const c = counts.get(t.directory);
+    // Spread only when present. An explicit `count: undefined` would serialise
+    // as a `"count": null` in the emitted JSON on some paths and read back as
+    // a declared value; absent must stay absent all the way to the browser.
+    return c === undefined ? t : { ...t, count: c.count, unit: c.unit };
+  });
+}
+
+/**
+ * Declared visualisation ref → the directory id that declared it.
+ *
+ * ## Why a generator needs this, and why it is a LOOKUP rather than a rule
+ *
+ * Issue #863. A tile's count is keyed by directory id ({@link withTileCounts}),
+ * but a scoped viewer's generator knows the SUBJECT it is rendering — an
+ * instance name like `folio-assistant-core` — not the id of the directory whose
+ * declaration produced the tile. The obvious bridge is to compose one from the
+ * other, and it is wrong on this repository's own corpus:
+ *
+ * | subject | declared directory id |
+ * |---|---|
+ * | `bootstrap-tools` | `bootstrap-tools-schemas` |
+ * | `detangle` | `detangle-schemas` |
+ * | `large-datasets` | `large-datasets-schemas` |
+ * | **`folio-assistant-core`** | **`folio-assist-core-schemas`** |
+ *
+ * Three follow `${subject}-schemas` and the fourth does not. A composed key
+ * would have badged three tiles, left the fourth silently uncounted, and
+ * looked correct — which is the table of guesses #856 refused, arriving one
+ * layer along.
+ *
+ * SO NOTHING IS COMPOSED. The declaration already names the exact page each
+ * directory is visualised by, and a generator already knows the exact page it
+ * is about to write. Matching on that page is an identity, not a heuristic: it
+ * cannot be right for three ids and wrong for a fourth, and a directory
+ * renamed tomorrow carries its own answer.
+ *
+ * ## Refs are compared as declared
+ *
+ * No normalising, no resolution: the caller passes the same repo-relative
+ * path the declaration holds, which is what `viewerPlacement` already
+ * composes. Normalising here would be this function inventing an equivalence
+ * the declaration never stated — and a ref that does not match is absent,
+ * which is the third state and gets no badge rather than a wrong one.
+ *
+ * A ref declared by two directories keeps the FIRST, for the reason
+ * `scanTileCounts` keeps the first of a duplicated key: two declarations over
+ * one page is a defect in the declarations, not something to settle by
+ * iteration order.
+ */
+export function directoryByVisualisationRef(
+  dirs: readonly TiledDirectory[],
+): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const d of dirs) {
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!out.has(v.ref)) out.set(v.ref, d.id);
+    }
+  }
+  return out;
 }
 
 export type { CatHarnessDeclaration };

@@ -20,7 +20,9 @@
       "mediaType": "application/pdf",
       "materialization": {
         "state": "materialized",
-        "of": "https://iris.who.int/handle/10665/332098",
+        "provenance": {
+          "upstream": "https://iris.who.int/handle/10665/332098"
+        },
         "localPath": "uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf",
         "purpose": "both",
         "bytes": 2810648,
@@ -62,7 +64,9 @@
       "pixelHeight": 212,
       "materialization": {
         "state": "materialized",
-        "of": "local:who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf#page=1",
+        "provenance": {
+          "local": "who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf#page=1"
+        },
         "localPath": "library/wpr-rdo-2020-003-eng-cover.png",
         "purpose": "working",
         "bytes": 5660,
@@ -109,7 +113,9 @@
   ],
   "materialization": {
     "state": "materialized",
-    "of": "https://iris.who.int/handle/10665/332098",
+    "provenance": {
+      "upstream": "https://iris.who.int/handle/10665/332098"
+    },
     "localPath": "library/wpr-rdo-2020-003-eng",
     "purpose": "working",
     "note": "Fully worked. Every identifier here was read off the full item record captured in 9a60f6f, extracted with `pdftotext -layout`: the DSpace UUID from the item URL, both handles from the two `dc.identifier.uri` values, and the bitstream name and size from the Files section. ALTERNATE IDENTIFIER KEPT, NOT DEDUPLICATED: http://iris.wpro.who.int/handle/10665.1/14518 is a handle on iris.wpro.who.int, a regional instance merged into the global one. It is the only evidence this repository holds of a source host disappearing.",

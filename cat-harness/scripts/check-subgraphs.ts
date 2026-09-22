@@ -41,7 +41,6 @@ import {
   resolveDirectories,
   subgraphTree,
 } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 

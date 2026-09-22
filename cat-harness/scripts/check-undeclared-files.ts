@@ -65,9 +65,6 @@ import { join, relative } from "node:path";
 
 import { findDeclarationFile, instanceRootFor, readDeclaration, repoRootFor, rootForScope } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
-// REQUIRED: an instance here declares a `folio` graph, whose kind is registered
-// by a load-time side effect in core.
-import "../schemas/folio-graph-kind.js";
 
 /**
  * Repository-level files that belong at the root, each with why.
