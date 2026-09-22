@@ -49,10 +49,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `catalogue`
 
-0 of 1 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- WHO IRIS — *declared, not published*
+- [WHO IRIS]({{ '/cat-harness/catalogue/who-iris/' | relative_url }})
 
 ### `docs`
 

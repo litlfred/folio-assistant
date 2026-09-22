@@ -124,7 +124,39 @@ describe("the harness report distinguishes unbuilt from undiscovered", () => {
   });
 });
 
-describe("who-iris/catalogue — the case that exposed it", () => {
+/*
+ * THE COUNT IS PINNED AT ZERO, and that is `ha78`'s own condition:
+ *
+ * > whichever way, the count in `docs/_data/harness.json` drops to zero and a
+ * > test pins it there — a finding that is merely rarer is not fixed
+ *
+ * So this is a POLICY gate, not only an honesty check: a viewer declared
+ * somewhere the convention does not look fails here, rather than being
+ * reported and lived with. The two repairs the bean names are the two ways to
+ * pass it — publish the page at `/<handler>/<kind>/<subject>/`, or teach the
+ * tile model to resolve an instance-relative ref through `withRoutes`.
+ *
+ * The assertions above stay exactly as they were. They pin that the REPORT is
+ * honest whatever the count is, which is a different property and one that
+ * still has to hold the moment somebody re-opens this case.
+ */
+describe("no viewer is built and unreachable", () => {
+  it("no harness carries an undiscovered-viewer finding", () => {
+    const offenders = harnesses
+      .filter((h) => undiscovered(h) !== undefined)
+      .map((h) => `${h.name ?? h.title}: ${undiscovered(h)}`);
+    expect(
+      offenders,
+      "A declared viewer exists on disk that no tile links. Either publish it at " +
+        "the conventional route `/<handler>/<kind>/<subject>/` — which is what " +
+        "who-iris/catalogue did for issue #886 — or resolve instance-relative refs " +
+        "through `withRoutes` so the tile can follow it. Reporting it and moving on " +
+        "is what bean `ha78` ruled out.",
+    ).toEqual([]);
+  });
+});
+
+describe("who-iris/catalogue — the case that exposed it, now closed", () => {
   /* FOUND BY `name`, NOT BY `title`, and the difference cost a red gate.
    *
    * This looked up `title === "who-iris"` and stopped matching on 2026-09-22,
@@ -143,19 +175,27 @@ describe("who-iris/catalogue — the case that exposed it", () => {
     expect(iris).toBeDefined();
   });
 
-  it("its catalogue viewer is named as built-but-unlinked", () => {
-    // Asserted through the REPORT rather than by joining a path here — partly
-    // because `site-dir-single-answer` refuses the literal, and partly because
-    // the report naming it is the property under test. The generic assertion
-    // above already proves every path the report names exists on disk, so this
-    // does not need to repeat that check with a second spelling of the path.
-    const f = undiscovered(iris!);
-    expect(f).toBeDefined();
-    expect(f).toContain("catalogue (");
+  it("its catalogue viewer is LINKED, not merely un-reported", () => {
+    /* THE POSITIVE ASSERTION, because the finding's absence is not the goal.
+     *
+     * This test used to require the built-but-unlinked finding to be PRESENT,
+     * which was right while the gap was open: the report naming the gap was
+     * the property worth pinning. Issue #886 closed it by moving the page to
+     * the conventional route, so the finding is gone — and a test that only
+     * checked it was gone would pass just as happily if the viewer had been
+     * DELETED, or if the declaration had been quietly dropped.
+     *
+     * So the assertion is that the tile carries a path. That is the fact a
+     * reader gets: something to click.
+     */
+    const v = (iris!.visualisations ?? []).find((x) => x.kind === "catalogue");
+    expect(v, "who-iris declares a catalogue graph; the report should carry it").toBeDefined();
+    expect(v!.path, "the catalogue tile has no path, so nothing links the viewer").toBeDefined();
   });
 
-  it("and is no longer reported as a viewer nobody built", () => {
-    const f = unbuilt(iris!);
-    if (f) expect(f).not.toContain("catalogue");
+  it("and is reported as neither unbuilt nor undiscovered", () => {
+    for (const f of [unbuilt(iris!), undiscovered(iris!)]) {
+      if (f) expect(f).not.toContain("catalogue");
+    }
   });
 });

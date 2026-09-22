@@ -204,6 +204,7 @@
     "readme:sync:check": "bun run cat-harness/content/pipeline/readme-sections.ts --check",
     "readme:sync:root": "bun run cat-harness/content/pipeline/readme-sections.ts --dir .",
     "readme:sync:root:check": "bun run cat-harness/content/pipeline/readme-sections.ts --dir . --check",
+    "regen": "bun run cat-harness/scripts/regen-after-merge.ts",
     "render": "bun run cat-harness/scripts/render-pipeline.ts",
     "render:bpmn": "bun run cat-harness/scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run cat-harness/scripts/render-bpmn.ts --check",

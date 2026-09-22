@@ -264,6 +264,12 @@ export const RULES: Rule[] = [
       // index, and nothing in it is about any folio's subject matter — a folio
       // could not make it resolve differently, only give it more files.
       "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
+      // Its clean-merge counterpart, and harness-level for the same reason: it
+      // loads the GATE SET from the workflow and re-runs whichever writers
+      // their checks report stale. It knows nothing about any folio's subject
+      // matter — a folio could not make it repair differently, only give it
+      // more gates.
+      "scripts/regen-after-merge.ts",        // artefacts a merge left wrong, repaired by asking the gates
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which

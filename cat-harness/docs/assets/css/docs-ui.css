@@ -2618,6 +2618,28 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   object-position: center top;
 }
 
+/* A SCRIM, NOT IMAGE OPACITY — and the difference is why this needs one value
+ * where the approach it replaced needed two.
+ *
+ * `opacity` on the `<img>` does not tint toward a fixed colour: it blends the
+ * art with whatever renders BEHIND it, which is the page background. The
+ * landing panel this supersedes carried `opacity: 0.9` by default and `0.8`
+ * under the light override for exactly that reason — its ink is a fixed dark
+ * green sized against the cream cloud in the artwork, so fading toward WHITE
+ * brightens that cloud and widens the contrast margin while fading toward
+ * BLACK by the same amount narrows it. Enough fade in dark mode read as the
+ * ink sinking into a dimmed cloud rather than standing out from one, so the
+ * two schemes could not share a number.
+ *
+ * A scrim is a layer of a KNOWN colour between art and ink, so the contrast it
+ * buys does not depend on what is behind the card. One value, both schemes,
+ * and a theme can set it. The rules that carried the 0.9/0.8 pair were removed
+ * from `_includes/head_custom.html` once measured dead — `folio-landing__art`
+ * was emitted by nothing, so they shipped inlined on 331 pages and matched
+ * none of them (bean `alox`, issue #873). This note is where that reasoning
+ * lives now; it is recorded because the blend-direction argument is not
+ * obvious and would otherwise be re-derived the next time somebody reaches
+ * for `opacity` here. */
 .fa-sticky--backdrop::before {
   content: "";
   position: absolute;
