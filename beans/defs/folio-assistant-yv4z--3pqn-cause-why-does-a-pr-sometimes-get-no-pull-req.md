@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-21T14:06:54Z
+updated_at: 2026-09-22T06:11:40Z
 parent: folio-assistant-1xhc
 ---
 
@@ -422,3 +422,55 @@ on the direction.
 observed.** It resolves `refs/heads/<branch>`, which exists regardless, so it
 worked six times for the reason this measurement gives — and that is exactly
 why it was unsafe on a conflicted PR: it tests a tree that will never exist.
+
+---
+
+## Observations EIGHT to FOURTEEN, 2026-09-22 — seven pushes on ONE branch, one open PR
+
+session_01N8KzeMohMrzNVUt5pyqSmp, branch `claude/kind-bohr-cyt1s4`, PR #781.
+The whole series is on one ref with one PR open throughout, which is what
+makes it worth recording: the earlier observations each came from a different
+branch, so nothing could be held fixed.
+
+| head | pushed (UTC) | `push` run | `pull_request` runs |
+|---|---|---|---|
+| `1e665b14` | 09-21 20:50 | ✓ | ✓ gates, staging, jsonld |
+| `73237866` | 09-21 21:47 | ✓ | ✓ |
+| `4a673ff9` | 09-21 22:08 | ✓ | ✓ |
+| `f579a870` | 09-21 22:23 | ✓ | **none** |
+| `185f680f` | 09-21 23:12 | ✓ | **none** |
+| `ae557ff5` | 09-22 06:02 | ✓ | ✓ |
+| `1a0a39df` | 09-22 06:09 | ✓ | **none** |
+
+Read from `list_workflow_runs` filtered to the branch, not reconstructed.
+
+### What this adds
+
+**The `push` event fired every single time.** On each of the three failures
+the only run on the head is the `push`-triggered `jsonld-gen-check.yml`. So
+the ref update reached GitHub and started a workflow — what did not happen is
+the `pull_request.synchronize` event for a PR that was open at the time.
+Whatever this is, it is not the push going missing.
+
+**The surviving hypothesis cannot be the mechanism.** #759 merged from THIS
+branch at 09-21 18:34Z, so "the branch's previous PR had just merged" holds
+for the entire series — and four of the seven pushes fired normally, one of
+them (`ae557ff5`) more than eleven hours after that merge. A condition that
+holds while the outcome varies is at most **predisposing**; it does not
+determine. It also does not decay on any timescale this series can see.
+
+**Elapsed time still predicts nothing**, which now has a same-branch control:
+21 min fired, 15 min did not, 49 min did not, 7 h fired, 7 min did not.
+
+**No shape of commit distinguishes them either.** Two merge commits fired
+(`73237866`, `ae557ff5`) and one did not (`1a0a39df`); two ordinary commits
+fired and two did not.
+
+### The procedure held
+
+`workflow_dispatch` against the branch, per `prepare-merge` §Guardrails —
+**no checks is not green**. Done for `f579a870` (run 35664317367, success)
+and for `1a0a39df`. Worth noting for anyone reading the runs later: a
+dispatched run is attributed to the branch rather than to the PR, so the PR's
+own check list still shows only the `push`-triggered job. Reading the PR page
+alone would say this head was never gated.

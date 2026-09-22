@@ -71,7 +71,69 @@
 {%- assign stickies = site.data.stickies.stickies -%}
 
 {%- if stickies and stickies.size > 0 -%}
-<div class="fa-sticky-board fa-landing-board">
+{%- comment -%}
+  THE STICKY PANEL — SLID AWAY, and that is the default rather than a setting.
+
+  Owner, 2026-09-21, twice and then once more in capitals:
+
+    i thought the sticky panel had some todos, but they seem gone. they should
+    be closed/tiled to start.
+
+    please!!! i dont want to see these giant cats at the top anymore. priority
+    #1 make the stikypanel slid away
+
+  The stickies used to be the FIRST thing on the page, full-bleed, one card per
+  harness. On a laptop that is a screen and a half of cat before the page says
+  what the repository is — and `index.md` carries the title, the description and
+  the Get started button BELOW this include, so everything that answers "what is
+  this" was under the fold.
+
+  ## Why this is a `<details>` and not a script
+
+  The same reason `nav_footer_custom.html` gives for the harness tabs, and it is
+  load-bearing rather than stylistic: keyboard-operable for free, announces its
+  own open/closed state to a screen reader, and works with NO JAVASCRIPT AT ALL.
+  That last one is the `jtj` floor — *the listing is the ARTEFACT and the board
+  is the overlay* — and a JS disclosure would have put the stickies behind a
+  script, which is the exact defect measured on 2026-09-21: every note on an
+  ordinary page was built from a `fetch`, so a reader with JS off got nothing
+  and no hint that anything existed.
+
+  ## Why the panel is at the TOP, and why that is not the thing being complained about
+
+  Issue #764 §5 S6, which is the owner's own words for a webpage as against a
+  folio: *"if not placed on a document somewhere, they in slide down panel at
+  top with [stikcy] icon to open or so."* A docs page is a webpage, not a folio,
+  so a slide-down at the top IS the specified home. What was wrong was never the
+  position — it was that the panel had no closed state, so "at the top" meant a
+  screen and a half rather than one bar.
+
+  ## The count is the panel's own cardinality
+
+  `stickies.size`, rendered here, so a collapsed panel still says how much is
+  behind it — the same rule `harness-tiles` states for the collapsed tab groups.
+  `docs-ui.js` ADDS the todo count to it once `mountTodoBoard` has mounted into
+  the board below; with no script the number is the stickies alone, which is
+  correct rather than degraded, because with no script there are no todo cards
+  in here to count. The no-JS todo listing is a separate generated include and
+  is not affected by this panel at all.
+{%- endcomment -%}
+<details class="fa-sticky-panel">
+  <summary class="fa-sticky-panel__handle">
+    {%- comment -%}
+      A sticky note with a turned-up corner. `aria-hidden` because the label
+      beside it says the same thing in words, and a screen reader announcing
+      both reads the control twice.
+    {%- endcomment -%}
+    <svg class="fa-sticky-panel__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 3h14a2 2 0 0 1 2 2v9l-7 7H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+      <path d="M21 14h-5a2 2 0 0 0-2 2v5z" opacity="0.55"/>
+    </svg>
+    <span class="fa-sticky-panel__label">Stickies</span>
+    <span class="fa-sticky-panel__count" data-fa-sticky-count="{{ stickies.size }}">{{ stickies.size }}</span>
+  </summary>
+  <div class="fa-sticky-panel__body">
+  <div class="fa-sticky-board fa-landing-board">
   {%- for st in stickies -%}
   {%- assign has_art = false -%}
   {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
@@ -96,6 +158,23 @@
   {%- assign sh = st.shape -%}
   {%- assign d = st.art[sh] -%}
   {%- if d == nil -%}{%- assign d = st.art.laptop -%}{%- endif -%}
+  {%- comment -%}
+    THE CELL, and the reason it exists is one line of the owner's:
+
+      i want the [pencil] edit icon, (edit, view links can be below, not
+      inside stick)                                     -- 2026-09-21
+
+    View and Edit used to sit INSIDE the `<article>`, in the sticky's own
+    text box. A sticky is a note; the links are about the FILE the note was
+    declared in, which is a different subject — and on a card with backdrop
+    art they were competing with the words for the quiet part of the cloud.
+
+    So the grid item is now the CELL, and it holds two things: the sticky,
+    and a caption row beneath it. `.fa-landing-sticky--fixed` still carries
+    the aspect ratio, so the sticky keeps its declared shape and the caption
+    adds its own height below rather than eating into the art.
+  {%- endcomment -%}
+  <div class="fa-sticky-cell">
   <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop fa-landing-sticky--fixed{% endif %}"
            data-fa-sticky-theme="{{ st.theme }}"
            {%- if has_art %} data-fa-shape="{{ st.shape }}" style="
@@ -250,24 +329,51 @@
       Always external: these are github.com URLs, never site paths, so
       `relative_url` must not touch them.
     {%- endcomment -%}
-    {%- if st.viewHref or st.editHref -%}
-    <p class="fa-landing-sticky__source">
-      {%- if st.viewHref -%}
-      <a class="fa-node-edit fa-sticky-view" href="{{ st.viewHref }}" rel="noopener"
-         title="View {{ st.declaredIn }} on GitHub"
-         aria-label="View the declaration of {{ st.summary }}">&#9096; View</a>
-      {%- endif -%}
-      {%- if st.editHref -%}
-      <a class="fa-node-edit fa-sticky-edit" href="{{ st.editHref }}" rel="noopener"
-         title="Edit {{ st.declaredIn }} on GitHub"
-         aria-label="Edit the declaration of {{ st.summary }}">&#9998; Edit</a>
-      {%- endif -%}
-    </p>
-    {%- endif -%}
     </div>
   </article>
+  {%- comment -%}
+    BELOW the sticky, not in it. Icons rather than "⎘ View" / "✎ Edit":
+
+    - the owner asked for the pencil by name;
+    - `✎` and `⎘` are CHARACTERS, and which glyph a font actually has for
+      them varies — `⎘` in particular falls back to a box on several common
+      stacks, which is how a control ends up looking broken without anyone
+      changing it. An inline SVG draws the same shape everywhere and takes
+      `currentColor`;
+    - the row is a caption under a card now, so it has to stay one line.
+
+    NO VISIBLE TEXT, so each carries `aria-label` AND `title`: the label
+    names the action for a screen reader, the title gives a pointer user the
+    same words on hover. They are not interchangeable and both are needed.
+    Target size is held in the stylesheet, not here — this instance's
+    declared interaction profile is low-dexterity.
+
+    Always external: these are github.com URLs, never site paths, so
+    `relative_url` must not touch them. ABSENT rather than disabled when the
+    pipeline has no forge — `pb04`: a dead link invites a click and then
+    reads as "this page is broken".
+  {%- endcomment -%}
+  {%- if st.viewHref or st.editHref -%}
+  <p class="fa-sticky-links">
+    {%- if st.viewHref -%}
+    <a class="fa-node-edit fa-sticky-view" href="{{ st.viewHref }}" rel="noopener"
+       title="View {{ st.declaredIn }} on GitHub"
+       aria-label="View the declaration of {{ st.summary }}"
+    ><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5c-5 0-8.6 4.2-9.6 6a1 1 0 0 0 0 1c1 1.8 4.6 6 9.6 6s8.6-4.2 9.6-6a1 1 0 0 0 0-1c-1-1.8-4.6-6-9.6-6zm0 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-2.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6z"/></svg></a>
+    {%- endif -%}
+    {%- if st.editHref -%}
+    <a class="fa-node-edit fa-sticky-edit" href="{{ st.editHref }}" rel="noopener"
+       title="Edit {{ st.declaredIn }} on GitHub"
+       aria-label="Edit the declaration of {{ st.summary }}"
+    ><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 16.5V20h3.5L17.8 9.7l-3.5-3.5L4 16.5zM20.7 7.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0l-1.7 1.7 3.5 3.5 1.7-1.7z"/></svg></a>
+    {%- endif -%}
+  </p>
+  {%- endif -%}
+  </div>
   {%- endfor -%}
-</div>
+  </div>
+  </div>
+</details>
 {%- else -%}
 {%- comment -%}
   No stickies: initiation has not run here, or this instance keeps none. The
