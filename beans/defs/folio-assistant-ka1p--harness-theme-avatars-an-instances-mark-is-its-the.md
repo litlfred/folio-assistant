@@ -34,3 +34,75 @@ The owner chose "reuse the captured who_logo.svg" from four options, with the op
 ## Not done
 
 smart-trust, folio-assistant-core and the rest still show initials: they declare neither a sticky-with-theme nor an icon. Reported as a finding, not invented.
+
+
+## ROUND 2, 2026-09-22 — a card id is NOT the instance name
+
+Owner: *"now do smart-trust and folio-assistant-core avatars"*.
+
+`folio-assistant-core` needed no decision and no art. It already declares a
+sticky naming `theme: library`, and `landing-library-card.webp` already exists
+with a measured `avatarRegion`. **The resolver was wrong**, in the way this
+repository has already paid for once:
+
+    decl.stickies?.find((st) => st.id === decl.name)
+
+`landing-sticky.test.ts` pins the opposite, by name:
+
+> `folio-assistant-core/` is the directory since the owner's ruling of
+> 2026-09-20; its card id stays `folio-assist-core` because **a card id is a
+> published identifier on the landing page and the directory is only where the
+> files sit** ... which is exactly why it broke when they were **assumed to be
+> one string**.
+
+That is the assumption I wrote yesterday, one file over, and it is why core had
+no avatar while its theme was declared all along. There is a test asserting the
+divergence and it was green throughout, because it tests `contributionsOf`
+rather than the tile.
+
+**Fixed by not assuming**: an instance's own sticky is the one its OWN
+declaration contributes — exact id match first, and a single contribution
+otherwise. Several contributions with no exact match is reported rather than
+picked from.
+
+- [x] folio-assistant-core shows the librarian cat, with no new art and no
+      renamed id
+- [x] smart-trust — owner chose `operations` from three cards; it contributes
+      a card naming that theme, which ALSO puts it on the landing board (a
+      theme is reached through a sticky, so that is inherent and is recorded
+      in the declaration rather than discovered later)
+- [x] an icon's URL is the SITE DIRECTORY's mount, not the front door — see
+      below; this was shipped broken in #984
+
+
+## A DEFECT I SHIPPED IN #984, found by running the mount
+
+who-iris's mark 404'd on the published site. `publishedIcon` composed against
+`folioRoot` — *"`/` for the instance that owns the site, `/<name>/` for one
+mounted beneath it"* — which is the instance's FRONT DOOR, a different question
+from where its SITE DIRECTORY lands.
+
+Measured by running `mount-instance-docs` against a built preview:
+
+    who-iris/library/  ->  /who-iris/        (1378 file(s))
+    who-iris/docs/     ->  /docs/who-iris/   (4 file(s))
+
+Every instance gets a `<kind>/<name>` route unconditionally; the bare `<name>`
+route goes to whichever kind claims it FIRST, and for who-iris that is the
+**library**. So its front door serves 1,378 corpus files and the icon pointed
+into it. Confirmed 404 against 200 for the same asset.
+
+**The local preview hid it**, which is the part worth keeping: `preview:site`
+does not run the mount, so the asset was absent there for an unrelated reason
+and the wrong URL looked like the same 404. I only separated them by running
+the mount step by hand.
+
+`siteDirMount` composes the `<kind>/<name>` route from the kind the instance
+declares for that directory, and an instance that classifies its site dir under
+no kind gets NO icon — a real answer, since nothing can be said about where an
+unclassified directory is served.
+
+**An existing test asserted the broken rule** (`"an instance mounted beneath the
+site root carries its mount"` → `/sibling/...`) on the premise *"everything else
+is at `/<name>/`"*. Updated with the measurement rather than deleted; four new
+specs pin the kind coming from the declaration rather than the string `docs`.
