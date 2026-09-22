@@ -330,6 +330,31 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         sections?: Array<{ page_start?: number; page_end?: number; n_words?: number; n_chars?: number }>;
       }>(join(dir, "structure.json"));
       const secs = structure?.sections ?? [];
+      /**
+       * Sum a section field, keeping only the values that are actually numbers.
+       *
+       * The guard is not defensive tidiness — it is the difference between a
+       * count and a script. `structure.json` comes from an ingested corpus
+       * this repository did not author, and `reduce((n, s) => n + s.n_words)`
+       * is string CONCATENATION the moment one `n_words` is a string. The
+       * result then flows to `gen-library-viz`, which renders `words` through
+       * `toLocaleString()` — one of only two fields it does NOT pass through
+       * `esc()`, because both were assumed numeric — and straight into
+       * `innerHTML`.
+       *
+       * Measured 2026-09-22 with `n_words: '<img src=x onerror="alert(1)">'`:
+       * `words` came out as the string `0<img src=x onerror="alert(1)">` and
+       * rendered unescaped. Bean `1wef`, surface 2.
+       *
+       * The `pages` line directly below already guards this exact class with
+       * `typeof n === "number"`. That guard was the one `words` and `chars`
+       * needed, four lines away.
+       */
+      const sumSections = (pick: (s: (typeof secs)[number]) => unknown): number =>
+        secs.reduce((n, s) => {
+          const v = pick(s);
+          return typeof v === "number" && Number.isFinite(v) ? n + v : n;
+        }, 0);
       const pages = secs.flatMap((s) => [s.page_start, s.page_end]).filter((n): n is number => typeof n === "number");
       const images = readJson<{ images?: unknown[] }>(join(dir, "images.json"));
       const sourceFile = str("source_file");
@@ -359,8 +384,8 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         hasImagesJson: has("images.json"),
         pageStart: pages.length ? Math.min(...pages) : null,
         pageEnd: pages.length ? Math.max(...pages) : null,
-        words: secs.reduce((n, s) => n + (s.n_words ?? 0), 0),
-        chars: secs.reduce((n, s) => n + (s.n_chars ?? 0), 0),
+        words: sumSections((s) => s.n_words),
+        chars: sumSections((s) => s.n_chars),
         bytes: treeBytes(dir),
         // Filled in by the uploads pass: the link is a fact about both ends,
         // and deciding it here would mean deciding it without the file.
