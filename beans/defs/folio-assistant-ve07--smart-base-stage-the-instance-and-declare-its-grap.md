@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ve07
 title: 'smart-base: stage the instance and declare its graphs'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-09-22T08:35:28Z
+updated_at: 2026-09-22T09:33:37Z
 parent: folio-assistant-2yyh
 ---
 

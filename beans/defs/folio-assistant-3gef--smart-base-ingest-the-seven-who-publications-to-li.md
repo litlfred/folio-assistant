@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3gef
 title: 'smart-base: ingest the seven WHO publications to library/'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-09-22T08:35:28Z
+updated_at: 2026-09-22T09:33:37Z
 parent: folio-assistant-2yyh
 ---
 
