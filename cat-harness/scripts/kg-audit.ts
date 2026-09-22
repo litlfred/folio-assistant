@@ -42,6 +42,8 @@
  */
 
 import { createHash } from "node:crypto";
+import { checkTools, unresolvedPaths } from "./check-tools.js";
+import { tools } from "../tools/index.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
@@ -150,6 +152,11 @@ const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
 const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
+// declared-path-literal: the convention fallback, at the call site. Same
+// reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the
+// nodes are authored in TypeScript, several to a module, so there is no
+// per-node file to sit a sidecar beside and `sidecarPath` falls back to here.
+const TOOLS_DIR = ownDirectoryById(root, "tools", "tools");
 
 const sha256 = (s: string) => `sha256:${createHash("sha256").update(s).digest("hex")}`;
 
@@ -738,6 +745,133 @@ function auditSkills(): KgQaReport[] {
             n > 400 ? [{ where: rel, detail: `${n} lines; p90 is 391. At this length it is a document.` }] : [],
           ),
           "skill-no-repeated-heading": entry(repeats),
+        },
+      ),
+    );
+  }
+  return out;
+}
+
+/**
+ * One sidecar per Tool node, PROJECTING verdicts the dedicated checkers reach.
+ *
+ * ## Why this projects rather than decides
+ *
+ * Measured 2026-09-22, and it overturned the plan it was measured for. The
+ * bean behind issue #853 called Tool nodes *"unaudited, 69 of them"*. They are
+ * unaudited BY THIS SCRIPT; they are not unaudited. `check-tools.ts` and
+ * `tools.test.ts` already decide `satisfies`, invoke paths, io IRIs, unsafe
+ * args, alternatives and contracts, and `check-maintained-artefacts.ts`
+ * decides every `maintains` claim against the assembled tree.
+ *
+ * A first attempt here added a `maintains` criterion of its own. That would
+ * have been a **second answer** to a question `check-maintained-artefacts`
+ * already answers, free to disagree with it — which is the defect the bean's
+ * own "Do not" warns about, one step removed.
+ *
+ * So what is added is the REPORTING SURFACE, not a judgement: a committed
+ * sidecar per Tool, which is what makes "unbound since it was drawn"
+ * distinguishable from "broken in the commit under review". A printed verdict
+ * cannot do that, and that is `AGENTS.md`'s own argument for sidecars.
+ *
+ * ## The two states that are not `pass`
+ *
+ * `n/a` where the property does not apply — a Tool declaring no
+ * `alternativeTo` has no alternative to dangle, and recording that as a pass
+ * would count 60-odd non-answers as evidence.
+ *
+ * `unknown` for `tool-maintains-in-tree`, ALWAYS, from a checkout: the
+ * artefact's presence is a fact about `_site/`, which does not exist here. The
+ * finding names where the answer lives rather than pretending to be it.
+ */
+function auditTools(): KgQaReport[] {
+  const check = checkTools();
+  const unresolved = unresolvedPaths();
+
+  // Indexed by tool id once, rather than filtering each list per tool: seven
+  // criteria over 69 tools is 483 scans of the same arrays otherwise.
+  const by = <T extends { tool: string }>(rows: readonly T[]): Map<string, T[]> => {
+    const m = new Map<string, T[]>();
+    for (const r of rows) m.set(r.tool, [...(m.get(r.tool) ?? []), r]);
+    return m;
+  };
+  const paths = by(unresolved);
+  const dangling = by(check.danglingSatisfies);
+  const unmet = by(check.unmetContracts);
+  const types = by(check.unknownTypes);
+  const unsafe = by(check.unsafeArgs);
+  const altDangling = by(check.danglingAlternatives);
+  const altAsym = by(check.asymmetricAlternatives);
+  const unreadable = new Set(check.unreadableContracts);
+
+  const out: KgQaReport[] = [];
+  for (const t of tools()) {
+    const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
+      (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
+
+    // A skill whose contract could not be READ is never agreement — the rule
+    // `check-tools` states and this must not soften into a pass.
+    const unreadableHere = t.satisfies.filter((sk) => unreadable.has(sk));
+
+    out.push(
+      report(
+        "tool",
+        t.id,
+        // NULL on purpose. Tool nodes are authored in TypeScript, several to a
+        // module, so there is no per-node file — and inventing one would send
+        // `sidecarPath` to a path that does not exist.
+        null,
+        createHash("sha256").update(JSON.stringify(t)).digest("hex").slice(0, 12),
+        {
+          "tool-invoke-path-resolves": entry(
+            f((paths.get(t.id) ?? []).map((r) => ({ detail: `${r.field}: ${r.value} (expected ${r.expected})` }))),
+          ),
+          "tool-satisfies-resolves": entry(
+            f((dangling.get(t.id) ?? []).map((r) => ({ detail: `satisfies "${r.skill}", which no declared instance has` }))),
+          ),
+          "tool-satisfies-contract-met":
+            unreadableHere.length > 0
+              ? {
+                  result: "unknown",
+                  findings: unreadableHere.map((sk) => ({
+                    where: t.id,
+                    detail: `the input contract of "${sk}" could not be read, so agreement cannot be judged`,
+                  })),
+                }
+              : entry(
+                  f(
+                    (unmet.get(t.id) ?? []).map((r) => ({
+                      detail: `satisfies "${r.skill}" but has no port for ${r.missing.join(", ")} (has: ${r.has.join(", ") || "none"})`,
+                    })),
+                  ),
+                ),
+          "tool-io-types-declared": entry(
+            f((types.get(t.id) ?? []).map((r) => ({ detail: `port "${r.port}" references undeclared type ${r.ref}` }))),
+          ),
+          "tool-args-shell-safe": entry(
+            f((unsafe.get(t.id) ?? []).map((r) => ({ detail: `command-line input "${r.port}" is ${r.type}, which can carry a shell payload` }))),
+          ),
+          "tool-alternative-resolves": entry(
+            [
+              ...f((altDangling.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo names ${JSON.stringify(r)}, which does not exist` }))),
+              ...f((altAsym.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo is not symmetric: ${JSON.stringify(r)}` }))),
+            ],
+            // `n/a` rather than a pass when there is no alternative declared.
+            (t.alternativeTo ?? []).length > 0,
+          ),
+          "tool-maintains-in-tree":
+            (t.maintains ?? []).length === 0
+              ? { result: "n/a", findings: [] }
+              : {
+                  // NEVER `pass` from a checkout. See the criterion's own note.
+                  result: "unknown",
+                  findings: (t.maintains ?? []).map((m) => ({
+                    where: t.id,
+                    detail:
+                      `maintains "${m.artefact}" — presence is a fact about the assembled site, not this ` +
+                      `checkout. Answered by \`check:maintained-artefacts ./_site\` in the docs-site workflow.`,
+                  })),
+                },
         },
       ),
     );
@@ -1414,6 +1548,7 @@ function sidecarPath(r: KgQaReport): string {
     requirement: join(KG_ROOT, "requirements"),
     skill: KG_ROOT,
     graph: SCENARIO_DIR,
+    tool: TOOLS_DIR,
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
@@ -1479,6 +1614,7 @@ if (graph) {
 reports.push(...auditRequirements(readRequirements(), skills, actors));
 reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills));
+reports.push(...auditTools());
 
 // Write or compare.
 //

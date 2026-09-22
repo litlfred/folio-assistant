@@ -74,17 +74,17 @@ disambiguate rather than resolved by picking the reading that suits the rest.
 
 ## Done when
 
-- [ ] `skill.update` is disambiguated, because 1–3 may be scoped by it
-- [ ] `tool` is a QA subject kind, with at least one criterion, and the 69
-      nodes are reported rather than skipped — including a third state for a
-      tool the criterion cannot judge
-- [ ] Whether `check-declared-assets` reaches Tool nodes is MEASURED, before
-      anything new is built for requirement 2
-- [ ] The pre-execution security gate has a consumer, and a test that fails
-      when the consumer stops consulting it — `a58y`'s lesson applied ahead of
-      time rather than after
-- [ ] `0grh` is read against requirement 4, and this bean either defers to it
-      or records what it does not cover
+- [x] `skill.update` is disambiguated — the owner read it as a Tool that
+      should exist and does not; filed as #875, not folded into 1–3
+- [x] `tool` is a QA subject kind with 7 criteria, 69 nodes reported, and a
+      third state for the one question a checkout cannot answer
+- [x] Requirement 2 measured — and CORRECTED below: `check-maintained-
+      artefacts` covers all 7 `maintains` claims; the gap is closed, not
+      doubled, and the first measurement of it was wrong
+- [x] The pre-execution gate has a consumer, and a test that fails when the
+      consumer stops consulting it — #878, bean `03t9`
+- [x] `0grh` read against requirement 4 — it does NOT cover it, and the
+      engine has no dispatch concept at all
 
 ## Do not
 
@@ -233,20 +233,76 @@ The order this implies is the opposite of the obvious one: **give
 unconsulted check to 69 more subjects widens the silence rather than the
 coverage.
 
-## Done when — updated
+## CORRECTION 2026-09-22 — the requirement 2 measurement above is WRONG
 
-- [ ] `skill.update` is disambiguated, because 1–3 may be scoped by it
-- [ ] `tool` is a QA subject kind, with at least one criterion, and the 69
-      nodes are reported rather than skipped — including a third state for a
-      tool the criterion cannot judge
-- [x] Whether `check-declared-assets` reaches Tool nodes is MEASURED — it does
-      not, the relation is `maintains`, and the gap is `6f1x`'s, now doubled
-      from 2 uncovered artefacts to 4
-- [ ] The pre-execution security gate has a consumer, and a test that fails
-      when the consumer stops consulting it — **the mechanism is
-      `folio:precondition` and it has 0 non-test callers today**, so the
-      consumer comes first
-- [x] `0grh` is read against requirement 4 — it does **not** cover it (its
-      rule 3 forbids the same-agent case the requirement permits), and the
-      engine has no dispatch concept at all: 26 call activities, 0 saying who
-      runs them, 0 multi-instance
+Everything under *"Requirement 2 measured"* that says the gap is open is
+false, and it was false when written. Left standing rather than edited away,
+because a measurement that was published and acted on should show its own
+correction.
+
+**`cat-harness/scripts/check-maintained-artefacts.ts` has existed since
+2026-09-20** — two days before that measurement — and is wired into
+`docs-site.yml` as *"Every maintained artefact is in the published tree"*,
+running after `_site/` is assembled. It iterates:
+
+    for (const t of tools()) for (const m of t.maintains ?? [])
+
+No narrowing. **All 7 claims are checked**, with a third state: exit 2 on
+could-not-determine, distinct from exit 1 on a real absence.
+
+| | claimed | actual |
+|---|---|---|
+| …covered by nothing | **4** | **0** |
+
+`6f1x`'s gap is CLOSED, by its own follow-up work.
+
+### How the error happened, which matters more than the number
+
+The question asked was *"which artefacts does `kg:schema:check` reconcile?"*.
+The answer, 3, was then read as *"the other 4 are covered by nothing"* —
+**without searching for other consumers of `maintains`.** There are eleven;
+one was checked.
+
+That is the `dh4f` shape — a clean verdict over a corpus the tool never
+looked at — committed while measuring for a bean whose whole subject is that
+shape. The check that would have caught it is one `grep`, and it was run only
+after the claim had shipped in a merged PR.
+
+**The rule this earns: a "covered by nothing" finding is not established by
+one consumer coming back empty.** Enumerate the consumers first, name them,
+and say how many were examined.
+
+## Requirement 1 delivered — as a PROJECTION, on the owner's ruling
+
+The correction cost requirement 1 its intended criterion: `tool-maintains-
+produced` would now be a second answer to a question `check-maintained-
+artefacts` already answers, free to disagree with it.
+
+Measured instead: Tool nodes are **already checked** — `check-tools.ts`,
+`tools.test.ts` and `check-maintained-artefacts.ts` cover `satisfies`, invoke
+paths, io IRIs, unsafe args, alternatives, contracts and `maintains`. The
+bean's *"69 unaudited"* is true of `kg:audit` and false of the repository.
+
+Owner's ruling 2026-09-22: **project the existing checks into per-tool
+sidecars.** So `tool` is now a `KG_SUBJECT_KIND` with 7 criteria that REPORT
+those verdicts and reach none of their own. What it buys is the thing a script
+cannot — a committed sidecar per Tool, so "unbound since it was drawn" and
+"broken in the commit under review" stop looking identical.
+
+Two results that are not `pass`, both guarded and both falsified:
+
+- **`n/a`** where the property does not apply — a Tool declaring no
+  `alternativeTo` has no alternative to dangle, and 60-odd non-answers counted
+  as passes is how a projection reads as more coverage than it has.
+- **`unknown`**, always, for `tool-maintains-in-tree`: presence in the
+  published tree is a fact about `_site/`, which no checkout has. `pass` there
+  would be green exactly where nobody built the site — `xom7`.
+
+`tool-maintains-in-tree` is `minor` **not** because a rotted artefact is small
+but because it can only ever be `unknown` here, `unknown` counts toward
+`worstSeverity`, and at `major` the 7 Tools declaring `maintains` would put
+`kg:audit:strict` permanently beyond reach with nothing able to clear it —
+`nested-instance-audited`'s precedent exactly.
+
+Verified `kg:audit:check` still exits 0, and that `kg:audit:strict` already
+exited 1 before this change, so no green gate was taken away.
