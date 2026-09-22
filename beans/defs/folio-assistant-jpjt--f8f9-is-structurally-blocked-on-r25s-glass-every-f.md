@@ -158,3 +158,21 @@ under test fails silently in the passing direction.
 
 With the control correct, **no element of the replica moves, resizes or
 changes colour.**
+
+## A correction to the commit message on the partition fix
+
+`check:partition` went red on #879 — three new top-level scripts
+`unassigned`, because `scripts/` is in no prefix rule. The fix is right and
+was reproduced before and verified after.
+
+**Its commit message says "CI caught what a branch run could not". That is
+false and is corrected here rather than rewritten.** The branch-local
+`bun run gates` caught the identical failure and exited 1. What actually
+happened is that the run was still going and the push did not wait for it —
+which is a different failure with a different fix, and describing it as the
+first one would have taught the next reader the wrong lesson about what the
+branch gates can see.
+
+The real rule it illustrates is the one already in `AGENTS.md`: *a subset of
+the gate set is not the gate set* — and a gate set still running is not a
+gate set that passed.
