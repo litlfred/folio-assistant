@@ -94,3 +94,8 @@ is an expiry that is *absent*, never one extended with a reason.
 I read the first failing list through `tail` and acted on 4 beans, believing
 that was all of them. It was 7 — the truncation hid the first three. Caught by
 re-running rather than by trusting the earlier output.
+
+### Where it landed
+
+Issue #950, PR #951. The PR carries the same reasoning for a reader who comes
+at it from the diff rather than from the work plan.
