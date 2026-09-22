@@ -47,3 +47,7 @@ the entry point it plugs into.
 The owner's #197 asks for exactly this, plus provenance **to page and line of the rendered source** on every extracted node, applied to PDF ingestion too, *"to make review and adjuducation processes easier to follow"*. Also *"basic formatting (bold, italic) preserved … not 1:1"*, and *"open format versions only for now"* (.docx, not .doc). Its comment tags @ritikarawlani for any schema change to the paper .ts content type.
 
 - [ ] every ingested node carries source page and line provenance
+
+## Moved here from 5xzc (2026-09-22)
+
+- [ ] register `id-reingest-stable`: re-ingesting an unchanged upload yields the same labels. Implement it beside `id-unique` / `id-stable` in `qa-checkers-ids.ts`, once this bean's ingest emits blocks. It was not registered earlier because a criterion with nothing to check sweeps `n/a` everywhere, and that reads as coverage.

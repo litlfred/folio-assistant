@@ -1,10 +1,11 @@
 ---
 # folio-assistant-5xzc
 title: 'QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:02:54Z
+updated_at: 2026-09-22T21:32:13Z
 parent: folio-assistant-q4jm
 ---
 
@@ -29,7 +30,33 @@ every other axis:
   same ids. Where the ids come from is child 03.
 
 ## Done when
-- [ ] the three criteria are registered, with severity (`id-unique` critical)
-- [ ] a rename carries `renamedFrom` in the folio/ graph, and the schema lives in folio-assistant-core/schemas
-- [ ] a test renames a block both with and without `renamedFrom`, and only the second produces a finding
-- [ ] `kg:audit` / the QA sweep runs the criteria over every declared folio
+- [x] `id-unique` (critical) and `id-stable` (major) are registered. `id-reingest-stable` is **moved to xtpc**, because there is no ingest to check yet (see round 1)
+- [ ] a rename carries `renamedFrom` in the folio/ graph, and the schema lives in folio-assistant-core/schemas. The field is added, but in `cat-harness/schemas/`, beside the rest of BlockBase (see round 1)
+- [x] a test renames a block both with and without `renamedFrom`, and only the second produces a finding
+- [ ] `kg:audit` / the QA sweep runs the criteria over every declared folio. Sweep discovery resolves both checkers; a sweep over a real folio has not been run (see round 1)
+
+
+Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3PsjvszpF3DyGeBgE).
+
+## Round 1: 2026-09-22 (branch claude/kind-albattani-0qe9gj)
+
+**Built**
+- `cat-harness/content/pipeline/qa-checkers-ids.ts`, holding `checkIdUnique` and `checkIdStable`;
+- both criteria registered in `qa-criteria-registry.ts` (domain `ids`);
+- `renamedFrom?: string[]` on `BlockBase` (`schemas/types.ts`) and on `BlockBaseSchema` (`schemas/constraints.ts`), in both because Zod strips unknown fields (zdrf);
+- 10 tests in `scripts/tests/qa-checkers-ids.test.ts`.
+
+**Measured before building**
+- **Ids are declared, not derived**: a block's `label`. That was this bean's falsification test, and it held.
+- **The gap is real.** `validate.ts` catches a block NAME listed twice in a manifest, but adds LABELS to a Set. `buildContentGraph` does `nodes.set(b.label, …)`. So two blocks with one label silently collapse to one, and nothing reported it.
+
+**Decisions made here, each open to the owner**
+- **id-unique also fails a block that takes a label another block lists in `renamedFrom`.** Reusing a retired id would re-attach the old block's review history to an unrelated block.
+- **id-stable follows renames (`git diff -M`) but NOT copies.** A copy is a new block. A copy that kept its source's label is id-unique's finding.
+- **id-stable counts an untracked new block file as an addition**, not as "unchanged".
+- **An unreachable base ref, or no folio to index, is `n/a`, never a pass.**
+
+**Not done, and why**
+- **`id-reingest-stable` moved to xtpc.** A criterion with no ingest to check would sweep `n/a` everywhere, and that reads as coverage.
+- **Schema placement.** The owner asked for core. But BlockBase itself still lives in `cat-harness/schemas`, and splitting one field from the type it belongs to would put a block's shape in two layers. It moves when the content model moves to core.
+- **No sweep has run over a real folio.** There is none in this repo (roast R7). The first folio sweep will show what the collision count really is.
