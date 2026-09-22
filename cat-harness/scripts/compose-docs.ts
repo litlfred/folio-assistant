@@ -510,7 +510,20 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
     }
   }
 
-  return { layers, missing, suppliedBy, overrides, added, merged, withheld: withheldFiles.sort(), composed: composedInst };
+  // DEDUPED. A path present in two layers is withheld once per layer, and a
+  // report listing it twice made `withheld.length` stop meaning "files this
+  // tree does not carry" — which is the only thing a reader would use it for.
+  // Caught by the test asserting the two trees differ by exactly that count.
+  return {
+    layers,
+    missing,
+    suppliedBy,
+    overrides,
+    added,
+    merged,
+    withheld: [...new Set(withheldFiles)].sort(),
+    composed: composedInst,
+  };
 }
 
 /** Every file beneath a directory with its bytes — for the identity check. */

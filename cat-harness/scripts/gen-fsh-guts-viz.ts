@@ -52,6 +52,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
+import { docsLayers } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
@@ -115,7 +116,7 @@ export function pageRelPath(repo = REPO): string | undefined {
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
       if (!ref) continue;
-      const rel = relative(join(repo, "cat-harness", "docs"), resolve(repo, ref));
+      const rel = relative(baseDocs(repo), resolve(repo, ref));
       // Outside the base docs layer is not a page this generator may write.
       if (rel.startsWith("..") || rel === "") return undefined;
       return rel;
@@ -261,9 +262,25 @@ export function page(files: GutsFile[], blobBase: string): string {
   return body.join("\n").trimEnd() + "\n";
 }
 
-/** The base docs layer — where a generated page belongs. */
+/**
+ * The base docs layer — the SAME answer `compose-docs.ts` uses, not a literal.
+ *
+ * `site-dir-single-answer.test.ts` refuses a hardcoded site root here and is
+ * right to: the root has moved twice (beans `x4a6`, `wggr`), and a generator
+ * holding its own copy keeps writing where the site used to be while every
+ * check reports clean.
+ *
+ * `docsLayers()` rather than `siteDirFor()`, and the difference bit once
+ * already: `siteDirFor` answers RELATIVE TO AN INSTANCE (`"docs"`), so
+ * `join(repo, siteDirFor(...))` resolves to the repository's OVERLAY layer
+ * rather than to `cat-harness`'s base. `docsLayers` reads both from the
+ * declaration and marks which is which, so asking it is the one answer —
+ * and it is the same one the composer withholds against.
+ */
 function baseDocs(repo: string): string {
-  return join(repo, "cat-harness", "docs");
+  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
+  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
+  return base.dir;
 }
 
 if (import.meta.main) {
