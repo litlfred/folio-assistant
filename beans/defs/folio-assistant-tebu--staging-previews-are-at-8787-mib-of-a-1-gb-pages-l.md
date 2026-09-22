@@ -70,7 +70,7 @@ review. So the cut has to be conditional on what the branch actually touches.
 
 - [x] A preview omits `reference/` and `api/` **unless the branch's diff
       touches their sources**, leaving a stub that links to the main site's copy
-- [ ] The saving is measured on a real preview, not projected
+- [x] The saving is measured on a real preview, not projected
 - [ ] The check's stale ~38 MB calibration is corrected to the measured figure
 - [ ] The basis stops naming blob sharing as the remedy for a published-size
       threshold, or says explicitly which budget each sentence is about
@@ -138,4 +138,49 @@ is probably LARGER than the arithmetic and a projection is not a measurement.
 The two defects in the check itself — the stale ~38 MB calibration and the
 basis naming blob sharing as the remedy for a published-size threshold — are
 also still open, and are edits to `test/health/` rather than to the workflow.
+
+
+---
+
+## MEASURED, on this branch's own preview — and it beat the projection
+
+The staging build for PR #839 ran the changed workflow (a same-repo
+`pull_request` uses the head's workflow file), so this branch became its own
+test. Its diff touches `.github/workflows/` and `beans/` only, so neither
+`reference/` nor `api/` was carried.
+
+| | this branch (trim active) | a control preview |
+|---|---|---|
+| total | **39.2 MiB** | 88.3 MiB |
+| files | 3,195 | 3,758 |
+| HTML pages | **122** | 676 |
+| mean per page | **68 KiB** | 83 KiB |
+| `reference/` | 0.1 MiB (the stub) | 35.8 MiB |
+| `api/` | 0.0 MiB | 7.6 MiB |
+
+**49.1 MiB saved, 55.6 %** — against a projection of 43.2 MiB.
+
+### The 5.9 MiB the arithmetic could not reach
+
+Projecting 43.2 MiB assumed the saving was just the two directories. It is
+not: **the mean page size fell 83 → 68 KiB**, on the 122 pages that remain.
+That is the nav shrinkage — just-the-docs inlines the whole navigation into
+every page, so removing 554 pages makes every surviving page smaller too.
+
+This is why the third box demanded a measurement rather than accepting the
+projection. The projection was not merely imprecise, it was **structurally
+incomplete**: it could not see a second-order effect that turned out to be
+14 % of the total saving.
+
+### What it does NOT establish
+
+The fleet total is **not** 9 x 39.2. The trim is conditional, and this
+repository's branches frequently touch `skills/` and `schemas/` — those
+previews keep the full tree, correctly. The measured claim is *per preview,
+when the branch does not touch those sources*; the fleet effect depends on the
+mix and is not measured here.
+
+Separately and not caused by this change: the total fell 878.7 → 741.2 MiB
+while this was being written, because #833 and #838 merged and their previews
+were reaped automatically. The auto-removal works; it was never the problem.
 
