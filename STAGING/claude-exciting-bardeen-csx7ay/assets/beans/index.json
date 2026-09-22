@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 510,
+      "count": 511,
       "unit": "beans"
     }
   },
@@ -5981,6 +5981,20 @@
       "updatedAt": "2026-09-20T12:42:53Z",
       "preview": "Found 2026-09-20 on PR #494, after merging main. **Not caused by that PR** — four\narrived with main's rename of skills into `skills/workflow/`, eight pre-date it.\n`kg:audit` prints the finding and **exits 0**, so `bun run gates --all` reports\n53 gates passing with this on screen.\n\n## What the check says, and which branch this is\n\n`kg-audit.ts:1394` reports sidecars auditing a subject no report cov",
       "file": "beans/defs/folio-assistant-uiw6--kg-audit-12-sidecars-audit-skills-the-audit-no-lon.md"
+    },
+    {
+      "id": "folio-assistant-uknu",
+      "title": "DUPLICATE id ON EVERY DOCS PAGE: just-the-docs renders nav_footer_custom twice, so both copies carry id=\"fa-nav-open\"",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:18:10Z",
+      "updatedAt": "2026-09-22T19:18:10Z",
+      "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
+      "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
     },
     {
       "id": "folio-assistant-ulqj",
