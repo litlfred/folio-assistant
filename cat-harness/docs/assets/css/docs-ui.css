@@ -618,18 +618,24 @@
  * MEASURED LIMIT: written against the selectors an earlier session read off
  * the BUILT stylesheet, recorded above. The rendered result is not checked
  * here; litlfred.github.io is refused at this environment's proxy. */
-:root {
-  /* DERIVED, not picked: the theme's own 1rem gutter on `.site-title`, plus
-     `.fa-site-mark` at 2rem, plus a matching right gutter. So the strip is
-     exactly the mark and its padding, and no label can sit inside it. */
-  --fa-nav-collapsed: 3.5rem;
-  /* The theme's width at mq(md); redefined below where the theme widens it. */
-  --fa-nav-open: 15.5rem;
-}
-
-@media (min-width: 66.5rem) {
-  :root { --fa-nav-open: 16.5rem; }
-}
+/* `--fa-nav-collapsed` and `--fa-nav-open` ARE NOT DEFINED HERE any more.
+ *
+ * They were, and `navbar.ts` defined them again — 56px against 40px at rest,
+ * 248px against 232px open, on two navbars the owner had asked to be
+ * "presented same way" (`sjic`). Both sides had a test asserting its own copy,
+ * so both were green while the widths disagreed.
+ *
+ * They now come from `assets/css/navbar-geometry.css`, GENERATED from
+ * `scripts/lib/navbar-geometry.ts` by `bun run navbar:geometry` and gated by
+ * `navbar:geometry:check`. That module carries the derivation this comment
+ * used to — the theme's gutter, `.fa-site-mark` at 2rem, a matching right
+ * gutter — plus the reason these numbers are the ones the RAIL adopted rather
+ * than the other way round: only this side has a `min-width` floor in the
+ * theme's own layout.scss, and a floor is not something a `width` can cross.
+ *
+ * Every `var(--fa-nav-*)` USE below is still authored here. Only the two
+ * definitions moved, which is what keeps this file hand-written.
+ */
 
 @media (min-width: 50rem) {
   .side-bar {

@@ -4,9 +4,9 @@ title: 'ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the 
 status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-p5wm
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-21T21:26:39Z
+updated_at: 2026-09-22T18:17:50Z
+parent: folio-assistant-p5wm
 ---
 
 ## What — the owner's spec, verbatim
@@ -153,3 +153,56 @@ That is the remaining half of this bean and it may well be all of it.
 
 **Suggested: re-scope rather than close.** The bean as written reads as though
 nothing is built.
+
+
+## ROUND 1, 2026-09-22 — the geometry is stated once, and it DISAGREED
+
+Re-claimed. The 2026-09-21 claim above named branch
+`claude/lhs-navbar-harness-folios-cqo9mu`; that branch now carries `624f`
+sticky geometry (PR #955) and no navbar work, so the claim had lapsed. **No
+open PR touches the navbar** — the four-way contention this bean was written to
+sequence around has cleared, which is what makes the remaining half workable
+now.
+
+The `RE-MEASURED` section above is right that the shared RENDERER exists.
+What it could not establish — *"whether the Jekyll/theme half now derives from
+the same component"* — is measured, and the answer is **no, and the two were
+different widths**:
+
+| | `navbar.ts` | `docs-ui.css` |
+|---|---|---|
+| strip at rest | 40px | `3.5rem` = **56px** |
+| open | 232px | `15.5rem` = **248px** |
+| open, ≥66.5rem | *(no such state)* | `16.5rem` = **264px** |
+
+Three of four disagreed and the fourth existed on one side only. **Both were
+green**: `navbar.test.ts` asserts `navbarCss()`'s numbers and
+`sidebar-strip.test.ts` asserts `docs-ui.css`'s, each against its own copy.
+That is the failure mode this bean names — agreement by maintenance — caught
+only by putting the two files side by side.
+
+**Fixed by deriving both from one record**, not by copying one into the other:
+`scripts/lib/navbar-geometry.ts`, rendered to `assets/css/navbar-geometry.css`
+by `bun run navbar:geometry` and gated by `navbar:geometry:check` (in
+`code-quality-gates.yml`, so `bun run gates` carries it).
+
+**The sidebar's numbers won, and not by seniority.** Both sides derived their
+strip — the rail from a 20px glyph and two 10px gutters, the sidebar from the
+theme's gutter plus `.fa-site-mark` at 2rem plus a matching one. Neither was
+arbitrary. What settles it is that only the sidebar is constrained from
+OUTSIDE this repository: just-the-docs' `layout.scss` carries
+`.side-bar { min-width: 16.5rem }`, and `docs-ui.css` already records what
+crossing that floor cost. So the constrained side sets the numbers and the free
+side adopts them. The rail's mark grows 20px → 32px, which also moves it the
+right way against this instance's declared low-dexterity profile.
+
+The two derivations turned out to be the same arithmetic in different units:
+`NAV_PAD_PX` derives to 12px, which is `0.75rem` — exactly the "matching right
+gutter" the stylesheet's own comment described.
+
+### Remaining, this session
+
+- [ ] the three regions are structural in the sidebar (gap 2)
+- [ ] harness avatars in the sidebar (gap 3) and home at the bottom (gap 5)
+- [ ] `documentIndex` gets a supplier — it has none anywhere (gap 4)
+- [ ] `avatarRegion` reaches the navbar mark (gap 6, `603s` slice 1's consumer)

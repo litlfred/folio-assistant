@@ -52,6 +52,15 @@
  * @module scripts/lib/navbar
  */
 
+import {
+  NAV_COLLAPSED_PX,
+  NAV_MARK_PX as NAV_GLYPH_PX,
+  NAV_OPEN_PX,
+  NAV_OPEN_WIDE_PX,
+  NAV_PAD_PX,
+  NAV_WIDE_MQ_PX,
+} from "./navbar-geometry.js";
+
 /** One destination. */
 export interface NavItem {
   /** Where it goes, already relative to the page being rendered. */
@@ -134,23 +143,25 @@ export interface NavbarModel {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** Gutter either side of the glyph column. */
-export const NAV_PAD_PX = 10;
-/** The glyph column itself. */
-export const NAV_GLYPH_PX = 20;
 /**
- * Width at rest — the icon strip at the far left.
+ * THE GEOMETRY IS NOT DECIDED HERE ANY MORE.
  *
- * DERIVED from the glyph column and its two gutters, so the strip is exactly
- * the icon and nothing else. **Closed is not gone**: asked to "have it start
- * hidden" I once removed the strip entirely, and the owner's correction —
- * *"clicking it away completelt disappeared … i expected … that it slides to
- * the far left, icon width thick"* — is the whole of why this constant exists
- * rather than a `visibility: hidden`.
+ * It was, and `docs-ui.css` decided it again, separately — 40px against 56px
+ * at rest and 232px against 248px open, on two navbars the owner had asked to
+ * be "presented same way". `lib/navbar-geometry.ts` is the single record and
+ * carries the whole argument for whose numbers won.
+ *
+ * `NAV_GLYPH_PX` is kept as the name callers already import; the record calls
+ * the same column `markPx`, because it holds an avatar as often as a glyph.
  */
-export const NAV_COLLAPSED_PX = NAV_PAD_PX * 2 + NAV_GLYPH_PX;
-/** Width while open. Overlays rather than reflowing. */
-export const NAV_OPEN_PX = 232;
+export {
+  NAV_COLLAPSED_PX,
+  NAV_OPEN_PX,
+  NAV_OPEN_WIDE_PX,
+  NAV_PAD_PX,
+  NAV_WIDE_MQ_PX,
+} from "./navbar-geometry.js";
+export { NAV_MARK_PX as NAV_GLYPH_PX } from "./navbar-geometry.js";
 
 /**
  * The navbar's stylesheet, scoped to `.fa-nav` so a host page keeps its own.
@@ -175,6 +186,13 @@ export function navbarCss(): string {
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
     `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+    // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
+    // The rail has no such floor and would simply stay narrower -- which is
+    // the same navbar at two widths on one screen size, the defect this
+    // whole module exists to have ended.
+    `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
+    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
+    `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
     `.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}`,
     // THE THREE REGIONS. `min-height:0` on the middle is not optional: a flex
     // child defaults to `min-height:auto`, which refuses to shrink below its
