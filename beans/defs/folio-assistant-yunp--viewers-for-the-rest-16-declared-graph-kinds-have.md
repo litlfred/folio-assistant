@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:34Z
-updated_at: 2026-09-21T23:15:13Z
+updated_at: 2026-09-22T00:07:36Z
 parent: folio-assistant-p5wm
 ---
 
@@ -210,3 +210,57 @@ question — "is this page about this graph" is not mechanically decidable — b
 the WEAKER form is: **a `docs` page shared by two entries whose graph kinds are
 disjoint** is at least suspicious, and that is computable. Not built in this
 round; recorded so it is not rediscovered.
+
+
+
+---
+
+## CORRECTION 2026-09-22 — "16 declarations" was the wrong corpus
+
+The re-measure above used a probe that matched **any JSON carrying `name` and
+`directories`**. That is not what an instance declaration is:
+`findDeclarationFile` requires the file's stem to EQUAL the declared `name`,
+and `declarationPathIn` returns nothing for `beans/` or `todos/` — verified by
+calling it.
+
+So `beans/beans.json` and `todos/todos.json` were swept in. They are
+**bean-graph declarations**, a different kind of file that also declares
+directories and graph kinds.
+
+| | said | correct |
+|---|---|---|
+| declarations | 16 | **14 instance** + 2 bean-graph |
+| kinds with a viewer | 7 | **8** — `fsh-guts` now has one |
+| kinds without | 24 | **17** instance + **6** bean-graph = 23 |
+
+The six that moved are exactly the nested ones: `bean-defs`, `workflow-state`,
+`todo-items`, `todo-feedback`, `boards`, `board-positions`. They are still real
+declared graphs with no viewer — the correction is about **which kind of file
+declares them**, not about whether they exist. The 24 → 23 is `fsh-guts`
+gaining a viewer in this PR, not a miscount.
+
+**The committed code was never wrong.** `declarationsIn()` in
+`compose-docs.ts` calls `declarationPathIn`, so the withholding scan always had
+the right corpus. Only the throwaway measurement script, and the prose it fed,
+used the heuristic.
+
+### Why this is worth more than the numbers
+
+A sibling session landed `w4tq` on main the same evening, and its single real
+error is **this exact one**: *"of fifteen declarations only `cat-harness` sets
+`stub`"* — there were 13, because its probe *"matched any JSON carrying `name`
+and `directories`, which swept in `beans/beans.json` and `todos/todos.json`"*.
+
+Two sessions, independently, the same day, same wrong probe. That is not two
+careless agents; it is a **missing affordance**. Writing the heuristic takes
+one line and looks right, while the correct answer needs knowing that
+`declarationPathIn` exists and that stem-equals-name is the contract. The
+heuristic is also *nearly* right, so it returns a plausible corpus rather than
+an error — which is `w4tq`'s own diagnosis of why its four counting mistakes
+survived into beans.
+
+Worth a shared helper that answers "every instance declaration in this
+checkout", since three call sites now want it: `declarationsIn` in
+`compose-docs.ts` (which got it right), and the two probes that did not.
+Not built here — recorded so the next session finds it rather than writing a
+fourth heuristic.
