@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/skills/quality-control/input.schema.json",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "staging": {
+    "branch": "claude/modest-keller-vzzjiy",
+    "sha": "04201a34a060a0d81ccf98e5ff56c519af98a61f",
+    "pr": "985/merge",
+    "run": "35796919810"
+  }
+}
