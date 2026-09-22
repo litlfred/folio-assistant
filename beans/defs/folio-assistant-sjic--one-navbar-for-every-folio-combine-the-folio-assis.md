@@ -202,7 +202,61 @@ gutter" the stylesheet's own comment described.
 
 ### Remaining, this session
 
-- [ ] the three regions are structural in the sidebar (gap 2)
-- [ ] harness avatars in the sidebar (gap 3) and home at the bottom (gap 5)
-- [ ] `documentIndex` gets a supplier — it has none anywhere (gap 4)
-- [ ] `avatarRegion` reaches the navbar mark (gap 6, `603s` slice 1's consumer)
+- [x] the three regions are structural in the sidebar (gap 2)
+- [x] harness avatars in the sidebar (gap 3) and home at the bottom (gap 5)
+- [x] `documentIndex` gets a supplier — it had none anywhere (gap 4)
+- [x] `avatarRegion` reaches the navbar mark (gap 6) — the MECHANISM, with the
+      missing harness→card assignment reported rather than invented
+
+## ROUNDS 2-4 — and two defects the plan did not contain
+
+Rounds 2-4 closed gaps 2-6. Two things were found only by **opening the page
+in a browser**, which is now the `rendered-verification` skill.
+
+### The harness dividers had no colour at all
+
+`harness-tiles.ts` writes `tone` as a HUE and nine CSS rules fed that angle
+straight to `color-mix()` and to a `border-left` shorthand. Proven with a
+control in the page rather than from the spec:
+
+    --h: 268; background: color-mix(in oklab, var(--h) 28%, transparent)
+      -> rgba(0, 0, 0, 0)        INVALID at computed-value time
+    --h: 268; background: hsl(var(--h) 45% 28%)
+      -> rgb(69, 39, 104)        works
+
+So the coloured tabs — *"as if you are opening a giant tabbed folio"* — had
+**no background and no stripe**, and nothing caught it because an invalid
+custom-property substitution fails silently. Derived through `--fa-tile-ink`
+now, from the avatar generator's own two lightness targets. Contrast
+re-measured in both schemes: worst stripe 4.41:1, all above the 3:1 bar.
+
+`--fa-tile-on` carries the absence: `GENERIC.tone` is **0** and means "no
+avatar declared", not red, and 9 of 14 harnesses are generic.
+
+### The regions' caps competed, and the measurement is the argument
+
+Each region got a cap and the arithmetic was never checked against a viewport.
+With the document index open: 60px header + 33% index + 50% footer left the
+middle **93px** in a 900px column. The middle now carries an **8rem floor**
+and both capped siblings yield to it, which they can afford because each
+scrolls inside its own cap.
+
+### Measured, before -> after, Chromium 1280x900
+
+| | before | after |
+|---|---|---|
+| `.side-bar` scroll | 1200/900 | 900/900 |
+| `.site-nav` (middle) | 64px holding 944px | 297-386px, scrolls |
+| `.site-footer` (bottom) | 1076px, overflowing | capped, scrolls internally |
+| home | absent | pinned, y=884 |
+| divider stripe | `0px none` | 6px solid, ≥4.41:1 |
+| harness mark | none | avatar or initial |
+
+### Gap 6 has no subject, and that is the finding
+
+`603s` slice 1 declared seven `avatarRegion` crops and they are on
+`landing-*-card` art. Every instance's `icon` is a **different image**
+(`cat-harness` declares `mark`). **Which card belongs to which harness is an
+assignment nobody has made** — the card names are roles and topics (engineer,
+analyst, architecture), not instances. The crop mechanism is built and tested;
+choosing the mapping is the owner's, not mine.
