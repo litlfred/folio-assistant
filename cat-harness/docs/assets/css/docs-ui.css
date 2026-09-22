@@ -1929,6 +1929,45 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   margin-right: 0.4rem;
   flex: none;
 }
+
+/* ── The mark as a MASK — one asset, both schemes ─────────────────────
+ *
+ * Owner, 2026-09-22: *"I want theme like in avaatars"*, pointing at the @
+ * logo. This is that mechanism, unchanged from `avatars.css`: the glyph is a
+ * `mask-image` and the colour is `background-color`, so a scheme is a value
+ * rather than a second file.
+ *
+ * IT CLOSES A DEFERRAL THIS FILE ALREADY RECORDED, a few lines up: *"the mark
+ * is fixed sage in both schemes … left as-is deliberately … recorded here
+ * rather than silently corrected."* It also ends a disagreement nothing had
+ * recorded — `cat-harness` declares tone **268** and its mark was sage, two
+ * colour vocabularies for one instance, which is the drift `schemas/theme.ts`
+ * exists to have ended.
+ *
+ * THE TWO COLOURS ARE THE AVATAR GENERATOR'S OWN TARGETS, not new ones:
+ * `hsl(<tone> 46% 34%)` light and `hsl(<tone> 42% 72%)` dark, from
+ * `gen-avatars-css.ts`. Using different numbers here would be a third
+ * vocabulary while removing the second.
+ *
+ * WHY THE SIZE RULE ABOVE STILL MATTERS. 2rem was chosen because the ears
+ * cross the ring and only a 3-unit halo separates them — 0.6 px at 1.5rem,
+ * which fused them into a disc. The mask keeps that halo as a CUT-OUT, so the
+ * measurement is unchanged and so is the size. */
+.fa-site-mark--masked {
+  display: inline-block;
+  background-color: hsl(268 42% 72%);
+  -webkit-mask-image: var(--fa-site-mark-src);
+  mask-image: var(--fa-site-mark-src);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+:root[data-fa-scheme="light"] .fa-site-mark--masked {
+  background-color: hsl(268 46% 34%);
+}
 .fa-site-title {
   vertical-align: baseline;
 }
