@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/skills/l2-dak-authoring/output.schema.json",
+  "title": "L2 DAK Authoring Output",
+  "description": "Output schema for L2 DAK authoring.",
+  "type": "object",
+  "required": [
+    "artifacts",
+    "status"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bpmn",
+              "dmn",
+              "spreadsheet",
+              "markdown",
+              "fsh"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready-for-review",
+        "approved"
+      ]
+    },
+    "validationIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/amazing-ptolemy-2ceyvg",
+    "sha": "33fd7efd064b0352ed853d6d06dd64987ffbece9",
+    "pr": "942/merge",
+    "run": "35723663617"
+  }
+}
