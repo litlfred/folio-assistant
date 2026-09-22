@@ -1,0 +1,9 @@
+{
+  "_comment": "Attacker-CHOSEN but shape-constrained expressions inside `run:` blocks — refs, PR numbers, repository names. A git ref cannot contain a space, a quote or a semicolon and a PR number is an integer, so none carries a shell break; they are listed because 'cannot carry THIS payload' is a narrower claim than 'safe'. FREE TEXT is never baselined: a quote is all it takes, and the remedy (pass it through `env:`) is one line. Keyed by expression rather than line so an unrelated step added above does not churn the file. Refresh with --write-baseline.",
+  "known": [
+    "feature-staging.yml: github.event.pull_request.number",
+    "feature-staging.yml: github.event.pull_request.number || ''",
+    "feature-staging.yml: github.event.pull_request.number || 'n/a'",
+    "feature-staging.yml: github.event.repository.name"
+  ]
+}

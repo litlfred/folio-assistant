@@ -1,12 +1,12 @@
 ---
 # folio-assistant-a58y
 title: 'ENFORCE: qa-reporting gains its first consumer — a QA verdict whose reviewer cannot emit one is refused'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T07:22:05Z
+parent: folio-assistant-3x2n
 ---
 
 The declared permission `qa-reporting` — *"Emit QA reports"* — has **zero
@@ -144,3 +144,20 @@ hook is **not retroactive**, and a test pins that.
 `roundtrip-back-translator (subagent)` have no actor, and none of the thirty
 declared actors obviously IS them. Inventing one is the same call this bean
 already declined once.
+
+## Summary of Changes
+
+`qa-reporting` has its first live consumer. `QaReviewer.actor` is the hook;
+`check:qa-reviewer-permission` is the gate, with three outcomes kept apart —
+permitted, forbidden (never baselined), unresolved (baselined, shrink-only).
+
+Both owner rulings implemented: script sweeps stamp `ci-pipeline` or
+`local-sweep` by where they ran; agent parties stamp `untainted-adjudicator`
+(holds the permission) or `untainted-checker` (**deliberately holds nothing**,
+which is what makes "a checker must not rule" structurally refusable).
+
+Measured across the work: unresolved reviewer ids **9 → 5**, entries naming no
+actor **5,896 → 5,856**. The five remaining are `qa-checkers-*.ts`, wired and
+waiting for a sweep that can run here — none undecided.
+
+Verified on `main` at `2ce66fc`. Merged in #829 and #848.

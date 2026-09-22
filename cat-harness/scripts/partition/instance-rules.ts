@@ -149,6 +149,21 @@ export const RULES: Rule[] = [
       // with a regex and imports nothing but `fs` and `path`, so it cannot
       // drag a folio in (bean `blv9`).
       "scripts/check-docs-templates.ts",
+      // HARNESS: its subject is the INSTANCE DECLARATION's `images[]` and the
+      // harness code that consumes a role, not a folio's content. It reads
+      // declarations through `cat-harness.ts` and walks `.ts` sources with a
+      // regex; no folio content is opened (bean `5yrl`).
+      //
+      // IT CARRIED a bare `import "../schemas/folio-graph-kind.js"` until
+      // #840 merged, because `readDeclaration` threw on this repo's own
+      // declaration without it — one of the 25 harness -> core registration
+      // edges bean `q2wn` measured. #840 moved the graph-kind registry to a
+      // leaf and put the trigger at `cat-harness.ts`'s foot, so the import
+      // became unnecessary AND became an edge the fixed regex can see. It was
+      // REMOVED here in the same merge that brought #840 in, and the gate was
+      // re-run to prove the registration still resolves without it rather
+      // than assumed to.
+      "scripts/check-image-roles.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -800,6 +815,12 @@ export const RULES: Rule[] = [
       // checkout's build wiring, not about any folio's material — it imports
       // node builtins and nothing else.
       "scripts/check-lockfile-pinning.ts",
+      // The workflow-injection gate. Harness by the same argument as its two
+      // neighbours: it reads this repository's own `.github/workflows/` and
+      // grades whether an attacker-supplied expression can reach a shell. A
+      // fact about the checkout's build wiring, not about any folio's
+      // material — node builtins only.
+      "scripts/check-workflow-injection.ts",
       // The credential gate. Harness by SUBJECT rather than by import: it
       // walks this checkout's declared roots and grades the bytes committed
       // there. It reads a folio's files where one is present, but what it
@@ -930,6 +951,7 @@ export const RULES: Rule[] = [
       //    folio's content model.
       "scripts/check-actor-reach.ts",       // reads role-graph
       "scripts/check-avatar-coverage.ts",   // avatars belong to roles
+      "scripts/check-avatar-instances.ts",  // the same, on the INSTANCE axis
       "scripts/check-declared-assets.ts",   // the instance declaration
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph

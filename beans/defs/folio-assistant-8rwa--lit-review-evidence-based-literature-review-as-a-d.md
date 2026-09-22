@@ -1,12 +1,12 @@
 ---
 # folio-assistant-8rwa
 title: 'LIT REVIEW: evidence-based literature review as a dispatched, untainted step in guideline development — WHO living guidelines'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T07:22:05Z
+parent: folio-assistant-3x2n
 ---
 
 Owner, 2026-09-21: *"need lit review, put this also as part of workflow for
@@ -87,3 +87,16 @@ workflow, not a style rule."* This skill is on the other side of that line, so
 the two do not overlap. It also already practises the spine's discipline from
 its own direction: a finding is upheld by **opening the cited page**, never by
 trusting the rule's wording.
+
+## Summary of Changes
+
+`skills/folio-core/evidence-review.md` expresses the recurring-surveillance
+shape against the spine and carries the fencing analysis: seven candidate rules
+through `domain-fencing`'s three questions, **three earn a place on the
+platform and four are fenced**. Nothing is shipped for the fenced four —
+declaring empty criteria for them would be `dh4f` exactly.
+
+The finding worth keeping: the platform did not need a rule for evidence
+review, it needed to notice the rule it already had was the same one.
+
+Verified on `main` at `2ce66fc`. Merged in #829.
