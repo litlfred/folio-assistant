@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sj6m
 title: 'TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T06:48:03Z
-updated_at: 2026-09-22T06:48:27Z
+updated_at: 2026-09-22T07:17:42Z
 parent: folio-assistant-vke6
 ---
 
@@ -91,3 +91,88 @@ disambiguate rather than resolved by picking the reading that suits the rest.
 Do not add `tool` to `KG_SUBJECT_KINDS` with no criterion. An enum member with
 nothing behind it makes `kg:audit` report tools as considered-and-clean, which
 is worse than today: right now the silence is at least visible as absence.
+
+## Requirement 2 measured 2026-09-22 — and it lands on a documented gap
+
+The Done-when said to measure whether `check-declared-assets` reaches Tool
+nodes **before** building anything for requirement 2. It does not, and the
+answer reframes the requirement.
+
+**`check-declared-assets` is not about Tool nodes at all.** It reads
+`declaredAssets(root)`, which returns `decl.assets` — the INSTANCE
+declaration's asset array, the `AGENTS.md` case from bean `v8gh`. So this is a
+gap in the MECHANISM, not in that check's coverage, and widening it would be
+the wrong repair.
+
+**A Tool node's asset reference is `maintains`** — *"the artefacts this Tool is
+authoritative for, as the URLs they are actually served at"* (`collectTools`,
+`kg-export.ts`), with `maintainsFrom` carrying the repo-relative source.
+
+**And the gap is already documented, by a COMPLETED bean.** `6f1x` narrowed
+`kg:schema:check`'s `unproduced` reconciliation to artefacts whose declaring
+Tool invokes `bun run kg:schema`, and stated the cost outright:
+
+> *"Coverage of every other producer's artefacts is now ABSENT, not narrower.
+> An artefact maintained by a Tool that some other command produces can rot to
+> a 404 and nothing notices. Today that is two artefacts; it will be more as
+> `d308` proceeds."*
+
+### The count, and `6f1x`'s prediction held
+
+| | |
+|---|---|
+| Tool nodes | 69 |
+| ...declaring `maintains` | 7 (7 artefacts claimed) |
+| ...covered by `kg:schema:check` | 3 |
+| **...covered by nothing** | **4** |
+
+`6f1x` said two. It is **four**, so the prediction was right and the gap has
+doubled. The uncovered claims:
+
+    assets/css/themes.css        assets/css/avatars.css
+    ns/vocabulary.jsonld         ns/content/v1.jsonld
+
+### All four currently resolve — so this is unchecked, not broken
+
+Checked rather than assumed, because "uncovered" and "already a 404" are
+different findings and only one is urgent:
+
+- `ns/vocabulary.jsonld` and `ns/content/v1.jsonld` are written by
+  `docs-site.yml` (`ns-export --out`, and a `cp` of the content context).
+- `themes.css` and `avatars.css` appear NOWHERE in that workflow — not even
+  by basename — but both are committed under `cat-harness/docs/assets/css/`
+  and Jekyll copies `docs/` wholesale, so they publish.
+
+No live `blv9`. What is missing is that nothing would notice if a generator
+stopped writing one.
+
+### The mechanism `6f1x` said it lacked now exists
+
+`6f1x`'s blocker was that the script *"cannot see whether the site build wrote
+a file into `_site/`"*. Bean `dyd3` built exactly that reader:
+`siteOutputs()` in `scripts/tests/bootstrap-graph.test.ts` extracts every
+`--out` path from a workflow and expands its `print-stub` captures.
+
+**Coverage needs BOTH halves**, which the measurement above is what shows:
+
+1. artefacts written by a workflow `--out` — `siteOutputs` reads these today
+2. artefacts committed under `docs/` and copied verbatim by Jekyll — the two
+   CSS files, invisible to a workflow scan
+
+A check built on (1) alone would report the two CSS claims as unproduced and
+be wrong about both, which is the same over-narrow reading `6f1x` was opened
+to correct, in the opposite direction.
+
+## Done when — updated
+
+- [ ] `skill.update` is disambiguated, because 1–3 may be scoped by it
+- [ ] `tool` is a QA subject kind, with at least one criterion, and the 69
+      nodes are reported rather than skipped — including a third state for a
+      tool the criterion cannot judge
+- [x] Whether `check-declared-assets` reaches Tool nodes is MEASURED — it does
+      not, the relation is `maintains`, and the gap is `6f1x`'s, now doubled
+      from 2 uncovered artefacts to 4
+- [ ] The pre-execution security gate has a consumer, and a test that fails
+      when the consumer stops consulting it
+- [ ] `0grh` is read against requirement 4
+
