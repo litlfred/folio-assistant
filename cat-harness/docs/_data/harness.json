@@ -180,6 +180,18 @@
       "hidden": false
     },
     {
+      "id": "docs",
+      "directory": "docs",
+      "title": "Docs — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/docs/",
+      "hidden": false
+    },
+    {
       "id": "folio-assist-core-schemas",
       "directory": "folio-assist-core-schemas",
       "title": "folio-assist-core-schemas",
@@ -977,7 +989,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 13
+          "value": 14
         }
       ],
       "visualisations": [
@@ -990,7 +1002,8 @@
           "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "docs"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/docs/"
         },
         {
           "kind": "folio"
@@ -1059,7 +1072,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 7 graph(s) with no published viewer — folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
