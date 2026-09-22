@@ -92,7 +92,7 @@ the two would disagree, the technique wins and the phase entry is wrong —
 |---|---|
 | `skills/folio-core/data-modelling.md` | the **technique**, with no CRDM in it |
 | `skills/folio-core/crdm-data-model.md` | the **phase** — when, with whom, what it consumes and hands on |
-| `skills/workflows/crdm-data-model.bpmn` | 5 activities, 3 lanes, `<folio:policy enforcement="strict">` |
+| `processes/crdm-data-model.bpmn` | 5 activities, 3 lanes, `<folio:policy enforcement="strict">` |
 | `crdm-requirements.bpmn` | `Call_DataModel`, the fifth `callActivity` |
 
 ### The technique skill argues from this repository's own failures

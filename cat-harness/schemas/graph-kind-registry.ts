@@ -419,8 +419,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
   },
-  workflows: {
-    type: termIri("WorkflowGraph"),
+  processes: {
+    type: termIri("ProcessGraph"),
     renderable: false,
     // The BPMN and DMN are the source of truth and are READ to run a process;
     // where a running instance GOT TO is `workflow-state`, which is `state`.
@@ -1233,6 +1233,21 @@ export const REGISTRATION_MODULE: Readonly<Record<string, string>> = {
 
 export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
   kg: "cat-harness",
+  // `workflows` was this kind's name for a few hours on 2026-09-21, between
+  // the `cat-harness` split and the owner settling the term.
+  //
+  // PROCESS won on evidence rather than preference. BPMN's own element is
+  // `<bpmn:process>`, and WHO's DAK component list — which this platform
+  // exists to author against — names "Business processes and decision logic"
+  // and "Personas and scenarios". The earlier ruling on bean `rapm`
+  // ("prefer workflows over processes") was made before either was checked
+  // and is OVERTURNED, not forgotten: the owner, 2026-09-21, *"we have
+  // BPMN... seems like process is best"*.
+  //
+  // An alias rather than a sweep because it is exactly 1:1, which is the one
+  // shape this table can express — the `cat-harness` split could not use it
+  // and had to keep its umbrella instead.
+  workflows: "processes",
 };
 
 /** What a declared kind name means now, and whether it was a deprecated spelling. */

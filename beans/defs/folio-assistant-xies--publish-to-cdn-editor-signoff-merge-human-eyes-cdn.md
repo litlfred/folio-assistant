@@ -40,7 +40,7 @@ Owner reframed this as the general case, with who-iris as its worked example:
 > generalize skils and tools.
 
 Landed on this branch: the skill `kg-to-portal`, the process
-`skills/workflows/kg-to-portal.bpmn`, the architecture drawing at
+`processes/kg-to-portal.bpmn`, the architecture drawing at
 `cat-harness/docs/assets/img/kg-to-portal-architecture.svg`, and
 `who-iris/docs/kg-to-portal.html` as the worked example with this instance's own
 measured numbers.

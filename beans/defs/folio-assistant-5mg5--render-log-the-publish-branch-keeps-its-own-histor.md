@@ -33,7 +33,7 @@ logging directory/file on gh-pages. skill + tool."*
 | schema | `cat-harness/schemas/render-log.ts` — `folio-render-log/v1` |
 | tool | `cat-harness/scripts/render-log.ts` |
 | skill | `cat-harness/skills/folio-core/render-logging.md` |
-| process | `cat-harness/skills/workflows/staging-render-log.bpmn` |
+| process | `cat-harness/processes/staging-render-log.bpmn` |
 | the carry | `CARRIED_PREFIXES` in `cat-harness/scripts/restore-staging.ts` |
 | the wiring | `.github/workflows/feature-staging.yml`, three jobs |
 

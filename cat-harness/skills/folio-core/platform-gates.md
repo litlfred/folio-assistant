@@ -251,7 +251,7 @@ Every gate in that workflow carries a comment saying what it caught and when.
 If you think one is wrong, that comment is what you are arguing with.
 
 **It does not make `--all` optional before a push that touches a diagram.**
-Anything under `skills/workflows/` changes a rendered SVG, and the check for
+Anything under `processes/` changes a rendered SVG, and the check for
 that is in the browser job.
 
 ---

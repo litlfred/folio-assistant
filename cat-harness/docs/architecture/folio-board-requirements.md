@@ -473,16 +473,73 @@ and the gate said clean*.
 
 ### Still open from this round
 
-**Whether the library view distinguishes materialised from not-materialised.**
-The states now have a name and a schema — `referenced` / `materialized` /
-`unknown` — so the question is no longer *is there a distinction* but *does
-the reader's view render it*. Nothing yet says.
+**The library view already renders all three states — this was recorded here
+as open twice, and both were wrong** (bean `mm36`, measured 2026-09-22).
 
-**F8/F9 is not built, and the gap is measured rather than asserted.** On the
-deployed preview, `who-iris/index.html` loads `docs-ui.js` **0** times and
-carries **0** boards and **0** tiles, against 9 / 1 / 28 on the
-folio-assistant landing page. A reader browsing that library has **no folio at
-all** — not a degraded one.
+`gen-iris-pages.ts` emits `materialized`, `referenced` and `unknown` as
+distinct badges, with `stateBadge(k.materialization?.state ?? "unknown")` —
+**defaulting to `unknown`, never to `referenced`**, which is the schema's
+no-default rule honoured at the render layer rather than only in the type. On
+`origin/gh-pages` a real collection page carries `state materialized` ×2 and
+`state referenced` ×1.
+
+**The first look was misleading and the trap is worth recording**: the source
+tree holds three committed `who-iris/docs/` pages and the badges appear on
+only one of them — `kg-to-portal.html`, the *legend*. The catalogue pages are
+generated at build time, so a source-tree grep says "almost nowhere" about
+something that is in fact everywhere. **This had to be measured on the
+published site.**
+
+The owner's own words are in that generator's header and are about exactly
+this — *"collectiosn w/ nothing greyed out"* — with the reasoning beside them:
+*"a row that says **referenced** reads as 'upstream, not here', which is the
+actual state and the distinction the whole catalogue-by-reference model is
+for."*
+
+**What this does to the ordering question: it dissolves it.** The open
+decision was R25's glass *versus* R30's library half, on R30's warning that
+building the glass alone ships the two-state model. The library half is not
+missing — what is missing is one **action**, the way from a library row onto
+the glass (*"go back to the library and pull it out to folio display
+window"*, the 1 → 3 transition). The view that action hangs off exists and
+already says which items are held. So the glass and its pull-out action are
+**one unit of work**, and there is nothing to sequence.
+
+**F8/F9 is blocked on R25, structurally rather than by scheduling** — bean
+`jpjt`, settled 2026-09-21.
+
+The gap is measured: on the deployed preview `who-iris/index.html` loads
+`docs-ui.js` **0** times and carries **0** boards and **0** tiles, against
+9 / 1 / 28 on the folio-assistant landing page. A reader browsing that library
+has **no folio at all**, not a degraded one.
+
+**The delivery mechanism is decided** — three ways were tabled and the owner
+chose an **exported mount fragment plus a gate**, the shape
+`staging-banner.ts` already proves, reusing `bodyInsertionPoint()` so that
+`ur84` cannot recur.
+
+**What blocks it is that nothing would mount.** `who-iris` pages are complete
+standalone HTML from their own generator — their own `<style>` built from the
+captured IRIS theme, no Jekyll, no `head_custom.html` — because the page is a
+**faithful replica** and the *"ingested copy — not WHO, not live"* banner is
+its requirement 1. Loading `docs-ui.js` there is safe (all seven mounts guard
+themselves and return without their markers), and that is the whole problem:
+
+| surface | requires | on a replica page |
+|---|---|---|
+| launcher | a **sidebar header** | absent |
+| board | `#main-content` / `.main-content` / `<main>`, inserted at the **top** | absent, and the top is the IRIS content |
+| language bar | `.main-content` | absent |
+
+**Every visible folio surface today is bound to just-the-docs page
+furniture**, and giving a library page that furniture means making it look
+like folio-assistant — the one thing who-iris exists not to do.
+
+**R25 is therefore the unblock rather than the next item.** A pull-down glass
+comes down OVER what is being browsed, so it is the only folio surface that
+does not require the host page to look like the harness. Shipping the mount
+fragment before it would create a gate for a thing with no consumer — R17's
+lesson, a third time.
 
 Both tracked on
 [issue #796](https://github.com/litlfred/folio-assistant/issues/796).

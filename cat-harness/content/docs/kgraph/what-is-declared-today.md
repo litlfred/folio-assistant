@@ -42,7 +42,7 @@ for Skills; what it loses is the finer query, which it never had.
 
 **What the split cost, and where it nearly went wrong.** Two directories that
 had been reached by *convention* stopped being reached the moment their parent
-changed kind: `skills/workflows/` and `methodologies/crdm/workflows/` both sat
+changed kind: `processes/` and `methodologies/crdm/processes/` both sat
 inside a `cat-harness` directory and were found by walking it. Each now declares
 `workflows` in its own right. The second was caught only because the generated
 process index reported it as an **orphan** rather than quietly indexing eight

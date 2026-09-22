@@ -28,7 +28,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { compose, docsLayers, mergeConfig, treeDigest } from "../compose-docs.ts";
+import { compose, docsLayers, isWithheld, mergeConfig, treeDigest } from "../compose-docs.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { parse as parseYaml } from "yaml";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -137,8 +137,40 @@ describe("an EMPTY overlay composes byte-identically — the safety property", (
     // path the composed tree adds must sit under a composed instance's own
     // prefix. That is strictly stronger than the count it replaces, which
     // said nothing about WHERE a new file could appear.
-    const differing = [...before].filter(([p, h]) => after.get(p) !== h).map(([p]) => p);
+    // WITHHELD PATHS ARE ABSENT ON PURPOSE, so the property is stated against
+    // the base MINUS them rather than against the base. Added 2026-09-21 with
+    // `publish: "staging-only"`.
+    //
+    // This is the one weakening in this file that had to be argued rather than
+    // just made. The property licenses pointing `docs-site.yml`'s `source:` at
+    // the composed tree, and it did so by saying composition changes NOTHING.
+    // A canonical compose now deliberately omits a page, so that sentence is
+    // no longer true as written.
+    //
+    // What replaces it is not "nothing changes except what changed" — that
+    // would license anything. It is two separate claims, and the second is why
+    // this is still a safety property:
+    //
+    //   1. every base file that is NOT withheld is byte-identical, and
+    //   2. the withheld set is exactly what the declarations asked for,
+    //      which `staging-only-publish.test.ts` asserts against the real
+    //      declaration (`["fsh-guts/"]`) rather than against whatever the
+    //      composer happened to drop.
+    //
+    // Without (2) this assertion would pass for a composer that silently lost
+    // files, since it would simply report them as withheld. The two tests are
+    // load-bearing together and neither is sufficient alone.
+    const withheld = report.withheld;
+    const differing = [...before]
+      .filter(([p]) => !isWithheld(p, withheld))
+      .filter(([p, h]) => after.get(p) !== h)
+      .map(([p]) => p);
     expect(differing).toEqual([]);
+
+    // And the omissions are ONLY the withheld ones — a base file missing for
+    // any other reason is the failure this property exists to catch.
+    const missingFromComposed = [...before.keys()].filter((p) => !after.has(p));
+    expect(missingFromComposed.sort()).toEqual([...withheld].sort());
 
     const prefixes = report.composed.map((c) => `${c.under}/`);
     const strays = [...after.keys()].filter(

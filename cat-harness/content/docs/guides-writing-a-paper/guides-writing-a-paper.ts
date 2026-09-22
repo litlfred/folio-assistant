@@ -16,11 +16,11 @@ export default webpage({
       title: "The end-to-end workflow",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/authoring-a-paper.bpmn",
+        source: "processes/authoring-a-paper.bpmn",
         rendered: "../assets/img/workflows/authoring-a-paper.svg",
         alt: "BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-paper.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-paper.bpmn" },
           { text: "full-size SVG", href: "../assets/img/workflows/authoring-a-paper.svg" },
         ],
         linkStyle: "caption",

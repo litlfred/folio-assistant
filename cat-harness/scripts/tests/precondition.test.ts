@@ -24,7 +24,7 @@ import {
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, "../.."));
-const REAL = join(ROOT, "bootstrap/workflows/initialize-harness.bpmn");
+const REAL = join(ROOT, "bootstrap/processes/initialize-harness.bpmn");
 
 /** A minimal loadable process, with whatever extension XML the case needs. */
 function fixture(ext: string): string {
@@ -49,8 +49,8 @@ function fixture(ext: string): string {
 const refuses = (ext: string) => expect(loadProcessModel(fixture(ext))).rejects.toThrow();
 
 describe("the real diagram — `initialize-harness`", () => {
-  // Loaded BY PATH because no corpus test covers `bootstrap/workflows/`:
-  // the platform's sweeps scan `cat-harness/skills/workflows/` only, which is
+  // Loaded BY PATH because no corpus test covers `bootstrap/processes/`:
+  // the platform's sweeps scan `cat-harness/processes/` only, which is
   // the same asymmetry bean `pve3` is about. Without this the element could be
   // added and the one diagram that needed it left behind.
   test("declares four preconditions, three of them unobservable", async () => {

@@ -2,7 +2,7 @@
 /**
  * Where will this folio be published, and is it there yet?
  *
- * The last thing `skills/workflows/getting-started.bpmn` does is hand the author
+ * The last thing `processes/getting-started.bpmn` does is hand the author
  * a link, because a folio that has just been scaffolded is worth very little to
  * its author until they can see it. This derives the address, reports whether
  * anything is set up to publish to it, and — with `--wait` — probes until the

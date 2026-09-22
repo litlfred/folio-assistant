@@ -20,6 +20,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
+import { isWithheld, withheldFromCanonical } from "../compose-docs.ts";
+import { pageRelPath } from "../gen-fsh-guts-viz.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 // THE REPOSITORY root. `fsh-guts/` is declared `scope: "repository"` — it sits
@@ -69,12 +71,45 @@ describe("fsh-guts stays out of the render pipeline", () => {
     expect(offenders).toEqual([]);
   });
 
-  test("it is not inside the declared site directory", () => {
+  test("its CONTENT is not inside the declared site directory", () => {
     // The site root is `siteDirFor`'s answer, not a literal — so this keeps
     // holding if the site moves again, which is the case that motivated the
     // test.
-    const site = siteDirFor(ROOT);
-    expect(existsSync(join(ROOT, site, GUTS))).toBe(false);
+    //
+    // NARROWED FROM "nothing named fsh-guts is in the site directory" on
+    // 2026-09-21, and narrowed rather than dropped. The owner asked to see
+    // this graph and ruled: render an INDEX of it, exclude that index from the
+    // canonical deploy. So `<site>/fsh-guts/` now exists and holds exactly one
+    // generated page.
+    //
+    // The property this test was written for is untouched, and it is worth
+    // stating precisely because the file count alone no longer shows it:
+    // **no byte of the trashcan's content is in the site tree.** The index
+    // links to each file on GitHub rather than copying it, so the graph stays
+    // the one copy. What changed is that a reader can now find out what is in
+    // there; what did not change is that the content is not republished.
+    const site = join(ROOT, siteDirFor(ROOT), GUTS);
+    const inSite = existsSync(site) ? readdirSync(site) : [];
+    expect(inSite.filter((f) => f !== "index.md")).toEqual([]);
+  });
+
+  test("and the index that IS there is withheld from the canonical deploy", () => {
+    // The other half of the same ruling, and the half that actually keeps the
+    // trashcan unpublished now that a page for it exists. Without this
+    // assertion the narrowing above would be a hole: a page in the site
+    // directory that nothing withholds is a published page.
+    //
+    // Asserted through `withheldFromCanonical` rather than by reading the
+    // declaration, because what matters is what the COMPOSER will do — the
+    // declaration is an input to that, not a substitute for it.
+    const rel = pageRelPath(REPO_ROOT);
+    if (rel === undefined) {
+      // No page declared is a legitimate state: the graph is then unrendered
+      // exactly as it was before the ruling, which the test above covers.
+      expect(existsSync(join(ROOT, siteDirFor(ROOT), GUTS))).toBe(false);
+      return;
+    }
+    expect(isWithheld(rel, withheldFromCanonical(REPO_ROOT))).toBe(true);
   });
 
   test("its nodes declare themselves", () => {

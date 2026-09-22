@@ -297,11 +297,69 @@ function tileFor(
     if (found) visualisations.push({ kind, path: found });
     else visualisations.push({ kind });
   }
+  // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
+  //
+  // Discovery above is by CONVENTION — a page at `/<handler>/<kind>/<name>/`
+  // or, for the site's owner, `/<kind>/`. A kind can therefore have a viewer
+  // that is real, declared and on disk, and still not be found here, because
+  // it was published somewhere the convention does not look: an instance's own
+  // mounted `docs/`, for example.
+  //
+  // Reporting both as "no published viewer" makes the artefact assert
+  // something false. Measured 2026-09-22: `who-iris/catalogue` gained a viewer
+  // at `who-iris/docs/catalogue.html`, declared and resolving — and this
+  // finding went on saying nobody had built one, while the declared-ref check
+  // twenty lines below reported the same declaration as perfectly fine. Two
+  // halves of one file disagreeing about one graph.
+  //
+  // The fix here is the DISTINCTION, not the discovery. Linking an
+  // instance-relative ref means resolving it through `withRoutes`, which is a
+  // change to how every tile resolves and belongs in its own right rather than
+  // bolted on. Naming the case is what stops the report lying in the meantime,
+  // and tells whoever does that work which gap they are closing.
+  const declaredFor = (kind: string, stagingOnly: boolean): string | undefined => {
+    for (const d of dirs) {
+      if (!(d.graphKinds ?? []).includes(kind)) continue;
+      for (const v of visualisationsOf(d.coverage, d.id)) {
+        if ((v.publish === "staging-only") !== stagingOnly) continue;
+        if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
+      }
+    }
+    return undefined;
+  };
+
   const unlinked = visualisations.filter((v) => v.path === undefined).map((v) => v.kind);
-  if (unlinked.length > 0) {
+  // A STAGING-ONLY viewer is unlinked ON PURPOSE, so it is neither of the two
+  // gaps below. Saying otherwise would have this generator report the
+  // `publish: "staging-only"` design as a defect — which it did for `fsh-guts`
+  // the moment the split above started working, and a report that flags an
+  // intended state as a finding is the same disease as one that hides a real
+  // gap. It is STATED rather than dropped: silence would make "deliberately
+  // withheld" indistinguishable from "nobody looked".
+  const stagingOnly = unlinked.filter((k) => declaredFor(k, true) !== undefined);
+  const rest = unlinked.filter((k) => !stagingOnly.includes(k));
+  const undiscovered = rest.filter((k) => declaredFor(k, false) !== undefined);
+  const unbuilt = rest.filter((k) => declaredFor(k, false) === undefined);
+
+  if (stagingOnly.length > 0) {
     findings.push(
-      `${decl.name}: declares ${unlinked.length} graph(s) with no published viewer — ` +
-        `${unlinked.join(", ")}. Declared and not rendered is a gap, not a dead link.`,
+      `${decl.name}: ${stagingOnly.length} graph(s) declare a staging-only viewer, deliberately ` +
+        `not linked on the canonical deploy — ${stagingOnly.join(", ")}. Not a gap.`,
+    );
+  }
+
+  if (unbuilt.length > 0) {
+    findings.push(
+      `${decl.name}: declares ${unbuilt.length} graph(s) with no published viewer — ` +
+        `${unbuilt.join(", ")}. Declared and not rendered is a gap, not a dead link.`,
+    );
+  }
+  if (undiscovered.length > 0) {
+    findings.push(
+      `${decl.name}: ${undiscovered.length} graph(s) have a declared viewer that exists but is ` +
+        `not at a conventional path, so no tile links it — ` +
+        `${undiscovered.map((k) => `${k} (${declaredFor(k, false)})`).join(", ")}. ` +
+        `Built and unreachable is a different gap from unbuilt.`,
     );
   }
 

@@ -136,7 +136,7 @@ export const RULES: Rule[] = [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
-      "scripts/render-bpmn.ts",              // BPMN → SVG (the skills/workflows one)
+      "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests
@@ -479,8 +479,11 @@ export const RULES: Rule[] = [
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/gen-uploads-viz.ts",          // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
+      "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
@@ -779,6 +782,19 @@ export const RULES: Rule[] = [
       // is a fact about the checkout's build wiring, not about any folio's
       // material — it imports `repoRootFor` and nothing else.
       "scripts/check-workflow-script-paths.ts",
+      // The supply-chain gate, and harness by the same argument: it reads this
+      // repository's own `.github/workflows/` and grades whether a pinned
+      // install can silently degrade to an unpinned one. A fact about the
+      // checkout's build wiring, not about any folio's material — it imports
+      // node builtins and nothing else.
+      "scripts/check-lockfile-pinning.ts",
+      // The credential gate. Harness by SUBJECT rather than by import: it
+      // walks this checkout's declared roots and grades the bytes committed
+      // there. It reads a folio's files where one is present, but what it
+      // asserts is a property of the CHECKOUT — "no credential is committed
+      // here" — which is the same claim `check-portable-paths.ts` makes about
+      // filenames. Imports node builtins only.
+      "scripts/check-secret-leaks.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
@@ -1006,6 +1022,19 @@ export const RULES: Rule[] = [
       // is the second file that has caught — a reminder that the keyword rule
       // is a heuristic and the triage list is where its misses are corrected.
       "content/pipeline/qa-witness.ts",
+      // `qa-reporting`'s first consumer — the gate that refuses a QA verdict
+      // whose reviewer acts as an actor lacking the permission.
+      //
+      // CORE rather than harness, and the reason is an import direction rather
+      // than a subject. Its subject would argue for harness: it grades the
+      // actor/permission graph, which is harness material. But it imports
+      // `schemas/block-qa.ts` for `QaReviewer` and
+      // `content/pipeline/untainted-verification.ts` for the could-not-dispatch
+      // predicate, and both are core. Core may import the harness; the harness
+      // may not import core. Placing it in harness would reintroduce exactly
+      // the wrong-direction edge `schemas/namespaces.ts` was extracted to
+      // remove, a few rules up.
+      "scripts/check-qa-reviewer-permission.ts",
     ],
   },
 

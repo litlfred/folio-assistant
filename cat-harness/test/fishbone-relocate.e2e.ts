@@ -3,7 +3,7 @@
  *
  * Bean `folio-assistant-db7g`, R11 of issue #602. Owner: *"confrim arctions
  * [fishbones] on open content puts in fsh guts"*, and CRDM Q5: **delete
- * becomes move**. `skills/workflows/board-relocate.bpmn` is the drawn process;
+ * becomes move**. `processes/board-relocate.bpmn` is the drawn process;
  * this is its reader-facing half.
  *
  * ## The failure this file guards, and it cuts both ways

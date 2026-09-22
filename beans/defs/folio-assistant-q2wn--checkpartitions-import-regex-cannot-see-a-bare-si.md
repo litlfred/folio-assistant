@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q2wn
-title: "check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written"
-status: todo
+title: check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T22:20:00Z
-updated_at: 2026-09-21T22:20:00Z
+updated_at: 2026-09-21T23:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -72,3 +72,76 @@ as not reaching a file it imports directly.
 
 *Recorded by session_017MEZnJxx7WeekiNCabx4hx, which found it and did not
 pivot to it.*
+
+---
+
+## Measured 2026-09-21 — the blind spot hides 25 forbidden edges
+
+Done-when 2, run with the engine's **own** `analyse()` against its own `SPEC`,
+changing nothing but `IMPORT_RE` in a scratch copy:
+
+```
+                     current    with bare side-effect imports
+total edges             1886    1961   (+75)
+CROSS-BOUNDARY             0      25   (+25)
+unresolved                 0       0
+```
+
+*Re-verified after merging 11 commits from `main`, including #822's relocation
+of `skills/workflows/` to `processes/`. The total moved 1875 → 1886 as main
+added modules; **the +75 and the +25 did not move at all**. A relocation of
+that size is exactly what could have invalidated the figure, so it was re-run
+rather than carried forward.*
+
+`check:partition` exits **0** today and reports **zero** cross-boundary edges.
+Make the bare form visible and there are **25** — every one `harness → core`,
+every one pointing at `schemas/folio-graph-kind.ts`, from **24 distinct
+harness-layer modules**. Spot-checked rather than trusted:
+`scripts/check-waivers.ts:54` and `src/tools/skill-fetch.ts:20` both carry it.
+
+### This is no longer a tidy-up
+
+The bean was opened expecting a regex gap. The measurement says the gap is
+load-bearing: **the registration mechanism requires the harness layer to
+import core, and the declared layering forbids exactly that.** `harness` is
+the lower layer; `allowed["harness"]` does not list `core`, which is why
+`analyse()` classes all 25 as cross-edges.
+
+So the three Done-whens are not independent, and the order in this bean is
+wrong. Fixing `IMPORT_RE` first turns a green gate red with 25 violations that
+describe a real design tension rather than a mistake anybody made. **Done-when
+3 has to be settled first**, and it now has teeth it did not have when it was
+written as a tidy question about regex scope.
+
+### What is established, and what is not
+
+**Established.** 75 edges are invisible; 25 of them are cross-boundary under
+the rules as they stand today; the check passes today and would not after.
+
+**NOT established.** That `harness → core` *should* be forbidden for an import
+that binds nothing and exists only to run a registration. That is the open
+question, and the measurement sharpens it rather than answering it: a
+side-effect import is a real runtime dependency and carries no type, so the
+two halves of "dependency" genuinely disagree here. `x4a6` measured the other
+side of the same mechanism — 31 of 31 readers reach the registration — so it
+works; the question is whether the layering should say it may.
+
+Also worth keeping: the tool already has a third state, and says so in its own
+output — *"These are not cross-edges — they are edges this tool declined to
+judge."* Whatever is decided, an edge it cannot judge should not silently
+become an edge it never saw.
+
+## Done when
+
+- [ ] `IMPORT_RE` matches the bare side-effect form, with a test carrying the
+      two-imports-within-400-characters case. **Blocked on the decision below,
+      not on effort** — landing it alone reds the gate.
+- [x] Measured, before and after: **+75 edges, +25 cross-boundary**, all
+      `harness → core` to `folio-graph-kind.ts`.
+- [ ] **A decision on whether a side-effect import counts as a layer
+      dependency**, now with the consequence attached: counting it makes 25
+      currently-invisible edges violations. The options are an `allowed` edge
+      for registration, a third classification beside `cross` and
+      `declined-to-judge`, or moving the registration so the harness need not
+      reach for it — and the third contradicts what `folio-graph-kind.ts`
+      exists to defend.

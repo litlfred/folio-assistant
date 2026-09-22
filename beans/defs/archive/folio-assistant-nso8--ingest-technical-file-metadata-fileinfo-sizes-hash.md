@@ -26,7 +26,7 @@ with a checksum is verifiable, and can be re-fetched and compared later.
 Every asset in `manifest.jsonld` carries these fields, and they are produced by
 the ingest path rather than backfilled.
 
-Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_TechMeta`.
+Diagram: `processes/ingest-derive-content.bpmn`, `Task_TechMeta`.
 
 _2026-09-19T15:02:07Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
