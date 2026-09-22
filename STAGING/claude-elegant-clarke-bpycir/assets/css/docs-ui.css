@@ -634,6 +634,28 @@
 @media (min-width: 50rem) {
   .side-bar {
     width: var(--fa-nav-collapsed);
+    /* MIN-WIDTH BEATS WIDTH, and the theme sets one this never answered.
+     *
+     * `layout.scss` carries `.side-bar { min-width: 16.5rem }` inside its own
+     * `mq(lg)` (66.5rem). Overriding `width` alone therefore collapsed the
+     * sidebar at 820-1063px and did NOTHING at 1064px and up, where the
+     * cascade is irrelevant because a `min-width` floor is not something a
+     * later `width` can cross.
+     *
+     * MEASURED 2026-09-22, by rendering the built site at six viewports
+     * rather than by reading this file:
+     *
+     *   viewport 1063 -> width 56px,  min-width 0px     collapsed
+     *   viewport 1064 -> width 264px, min-width 264px   NOT collapsed
+     *
+     * And it was worse than a control that did not work, because
+     * `.side-bar + .main` still reserves `--fa-nav-collapsed`: the sidebar
+     * sat 264px wide over content that began at 56px, so its own
+     * `border-right` was painted ACROSS the page. The owner reported that as
+     * "there is stray border when collasped" — the border is the theme's and
+     * is correct; what was wrong is that the sidebar was over the page.
+     */
+    min-width: 0;
     align-items: flex-start;
     overflow-y: auto;
     overflow-x: hidden;
@@ -682,21 +704,36 @@
   /* THE OPEN CONTROL. A pointer is not the only input: `:hover` does nothing
      on a tablet, and `:focus-within` there only fires once a tap has already
      landed on a link the reader could not read. */
+  /* AT THE TOP OF THE STRIP, aligned to `navbar.ts`'s `.fa-nav-head`, which
+   * who-iris and every generated standalone page render. Owner's choice,
+   * 2026-09-22, from four offered: a bare glyph at the top, no words.
+   *
+   * POSITIONED rather than re-ordered. The control is a `<label>` inside
+   * `.site-footer`, the LAST of `.side-bar`'s four flex children, so `order`
+   * cannot lift it out of its parent — and moving the markup means overriding
+   * the theme's `sidebar.html`, which this file's own note refuses for a
+   * placement. A label drives its checkbox from anywhere in the document, so
+   * where it is PAINTED is free.
+   *
+   * `top` clears the site mark, whose height is the theme's own header. The
+   * strip is `--fa-nav-collapsed` wide and the glyph is centred in it, so it
+   * lands under the mark rather than beside it. */
   .fa-nav-toggle {
+    position: absolute;
+    top: 3.25rem;
+    left: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0 0.4rem 1rem;
+    justify-content: center;
+    width: var(--fa-nav-collapsed);
+    height: 1.75rem;
     cursor: pointer;
     user-select: none;
-    font-size: 0.75rem;
-    opacity: 0.8;
+    opacity: 0.7;
   }
-  .fa-nav-toggle .fa-nav-glyph { flex: none; width: 2rem; text-align: center; }
-  .fa-nav-toggle .fa-nav-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
-  .side-bar:hover .fa-nav-text,
-  .side-bar:focus-within .fa-nav-text,
-  .side-bar:has(.fa-nav-open:checked) .fa-nav-text { opacity: 1; }
+  .fa-nav-toggle:hover { opacity: 1; }
+  .fa-nav-toggle .fa-nav-glyph { flex: none; text-align: center; }
   /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
      so showing both would be two controls for one state. */
   .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }
@@ -1929,6 +1966,45 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   margin-right: 0.4rem;
   flex: none;
 }
+
+/* ── The mark as a MASK — one asset, both schemes ─────────────────────
+ *
+ * Owner, 2026-09-22: *"I want theme like in avaatars"*, pointing at the @
+ * logo. This is that mechanism, unchanged from `avatars.css`: the glyph is a
+ * `mask-image` and the colour is `background-color`, so a scheme is a value
+ * rather than a second file.
+ *
+ * IT CLOSES A DEFERRAL THIS FILE ALREADY RECORDED, a few lines up: *"the mark
+ * is fixed sage in both schemes … left as-is deliberately … recorded here
+ * rather than silently corrected."* It also ends a disagreement nothing had
+ * recorded — `cat-harness` declares tone **268** and its mark was sage, two
+ * colour vocabularies for one instance, which is the drift `schemas/theme.ts`
+ * exists to have ended.
+ *
+ * THE TWO COLOURS ARE THE AVATAR GENERATOR'S OWN TARGETS, not new ones:
+ * `hsl(<tone> 46% 34%)` light and `hsl(<tone> 42% 72%)` dark, from
+ * `gen-avatars-css.ts`. Using different numbers here would be a third
+ * vocabulary while removing the second.
+ *
+ * WHY THE SIZE RULE ABOVE STILL MATTERS. 2rem was chosen because the ears
+ * cross the ring and only a 3-unit halo separates them — 0.6 px at 1.5rem,
+ * which fused them into a disc. The mask keeps that halo as a CUT-OUT, so the
+ * measurement is unchanged and so is the size. */
+.fa-site-mark--masked {
+  display: inline-block;
+  background-color: hsl(268 42% 72%);
+  -webkit-mask-image: var(--fa-site-mark-src);
+  mask-image: var(--fa-site-mark-src);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+:root[data-fa-scheme="light"] .fa-site-mark--masked {
+  background-color: hsl(268 46% 34%);
+}
 .fa-site-title {
   vertical-align: baseline;
 }
@@ -2030,6 +2106,52 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 
 .fa-tile svg { width: 1.25rem; height: 1.25rem; fill: currentColor; flex: 0 0 auto; }
+
+/* ── The two greys ──────────────────────────────────────────────────────
+ *
+ * A graph with no viewer and a graph that is read-only both read as inert,
+ * and they are different facts. The first is not here at all: `docs-ui.js`
+ * skips a tile with no `href`, so it never reaches this stylesheet. The
+ * second opens perfectly and refuses an EDIT.
+ *
+ * So the read-only tile is NOT greyed down, and that is the point. Dimming it
+ * would spell it the same way as "nothing to open" — the collapse this exists
+ * to prevent — and it would also read as "less important", which materialized
+ * content emphatically is not. It gets a DIFFERENT mark instead: a dashed
+ * border, the established convention for a boundary you may look across and
+ * not cross.
+ *
+ * The state also reaches a screen reader through the tile's `aria-label`
+ * (`docs-ui.js`), never through colour alone, and the dashed border survives
+ * forced-colours mode where a background tint would not. */
+a.fa-tile[data-fa-readonly] {
+  border-style: dashed;
+}
+
+/* The same state on the harness viewer list, where it actually occurs today.
+ *
+ * A link cannot carry a dashed BORDER legibly — it has none — so the mark is a
+ * dashed underline plus a word. The word is there because this list is dense
+ * and a reader scanning it should not have to notice a line style; the dash
+ * carries it for anyone who reads the link itself. Neither is colour. */
+a[data-fa-readonly] {
+  text-decoration-style: dashed;
+}
+
+.fa-readonly-note {
+  margin-left: 0.4em;
+  font-size: 0.78em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+a.fa-tile[data-fa-readonly]:hover,
+a.fa-tile[data-fa-readonly]:focus-visible {
+  /* Hover keeps the dash: the tile is still read-only while you point at it,
+     and a mark that vanishes on interaction is a mark that is absent exactly
+     when somebody is about to act. */
+  border-style: dashed;
+}
 
 /* Hover and focus are given the SAME treatment deliberately: a reader driving
    this from the keyboard should see exactly what a reader with a mouse sees,
@@ -2533,6 +2655,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   object-position: center top;
 }
 
+/* A SCRIM, NOT IMAGE OPACITY — and the difference is why this needs one value
+ * where the approach it replaced needed two.
+ *
+ * `opacity` on the `<img>` does not tint toward a fixed colour: it blends the
+ * art with whatever renders BEHIND it, which is the page background. The
+ * landing panel this supersedes carried `opacity: 0.9` by default and `0.8`
+ * under the light override for exactly that reason — its ink is a fixed dark
+ * green sized against the cream cloud in the artwork, so fading toward WHITE
+ * brightens that cloud and widens the contrast margin while fading toward
+ * BLACK by the same amount narrows it. Enough fade in dark mode read as the
+ * ink sinking into a dimmed cloud rather than standing out from one, so the
+ * two schemes could not share a number.
+ *
+ * A scrim is a layer of a KNOWN colour between art and ink, so the contrast it
+ * buys does not depend on what is behind the card. One value, both schemes,
+ * and a theme can set it. The rules that carried the 0.9/0.8 pair were removed
+ * from `_includes/head_custom.html` once measured dead — `folio-landing__art`
+ * was emitted by nothing, so they shipped inlined on 331 pages and matched
+ * none of them (bean `alox`, issue #873). This note is where that reasoning
+ * lives now; it is recorded because the blend-direction argument is not
+ * obvious and would otherwise be re-derived the next time somebody reaches
+ * for `opacity` here. */
 .fa-sticky--backdrop::before {
   content: "";
   position: absolute;
@@ -2807,14 +2951,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   left: 50%;
   transform: translateX(-50%);
   z-index: 91;
-  /* SC 2.5.8's 24px floor, and this instance's profile is low-dexterity, so
-     the floor is the point rather than a minimum to argue down from. */
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* PRONOUNCED, on the owner's instruction: *"Not too subtle but
+     pronounced."* The first draft was an 0.8rem label in the chrome colour,
+     which reads as a stray tab rather than as the way to your folio. This is
+     the same control asserting itself: bigger target, heavier label, and an
+     ACCENT fill so it is the one thing on the page that is not page.
+
+     SC 2.5.8's 24px floor was already cleared at 2.75rem and is cleared by
+     more now. That floor is a minimum, not a target, and this instance's
+     profile is low-dexterity — a control a reader is meant to find without
+     looking for it should be bigger than the rule requires. */
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border: 2px solid #8c74f0;
   border-top: 0;
   border-radius: var(--fa-folio-radius, 0);
-  background: var(--sidebar-color, #27262b);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* A shadow, because the handle overhangs content rather than sitting in a
+     bar of its own — without one it reads as printed ON the page instead of
+     as something held above it and pullable. */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  background: #4a34b8;
   /* AN EXPLICIT FOREGROUND, never `inherit`, and this cost an a11y failure
      before it was written: axe measured 1.39:1, `#000000` on `#27262b`.
      The handle is appended to `document.body`, so there is nothing above it
@@ -2822,15 +2980,31 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
      BACKGROUND and leans on an inherited FOREGROUND is `23bc` again, and
      being body-level is what makes it certain rather than likely.
      12.46:1 on the dark chrome, computed rather than eyeballed. */
-  color: #e8eaed;
-  font-size: 0.8rem;
+  color: #ffffff;
+  font-size: 0.95rem;
   cursor: pointer;
 }
-:root[data-fa-scheme="light"] .fa-glass-handle {
-  background: #e8eaed;
-  border-color: #767d88;           /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                  /* 12.24:1 */
-}
+
+/* ONE PALETTE FOR BOTH SCHEMES, and no light override — which is the fix for
+ * a defect the first draft had rather than a shortcut. A control that is
+ * violet in one scheme and grey in the other is TWO controls, and a reader
+ * switching schemes has to learn it twice.
+ *
+ * THE BORDER IS LOAD-BEARING IN DARK, and that is the measurement worth
+ * keeping. Every ratio below is computed, because this file has now shipped
+ * TWO contrast failures from pairs that looked fine: `23bc`, and this very
+ * handle at 1.39:1 when it carried `color: inherit`. A third draft claimed
+ * "10.4:1" and "the edge clears 3:1"; both were wrong — 7.32:1, and 1.41:1
+ * against its own fill, which is not what SC 1.4.11 asks about anyway.
+ *
+ *   #ffffff on #4a34b8 ............ 8.49:1   text, needs 4.5
+ *   #4a34b8 vs the LIGHT page ..... 8.49:1   the fill separates it
+ *   #4a34b8 vs the DARK page ...... 1.77:1   the fill does NOT
+ *   #8c74f0 vs the DARK page ...... 4.20:1   ← so the BORDER does, SC 1.4.11
+ *   #8c74f0 vs the LIGHT page ..... 3.58:1
+ *
+ * Drop the border and the handle vanishes into a dark page. It is not
+ * decoration. */
 .fa-glass-handle:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
@@ -2927,6 +3101,27 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   background: rgba(128, 128, 128, 0.3);
   font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
+}
+
+/* ZERO, on a graph tile, is the state the badge exists to surface.
+ *
+ * It is not styled as an error -- an empty graph is often correct, and a tile
+ * shouting about it would train the reader to ignore the badge. It is styled
+ * as QUIET: the pill loses its fill and keeps only an outline, so a row of
+ * tiles reads as "these have things in them, that one does not" at a glance.
+ *
+ * `currentColor` for the outline rather than a literal, so this needs no
+ * second definition under the dark theme and cannot drift from one.
+ *
+ * NOT the same as a tile with no badge at all. A missing badge means the
+ * projection declared no count or could not be read -- the opposite fact from
+ * an empty graph, and `dh4f` is this repository's name for conflating them.
+ * The difference has to survive at the pixel level, which is why absent draws
+ * nothing rather than drawing a dimmer zero. */
+.fa-tile-count[data-fa-empty] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px currentColor;
+  opacity: 0.55;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -3839,6 +4034,52 @@ a.fa-harness-tab__body:focus-visible {
 .fa-harness-tabs--deps {
   margin-top: 0.25rem;
   opacity: 0.8;
+}
+
+/* WHAT EACH HARNESS HOLDS, in the sidebar — the owner's *"also missing the
+ * doc/, librayr/ etc."*
+ *
+ * Indented under its tab rather than given a disclosure of its own. A harness
+ * carries two or three kinds here, and a `<details>` per tab would put a
+ * chevron on every row to hide two lines behind it — the "they eat up all the
+ * nav bar sspace" complaint answered by adding a click instead of removing
+ * one. The DEPENDENCIES group above is already the disclosure that keeps this
+ * list short.
+ *
+ * Quieter than the tab: the tab is the destination and these are what is
+ * inside it, so they read as a sub-list and not as four more tabs. */
+.fa-harness-tab__graphs {
+  margin: 0.15rem 0 0.35rem;
+  padding: 0 0 0 1.75rem;
+  list-style: none;
+  font-size: 0.6875rem;
+}
+
+.fa-harness-graph {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.fa-harness-graph__link {
+  color: inherit;
+  opacity: 0.72;
+  text-decoration: none;
+}
+
+.fa-harness-graph__link:hover,
+.fa-harness-graph__link:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`. Marked
+ * with a rule rather than only by opacity, because opacity alone is the same
+ * signal this file already uses for "quiet" and would make "declared but
+ * unbuilt" indistinguishable from "just a sub-item". */
+.fa-harness-graph__link--unlinked {
+  opacity: 0.45;
+  text-decoration: line-through;
+  cursor: help;
 }
 
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════

@@ -264,25 +264,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T07:34:56.308Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7f857acc52c8e56094f1de90fb4e7106a38c5a74",
-  "sourceCommitSha": "7f857acc52c8e56094f1de90fb4e7106a38c5a74",
-  "sourceCommitAt": "2026-09-22T07:33:10Z",
+  "generatedAt": "2026-09-22T11:34:33.387Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1c944b69aef99cda194e28ca8b68743dbacd9b02",
+  "sourceCommitSha": "1c944b69aef99cda194e28ca8b68743dbacd9b02",
+  "sourceCommitAt": "2026-09-22T11:32:38Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 228,
+    "Skill": 234,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 17,
-    "Process": 58,
-    "SequenceFlow": 741,
-    "Role": 131,
-    "ProcessNode": 705,
+    "Process": 60,
+    "SequenceFlow": 763,
+    "Role": 139,
+    "ProcessNode": 726,
     "Tool": 69,
-    "Schema": 92,
-    "GraphKind": 26,
-    "Directory": 35,
+    "Schema": 93,
+    "GraphKind": 27,
+    "Directory": 36,
     "Asset": 3
   },
   "@graph": [
@@ -1637,7 +1637,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-review.md",
-      "instructionLines": 201,
+      "instructionLines": 235,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1728,6 +1728,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/surprise-to-corpus",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "surprise-to-corpus",
+      "title": "Surprise to corpus — notice it, filter it, then ask",
+      "description": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/surprise-to-corpus.md",
+      "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-editorial-review",
@@ -1840,7 +1857,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 760,
+      "instructionLines": 801,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1863,6 +1880,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/communication-language",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "communication-language",
+      "title": "The language you communicate in",
+      "description": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/communication-language.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/communication-language"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/harness-tiles",
@@ -2009,7 +2043,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 394,
+      "instructionLines": 407,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2327,7 +2361,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 648,
+      "instructionLines": 703,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2412,7 +2446,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 467,
+      "instructionLines": 522,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2462,7 +2496,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 466,
+      "instructionLines": 508,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2579,7 +2613,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-contribution-offer.md",
-      "instructionLines": 224,
+      "instructionLines": 238,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2679,7 +2713,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 414,
+      "instructionLines": 438,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2708,17 +2742,34 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "symbiotic-interaction",
       "title": "symbiotic-interaction — the three registers of author input",
-      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Generic folio-assistant platform skill.",
+      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/symbiotic-interaction.md",
-      "instructionLines": 80,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/symbiotic-interaction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/where-does-this-go",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "where-does-this-go",
+      "title": "Where does this go? — the question, then the skill that answers it",
+      "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/where-does-this-go.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/decision-comparison",
@@ -2847,7 +2898,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 246,
+      "instructionLines": 353,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3008,6 +3059,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/swimlane-glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "swimlane-glossary",
+      "title": "Swimlane Glossary Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/swimlane-glossary.md",
+      "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/integration-watcher",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "integration-watcher",
@@ -3023,6 +3090,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "adjudication",
+      "title": "Adjudication — judgement, when the mechanism ran out of facts",
+      "description": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape seven implementations here already share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/adjudication.md",
+      "instructionLines": 209,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-context-and-state-graphs",
@@ -4125,6 +4209,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-navigation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "copy-out-materialized",
+      "title": "Working on materialized content — copy it out",
+      "description": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/copy-out-materialized.md",
+      "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/materialize-remote",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "materialize-remote",
@@ -4176,7 +4277,8 @@
       "roleName": [
         "reviewer",
         "integration-watcher",
-        "proof-review-agent"
+        "proof-review-agent",
+        "feedback-provider"
       ],
       "permissionName": [
         "review-comments"
@@ -4241,7 +4343,8 @@
       "hasCapability": [],
       "roleName": [
         "reviewer",
-        "narrative-reviewer"
+        "narrative-reviewer",
+        "feedback-provider"
       ],
       "permissionName": [
         "review-comments"
@@ -4281,7 +4384,8 @@
       "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
       "hasCapability": [],
       "roleName": [
-        "qc-reviewer"
+        "qc-reviewer",
+        "feedback-provider"
       ],
       "permissionName": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-checker"
@@ -4466,10 +4570,12 @@
       "roleName": [
         "reviewer",
         "translation-adjudicator",
-        "narrative-reviewer"
+        "narrative-reviewer",
+        "adjudicator"
       ],
       "permissionName": [
-        "approval-authority"
+        "approval-authority",
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/content-reviewer"
     },
@@ -4559,7 +4665,8 @@
       "hasCapability": [],
       "roleName": [
         "build-pipeline",
-        "validation-pipeline"
+        "validation-pipeline",
+        "feedback-provider"
       ],
       "permissionName": [
         "qa-reporting"
@@ -4576,6 +4683,9 @@
       "hasCapability": [],
       "roleName": [
         "user"
+      ],
+      "permissionName": [
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/end-user"
     },
@@ -4785,10 +4895,12 @@
       "description": "The dispatched party that rules — given the original intent and the checker's output, and never the artefact itself. It names each drift against the criterion's declared `drift` statement and returns pass / warn / fail. It holds `qa-reporting` and its witness leads the criterion, because the first entry per criterion is the operative one. It does NOT hold `content-authoring`: the party that produced the artefact does not write the verdict on it, which is the whole discipline in one line.",
       "hasCapability": [],
       "roleName": [
-        "qc-reviewer"
+        "qc-reviewer",
+        "adjudicator"
       ],
       "permissionName": [
-        "qa-reporting"
+        "qa-reporting",
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-adjudicator"
     },
@@ -5488,6 +5600,7 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/activity-log",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/archiving-arxiv",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/archiving-web-pages",
@@ -5504,6 +5617,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/communication-language",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-acquisition",
@@ -5588,7 +5702,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/swarm-management",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/swimlane-glossary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/technical-documentation",
@@ -5609,7 +5725,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-overlay-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/where-does-this-go"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#capability/git-push",
@@ -9207,7 +9324,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_NarrativeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-editorial-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -10554,7 +10672,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/materialize-remote"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -10570,7 +10689,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Re-materialize, re-asking the five gates",
+      "name": "Re-materialize, re-asking the five gates — and record the new fixity",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_RefreshMaterialized",
@@ -14727,6 +14846,378 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Adjudication",
+      "enforcement": "advisory",
+      "sourcePath": "processes/adjudication.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement"
+      ],
+      "nodeCount": 11,
+      "flowCount": 12,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "both sides present",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "only one side",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the finding stands",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the criterion does not apply here",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "it applies; this is an exception",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Feedback%20provider",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Feedback provider",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Feedback%20provider"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Adjudicator",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Entries for one criterion disagree",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Feedback%20provider",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "State the finding and what it read",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Feedback%20provider",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-feedback"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Are both sides present?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not adjudicable — it is a review, a gate, or a bug report",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dispatch with adjudicator_sees — never the artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/untainted-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Judge the disagreement",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which of the three?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Scope the criterion so it stops applying here",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Grant a dispensation, with its reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write the entry that LEADS — keeping the checker's beneath it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Settled, with the reason on the record",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "The gates a change must pass before it can merge",
@@ -14735,8 +15226,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -14869,6 +15360,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_13"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -14889,7 +15398,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All five,&#10;in parallel",
+      "name": "All six,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -14905,7 +15414,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -15021,6 +15531,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dependency advisories&#10;(WARN-ONLY)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -15036,7 +15568,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -15715,7 +16248,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/translation-manager"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -17756,7 +18289,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_VoiceReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-overlay-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-overlay-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -22844,7 +23378,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/document-intake"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -23710,6 +24245,308 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AtomicMassDrift/node/End_Drift"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Copy out materialized content — to work on somebody else's bytes",
+      "enforcement": "strict",
+      "sourcePath": "processes/copy-out-materialized.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes — read-only",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no, or not declared",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reader (any actor)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Source graph — read-only",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Source%20graph%20—%20read-only"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Copier's own folio/",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Verification",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Somebody wants to work on held content",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Is the target materialized / read-only?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Gateway_Frozen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edit it in place — it is your own content",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Writable"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Read the original — and write nothing",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Source%20graph%20—%20read-only",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_Frozen"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Land the bytes in the copier's own folio/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record provenance.local — what this is a copy OF",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Copier's%20own%20folio/",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Verify the ORIGINAL still hashes to its digest",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Verification",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/copy-out-materialized"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A working copy, saying what it is a copy of",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Verification",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_Copied"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edited where it lives — no copy needed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reader%20(any%20actor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_NotFrozen"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#process/Process_DocumentAuthoring",
@@ -33350,6 +34187,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/themes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#schema/tile-count",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "tile-count",
+      "title": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "module": "schemas/tile-count.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tile-count"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#schema/todo-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo-graph",
@@ -33682,6 +34528,14 @@
       "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "renderable": false,
+      "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "beans",
@@ -33820,6 +34674,7 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/dispatch-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/interaction-modality",
@@ -33895,18 +34750,19 @@
         "agent"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-block-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-feedback",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-validation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/milnor-exposition-standard",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/rendering-auditor",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/semantic-review-scoping",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-overlay-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-block-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-validation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/rendering-auditor"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/voice-overlay-review"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Reviewer%20/%20SME",
@@ -33931,6 +34787,7 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-feedback",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/milnor-exposition-standard",
@@ -34178,7 +35035,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "translation-adjudicator",
       "title": "Translation adjudicator",
-      "description": "Reviewer who settles a disagreement between machine and human translation.",
+      "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
@@ -34190,6 +35047,48 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translation-adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "adjudicator",
+      "title": "Adjudicator",
+      "description": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/untainted-verification"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Adjudicator"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/feedback-provider",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "feedback-provider",
+      "title": "Feedback provider",
+      "description": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#skill/todo-review"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/Feedback%20provider"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#role/stakeholder",
@@ -35136,7 +36035,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs"
       ],
-      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's \"only uploads/ on this repo's root\". `n0nf` says the root's docs \"is not its own: cat-harness installs it\", which needs a dependency edge that does not exist. That is left for the owner rather than settled here.",
+      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's \"only uploads/ on this repo's root\". `n0nf` says the root's docs \"is not its own: cat-harness installs it\", which needs a dependency edge that does not exist. That is left for the owner rather than settled here. A viewer IS declared for this `docs` directory, and `owesVisualiser` not demanding one is not the same as forbidding one. The kind is `renderable`, so it does not OWE a viewer — but the owner's rule, quoted in full in `mount-instance-docs.ts`'s module note, is that a harness which instantiates a directory MAKES a visualiser for it, docs and library included. It points at the `docs-auto` index, NOT at the mount route `/docs/<instance>/`: that mount is a VERBATIM copy of the directory, and `visualiserHref` exists precisely because linking a rail to it lands on a byte-identical page — the owner's *\"clicking on doc/ ... under who-iris navbar did nothing\"*. The owner's sentence is CITED rather than quoted here on purpose: it names a graph whose viewer is `publish: \"staging-only\"`, and a test asserts that name appears NOWHERE in the built export — including in a declaration's own prose, which is where quoting it put it. The test caught that, and this paragraph is the second attempt.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -35234,6 +36133,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "glossary",
+      "path": "glossary/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+      ],
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/glossary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -35267,8 +36178,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-clarke-bpycir",
-    "sha": "f6347e3ff27ca6e058fe4bd261c3bf59c22d363d",
+    "sha": "08800b1fc4d7964948c33c97d7b3400ed0f69d65",
     "pr": "731/merge",
-    "run": "35700184808"
+    "run": "35722040862"
   }
 }

@@ -1,5 +1,27 @@
 {
   "$schema": "folio-schema-graph/v1",
+  "tile": {
+    "bootstrap-tools-schemas": {
+      "count": 2,
+      "unit": "modules"
+    },
+    "schemas": {
+      "count": 122,
+      "unit": "modules"
+    },
+    "detangle-schemas": {
+      "count": 2,
+      "unit": "modules"
+    },
+    "folio-assist-core-schemas": {
+      "count": 11,
+      "unit": "modules"
+    },
+    "large-datasets-schemas": {
+      "count": 2,
+      "unit": "modules"
+    }
+  },
   "roots": [
     "bootstrap-tools/schemas",
     "cat-harness/schemas",
@@ -339,6 +361,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "instance": "cat-harness",
+      "name": "graph-kind-registry",
+      "graphNode": "schema",
+      "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/harness-config.test.ts",
       "instance": "cat-harness",
       "name": "harness-config.test",
@@ -509,6 +539,39 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/panel-chrome.test.ts",
+      "instance": "cat-harness",
+      "name": "panel-chrome.test",
+      "graphNode": "undeclared",
+      "summary": "The kind declares its controls; the platform fixes the chrome.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "instance": "cat-harness",
+      "name": "panel-chrome",
+      "graphNode": "schema",
+      "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/portable-path.test.ts",
+      "instance": "cat-harness",
+      "name": "portable-path.test",
+      "graphNode": "undeclared",
+      "summary": "The rules a checkout relies on — a filename that is legal here and illegal",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/portable-path.ts",
+      "instance": "cat-harness",
+      "name": "portable-path",
+      "graphNode": "none",
+      "reason": "a predicate and an encoder over path strings, not a schema",
+      "summary": "Path segments a checkout can actually create — on every filesystem, not only",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/precision-scalar.ts",
       "instance": "cat-harness",
       "name": "precision-scalar",
@@ -538,6 +601,22 @@
       "name": "qa-review",
       "graphNode": "schema",
       "summary": "QA review — findings, decisions, and the audit notes that justify them.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/reader-filter.test.ts",
+      "instance": "cat-harness",
+      "name": "reader-filter.test",
+      "graphNode": "undeclared",
+      "summary": "A reader's filter narrows their view and commits nothing.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "instance": "cat-harness",
+      "name": "reader-filter",
+      "graphNode": "schema",
+      "summary": "The filter a READER applies to a board, which commits nothing.",
       "isTest": false
     },
     {
@@ -586,6 +665,22 @@
       "name": "role-graph",
       "graphNode": "schema",
       "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/safe-url.test.ts",
+      "instance": "cat-harness",
+      "name": "safe-url.test",
+      "graphNode": "undeclared",
+      "summary": "Default-deny on URL schemes, and the evasions it has to survive.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/safe-url.ts",
+      "instance": "cat-harness",
+      "name": "safe-url",
+      "graphNode": "schema",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
       "isTest": false
     },
     {
@@ -758,6 +853,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/tile-count.test.ts",
+      "instance": "cat-harness",
+      "name": "tile-count.test",
+      "graphNode": "undeclared",
+      "summary": "A tile's declared count, and the third state that is the whole point.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tile-count.ts",
+      "instance": "cat-harness",
+      "name": "tile-count",
+      "graphNode": "schema",
+      "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/todo-graph.test.ts",
       "instance": "cat-harness",
       "name": "todo-graph.test",
@@ -771,6 +882,14 @@
       "name": "todo-graph",
       "graphNode": "schema",
       "summary": "The todo graph — what `todos/` is, rather than where it happens to be.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/todo-index.ts",
+      "instance": "cat-harness",
+      "name": "todo-index",
+      "graphNode": "schema",
+      "summary": "The published todo index — `folio-todo-index/v1`, described at last.",
       "isTest": false
     },
     {
@@ -863,6 +982,14 @@
       "isTest": true
     },
     {
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "instance": "cat-harness",
+      "name": "voice-skill",
+      "graphNode": "schema",
+      "summary": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/voices.ts",
       "instance": "cat-harness",
       "name": "voices",
@@ -884,6 +1011,30 @@
       "name": "webpage",
       "graphNode": "schema",
       "summary": "`webpage` — a published documentation page, modelled as a graph node that",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/window-stack.test.ts",
+      "instance": "cat-harness",
+      "name": "window-stack.test",
+      "graphNode": "undeclared",
+      "summary": "The window stack, and the zoom it must stay separate from.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/window-stack.ts",
+      "instance": "cat-harness",
+      "name": "window-stack",
+      "graphNode": "schema",
+      "summary": "Which cards are OPEN on a board, and in what order they stack.",
+      "isTest": false
+    },
+    {
+      "module": "detangle/schemas/detangle-sidecar.ts",
+      "instance": "detangle",
+      "name": "detangle-sidecar",
+      "graphNode": "schema",
+      "summary": "The durable record of a detangle measurement — what is pinned, and what is not.",
       "isTest": false
     },
     {
@@ -935,6 +1086,14 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "instance": "folio-assistant-core",
+      "name": "fhir-artifact-index",
+      "graphNode": "schema",
+      "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/library-ref.test.ts",
       "instance": "folio-assistant-core",
       "name": "library-ref.test",
@@ -949,6 +1108,14 @@
       "graphNode": "schema",
       "summary": "A reference to an L1 source — in this instance, or in another one.",
       "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/masked-region.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "masked-region.test",
+      "graphNode": "undeclared",
+      "summary": "`maskedRegions` — the rules, each against the mistake it exists for.",
+      "isTest": true
     },
     {
       "module": "folio-assistant-core/schemas/materialization.ts",
@@ -1076,7 +1243,7 @@
         },
         {
           "name": "harness",
-          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or a derivative such as…",
+          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or a derivative such as `ca…",
           "optional": true,
           "array": false
         },
@@ -3983,6 +4150,13 @@
           "doc": "Extra files that invalidate a cached verdict WITHOUT gating"
         },
         {
+          "name": "untainted",
+          "type": "UntaintedDispatch",
+          "optional": true,
+          "array": false,
+          "doc": "How an UNTAINTED verification of this criterion is dispatched — and, more"
+        },
+        {
           "name": "automated",
           "type": "boolean",
           "optional": false,
@@ -4018,6 +4192,13 @@
           "doc": "Path (repo-relative) to the source file containing this"
         },
         {
+          "name": "checker_contributed",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "This criterion is declared here, but its checker belongs to a dependency."
+        },
+        {
           "name": "extra_inputs",
           "type": "string[]",
           "optional": true,
@@ -4031,7 +4212,8 @@
         "cat-harness/schemas/block-kinds.ts#ContentAdapter",
         "cat-harness/schemas/block-kinds.ts#ContentProfile",
         "cat-harness/schemas/block-qa.ts#CompanionRole",
-        "cat-harness/schemas/block-qa.ts#QaCriterionSubject"
+        "cat-harness/schemas/block-qa.ts#QaCriterionSubject",
+        "cat-harness/schemas/block-qa.ts#UntaintedDispatch"
       ],
       "unresolved": [],
       "external": [],
@@ -4236,6 +4418,13 @@
           "doc": "Optional version pin (script revision, model id)."
         },
         {
+          "name": "actor",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declared ACTOR this reviewer was acting as — an id in"
+        },
+        {
           "name": "script_hash",
           "type": "string",
           "optional": true,
@@ -4390,6 +4579,49 @@
           "optional": true,
           "array": false,
           "doc": "Engine fingerprint — e.g. `bun-1.3.11+node-22`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/block-qa.ts#UntaintedDispatch",
+      "name": "UntaintedDispatch",
+      "module": "cat-harness/schemas/block-qa.ts",
+      "kind": "interface",
+      "doc": "What each party of an untainted verification is given, and what it is not.",
+      "fields": [
+        {
+          "name": "checker_sees",
+          "type": "A[]",
+          "optional": false,
+          "array": true,
+          "doc": "Artefacts the CHECKER is given."
+        },
+        {
+          "name": "checker_withheld",
+          "type": "A[]",
+          "optional": false,
+          "array": true,
+          "doc": "Artefacts deliberately WITHHELD from the checker."
+        },
+        {
+          "name": "adjudicator_sees",
+          "type": "A[]",
+          "optional": false,
+          "array": true,
+          "doc": "Artefacts the ADJUDICATOR is given, alongside the checker's output."
+        },
+        {
+          "name": "drift",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "What counts as a finding for this criterion, and what does not."
         }
       ],
       "extendsNames": [],
@@ -5035,6 +5267,62 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+      "name": "AssetDelivery",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "doc": "How a declared asset REACHES the agent that needs it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "file",
+        "injected"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "name": "AssetRoleDef",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "What a declared asset ROLE means — asked once, for every instance.",
+      "fields": [
+        {
+          "name": "purpose",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "What this artefact is FOR — one line."
+        },
+        {
+          "name": "layer",
+          "type": "GraphLayer",
+          "optional": false,
+          "array": false,
+          "doc": "Which {@link GraphLayer} the role's file belongs to."
+        },
+        {
+          "name": "delivery",
+          "type": "AssetDelivery",
+          "optional": false,
+          "array": false,
+          "doc": "{@link AssetDelivery} — and required, so a new role decides it at the keyboard."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "name": "CatHarnessDeclaration",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -5317,6 +5605,21 @@
       "id": "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
       "name": "ContentDirectorySchema",
       "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "undetermined",
+      "note": "z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape)",
+      "doc": "As {@link GraphNodeDirectorySchema}, for an instance's own directories.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "name": "ContentDirectoryShape",
+      "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
       "fields": [
         {
@@ -5332,6 +5635,20 @@
           "array": false
         },
         {
+          "name": "instanceRoot",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
+        },
+        {
+          "name": "composed",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
+        },
+        {
           "name": "theme",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -5340,19 +5657,19 @@
         }
       ],
       "extendsNames": [
-        "GraphNodeDirectorySchema"
+        "GraphNodeDirectoryShape"
       ],
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#DependentMaterialisationSchema",
-        "cat-harness/schemas/cat-harness.ts#GraphNodeDirectorySchema",
+        "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema"
       ],
       "unresolved": [],
       "external": [
         "z"
       ],
-      "exported": true
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
@@ -5399,7 +5716,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -5450,111 +5767,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphKind",
-      "name": "GraphKind",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "type-alias",
-      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphKindDef",
-      "name": "GraphKindDef",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "interface",
-      "doc": "What a declared directory's graph kind means.",
-      "fields": [
-        {
-          "name": "type",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The `@type` IRI this kind projects to."
-        },
-        {
-          "name": "renderable",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Is a graph of this kind expected to render as a website?"
-        },
-        {
-          "name": "holds",
-          "type": "GraphLayer",
-          "optional": false,
-          "array": false,
-          "doc": "Does a graph of this kind say what the instance **IS**, or where something"
-        },
-        {
-          "name": "summary",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "skill",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The skill that says how to READ a graph of this kind, by name."
-        },
-        {
-          "name": "schema",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the shape of a node in this graph is defined — a repo-relative"
-        },
-        {
-          "name": "validator",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
-        },
-        {
-          "name": "declarationFile",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphLayer"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphLayer",
-      "name": "GraphLayer",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "type-alias",
-      "doc": "What a running process does with a graph of this kind.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "content",
-        "context",
-        "state",
-        "derived"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
       "name": "GraphNodeDirectory",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -5595,7 +5807,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#DeclarationScope",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
@@ -5607,8 +5819,22 @@
       "id": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectorySchema",
       "name": "GraphNodeDirectorySchema",
       "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "undetermined",
+      "note": "z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape)",
+      "doc": "The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "name": "GraphNodeDirectoryShape",
+      "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "A place to look, with no statement about inheritance.",
       "fields": [
         {
           "name": "id",
@@ -5636,7 +5862,7 @@
       "external": [
         "z"
       ],
-      "exported": true
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory",
@@ -5821,7 +6047,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -5889,6 +6115,13 @@
           "optional": false,
           "array": false,
           "doc": "What it carries INSTEAD — the criterion it cannot fail quietly."
+        },
+        {
+          "name": "reachableAt",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the instance IS reachable, since it renders nothing of its own."
         }
       ],
       "extendsNames": [],
@@ -5922,6 +6155,12 @@
           "name": "owes",
           "type": "z.string().min(1)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "reachableAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -6006,11 +6245,10 @@
       "name": "SubgraphCoverageSchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "What makes a declared subgraph REACHABLE — and the reasons it may not need",
       "fields": [
         {
           "name": "visualiser",
-          "type": "z.string().min(1).optional()",
+          "type": "VisualiserDeclarationSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
@@ -6045,7 +6283,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -6195,6 +6435,112 @@
         "NETWORK_REACHES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#Visualisation",
+      "name": "Visualisation",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualisationSchema",
+      "name": "VisualisationSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "ONE visualisation of a subgraph — where it is rendered, and what to call it.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a tile calls it. Absent falls back to the directory's id."
+        },
+        {
+          "name": "surfaces",
+          "type": "z.array(z.enum([\"navbar\", \"board\"])).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Where its tile appears. Absent means BOTH."
+        },
+        {
+          "name": "hidden",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether this tile starts out of frame. Absent means shown."
+        },
+        {
+          "name": "theme",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The tile's theme. Absent means the directory's, then the instance's."
+        },
+        {
+          "name": "icon",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic"
+        },
+        {
+          "name": "publish",
+          "type": "z.enum([\"staging-only\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHERE this visualisation may be published. Absent means everywhere, which"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserDeclaration",
+      "name": "VisualiserDeclaration",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema",
+      "name": "VisualiserDeclarationSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-union",
+      "doc": "What `coverage.visualiser` accepts: one path, or several visualisations.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -8224,6 +8570,51 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "name": "ContributedChecker",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "A registered checker, resolved: the function, and where its bytes live.",
+      "fields": [
+        {
+          "name": "check",
+          "type": "(paths: CheckerPaths) => CheckerResult",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sourceFile",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to `root`."
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The contributor's own root, absolute."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<contributor>/<sourceFile>` — portable, and says whose checker it is."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/block-qa.ts#CheckerPaths",
+        "cat-harness/schemas/block-qa.ts#CheckerResult"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/contributions.ts#FolioContribution",
       "name": "FolioContribution",
       "module": "cat-harness/schemas/contributions.ts",
@@ -8235,6 +8626,13 @@
           "optional": false,
           "array": false,
           "doc": "The contributing instance's name, as declared in the dependency entry."
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The contributing instance's root directory, absolute."
         },
         {
           "name": "blockKinds",
@@ -8326,6 +8724,13 @@
           "optional": false,
           "array": false,
           "doc": "The checker itself."
+        },
+        {
+          "name": "sourceFile",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The file that DEFINES `check`, relative to the contributor's own root."
         }
       ],
       "extendsNames": [],
@@ -9491,6 +9896,77 @@
       "refs": [
         "cat-harness/schemas/decision-request.ts#DecisionOptionSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
+      "name": "CaptureBasis",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#CaptureBasisSchema",
+      "name": "CaptureBasisSchema",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "zod-object",
+      "doc": "A role computed from the CAPTURE the document came out of, plus geometry.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"capture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The PDF's `Producer`, verbatim. The evidence, not a derived flag."
+        },
+        {
+          "name": "creator",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The PDF's `Creator`, verbatim — the browser user-agent for a print."
+        },
+        {
+          "name": "coverage",
+          "type": "z.number().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Placed area over page area, as for geometry."
+        },
+        {
+          "name": "imagesOnPage",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How many images share this page."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page it sits on, 1-based as a reader counts."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -12071,6 +12547,118 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+      "name": "GraphKind",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "name": "GraphKindDef",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "interface",
+      "doc": "What a declared directory's graph kind means.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The `@type` IRI this kind projects to."
+        },
+        {
+          "name": "renderable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Is a graph of this kind expected to render as a website?"
+        },
+        {
+          "name": "recordsWork",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Does a graph of this kind record WORK — something somebody is partway"
+        },
+        {
+          "name": "holds",
+          "type": "GraphLayer",
+          "optional": false,
+          "array": false,
+          "doc": "Does a graph of this kind say what the instance **IS**, or where something"
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skill",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The skill that says how to READ a graph of this kind, by name."
+        },
+        {
+          "name": "schema",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the shape of a node in this graph is defined — a repo-relative"
+        },
+        {
+          "name": "validator",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
+        },
+        {
+          "name": "declarationFile",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "name": "GraphLayer",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "What a running process does with a graph of this kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "content",
+        "context",
+        "state",
+        "derived"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#ClosedContentType",
       "name": "ClosedContentType",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -13877,6 +14465,19 @@
           "doc": "`subject.path` as the sidecar records it, or `undefined` if it records none."
         },
         {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`subject.kind` and `subject.id`, when the sidecar records them."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "subjectExists",
           "type": "boolean",
           "optional": true,
@@ -14908,6 +15509,147 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/panel-chrome.ts#Capabilities",
+      "name": "Capabilities",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "What this environment can do for this node.",
+      "fields": [
+        {
+          "name": "source-read",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source-write",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
+      "name": "ControlCapability",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "type-alias",
+      "doc": "What a control needs the environment to be able to do.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "none",
+        "source-read",
+        "source-write"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#ControlFinding",
+      "name": "ControlFinding",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "A declaration that names something that does not exist.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "control",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/panel-chrome.ts#PanelControl",
+      "name": "PanelControl",
+      "module": "cat-harness/schemas/panel-chrome.ts",
+      "kind": "interface",
+      "doc": "One control a panel may carry.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The accessible name. Words, because a glyph alone is a guess."
+        },
+        {
+          "name": "needs",
+          "type": "ControlCapability",
+          "optional": false,
+          "array": false,
+          "doc": "What the environment must be able to do for this to work."
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Why this control exists, for whoever is deciding whether to keep it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/panel-chrome.ts#ControlCapability"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/portable-path.ts#UnportableReason",
+      "name": "UnportableReason",
+      "module": "cat-harness/schemas/portable-path.ts",
+      "kind": "type-alias",
+      "doc": "Why a segment cannot be created, in words a committer can act on.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "empty",
+        "reserved-character",
+        "reserved-device-name",
+        "trailing-dot-or-space"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/precision-scalar.ts#precisionScalar",
       "name": "precisionScalar",
       "module": "cat-harness/schemas/precision-scalar.ts",
@@ -15932,6 +16674,101 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/reader-filter.test.ts#Node",
+      "name": "Node",
+      "module": "cat-harness/schemas/reader-filter.test.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "page",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "node",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "Record<string, string>",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/reader-filter.ts#FilterableNode",
+      "name": "FilterableNode",
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "kind": "interface",
+      "doc": "What a reader's filter matches on — a board node plus its own properties.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "Readonly<Record<string, string>>",
+          "optional": true,
+          "array": false,
+          "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/reader-filter.ts#ReaderFilter",
+      "name": "ReaderFilter",
+      "module": "cat-harness/schemas/reader-filter.ts",
+      "kind": "interface",
+      "doc": "What a reader is narrowing by. Absent axes do not filter.",
+      "fields": [
+        {
+          "name": "kinds",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Kinds to keep. OR within the list."
+        },
+        {
+          "name": "properties",
+          "type": "Readonly<Record<string, readonly string[]>>",
+          "optional": true,
+          "array": false,
+          "doc": "Kind properties to keep, keyed by property name — the owner's *\"filter out"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/refactor-strategy.ts#LeanVersionRange",
       "name": "LeanVersionRange",
       "module": "cat-harness/schemas/refactor-strategy.ts",
@@ -16520,6 +17357,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/role-graph.ts#LaneBinding",
+      "name": "LaneBinding",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "type-alias",
+      "doc": "What a lane's role binding ACTUALLY is — five answers, not two.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#LoadedActor",
       "name": "LoadedActor",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -17029,6 +17880,33 @@
           "optional": false,
           "array": false,
           "doc": "Depth in the `inherits` walk; 0 is the role itself."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/safe-url.ts#UrlRefusal",
+      "name": "UrlRefusal",
+      "module": "cat-harness/schemas/safe-url.ts",
+      "kind": "interface",
+      "doc": "Why a URL was refused — for a caller that wants to report rather than drop.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "string",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -21655,6 +22533,49 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tile-count.ts#TileCount",
+      "name": "TileCount",
+      "module": "cat-harness/schemas/tile-count.ts",
+      "kind": "interface",
+      "doc": "What a projection says about one tile's headline number.",
+      "fields": [
+        {
+          "name": "count",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "The headline number. `0` is a legitimate, meaningful value."
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "What is being counted, as a noun the reader sees — `\"entries\"`,"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "name": "TileCountsSchema",
+      "module": "cat-harness/schemas/tile-count.ts",
+      "kind": "zod-record",
+      "doc": "The field, for a projection schema that is `.strict()` — which every one of",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo-graph.ts#TodoGraph",
       "name": "TodoGraph",
       "module": "cat-harness/schemas/todo-graph.ts",
@@ -21746,6 +22667,298 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndex",
+      "name": "TodoIndex",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexItem",
+      "name": "TodoIndexItem",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "name": "TodoIndexItemSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "One todo, as published.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "comment",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "priority",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "origin",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "targetLabel",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The composite label. KEPT — see the module docs."
+        },
+        {
+          "name": "target",
+          "type": "TodoTargetSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The same attachment, in parts. ABSENT when the note is attached to"
+        },
+        {
+          "name": "theme",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "NoteTagsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relations",
+          "type": "z.array(TodoRelationSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "viewHref",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Present together or not at all — both come from one `sourceLinks` call."
+        },
+        {
+          "name": "editHref",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
+        "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+        "cat-harness/schemas/todo-index.ts#TodoTargetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "name": "TodoIndexSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "The document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TODO_INDEX_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tile",
+          "type": "TileCountsSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The tile's declared headline number, keyed by directory — issue #856."
+        },
+        {
+          "name": "repoWeb",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The forge address, resolved rather than composed — `gen-docs-pages`' `REPO_WEB`."
+        },
+        {
+          "name": "items",
+          "type": "z.array(TodoIndexItemSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "processes",
+          "type": "z.record(z.string().min(1), z.array(z.string().min(1)))",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "themeArt",
+          "type": "z.record(z.string().min(1), z.record(z.string().min(1), z.string().min(1)))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+        "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TODO_INDEX_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoRelation",
+      "name": "TodoRelation",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+      "name": "TodoRelationSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "One edge, already resolved — what a sticky renders as a chip.",
+      "fields": [
+        {
+          "name": "axis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoTarget",
+      "name": "TodoTarget",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/todo-index.ts#TodoTargetSchema",
+      "name": "TodoTargetSchema",
+      "module": "cat-harness/schemas/todo-index.ts",
+      "kind": "zod-object",
+      "doc": "Where a note is attached, in PARTS — the R3 field.",
+      "fields": [
+        {
+          "name": "page",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page slug the block is on."
+        },
+        {
+          "name": "node",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's id within that page."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's declared, page-qualified label — the same value as `targetLabel`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -26172,17 +27385,217 @@
       "name": "TermLayer",
       "module": "cat-harness/schemas/vocabulary.ts",
       "kind": "type-alias",
-      "doc": "Which layer owns a term — and therefore which instances must carry it.",
+      "doc": "The layers, as a value — and THE ORDER IS PART OF THE CONTRACT.",
       "fields": [],
       "extendsNames": [],
-      "values": [
-        "bootstrap",
-        "harness",
-        "core"
-      ],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
+      "name": "VoiceInstructionsSchema",
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "kind": "zod-object",
+      "doc": "Where the instruction body lives.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The skill body, as a sibling file — `SKILL.md` by convention."
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What an actor is expected to DO with this voice, one line, for a skill"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voice-skill.ts#VoiceSkill",
+      "name": "VoiceSkill",
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voice-skill.ts#VoiceSkillRule",
+      "name": "VoiceSkillRule",
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
+      "name": "VoiceSkillRuleSchema",
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "kind": "zod-object",
+      "doc": "One rule, plus the two flags that make it usable by a process rather than",
+      "fields": [
+        {
+          "name": "counterintuitive",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The instinct is wrong, so a drafter must know this rule BEFORE writing."
+        },
+        {
+          "name": "commonError",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why the instinct is wrong, in one sentence, for a drafter who has not read"
+        }
+      ],
+      "extendsNames": [
+        "VoiceRuleSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/voices.ts#VoiceRuleSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "name": "VoiceSkillSchema",
+      "module": "cat-harness/schemas/voice-skill.ts",
+      "kind": "zod-object",
+      "doc": "A voice skill.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-voice-skill/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9-]+$/, \"a voice id is lower-case kebab\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "owner",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The instance that DERIVED this voice, by declared name."
+        },
+        {
+          "name": "instructions",
+          "type": "VoiceInstructionsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sources",
+          "type": "z .array( z.object({ title: z.string().min(1), instance: z.string().min(1).optional(), libraryId: z.string().min(1).opt…",
+          "optional": true,
+          "array": true,
+          "doc": "The ingested documents this voice is derived from."
+        },
+        {
+          "name": "provenance",
+          "type": "z.enum(VOICE_PROVENANCE)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rules",
+          "type": "z.array(VoiceSkillRuleSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "overlaySeverity",
+          "type": "z.enum([\"critical\", \"major\", \"minor\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How severe a finding against this voice AS A WHOLE is, for the overlay"
+        },
+        {
+          "name": "appliesTo",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "activeIn",
+          "type": "VoiceApplicabilitySchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extends",
+          "type": "VoiceRefSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "superseded",
+          "type": "VoiceSupersessionSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
+        "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
+        "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
+        "cat-harness/schemas/voices.ts#VoiceRefSchema",
+        "cat-harness/schemas/voices.ts#VoiceSupersessionSchema"
+      ],
+      "unresolved": [
+        "VOICE_PROVENANCE"
+      ],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -26428,9 +27841,10 @@
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(\"folio-voice/v1\")",
+          "type": "z.union([z.literal(\"folio-voice/v1\"), z.literal(\"folio-voice-skill/v1\")])",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "EITHER tag, because a voice skill IS a profile plus the skill half."
         },
         {
           "name": "id",
@@ -26462,6 +27876,13 @@
           "type": "z.array(VoiceRuleSchema).min(1)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "overlaySeverity",
+          "type": "z.enum([\"critical\", \"major\", \"minor\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How severe a finding against THIS VOICE AS A WHOLE is, for the overlay"
         },
         {
           "name": "appliesTo",
@@ -26520,6 +27941,40 @@
       "module": "cat-harness/schemas/voices.ts",
       "kind": "type-alias",
       "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voices.ts#VoiceProvenanceFlag",
+      "name": "VoiceProvenanceFlag",
+      "module": "cat-harness/schemas/voices.ts",
+      "kind": "interface",
+      "doc": "Where a voice's DECLARED provenance sits oddly against what its rules cite.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "\"declared-outside-cites-inside\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ruleIds",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Rule ids that cite a node of this instance's own graph."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -27204,6 +28659,112 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/window-stack.ts#WindowStack",
+      "name": "WindowStack",
+      "module": "cat-harness/schemas/window-stack.ts",
+      "kind": "type-alias",
+      "doc": "The open cards, bottom of the stack first. A card appears at most once.",
+      "fields": [
+        {
+          "name": "open",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "detangle/schemas/detangle-sidecar.ts#DetangleSidecar",
+      "name": "DetangleSidecar",
+      "module": "detangle/schemas/detangle-sidecar.ts",
+      "kind": "interface",
+      "doc": "The pinned measurement for one candidate group.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "\"folio-detangle-sidecar/v1\"",
+          "optional": false,
+          "array": false,
+          "doc": "The schema tag, so the file declares what it is rather than being identified by shape."
+        },
+        {
+          "name": "group",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The group this measures — the same string `measure()` takes."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Node count."
+        },
+        {
+          "name": "internal",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges with both ends inside."
+        },
+        {
+          "name": "inbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from outside in."
+        },
+        {
+          "name": "outbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from inside out."
+        },
+        {
+          "name": "cohesion",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`internal / (internal + inbound + outbound)`, rounded — see {@link COHESION_DP}."
+        },
+        {
+          "name": "enforcedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FACT."
+        },
+        {
+          "name": "recordedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FILING DECISION — symmetric coupling."
+        },
+        {
+          "name": "proseMentions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Cross-group prose mentions. Neither a dependency nor a coupling."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "detangle/schemas/detangle.ts#BoundaryRole",
       "name": "BoundaryRole",
       "module": "detangle/schemas/detangle.ts",
@@ -27613,6 +29174,13 @@
           "array": false
         },
         {
+          "name": "maskedRegions",
+          "type": "z.array(MaskedRegionSchema).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Regions blanked out of these bytes before they were written."
+        },
+        {
           "name": "materialization",
           "type": "MaterializationSchema",
           "optional": false,
@@ -27623,6 +29191,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
         "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
       ],
       "unresolved": [],
@@ -27840,6 +29409,69 @@
       "unresolved": [],
       "external": [
         "CATALOGUE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/catalogue.ts#MaskedRegion",
+      "name": "MaskedRegion",
+      "module": "folio-assistant-core/schemas/catalogue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
+      "name": "MaskedRegionSchema",
+      "module": "folio-assistant-core/schemas/catalogue.ts",
+      "kind": "zod-object",
+      "doc": "A rectangle blanked out of a raster before its bytes were written.",
+      "fields": [
+        {
+          "name": "x0",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "y0",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "x1",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "Exclusive."
+        },
+        {
+          "name": "y1",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "Exclusive."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why this region is masked, in a person's words. Never generated."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -28332,6 +29964,688 @@
       "external": [
         "EXTRACTION_METHODS",
         "EXTRACTION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakApiState",
+      "name": "DakApiState",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlay",
+      "name": "DakOverlay",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "name": "DakOverlaySchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The DAK API overlay — the JSON Schema / JSON-LD surface, where one exists.",
+      "fields": [
+        {
+          "name": "schema",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.schema.json` — the JSON Schema for this artefact."
+        },
+        {
+          "name": "displays",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.displays.json` — display strings, keyed by code."
+        },
+        {
+          "name": "openapi",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc."
+        },
+        {
+          "name": "jsonld",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`."
+        },
+        {
+          "name": "codeCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of codes, for a ValueSet."
+        },
+        {
+          "name": "propertyCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of properties, for a logical model."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifact",
+      "name": "FhirArtifact",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndex",
+      "name": "FhirArtifactIndex",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "name": "FhirArtifactIndexSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_INDEX_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Instance id — the directory this index lives in, e.g. `smart-trust`."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "packageId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "NPM-style package id, e.g. `smart.who.int.trust`."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fhirVersion",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "canonicalBase",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`."
+        },
+        {
+          "name": "builtAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription."
+        },
+        {
+          "name": "source",
+          "type": "IgSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "IndexProvenanceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dakApi",
+          "type": "z.enum(DAK_API_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contexts",
+          "type": "z.array(JsonLdContextSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "dakUnbound",
+          "type": "z.array(UnboundSidecarSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sidecars an enumeration listed that bound to no artefact. Absent means"
+        },
+        {
+          "name": "count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "artifacts",
+          "type": "z.array(FhirArtifactSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DAK_API_STATES",
+        "FHIR_ARTIFACT_INDEX_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "name": "FhirArtifactSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One artefact of the IG.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_SCHEMA_TAG).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not."
+        },
+        {
+          "name": "resourceType",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FHIR canonical URL. Absent for examples and instances; see the doc above."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "category",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
+        },
+        {
+          "name": "published",
+          "type": "PublishedFormatsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dak",
+          "type": "DakOverlaySchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "FHIR_ARTIFACT_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSource",
+      "name": "IgSource",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceKind",
+      "name": "IgSourceKind",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "name": "IgSourceSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum(IG_SOURCE_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The URI the artefacts are published AT — what a `published` URL is resolved against."
+        },
+        {
+          "name": "revision",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Git revision of the branch read, when the source was a checkout. Absent means not established."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When the source was read. An index with no read date cannot be told from a current one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_SOURCE_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenance",
+      "name": "IndexProvenance",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "name": "IndexProvenanceSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "Which published file each part of the index came out of.",
+      "fields": [
+        {
+          "name": "packageManifest",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.manifest.json` — package id, version, FHIR version, build date."
+        },
+        {
+          "name": "canonicals",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`canonicals.json` — the spine for anything with a canonical URL."
+        },
+        {
+          "name": "packageIndex",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc."
+        },
+        {
+          "name": "artifactsHtml",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`artifacts.html` — the ONLY source of an artefact's editorial category."
+        },
+        {
+          "name": "dakEnumerations",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The DAK API enumeration schemas, when present."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContext",
+      "name": "JsonLdContext",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "name": "JsonLdContextSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A JSON-LD context the IG publishes for its own consumers.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "representation",
+          "type": "RepresentationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "binds",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Canonical URLs of the artefacts whose terms this context binds, where that could be established."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormats",
+      "name": "PublishedFormats",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "name": "PublishedFormatsSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The representations the IG publisher emits for every artefact.",
+      "fields": [
+        {
+          "name": "json",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "xml",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "ttl",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "html",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#Representation",
+      "name": "Representation",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "name": "RepresentationSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One published representation of one artefact.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "localPath",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Instance-relative path, present iff these bytes were materialised."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecar",
+      "name": "UnboundSidecar",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
+      "name": "UnboundSidecarSchema",
+      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A DAK sidecar the enumeration lists that could not be bound to an artefact.",
+      "fields": [
+        {
+          "name": "filename",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The sidecar file the enumeration named."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its title, as the enumeration gives it — usually the only human handle on what was missed."
+        },
+        {
+          "name": "enumeration",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which enumeration listed it."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why no artefact matched: the strategies tried, in order."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -29570,6 +31884,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/block-qa.ts#QaCriterionDefinition",
+      "to": "cat-harness/schemas/block-qa.ts#UntaintedDispatch",
+      "via": "untainted",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/block-qa.ts#QaCriterionEntry",
       "to": "cat-harness/schemas/block-qa.ts#QaFieldHash",
       "via": "field_hash",
@@ -29664,6 +31986,22 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "to": "cat-harness/schemas/cat-harness.ts#AssetDelivery",
+      "via": "delivery",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "via": "layer",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
@@ -29826,7 +32164,7 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#DependentMaterialisationSchema",
       "via": "dependents",
       "kind": "field",
@@ -29834,15 +32172,15 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectorySchema",
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
       "via": "",
       "kind": "extends",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
       "via": "coverage",
       "kind": "field",
@@ -29851,7 +32189,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -29866,16 +32204,8 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/cat-harness.ts#GraphKindDef",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphLayer",
-      "via": "holds",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -29915,7 +32245,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#RemoteGraph",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -29943,6 +32273,14 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#VisualiserDeclarationSchema",
+      "via": "visualiser",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -30344,6 +32682,22 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "to": "cat-harness/schemas/block-qa.ts#CheckerPaths",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#ContributedChecker",
+      "to": "cat-harness/schemas/block-qa.ts#CheckerResult",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
@@ -31002,6 +33356,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "via": "holds",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#ClosedContentType",
       "to": "cat-harness/schemas/content-type.ts#ContentTypeMembership",
       "via": "",
@@ -31383,6 +33745,14 @@
       "via": "anchor",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/panel-chrome.ts#PanelControl",
+      "to": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
+      "via": "needs",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -32354,6 +34724,46 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
+      "via": "tags",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoRelationSchema",
+      "via": "relations",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoTargetSchema",
+      "via": "target",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "to": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "via": "tile",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "to": "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema",
+      "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/todo.ts#ResolvedTag",
       "to": "cat-harness/schemas/todo.ts#TagResolution",
       "via": "state",
@@ -32954,6 +35364,54 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceRuleSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
+      "via": "instructions",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
+      "via": "rules",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
+      "via": "activeIn",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceRefSchema",
+      "via": "extends",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceSupersessionSchema",
+      "via": "superseded",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/voices.ts#ResolvedVoice",
       "to": "cat-harness/schemas/voices.ts#VoiceApplicability",
       "via": "activeIn",
@@ -33147,6 +35605,14 @@
     },
     {
       "from": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema",
+      "to": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema",
+      "via": "maskedRegions",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "via": "materialization",
       "kind": "field",
@@ -33192,6 +35658,142 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "displays",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "jsonld",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "openapi",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "schema",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "via": "artifacts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "via": "contexts",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
+      "via": "dakUnbound",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
+      "via": "dak",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "via": "published",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "representation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "html",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "json",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "ttl",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "xml",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/materialization.ts#GatesSchema",

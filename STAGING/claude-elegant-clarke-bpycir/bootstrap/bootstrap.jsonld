@@ -270,10 +270,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-22T07:34:56.836Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7f857acc52c8e56094f1de90fb4e7106a38c5a74",
-  "sourceCommitSha": "7f857acc52c8e56094f1de90fb4e7106a38c5a74",
-  "sourceCommitAt": "2026-09-22T07:33:10Z",
+  "generatedAt": "2026-09-22T11:34:33.940Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1c944b69aef99cda194e28ca8b68743dbacd9b02",
+  "sourceCommitSha": "1c944b69aef99cda194e28ca8b68743dbacd9b02",
+  "sourceCommitAt": "2026-09-22T11:32:38Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -281,8 +281,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 4,
-    "Directory": 5,
+    "GraphKind": 7,
+    "Directory": 8,
     "Asset": 2
   },
   "@graph": [
@@ -1395,6 +1395,30 @@
       "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "renderable": false,
+      "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "models",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ModelGraph",
+      "renderable": false,
+      "summary": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "translation-sources",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TranslationSourceGraph",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#role/initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
@@ -1527,6 +1551,42 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "models",
+      "path": "models/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models"
+      ],
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/models",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "glossary",
+      "path": "glossary/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+      ],
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "bootstrap-translations",
+      "path": "translations/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext templates for THIS instance's workflow diagrams — one directory per target locale, holding the `.pot` extracted from each `.bpmn` here. Undeclared until 2026-09-22, and that was the `dh4f` defect: `j28g` moved these out of `cat-harness/translations/` correctly, because the templates belong beside the instance that owns the diagrams, and the declaration did not follow. Fifteen committed files a consumer scanning the declared set would report a clean run over. A SEPARATE id from cat-harness's `translation-sources`: overrides match on id, so reusing it would REPLACE that graph with this one rather than add to it. `reproduce` for the reason cat-harness's entry gives — a downstream instance translating this diagram set needs catalogues of its own, not a pointer to these. Bean `m9zz`.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -1549,8 +1609,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-clarke-bpycir",
-    "sha": "f6347e3ff27ca6e058fe4bd261c3bf59c22d363d",
+    "sha": "08800b1fc4d7964948c33c97d7b3400ed0f69d65",
     "pr": "731/merge",
-    "run": "35700184808"
+    "run": "35722040862"
   }
 }

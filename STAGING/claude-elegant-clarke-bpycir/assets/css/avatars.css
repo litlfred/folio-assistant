@@ -73,6 +73,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="folio-assistant"] {
+  /* a leaf of paper held in a frame — the folio, and the instance that holds it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="folio-assistant-core"] {
   /* a leaf of paper with lines — the folio itself */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -167,6 +174,20 @@
 .fa-avatar[data-fa-kind="methodology"] {
   /* a fork in a path — parallel ways to a judgement, one chosen by context */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="models"] {
+  /* a chip with its pins — the machine an agent is running on, not what it says */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8h8v8H8zM4 10h4M4 14h4M16 10h4M16 14h4M10 4v4M14 4v4M10 16v4M14 16v4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="glossary"] {
+  /* an open book — terms somebody looks up, not terms a machine mints */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -290,6 +311,7 @@
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
+  .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
@@ -304,6 +326,8 @@
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
+  .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 46% 34%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
@@ -329,6 +353,7 @@
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
+    .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
@@ -343,6 +368,8 @@
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
+    .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 46% 34%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
@@ -369,6 +396,7 @@
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
+  .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
@@ -383,6 +411,8 @@
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
+  .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 42% 72%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
@@ -408,6 +438,7 @@
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
+    .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
@@ -422,6 +453,8 @@
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
+    .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 42% 72%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
@@ -450,6 +483,7 @@
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+  .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
@@ -464,6 +498,8 @@
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+  .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 16% 52%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
@@ -488,6 +524,7 @@
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+    .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
@@ -502,6 +539,8 @@
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+    .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 16% 52%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
@@ -526,6 +565,7 @@
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+  .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
@@ -540,6 +580,8 @@
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+  .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 14% 56%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
@@ -564,6 +606,7 @@
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+    .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
@@ -578,6 +621,8 @@
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+    .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 14% 56%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }

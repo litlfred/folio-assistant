@@ -1,11 +1,19 @@
 {
   "$schema": "folio-voices-index/v1",
+  "tile": {
+    "voices": {
+      "count": 6,
+      "unit": "voices"
+    }
+  },
   "directories": [
     {
       "instance": "agent-skills",
       "dir": "agent-skills/skills/voices",
-      "present": false,
-      "voices": []
+      "present": true,
+      "voices": [
+        "agent-skill-authoring"
+      ]
     },
     {
       "instance": "folio-assistant-core",
@@ -36,6 +44,198 @@
   ],
   "voices": [
     {
+      "id": "agent-skill-authoring",
+      "title": "Agent skill authoring — the base voice, read from two ingested papers",
+      "description": "The voice for writing and reviewing agent skills: what a SKILL.md's description must carry to be routed to at all, how much may sit in the body, where references and examples go, and what to do before trusting somebody else's skill. Twelve rules, every one cited to a page of an ingested paper. This is the SHARED BASE — the part the vendors agree on. Anything specific to one vendor's platform belongs in an override under `vendors/`, declaring this voice in its `extends` field.",
+      "instance": "agent-skills",
+      "path": "agent-skills/skills/voices/agent-skill-authoring",
+      "provenance": "evidence",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring",
+      "sources": [
+        {
+          "title": "Authoring Agent Skills: A Software-Engineering Approach",
+          "year": 2026
+        },
+        {
+          "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "as-description-states-function-and-trigger",
+          "title": "The description states BOTH what the skill does and when to use it",
+          "description": "A description that names only the function cannot be routed to. State the operations and the triggering situations, in the concrete terms a real request would contain — \"Drafts release notes from the pull requests merged between two version tags. Use when cutting a release…\" rather than \"Handles releases\". This is the most prevalent defect in the public corpus and the only one whose harm has been measured end to end: R1.3 (missing trigger guidance) affects 52.3% of 138,133 skills, and R1-clean skills reach 88.5% hit@1 against 82.6% for R1-defective ones. A skill that is never selected has no other quality.",
+          "category": "structure",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-004-writing-the-description",
+          "pages": "4-5",
+          "quote": "State both what the skill does and when it should be used, and include the concrete terms a relevant task would contain."
+        },
+        {
+          "id": "as-description-third-person",
+          "title": "Write the description in the third person",
+          "description": "The description is read by the model as part of its own context, so first or second person degrades matching. \"Reviews a diff for…\", never \"I review…\" or \"You can use this to…\". This is a routing property, not a style preference — the same sentence in the wrong person is a worse trigger.",
+          "category": "person",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-004-writing-the-description",
+          "pages": "4-5",
+          "quote": "Write it in the third person, since it is read by the model as part of its own context, and a first or second person voice can degrade matching."
+        },
+        {
+          "id": "as-body-under-500-lines",
+          "title": "Keep the body under about 500 lines",
+          "description": "The body enters the context window whole, the moment the skill is selected. Past roughly five hundred lines it starts displacing the conversation and the other context the task needs, so length is a cost paid at every invocation rather than a one-off. Longer material belongs in a reference file, which costs nothing until it is read.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-003-staged-loading",
+          "pages": "4",
+          "quote": "The body should stay under about five hundred lines, a few thousand tokens, so that once loaded it does not crowd out the conversation and other context"
+        },
+        {
+          "id": "as-assume-general-knowledge",
+          "title": "Add only what the model does not already know",
+          "description": "Explaining what the model already understands is not harmless padding: every sentence competes for context once the body is loaded, so a paragraph restating general knowledge displaces one carrying a project convention. Write the non-obvious procedure, the specific file location, the rule that must hold — and delete the rest.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
+          "pages": "5",
+          "quote": "Assume the model already holds general knowledge, and add only what it does not have: project conventions, non-obvious procedures, specific file locations, rules that must hold."
+        },
+        {
+          "id": "as-references-one-level-deep",
+          "title": "Reference files are linked ONE level deep, never chained",
+          "description": "Link every reference file directly from the body. A file that links onward to another may be reached by a partial read, and the model then acts on incomplete information — a failure that looks like the skill working, because something was read. The depth limit is what makes a partial read safe.",
+          "category": "structure",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
+          "pages": "5",
+          "quote": "those files should not chain onward to further files, because the model may preview a deeply linked file with a partial read and then act on incomplete information"
+        },
+        {
+          "id": "as-reference-toc-over-100-lines",
+          "title": "A reference file over ~100 lines opens with a table of contents",
+          "description": "A partial read of a long reference shows its opening. If that opening is a table of contents, the reader learns the file's full scope even when it never reaches the end; without one it learns only the first section and cannot tell what it missed.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
+          "pages": "5",
+          "quote": "For any reference file longer than about one hundred lines, place a short table of contents at the top so the model can see the full scope even on a partial read"
+        },
+        {
+          "id": "as-one-default-name-the-exception",
+          "title": "Give ONE default and name the exception",
+          "description": "A body that lists alternatives without ranking them leaves the model choosing on no grounds, which makes its behaviour vary run to run for reasons the author cannot see. State the default, then state the specific condition under which something else applies.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-009-patterns-and-faults",
+          "pages": "8",
+          "quote": "Offering many alternatives leaves the model to choose without grounds, so give one default and name the exception."
+        },
+        {
+          "id": "as-state-dependencies",
+          "title": "State every dependency the skill assumes",
+          "description": "A skill that assumes a package, a binary or a path is present fails on the machine where it is not — and fails at the point of use, having already been selected. Name what must be installed, and prefer a check that reports the gap over a step that dies on it.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-009-patterns-and-faults",
+          "pages": "8",
+          "quote": "Assuming a package is installed fails when it is not, so state dependencies explicitly."
+        },
+        {
+          "id": "as-evaluations-before-instructions",
+          "title": "Write the evaluations before the skill",
+          "description": "Run the model on representative tasks WITHOUT the skill and record where it actually fails. Those failures are the test cases; the skill is the minimum instruction set that passes them. Written the other way round, a skill documents what its author imagined the model could not do, and the two sets overlap less than they appear to.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-008-an-evaluation-driven-authoring-process",
+          "pages": "8",
+          "quote": "Write evaluations before writing the skill."
+        },
+        {
+          "id": "as-read-third-party-skills-in-full",
+          "title": "Read a third-party skill in full before using it",
+          "description": "A skill carries instructions and may carry code, both of which the agent can act on. Installing one from outside the project without reading it is running unreviewed content in the agent's own voice, where it is indistinguishable from the project's own guidance.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2607.25032v1#sec-011-summary-of-guidance",
+          "pages": "9",
+          "quote": "a skill from a third party should be read in full before it is used."
+        },
+        {
+          "id": "as-no-name-as-heading",
+          "title": "Do not repeat the skill's name as the body's first heading",
+          "description": "The name is already in the frontmatter and already in the model's context at level one. Repeating it as the opening heading spends body lines restating what the reader has, and it is the second most common defect in the public corpus at 44.3%. Open with what the reader does not yet have.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2608.08453v1#sec-012-42-rq1-what-reusability-defects-are-prevalent-in",
+          "pages": "4",
+          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%)."
+        },
+        {
+          "id": "as-examples-move-to-references",
+          "title": "Too many inline examples belong in a reference file",
+          "description": "Examples are the easiest thing to add and the most expensive to carry, because they sit in the body and load on every invocation. R3.2 affects 32.1% of public skills. Keep the one example that disambiguates the instruction; move the rest to a reference the body links, where they cost nothing until needed.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "arxiv-2608.08453v1#sec-012-42-rq1-what-reusability-defects-are-prevalent-in",
+          "pages": "4",
+          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%)."
+        }
+      ]
+    },
+    {
       "id": "milnor",
       "title": "Milnor exposition standard",
       "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
@@ -51,6 +251,7 @@
         }
       ],
       "hasInstructions": true,
+      "provenanceFlags": [],
       "rules": [
         {
           "id": "milnor-h1-economy",
@@ -242,6 +443,17 @@
         }
       ],
       "hasInstructions": false,
+      "provenanceFlags": [
+        {
+          "code": "declared-outside-cites-inside",
+          "ruleIds": [
+            "tw-glossary-terms-capitalised",
+            "tw-no-repetition-logical-order",
+            "tw-link-schema-and-uml"
+          ],
+          "detail": "declares \"assertion\" — a voice read from outside this project — while 3 of 9 rule(s) cite a node of this project's own graph. That part of it is a house standard. A voice may legitimately be a synthesis of both; this asks whether the declared value still describes the result, and only a person can answer it"
+        }
+      ],
       "rules": [
         {
           "id": "tw-rfc2119-absolute-requirement",
@@ -393,6 +605,7 @@
         }
       ],
       "hasInstructions": true,
+      "provenanceFlags": [],
       "rules": [
         {
           "id": "who-ed-ize-preferred",
@@ -538,6 +751,7 @@
         }
       ],
       "hasInstructions": true,
+      "provenanceFlags": [],
       "rules": [
         {
           "id": "who-gdl-strength-verbs",
@@ -669,6 +883,7 @@
         }
       ],
       "hasInstructions": true,
+      "provenanceFlags": [],
       "rules": [
         {
           "id": "who-des-figure-colour-accessibility",
@@ -786,9 +1001,9 @@
     }
   ],
   "totals": {
-    "voices": 5,
-    "rules": 46,
-    "citingLibrary": 43,
+    "voices": 6,
+    "rules": 58,
+    "citingLibrary": 55,
     "citingKgNode": 3,
     "mechanical": 9
   }
