@@ -19,9 +19,6 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
-// `folio` is registered by CORE on import, and this resolves an instance that
-// declares one — without it `directoriesForGraph` throws `unknown graph kind`.
-import "../../schemas/folio-graph-kind.js";
 
 /** The instance root these helpers resolve against: `cat-harness`. */
 export const INSTANCE = resolve(import.meta.dir, "../..");

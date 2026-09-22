@@ -54,7 +54,6 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");

@@ -69,11 +69,6 @@ import {
   type CatHarnessDeclaration,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
-// `folio` is registered by CORE as a load-time side effect, and this module
-// reads declarations — without it `readDeclaration` throws `unknown graph kind
-// "folio"` on a declaration that is perfectly valid. Same import
-// `check-declared-assets.ts` and `kg-export.ts` already carry, same reason.
-import "../schemas/folio-graph-kind.js";
 
 /** The three obligations, in the order the owner named them. */
 export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;

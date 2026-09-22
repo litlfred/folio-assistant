@@ -16,11 +16,6 @@ import { join, resolve } from "path";
 import { execFileSync } from "child_process";
 import { findDeclarationFile, graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
 import { portableSegment } from "../../schemas/portable-path";
-// The `folio` kind is registered by CORE as a load-time side effect. Without
-// it `graphLayer("folio")` is undefined and the folio directory would read as
-// "layer unknown" — which this walker treats as walkable, so the corpus is
-// still swept, but the reason would be luck rather than design.
-import "../../schemas/folio-graph-kind.js";
 import { criterionSourceHash } from "./qa-criterion-hash";
 import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {

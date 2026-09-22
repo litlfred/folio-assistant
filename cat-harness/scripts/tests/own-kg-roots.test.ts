@@ -19,7 +19,6 @@ import { join, relative } from "node:path";
 import { DECLARATION_SUFFIX } from "../../schemas/cat-harness.ts";
 
 import { ownKgRoots } from "../known-skills.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 const made: string[] = [];
 afterEach(() => {

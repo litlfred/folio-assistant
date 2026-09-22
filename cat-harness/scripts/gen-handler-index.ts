@@ -53,7 +53,6 @@ import { dirname, join, relative } from "node:path";
 
 import { harnessTiles, type HarnessTile } from "./harness-tiles.ts";
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
