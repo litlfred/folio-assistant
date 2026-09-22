@@ -6,7 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-22T18:29:28Z
 updated_at: 2026-09-22T18:29:28Z
-parent: folio-assistant-5a3l
+parent: folio-assistant-bzyu
 ---
 
 ## What this is
@@ -39,6 +39,27 @@ re-render for translated labels), `xcyh` (the KG viewer must be translated),
 `0hd6` (`translate-bpmn` has no `--check`, and 12 diagrams have no `.pot` at
 all), `a98i`, `j1r2` (audio and visual assets carry translatable text), `x3h9`
 (**gettext + accessibility are HARNESS CORE, not folio**).
+
+## `5a3l` reads `completed` while carrying 12 open children — do not trust it
+
+**This bean was first parented to `5a3l` and has been moved to `bzyu`.** `5a3l`
+is `completed`, and stream 4's `check:bean-rollup` (#962) reports it as its one
+live finding — `closed-container-open-subtree`: an epic marked finished with
+twelve open children under it. Parenting a `todo` bean there made that finding
+worse by one, which is a defect committed by the session that queued the work
+the finding is about.
+
+`bzyu` is `in-progress` and is one of this entry's two halves, so it is an
+honest parent. It is not a perfect one: this entry's larger half is `5a3l`'s
+eleven deployment beans, and they now hang from a translation epic.
+
+**That mismatch is the symptom, not the fix.** The real question — are those
+twelve unfinished deployment work, or do they belong under another epic? — is a
+judgement about `5a3l`, and re-opening or re-parenting somebody's epic belongs
+to its owner. Stream 4 baselined it rather than repairing it for the same
+reason. **A session launched against this entry should put that question to the
+owner before treating `5a3l` as either done or live**, because the roadmap
+currently reads DEPLOYMENT as finished while eleven of its beans are open.
 
 ## Why these two belong together
 
