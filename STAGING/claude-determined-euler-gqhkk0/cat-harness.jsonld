@@ -264,25 +264,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T10:12:47.649Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1be2f45ea7ea62f2d0dc408195088bd601564954",
-  "sourceCommitSha": "1be2f45ea7ea62f2d0dc408195088bd601564954",
-  "sourceCommitAt": "2026-09-22T10:11:21Z",
+  "generatedAt": "2026-09-22T11:08:43.477Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b34c864276ddb5bacd608700fbd924da088d45cd",
+  "sourceCommitSha": "b34c864276ddb5bacd608700fbd924da088d45cd",
+  "sourceCommitAt": "2026-09-22T11:07:22Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 230,
+    "Skill": 233,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
-    "Process": 59,
-    "SequenceFlow": 751,
-    "Role": 135,
-    "ProcessNode": 715,
+    "Process": 60,
+    "SequenceFlow": 763,
+    "Role": 139,
+    "ProcessNode": 726,
     "Tool": 69,
     "Schema": 93,
-    "GraphKind": 26,
-    "Directory": 34,
+    "GraphKind": 27,
+    "Directory": 35,
     "Asset": 3
   },
   "@graph": [
@@ -1739,7 +1739,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/surprise-to-corpus.md",
-      "instructionLines": 139,
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1857,7 +1857,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 799,
+      "instructionLines": 801,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1880,6 +1880,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/communication-language",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "communication-language",
+      "title": "The language you communicate in",
+      "description": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/communication-language.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/communication-language"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/harness-tiles",
@@ -2344,7 +2361,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 648,
+      "instructionLines": 703,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2479,7 +2496,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 466,
+      "instructionLines": 508,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3042,6 +3059,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/swimlane-glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "swimlane-glossary",
+      "title": "Swimlane Glossary Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/swimlane-glossary.md",
+      "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/integration-watcher",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "integration-watcher",
@@ -3057,6 +3090,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "adjudication",
+      "title": "Adjudication — judgement, when the mechanism ran out of facts",
+      "description": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape seven implementations here already share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/adjudication.md",
+      "instructionLines": 209,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-context-and-state-graphs",
@@ -4209,7 +4259,8 @@
       "roleName": [
         "reviewer",
         "integration-watcher",
-        "proof-review-agent"
+        "proof-review-agent",
+        "feedback-provider"
       ],
       "permissionName": [
         "review-comments"
@@ -4274,7 +4325,8 @@
       "hasCapability": [],
       "roleName": [
         "reviewer",
-        "narrative-reviewer"
+        "narrative-reviewer",
+        "feedback-provider"
       ],
       "permissionName": [
         "review-comments"
@@ -4314,7 +4366,8 @@
       "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
       "hasCapability": [],
       "roleName": [
-        "qc-reviewer"
+        "qc-reviewer",
+        "feedback-provider"
       ],
       "permissionName": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-checker"
@@ -4499,10 +4552,12 @@
       "roleName": [
         "reviewer",
         "translation-adjudicator",
-        "narrative-reviewer"
+        "narrative-reviewer",
+        "adjudicator"
       ],
       "permissionName": [
-        "approval-authority"
+        "approval-authority",
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/content-reviewer"
     },
@@ -4592,7 +4647,8 @@
       "hasCapability": [],
       "roleName": [
         "build-pipeline",
-        "validation-pipeline"
+        "validation-pipeline",
+        "feedback-provider"
       ],
       "permissionName": [
         "qa-reporting"
@@ -4609,6 +4665,9 @@
       "hasCapability": [],
       "roleName": [
         "user"
+      ],
+      "permissionName": [
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/end-user"
     },
@@ -4818,10 +4877,12 @@
       "description": "The dispatched party that rules — given the original intent and the checker's output, and never the artefact itself. It names each drift against the criterion's declared `drift` statement and returns pass / warn / fail. It holds `qa-reporting` and its witness leads the criterion, because the first entry per criterion is the operative one. It does NOT hold `content-authoring`: the party that produced the artefact does not write the verdict on it, which is the whole discipline in one line.",
       "hasCapability": [],
       "roleName": [
-        "qc-reviewer"
+        "qc-reviewer",
+        "adjudicator"
       ],
       "permissionName": [
-        "qa-reporting"
+        "qa-reporting",
+        "adjudication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-adjudicator"
     },
@@ -5512,6 +5573,7 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/activity-log",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/archiving-arxiv",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/archiving-web-pages",
@@ -5528,6 +5590,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/communication-language",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-acquisition",
@@ -5614,6 +5677,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/swarm-management",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/swimlane-glossary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/technical-documentation",
@@ -9233,7 +9297,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_NarrativeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-editorial-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -10580,7 +10645,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/materialize-remote"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -14753,6 +14819,378 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Adjudication",
+      "enforcement": "advisory",
+      "sourcePath": "processes/adjudication.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement"
+      ],
+      "nodeCount": 11,
+      "flowCount": 12,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "both sides present",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "only one side",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the finding stands",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the criterion does not apply here",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "it applies; this is an exception",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Feedback%20provider",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Feedback provider",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Feedback%20provider"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Adjudicator",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Entries for one criterion disagree",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Feedback%20provider",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "State the finding and what it read",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Feedback%20provider",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-feedback"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_StateFinding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Are both sides present?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/GW_Adjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not adjudicable — it is a review, a gate, or a bug report",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_NotAdjudicable"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_NotAdjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dispatch with adjudicator_sees — never the artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/untainted-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Adjudicable"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Judge the disagreement",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which of the three?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Scope the criterion so it stops applying here",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Grant a dispensation, with its reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write the entry that LEADS — keeping the checker's beneath it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Settled, with the reason on the record",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_CodeQualityGates",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "The gates a change must pass before it can merge",
@@ -15783,7 +16221,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/translation-manager"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -17824,7 +18262,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_VoiceReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-overlay-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-overlay-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -22912,7 +23351,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/document-intake"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -34061,6 +34501,14 @@
       "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "renderable": false,
+      "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "beans",
@@ -34199,6 +34647,7 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/dispatch-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/interaction-modality",
@@ -34274,18 +34723,19 @@
         "agent"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-block-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-feedback",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-validation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/milnor-exposition-standard",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/rendering-auditor",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/semantic-review-scoping",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-overlay-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-block-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-validation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/rendering-auditor"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/voice-overlay-review"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Reviewer%20/%20SME",
@@ -34310,6 +34760,7 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-feedback",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/milnor-exposition-standard",
@@ -34557,7 +35008,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "translation-adjudicator",
       "title": "Translation adjudicator",
-      "description": "Reviewer who settles a disagreement between machine and human translation.",
+      "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
@@ -34569,6 +35020,48 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translation-adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "adjudicator",
+      "title": "Adjudicator",
+      "description": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/untainted-verification"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Adjudicator"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/feedback-provider",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "feedback-provider",
+      "title": "Feedback provider",
+      "description": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#skill/todo-review"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/Feedback%20provider"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#role/stakeholder",
@@ -35601,6 +36094,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "glossary",
+      "path": "glossary/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+      ],
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/glossary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -35634,8 +36139,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "4163ad4d5557067d33c6e2a8a56309ae46435d2e",
+    "sha": "a14e85461460f4e3838614e3f45d2cba740d7285",
     "pr": "920/merge",
-    "run": "35714630592"
+    "run": "35719707555"
   }
 }
