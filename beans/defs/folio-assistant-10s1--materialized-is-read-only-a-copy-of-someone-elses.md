@@ -4,9 +4,9 @@ title: 'MATERIALIZED IS READ-ONLY: a copy of someone else''s artefact is not you
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-p5wm
 created_at: 2026-09-21T22:01:44Z
-updated_at: 2026-09-21T22:01:44Z
+updated_at: 2026-09-22T06:55:01Z
+parent: folio-assistant-p5wm
 ---
 
 ## What — owner, 2026-09-21, verbatim
@@ -113,3 +113,75 @@ actors" means naming, not prose:
 - [ ] `todo-review` links BACK to this step, so the feedback pipeline no
       longer starts mid-air
 
+
+
+---
+
+## OWNER, 2026-09-22 — two corrections to the model
+
+> Maternalized may have provenance/digital signature later that can be checked
+> ... (see trusted data objects)
+>
+> Materialized assets not a flag true, but mid winter to asset in folio/ or
+> elsewhere and a reference to the library/ original reference
+
+Reading *"mid winter"* as **a pointer** — flagged because it is the one word
+not clear from context; everything else below follows from the rest.
+
+### 1. Fixity is the FLOOR, not the answer
+
+`check:materialized-fixity` (#858) answers *"unchanged since we recorded it"*.
+A **trusted data object** answers *"signed by whom, and verifiable against
+their key"* — strictly stronger, and it survives the recorder being wrong or
+dishonest, which a self-recorded digest does not.
+
+**Measured: "trusted data object" appears NOWHERE in this checkout** — zero
+hits across `.md`, `.ts` and `.json`. So it is a concept to bring in rather
+than one already modelled, and nothing here should be written as though it
+exists.
+
+The order is right, though, and worth stating so the floor is not mistaken for
+the ceiling: a digest is checkable today with no key infrastructure, and it is
+what makes an edit-in-place detectable at all. A signature replaces the
+*basis* of the claim without changing the shape of the check.
+
+### 2. Materialized is a POINTER PAIR, not a flag
+
+This is the substantive correction and it lands before the copy-out is built,
+which is the useful moment for it.
+
+Today `MaterializationSchema` carries:
+
+| field | what it points at |
+|---|---|
+| `of` | the **remote** thing — a URI, upstream |
+| `localPath` | where the bytes landed in **this** instance |
+| — | **nothing for the local original** |
+
+So a materialized asset is modelled as *a state plus where its bytes are*. The
+owner's model is different: a materialized asset is
+
+- **a pointer to the asset** — in `folio/`, or elsewhere; and
+- **a reference to the `library/` original**.
+
+**There is no field for the second, and that is the gap the copy-out needs.**
+When a reviewer copies a materialized item into their own `folio/`, `of` still
+points upstream, so the copy records where the bytes ultimately came FROM and
+not which local original it was taken from. One rename later a copy is
+indistinguishable from original work — which is this bean's own "what carries
+provenance?" question, answered: not `of`.
+
+### What this changes about the remaining work
+
+- The copy-out edge is **local provenance** and needs its own field. It is not
+  `of` with a different value: `of` means upstream, and overloading it would
+  make "copied from IRIS" and "copied from our library" the same statement.
+- `state: "materialized"` as an enum value stays useful as a CENSUS, but it is
+  not what identifies the asset — the pointer pair is. A consumer asking
+  "where is this and what is it a copy of" should not have to read a state to
+  find out.
+- Whatever field is added should be shaped so a **signature** can hang off it
+  later without a second migration, since the owner has named that as coming.
+
+NOT designed here. Recorded so the copy-out is built against this model rather
+than against the flag, and so #858's fixity work is read as the floor it is.
