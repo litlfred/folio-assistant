@@ -65,6 +65,27 @@
  * A malformed entry is dropped WITHOUT dropping its siblings, so one bad
  * declaration in a shared projection cannot silence the tile beside it.
  *
+ * ## A badge is exactly as fresh as its projection, and that is the point
+ *
+ * The count is read from the projection, so it inherits whatever freshness the
+ * projection has. That is the correct coupling rather than a weakness: the
+ * badge and the page it opens read the SAME document, so they cannot disagree.
+ * A tile that recomputed its own number would be a second answer, which is the
+ * `flh4` defect arriving through the badge.
+ *
+ * It does mean a committed projection's lag shows on the tile. Measured
+ * 2026-09-22: `beans/defs/` held 478 files while the committed
+ * `assets/beans/index.json` projected 466. That projection is EXISTENCE-gated
+ * on purpose — every session writes to `beans/`, so a content gate would go
+ * red on a projection fresh on the branch and fresh on main and stale only
+ * against their union (bean `d2kp`) — and `docs-site.yml` regenerates before
+ * publishing, so a reader fetches the current number even while the committed
+ * copy lags.
+ *
+ * The consequence for anyone checking a badge: a number read from a LOCAL
+ * checkout is the committed projection's, not the site's. Compare against the
+ * deployed page, or regenerate first.
+ *
  * @graphNode schema
  * @module schemas/tile-count
  */
