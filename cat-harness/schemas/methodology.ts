@@ -81,16 +81,35 @@ export const MethodologyFrontMatterSchema = z
      */
     "applies-when": z.string().min(1),
     /**
-     * The ingested source, as `library/<bib-slug>`.
+     * The ingested sources, each as `library/<bib-slug>`.
      *
-     * Optional — see the module docstring. When present it must be a library
+     * Optional — see the module docstring. Each entry must be a library
      * reference, not a URL and not a prose citation: the point is that a reader
      * can open it from this checkout, and a URL is precisely the thing that
      * resolves against nothing.
+     *
+     * ## An ARRAY, and it became one the day a second source arrived
+     *
+     * This was a single string until 2026-09-22, when `swot` gained a second
+     * ingested source. A methodology adopted from secondary literature does not
+     * have one canonical text — `swot` is rendered from a theoretical review
+     * AND an encyclopedia chapter, which agree on the method, differ in what
+     * they cover, and are silent on different things. Forcing a choice between
+     * them would make the node cite less than it rests on.
+     *
+     * An array even for one, matching `graphKinds` and for the same reason:
+     * a field with two spellings is a field every consumer must branch on, and
+     * the one-element case is the one that would silently become the default.
+     * A present-but-empty array is refused — an empty list of sources is
+     * `evidence` absent, said in a way that reads as answered.
      */
     evidence: z
-      .string()
-      .regex(/^library\/[a-z0-9][a-z0-9.-]*$/, "`evidence` is a library reference: `library/<bib-slug>`")
+      .array(
+        z
+          .string()
+          .regex(/^library\/[a-z0-9][a-z0-9.-]*$/, "each `evidence` entry is a library reference: `library/<bib-slug>`"),
+      )
+      .min(1, "`evidence: []` is not `no evidence` — omit the field instead")
       .optional(),
   })
   .strict();

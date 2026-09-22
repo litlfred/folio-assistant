@@ -56,10 +56,38 @@ describe("the schema that did not exist", () => {
   });
 
   it("refuses a URL as `evidence` — the point is that it resolves HERE", () => {
-    const url = { ...VALID, evidence: "https://doi.org/10.17719/jisr.2017.1832" };
+    const url = { ...VALID, evidence: ["https://doi.org/10.17719/jisr.2017.1832"] };
     expect(MethodologyFrontMatterSchema.safeParse(url).success).toBe(false);
-    const ref = { ...VALID, evidence: "library/gurel-tat-2017-swot-analysis" };
+    const ref = { ...VALID, evidence: ["library/gurel-tat-2017-swot-analysis"] };
     expect(MethodologyFrontMatterSchema.safeParse(ref).success).toBe(true);
+  });
+
+  it("takes SEVERAL sources — a methodology may rest on more than one", () => {
+    // `swot` is rendered from a theoretical review AND an encyclopedia
+    // chapter. They agree on the method and differ in coverage, so forcing a
+    // choice would make the node cite less than it rests on.
+    const two = {
+      ...VALID,
+      evidence: ["library/gurel-tat-2017-swot-analysis", "library/sammut-bonnici-galea-2015-swot-analysis"],
+    };
+    expect(MethodologyFrontMatterSchema.safeParse(two).success).toBe(true);
+  });
+
+  it("refuses `evidence: []` — an empty list is not `no evidence`", () => {
+    // Absent means nobody has ingested a source. An empty array reads as
+    // answered while saying nothing, which is the third-state collapse this
+    // corpus spends most of its length preventing.
+    expect(MethodologyFrontMatterSchema.safeParse({ ...VALID, evidence: [] }).success).toBe(false);
+  });
+
+  it("refuses a BARE STRING, so the one-source case cannot fork the shape", () => {
+    // It was a string until a second source arrived. Accepting both spellings
+    // would leave every consumer branching on the field's type, and the
+    // one-element case is the one that would silently become the default.
+    expect(
+      MethodologyFrontMatterSchema.safeParse({ ...VALID, evidence: "library/gurel-tat-2017-swot-analysis" })
+        .success,
+    ).toBe(false);
   });
 });
 
@@ -93,10 +121,24 @@ describe("the real corpus", () => {
     expect(names).toContain("grade");
   });
 
-  it("swot is backed, and its source is really on disk", () => {
-    const swot = report.resolved.find((r) => r.name === "swot");
-    expect(swot).toBeDefined();
-    expect(existsSync(join(INSTANCE_ROOT, swot!.at))).toBe(true);
+  it("swot is backed by BOTH its sources, and each is really on disk", () => {
+    const swot = report.resolved.filter((r) => r.name === "swot");
+    expect(swot.map((r) => r.evidence).sort()).toEqual([
+      "library/gurel-tat-2017-swot-analysis",
+      "library/sammut-bonnici-galea-2015-swot-analysis",
+    ]);
+    for (const r of swot) expect(existsSync(join(INSTANCE_ROOT, r.at))).toBe(true);
+  });
+
+  it("a node is backed only when EVERY source it cites resolves", () => {
+    // Half-backed must not read as backed. `resolved` holds one entry per
+    // (node, source) pair, so counting it as a count of METHODOLOGIES reported
+    // 2 of 5 the moment swot gained a second source — the count bug this
+    // assertion pins shut.
+    const backed = new Set(report.resolved.map((r) => r.name));
+    const unresolved = new Set(report.unresolved.map((f) => f.name));
+    for (const name of backed) expect(unresolved.has(name)).toBe(false);
+    expect(backed.size).toBeLessThanOrEqual(report.nodes);
   });
 
   it("does NOT descend into a methodology's own subgraph directory", () => {

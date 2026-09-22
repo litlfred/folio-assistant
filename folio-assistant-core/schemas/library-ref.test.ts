@@ -110,7 +110,14 @@ describe("library location is read from the declaration", () => {
     const cited = new Set<string>();
     for (const f of readdirSync(methodologies).filter((f) => f.endsWith(".md"))) {
       const text = readFileSync(join(methodologies, f), "utf8");
-      for (const m of text.matchAll(/^evidence:\s*library\/(\S+)\s*$/gm)) {
+      // BOTH SPELLINGS OF THE FIELD'S LAYOUT, not both shapes of the field.
+      // `evidence` is an array in the schema; YAML writes a one-element array
+      // inline (`evidence: [library/x]`) or as a block list, and `swot` uses
+      // the block form. Matching only `evidence: library/x` read the block
+      // form as ZERO citations, which failed this test by declaring a real
+      // source uncited — a false finding, and in the direction that looks like
+      // a violation.
+      for (const m of text.matchAll(/^\s*(?:evidence:\s*)?-?\s*library\/(\S+?)\s*$/gm)) {
         cited.add(m[1]!);
       }
     }

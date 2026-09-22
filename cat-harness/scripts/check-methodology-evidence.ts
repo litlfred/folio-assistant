@@ -184,7 +184,7 @@ export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
     r.nodes += 1;
     const { name, evidence, origin } = v.data;
 
-    if (evidence === undefined) {
+    if (evidence === undefined || evidence.length === 0) {
       r.noEvidence.push({
         node,
         name,
@@ -193,12 +193,26 @@ export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
       continue;
     }
 
-    const at = resolveEvidence(root, evidence);
-    if (at === undefined) {
-      r.unresolved.push({ node, name, detail: `\`evidence: ${evidence}\` is in no declared library` });
+    // EVERY reference is resolved, not just the first. A node citing two
+    // sources where one is missing is not backed — it is half backed, and
+    // reporting it as resolved would put the more reassuring of the two
+    // answers on the record.
+    const missing: string[] = [];
+    const found: { ref: string; at: string }[] = [];
+    for (const ref of evidence) {
+      const at = resolveEvidence(root, ref);
+      if (at === undefined) missing.push(ref);
+      else found.push({ ref, at: relative(root, at) });
+    }
+    if (missing.length > 0) {
+      r.unresolved.push({
+        node,
+        name,
+        detail: `${missing.map((m) => `\`${m}\``).join(", ")} in no declared library`,
+      });
       continue;
     }
-    r.resolved.push({ node, name, evidence, at: relative(root, at) });
+    for (const f of found) r.resolved.push({ node, name, evidence: f.ref, at: f.at });
   }
   return r;
 }
@@ -270,9 +284,17 @@ if (import.meta.main) {
     for (const f of r.invalid) console.log(`  ✗ ${f.node}: ${f.detail}`);
     for (const f of r.untagged) console.log(`  ? ${f.node}: ${f.detail}`);
 
-    const backed = r.resolved.length;
+    // COUNT THE METHODOLOGIES, NOT THE REFERENCES. `resolved` holds one entry
+    // per (node, source) pair since `evidence` became an array, so its length
+    // is a count of citations — and printing that as "N of 5 methodologies"
+    // read as 2 the moment one node gained a second source. Exactly the
+    // "never quote a count from prose" failure, in the script that exists to
+    // replace prose counts with measured ones.
+    const backed = new Set(r.resolved.map((g) => g.name)).size;
+    const refs = r.resolved.length;
     console.log(
-      `\n  ${backed} of ${r.nodes} methodolog${r.nodes === 1 ? "y" : "ies"} rest on a source this checkout holds.`,
+      `\n  ${backed} of ${r.nodes} methodolog${r.nodes === 1 ? "y" : "ies"} rest on a source this ` +
+        `checkout holds${refs > backed ? `, across ${refs} ingested source(s)` : ""}.`,
     );
     if (r.noEvidence.length > 0) {
       console.log(`  ${r.noEvidence.length} cite${r.noEvidence.length === 1 ? "s" : ""} an origin nobody has ingested.`);
