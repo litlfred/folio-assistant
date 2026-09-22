@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:04:32Z
+updated_at: 2026-09-22T21:26:45Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -32,9 +32,21 @@ o3xy's rules apply.
 ## Done when
 - [ ] outline, breadcrumb, next/prev and minimap on the review page
 - [ ] every action is reachable by keyboard alone, verified by a Playwright test that uses no mouse
-- [ ] the TOC ruling is checked with the owner, and the answer is recorded here
+- [x] the TOC ruling is checked with the owner (ruling below)
 
 
 ## Roast correction 2026-09-22 (epic q4jm, R6)
 
 The TOC ruling's own reason is *"a sub-graph has no single order"*. A document folio has one (manifest order), so an outline for a DOCUMENT folio falls under its "(mayber later)", not against it. It is still asked, not assumed.
+
+
+## Owner ruling 2026-09-22: outline on the review page only
+
+The owner was asked with three options side by side (review page only / every page of a document folio / none) and chose **review page only**:
+- the outline lists a **document** folio's chapters and sections in manifest order;
+- each row carries changed / reviewed / has-comments badges, and one click jumps to that section;
+- it appears on `review/` pages and nowhere else.
+
+The docs-auto "no toc" ruling for normal pages **stands unchanged**. A folio with no single order (a paper graph, a multi-document folio) gets no outline; it falls back to the minimap and next/previous.
+
+- [x] the TOC ruling is checked with the owner, and the answer is recorded here

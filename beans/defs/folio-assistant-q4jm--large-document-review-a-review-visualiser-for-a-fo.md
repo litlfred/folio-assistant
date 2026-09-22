@@ -5,7 +5,7 @@ status: todo
 type: epic
 priority: high
 created_at: 2026-09-22T21:02:29Z
-updated_at: 2026-09-22T21:09:45Z
+updated_at: 2026-09-22T21:25:28Z
 ---
 
 ## What this is
@@ -167,3 +167,8 @@ like 1swy.
 ### R9. The owner already filed half of this, as issue #197 (2026-09-17), and the plan missed its other half
 
 #197 covers DOCX ingest with page/line provenance (now on xtpc) **and** a Public Comment process: a line-numbered frozen draft goes out, and comments come back as CSV/XLSX to be triaged, reassigned, assigned and dispensed. The first draft of this plan had only in-page comments. That is not how DAK and L1 consultations are run. It is a new child, and it shares 423d's Finding store rather than getting its own.
+
+
+## Owner ruling 2026-09-22: not under a goal
+
+Asked which goal this epic joins (p5wm, yg29, a new one), the owner answered *"its not under goal"*. It stays a root epic, like 1swy and 2upx, and that is **decided, not unasked**. A later sweep that finds it unparented should read this rather than file it under a milestone.
