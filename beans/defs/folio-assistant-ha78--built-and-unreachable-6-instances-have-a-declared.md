@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ha78
 title: 'BUILT AND UNREACHABLE: 6 instances have a declared viewer no tile links, and shipping a graph adds one'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T06:49:16Z
-updated_at: 2026-09-22T08:58:25Z
+updated_at: 2026-09-22T09:21:44Z
 parent: folio-assistant-o3xy
 ---
 
