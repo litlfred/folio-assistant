@@ -2901,6 +2901,20 @@
       "file": "beans/defs/folio-assistant-frs5--who-iris-stage-the-catalogue-instance-and-git-mv-t.md"
     },
     {
+      "id": "folio-assistant-funp",
+      "title": "R25 glass stage 1: the folio layer exists on ANY page, pulled down and put away from the keyboard",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:10:00Z",
+      "updatedAt": "2026-09-22T06:10:00Z",
+      "preview": "R25: *\"the user in visualization should be able to pull down their folio\"*,\nand R30's glass — *\"pulling down folio panel = glass/window on which stikcy\nnotes/avatrs of materialized assets … are visualized.\"*\n\n## The defect was procedural, not structural\n\nThe layer already existed, already on `document.body`, already\n`position: fixed; inset: 0` — structurally a glass. It was **created inside\n`mount",
+      "file": "beans/defs/folio-assistant-funp--r25-glass-stage-1-the-folio-layer-exists-on-any-pa.md"
+    },
+    {
       "id": "folio-assistant-fuzm",
       "title": "The staging slug sanitiser can emit '..' — safety rests on git's ref rules, written down nowhere",
       "status": "completed",
@@ -5475,14 +5489,14 @@
     {
       "id": "folio-assistant-v18c",
       "title": "Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness's library is empty",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:09:01Z",
-      "updatedAt": "2026-09-21T23:17:17Z",
+      "updatedAt": "2026-09-22T06:03:28Z",
       "preview": "Found 2026-09-21 while fixing the library viewers' parse error (the owner:\n*\"way too many tiles (non functional) on LHS explode menu\"*). **The parse error\nis fixed and shipped separately**; this is what is left after it.\n\n## Measured in a browser, after the fix — 12 navbar tiles\n\n| tile | renders |\n|---|---|\n| `schemas` (cat-harness) | 773 declarations |\n| `detangle-schemas` / `large-datasets-sche",
       "file": "beans/defs/folio-assistant-v18c--navbar-tiles-uploads-and-library-are-two-tiles-for.md"
     },
