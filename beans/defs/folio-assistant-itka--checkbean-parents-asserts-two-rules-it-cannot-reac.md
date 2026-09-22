@@ -1,12 +1,12 @@
 ---
 # folio-assistant-itka
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
-status: todo
+status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-21T21:59:36Z
-updated_at: 2026-09-21T21:59:36Z
+updated_at: 2026-09-22T10:56:22Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-21 by tripping it: a new epic was parented to another epic, and
@@ -61,9 +61,55 @@ it is the owner's call rather than a checker's.
 
 ## Done when
 
-- [ ] The root exclusion is narrowed to the has-a-parent rule; the
-      epic-under-epic branch is reachable
-- [ ] Falsified: an epic parented to an epic turns it red, and did not before
-- [ ] `d308` is reported as **outstanding** for its owner, not failed on
+- [x] The root exclusion is narrowed to the has-a-parent rule; the
+      epic-under-epic branch is reachable. The loop now runs over EVERY open
+      bean and roots `continue` only on the missing-parent case
+- [x] Falsified: an epic parented to an epic turns it red, and did not before.
+      Restoring the old one-line filter turns **4** of the 12 new tests red —
+      the epic-under-epic case plus the two dangling/wrong-type cases that also
+      never reached a root — and restoring the fix turns them green
+- [x] `d308` is reported as **outstanding** for its owner, not failed on.
+      `bean-parents-baseline.json` carries the single pair; a NEW one fails, and
+      a **stale** entry fails too, so the file can only shrink (verified by
+      adding a bogus entry and watching it exit 1)
 - [ ] Finding 2 is put to the owner as a question and its answer recorded here
       before `PARENT_TYPES` is touched
+
+## Finding 1 — fixed 2026-09-22
+
+**The branch was provably dead, and the summary asserted it.** Measured before
+touching anything: **0 epics** among the **179** open beans the loop ran over,
+because `ROOT_TYPES` was applied to the whole filter rather than to the
+has-a-parent rule alone.
+
+The fix is the scope, not the rule. The loop now runs over every open bean;
+a root `continue`s only on the missing-parent case, and the three rules about
+the parent a bean **actually declares** — exists, right type, not an epic under
+an epic — reach roots like everything else.
+
+**That turned out to matter for more than the one branch.** Narrowing the scope
+also made two other rules reachable for roots, which the bean had not noticed:
+an epic with a **dangling** parent, and an epic parented to a **task**. Both now
+have tests. Neither has a live instance today, so the fix surfaces nothing new
+there — but they were as unreachable as the branch this bean was opened for.
+
+**What it surfaces: exactly one pair,** `d308 -> zzmr`, which is what the bean
+predicted. Baselined rather than fixed: re-homing it moves somebody else's work
+in the roadmap, and `bean-coordination` is explicit that an outstanding defect
+is the bean **owner's** to repair.
+
+**The summary line was the last trap.** With the baseline in place the check
+went green while still printing *"no epic hangs from another"* over a known
+pair — reproducing this bean's own defect one line further down. It now reads
+*"no **NEW** epic hangs from another"* whenever the baseline is non-empty, and
+lists each outstanding pair **whether or not anything failed**: a backlog that
+only prints on a red run is invisible on exactly the days somebody would act on
+it.
+
+`bun run gates` — 122 of 122. 12 new tests.
+
+## Finding 2 — still the owner's, and still not touched
+
+`PARENT_TYPES` is unchanged. Whether `feature` is a real tier or a label
+changes where existing beans belong, and a checker does not get to decide that
+by being edited.
