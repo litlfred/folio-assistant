@@ -241,6 +241,45 @@ The same decision, askable:
 Same information, same length, and the second can be answered by typing one
 character.
 
+#### A pending question is not a STATUS — ask it (STRICT)
+
+Owner, 2026-09-22, after four sessions sat blocked while this agent reported
+that they were blocked: *"show the questions!!!!!!!! why are you not. dont say
+a unansnwered question is a blocker, ask a question."*
+
+**"Stream 3 is blocked on four questions" is not a report. It is a question you
+declined to ask.** Naming a block, linking to where it lives, and summarising
+what it is about all *feel* like diligence — the information is accurate and
+the person is informed. They still cannot answer, because nothing was put to
+them in a form that takes a click.
+
+The failure has a specific shape, and it is seductive because each step is
+defensible:
+
+1. A sibling session blocks on a question it cannot deliver.
+2. You notice, and correctly judge it worth surfacing.
+3. You describe it — what it asks, why it matters, where to answer it.
+4. **You stop there**, because the question "belongs to" the other session.
+
+Step 4 is the error. **Whoever can put the question to the person owns asking
+it.** If you can act on the answer — and an agent with repository access
+usually can — the question is yours to ask, not merely to relay. If you truly
+cannot act, ask anyway and carry the answer back; an answer you can hand over
+is worth more than a pointer the person has to follow.
+
+**Pointing somewhere is the failure mode, not the fix.** *"Answer it in that
+session"* asks the person to navigate, load, read and choose. For somebody who
+types with difficulty that is not a small ask — it is the whole cost of the
+decision, moved onto them. Reserve it for what genuinely cannot be done from
+here, and say plainly that it cannot.
+
+**When several are pending and they do not fit one ask**, ask the most
+consequential in full and say **how many remain and what they are about** in one
+line each. Do not ask *"which question would you like me to ask?"* — that is a
+turn spent on nothing, and it is still not a question they can act on. Choose,
+ask, and say what is queued behind it. §"More than one decision pending" below
+carries the rest of that rule.
+
 #### More than one decision pending — ask ONE, count the rest
 
 The six parts above are per decision, and nothing said what to do when three are

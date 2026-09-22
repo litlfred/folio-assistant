@@ -205,11 +205,11 @@ jobs:
           bun-version: latest
 
       - name: Install + run TypeDoc
-        working-directory: folio-assistant
+        working-directory: cat-harness
         run: |
           bun install || npm install
           # Use TypeDoc to document the schemas/ exports + adapters/paper/schemas/
-          npx typedoc \
+          npx --yes typedoc@0.28.20 \
             --out ../_site/schema-docs \
             --entryPointStrategy expand \
             --readme none \

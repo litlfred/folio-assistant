@@ -8,6 +8,25 @@
  * `who-iris/library/`, `smart-kg/methodologies/`. The owner, 2026-09-22:
  * *"dont bury sub-graph assets. same for `<stub>/skills`, etc."*
  *
+ * ## What it measures, against the owner's NEWER ruling
+ *
+ * #980, 2026-09-22, ruled after this check was written: nesting IS allowed,
+ * *"if there is a (Sub?)KGraph node within the first subdir that labels all the
+ * other ones that exist within it"*, and a root declaration reaching down a
+ * multi-level path is NOT allowed.
+ *
+ * This check measures the second half. Every pair it finds is two entries in a
+ * ROOT declaration, one containing the other — precisely the forbidden shape —
+ * so the two rulings agree on every case in the corpus today.
+ *
+ * **It does not yet know about the from-within node, and must learn it.** That
+ * node's kind and name are explicitly left open to the owner, so nothing can
+ * declare nesting from within today and no legitimate structure is being
+ * flagged. The day it lands, a nesting it describes is sanctioned and this
+ * check must stop reporting it, or it becomes an obstacle to the mechanism the
+ * owner chose. Written down here rather than left to be rediscovered as a
+ * false finding.
+ *
  * ## Why the check is "nested inside another DECLARED directory"
  *
  * Depth is the wrong test and would produce false findings immediately.
