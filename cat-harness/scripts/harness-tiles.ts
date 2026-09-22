@@ -326,6 +326,17 @@ function tileFor(
   isRepoRoot: boolean,
   /** This instance's OWN directory, which is where its declared paths are relative to. */
   instanceDir: string,
+  /**
+   * The SITE-OWNING instance — its declaration and its directory.
+   *
+   * Needed because theme art is routinely declared by the harness that
+   * SUPPLIES it rather than by the instance it is about: `bootstrap` declares
+   * a sticky with `theme: bootstrap` and **no images at all**, while
+   * `cat-harness` declares the `landing-bootstrap` role's three layouts. That
+   * is the inversion `ThemeBackdropSchema` describes — a theme names a ROLE,
+   * and whoever holds images for that role supplies the art.
+   */
+  owner?: { decl: CatHarnessDeclaration; dir: string },
 ): HarnessTile {
   const dirs = decl.directories ?? [];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
@@ -684,14 +695,61 @@ function tileFor(
         `showing no theme avatar rather than a broken image.`,
     );
   }
-  const card = theme ? resolveThemeBackdrop(theme, decl.images).art.get("card") : undefined;
-  const cardSrc = card ? publishedIcon(instanceDir, card.src, folio) : undefined;
+  // OWN IMAGES FIRST, THE SITE OWNER'S SECOND — the overlay order this
+  // repository uses everywhere else, and the one the theme docs describe: *"an
+  // instance declaring its own `landing` images gets its own backdrop"*, with
+  // the supplier as the fallback rather than the only answer.
+  //
+  // MEASURED, and it is why `bootstrap` had no avatar until now: it declares a
+  // sticky naming `theme: bootstrap` and **zero images**, while `cat-harness`
+  // declares the `landing-bootstrap` role. Resolving against `decl.images`
+  // alone found nothing and reported a gap that was not one.
+  // `gen-landing-data.ts` has always resolved a contributed sticky's art
+  // against the site owner's images, so this is that join rather than a second
+  // one — widened by the own-first step, which changes no existing answer
+  // because no instance below the owner declares a landing role today.
+  const ownCard = theme ? resolveThemeBackdrop(theme, decl.images).art.get("card") : undefined;
+  const ownerCard =
+    theme && ownCard === undefined && owner
+      ? resolveThemeBackdrop(theme, owner.decl.images).art.get("card")
+      : undefined;
+  const card = ownCard ?? ownerCard;
+  // THE PATH FOLLOWS THE SOURCE. An image declared by the site owner is
+  // published under the SITE's own root, not under this instance's mount —
+  // composing it from `folio` would point at a path the instance does not
+  // serve, which is `68au` with the baseurl replaced by the wrong instance.
+  const cardSrc = card
+    ? ownCard !== undefined
+      ? publishedIcon(instanceDir, card.src, folio)
+      : publishedIcon(owner!.dir, card.src, "/")
+    : undefined;
   const themeAvatar =
     card && cardSrc !== undefined
       ? {
           src: cardSrc,
           title: theme!.name,
           ...(card.avatarRegion ? { region: card.avatarRegion } : {}),
+          // THE SAME CROP, SOLVED — for a consumer that cannot do arithmetic.
+          //
+          // `region` is the declaration and `navbar.ts`'s `mark()` solves it
+          // itself for a mounted page. The Liquid sidebar cannot: dividing two
+          // floats in a template is the kind of thing that silently yields an
+          // integer. So the four CSS values are computed here, exactly as
+          // `sync-docs-harness.ts` already does for the site title's avatar.
+          //
+          // Two fields from one declaration, both generated, neither authored
+          // — which is why this is not the duplication `sjic` is about. The
+          // sum has ONE home; only its output has two shapes.
+          ...(card.avatarRegion
+            ? {
+                crop: {
+                  width: +(100 / card.avatarRegion.w).toFixed(4),
+                  height: +(100 / card.avatarRegion.h).toFixed(4),
+                  left: +((-100 * card.avatarRegion.x) / card.avatarRegion.w).toFixed(4),
+                  top: +((-100 * card.avatarRegion.y) / card.avatarRegion.h).toFixed(4),
+                },
+              }
+            : {}),
         }
       : undefined;
   if (card && card.avatarRegion === undefined) {
@@ -800,7 +858,8 @@ export function harnessTiles(
   // caller pointed at a tree that has no harness gets no tiles, which is a
   // real answer; an exception here would take down the whole docs sync over a
   // question that has one.
-  const handler = readDeclaration(harnessRoot)?.name;
+  const ownerDecl = readDeclaration(harnessRoot);
+  const handler = ownerDecl?.name;
   if (!handler) return [];
   const siteDir = join(harnessRoot, siteDirFor(harnessRoot));
 
@@ -832,6 +891,7 @@ export function harnessTiles(
       repoRoot,
       dir === repoRoot,
       dir,
+      ownerDecl ? { decl: ownerDecl, dir: harnessRoot } : undefined,
     );
     const icons = resolveNavbarIcons(decl.name, declaredIcons, needsOf, handler);
     // UNDETERMINED IS NOT EMPTY, and the field is omitted rather than set to

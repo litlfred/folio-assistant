@@ -166,7 +166,37 @@
           The tone comes from the avatar registry via `--fa-tile-tone`, which
           this element already carried for its stripe.
         {%- endcomment -%}
-        {%- if t.icon.src -%}
+        {%- comment -%}
+          THE THEME AVATAR FIRST — owner, 2026-09-22: *"bootstrap and who-iris
+          need theme avatars"*.
+
+          An instance's theme art, clipped to the cat, beats its `icon`. The
+          chain is instance -> its sticky -> the sticky's `theme` -> the
+          theme's `imageRole` -> the images carrying that role -> the `card`
+          layout -> its `avatarRegion`. Every link already existed;
+          `harness-tiles.ts` walks it and solves the crop.
+
+          THE SUPPLIER MAY NOT BE THE SUBJECT. `bootstrap` declares a sticky
+          naming `theme: bootstrap` and **zero images**; `cat-harness` declares
+          the `landing-bootstrap` role. That is the inversion a theme's
+          `imageRole` exists for, and it is why resolution falls back to the
+          site owner's image set.
+
+          `relative_url`, like the icon below. `src` is composed against
+          whichever instance supplies the art, but it is SITE-ROOT relative and
+          carries no baseurl — the first version of this block said otherwise
+          and omitted the filter, and the mark rendered as nothing: the site is
+          served from `/folio-assistant/`, so `/assets/...` is a 404. Measured
+          (404 bare, 200 with the prefix), not reasoned. `68au` is this same
+          defect on the graph tiles, which is why it has a bean.
+        {%- endcomment -%}
+        {%- if t.avatar.crop -%}
+        <span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="{{ t.avatar.src | relative_url }}" alt=""
+               style="width: {{ t.avatar.crop.width }}%; height: {{ t.avatar.crop.height }}%;
+                      left: {{ t.avatar.crop.left }}%; top: {{ t.avatar.crop.top }}%">
+        </span>
+        {%- elsif t.icon.src -%}
         <img class="fa-harness-tab__mark" src="{{ t.icon.src | relative_url }}"
              alt=""{% if t.icon.title %} title="{{ t.icon.title }}"{% endif %}>
         {%- else -%}
