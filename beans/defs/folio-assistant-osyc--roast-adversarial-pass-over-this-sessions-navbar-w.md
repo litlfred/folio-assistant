@@ -1,11 +1,11 @@
 ---
 # folio-assistant-osyc
 title: 'ROAST: adversarial pass over this session''s navbar work, the skill-reachability bean, and the claims made to the owner'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:43:53Z
-updated_at: 2026-09-22T10:48:41Z
+updated_at: 2026-09-22T11:04:11Z
 parent: folio-assistant-vuip
 ---
 
@@ -239,4 +239,3 @@ Every cell can reproduce while the relation between them is broken, and a
 per-cell check cannot see that by construction — which is the same shape as
 Finding 2 above, where two ways of counting lanes disagreed and one way alone
 would have confirmed the wrong figure twice.
-
