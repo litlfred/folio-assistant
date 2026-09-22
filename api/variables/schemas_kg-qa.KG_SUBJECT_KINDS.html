@@ -11,11 +11,25 @@
 <li><a href="../modules/schemas_kg-qa.html">schemas/kg-qa</a></li>
 <li><a href="" aria-current="page">KG_SUBJECT_KINDS</a></li></ul>
 <h1>Variable KG_SUBJECT_KINDS<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">KG_SUBJECT_KINDS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;process&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decision&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;role&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;requirement&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;skill&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;graph&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>What kind of node a sidecar audits.</p>
+<div class="tsd-signature"><span class="tsd-kind-variable">KG_SUBJECT_KINDS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;process&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decision&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;role&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;requirement&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;skill&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;graph&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;tool&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The subject kinds this audit reports on.</p>
+<p><code>tool</code> arrived last (issue #853, requirement 1) and is a different KIND of
+member from the rest, which is worth saying because it changes what its
+criteria are allowed to be. Every other kind's criteria DECIDE something
+here. A Tool node's properties were already decided, by <code>check-tools.ts</code>,
+<code>tools.test.ts</code> and <code>check-maintained-artefacts.ts</code> — measured 2026-09-22,
+after a first attempt to add a <code>maintains</code> criterion turned out to be a
+second answer to a question one of those already answers.</p>
+<p>So the <code>tool-*</code> criteria below PROJECT those verdicts rather than re-derive
+them. What that buys is the thing a script cannot: a <strong>committed sidecar per
+Tool</strong>, so &quot;unbound since it was drawn&quot; and &quot;broken in the commit under
+review&quot; stop looking identical — the argument <code>AGENTS.md</code> makes for sidecars
+over a printed verdict. It buys no new judgement, and a criterion here that
+decided something <code>check-tools</code> does not would be the drift this note exists
+to prevent.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2cb60226bd86c3e3af1bff083c668003f869c4b8/cat-harness/schemas/kg-qa.ts#L289">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:289</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/011ea91dc7b6af058f64b421810a4956f056e090/cat-harness/schemas/kg-qa.ts#L308">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:308</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

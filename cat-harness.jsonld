@@ -260,10 +260,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:38:27.566Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2cb60226bd86c3e3af1bff083c668003f869c4b8",
-  "sourceCommitSha": "2cb60226bd86c3e3af1bff083c668003f869c4b8",
-  "sourceCommitAt": "2026-09-22T11:35:50+02:00",
+  "generatedAt": "2026-09-22T09:50:10.150Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/011ea91dc7b6af058f64b421810a4956f056e090",
+  "sourceCommitSha": "011ea91dc7b6af058f64b421810a4956f056e090",
+  "sourceCommitAt": "2026-09-22T11:48:25+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 230,
@@ -272,9 +272,9 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 59,
-    "SequenceFlow": 749,
+    "SequenceFlow": 751,
     "Role": 135,
-    "ProcessNode": 714,
+    "ProcessNode": 715,
     "Tool": 69,
     "Schema": 93,
     "GraphKind": 26,
@@ -13825,8 +13825,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -13944,6 +13944,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -13963,7 +13979,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All five,&#10;in parallel",
+      "name": "All six,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -13979,7 +13995,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
@@ -14089,6 +14106,27 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dependency advisories&#10;(WARN-ONLY)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -14104,7 +14142,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -33424,8 +33463,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "2cb60226bd86c3e3af1bff083c668003f869c4b8",
+    "sha": "011ea91dc7b6af058f64b421810a4956f056e090",
     "pr": "main",
-    "run": "35711288913"
+    "run": "35712466196"
   }
 }
