@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS, by the same test as `check-ci-health` above: its subject is
+      // this repository's own Jekyll templates and the baseurl its site is
+      // served under, and it reads no folio content at all. It parses HTML
+      // with a regex and imports nothing but `fs` and `path`, so it cannot
+      // drag a folio in (bean `blv9`).
+      "scripts/check-docs-templates.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -1206,6 +1212,18 @@ export const RULES: Rule[] = [
       // `beans.ts` in the harness block. The fix is not an exemption, it is
       // the right owner — the same sentence `gen-landing-data.ts` opens with.
       "scripts/state-visualizer.ts",
+      // The translation status page, and CORE by the same test read the same
+      // way: it is a RENDERER. It reads the instance declaration to find the
+      // `translation-sources` directory — harness, and downward, which costs
+      // nothing — and its subject is the gettext corpus a folio is translated
+      // from. What it PRODUCES is a page.
+      //
+      // Deliberately NOT beside `state-visualizer.ts` as a variant of it:
+      // that generator draws only STATE graphs, and `translation-sources` is
+      // not state. They are two renderers of two different things that happen
+      // to share a shape, and folding one into the other would make the
+      // state generator answer for a graph it correctly skips.
+      "scripts/gen-translation-status.ts",
       // Three of the 19 unassigned that are CONTENT-side, by the same test
       // read the other way: each operates on a folio's own material, not on
       // the machinery that runs a process. Classifying them harness alongside
