@@ -150,7 +150,7 @@ describe("the diagrams declare which operation each step performs", () => {
   <bpmn:process id="Process_Bad" name="Bad" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>
     <bpmn:task id="T" name="Do">
-      <bpmn:extensionElements><folio:bean store="beans/" op="obliterate" /></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:bean op="obliterate" /></bpmn:extensionElements>
       <bpmn:incoming>F1</bpmn:incoming><bpmn:outgoing>F2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:endEvent id="E"><bpmn:incoming>F2</bpmn:incoming></bpmn:endEvent>
