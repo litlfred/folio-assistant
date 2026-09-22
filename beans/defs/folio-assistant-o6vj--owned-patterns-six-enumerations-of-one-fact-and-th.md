@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o6vj
 title: 'OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T09:27:56Z
-updated_at: 2026-09-22T09:28:13Z
+updated_at: 2026-09-22T09:38:02Z
 parent: folio-assistant-1xhc
 ---
 
@@ -61,8 +61,8 @@ So: **fixed pages** from one declaration (where `catalogue` fell through),
 
 ## Done when
 
-- [ ] one source of truth; the derived forms carry no independent names
-- [ ] a page written to a side its pattern does not own FAILS, demonstrated by
+- [x] one source of truth; the derived forms carry no independent names
+- [x] a page written to a side its pattern does not own FAILS, demonstrated by
       injection rather than asserted
-- [ ] `OWNED` no longer names `catalogue`
-- [ ] `bun run gates` green
+- [x] `OWNED` no longer names `catalogue`
+- [x] `bun run gates` green
