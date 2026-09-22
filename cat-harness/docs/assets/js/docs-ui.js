@@ -3060,6 +3060,104 @@
    * makes the next one you want move under your cursor -- and the greyed entry
    * is a real button that docks it again.
    */
+  /**
+   * THE GLASS — the reader's folio, pulled down over whatever they are
+   * browsing. R25: *"the user in visualization should be able to pull down
+   * their folio."*
+   *
+   * ## Why this is its own function, and what the move cost before it
+   *
+   * The layer already existed and was already `document.body`'s, fixed to the
+   * viewport — structurally a glass. It was created INSIDE `mountTodoBoard`,
+   * after two guards that have nothing to do with a glass:
+   *
+   *   mountTodoStickies -> fetchTodoIndex -> `if (items === null) return`
+   *   mountTodoBoard    -> `if (!main) return null`   (#main-content / main)
+   *
+   * So the folio existed only on a page that had a just-the-docs main region
+   * AND a readable todo index. A `who-iris` replica page has neither — its
+   * own `<style>`, no Jekyll, no `<main>` — which is why bean `jpjt` measured
+   * `docs-ui.js` 0 / boards 0 / tiles 0 there and concluded F8/F9 was blocked
+   * on this. **A folio that only exists where a board mounted is not a folio
+   * a reader carries between libraries.**
+   *
+   * ## Idempotent, and it returns the SAME layer the board floats into
+   *
+   * Called from `init` before anything else and again by `mountTodoBoard`.
+   * One layer or the glass and the board would be two surfaces that agree
+   * only by accident — the shape `harness-tiles` calls two registries.
+   *
+   * ## An empty glass still comes down
+   *
+   * `.fa-sticky-layer:empty { display: none }` hides a layer with no children,
+   * which is right for a float layer and wrong for a glass: "nothing on your
+   * glass" and "the glass is broken" are opposite facts, and the first is a
+   * state a reader reaches by tidying. The open glass therefore always holds
+   * its own chrome, so it is never `:empty` while open.
+   */
+  var glassLayer = null;
+  function mountGlass() {
+    if (glassLayer && glassLayer.isConnected) return glassLayer;
+
+    var layer = el("div", {
+      class: "fa-sticky-layer",
+      "aria-live": "polite",
+      "data-fa-glass": "closed",
+    });
+    document.body.appendChild(layer);
+    glassLayer = layer;
+
+    // The handle. A BUTTON, not a div with a click: the disclosure, the focus
+    // ring and the keyboard path are the browser's, and this instance's
+    // declared interaction profile is low-dexterity, so the way in is never a
+    // pointer-only gesture.
+    var handle = el("button", {
+      type: "button",
+      class: "fa-glass-handle",
+      "aria-expanded": "false",
+      "aria-label": "Pull down your folio",
+      title: "Pull down your folio",
+    }, "\u25BE Folio");
+    document.body.appendChild(handle);
+
+    // The glass's own chrome, so an open glass is never `:empty`.
+    var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
+    var empty = el("p", { class: "fa-glass-empty" },
+      "Nothing on your folio glass. Open a library and pull an item out to put it here.");
+    sheet.appendChild(empty);
+    layer.appendChild(sheet);
+
+    function setOpen(open) {
+      layer.setAttribute("data-fa-glass", open ? "open" : "closed");
+      handle.setAttribute("aria-expanded", open ? "true" : "false");
+      handle.setAttribute("aria-label", open ? "Put your folio away" : "Pull down your folio");
+      handle.title = handle.getAttribute("aria-label");
+      // The EMPTY LINE is about the glass's contents, not about the sheet:
+      // the sheet is chrome and is always present. `slots` are the cards the
+      // board floats here, so the count is taken from them rather than from
+      // the layer's children, which would count the sheet itself.
+      var floating = layer.querySelectorAll(".fa-sticky-floating").length;
+      empty.hidden = floating > 0;
+    }
+    setOpen(false);
+
+    // `l4zi`: the inverse is reachable, and by the same control. The handle
+    // stays on the page while the glass is open — a glass whose only way out
+    // is Escape excludes a reader who never learned that Escape was a way out.
+    handle.addEventListener("click", function () {
+      setOpen(layer.getAttribute("data-fa-glass") !== "open");
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      if (layer.getAttribute("data-fa-glass") !== "open") return;
+      setOpen(false);
+      handle.focus();
+    });
+
+    layer.__faSetGlassOpen = setOpen;
+    return layer;
+  }
+
   function mountTodoBoard(items) {
     // THE LANDING FOLIO BOARD FIRST, when the page has one. The owner, 2026-09-20:
     // "i want todo board inside of the landing folio/board."
@@ -3081,8 +3179,11 @@
       return null;
     }
 
-    var layer = el("div", { class: "fa-sticky-layer", "aria-live": "polite" });
-    document.body.appendChild(layer);
+    // THE LAYER IS THE GLASS, and it is no longer created here. `mountGlass`
+    // made it before this ran, because a folio that only exists where a board
+    // mounted is not a folio a reader carries. See that function for what the
+    // two guards above used to cost.
+    var layer = mountGlass();
 
     // VISIBLE on the landing board, hidden everywhere else. On a page whose
     // whole content is a board of stickies, a hidden board of stickies is the
@@ -5134,6 +5235,10 @@
     mountTranslationBadges();
     mountQaPanels();
     paintQaBadges();
+    // THE GLASS FIRST, and unconditionally. It is the reader's folio rather
+    // than this page's furniture, so it must not inherit any of the guards
+    // that decide whether a BOARD mounts — see `mountGlass`.
+    mountGlass();
     mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
