@@ -227,3 +227,36 @@ a second criterion, *every `working-directory` must EXIST*, and holds both
 TypeDoc steps as `missing — baselined, still owed`. The suspicion is now a
 gate's finding that cannot regress. It is still not the dispatch, and the bean
 says so.
+
+## The two failures now live where the next agent meets them
+
+`platform-gates.md` gains **§"...and a green gate is not a VERIFIED FACT"**,
+placed as the next rung of the ladder it already climbs — `bun test` green is
+not the gates green → the gates green is not the published page green → **a
+green gate is not a verified fact.**
+
+It carries both failures from this consolidation's first commit, as the two
+different things they are:
+
+1. **A rule that lives only in prose has a compliance ceiling nobody measures.**
+   Citing `k59d`, quoting it, and instructing three agents about it did not
+   prevent reproducing it in the same commit. The measurable forms are named — a
+   check, a schema field, a test — with `bean-blocking`'s `status: blocked` as
+   the worked example of the opposite outcome: a form the tool refuses to store
+   was honoured **0 times in 99**.
+2. **A gate's silence is bounded by its stated scope.** The `10uc` ✗ / `w0cr` ✓
+   pair is tabulated, with the reason (`check:stale-paths` judges arrows and
+   numbered steps and declines prose, on purpose and in writing), and the rule
+   to apply before quoting a tick: *what does this gate say it judges, and is my
+   claim inside it?* Read the check's own header rather than inferring scope
+   from the fact that it ran.
+
+Tied to the live corroboration rather than left abstract: eight workflows green
+beside **31 that produced no run at all**, which `check:ci-health` itself labels
+*unjudged, not green*.
+
+**Why the skill and not `AGENTS.md`:** the banner at the top of that file says a
+rule stated there is a rule with no home — not in the generated reference, not
+in the published skill docs, and not found by an agent that went looking for the
+skill first. `platform-gates` is where an agent arrives when it asks what to run
+before pushing, which is the moment both failures happen.
