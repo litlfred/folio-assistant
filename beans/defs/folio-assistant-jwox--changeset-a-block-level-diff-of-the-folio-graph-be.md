@@ -5,10 +5,11 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:51:43Z
+updated_at: 2026-09-22T22:33:27Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
+    - folio-assistant-p0za
 ---
 
 **What.** A `ChangeSet` node computed between two refs (`origin/main` and the
@@ -34,9 +35,9 @@ it lands there, not in a second file. It is exposed as a Tool node
 
 ## Done when
 - [x] a `ChangeSet` schema in folio-assistant-core/schemas, with the five change kinds. Modelled as added / removed / changed, where changed carries the aspects renamed, prose, manifest and moved (see round 1)
-- [ ] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind
-- [ ] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo)
-- [ ] `diff` and `staging-review` read it instead of re-deriving from git
+- [ ] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind. The computation and its fixture tests landed in #981. **The Tool is blocked on p0za**: no instance outside cat-harness can serve a Tool today, and a Tool here would be declared and unreachable
+- [ ] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo). **Re-homed to ojcx**: this repo holds no folio, so an emission step here would compute over nothing. The emission belongs in the reusable staging workflow that ojcx makes for folio repos
+- [x] `diff` and `staging-review` read it instead of re-deriving from git (round 2)
 
 
 Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3PsjvszpF3DyGeBgE), stacked after 5xzc (#976).
@@ -56,3 +57,10 @@ Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3Psjvs
 **Placement.** The module lives in core. Core may import the harness, and the harness may not import core (`check:partition`). So the Tool node that wraps it must live in core too, or read its JSON output.
 
 **Still open:** the remaining three Done-when boxes.
+
+## Round 2: 2026-09-22
+
+- **`diff` skill.** "Finding changed blocks" now runs the ChangeSet CLI. The old recipe grepped changed `.ts` files, so it **missed every prose-only edit** (a `.md` change with no `.ts` change, the commonest edit in a document folio), and it saw moves and renames only as noise. Its change categories are now the ChangeSet's own aspects, so the report and the review page cannot disagree.
+- **`staging-review` skill.** It gains a folio-content row in "what changed → which page", and step 1 of content-authoring integration computes the ChangeSet rather than a file list. It ranks "where to start" by changed blocks per section.
+- **The Tool is blocked on p0za (new)**, a measured composition gap. Eight of the nine consumers of the tools list read the harness-only barrel. smart-base's Tools are already declared and never served.
+- **Staging emission is re-homed to ojcx.** This repo has no folio for it to compute over.

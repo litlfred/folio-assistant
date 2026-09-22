@@ -21,3 +21,7 @@ So STAGING, and with it every before/after in this epic, exists only for the pla
 - [ ] feature-staging is callable from another repository, tested with a scratch folio
 - [ ] `init-folio` writes the caller, and `readme:sync` lists it
 - [ ] the ChangeSet (jwox) is emitted by the reusable workflow, not only by this repo's
+
+## From jwox (2026-09-22)
+
+The ChangeSet CLI exists (#981): `bun run folio-assistant-core/schemas/changeset.ts --folio <dir> --base <main sha> --head <branch sha> --out <site>/changeset.json`. The reusable workflow should publish its output beside the staging site. That is 6pfo's "staging metadata as a KG graph", so settle the path with it.
