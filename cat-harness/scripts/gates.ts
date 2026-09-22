@@ -274,6 +274,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
+    match: "run uploads:viz",
+    kind: "covered-by",
+    reason:
+      "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
+      "`uploads:viz:check` is intentionally not gated, for `library:viz:check`'s reason — " +
+      "it renders that same projection (bean `flh4`: one dataset, two viewers)",
+  },
+  {
     // The WRITER's step in the site build. Its `--check` IS gated — see the
     // reason beside it in code-quality-gates.yml — so this is the ordinary
     // writer-runs-at-deploy case rather than the schema/library exception.
@@ -669,6 +677,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "same as `schema:viz:check` and for the same reason: the writer runs at deploy, and the projection derives from the whole repository, so its red means a sibling merged rather than that this diff forgot. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "uploads:viz:check",
+    kind: "covered-by",
+    reason:
+      "same as `library:viz:check`, and NECESSARILY so: it renders that projection. The writer runs at deploy (`docs-site.yml`), and what it draws derives from the whole repository, so a red here means a sibling merged rather than that this diff forgot. Gating it would also be worse than gating its sibling, because this generator emits no projection of its own — it publishes a viewer over `assets/library/index.json` (bean `flh4`: one dataset, since two would be two answers to how many are queued), so its staleness is the library projection's staleness wearing a second name. Run it by hand, or from `/prepare-merge`",
   },
   {
     script: "check:session-staleness",

@@ -4,9 +4,9 @@ title: 'INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-vuip
 created_at: 2026-09-21T21:42:35Z
-updated_at: 2026-09-21T21:42:35Z
+updated_at: 2026-09-21T23:15:22Z
+parent: folio-assistant-vuip
 ---
 
 ## What — the owner's ask, verbatim
@@ -180,3 +180,30 @@ report the mismatch**, which is this repository's third-state rule — a command
 with no skill and a skill with no command are different findings, and neither
 is "clean".
 
+
+
+---
+
+## Owner, 2026-09-21: *"keep tools and skills separate!"*
+
+Binding on this bean specifically, because this bean is the one that could
+break it. `j6t3` is about EXPOSING a skill through a slash command / tool
+surface so `/coordinate` and `/prepare-merge` work across Claude Code and
+Antigravity. That is a rendering of a skill at an interface — it is **not** the
+skill becoming a Tool node.
+
+The two stay distinct objects in the graph:
+
+| | declared in | what it is |
+|---|---|---|
+| **Skill** | the `kg` graph (`skills/`) | the instruction body an actor reads |
+| **Tool** | the `tools` graph (`cat-harness/tools/`) | a `defineTool` node, authored as `.ts` so a malformed one fails at tsc |
+
+So whatever `j6t3` builds emits an INVOCATION for a skill; it never mints a
+Tool node from one, and it never writes into `tools/`. If a skill needs a real
+tool to do its job, that tool is authored in `tools/` on its own terms and the
+skill names it — which is the existing relation, not a new one.
+
+Recorded here as well as on `yunp` because the instruction was given while
+`yunp` was in hand, and an instruction found only on the bean that happened to
+be open is an instruction the next agent does not find.
