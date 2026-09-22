@@ -1694,14 +1694,85 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   --fa-trwarn-fg: #6b3d0a;             /* 8.31:1 on its bg */
 }
 
+/* ONE LINE, opening to the detail. Owner, 2026-09-21: *"should be a slim one
+   line ... which then can open to the full trnslation QA report."*
+
+   It was a four-line block above the page title: the warning, the source, and
+   two tool names a reader cannot run from a browser. On a translated page
+   that is the first thing between the reader and the content they came for,
+   on every page, permanently.
+
+   The padding drops from 12px to 6px vertical BECAUSE it is now one line —
+   the old value was sized for a paragraph block and reads as a slab around a
+   single sentence. The tokens are unchanged: `--fa-trwarn-*` already carries
+   its measured pair for both schemes a few hundred lines up. */
 .fa-translation-warning {
   background: var(--fa-trwarn-bg);
   border: 1px solid var(--fa-trwarn-border);
   border-radius: 6px;
-  padding: 12px 16px;
-  margin: 1em 0;
+  padding: 0.35rem 0.75rem;
+  margin: 0.6em 0;
   color: var(--fa-trwarn-fg);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* The summary IS the notice, so it carries the whole line and stays on one
+   where there is room. `list-style: none` plus the WebKit pseudo-element:
+   Safari ignores the former on a summary and keeps drawing its own triangle,
+   which beside the ⚠️ reads as two markers. */
+.fa-translation-warning__line {
+  cursor: pointer;
+  /* Target size: this is a disclosure on an instance whose declared
+     interaction profile is low-dexterity, so the line is held at the 24px
+     SC 2.5.8 floor even though the text alone is shorter. */
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.fa-translation-warning__line::-webkit-details-marker { display: none; }
+
+/* Never left to the user agent: the notice's fill differs per scheme and the
+   default ring is invisible on one of them. */
+.fa-translation-warning__line:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+.fa-translation-warning__body {
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--fa-trwarn-border);
+}
+
+.fa-translation-warning__body p { margin: 0 0 0.35rem; }
+
+/* The control that opens the EXISTING QA panel rather than restating it.
+   `currentcolor` throughout, so it inherits the notice's per-scheme ink and
+   cannot be legible in one scheme and invisible in the other — the `23bc`
+   failure, which this file has now paid for three times. */
+.fa-translation-warning__report {
+  min-height: 1.75rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid currentcolor;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.fa-translation-warning__report:hover,
+.fa-translation-warning__report:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  outline: none;
+}
+
+.fa-translation-warning__report:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
 }
 
 /* The page-level QA row, before `mountTranslationBadges` lifts it into the
@@ -1857,6 +1928,45 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   vertical-align: -0.32em;
   margin-right: 0.4rem;
   flex: none;
+}
+
+/* ── The mark as a MASK — one asset, both schemes ─────────────────────
+ *
+ * Owner, 2026-09-22: *"I want theme like in avaatars"*, pointing at the @
+ * logo. This is that mechanism, unchanged from `avatars.css`: the glyph is a
+ * `mask-image` and the colour is `background-color`, so a scheme is a value
+ * rather than a second file.
+ *
+ * IT CLOSES A DEFERRAL THIS FILE ALREADY RECORDED, a few lines up: *"the mark
+ * is fixed sage in both schemes … left as-is deliberately … recorded here
+ * rather than silently corrected."* It also ends a disagreement nothing had
+ * recorded — `cat-harness` declares tone **268** and its mark was sage, two
+ * colour vocabularies for one instance, which is the drift `schemas/theme.ts`
+ * exists to have ended.
+ *
+ * THE TWO COLOURS ARE THE AVATAR GENERATOR'S OWN TARGETS, not new ones:
+ * `hsl(<tone> 46% 34%)` light and `hsl(<tone> 42% 72%)` dark, from
+ * `gen-avatars-css.ts`. Using different numbers here would be a third
+ * vocabulary while removing the second.
+ *
+ * WHY THE SIZE RULE ABOVE STILL MATTERS. 2rem was chosen because the ears
+ * cross the ring and only a 3-unit halo separates them — 0.6 px at 1.5rem,
+ * which fused them into a disc. The mask keeps that halo as a CUT-OUT, so the
+ * measurement is unchanged and so is the size. */
+.fa-site-mark--masked {
+  display: inline-block;
+  background-color: hsl(268 42% 72%);
+  -webkit-mask-image: var(--fa-site-mark-src);
+  mask-image: var(--fa-site-mark-src);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+:root[data-fa-scheme="light"] .fa-site-mark--masked {
+  background-color: hsl(268 46% 34%);
 }
 .fa-site-title {
   vertical-align: baseline;
@@ -2177,7 +2287,14 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    accessible-name assertion guards it instead.
 
    So: clipped to a pixel rather than removed. Invisible, still named. */
-.fa-tiles .search-label {
+/* SCOPED TO BOTH CONTAINERS since 2026-09-21. The field moved to the navbar
+   (`.fa-search-home`) and this rule stayed pinned to `.fa-tiles`, so the
+   magnifier came back at full size over the input — caught by the e2e
+   assertion on the label's box, which is exactly what that assertion is for.
+   Widened rather than duplicated: two copies of an accessibility rule is two
+   places for one of them to be reverted. */
+.fa-tiles .search-label,
+.fa-search-home .search-label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -2729,14 +2846,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   left: 50%;
   transform: translateX(-50%);
   z-index: 91;
-  /* SC 2.5.8's 24px floor, and this instance's profile is low-dexterity, so
-     the floor is the point rather than a minimum to argue down from. */
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* PRONOUNCED, on the owner's instruction: *"Not too subtle but
+     pronounced."* The first draft was an 0.8rem label in the chrome colour,
+     which reads as a stray tab rather than as the way to your folio. This is
+     the same control asserting itself: bigger target, heavier label, and an
+     ACCENT fill so it is the one thing on the page that is not page.
+
+     SC 2.5.8's 24px floor was already cleared at 2.75rem and is cleared by
+     more now. That floor is a minimum, not a target, and this instance's
+     profile is low-dexterity — a control a reader is meant to find without
+     looking for it should be bigger than the rule requires. */
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border: 2px solid #8c74f0;
   border-top: 0;
   border-radius: var(--fa-folio-radius, 0);
-  background: var(--sidebar-color, #27262b);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* A shadow, because the handle overhangs content rather than sitting in a
+     bar of its own — without one it reads as printed ON the page instead of
+     as something held above it and pullable. */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  background: #4a34b8;
   /* AN EXPLICIT FOREGROUND, never `inherit`, and this cost an a11y failure
      before it was written: axe measured 1.39:1, `#000000` on `#27262b`.
      The handle is appended to `document.body`, so there is nothing above it
@@ -2744,15 +2875,31 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
      BACKGROUND and leans on an inherited FOREGROUND is `23bc` again, and
      being body-level is what makes it certain rather than likely.
      12.46:1 on the dark chrome, computed rather than eyeballed. */
-  color: #e8eaed;
-  font-size: 0.8rem;
+  color: #ffffff;
+  font-size: 0.95rem;
   cursor: pointer;
 }
-:root[data-fa-scheme="light"] .fa-glass-handle {
-  background: #e8eaed;
-  border-color: #767d88;           /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                  /* 12.24:1 */
-}
+
+/* ONE PALETTE FOR BOTH SCHEMES, and no light override — which is the fix for
+ * a defect the first draft had rather than a shortcut. A control that is
+ * violet in one scheme and grey in the other is TWO controls, and a reader
+ * switching schemes has to learn it twice.
+ *
+ * THE BORDER IS LOAD-BEARING IN DARK, and that is the measurement worth
+ * keeping. Every ratio below is computed, because this file has now shipped
+ * TWO contrast failures from pairs that looked fine: `23bc`, and this very
+ * handle at 1.39:1 when it carried `color: inherit`. A third draft claimed
+ * "10.4:1" and "the edge clears 3:1"; both were wrong — 7.32:1, and 1.41:1
+ * against its own fill, which is not what SC 1.4.11 asks about anyway.
+ *
+ *   #ffffff on #4a34b8 ............ 8.49:1   text, needs 4.5
+ *   #4a34b8 vs the LIGHT page ..... 8.49:1   the fill separates it
+ *   #4a34b8 vs the DARK page ...... 1.77:1   the fill does NOT
+ *   #8c74f0 vs the DARK page ...... 4.20:1   ← so the BORDER does, SC 1.4.11
+ *   #8c74f0 vs the LIGHT page ..... 3.58:1
+ *
+ * Drop the border and the handle vanishes into a dark page. It is not
+ * decoration. */
 .fa-glass-handle:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
@@ -4378,3 +4525,603 @@ a.fa-harness-tab__body:focus-visible {
 .fa-board-tiles:empty {
   display: none;
 }
+
+/* ── The sticky panel, slid away ──────────────────────────────────────────
+ *
+ * Owner, 2026-09-21: *"please!!! i dont want to see these giant cats at the
+ * top anymore. priority #1 make the stikypanel slid away"* — and earlier,
+ * *"they should be closed/tiled to start."*
+ *
+ * Markup: `_includes/landing.html`, a `<details>` with no `open`. Everything
+ * here styles the two states; NOTHING here decides them, because a disclosure
+ * a stylesheet can force open is one a reader cannot close.
+ *
+ * ## BOTH SCHEMES, with the ratios measured rather than remembered
+ *
+ * Stated up front because this rule was written in the same session that
+ * filed bean `23bc` against `.fa-qr-toggle` and `.fa-tiles` for having no
+ * light-scheme block at all — shipping a third element with the same hole
+ * would have been the defect and its own bug report in one commit.
+ *
+ * Every pair below clears its threshold, and the thresholds differ: text on
+ * its own fill is held at 4.5:1 (WCAG AA body text), a border at 3:1 because
+ * it is a shape rather than a glyph.
+ *
+ * THE FILL IS NOT WHAT SEPARATES THE PANEL FROM THE PAGE — it measures 1.04:1
+ * in dark and 1.21:1 in light, which is a surface-on-surface tint and nothing
+ * more. The BORDER is what makes the panel an object (5.07:1 and 6.00:1
+ * against the page), so it is not decoration and must not be dropped to
+ * "clean up" the look.
+ */
+.fa-sticky-panel {
+  /* DARK scheme. Ratios against --fa-stickypanel-bg unless stated. */
+  --fa-stickypanel-bg: #232a33;
+  --fa-stickypanel-fg: #e6e9ee;         /* 11.90:1                        */
+  --fa-stickypanel-border: #8b97a8;     /*  4.89:1 here, 5.07:1 on the page */
+  --fa-stickypanel-count-bg: #3b4654;
+  --fa-stickypanel-count-fg: #e6e9ee;   /*  7.88:1 on the count's own fill  */
+
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--fa-stickypanel-border);
+  border-radius: 6px;
+  background: var(--fa-stickypanel-bg);
+  color: var(--fa-stickypanel-fg);
+}
+
+:root[data-fa-scheme="light"] .fa-sticky-panel {
+  /* LIGHT scheme. The same five tokens, RE-MEASURED against #ffffff — a
+     colour written for one scheme and never rechecked in the other is how
+     `.fa-page-lang-bar` failed, and its note is a few hundred lines above. */
+  --fa-stickypanel-bg: #e8eaed;
+  --fa-stickypanel-fg: #1f2933;         /* 12.24:1                          */
+  --fa-stickypanel-border: #5a6472;     /*  4.98:1 here, 6.00:1 on the page */
+  --fa-stickypanel-count-bg: #d3d8de;
+  --fa-stickypanel-count-fg: #1f2933;   /* 10.29:1 on the count's own fill  */
+}
+
+/* The handle is the whole row, not the triangle.
+ *
+ * This instance's declared interaction profile is LOW-DEXTERITY, so the target
+ * is the full width at 2.75rem tall — comfortably past the 24px SC 2.5.8 floor
+ * in the axis that is hardest to hit, and past it by enough to still be
+ * comfortable rather than merely legal. `1le7` sizes the action tiles from the
+ * QR code for the same reason. */
+.fa-sticky-panel__handle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  /* `list-style: none` plus the WebKit pseudo-element: Safari ignores the
+     former on a summary and keeps drawing its own disclosure triangle, which
+     would sit beside the sticky glyph and read as two controls. */
+  list-style: none;
+}
+
+.fa-sticky-panel__handle::-webkit-details-marker { display: none; }
+
+/* Never left to the user agent. The panel's fill differs per scheme and the
+   default focus ring is invisible on one of them; 2px is the floor the a11y
+   spec here holds. */
+.fa-sticky-panel__handle:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+.fa-sticky-panel__icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.fa-sticky-panel__label { flex: 1 1 auto; }
+
+/* The count travels with the COLLAPSED state, which is the whole point of
+   putting it on the summary: a panel that hides its contents must still say
+   how much it is hiding, or "closed" and "empty" render identically. Same
+   rule `harness-tiles` states for the collapsed tab groups. */
+.fa-sticky-panel__count {
+  flex: 0 0 auto;
+  min-width: 1.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--fa-stickypanel-count-bg);
+  color: var(--fa-stickypanel-count-fg);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* The turned-up corner of the glyph rotates to point down when open — the
+   disclosure affordance, carried by the icon that is already there rather
+   than by a second chevron beside it. */
+.fa-sticky-panel[open] .fa-sticky-panel__icon { transform: rotate(180deg); }
+
+.fa-sticky-panel__body {
+  padding: 0 0.75rem 0.75rem;
+  border-top: 1px solid var(--fa-stickypanel-border);
+}
+
+/* THE SLIDE, and it is opt-in rather than default.
+ *
+ * `<details>` cannot animate its own height — the content goes from
+ * `display: none` to laid out in one frame — so the open state animates the
+ * BODY instead, which is a normal block and can. Guarded by
+ * `prefers-reduced-motion` because a panel that slides is a panel that moves
+ * under a reader who asked things not to, and the disclosure works identically
+ * without it: this is decoration on a control that is already correct. */
+@media (prefers-reduced-motion: no-preference) {
+  .fa-sticky-panel[open] .fa-sticky-panel__body {
+    animation: fa-sticky-panel-slide 180ms ease-out;
+  }
+  .fa-sticky-panel__icon { transition: transform 180ms ease-out; }
+}
+
+@keyframes fa-sticky-panel-slide {
+  from { opacity: 0; transform: translateY(-0.4rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Inside the panel the board is content, not a page section, so it drops the
+   margin it carries when it stands alone. */
+.fa-sticky-panel__body > .fa-landing-board { margin-top: 0.75rem; }
+
+/* ── Light scheme for the launcher, its panel, and the header mini-icons ──
+ *
+ * Bean `23bc`. Owner, 2026-09-21: *"class=\"fa-qr-toggle fa-tiles-toggle\"
+ * does not respect light mode."*
+ *
+ * ## What was actually wrong, which is wider than the control named
+ *
+ * `.fa-qr-toggle` was `background: transparent; color: inherit;
+ * border: 1px solid var(--border-color, …)` with NO `:root[data-fa-scheme="light"]`
+ * block, so in light mode it kept whatever the compiled dark stylesheet had
+ * put in `--border-color` and whatever the header happened to inherit. One
+ * element out, `.fa-tiles` is `background: var(--sidebar-color, #27262b)` —
+ * also with no light block — which is why the whole panel stayed dark on a
+ * light page in the reported screenshot. Naming one control understated it.
+ *
+ * ## Why this is TOKENS rather than a light-mode patch
+ *
+ * The two schemes are not one palette recoloured, and the site is COMPILED
+ * dark: `color_scheme: dark` in `_config.yml` means the theme's own variables
+ * (`--border-color`, `--sidebar-color`, `--body-text-color`) hold dark values
+ * whatever `data-fa-scheme` says, because that attribute is this file's
+ * override and not the theme's. So inheriting from the theme is inheriting
+ * the wrong scheme half the time. Every value below is stated explicitly and
+ * re-measured in both, the way `.fa-page-lang-bar` was after it failed.
+ *
+ * Text is held at 4.5:1 and a border at 3:1. Every pair clears it:
+ *
+ *   glyph on the sidebar    dark 12.34:1   light 13.66:1
+ *   border on the sidebar   dark  5.07:1   light  5.55:1
+ *   panel text on panel     dark 12.34:1   light 14.76:1
+ *   tile border on panel    dark  5.07:1   light  6.00:1
+ *
+ * ## It now covers three buttons, not one
+ *
+ * `.fa-scheme-mini` and `.fa-lang-mini` reuse `.fa-qr-toggle` for their box,
+ * so they inherit this fix rather than needing their own. That is deliberate:
+ * the mini-icons are the control a reader uses to CHANGE scheme, and a scheme
+ * switch that is invisible in one of the two schemes is the worst possible
+ * instance of this bug.
+ */
+.fa-qr-toggle,
+.fa-tiles {
+  /* DARK — the compiled default. */
+  --fa-launcher-fg: #e6e9ee;
+  --fa-launcher-border: #8b97a8;
+  --fa-launcher-panel-bg: #27262b;
+}
+
+:root[data-fa-scheme="light"] .fa-qr-toggle,
+:root[data-fa-scheme="light"] .fa-tiles {
+  /* LIGHT — re-measured against the theme's light sidebar (#f5f6fa) and a
+     white panel, NOT the dark values lightened. */
+  --fa-launcher-fg: #1f2933;
+  --fa-launcher-border: #5a6472;
+  --fa-launcher-panel-bg: #ffffff;
+}
+
+/* These override the earlier `.fa-qr-toggle` / `.fa-tiles` rules by ordering,
+   which is why they are stated as whole declarations rather than as a patch:
+   a reader changing the block above must see this one lose or win, not guess.
+   `color` in particular replaces `inherit`, which was the original defect. */
+.fa-qr-toggle {
+  border-color: var(--fa-launcher-border);
+  color: var(--fa-launcher-fg);
+}
+
+.fa-tiles {
+  border-color: var(--fa-launcher-border);
+  background: var(--fa-launcher-panel-bg);
+  color: var(--fa-launcher-fg);
+}
+
+.fa-tile {
+  border-color: var(--fa-launcher-border);
+  color: inherit;   /* now inherits the PANEL's per-scheme colour, set above */
+}
+
+/* The two header mini-icons. They are `.fa-qr-toggle` boxes, so everything
+   above applies; all they add is the gap from the title and, for the bulb,
+   the pressed state the launcher has no use for.
+
+   NO caption and NO width of their own: the header row is capped at 3.75rem
+   and shares its width with the site title (`1le7`), so three 1.75rem boxes
+   is the budget. `.fa-qr-host`'s `min-width: 0` on the title is what lets the
+   title ellipsis rather than push them off the row. */
+.fa-scheme-mini,
+.fa-lang-mini { margin-left: 0.25rem; }
+
+/* `aria-pressed` is on the bulb because it toggles. Rendered as a filled box
+   rather than only a border change: at 1.1rem the border is two pixels of
+   signal, and this instance's interaction profile is low-dexterity, where a
+   reader confirming a press should not have to inspect an edge. */
+.fa-scheme-mini[aria-pressed="true"] {
+  background: rgba(128, 128, 128, 0.22);
+}
+
+/* ── Search: in the top display navbar, slidable to the corner ────────────
+ *
+ * Owner, 2026-09-21: *"also i want the search restored back to the top
+ * display navbar, with option to slide out to the UR corner as an icon."*
+ *
+ * TWO STATES ON ONE NODE, switched by `data-place`, because the field must
+ * never leave the document — just-the-docs finds its input by id and
+ * `getElementById` does not see a detached node. So "sliding out" is a class
+ * change on the wrapper, never a move of the input. `docs-ui.js` carries the
+ * long form of why.
+ *
+ *   data-place="navbar"  in flow at the top of the main header (the default,
+ *                        and where the theme itself renders search)
+ *   data-place="corner"  fixed to the upper right, collapsed behind an icon
+ *                        until `data-open="true"`
+ *
+ * The choice is remembered per reader in `localStorage`, so it is a setting
+ * rather than a gesture repeated every page.
+ */
+/* ## The navbar state INHERITS the page's ink; only the corner names its own
+ *
+ * The first version of this block gave `.fa-search-home` a per-scheme
+ * foreground the way `.fa-tiles` has one, and axe caught it immediately:
+ * `#e6e9ee on #ffffff, 1.21:1`. The mistake is worth naming because it looks
+ * like the FIX for `23bc` rather than a new instance of it.
+ *
+ * `.fa-tiles` paints its own opaque panel, so it knows what its text sits on
+ * and must state a matching colour. The navbar search does NOT paint a
+ * background — it sits in page content — so whatever colour it names is a
+ * guess about a surface it does not own, and the guess is wrong in one
+ * scheme by construction. Inheriting is not laziness here; it is the only
+ * answer that cannot be wrong, because the page's own text colour is already
+ * correct against the page's own background.
+ *
+ * The BORDER cannot inherit — it needs a value — so it takes one that clears
+ * 3:1 on every background it can land on rather than one per scheme:
+ *
+ *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
+ *
+ * The corner card is the opposite case and keeps the per-scheme pair below:
+ * it IS opaque, it does own its background, and it must.
+ */
+.fa-search-home {
+  --fa-search-border: #737d8c;
+
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: inherit;
+}
+
+/* NAVBAR — the default. The field takes the width it is given and the slide
+   control sits after it, so the control does not move as the page resizes. */
+.fa-search-home[data-place="navbar"] {
+  width: 100%;
+  margin: 0 0 0.75rem;
+}
+
+.fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
+.fa-search-home[data-place="navbar"] .fa-search-peek { display: none; }
+
+/* CORNER — fixed, upper right.
+ *
+ * `z-index: 95` puts it over page content and over the pinned-sticky layer
+ * (`.fa-sticky-layer`, 90), which is deliberate: a reader who pressed the
+ * search icon wants the field, not a note that happens to overlap it. It
+ * stays BELOW anything modal, of which there is currently nothing. */
+.fa-search-home[data-place="corner"] {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 95;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 6px;
+  /* Opaque: it sits over body text, so unlike the navbar state it DOES own
+     its background and therefore must name a foreground to match it. Dark by
+     default, re-measured light below — #e6e9ee on #27262b is 12.34:1 and
+     #1f2933 on #ffffff is 14.76:1. */
+  background: #27262b;
+  color: #e6e9ee;
+}
+
+:root[data-fa-scheme="light"] .fa-search-home[data-place="corner"] {
+  background: #ffffff;
+  color: #1f2933;
+}
+
+/* Collapsed is the corner's ARRIVAL state — sending search to the corner and
+   leaving the field open would not have freed the space that was the point. */
+.fa-search-home[data-place="corner"][data-open="false"] .fa-search-holder { display: none; }
+.fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder { width: min(18rem, 60vw); }
+
+/* The two controls. Sized like the header mini-icons (1.75rem) rather than
+   to the text, because this instance's interaction profile is low-dexterity
+   and both are targets a reader hits with a pointer. */
+.fa-search-peek,
+.fa-search-slide {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 0.85rem;
+}
+
+.fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+.fa-search-peek:hover,
+.fa-search-peek:focus-visible,
+.fa-search-slide:hover,
+.fa-search-slide:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  outline: none;
+}
+
+/* Never left to the user agent: the corner card's fill differs per scheme and
+   the default ring is invisible on one of them. */
+.fa-search-peek:focus-visible,
+.fa-search-slide:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+/* On a phone the corner card would cover most of the header, so the corner
+   state collapses to just its icon and the field opens full-width beneath.
+   The state is still honoured — it is not silently forced back to the navbar,
+   which would lose a choice the reader made on another device. */
+@media (max-width: 50rem) {
+  .fa-search-home[data-place="corner"][data-open="true"] {
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+  .fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* The field's own size in the navbar.
+ *
+ * The theme's input is 21px tall unstyled, and the tiles panel used to give
+ * it a height that the navbar does not. 21px is UNDER the 24px SC 2.5.8
+ * target floor, and this instance's declared interaction profile is
+ * low-dexterity, where "technically under the bar" is a reader who misses.
+ * Caught by the e2e box assertion after the field moved — the check existed,
+ * it was the styling that did not follow.
+ *
+ * 2.25rem (36px) rather than 24: that is what the panel already gave it, so
+ * the field is not quietly smaller in its new home than in its old one. The
+ * test holds the legal 24 so this comfort can be spent deliberately rather
+ * than by accident. */
+.fa-search-home .search-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: transparent;
+  /* Inherits — the page's in the navbar, the card's in the corner. One
+     declaration, correct in both, for the reason at the top of this block. */
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.fa-search-home .search-input:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 1px;
+}
+
+/* Results drop below the field rather than floating, same rule the panel
+   already follows, and the corner card needs it more: fixed-positioned, it
+   would otherwise render its hits off the bottom of the viewport. */
+.fa-search-home .search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 16rem;
+  margin-top: 0.25rem;
+  overflow-y: auto;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  /* Opaque like the corner card, and for the same reason: hits render over
+     body text. `Canvas` was rejected here for the reason the pinned-sticky
+     rule records — it is a SYSTEM colour that follows the OS scheme while the
+     text follows the page's, so the two disagree the moment a reader sets the
+     page against their system. */
+  background: #27262b;
+  color: #e6e9ee;
+}
+
+:root[data-fa-scheme="light"] .fa-search-home .search-results {
+  background: #ffffff;
+  color: #1f2933;
+}
+
+.fa-search-home .search { position: relative; }
+
+/* ── A board nested in the sticky panel has no chrome of its own ──────────
+ *
+ * Owner, 2026-09-21, looking at the staging preview: *"why are there two
+ * panels???"*
+ *
+ * They were two because `.fa-sticky-board` paints a bordered, padded,
+ * tinted box with its own heading — which is right for the overlay it is
+ * everywhere else, and wrong inside `.fa-sticky-panel`, which already paints
+ * exactly that. Nesting one in the other gave a box headed "Todos" inside a
+ * box headed "Stickies".
+ *
+ * NOT a smaller border or a lighter tint. The chrome belongs to the OUTER
+ * panel and is already there once; a second, quieter frame would still be a
+ * second frame, and the question would come back as "why are there two
+ * boxes".
+ *
+ * Every declaration here UNSETS something the base rule sets, which is why
+ * they are spelled out rather than shorthanded away: a reader changing
+ * `.fa-sticky-board` needs to see precisely what this cancels.
+ */
+.fa-sticky-board--bare {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+/* The head is empty when bare — the `<h2>` inside it is clipped to a pixel by
+   `fa-sr-only` and the close button is not appended at all — so it would
+   otherwise contribute its 0.8em bottom margin as a gap above nothing. */
+.fa-sticky-board--bare > .fa-sticky-board-head { margin: 0; }
+
+/* ── The filter row, compacted ────────────────────────────────────────────
+ *
+ * Owner: *"the todos controls are too clunky / take up too much real
+ * estate."* (bean `qefk`, partial.)
+ *
+ * The row is two labelled selects, and at the panel's font size the labels
+ * were reading as loud as the todo titles beneath them. Quieted rather than
+ * removed: the labels are what make the selects say WHICH axis they filter,
+ * and a bare pair of dropdowns is a guessing game.
+ *
+ * What is NOT done here: shrinking the select targets. They stay at their
+ * full height because this instance's declared interaction profile is
+ * low-dexterity, and "takes up less room" must not be bought with a target a
+ * reader cannot hit. The saving comes from the label type and the gaps.
+ */
+.fa-sticky-board--bare > .fa-board-filter {
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+}
+
+.fa-sticky-board--bare > .fa-board-filter .fa-board-filter-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+}
+
+/* ── The source links, as a caption row under the sticky ──────────────────
+ *
+ * Owner, 2026-09-21: *"i want the [pencil] edit icon, (edit, view links can
+ * be below, not inside stick)"*.
+ *
+ * They used to sit inside the card — in the sticky's own text box on the
+ * landing page, and in the card head on a todo. A sticky is a note; these
+ * links are about the FILE the note was declared in, which is a different
+ * subject. On a card with backdrop art they also competed with the words for
+ * the quiet part of the cloud.
+ *
+ * The grid item is the CELL now (`.fa-sticky-cell` in `landing.html`,
+ * `.fa-sticky-slot` on the board), holding the sticky and this row beneath
+ * it. The sticky keeps its declared aspect ratio; the caption adds its own
+ * height below rather than eating into the art.
+ */
+.fa-sticky-cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fa-sticky-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  /* Trailing, so the icons sit under the card's right edge and read as
+     belonging to it rather than starting a new column of content. */
+  justify-content: flex-end;
+  margin: 0.3rem 0 0;
+  padding: 0;
+}
+
+/* TARGET SIZE IS NOT NEGOTIABLE HERE. Icon-only controls are exactly where
+   this gets quietly lost: the glyph is 1rem, and without a minimum the hit
+   area would be the glyph. 1.75rem matches the header mini-icons, and this
+   instance's declared interaction profile is low-dexterity — 24px is the SC
+   2.5.8 floor and 28 is the comfort this file holds everywhere else. */
+.fa-sticky-links .fa-node-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border-radius: 4px;
+  /* The row is quiet until reached for — it is a caption, not an action bar.
+     0.62 is about as far down as these go while still clearing 4.5:1 against
+     the page in both schemes. */
+  opacity: 0.62;
+  text-decoration: none;
+}
+
+.fa-sticky-links .fa-node-edit svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.fa-sticky-links .fa-node-edit:hover,
+.fa-sticky-links .fa-node-edit:focus-visible {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.18);
+}
+
+/* Never left to the user agent: these sit on the page background, which
+   differs per scheme, and the default ring is invisible on one of them. */
+.fa-sticky-links .fa-node-edit:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+/* ── The sidebar mark, one per scheme ─────────────────────────────────────
+ *
+ * `title.html` emits BOTH when the instance declares a `mark-dark`, and this
+ * shows whichever matches. Liquid cannot choose: the scheme lives in
+ * `data-fa-scheme` on `<html>`, written by `docs-ui.js` from the reader's
+ * stored choice, which the server does not know.
+ *
+ * DARK IS THE DEFAULT here, matching `color_scheme: dark` in `_config.yml`.
+ * The light mark shows only under the explicit light override, so a reader
+ * who never touches the toggle gets the right one with no JavaScript having
+ * run — which matters because `docs-ui.js` is `defer`red and would otherwise
+ * flash the wrong mark on every page load.
+ */
+.fa-site-mark--light { display: none; }
+.fa-site-mark--dark { display: inline-block; }
+
+:root[data-fa-scheme="light"] .fa-site-mark--light { display: inline-block; }
+:root[data-fa-scheme="light"] .fa-site-mark--dark { display: none; }
