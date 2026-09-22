@@ -139,6 +139,30 @@ is `y8cm`'s. Both are *rendered* facts: compute the contrast from the two
 resolved colours rather than from the tokens, because the token you
 authored and the colour that won are different questions.
 
+## Listen for `pageerror`, or a crash reads as a missing feature
+
+Two in one session, neither visible in a screenshot:
+
+- `mountInstanceGraphs` **moved** `.site-nav`, so a later `insertBefore` got a
+  reference node that was no longer a child, threw `NotFoundError`, and took
+  **the rest of `init()`** with it. The symptom was that the document index
+  simply was not there — which looks exactly like a feature that did not mount.
+- The same throw, from a different function, reproduced on a build of
+  `origin/main`: it had been eating `inlineDiagrams` and `mountFigures` on
+  every page load, which is why no figure on the front page had zoom. **Nobody
+  had noticed**, because a swallowed init is silent.
+
+So: attach the listener, and assert zero.
+
+```js
+page.on("pageerror", (e) => errors.push(e.stack || e.message));
+```
+
+**And check the base branch before you claim a crash is yours** — or before you
+claim it is not. One run against a build of `origin/main` is what turned
+"something I just broke" into "a live defect nobody had reported", and it is
+the same measurement either way.
+
 ## What this does NOT replace
 
 The gate set. This is the layer **above** it: gates catch what is checkable

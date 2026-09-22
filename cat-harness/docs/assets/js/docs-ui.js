@@ -6463,7 +6463,15 @@
       }
 
       var label = LABELS[id] || id;
-      var at = hrefs[id];
+      // THROUGH `safeHref`, like every other href in this file. The value comes
+      // from `_data/harness.json`, which is generated -- but "generated" is not
+      // "trusted": the destinations are declared coverage paths, and a
+      // declaration is authored. `href-safety.test.ts` enforces this over the
+      // whole client for that reason, and it caught this exact line.
+      //
+      // `undefined` falls through to the non-link branch below, which is
+      // already the right rendering for a destination the row cannot use.
+      var at = safeHref(hrefs[id]);
       if (at) {
         var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
         a.innerHTML = rowGlyph(id);
@@ -6542,8 +6550,19 @@
         var g = graphs[j];
         var li = el("li", { class: "fa-nav-folders__item" });
         if (g && g.path) {
-          var a = el("a", { class: "fa-nav-folders__link", href: withBase(g.path) }, g.kind);
-          li.appendChild(a);
+          // `safeHref` for the same reason as the icon row above, and applied
+          // AFTER `withBase` so what is checked is the href that is actually
+          // written -- checking the bare path would clear a value the baseurl
+          // could still turn into something else.
+          var at = safeHref(withBase(g.path));
+          if (at) {
+            li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, g.kind));
+          } else {
+            li.appendChild(el("span", {
+              class: "fa-nav-folders__link fa-nav-folders__link--dead",
+              title: "declared, and its path is not one this page may link to"
+            }, g.kind));
+          }
         } else {
           li.appendChild(el("span", {
             class: "fa-nav-folders__link fa-nav-folders__link--dead",
