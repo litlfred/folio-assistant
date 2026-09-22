@@ -1,11 +1,11 @@
 ---
 # folio-assistant-aqb6
 title: 'PIPELINE INVENTORY: the 13 DAK pre/post-processing steps, each assigned to a layer and written into the skill that owns it'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-22T19:23:57Z
+updated_at: 2026-09-22T21:29:40Z
 parent: folio-assistant-uhkv
 ---
 
@@ -47,5 +47,22 @@ split is wrong.
 - [x] `dak-preprocessing` and `dak-postprocessing` written
 - [x] `ig-publication` gains the render-IG phase
 - [x] each step assigned; none unplaceable
-- [ ] the deploy phase's 6 steps assigned — NOT yet done, and the split is
-      unverified until they are
+- [x] the deploy phase's 10 steps assigned — DONE 2026-09-22. Nine to
+      `fhir-harness` and one (the PR-comment step) to `cat-harness`. The
+      count was wrong here too: the phase is ten steps, not six.
+      **The phase came back entirely generic**, which was not the expected
+      answer and is the strongest evidence for `nsbb`'s base-plus-overlay
+      claim — the overlay never reaches the deployment end
+
+## Summary of Changes
+
+All 26 steps of the WHO build are assigned, and the split survived its own
+test: none needed a sixth layer, none needed two owners. Three placed against
+their own step names — both `Library` strippers to `fhir-harness`, and the
+PR-comment step to `cat-harness`, which owns forge plumbing.
+
+Written into the skills that own each phase: `dak-preprocessing` (6
+invocations), `ig-publication` §render-IG (1), `dak-postprocessing` (9),
+`ig-build-pipeline` §"The deploy phase" (10).
+
+On `main` in `95e63c12`.

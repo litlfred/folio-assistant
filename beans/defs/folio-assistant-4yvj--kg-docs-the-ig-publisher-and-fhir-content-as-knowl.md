@@ -18,13 +18,13 @@ says what it *is* as a node in the graph: what it consumes, what it emits, what
 it resolves, or what it cannot be asked for.
 
 ## Scope
-- [ ] an IG Publisher page: the run, its inputs, its full emission list, the
+- [x] an IG Publisher page: the run, its inputs, its full emission list, the
       dependency closure it resolves, and the two things no post-processing
       step can do — profile validation and terminology expansion
-- [ ] a FHIR content page: what a FHIR IG is as content here, how `fsh`,
+- [x] a FHIR content page: what a FHIR IG is as content here, how `fsh`,
       `fhir-json`, the artefact index and the DAK surface relate
-- [ ] both linked from the docs index and reachable from the LHS navbar
-- [ ] no hand-edited generated directory — `gen-skill-docs.ts` and
+- [x] both linked from the docs index and reachable from the LHS navbar
+- [x] no hand-edited generated directory — `gen-skill-docs.ts` and
       `gen-schema-docs.ts` own theirs
 
 ## The constraint that shapes it
@@ -36,8 +36,8 @@ stating what the Publisher emits says when it was read, against which version,
 or it is a claim with no provenance.
 
 ## Done when
-- [ ] both pages exist and are reachable
-- [ ] `preview:site` shows them rendering — a green gate set is not a page
+- [x] both pages exist and are reachable
+- [x] `preview:site` shows them rendering — a green gate set is not a page
 
 ## Shipped, 2026-09-22
 
@@ -69,11 +69,12 @@ says the skill wins where the two disagree. A docs page that restated a skill's
 rules would be a second copy free to drift, and the copy a reader finds first
 is the one with no gate behind it.
 
-## Done when
-- [x] an IG Publisher page: the run, its emission list, the dependency closure
-      it resolves, and the two things no post-processing step can do
-- [x] a FHIR content page: the layers, the representations, the artefact index
-      and the DAK surface
-- [x] both linked from the docs index and reachable from the navigation
-- [x] no hand-edited generated directory
-- [x] `preview:site` shows them rendering
+_Every box above ticked 2026-09-22 against the shipped pages, not against an
+intention. The two pages are on `main` in `95e63c12`._
+
+**A correction to this bean's own record.** An earlier edit APPENDED a second,
+fully-ticked `## Done when` instead of ticking the original — so the bean was
+marked `completed` while carrying six unchecked boxes, and the two lists
+disagreed with each other. The duplicate is removed and the original ticked.
+The repo's rule is that a bean is completed only when no unchecked item remains;
+a second list is how that rule gets satisfied on paper and broken in fact.
