@@ -307,3 +307,29 @@ PR #842 is live on `claude/lhs-navbar-harness-folios-cqo9mu` right now. Two
 sessions designing one expanding element separately is the outcome
 `bean-coordination` exists to prevent. **Not edited above** — this is a
 sibling's bean and the sections it already carries are theirs.
+
+**The kind list, extended.** Owner, same day: *"…or library"*. So the element
+covers **skills, tools, docs and library**. Measured state of each, since the
+four are not in the same position and one of them must not be treated like the
+other three:
+
+| kind | directories | declared viewer | per-instance? |
+|---|---|---|---|
+| `skills` | 7 | 7 | yes, as of #851 |
+| `library` | 4 | 4 | yes, already |
+| `tools` | 1 | 1 | n/a — only one instance declares a tools graph |
+| `docs` | 2 | **0** | **no, and it must not be** |
+
+**`docs` is the exception, and declaring a visualiser for it would be a
+defect.** Its kind is `renderable: true`, and the rule on `owesVisualiser`
+says why: *"a renderable kind is its own view — demanding a separate viewer
+would be asking for a second rendering of the same thing."* So the element
+must link an instance's docs at its RENDERED ROUTE, not through
+`coverage.visualiser`. Reading all four kinds through one accessor is the
+obvious implementation and it is the wrong one; `docs` needs the route and the
+other three need the declaration.
+
+`tools` is not evidence either way. One instance declares a tools graph, so
+"per-instance" is satisfied trivially and would need a second instance with
+tools before the split is exercised. An element that renders correctly today
+for `tools` has not been tested on it.
