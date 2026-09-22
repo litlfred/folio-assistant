@@ -45,11 +45,36 @@ Three states, not two, per this repo's standing rule: a `working-directory` unde
 
 ## Done when
 
-- [ ] Every `working-directory` (job `defaults.run`, step-level, and `cd` targets) is checked for existence against the tree the step actually sees
-- [ ] A step with no invoked script path is still examined for its cwd
-- [ ] Exemptions carry reasons and fail when they match nothing, reusing the `FOLIO_PATHS` invariant rather than a parallel one
-- [ ] A checkout at a non-HEAD `ref:` yields `undetermined`, never a pass
-- [ ] A test plants a workflow with a nonexistent `working-directory` and the check goes red — **mutation-tested**, since a reconciliation that holds by construction is the failure this repo has already paid for once (`t6s7`)
+- [x] Every `working-directory` — workflow `defaults.run`, job `defaults.run`
+      and step-level — is checked for existence against the tree the step
+      actually sees
+- [~] ~~and `cd` targets~~ — **REQUIREMENT CHANGED, not met.** Excluded on
+      purpose once the asymmetry was clear: GitHub evaluates
+      `working-directory` BEFORE the script runs, so it must pre-exist, while
+      a `cd` may target what the same block just created — `publish.yml` does
+      exactly that with `mkdir -p appendices/`. Including them would report a
+      correct workflow as broken, which this module's own header calls worse
+      than having no check. Struck rather than ticked: the box asked for
+      something I decided against, and ticking it would record agreement I do
+      not have
+- [x] A step with no invoked script path is still examined for its cwd — this
+      is what made the two `npx typedoc` steps visible at all
+- [x] Exemptions carry reasons and fail when they match nothing. `FOLIO_WORKDIRS`
+      mirrors `FOLIO_PATHS`'s invariant; `workDirBaseline` additionally
+      validates every entry has a reason ON LOAD, throwing rather than
+      tolerating one that does not
+- [~] A checkout at a non-HEAD `ref:` yields `undetermined` — **HALF met, and
+      the other half is deliberately the opposite.** Below such a checkout:
+      yes, `undetermined`. AT its root: it **resolves**, because for a cwd the
+      only question is whether the directory exists and `actions/checkout`
+      makes it — the contents being unreadable from HEAD is beside the point.
+      I wrote this box before seeing that `feature-staging.yml`'s `pages`
+      would otherwise become a permanent unknown NOBODY COULD EVER RETIRE,
+      which is the shape this module refuses everywhere else
+- [x] A test plants a workflow with a nonexistent `working-directory` and the
+      check goes red — **mutation-tested**: always-`Resolves` fails 10 tests,
+      removing the workflow-level dedup fails 1, reverting the `gh-pages` root
+      to `undetermined` fails 1. Restored: 53 pass, 0 fail
 
 ## Not in scope
 
@@ -109,3 +134,11 @@ Worth recording plainly: **this repo's path discipline caught a path-discipline 
 ## Not done
 
 `u9r9`'s two paths are **not** fixed. Correcting them makes dormant steps live, which is the owner's call there — `u9r9` says so and this bean said so at the outset. The baseline is what lets the gate ship green without pretending they are fine.
+
+_2026-09-22T09:05:00Z_ — DONE-WHEN RECONCILED, and two boxes are struck rather than ticked.
+
+I wrote those five boxes before implementing, marked the bean `completed`, and left all five unchecked — which is `todo-manager` §"Check before you WORK — a checkbox is a claim, not a measurement" broken by the session enforcing it. Worse than the omission: **two of the five describe behaviour I deliberately did not build**, and ticking them would have recorded agreement I do not have while the code says otherwise.
+
+So they are `[~]` with the reason, not `[x]` and not silently deleted. `cd` targets are out because `working-directory` must pre-exist and a `cd` need not. A `gh-pages` checkout ROOT resolves because a cwd only has to exist. Both were written into the boxes before the asymmetries were visible, and both are stated at the code as well as here.
+
+**The rule that makes this worth the words:** a Done-when box is a requirement somebody wrote down, so a requirement that turned out wrong gets STRUCK with its reason, never quietly satisfied by a looser reading. A reader who finds five ticks and an implementation contradicting two of them learns to distrust every tick in the store.
