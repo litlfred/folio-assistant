@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-22T05:57:48Z
-updated_at: 2026-09-22T07:19:07Z
+updated_at: 2026-09-22T21:40:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -239,3 +239,66 @@ take over.
 - [x] The premise is gated rather than re-derived — `check:workflow-paths`
       criterion 2 (`ai9u`) holds both steps as `missing — baselined, still
       owed`, and the baseline may only shrink
+
+---
+
+## Settled 2026-09-22 on the owner's ruling — path corrected, NOT dispatched
+
+Owner, 2026-09-22, choosing *"Correct the path, no dispatch"* over dispatching
+the workflow to observe its real outcome. The alternative would have authorised
+a **first-ever `gh-pages` publish from a workflow with no run history**, all
+three of whose jobs push there — so the cheap fix and the risky observation were
+correctly separated.
+
+### What was wrong, verified rather than quoted
+
+| | |
+|---|---|
+| `.github/workflows/discoverability-docs.yml:208` | `working-directory: folio-assistant` |
+| `.github/workflows/publish.yml:568` | `working-directory: folio-assistant` |
+
+`folio-assistant/` **does not exist** in this checkout. `cat-harness/` does, and
+holds `schemas/`. Both corrected, and `npx typedoc` pinned to `typedoc@0.28.20`
+with `--yes`, which is the version npx resolves today — an unpinned `npx` in CI
+takes whatever is latest at run time, which is a different program on a
+different day.
+
+### A SECOND defect, found by running it rather than reading it
+
+The invocation exits **0** from `cat-harness`. That is what makes this worth
+writing down, because exit 0 is also what it would report if the step were
+documenting nothing at all.
+
+Both steps name **two** entry points: `schemas/` and `adapters/paper/schemas/`.
+**`cat-harness/adapters/paper/schemas/` does not exist** — the paper adapter
+holds `index.ts` and `tools/lean.ts` and no `schemas/` directory. Measured on
+the real run:
+
+```
+Found 0 errors and 231 warnings
+126 modules generated — every one from schemas/
+```
+
+Nothing from `adapters/paper/`. **TypeDoc accepts a missing entry point without
+failing**, so the step is green while silently producing less than its own
+command line claims, and its comment — *"document the schemas/ exports +
+adapters/paper/schemas/"* — describes output that does not exist. That is
+`1xhc`'s thesis at the level of a single argument: not a gate that fails to
+fire, but an argument that fails to resolve, reported as success.
+
+**NOT fixed here, deliberately.** Pointing the second entry at
+`adapters/paper/`, which does exist, would **add** documentation to a published
+site — a change to what readers receive, not a repair of a broken path. The
+owner ruled on the path. This is recorded for its own decision.
+
+### Done when
+
+- [x] `working-directory` corrected in both workflows, verified against the
+      filesystem rather than assumed
+- [x] `typedoc` pinned, so CI runs the same program twice
+- [x] The dead second entry point measured and recorded
+- [ ] The dead entry point decided: repoint at `adapters/paper/`, drop it, or
+      keep it with a comment saying it is aspirational — **the owner's, because
+      it changes published output**
+- [ ] Not dispatched, by ruling. Whoever dispatches first should know all three
+      jobs push to `gh-pages`

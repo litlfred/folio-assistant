@@ -428,6 +428,72 @@ break the overlay to fix a directory-creation problem.
 DEPENDENT does; an instance always materialises what it declared itself.
 Otherwise marking `schemas/` as `skip` would stop the platform creating its own.
 
+## Nesting is declared FROM WITHIN, by a node in the first subdirectory (STRICT)
+
+Owner's ruling, 2026-09-22:
+
+> *"the proper way to do nested directories (and only way that will be allowed)
+> is if there is a (Sub?)KGraph node within the first subdir that labels all the
+> other ones that exist within it. that structure is inherited"*
+
+**A declaration never reaches down a path.** An instance declares a directory;
+that directory's own contents are described by **a node inside its first
+subdirectory**, which names the sibling subdirectories present there. Depth is
+carried one level at a time, by the level that can see itself.
+
+What this forbids, and it is the shape everything currently reaches for:
+
+```jsonc
+// WRONG — the root declaration enumerating a path it cannot verify
+{ "id": "docs", "path": "cat-harness/content/docs/", "graphs": ["folio"] }
+```
+
+The root cannot tell you what is under `docs/`; it can only assert it. A node
+that lives there can be wrong in a way somebody notices, because it sits beside
+the thing it describes.
+
+**And the structure is INHERITED.** A dependent instance gets the nesting the
+same way it gets the directory — through the overlay, resolved by id, in scan
+order. It does not re-describe a dependency's interior, and it does not have to:
+the describing node came with the directory.
+
+### The live case this ruling settles
+
+Stream 1 of the #956 consolidation measured `cat-harness/content/docs/`,
+2026-09-22: it **exists**, holds **14 documentation subgraphs**, and the
+docs-site generators read it today — live paths, not stale ones. And
+`cat-harness.json` **declares it nowhere**, while the declared `folio/` holds
+three JSON files.
+
+Bean `hs08` had recorded the absent `content` entry as the rename having
+*landed*. It is the opposite: the declaration was emptied of `content/` **before**
+the directory holding the content moved, leaving 14 live subgraphs invisible to
+any consumer that scans the declaration. That is `dh4f` pointed the other way —
+**present-but-undeclared** rather than declared-but-absent, and the worse of the
+two, because the clean run is over content that is really there.
+
+**The fix under this ruling is not to add `content/docs/` to the root
+declaration.** It is a node inside the first subdirectory naming the fourteen.
+
+### What the owner left open, and it is NOT an agent's to settle
+
+The ruling says *"(Sub?)KGraph node"* — with the question mark. **What that node
+is called, which `graphKinds` it carries, and whether it is a new kind or an
+existing one used positionally are undetermined**, and inventing a schema for it
+would be exactly the move `deletion-requires-confirmation` and
+`surprise-to-corpus` both guard against: an agent settling a naming question in
+the corpus because it needed one to proceed.
+
+Recorded so the next session reads the constraint rather than re-deriving it,
+and knows which part is ruled and which is open:
+
+| | |
+|---|---|
+| **ruled** | nesting is described from within, by a node in the first subdirectory, naming the others present there; and that structure is inherited |
+| **ruled** | a root declaration reaching down a multi-level path is not allowed |
+| **open** | the node's kind and name — `SubKGraph`, a reused kind, or something else |
+| **open** | whether existing multi-level declarations are grandfathered or must migrate |
+
 ## Making a field REQUIRED is a change other branches pay for
 
 `dependents` has no default, deliberately: `reproduce` ships junk downstream and
