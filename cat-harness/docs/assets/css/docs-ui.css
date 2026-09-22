@@ -2270,6 +2270,29 @@ a.fa-tile[data-fa-readonly]:focus-visible {
    and `getElementById` does not find a detached node. */
 .fa-search-holder[hidden] { display: none; }
 
+/* WHICH INDEX THE SEARCH BOX IS SEARCHING — bean `eof6`.
+ *
+ * Only ever rendered when the build stamped a non-canonical index, so on the
+ * published site this rule matches nothing. Styled as a NOTE rather than an
+ * error: the state it reports is expected on a preview, and an alarm colour
+ * for an expected state is how a reader learns to skip it.
+ *
+ * Colours come from the `--fa-search-*` family the search field already uses,
+ * so the notice themes with the control it belongs to rather than tracking a
+ * separate palette. A first draft invented `--fa-accent`, `--fa-surface-2` and
+ * `--fa-ink-dim`: NONE of the three exists, and the token tests did not catch
+ * it because they forbid a raw hex rather than requiring a defined name — an
+ * undefined custom property is not an error, it just renders unstyled. */
+.fa-search-notice {
+  margin: 0.4rem 0 0;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  border-left: 3px solid var(--fa-search-border);
+  background: var(--fa-search-bg);
+  color: var(--fa-search-muted);
+}
+
 .fa-tiles .fa-search-holder {
   width: 100%;
   box-sizing: border-box;
