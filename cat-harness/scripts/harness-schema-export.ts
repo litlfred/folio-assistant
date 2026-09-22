@@ -38,7 +38,7 @@ import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPath, repoRootFor } from "../schemas/cat-harness.js";
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";

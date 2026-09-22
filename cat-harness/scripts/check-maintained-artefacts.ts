@@ -46,7 +46,7 @@
 import { existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { tools } from "../../tools/index.js";
+import { tools } from "../tools/discover.js";
 
 /** One claim, and whether the tree bears it out. */
 export interface ArtefactCheck {
