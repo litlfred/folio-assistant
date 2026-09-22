@@ -360,14 +360,35 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
     expect(tile.icon?.src).not.toContain(`${siteDirFor(join(f.repo, "host"))}/`);
   });
 
-  test("an instance mounted beneath the site root carries its mount", () => {
-    // The site owner is at `/`; everything else is at `/<name>/`. A helper
-    // that answered `/assets/...` for both would 404 for every instance but
-    // one, which is the shape of the defect it replaced.
-    const f = fixture({ host: host(), sibling: withIcon("sibling") });
+  test("an instance mounted beneath the site root carries its SITE DIR's mount", () => {
+    // THIS TEST ASSERTED `/sibling/...` AND THAT WAS THE BUG, on the premise
+    // "the site owner is at `/`; everything else is at `/<name>/`".
+    //
+    // Disproved by running the mount rather than by reading a file:
+    //
+    //     who-iris/library/  ->  /who-iris/        (1378 files)
+    //     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+    //
+    // Every instance gets a `<kind>/<name>` route unconditionally; the bare
+    // `<name>` route goes to whichever kind claims it FIRST, and for who-iris
+    // that is the library. So the front door served 1,378 corpus files and the
+    // icon composed against it 404'd — 404 against 200 for the same asset at
+    // `/docs/who-iris/assets/...`, on a mounted build.
+    //
+    // `<kind>/<name>` is the route that always exists, so it is the one to
+    // compose against; the bare one is right only by luck.
+    const f = fixture({
+      host: host(),
+      sibling: withIcon("sibling", {
+        directories: [
+          { id: "beans", path: "beans/", graphKinds: ["beans"] },
+          { id: "site", path: `${siteDir({ name: "sibling", stub: "sibling" })}/`, graphKinds: ["docs"] },
+        ],
+      }),
+    });
     giveOwnSite(f.repo, "sibling");
     const [tile] = tilesOf(f).filter((t) => t.name === "sibling");
-    expect(tile.icon?.src).toBe("/sibling/assets/img/mark.svg");
+    expect(tile.icon?.src).toBe("/docs/sibling/assets/img/mark.svg");
   });
 
   test("no mount means NO icon and a finding — `pb04` one layer down", () => {
@@ -731,5 +752,77 @@ describe("a render-exempt instance is not missing what it was excused from", () 
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.findings.join(" ")).toContain("no published viewer");
+  });
+});
+
+describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front door", () => {
+  // MEASURED, by running `mount-instance-docs` against a built preview rather
+  // than by reading either file:
+  //
+  //     who-iris/library/  ->  /who-iris/        (1378 files)
+  //     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+  //
+  // Every instance gets a `<kind>/<name>` route unconditionally; the bare
+  // `<name>` route goes to whichever kind claims it first, and for who-iris
+  // that is the LIBRARY. So its front door serves 1,378 corpus files and its
+  // docs are somewhere else entirely.
+  //
+  // The shipped version composed an icon against `folioRoot` — the front door
+  // — and produced a URL that 404s. Confirmed against a mounted build: 404 for
+  // `/who-iris/assets/...` and 200 for `/docs/who-iris/assets/...`, same asset.
+  //
+  // The local preview HID it, which is why this is a test and not a comment:
+  // `preview:site` does not run the mount, so the asset was absent there for
+  // an unrelated reason and the wrong URL looked like the same 404.
+
+  const withIcon = (name: string, kind: string) => ({
+    name,
+    icon: "mark",
+    images: [{ id: "mark", src: `${siteDir({ name })}/assets/m.svg`, title: "M", description: "d" }],
+    directories: [{ id: `${name}-site`, path: `${siteDir({ name })}/`, graphKinds: [kind] }],
+  });
+
+  test("a mounted instance addresses its icon under its site dir's KIND", () => {
+    const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "docs") });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon?.src).toBe("/docs/guest/assets/m.svg");
+  });
+
+  test("...and the kind is the DECLARATION's, not the string `docs`", () => {
+    // The whole point: who-iris's bare route is taken by `library`, so a rule
+    // that assumed `docs` would be right by luck here and wrong there.
+    const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "catalogue") });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon?.src).toBe("/catalogue/guest/assets/m.svg");
+  });
+
+  test("the site OWNER keeps the root — its docs are built in place, not mounted", () => {
+    const f = fixture({
+      host: { ...host({ needs: [] }), ...withIcon("host", "docs"), name: "host" },
+    });
+    const h = tilesOf(f).find((t) => t.name === "host")!;
+    expect(h.icon?.src).toBe(`/assets/m.svg`);
+  });
+
+  test("an instance that classifies its site dir under NO kind gets no icon", () => {
+    // `pb04` one layer down, and a real answer rather than a guess: nothing
+    // can be said about where a directory nobody classified will be served, so
+    // an `<img>` is not emitted at all.
+    const f = fixture({
+      host: host({ needs: [] }),
+      guest: {
+        name: "guest",
+        icon: "mark",
+        images: [{ id: "mark", src: `${siteDir({ name: "guest" })}/assets/m.svg`, title: "M", description: "d" }],
+        // A registered kind, on a path that is NOT the site directory — so the
+        // site dir itself is classified by nothing.
+        directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+      },
+    });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon).toBeNull();
   });
 });
