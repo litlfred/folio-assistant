@@ -786,6 +786,12 @@ export const RULES: Rule[] = [
       // checkout's build wiring, not about any folio's material — it imports
       // node builtins and nothing else.
       "scripts/check-lockfile-pinning.ts",
+      // The workflow-injection gate. Harness by the same argument as its two
+      // neighbours: it reads this repository's own `.github/workflows/` and
+      // grades whether an attacker-supplied expression can reach a shell. A
+      // fact about the checkout's build wiring, not about any folio's
+      // material — node builtins only.
+      "scripts/check-workflow-injection.ts",
       // The credential gate. Harness by SUBJECT rather than by import: it
       // walks this checkout's declared roots and grades the bytes committed
       // there. It reads a folio's files where one is present, but what it
