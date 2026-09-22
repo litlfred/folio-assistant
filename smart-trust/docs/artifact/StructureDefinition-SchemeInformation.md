@@ -4,111 +4,42 @@ description: "StructureDefinition/SchemeInformation in the WHO SMART Trust IG, w
 nav_exclude: true
 ---
 <style>
-:root {
-  --ink: #17242e; --muted: #5c6b77; --edge: #d5dde3; --surface: #ffffff;
-  --wash: #f6f9fb; --accent: #0a6e8c; --accent-deep: #08516a;
-  --held: #0d6e5e; --ref: #6b5b95; --col: 1180px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ink: #e8eef2; --muted: #9fb0bc; --edge: #2c3a45; --surface: #111a20;
-    --wash: #16212a; --accent: #57b6d4; --accent-deep: #8ed2e8;
-    --held: #5fc7ae; --ref: #b3a3dd;
-  }
-}
-:root[data-theme="dark"] {
-  --ink: #e8eef2; --muted: #9fb0bc; --edge: #2c3a45; --surface: #111a20;
-  --wash: #16212a; --accent: #57b6d4; --accent-deep: #8ed2e8;
-  --held: #5fc7ae; --ref: #b3a3dd;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0; background: var(--surface); color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", sans-serif;
-  font-size: 16px; line-height: 1.55;
-}
-.wrap { max-width: var(--col); margin: 0 auto; padding: 0 16px; }
-a { color: var(--accent); }
-a:hover, a:focus { text-decoration: underline; }
-code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
-header.top { background: var(--accent-deep); color: #fff; padding: 22px 0; }
-header.top .wrap { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; justify-content: space-between; }
-header.top h1 { margin: 0; font-size: 1.35rem; letter-spacing: .01em; }
-header.top a { color: #dff1f8; }
-.sub { color: #cfe6f0; font-size: .92rem; }
-.banner {
-  background: var(--wash); border-bottom: 1px solid var(--edge);
-  padding: 12px 0; font-size: .92rem; color: var(--muted);
-}
-main { padding: 24px 0 64px; }
-h2 { font-size: 1.12rem; margin: 30px 0 10px; }
-h3 { font-size: 1rem; margin: 22px 0 8px; }
-p { margin: 8px 0; }
-.lede { font-size: 1.02rem; max-width: 72ch; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0 6px; }
-.stat { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 14px; background: var(--wash); }
-.stat b { display: block; font-size: 1.5rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.stat span { color: var(--muted); font-size: .84rem; }
-table { border-collapse: collapse; width: 100%; margin: 10px 0 4px; font-size: .93rem; }
-th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--edge); vertical-align: top; }
-th { color: var(--muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
-tbody tr:hover { background: var(--wash); }
-.tag { display: inline-block; font-size: .74rem; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
-.tag.held { color: var(--held); }
-.tag.ref { color: var(--ref); }
-.reps a { margin-right: 8px; white-space: nowrap; }
-details { border: 1px solid var(--edge); border-radius: 8px; margin: 12px 0; background: var(--surface); }
-details > summary {
-  cursor: pointer; padding: 11px 14px; font-weight: 600;
-  display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
-}
-details > summary .n { color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
-details[open] > summary { border-bottom: 1px solid var(--edge); }
-.inner { padding: 0 14px 10px; overflow-x: auto; }
-.prov { border: 1px solid var(--edge); border-radius: 8px; padding: 12px 14px; background: var(--wash); }
-.prov dt { font-weight: 600; font-size: .86rem; margin-top: 8px; }
-.prov dd { margin: 2px 0 0; color: var(--muted); }
-footer { border-top: 1px solid var(--edge); color: var(--muted); font-size: .86rem; padding: 18px 0 40px; }
-.back { display: inline-block; margin-bottom: 8px; }
-@media (max-width: 640px) { header.top h1 { font-size: 1.1rem; } .wrap { padding: 0 16px; } }
+.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+.st-held{color:#0d6e5e}
+.st-ref{color:#6b5b95}
+.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.st-stat span{font-size:.75rem;opacity:.75}
 </style>
 
-<a class="back" href="../index.html">&larr; all 674 artefacts</a>
-<h2 style="margin-top:6px">Scheme Information</h2>
-<p class="mono" style="color:var(--muted)">StructureDefinition/SchemeInformation</p>
-<p class="lede">Logical Model for Information on the trusted list and its issuing scheme</p>
-<div class="grid">
-  <div class="stat"><b>StructureDefinition</b><span>resource type</span></div>
-  <div class="stat"><b>1.8.0</b><span>version</span></div>
-  <div class="stat"><b>Structures: Logical Models</b><span>category</span></div>
-  
-</div>
+[← all 674 artefacts](../)
 
-<h3>Identity and bytes are different questions</h3>
-<table><tbody>
-<tr><td style="width:12rem">Canonical URL</td><td class="mono">http://smart.who.int/trust/StructureDefinition/SchemeInformation</td></tr>
-<tr><td>Published</td><td class="reps"><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.json">json</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.xml">xml</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl">ttl</a><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.html">html</a></td></tr>
-<tr><td>Materialization</td><td><span class="tag held">materialized</span> &mdash; working copy, regenerable by re-running the ingest</td></tr>
-</tbody></table>
+## Scheme Information
 
-<h3>DAK API</h3>
-<p class="lede">The four sidecars are published independently, so an absent one is a fact about the IG
-rather than a gap in this index.</p>
-<table>
-<thead><tr><th>Sidecar</th><th>Published at</th><th>Held locally</th></tr></thead>
-<tbody>
-<tr>
-  <td>JSON Schema</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json</td>
-</tr>
-<tr><td>Displays</td><td colspan="2" style="color:var(--muted)">not published for this artefact</td></tr>
-<tr>
-  <td>OpenAPI</td>
-  <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json</a></td>
-  <td class="mono">fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json</td>
-</tr>
-<tr><td>JSON-LD</td><td colspan="2" style="color:var(--muted)">not published for this artefact</td></tr>
-</tbody></table>
+`StructureDefinition/SchemeInformation`
 
+Logical Model for Information on the trusted list and its issuing scheme
+
+<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div></div>
+
+## Identity and bytes are different questions
+
+| | |
+|---|---|
+| Canonical URL | `http://smart.who.int/trust/StructureDefinition/SchemeInformation` |
+| Published | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.html">html</a> |
+| Materialization | <span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest |
+
+## DAK API
+
+The four sidecars are published independently, so an absent one is a fact about the
+IG rather than a gap in this index.
+
+| Sidecar | Published at | Held locally |
+|---|---|---|
+| JSON Schema | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json` |
+| Displays | *not published for this artefact* | |
+| OpenAPI | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json` |
+| JSON-LD | *not published for this artefact* | |

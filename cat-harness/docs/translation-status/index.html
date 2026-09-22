@@ -36,8 +36,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 <body>
 <main>
 <h1>translations — status</h1>
-<p class="ts-sub">The gettext side of the <code>translation-sources</code> graph, measured from the files on
-disk at 2026-09-21. Every number here is derived on each run; none is written down.</p>
+<p class="ts-sub">The gettext side of the <code>translation-sources</code> graph, measured from the files in
+<code>cat-harness/translations</code>. Every number here is derived on each run; none is written down. These
+numbers last <strong>changed</strong> on 2026-09-22.</p>
 
 <table>
 <thead>
@@ -53,43 +54,43 @@ disk at 2026-09-21. Every number here is derived on each run; none is written do
 <tbody>
 <tr>
   <th scope="row"><code>ar</code></th>
-  <td>4 / 63<br><span class="ts-dim">6.3%</span></td>
-  <td>170</td>
-  <td>125<br><span class="ts-dim">73.5%</span></td>
+  <td>4 / 59<br><span class="ts-dim">6.8%</span></td>
+  <td>168</td>
+  <td>124<br><span class="ts-dim">73.8%</span></td>
   <td>0</td>
-  <td>45</td>
+  <td>44</td>
 </tr>
 <tr>
   <th scope="row"><code>es</code></th>
-  <td>3 / 63<br><span class="ts-dim">4.8%</span></td>
-  <td>86</td>
-  <td>41<br><span class="ts-dim">47.7%</span></td>
+  <td>3 / 59<br><span class="ts-dim">5.1%</span></td>
+  <td>85</td>
+  <td>41<br><span class="ts-dim">48.2%</span></td>
   <td>0</td>
-  <td>45</td>
+  <td>44</td>
 </tr>
 <tr>
   <th scope="row"><code>fr</code></th>
-  <td>5 / 66<br><span class="ts-dim">7.6%</span></td>
-  <td>173</td>
-  <td>60<br><span class="ts-dim">34.7%</span></td>
+  <td>5 / 62<br><span class="ts-dim">8.1%</span></td>
+  <td>171</td>
+  <td>60<br><span class="ts-dim">35.1%</span></td>
   <td>0</td>
-  <td>113</td>
+  <td>111</td>
 </tr>
 <tr>
   <th scope="row"><code>ru</code></th>
-  <td>4 / 63<br><span class="ts-dim">6.3%</span></td>
-  <td>170</td>
-  <td>125<br><span class="ts-dim">73.5%</span></td>
+  <td>4 / 59<br><span class="ts-dim">6.8%</span></td>
+  <td>168</td>
+  <td>124<br><span class="ts-dim">73.8%</span></td>
   <td>0</td>
-  <td>45</td>
+  <td>44</td>
 </tr>
 <tr>
   <th scope="row"><code>zh</code></th>
-  <td>3 / 63<br><span class="ts-dim">4.8%</span></td>
-  <td>86</td>
-  <td>41<br><span class="ts-dim">47.7%</span></td>
+  <td>3 / 59<br><span class="ts-dim">5.1%</span></td>
+  <td>85</td>
+  <td>41<br><span class="ts-dim">48.2%</span></td>
   <td>0</td>
-  <td>45</td>
+  <td>44</td>
 </tr>
 </tbody>
 </table>
@@ -101,6 +102,12 @@ while most of its templates have none — which is why the first column is not f
 
 <p class="ts-note"><strong>&ldquo;no basis&rdquo; is not zero.</strong> A share over an empty denominator is
 undefined, and rendering it as 0% would report a measurement this run did not make.</p>
+
+<p class="ts-note"><strong>One directory, named above.</strong> <code>translation-sources</code> is a graph
+KIND, and more than one instance may declare it; this page measures the one directory named in the subtitle
+and says nothing about any other. A catalogue sitting in an instance that has not declared it is invisible
+here — which is a gap in that declaration rather than a locale with no work done, and the two must not read
+the same.</p>
 
 <p class="ts-note"><strong>Fuzzy is counted apart from translated.</strong> A fuzzy entry has a translation
 and needs review; adding it to <em>translated</em> would flatter exactly the entries a reviewer must look at.</p>

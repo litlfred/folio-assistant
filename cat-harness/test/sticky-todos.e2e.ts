@@ -1327,3 +1327,55 @@ test("Move joins the face when the card floats, after the other board gestures",
   // them, which is the whole reason the slot owns them rather than the card.
   await expect(page.locator(".fa-sticky-layer a.fa-sticky-edit")).toHaveCount(0);
 });
+
+/* ── The board's geometry is a MEASUREMENT, not a taste ──────────────────
+ *
+ * Owner, 2026-09-21: *"to much padding between panels, condense"* and
+ * *"sticky should stilll be ~2.5" in large macbook screen"* — two halves of
+ * one instruction. Condensing without the floor shrinks the card; the floor
+ * without the condensing leaves the dead space. Both are asserted, because a
+ * later "tighten this up" that took the card with it would satisfy half the
+ * request and look like it satisfied all of it.
+ */
+test.describe("board geometry", () => {
+  // The screen the request names. 3456x2234 over a 16.2" diagonal is 13.6" of
+  // width, presented as 1728 CSS px — about 127 CSS px per PHYSICAL inch. That
+  // ratio is the whole point: a CSS `in` is exactly 96 CSS px and is NOT a
+  // physical inch, so `2.5in` in the stylesheet would have rendered ~1.9" of
+  // glass. 2.5 x 127 = 318px, and 20rem is 320px.
+  test.use({ viewport: { width: 1728, height: 1000 } });
+
+  test('a sticky is ~2.5 physical inches on the screen the owner named', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-tiles-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+    const card = page.locator(".fa-sticky-grid > *").first();
+    const box = await card.boundingBox();
+    expect(box).not.toBeNull();
+    // 320px exactly, but asserted as a BAND. The tolerance is not slack for
+    // the implementation — it is what "~2.5 inches" means. A spec that
+    // demanded 320.0 would fail on a rounding change nobody could see.
+    expect(box!.width).toBeGreaterThanOrEqual(310);
+    expect(box!.width).toBeLessThanOrEqual(330);
+  });
+
+  test("the cards do not stretch to fill the row", async ({ page }) => {
+    // `1fr` WAS THE BUG, and this is the spec that would have caught it: with
+    // a `1fr` track every column absorbs the leftover width, so the card's
+    // size is whatever the viewport happens to leave — a number nobody chose
+    // and the test above could only pass by luck of the viewport.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-tiles-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+    const widths = await page
+      .locator(".fa-sticky-grid > *")
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).getBoundingClientRect().width));
+    expect(widths.length).toBeGreaterThan(0);
+    const grid = await page.locator(".fa-sticky-grid").boundingBox();
+    // Every card is capped well under the board's own width; none of them has
+    // been handed the remainder.
+    for (const w of widths) expect(w).toBeLessThan(grid!.width / 2);
+  });
+});

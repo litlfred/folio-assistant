@@ -366,6 +366,50 @@
   padding: 0.5rem;
 }
 
+/* THE SAME WHITE, WITHOUT JAVASCRIPT — belt and braces for the rule above.
+ *
+ * Owner, 2026-09-21, with a screenshot of a Mermaid graph on the dark site:
+ * *"all drawings/figures need white backgroun in dark mode"*. The nodes were
+ * legible (Mermaid's light palette, as pinned in `mermaid_config.js`) and the
+ * EDGES were not: thin grey connectors and arrowheads on a near-black page, so
+ * the boxes read fine and the graph's structure did not. A diagram whose
+ * arrows are invisible is worse than one that is hard to read, because it
+ * still looks finished.
+ *
+ * The white card above should have prevented it, and it is applied by
+ * `mountFigures()` — which wraps a diagram only after MEASURING it, and skips
+ * anything whose `getBoundingClientRect()` is under 240px in both axes. That
+ * guard is right for its purpose (it keeps a toolbar off every inline icon)
+ * and it is a guard a diagram can fail transiently, before layout settles, on
+ * a path that does not retry it.
+ *
+ * So the same white is stated here too, declaratively. It needs no script, no
+ * measurement and no mutation observer, and it cannot be lost to a timing
+ * window. The two agree on the value on purpose; the JS rule additionally
+ * carries the scroll container and the zoom controls, which CSS cannot.
+ *
+ * SCOPED TO MERMAID'S OWN CONTAINERS, and that is the whole of the caution. A
+ * blanket `img[src$=".svg"] { background: #fff }` would put a white plate
+ * behind every inline icon, which is precisely what the 240px guard exists to
+ * avoid — CSS cannot measure, so it must not try to make that judgement. A
+ * `.language-mermaid` element is always a figure.
+ *
+ * WHITE IN BOTH SCHEMES, not only in dark, because that is the settled rule
+ * recorded above: a schematic is a figure and figures are printed on white,
+ * whatever the surrounding page is doing. Dark mode is where the failure is
+ * VISIBLE, not where the rule changes.
+ *
+ * NOT REPRODUCED against the live page — litlfred.github.io is refused at this
+ * environment's proxy — so this is a fix for a mechanism that can fail rather
+ * than for a failure that was traced. The JS path is left exactly as it is. */
+.main-content .language-mermaid,
+.main-content pre.mermaid,
+.main-content .mermaid {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
 /* Full-bleed. The width and offset are set by JS from the element's measured
    position, NOT by the usual `margin-left: calc(-1 * (100vw - 100%) / 2)`
    trick. That trick assumes the element is CENTRED in the viewport; here it
@@ -534,47 +578,50 @@
   .side-bar + .main { margin-left: 16.5rem; }
 }
 
-/* ── The sidebar starts CLOSED, on every page of this site ─────────────── */
+/* ── The sidebar rests as an icon strip, on every page of this site ────── */
 
-/* Owner, 2026-09-21: "i want navbar to be collasable and start closed
- * everywhere, not just who-iris."
+/* Owner, 2026-09-21, looking at the round this replaces:
  *
- * The mounted instance pages got this first (`harness-rail.ts`, bean `hw9g`),
- * because they get no Jekyll layout and had no harness navigation at all. That
- * left ONE SITE WITH TWO NAVBARS BEHAVING DIFFERENTLY -- the rail collapsed to
- * an icon, the theme's sidebar always open -- which is the inconsistency this
- * removes. Same three mechanisms, same no-JavaScript rule, same reason for
- * each.
+ *   "clicking it away completelt disappeared in who-iris. i expected the same
+ *    behaviour as was in who-iris, that it slides to the far left, icon width
+ *    thick."
  *
- * IT OVERLAYS WHEN OPEN, it does not reflow the page. A sidebar that pushed
- * the text column right on hover would make every line jump under the pointer
- * on the way to a link, which is worse than briefly covering the left margin.
- * `.main`'s margin therefore stays at the COLLAPSED width.
+ * CLOSED IS NOT GONE, and reading it that way cost a round. Asked to "have it
+ * start hidden", I removed the strip entirely and put a launcher on the glass.
+ * `hidden` meant CLOSED -- slid left to an icon strip -- and the strip is both
+ * the resting state and the affordance: there is no separate launcher, because
+ * the nav is always on screen to be reached.
  *
- * The children keep their open width and are CLIPPED. Letting them inherit
- * 3.5rem instead would wrap every nav label to roughly one character per line,
- * and the reflow back on hover is visible as a full re-layout of the nav.
+ * Three ways in, one way back:
+ *   - `:hover` opens it while the pointer is on it;
+ *   - `:focus-within` opens it for a keyboard;
+ *   - the `☰` checks a box and it STAYS open, which is what a tablet needs --
+ *     it is above this breakpoint and has no hover at all;
+ *   - the `[x]` unchecks it and the sidebar slides back to the strip.
+ *
+ * IT OVERLAYS WHEN OPEN. `.main`'s margin stays at the strip's width. A
+ * sidebar that pushed the text column right on hover would move every line the
+ * reader was looking at on the way to a link.
  *
  * `align-items: flex-start` is not cosmetic and is easy to miss: the theme
- * sets `align-items: flex-end` on this flex column, so with a narrow parent
- * and wide children the clip would show the RIGHT-HAND END of every label
- * rather than its start.
+ * sets `flex-end` on this flex column, so with a narrow parent and wide
+ * children the clip would show the RIGHT-HAND END of every label rather than
+ * its start.
  *
- * Scoped to 50rem and up on purpose -- below it the theme is not `fixed` and
- * has its own hamburger, and applying this there breaks the phone layout.
+ * ATTACHED TO THE GLASS. `.side-bar` is `position: fixed` already, so the page
+ * scrolls underneath it. What it lacked is an INNER scroll: a nav taller than
+ * the window had items nothing could reach and no scrollbar to say so.
  *
- * MEASURED LIMIT: this was written against the selectors recorded above, which
- * an earlier session read off the BUILT stylesheet. The rendered result was
- * not checked, because litlfred.github.io is refused at this environment's
- * proxy. If the collapsed strip clips the site mark, `--fa-nav-collapsed` is
- * the one value to move. */
+ * Scoped to 50rem and up -- below it the theme is not `fixed` and has its own
+ * hamburger, and applying this there breaks the phone layout.
+ *
+ * MEASURED LIMIT: written against the selectors an earlier session read off
+ * the BUILT stylesheet, recorded above. The rendered result is not checked
+ * here; litlfred.github.io is refused at this environment's proxy. */
 :root {
   /* DERIVED, not picked: the theme's own 1rem gutter on `.site-title`, plus
-     `.fa-site-mark` at 2rem, plus a matching right gutter. So the collapsed
-     strip is exactly the mark and its padding, and nothing of a label can sit
-     inside it. The rail's own constant is 40px against a 20px glyph -- a
-     different number for the same rule, because the two carry different marks
-     and a reader never sees both at once. */
+     `.fa-site-mark` at 2rem, plus a matching right gutter. So the strip is
+     exactly the mark and its padding, and no label can sit inside it. */
   --fa-nav-collapsed: 3.5rem;
   /* The theme's width at mq(md); redefined below where the theme widens it. */
   --fa-nav-open: 15.5rem;
@@ -587,15 +634,19 @@
 @media (min-width: 50rem) {
   .side-bar {
     width: var(--fa-nav-collapsed);
-    overflow: hidden;
     align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
+  /* Children keep their OPEN width and are clipped. Letting them inherit
+     3.5rem instead wraps every label to about one character per line, and the
+     reflow back on open is a visible re-layout of the whole nav. */
   .side-bar > * { width: var(--fa-nav-open); }
 
   .side-bar:hover,
   .side-bar:focus-within,
-  .side-bar:has(.fa-nav-pin:checked) {
+  .side-bar:has(.fa-nav-open:checked) {
     width: var(--fa-nav-open);
     /* Above `.main`, which is positioned and later in tree order. Without this
        the sidebar opens BEHIND the page content and reads as a rendering bug
@@ -605,11 +656,11 @@
 
   .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
 
-  /* Every label is held invisible while collapsed rather than merely clipped.
-     The width arithmetic above is a geometry argument, and a longer title or
-     an inherited `letter-spacing` moves where a label starts without touching
-     any of these values. `opacity`, not `display:none` -- the labels stay in
-     the accessibility tree. */
+  /* Every label is held invisible at rest rather than merely clipped. The
+     width arithmetic is a geometry argument, and a longer title or an
+     inherited `letter-spacing` moves where a label starts without touching any
+     of these values. `opacity`, not `display:none` -- the labels stay in the
+     accessibility tree. */
   .side-bar .fa-site-title,
   .side-bar .site-nav,
   .side-bar .fa-harness-tabs {
@@ -622,18 +673,16 @@
   .side-bar:focus-within .fa-site-title,
   .side-bar:focus-within .site-nav,
   .side-bar:focus-within .fa-harness-tabs,
-  .side-bar:has(.fa-nav-pin:checked) .fa-site-title,
-  .side-bar:has(.fa-nav-pin:checked) .site-nav,
-  .side-bar:has(.fa-nav-pin:checked) .fa-harness-tabs {
+  .side-bar:has(.fa-nav-open:checked) .fa-site-title,
+  .side-bar:has(.fa-nav-open:checked) .site-nav,
+  .side-bar:has(.fa-nav-open:checked) .fa-harness-tabs {
     opacity: 1;
   }
 
-  /* The pin. A POINTER IS NOT THE ONLY INPUT: `:hover` does nothing on a
-     tablet, which is above this breakpoint, and `:focus-within` there only
-     fires once a tap has already landed on a link the reader could not see.
-     The pin is the affordance that makes the nav reachable by touch. */
-  .fa-nav-pin { position: absolute; opacity: 0; pointer-events: none; }
-  .fa-nav-pin-toggle {
+  /* THE OPEN CONTROL. A pointer is not the only input: `:hover` does nothing
+     on a tablet, and `:focus-within` there only fires once a tap has already
+     landed on a link the reader could not read. */
+  .fa-nav-toggle {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -643,20 +692,60 @@
     font-size: 0.75rem;
     opacity: 0.8;
   }
-  .fa-nav-pin-toggle .fa-nav-pin-glyph { flex: none; width: 2rem; text-align: center; }
-  .fa-nav-pin-toggle .fa-nav-pin-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
-  .side-bar:hover .fa-nav-pin-text,
-  .side-bar:focus-within .fa-nav-pin-text,
-  .side-bar:has(.fa-nav-pin:checked) .fa-nav-pin-text { opacity: 1; }
+  .fa-nav-toggle .fa-nav-glyph { flex: none; width: 2rem; text-align: center; }
+  .fa-nav-toggle .fa-nav-text { white-space: nowrap; opacity: 0; transition: opacity .12s ease; }
+  .side-bar:hover .fa-nav-text,
+  .side-bar:focus-within .fa-nav-text,
+  .side-bar:has(.fa-nav-open:checked) .fa-nav-text { opacity: 1; }
+  /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
+     so showing both would be two controls for one state. */
+  .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }
+
+  /* THE CLOSE CONTROL. Only while pinned open -- an `[x]` alone in a 3.5rem
+     strip would be the only thing in it and would read as a close button for
+     the page. `sticky` so it survives the inner scroll. */
+  .fa-nav-close { display: none; }
+  .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0.5rem 0.5rem 0 0;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    background: var(--sidebar-color, #27262b);
+    font-size: 0.875rem;
+    line-height: 1;
+    opacity: 0.75;
+  }
+  .fa-nav-close:hover { opacity: 1; }
+}
+
+/* The control itself is never seen -- the two labels are the interface. A real
+   checkbox rather than a styled div so it is focusable and announces its own
+   state, and off-screen rather than `display: none`, because a hidden control
+   is not focusable and the keyboard would lose the toggle. */
+.fa-nav-open {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
 }
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
   .side-bar { transition: width .14s ease; }
 }
 
-/* Printing a collapsed nav prints a grey stripe down the page. */
 @media print {
-  .side-bar { display: none; }
+  .side-bar,
+  .fa-nav-toggle,
+  .fa-nav-close { display: none; }
   .side-bar + .main { margin-left: 0; }
 }
 
@@ -2233,6 +2322,33 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * that is barely legal is a target that is hard to hit (bean `gjli`).
  */
 
+/* ── The folio visualisation's corner radius — ONE home ───────────────
+ *
+ * Owner, 2026-09-21: *"drop all the rounded corners… too much dead space."*
+ *
+ * A TOKEN rather than a sweep, and the difference is what the next change
+ * costs. Written as `border-radius: 0` at each of the thirteen surfaces, the
+ * decision would have thirteen homes and no name: a reader who wanted the
+ * rounding back would have to find every one, and a reader editing
+ * `.fa-sticky`'s radius would not learn that the value is a policy rather
+ * than a taste. Here it is one line, and each surface below SAYS it is
+ * governed by asking for it.
+ *
+ * SCOPED TO THE FOLIO, not to the stylesheet. The surfaces that opt in are
+ * the board, the cards on it, the window, the avatar and the chrome inside a
+ * card — the thing the owner was looking at. The QA panel, the search field
+ * and the translation badges keep their own literals: none was asked about,
+ * and a blanket sweep would have changed them silently.
+ *
+ * THE PILLS ARE NOT SURFACES AND DO NOT OPT IN. `.fa-sticky-chip`,
+ * `.fa-sticky-badge` and `.fa-tile-count` are `999px` — a pill is a SHAPE
+ * that carries meaning, and squaring a count badge does not recover any dead
+ * space because a pill has none. The stated reason does not reach them, so
+ * they are left and NAMED here rather than left and unmentioned. */
+:root {
+  --fa-folio-radius: 0;
+}
+
 /* Themed: every colour here is a ROLE supplied by themes.css, which is
  * generated from the theme nodes in `schemas/themes.ts`. The fallbacks after
  * each `var()` are the pre-theme neutrals, so a board still renders if
@@ -2240,9 +2356,12 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * theme yet" is a state rather than an error. */
 .fa-sticky-board {
   margin: 0 0 1.5em;
-  padding: 1em 1.1em 1.2em;
+  /* CONDENSED — *"to much padding between panels"*. Was `1em 1.1em 1.2em`.
+     The board is the glass the cards sit on, so its inset is frame rather
+     than content: it needs to read as an edge, not as a margin. */
+  padding: 0.4rem;
   border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
-  border-radius: 8px;
+  border-radius: var(--fa-folio-radius, 8px);
   background: rgba(128, 128, 128, 0.06);
 }
 
@@ -2265,7 +2384,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-height: 2.75rem;
   padding: 0;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   background: transparent;
   color: inherit;
   font-size: 1.2rem;
@@ -2275,11 +2394,46 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 /* `auto-fill` with a floor, so the board is one readable column on a phone and
  * lines the stickies up on a wide screen — without a media query naming a
- * breakpoint that the next layout change would invalidate. */
+ * breakpoint that the next layout change would invalidate.
+ *
+ * ── The column is CAPPED now, and the cap is a measurement ──────────
+ *
+ * Owner, 2026-09-21: *"sticky should stilll be ~2.5" in large macbook
+ * screen"*, said in the same breath as *"THE STICKIES MUST BE CLOSED AVATRS
+ * AND SMALL"* — so the cap is what keeps "small" from becoming "unreadable",
+ * not a licence to shrink further.
+ *
+ * `1fr` WAS THE BUG. The floor was 17rem and the track was `1fr`, so on a
+ * wide board every column absorbed the leftover space and the sticky's width
+ * was whatever the viewport happened to leave — a size nobody chose and
+ * nothing could hold. `--fa-sticky-max-width` makes the intended width
+ * statable, and therefore testable.
+ *
+ * 20rem IS 2.5 INCHES, AND NOT BECAUSE CSS SAYS SO. A CSS `in` is defined as
+ * exactly 96 CSS px and is NOT a physical inch — writing `2.5in` here would
+ * have rendered about 1.9" of glass and looked like the owner was ignored.
+ * The 16" MacBook Pro this was asked about is 3456x2234 over a 16.2" diagonal
+ * — 13.6" of width — and presents 1728 CSS px across it, so one physical inch
+ * is about 127 CSS px. 2.5 x 127 = 318px; 20rem is 320px. The device is named
+ * because the conversion is device-dependent: on a 27" 1440p display the same
+ * 20rem is about 3.7 physical inches, and that is correct rather than a
+ * defect — the owner sized it for the screen they use.
+ *
+ * MOBILE IS UNTOUCHED. themes.css sets `--fa-sticky-min-width: 100%` under
+ * 40rem. `minmax(100%, 20rem)` has min > max, which CSS resolves by IGNORING
+ * the max — so the phone keeps its single full-width column without this rule
+ * having to know a breakpoint. */
 .fa-sticky-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--fa-sticky-min-width, 17rem), 1fr));
-  gap: 0.9em;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--fa-sticky-min-width, 17rem), var(--fa-sticky-max-width, 20rem))
+  );
+  /* CONDENSED — *"to much padding between panels, condense"*. Was `0.9em`,
+     which is ~14px of dead board between two cards that are themselves only
+     320px wide. `rem` rather than `em` because the gap is board geometry and
+     must not track a sticky's font scale. */
+  gap: 0.4rem;
   align-items: start;
 }
 
@@ -2292,7 +2446,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * WIDTH as well as an opacity — colour alone would carry the whole signal,
    * which SC 1.4.1 forbids and a monochrome reader cannot see at all. */
   border-left-width: 5px;
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   /* A gradated theme supplies both stops or neither — the schema refuses one,
    * because a gradient with a single stop is a flat fill claiming otherwise.
    * So the linear-gradient falls back to the flat surface as a whole. */
@@ -2452,7 +2606,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-height: 2.75rem;
   padding: 0.2em 0.7em;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   background: transparent;
   color: inherit;
   font: inherit;
@@ -2497,7 +2651,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   margin: 0;
   padding: 0.2em 0.7em;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 6px;
+  border-radius: var(--fa-folio-radius, 6px);
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -2536,7 +2690,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-width: 24px;
   min-height: 24px;
   padding: 0 0.35em;
-  border-radius: 4px;
+  border-radius: var(--fa-folio-radius, 4px);
   cursor: pointer;
   line-height: 1;
   list-style: none;
@@ -2559,7 +2713,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   min-width: max-content;
   padding: 0.3em;
   border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
-  border-radius: 5px;
+  border-radius: var(--fa-folio-radius, 5px);
   /* OPAQUE, and for the reason the pinned sticky is: it sits over content.
      Inherits the card's own surface so a themed sticky's drawer is themed
      too — the `ivfw` round-trip lesson, applied before it could bite. */
@@ -2709,7 +2863,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   gap: 0.3em;
   padding: 0.1em 0.5em;
   border: 1px solid rgba(128, 128, 128, 0.35);
-  border-radius: 4px;
+  border-radius: var(--fa-folio-radius, 4px);
   font-size: 0.72rem;
 }
 
@@ -3154,7 +3308,12 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    * `min(26rem, 100%)` rather than a flat 26rem: 26rem is 416px, and a 430px
    * phone would otherwise be handed a column it cannot quite fit. */
   grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
-  gap: 1rem;
+  /* CONDENSED with the board grid, and for the same reason. Not to `0.4rem`:
+     these cards carry full-bleed art to their own edges, so at 4px two crops
+     read as one image. `0.6rem` is the smallest gap at which the boundary
+     survives — the constraint is the art, not a second opinion about
+     spacing. */
+  gap: 0.6rem;
   align-items: start;
   margin-bottom: 1.5rem;
 }
@@ -3688,7 +3847,7 @@ a.fa-harness-tab__body:focus-visible {
   align-items: center;
   padding: 0 1rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
-  border-radius: 0.375rem;
+  border-radius: var(--fa-folio-radius, 0.375rem);
   margin: 0.5rem 0;
   background: transparent;
   color: inherit;
@@ -3841,7 +4000,7 @@ a.fa-harness-tab__body:focus-visible {
   min-height: 2.75rem;
   margin: 0 0 0.375rem;
   border: 1px solid transparent;
-  border-radius: 0.375rem;
+  border-radius: var(--fa-folio-radius, 0.375rem);
   background-color: transparent;
   cursor: pointer;
 }
@@ -3897,7 +4056,7 @@ a.fa-harness-tab__body:focus-visible {
   overflow: auto;
   pointer-events: auto;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.5));
-  border-radius: 0.5rem;
+  border-radius: var(--fa-folio-radius, 0.5rem);
   background: var(--fa-surface, Canvas);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
 }
@@ -3948,7 +4107,7 @@ a.fa-harness-tab__body:focus-visible {
   min-width: 2.25rem;
   min-height: 2.25rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.4));
-  border-radius: 0.25rem;
+  border-radius: var(--fa-folio-radius, 0.25rem);
   background: transparent;
   color: inherit;
   cursor: pointer;
@@ -4095,7 +4254,7 @@ a.fa-harness-tab__body:focus-visible {
   min-height: 2.25rem;
   padding: 0 0.375rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
-  border-radius: 0.25rem;
+  border-radius: var(--fa-folio-radius, 0.25rem);
   background: transparent;
   color: inherit;
 }
@@ -4105,16 +4264,106 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
-/* The declared visualisations, on the board. The navbar's copies live in the
- * action launcher's own grid and take its rules; this is the second surface of
- * the same declaration, so it reuses `.fa-tile` rather than styling a new
- * thing — the template is `1le7`'s and is not duplicated. */
+/* ── The folio's tile strip (beans `v0jv`, refined by #796) ────────────
+ *
+ * Owner, 2026-09-21: *"lets have the square tiles lined up on the top of the
+ * folio-sicky-board-landingpanel whole slides up if user doesnt want"*, and
+ * in the same breath *"i dont want sub-panels of the folio, just one open
+ * (miro-like) board … drop all the rounded corners… too much dead space."*
+ *
+ * TWO CORRECTIONS TO WHAT THIS WAS, both before it shipped. `v0jv` put the
+ * tiles in a `<details>` at the BOTTOM, CLOSED. Wrong edge, and wrong
+ * default: tiles a reader must open before they can see what a folio offers
+ * read as absent, which is the very complaint that opened `v0jv` about the
+ * in-flow row. Open is the initial state; sliding it up is the reader's act.
+ *
+ * CHROME ALONG THE BOARD, NOT A PANEL WITHIN IT. It carries no card, no
+ * content and no second surface — that is what *"no sub-panels"* means, and
+ * it is why this is a strip rather than a dock.
+ *
+ * SQUARE, and the same `.fa-tile` the launcher uses: *"i meant to use same
+ * SQUARE TILES taht are in the expanding menu of LHS navbar."* The template
+ * was already shared; what was not square was the tile itself, a flex item of
+ * flexible width in a wrap row. `aspect-ratio` makes it square without
+ * hardcoding a size, so it still tracks the theme's own steps.
+ *
+ * NO ROUNDED CORNERS on this surface. Stated as a rule here rather than swept
+ * across all 57 `border-radius` declarations in this file: the folio
+ * visualisation is the surface the owner is specifying, and a blanket sweep
+ * would change the QA panel, the translation badges and the search field —
+ * none of which was asked for and each of which is somebody else's bean. */
+.fa-board-strip {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  border-bottom: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  /* Opaque: board content scrolls UNDER it. */
+  background: var(--sidebar-color, #27262b);
+}
+:root[data-fa-scheme="light"] .fa-board-strip {
+  background: #e8eaed;
+  border-bottom-color: #767d88;        /* 3.44:1 as a boundary, SC 1.4.11 */
+  color: #1f2933;                      /* 12.24:1 */
+}
+
+.fa-board-strip-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  /* SC 2.5.8's 24px floor. This instance's declared interaction profile is
+     low-dexterity, so the floor is the point rather than a minimum to argue
+     down from. */
+  min-height: 24px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  list-style: none;
+}
+.fa-board-strip-summary::-webkit-details-marker { display: none; }
+.fa-board-strip-summary::marker { content: ""; }
+.fa-board-strip-summary:hover { background: rgba(128, 128, 128, 0.16); }
+
+/* The declared visualisations, lined up along the top. The navbar's copies
+ * live in the launcher's own grid and take its rules; this is the second
+ * surface of the same declaration, so it reuses `.fa-tile` rather than
+ * styling a new thing — the template is `1le7`'s and is not duplicated. */
 .fa-board-tiles {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  /* CONDENSED — *"to much padding between panels, condense"*. Was 0.5rem on
+     both; the gap carries the separation and the padding was dead space. */
+  gap: 0.25rem;
+  padding: 0.25rem;
+  /* NOT the default `stretch`. A flex line stretches its items to the tallest
+     one, which silently un-squares every tile on the row the moment one
+     caption wraps — measured at 64 x 68.8px, and invisible in a screenshot. */
+  align-items: flex-start;
 }
+
+/* SQUARE, and cornerless, on this surface only.
+ *
+ * AN EXPLICIT HEIGHT rather than `aspect-ratio: 1 / 1`, and the difference is
+ * that one of them is a promise and the other is a constraint. `aspect-ratio`
+ * supplies a height only while the content fits inside it; a two-line caption
+ * grows the box past the ratio and the tile is quietly oblong again. The
+ * padding drops with it so the caption has the room not to wrap in the first
+ * place — that is the actual fix, and the clip below is only the backstop for
+ * a caption longer than any declared today. */
+.fa-board-tiles .fa-tile {
+  flex: 0 0 auto;
+  width: 4rem;
+  height: 4rem;
+  min-height: 0;
+  padding: 0.25rem;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+/* An EMPTY strip is no strip. A row that opens on nothing is the `pb04`
+   failure again — an affordance that promises and delivers nothing — and
+   `:has()` lets the container answer for its contents rather than the mount
+   having to tell it. */
+.fa-board-strip:not(:has(.fa-tile)) { display: none; }
 
 .fa-board-tiles:empty {
   display: none;

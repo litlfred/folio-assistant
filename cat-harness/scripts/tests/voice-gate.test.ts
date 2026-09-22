@@ -21,7 +21,7 @@ import {
 } from "../../schemas/block-qa";
 import { readActiveVoices } from "../../schemas/voices";
 import { criterionDefHash } from "../../content/pipeline/qa-utils";
-import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
+import { qaCriteriaByIdFor } from "../../content/pipeline/qa-criteria-registry";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
@@ -193,6 +193,14 @@ describe("the four shipped voices each have a criterion", () => {
   // Issue #208: "make sure agentic sidecaras are set up for each". One criterion
   // per VOICE rather than per rule — 34 rules would put 30 permanently
   // `needs-agent` rows on every sidecar, a queue nobody drains.
+  //
+  // Read through `qaCriteriaByIdFor` rather than the static `QA_CRITERIA_BY_ID`:
+  // since bean `btuv` these four are DERIVED from the voices the repository
+  // ships, so the static index no longer carries them and a consumer that reads
+  // it alone sees none. That is the consumer-facing half of the change, and this
+  // block is where it is checked — `voice-criteria.test.ts` checks the
+  // derivation itself.
+  const byId = qaCriteriaByIdFor(join(import.meta.dir, "../.."));
   for (const id of [
     "voice-overlay-who-editorial",
     "voice-overlay-who-guideline-development",
@@ -200,7 +208,7 @@ describe("the four shipped voices each have a criterion", () => {
     "voice-overlay-milnor",
   ]) {
     test(`${id} is registered, voice-scoped and agent-adjudicated`, () => {
-      const def = QA_CRITERIA_BY_ID[id];
+      const def = byId[id];
       expect(def).toBeDefined();
       expect(def!.domain).toBe("voice");
       expect(def!.voices).toHaveLength(1);

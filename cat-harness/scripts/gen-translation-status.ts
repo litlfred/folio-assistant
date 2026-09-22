@@ -239,12 +239,36 @@ export function share(n: number, d: number): number | null {
   return d === 0 ? null : Math.round((n / d) * 1000) / 10;
 }
 
+/**
+ * The same artefact with every ISO date blanked, for comparison only.
+ *
+ * `changedAt` is the ONE date either artefact carries, and it is rendered in
+ * both — so blanking `\d{4}-\d{2}-\d{2}` reaches exactly it. Nothing else
+ * here is a date: the locales are names and every other figure is a count.
+ * If a date is ever added to the page for its own sake, this becomes too
+ * blunt and the comparison has to name the field instead.
+ *
+ * It is what makes `changedAt` mean what it says. A re-run that reproduces
+ * the same numbers leaves the file alone, so the date on the page is the day
+ * the measurement last MOVED rather than the day somebody last ran a script
+ * — which is the more useful of the two, and the only one a committed
+ * artefact can state honestly.
+ */
+function undated(text: string): string {
+  return text.replace(/\d{4}-\d{2}-\d{2}/g, "<date>");
+}
+
 /** A share for display. `null` is "no basis", NEVER "0%". */
 function pct(v: number | null): string {
   return v === null ? '<span class="ts-none">no basis</span>' : `${v}%`;
 }
 
-export function statusPage(doc: { locales: LocaleStatus[]; generatedAt: string }): string {
+export function statusPage(doc: {
+  locales: LocaleStatus[];
+  changedAt: string;
+  /** The ONE declared directory measured, repo-relative. See the page note. */
+  scope: string;
+}): string {
   const rows = doc.locales
     .map((l) => {
       const unread =
@@ -301,8 +325,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 <body>
 <main>
 <h1>translations — status</h1>
-<p class="ts-sub">The gettext side of the <code>translation-sources</code> graph, measured from the files on
-disk at ${esc(doc.generatedAt)}. Every number here is derived on each run; none is written down.</p>
+<p class="ts-sub">The gettext side of the <code>translation-sources</code> graph, measured from the files in
+<code>${esc(doc.scope)}</code>. Every number here is derived on each run; none is written down. These
+numbers last <strong>changed</strong> on ${esc(doc.changedAt)}.</p>
 
 <table>
 <thead>
@@ -327,6 +352,12 @@ while most of its templates have none — which is why the first column is not f
 
 <p class="ts-note"><strong>&ldquo;no basis&rdquo; is not zero.</strong> A share over an empty denominator is
 undefined, and rendering it as 0% would report a measurement this run did not make.</p>
+
+<p class="ts-note"><strong>One directory, named above.</strong> <code>translation-sources</code> is a graph
+KIND, and more than one instance may declare it; this page measures the one directory named in the subtitle
+and says nothing about any other. A catalogue sitting in an instance that has not declared it is invisible
+here — which is a gap in that declaration rather than a locale with no work done, and the two must not read
+the same.</p>
 
 <p class="ts-note"><strong>Fuzzy is counted apart from translated.</strong> A fuzzy entry has a translation
 and needs review; adding it to <em>translated</em> would flatter exactly the entries a reviewer must look at.</p>
@@ -357,7 +388,15 @@ function main(): void {
   // numbers no file backs.
   const doc = {
     $schema: TRANSLATION_STATUS_SCHEMA,
-    generatedAt: new Date().toISOString().slice(0, 10),
+    // WHEN THE NUMBERS LAST CHANGED, which is not when the generator last
+    // ran — see `undated` below. Filled in after the comparison, because a
+    // re-run that reproduces the same numbers must not move it.
+    changedAt: "",
+    // WHAT WAS MEASURED, in the projection and not only on the page. A reader
+    // of the JSON has the same right to know the scope as a reader of the
+    // table, and a number whose subject is implicit is the one that gets
+    // quoted somewhere else as though it covered everything.
+    scope: relative(REPO_ROOT, translationsDir),
     locales,
   };
 
@@ -366,22 +405,30 @@ function main(): void {
   const assetPath = join(assetDir, "index.json");
   const pagePath = join(pageDir, "index.html");
 
-  const json = `${JSON.stringify(doc, null, 2)}\n`;
-  const html = statusPage({ locales, generatedAt: doc.generatedAt });
+  const page = (changedAt: string) => statusPage({ locales, changedAt, scope: doc.scope });
+  const json = (changedAt: string) => `${JSON.stringify({ ...doc, changedAt }, null, 2)}\n`;
+
+  const today = new Date().toISOString().slice(0, 10);
 
   let stale = 0;
-  for (const [p, want] of [
+  for (const [p, render] of [
     [assetPath, json],
-    [pagePath, html],
+    [pagePath, page],
   ] as const) {
     const have = existsSync(p) ? readFileSync(p, "utf-8") : null;
-    if (have === want) continue;
+    // COMPARED WITHOUT THE DATE, and then written WITH it. Comparing the
+    // rendered date would make this gate fail on the calendar: the artefact
+    // would go stale at midnight with not one catalogue touched, and CI would
+    // be red on every branch until somebody re-ran a generator that changes
+    // one line. A gate that fails for a reason nobody can act on is a gate
+    // people learn to re-run rather than read.
+    if (have !== null && undated(have) === undated(render(today))) continue;
     stale += 1;
     if (check) {
       console.error(`  ✗ ${relative(REPO_ROOT, p)} is stale`);
     } else {
       mkdirSync(join(p, ".."), { recursive: true });
-      writeFileSync(p, want);
+      writeFileSync(p, render(today));
       console.log(`  ✓ ${relative(REPO_ROOT, p)}`);
     }
   }

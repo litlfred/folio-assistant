@@ -11,7 +11,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { countCatalogue, share } from "../gen-translation-status.ts";
+import { countCatalogue, share, statusPage } from "../gen-translation-status.ts";
 
 /** A minimal catalogue header — every real `.po` opens with one. */
 const HEADER = `# Some translation
@@ -169,5 +169,41 @@ describe("a share over an empty denominator has NO BASIS", () => {
     // The distinction the null exists for: "none of 40 done" is a
     // measurement; "none of 0" is not.
     expect(share(0, 40)).toBe(0);
+  });
+});
+
+describe("the date on the page is when the numbers CHANGED", () => {
+  const locales = [
+    { locale: "es", templates: 10, catalogues: 2, entries: 40, translated: 30, fuzzy: 2, untranslated: 8, unreadable: [] },
+  ];
+
+  test("two runs on different days render identically apart from the date", () => {
+    // The gate this protects: `--check` compares the artefacts with every ISO
+    // date blanked. Without that, a committed page goes stale at midnight
+    // with not one catalogue touched, and CI is red on every branch until
+    // somebody re-runs a generator that changes one line. A gate that fails
+    // for a reason nobody can act on is a gate people learn to re-run rather
+    // than read.
+    const a = statusPage({ locales, changedAt: "2026-01-05", scope: "cat-harness/translations" });
+    const b = statusPage({ locales, changedAt: "2026-09-22", scope: "cat-harness/translations" });
+    expect(a).not.toBe(b);
+    const blank = (t: string) => t.replace(/\d{4}-\d{2}-\d{2}/g, "<date>");
+    expect(blank(a)).toBe(blank(b));
+  });
+
+  test("a changed COUNT survives the blanking, so the check still fires", () => {
+    // The control. A normaliser that blanked too much would make every page
+    // compare equal, and the gate would pass over a real change — which is
+    // the failure that looks exactly like success.
+    const more = [{ ...locales[0]!, translated: 31, untranslated: 7 }];
+    const blank = (t: string) => t.replace(/\d{4}-\d{2}-\d{2}/g, "<date>");
+    expect(blank(statusPage({ locales, changedAt: "2026-01-05", scope: "x" }))).not.toBe(
+      blank(statusPage({ locales: more, changedAt: "2026-01-05", scope: "x" })),
+    );
+  });
+
+  test("the SCOPE is on the page, so a number cannot be read as covering everything", () => {
+    const html = statusPage({ locales, changedAt: "2026-01-05", scope: "cat-harness/translations" });
+    expect(html).toContain("cat-harness/translations");
   });
 });

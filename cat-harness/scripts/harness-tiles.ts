@@ -293,6 +293,46 @@ function tileFor(
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
+  // WHERE THE SITE IS, repo-relative, computed once. `siteDir` arrives
+  // absolute while every declared path is relative to the repository root, so
+  // one has to be rebased onto the other; deriving it from the value
+  // `harnessTiles` already passed in means this and `handled` below cannot
+  // disagree about where the site is.
+  const sitePrefix = `${relative(repoRoot, siteDir)}/`;
+
+  /* WHAT THE DECLARATION SAYS, before what the conventions guess.
+   *
+   * `coverage.visualiser` names the page that renders a directory's graph,
+   * and a directory says which kinds it holds — so between them the
+   * declaration answers "is this kind viewable" directly. Reading only the
+   * two conventional paths made that answer unreachable: `translations/`
+   * declared a resolving visualiser at `docs/translation-status/` and the
+   * tile's own `directories` list linked it, while `visualisations` two
+   * lines away still reported the kind as having no viewer. One question,
+   * two answers, free to disagree — and the wrong one is the one that gets
+   * counted in a finding.
+   *
+   * `flh4` is the rule: a DECLARED visualiser that does not resolve is a
+   * different defect from no visualiser at all. It has always been reported
+   * as such below; what was missing is the other side of it, that one which
+   * DOES resolve is a viewer.
+   *
+   * Only a ref under the published site directory counts. A page that
+   * resolves on disk but is not published is not something a tile can open,
+   * and claiming it would put a 404 behind the tab — `pb04`.
+   */
+  const declared = new Map<string, string>();
+  for (const d of dirs) {
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!v.ref.startsWith(sitePrefix)) continue;
+      if (!existsSync(join(repoRoot, v.ref))) continue;
+      const page = `/${v.ref.slice(sitePrefix.length).replace(/index\.html$/, "")}`;
+      for (const kind of d.graphKinds ?? []) {
+        if (!declared.has(kind)) declared.set(kind, page);
+      }
+    }
+  }
+
   // CANDIDATES FROM THE DECLARATION, presence checked on disk. Both pages a
   // kind can be published at are considered, because the instance that owns
   // the site elides its own name and every other instance does not — two rules
@@ -303,7 +343,16 @@ function tileFor(
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
     const found = candidates.find((p) => existsSync(join(siteDir, p, "index.html")));
-    if (found) visualisations.push({ kind, path: found });
+    // CONVENTION FIRST, declaration as the fallback — and the order is
+    // OBSERVABLE, so it is a decision rather than a detail. Exactly one kind
+    // in this repository resolves both ways today: cat-harness's `uploads`,
+    // which the convention publishes at `/uploads/` and the declaration names
+    // at `/cat-harness/library/cat-harness/`. Preferring the declaration
+    // would repoint a working link nobody asked about; preferring the
+    // convention leaves every existing link exactly where it was and fills
+    // only the gaps, which is the whole of what this is for.
+    const path = found ?? declared.get(kind);
+    if (path) visualisations.push({ kind, path });
     else visualisations.push({ kind });
   }
   const unlinked = visualisations.filter((v) => v.path === undefined).map((v) => v.kind);
@@ -411,12 +460,10 @@ function tileFor(
   let handled: string | undefined;
   const reachable = decl.renderExemption?.reachableAt;
   if (folio === undefined && firstViewer === undefined && reachable !== undefined) {
-    // The handler's site directory, repo-relative — `siteDir` arrives
-    // absolute, and `reachableAt` is declared relative to the repo root, so
-    // one of them has to be rebased onto the other. Derived from the value
-    // `harnessTiles` already computed rather than re-resolved here, so the
-    // two cannot disagree about where the site is.
-    const prefix = `${relative(repoRoot, siteDir)}/`;
+    // `sitePrefix`, the same repo-relative site directory the declared
+    // visualisers were rebased onto above — one computation, so the two
+    // cannot disagree about where the site is.
+    const prefix = sitePrefix;
     const onDisk = join(repoRoot, reachable);
     if (!existsSync(onDisk)) {
       findings.push(

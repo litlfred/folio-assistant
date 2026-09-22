@@ -550,3 +550,112 @@ describe("a render-exempt instance links to the page another instance publishes 
     expect(floor.hrefKind).toBe("folio");
   });
 });
+
+describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () => {
+  /* The host's site directory, READ from its declaration. Same reason as the
+   * block above: hardcoding "docs" here is a second answer to "where does
+   * this instance publish", in the tests of all places. */
+  const hostSite = (repo: string) => siteDirFor(join(repo, "host"));
+
+  /** Publish a page at a NON-conventional path under the host's site, and
+   *  return the repo-relative ref a `coverage.visualiser` would declare. */
+  function publishAt(repo: string, rel: string): string {
+    const dir = join("host", hostSite(repo), rel);
+    mkdirSync(join(repo, dir), { recursive: true });
+    writeFileSync(join(repo, dir, "index.html"), "<!doctype html>");
+    return join(dir, "index.html");
+  }
+
+  /* `dependents` is required on every directory entry and has no default, so
+   * `fixture` fills it in. These tests rewrite the declaration AFTER that, to
+   * point a visualiser at a page only just published, so they fill it the
+   * same way rather than restating it on every entry. */
+  function decorate<T extends { directories?: Array<Record<string, unknown>> }>(decl: T): T {
+    for (const entry of decl.directories ?? []) entry["dependents"] ??= "skip";
+    return decl;
+  }
+
+  const withViewer = (ref: string) => ({
+    name: "who",
+    directories: [{ id: "lib", path: "library/", graphKinds: ["library"], coverage: { visualiser: ref } }],
+  });
+
+  test("a resolving, published visualiser links its kind at the path it names", () => {
+    // The defect this fixes, in one sentence: the tile's `directories` list
+    // read `coverage.visualiser` and linked it, while `visualisations` two
+    // lines away reported the same kind as having no viewer. One question,
+    // two answers — and the wrong one is the one a finding counted.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    const ref = publishAt(f.repo, "translation-status");
+    writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.visualisations).toEqual([{ kind: "library", path: "/translation-status/" }]);
+    expect(who.findings.join(" ")).not.toContain("no published viewer");
+  });
+
+  test("a visualiser that does NOT resolve links nothing, and the gap is still reported", () => {
+    // `flh4` is that these are two findings, not one: "the declaration is
+    // wrong" and "nobody built it". Both leave the kind unlinked, and a
+    // generator that linked the declared path regardless would put a 404
+    // behind the tab — `pb04`.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    const ref = join("host", hostSite(f.repo), "nowhere", "index.html");
+    writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.findings.join(" ")).toContain("does not resolve on disk");
+    expect(who.findings.join(" ")).toContain("no published viewer");
+  });
+
+  test("a page that resolves OUTSIDE the site directory is not a viewer", () => {
+    // It exists, and a tile still cannot open it: nothing publishes it. The
+    // tile links what the SITE serves, not what the checkout contains.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    mkdirSync(join(f.repo, "who", "elsewhere"), { recursive: true });
+    writeFileSync(join(f.repo, "who", "elsewhere", "index.html"), "<!doctype html>");
+    const ref = join("who", "elsewhere", "index.html");
+    writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.findings.join(" ")).toContain("no published viewer");
+  });
+
+  test("the CONVENTIONAL page wins when a kind resolves both ways", () => {
+    // The order is observable, so it is a decision. Preferring the
+    // declaration would repoint a link that already works; preferring the
+    // convention fills only the gaps, which is all this is for.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } }, ["host/library/who"]);
+    const ref = publishAt(f.repo, "somewhere-else");
+    writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.visualisations).toEqual([{ kind: "library", path: "/host/library/who/" }]);
+  });
+
+  test("one directory's viewer does not vouch for a kind it does not hold", () => {
+    // The map is keyed by the kinds the DECLARING directory lists. A viewer
+    // for `library` saying nothing about `uploads` is the point: a tile that
+    // borrowed it would claim a page that renders another graph.
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    const ref = publishAt(f.repo, "lib-view");
+    writeDeclaration(
+      join(f.repo, "who"),
+      JSON.stringify(
+        decorate({
+          name: "who",
+          directories: [
+            { id: "lib", path: "library/", graphKinds: ["library"], coverage: { visualiser: ref } },
+            { id: "up", path: "uploads/", graphKinds: ["uploads"] },
+          ],
+        }),
+        null,
+        2,
+      ),
+    );
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.visualisations).toEqual([
+      { kind: "library", path: "/lib-view/" },
+      { kind: "uploads" },
+    ]);
+    expect(who.findings.join(" ")).toContain("no published viewer — uploads");
+  });
+});

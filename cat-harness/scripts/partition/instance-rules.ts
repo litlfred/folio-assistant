@@ -184,6 +184,13 @@ export const RULES: Rule[] = [
       // generator would give every instance its own copy of the platform's
       // navbar, which is the boundary AGENTS.md opens with.
       "scripts/lib/harness-rail.ts",
+      // The renderer that rail became an adapter over (bean `sjic`). HARNESS
+      // by the same argument and more strongly: it is now the ONE navbar, for
+      // a mounted page and for a Jekyll page alike, so a folio owning it would
+      // mean a folio owning the platform's chrome for every other instance
+      // too. It renders a model and reads no content object -- the model's
+      // regions are composed by the caller from declarations.
+      "scripts/lib/navbar.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -472,6 +479,9 @@ export const RULES: Rule[] = [
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
+      "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
+      "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -1097,6 +1107,11 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Its other half: the rules are cited, AND the instruction body beside
+      // them does not restate them uncited (bean `n8br`). Core for the same
+      // reason — its subject is a voice, which is content an instance derived,
+      // and it reads `schemas/voices.ts`.
+      "scripts/check-voice-skills.ts",
       // Counts every prefix the CONTENT `@context` binds against the published
       // `.jsonld` documents that emit it (bean `fd6i`). Core for the same
       // reason `check-voices.ts` is: its subject is content. It reads

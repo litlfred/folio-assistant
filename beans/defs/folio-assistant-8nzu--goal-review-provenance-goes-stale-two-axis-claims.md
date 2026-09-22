@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8nzu
 title: 'GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep''s headline'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T06:25:55Z
-updated_at: 2026-09-21T12:30:46Z
+updated_at: 2026-09-21T22:18:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -99,3 +99,20 @@ and correct; only a sentence about the world aged, and closing or reopening a
 sibling's bean is not this session's to do.
 
 *Issue link, recorded on creation.* **[#703](https://github.com/litlfred/folio-assistant/issues/703)**
+
+## Closed 2026-09-21 — re-derived on `645dd7dd91`
+
+All three criteria verified in `skills/folio-core/goal-review.md` and on
+`ab3n`, by reading them rather than by trusting the ticks:
+
+- **Dated measurements separated from instructions** — the skill states the
+  failure directly (welding *"a present-tense capability claim to its dated
+  evidence"*, with a reader who takes the clause as guidance and never
+  re-tests it) and applies the rule to every dated figure it carries.
+- **Session API first, trailers as fallback** — *"commit trailers when it does
+  not answer, and report 'could not determine' when"* neither answers. The
+  fallback is named as a fallback, which was the defect.
+- **`ab3n` carries its correction** — dated 2026-09-21, and framed as *"a
+  correction, not a reopening"*.
+
+Found by the `fkjo` sweep: this was `in-progress` with every box ticked.

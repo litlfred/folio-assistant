@@ -146,3 +146,17 @@ than closing it**, which is what makes closing it verifiable.
       distinctly (2 vs 1 vs 0).
 - [x] It works on an arbitrary instance, including one whose declaration names
       directories this repo does not have (temp-instance fixtures).
+
+## Swept by `fkjo` 2026-09-21 and found to be a FALSE POSITIVE
+
+Left open, and the detector was wrong rather than this bean.
+
+`fkjo`'s sweep counted `[x]`-style checkboxes and found all three ticked. They
+are not this bean's criteria: they sit under `## Done when — item 3`, a
+**sub-checklist of one item**. The bean's actual Done-when is a `•` bullet
+list above it, and it is unticked.
+
+Recorded on `fkjo` as a limitation the check it proposes must handle: a
+sub-checklist under one Done-when item is not the bean's Done-when, and a
+detector that cannot tell them apart will report finished beans that are not.
+

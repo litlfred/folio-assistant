@@ -120,8 +120,8 @@ import {
   type CriterionScriptHashes,
 } from "./qa-utils";
 import {
-  QA_CRITERIA_REGISTRY,
-  QA_CRITERIA_BY_ID,
+  qaCriteriaFor,
+  qaCriteriaByIdFor,
   WATCHER_CRITERIA_BY_AXIS,
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
@@ -296,12 +296,22 @@ async function run(): Promise<void> {
   //   --axis NAME[,...] one or more watcher axes (one-voice, proof,
   //                     canonical, compute, detangler)
   //   (default)         every registered criterion across all axes
+  // Criteria BY ID, through the instance-aware index rather than the static
+  // one. Since bean `btuv` the voice-overlay criteria are derived from the
+  // voices an instance ships, and every lookup below would return `undefined`
+  // for them: the selection filter would drop `--only voice-overlay-milnor`,
+  // the per-block loop's `if (!def) continue` would leave them out of every
+  // sidecar, and — worst — the voice gate would see `{}` and a criterion naming
+  // no voice always runs, so a WHO criterion would sweep a folio that never
+  // adopted WHO style. Read once per run; the derivation is memoised anyway.
+  const criteriaById = qaCriteriaByIdFor(REPO_ROOT);
+
   const criteriaSelected: string[] =
     args.only && args.only.length > 0
-      ? args.only.filter((id) => QA_CRITERIA_BY_ID[id])
+      ? args.only.filter((id) => criteriaById[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
-        : QA_CRITERIA_REGISTRY.map((c) => c.id);
+        : qaCriteriaFor(REPO_ROOT).map((c) => c.id);
 
   // VOICE GATE, applied ONCE here rather than per block, because the question is
   // a property of the folio and not of any block: which editorial registers did
@@ -321,7 +331,7 @@ async function run(): Promise<void> {
   // per block would be sidecar bloat carrying no information a reader of the
   // folio's own configuration does not already have.
   const voiceSkipped = criteriaSelected.filter((id) =>
-    voiceExcludesCriterion(QA_CRITERIA_BY_ID[id] ?? {}, activeVoiceIds),
+    voiceExcludesCriterion(criteriaById[id] ?? {}, activeVoiceIds),
   );
   const criteriaToRun: string[] = criteriaSelected.filter(
     (id) => !voiceSkipped.includes(id),
@@ -343,7 +353,7 @@ async function run(): Promise<void> {
   // script sidecar under `content/pipeline/script-sidecars/`.
   const scriptHashesByCriterion: Record<string, CriterionScriptHashes> = {};
   for (const id of criteriaToRun) {
-    const def = QA_CRITERIA_BY_ID[id];
+    const def = criteriaById[id];
     if (!def?.automated) continue;
     // Same ONE answer discovery used. Hashing a contributed checker against
     // this repo's root would read the wrong bytes — or none — and a
@@ -356,7 +366,7 @@ async function run(): Promise<void> {
       located.sourceFile,
       getCriterionExtraInputs(id),
       located.root,
-      QA_CRITERIA_BY_ID[id],
+      criteriaById[id],
       located.label,
     );
   }
@@ -468,7 +478,7 @@ async function run(): Promise<void> {
     };
 
     for (const criterionId of criteriaToRun) {
-      const def = QA_CRITERIA_BY_ID[criterionId];
+      const def = criteriaById[criterionId];
       if (!def) continue;
 
       // Applicability gate.
