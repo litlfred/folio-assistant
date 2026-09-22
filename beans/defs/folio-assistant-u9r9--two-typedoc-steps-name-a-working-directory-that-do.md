@@ -161,3 +161,81 @@ Two reasons it cannot see this, and they compound:
 2. Both TypeDoc steps run `npx typedoc` — not a script path — so `invokedPath` declines the line and the step is never examined at all.
 
 A step whose `working-directory` is absent fails 100 % of the time whatever it runs. This is `1xhc` one level up from where the bean looked: not a gate that does not fire, but a gate that fires, passes, and is structurally blind to the case. Tracked separately rather than folded in here, because it is a platform gate's gap and not this bean's two paths.
+
+---
+
+## 2026-09-22, stream 4 (`kpcl`) — the premise is now GATED, and the bean is owner-blocked rather than stale
+
+Picked up because this bean sits in the stale-claim sweep's candidate set —
+`in-progress`, untouched for a day, no open PR naming it. It is **not**
+abandoned. It is waiting on a decision only the owner can make, and it says so
+in prose that no date can expire. That is the sweep's falsifier confirmed on a
+real sample rather than argued: see `kpcl`.
+
+### `ai9u` landed the criterion while this bean was waiting for a dispatch
+
+`bun run check:workflow-paths` now runs a **second** criterion over the same
+parse — *every `working-directory` must EXIST* — and both of this bean's steps
+are in its output:
+
+```
+31 working-directory declaration(s): 4 resolve, 24 need a folio, 3 baselined, 0 missing, 0 undetermined
+· held  discoverability-docs.yml › schema-docs › Install + run TypeDoc: `folio-assistant` (missing) — baselined, still owed
+· held  publish.yml › schema-docs › TypeDoc generate: `folio-assistant` (missing) — baselined, still owed
+```
+
+**What that changes, stated narrowly.** It does not observe the failure, and it
+is not the dispatch §"What would settle it" asks for. What it does is make the
+premise **durable and regression-proof**: *the directory is missing* is now a
+gate's finding rather than one session's file read, it is listed on every run
+rather than re-derived, and the baseline may only shrink — so if somebody fixes
+the path, the entry goes stale and the gate says so. The third session's closing
+paragraph asked for exactly this to be tracked separately, and it was.
+
+The baseline also carries `lake-cache-refresh.yml`'s `${{ matrix.lake-root }}`
+as **undetermined**, which is the right third state for an expression a static
+reader cannot evaluate — not a pass.
+
+### What is still genuinely open, and why nobody can take it over
+
+`publish.yml` cannot be settled by a dispatch at all: its `schema-docs` carries
+`needs: content-pipeline`, which preflights `content/schema/references.ts`, and
+`content/` does not exist in the platform. A dispatch returns `skipped`, which
+is not an outcome. The third session established that and it holds.
+
+`discoverability-docs.yml` **can** be dispatched — its jobs carry no `needs:` —
+and that is the whole of the block: **all three of its jobs push to `gh-pages`
+via `peaceiris/actions-gh-pages@v4`, and the workflow has never run, not once.**
+Authorising the dispatch is authorising a publish from a workflow with no run
+history. That is not an agent's call to make, and it is not one an expiry can
+take over.
+
+## Blocked on
+
+- **waits on:** the owner's decision on `discoverability-docs.yml` — dispatch it
+  once to observe the TypeDoc step (which also authorises a first-ever
+  `gh-pages` publish from that workflow), or correct the `working-directory`
+  path without observing, or rule the workflow dormant and scrap the step.
+  `publish.yml` is not part of this: it returns `skipped`, not an outcome.
+- **since:** 2026-09-22T19:05Z
+- **expires:** 2026-09-29T19:05Z
+- **handoff:** a **re-ask date, not a takeover date** — no agent may authorise a
+  first publish from a never-run workflow. On expiry, re-raise it on #956 with
+  the three options above as selectable choices, move this date out, and say in
+  the bean that it was re-asked. Do **not** dispatch, and do **not** edit the
+  path: `check:workflow-paths` already holds the finding, so nothing is lost by
+  waiting and a dormant step turned live is a behaviour change nobody asked for.
+
+## Done when
+
+- [ ] Each workflow is dispatched once and the step's real outcome recorded —
+      **unachievable as written for `publish.yml`** (`needs: content-pipeline`
+      cannot pass in the platform, so a dispatch returns `skipped`). Live only
+      for `discoverability-docs.yml`, and owner-blocked above.
+- [ ] If it fails: the path is corrected and the two installs pinned in the
+      same change, and their baseline entries removed
+- [ ] If it succeeds: this bean is marked wrong, with what the checkout
+      actually produces written down so the next reader does not re-derive it
+- [x] The premise is gated rather than re-derived — `check:workflow-paths`
+      criterion 2 (`ai9u`) holds both steps as `missing — baselined, still
+      owed`, and the baseline may only shrink
