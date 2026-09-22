@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:29:28Z
-updated_at: 2026-09-22T18:29:28Z
+updated_at: 2026-09-22T18:44:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -127,3 +127,53 @@ because sweeping is its job.
       folio-vendored, or broken — rather than left silent
 - [ ] The two failures from this consolidation's own first commit written down
       where the next agent meets them, not only in this bean
+
+## The falsifier fired — the 76 are four populations, not one
+
+Measured 2026-09-22T18:45Z, `beans list --json` against this branch plus the
+live REST API (325 PRs, 25 open). **99 in-progress, 77 untouched ≥ 1 day**,
+consistent with the owner's 98/76 at 18:30Z — the drift is new claim activity,
+not disagreement. Partitioned by what the claim actually **asserts**:
+
+| bucket | n | what `in-progress` means there |
+|---|---|---|
+| container (≥1 child) with an open child | **16** | the claim is **TRUE** |
+| container, every child closed | **0** | — |
+| leaf named by an open PR | 14 | live work, mid-flight |
+| leaf named by no open PR | **47** | the candidate set |
+
+**16 of the 77 are not stale claims at all.** Nobody edits a milestone when one
+of its children moves, so a container's `updated_at` measures EDITING and the
+sweep read it as LIVENESS. Releasing `vuip`, `p5wm`, `yg29`, `1xhc`, `1swy`,
+`ahvw` or `zzmr` — all in that 16 — would have been a defect, and three of them
+are the streams' own goals.
+
+**A correction to this bean's own first pass.** It counted nine containers with
+"no open child" and proposed reviewing them for closure. All nine have **zero**
+children: they are leaves typed `feature`, and "no open child" was vacuous over
+them. `rollupFindings` now requires `children.length > 0` before judging a
+container at all, and a test pins it. Reported here rather than quietly fixed,
+because it is the same shape as the consolidation's first commit — the sweep
+reproducing the defect it was written to find.
+
+## What landed
+
+`bun run check:bean-rollup` (`scripts/check-bean-rollup.ts`, 10 tests):
+
+- **The gate owns no clock.** `beans.ts` §`beanFindings` declines a
+  stale-`in-progress` finding because anything computed against the clock
+  changes on every run; a clock-dependent GATE turns CI red at an arbitrary
+  hour with nobody having changed anything. So the gate is pure graph — a
+  status its own subtree refutes — and `--sweep` carries the ages and never
+  sets the exit code.
+- **Two directions, both self-refuting without a date.** Open container / every
+  child closed: **0**. Closed container / some child open: **1** — `5a3l`
+  (DEPLOYMENT) is `completed` with **12** open children, so the roadmap reads
+  that area as finished. Baselined, not repaired: re-opening or re-parenting
+  somebody's epic is a judgement about that epic.
+- **Unjudged is not guilty.** Without `--github` the leaf buckets are one
+  `leaf-unjudged` group. Rendering an unreachable API as *"no PR names this
+  bean"* would convict 47 beans of the network being down — `check:ci-health`'s
+  third-state rule, inverted.
+- **Nothing swept.** No status changed, nothing deleted. A leaf with no open PR
+  is a candidate, never a verdict.
