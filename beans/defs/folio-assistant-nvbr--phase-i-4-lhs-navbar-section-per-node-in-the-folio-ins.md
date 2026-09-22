@@ -12,8 +12,13 @@ parent: folio-assistant-vke6
 From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):
 "the lhs navbar should have sections for each node in the folio instance".
 
-**Blocked on bean `fsch`** — without a folio holding 0..n content instances
-there is only ever one node to render.
+**A block was recorded here against bean `fsch`** — without a folio holding
+0..n content instances there is only ever one node to render. **NOT blocked
+on `fsch`:**
+it was scrapped 2026-09-20 and the block is void — see §"The blocker is VOID"
+below, which this line is corrected to agree with. A reader meets this
+paragraph first, so leaving it asserting a live block is the exact harm that
+section describes.
 
 Gate: a two-instance folio shows two sections; a zero-instance folio renders
 without error.

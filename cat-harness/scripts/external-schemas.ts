@@ -31,9 +31,24 @@ import {
 
 import { FOLIO_BPMN_NS, OWN_XML_NAMESPACES } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
+import { directoriesForGraph } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
-const REGISTRY = join(ROOT, "external-schemas");
+// Read from the DECLARATION rather than hardcoded, and the reason this
+// changed on 2026-09-22 is worth keeping: the literal was invisible to
+// `check:declared-paths` for as long as nothing declared the directory. The
+// moment `external-schemas/` was declared in `cat-harness.json`, the same
+// unchanged line became counted debt — which is the check doing exactly its
+// job, and is why a held-but-undeclared directory is worse than it looks.
+//
+// declared-path-literal: the convention fallback, at the call site so the
+// choice is visible. An instance that declares no registry gets the
+// conventional path and `loadSpecs` reports the empty result as the third
+// state rather than as a pass.
+const REGISTRY: string = (() => {
+  const declared = directoriesForGraph(ROOT, "external-schema");
+  return declared.length > 0 ? declared[0]! : join(ROOT, "external-schemas");
+})();
 
 /** Every declared record, parsed — a malformed one fails here, not at use. */
 export function loadSpecs(dir = REGISTRY): ExternalSchema[] {
@@ -94,10 +109,135 @@ export function dcTermsInUse(repoRoot = resolve(ROOT, "..")): string[] {
   return [...out].sort();
 }
 
+/**
+ * Namespace IRIs the corpus mentions ANYWHERE — not only as a BPMN `xmlns`.
+ *
+ * {@link namespacesInUse} reads `processes/*.bpmn|dmn` and nothing else, which
+ * is the right question for "what does a DIAGRAM bind". It is the wrong
+ * question for "is this record still earning its place", and on 2026-09-22 the
+ * difference produced a FALSE FINDING pointing at the most load-bearing record
+ * in the registry:
+ *
+ *     · 2 declared namespace(s) nothing uses — a record outliving its dependency:
+ *         http://purl.org/dc/elements/1.1/
+ *         http://purl.org/dc/terms/
+ *
+ * Dublin Core is used 43 times. `dcterms:title` is in the glossary document's
+ * own `@context` and on its scheme node. The remedy the finding offered —
+ * delete the record — would have unpinned the edition of a vocabulary the
+ * repository actively emits, and a gate whose remedy is wrong is worse than
+ * one that says nothing, which is the argument the OWN-namespace block twenty
+ * lines up already makes for a different case.
+ *
+ * The cause is that a vocabulary can be used in more than one syntax. BPMN
+ * binds namespaces with `xmlns`; JSON-LD binds them in `@context`. A reader
+ * that knows one syntax reports the other as absent — the same shape as the
+ * `<bpmn:`-prefixed regexes that read a default-namespace diagram as empty.
+ *
+ * So the scan is by IRI STRING over the source tree, which is syntax-agnostic
+ * by construction and cannot acquire a third blind spot the day somebody emits
+ * a vocabulary in a form neither reader knows.
+ *
+ * DELIBERATELY EXCLUDED, each for a different reason:
+ *   - `external-schemas/` — every record names its own IRIs, so including it
+ *     makes every record self-justifying and the check vacuous.
+ *   - generated trees (`_kg/`, `docs/`) — an answer that depends on whether a
+ *     generator has run is not reproducible on a fresh clone.
+ *   - `node_modules/` — not this corpus.
+ *
+ * This feeds the UNUSED question only. `undeclared` still reads diagram
+ * bindings, on purpose: widening it would demand a registry record for every
+ * IRI mentioned anywhere — `owl:`, `rdfs:`, `schema:` — which is a different
+ * and much larger decision. Filed rather than taken: bean `2j09`.
+ */
+export function namespaceMentions(iris: readonly string[], repoRoot = resolve(ROOT, "..")): Set<string> {
+  const found = new Set<string>();
+  if (iris.length === 0) return found;
+  // The registry is excluded by PATH rather than by name, because repeating
+  // the string "external-schemas" here would be a second spelling of a
+  // directory the declaration already answers — `check:declared-paths` counts
+  // exactly that, and it is right to: the two copies are free to diverge.
+  const SKIP = new Set(["node_modules", "_kg", "docs", ".git", "dist", "coverage"]);
+  const EXT = [".ts", ".tsx", ".json", ".jsonld", ".md"];
+  const walk = (dir: string): void => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return; // unreadable directory is not a mention
+    }
+    for (const e of entries) {
+      if (e.name.startsWith(".") || SKIP.has(e.name)) continue;
+      const full = join(dir, e.name);
+      if (e.isDirectory()) {
+        // Every record names its own IRIs, so counting the registry would make
+        // each record self-justifying and the check vacuous.
+        if (full !== REGISTRY) walk(full);
+        continue;
+      }
+      if (!EXT.some((x) => e.name.endsWith(x))) continue;
+      let src;
+      try {
+        src = readFileSync(full, "utf-8");
+      } catch {
+        continue;
+      }
+      for (const iri of iris) if (!found.has(iri) && src.includes(iri)) found.add(iri);
+      if (found.size === iris.length) return; // every IRI accounted for
+    }
+  };
+  walk(repoRoot);
+  return found;
+}
+
+/**
+ * SKOS terms this repository EMITS, derived from the exporters that emit them.
+ *
+ * Source-derived rather than read back from `_kg/`, for the reason
+ * {@link namespaceMentions} excludes generated trees: an answer that depends
+ * on whether a generator has run is not reproducible on a fresh clone. The
+ * exporters carry the mapping as literals (`prefLabel: "skos:prefLabel"`), so
+ * the literals ARE the operative vocabulary.
+ *
+ * `use` on this record is `conforms`, not `reads`, and the distinction is the
+ * one {@link SpecUse} draws: we do not parse somebody else's SKOS, we publish
+ * documents that claim to BE `skos:ConceptScheme` instances. A version bump is
+ * therefore a migration of our own output, not a compatibility question.
+ */
+export function skosTermsInUse(root = resolve(ROOT, "..")): string[] {
+  const out = new Set<string>();
+  const dirs = [
+    join(root, "cat-harness", "scripts"),
+    join(root, "cat-harness", "schemas"),
+    join(root, "folio-assistant-core", "schemas"),
+  ];
+  for (const dir of dirs) {
+    if (!existsSync(dir)) continue;
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        if (e.name.startsWith(".") || e.name === "node_modules") continue;
+        const full = join(d, e.name);
+        if (e.isDirectory()) {
+          walk(full);
+          continue;
+        }
+        // Tests are excluded: a term asserted in a fixture is not a term this
+        // repository publishes, and counting them would let a deleted feature
+        // keep its vocabulary alive through the test that still names it.
+        if (!e.name.endsWith(".ts") || e.name.includes(".test.")) continue;
+        for (const m of readFileSync(full, "utf-8").matchAll(/"(skos:[a-zA-Z]+)"/g)) out.add(m[1]!);
+      }
+    };
+    walk(dir);
+  }
+  return [...out].sort();
+}
+
 /** Which deriver feeds which record. Keyed by id so a record opts in. */
 const DERIVERS: Record<string, () => string[]> = {
   "omg-bpmn-2.0": () => bpmnTermsInUse(),
   "dcmi-terms": () => dcTermsInUse(),
+  "w3c-skos": () => skosTermsInUse(),
 };
 
 function run(argv: string[]): number {
@@ -131,7 +271,11 @@ function run(argv: string[]): number {
   const own = inUse.filter((ns) => (OWN_XML_NAMESPACES as readonly string[]).includes(ns));
   const external = inUse.filter((ns) => !(OWN_XML_NAMESPACES as readonly string[]).includes(ns));
   const undeclared = undeclaredNamespaces(external, specs);
-  const unused = unusedNamespaces(external, specs);
+  // An IRI a diagram does not bind may still be emitted in JSON-LD, so the
+  // mention scan is what decides whether a record has outlived its dependency.
+  // See {@link namespaceMentions} for the false finding this repairs.
+  const mentioned = namespaceMentions(unusedNamespaces(external, specs));
+  const unused = unusedNamespaces(external, specs).filter((ns) => !mentioned.has(ns));
 
   // Drift, not absence: an XML namespace is compared by STRING, so a second
   // spelling means a consumer matching on the first skips every element in the

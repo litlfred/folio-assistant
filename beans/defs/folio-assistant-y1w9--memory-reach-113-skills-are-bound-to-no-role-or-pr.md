@@ -135,7 +135,11 @@ the same day, from 113.
 Whether a fact in a SUBAGENT's memory can reach the main session. Not
 touched here, deliberately: the triage had to say first whether "bind the
 skill" is even the right remedy, and it now says the binding route is
-blocked on `qif9`. Worth noting that binding is not obviously sufficient
+**not blocked on `qif9`** — it is `completed`. Step 1 of the revised route
+above (*"`qif9` first"*) is therefore satisfied, and the next action is its
+step 2: recount the evidence-backed bucket now that every `roles:` value
+resolves against a declared vocabulary. Worth noting that binding is not
+obviously sufficient
 anyway — a role carrying a skill makes it reachable, not injected.
 
 ---

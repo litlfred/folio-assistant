@@ -535,6 +535,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
   },
+  "external-schema": {
+    type: termIri("ExternalSchemaGraph"),
+    renderable: false,
+    // `content`, and the call is against the obvious reading. A process DOES
+    // write these files — `external-schemas.ts --write` refreshes each
+    // record's `terms[]` from the corpus — which sounds like `state`. It is
+    // not, because the axis asks what the graph IS, and the subject matter
+    // here is a DECISION: which specifications this instance depends on, at
+    // which edition, and what each term operatively means. A person makes
+    // that; the deriver only keeps one field of it honest.
+    //
+    // `derived` would be worse than wrong, it would be destructive: it says
+    // "regenerate it", and regenerating a deleted record cannot recover the
+    // authored edition, the `usedBy` blast radius, or a line of the
+    // `operative` prose. The writer preserves those precisely because they
+    // are not derivable (`prior.get(term)` in the `--write` path).
+    holds: "content",
+    summary:
+      "The specifications this instance depends on — one record per specification, pinning the " +
+      "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
