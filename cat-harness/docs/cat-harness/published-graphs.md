@@ -56,10 +56,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-0 of 3 published.
+1 of 3 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 
@@ -221,7 +221,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 4 of 4 published.
 {: .fa-hx-dim }
 
-- [agent-skills]({{ '/cat-harness/voices/' | relative_url }})
+- [agent-skills]({{ '/cat-harness/voices/agent-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
 - [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
