@@ -6181,6 +6181,13 @@
           "optional": false,
           "array": false,
           "doc": "What it carries INSTEAD — the criterion it cannot fail quietly."
+        },
+        {
+          "name": "reachableAt",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the instance IS reachable, since it renders nothing of its own."
         }
       ],
       "extendsNames": [],
@@ -6214,6 +6221,12 @@
           "name": "owes",
           "type": "z.string().min(1)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "reachableAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
           "array": false
         }
       ],
