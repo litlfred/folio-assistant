@@ -95,7 +95,6 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");

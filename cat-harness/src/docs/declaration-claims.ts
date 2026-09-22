@@ -45,13 +45,6 @@
 import { existsSync } from "node:fs";
 import { basename, join } from "node:path";
 
-// Side effect: registers the `folio` graph kind, which a DEPENDENCY
-// contributes. Without it `readDeclaration` throws on this very repository's
-// own declaration — and it threw the first time this module ran, which is the
-// argument for `declaredGraphs` resolving through the repo's own readers
-// rather than globbing JSON: a glob would have skipped the file silently and
-// reported a clean run over a corpus missing its largest instance.
-import "../../schemas/folio-graph-kind.js";
 import { findDeclarationFile, instanceRootsIn, readDeclaration } from "../../schemas/cat-harness.js";
 
 /** Where a graph id is declared: the ids, each with its declaring file(s). */

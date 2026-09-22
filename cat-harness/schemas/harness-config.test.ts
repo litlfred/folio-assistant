@@ -2,10 +2,6 @@
  * Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-// REQUIRED: cat-harness/harness.json declares a `folio` graph, and that kind is
-// registered by a load-time side effect in core. Without this, reading the
-// declaration under test throws `unknown graph kind "folio"`.
-import "./folio-graph-kind";
 import { mkdirSync, mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

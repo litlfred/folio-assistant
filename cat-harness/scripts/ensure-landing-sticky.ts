@@ -64,15 +64,6 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFile
 import { join, relative, resolve } from "node:path";
 
 import { type ContentDirectory, findDeclarationFile, findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor, rootForScope, declarationPathIn } from "../schemas/cat-harness.js";
-// REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
-// side effect (`schemas/folio-graph-kind.ts`, "a layer that cannot render must
-// not own the renderable kind"), so the harness alone does not know the kind
-// exists. Without this import `readDeclaration` throws
-// `unknown graph kind "folio"` on the very declaration this script just wrote —
-// which is what it did on the first re-run, because nothing in this repository
-// had ever DECLARED a folio graph before and so nothing had ever needed the
-// registration to have happened.
-import "../schemas/folio-graph-kind.js";
 import {
   LandingStickySchema,
   stickyFromContribution,

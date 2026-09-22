@@ -43,12 +43,6 @@ import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories, and the instance
-// DECLARES a folio graph — without this the read throws `unknown graph kind
-// "folio"` on a perfectly valid declaration (issue #464).
-import "../schemas/folio-graph-kind.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.

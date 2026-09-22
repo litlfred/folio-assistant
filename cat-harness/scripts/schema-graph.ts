@@ -75,12 +75,6 @@ import { basename, join, relative } from "node:path";
 import ts from "typescript";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories and the instance
-// DECLARES a folio graph, so without this the read throws `unknown graph kind
-// "folio"` on a perfectly valid declaration (issue #464).
-import "../schemas/folio-graph-kind.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.

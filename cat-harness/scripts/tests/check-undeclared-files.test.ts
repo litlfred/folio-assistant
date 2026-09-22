@@ -19,7 +19,6 @@ import {
   humanBytes,
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
-import "../../schemas/folio-graph-kind.js";
 import { findDeclarationFile } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
