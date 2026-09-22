@@ -1,12 +1,12 @@
 ---
 # folio-assistant-0grh
 title: 'SPINE: the untainted-dispatch skill — controlled context extracted from the KG, parameterized prompt, producer never writes the verdict'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T07:22:05Z
+parent: folio-assistant-3x2n
 ---
 
 The spine of `3x2n`. Everything else here is an instance of this.
@@ -92,3 +92,16 @@ Restoring each defect turns the guard red and the fix turns it green:
 | restored | **16 pass, 0 fail** |
 
 `bun run gates` — 96 of 96.
+
+## Summary of Changes
+
+`skills/folio-core/untainted-verification.md` states the discipline with no
+domain vocabulary, bound to `qc-reviewer`. `UntaintedDispatch` on
+`QaCriterionDefinition` declares the visible sets; `untaintedPartitionDefects`
+reports four ways the declaration decays without erroring. The recorder in
+`content/pipeline/untainted-verification.ts` writes both parties as witnesses,
+adjudicator first, with the owner's third state — "could not dispatch",
+recordable by the producer, a reason required, never a pass.
+
+Verified on `main` at `2ce66fc`: skill, module and checker all present.
+Merged in #829 and #848.
