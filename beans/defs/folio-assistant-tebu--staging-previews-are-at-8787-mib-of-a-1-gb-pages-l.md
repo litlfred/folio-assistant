@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T06:03:07Z
-updated_at: 2026-09-22T06:30:20Z
+updated_at: 2026-09-22T09:03:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -235,3 +235,47 @@ was doing its job the whole time — which is the point the finding's own
 action missed when it proposed labelling previews for cleanup.
 
 94 health tests pass; `bun run gates` 102/102.
+
+
+_2026-09-22T09:15:00Z_ — **MEASURED, and the projection was wrong by a factor of six.** Measured from `origin/gh-pages` on this branch's own live preview, BEFORE the merge — the staging deploy already runs on the PR, so the merge was never needed to find this out.
+
+## The numbers
+
+| preview | files | MiB | `reference/` | `api/` |
+|---|---|---|---|---|
+| claude-740-windows-bootstrap | 3764 | 83.1 | 256 | 307 |
+| claude-determined-euler-gqhkk0 | 3773 | 92.3 | 262 | 307 |
+| claude-elegant-albattani-0byaig | 3777 | 92.5 | 261 | 307 |
+| claude-elegant-clarke-bpycir | 3772 | 91.9 | 262 | 307 |
+| claude-kind-bohr-cyt1s4 | 3774 | 91.4 | 263 | 307 |
+| claude-lhs-navbar-harness-folios-cqo9mu | 3777 | 93.7 | 261 | 307 |
+| **claude-peaceful-heisenberg-dzgsf1** | **3470** | **85.2** | **261** | **0** |
+| claude-sharp-fermi-xvs06i | 3786 | 92.9 | 263 | 307 |
+| claude-sharp-ptolemy-6qxh77-precond | 3772 | 92.6 | 261 | 307 |
+
+Baseline across the seven comparable previews: **92.47 MiB**, spread 91.4–93.7 — tight enough to be a real baseline rather than a pick. Mine: **85.2 MiB**.
+
+    MEASURED saving   7.27 MiB   =  7.9 %
+    PROJECTED         43.2 MiB   = 48.9 %
+
+## Why, and both reasons are the check working correctly
+
+**`reference/` was NOT dropped, and should not have been.** This branch edits `cat-harness/skills/folio-core/todo-manager.md`, and the carry rule keeps `reference/` for any branch touching `skills/`, `schemas/`, `methodologies/`, `docs/reference/` or the generators. So the 38.7 MiB that dominates the projection stayed — correctly, because a reviewer of this branch needs those pages. **The saving is per-branch and depends on what the branch touches**, which the projection treated as a constant.
+
+**The "nav shrinks on every remaining page too" bonus did not materialise.** I argued on the PR that the true saving would be *larger* than the arithmetic. For `api/` it is not: 307 files dropped, ~7.8 MiB at the measured 26 KiB/page, and the observed saving is 7.27 MiB — the tree's own weight and nothing more. The reason is now obvious and was not checked: **`api/` is TypeDoc output and does not carry the just-the-docs nav.** Only `reference/` does. So the bonus is real only for the tree nobody has yet dropped, and remains **unmeasured** rather than disproved.
+
+## What this does and does not settle for the 1 GB limit
+
+Total published STAGING tree today: **815.6 MiB across 9 previews** (was 878.7 across 10). At a measured 7.9 % per preview on a skills-touching branch, this change alone does not take the tree off a collision course — it buys roughly one extra concurrent review, not the halving the PR body implies.
+
+The lever that would matter is `reference/` at 38.7 MiB, which drops only for branches touching none of the five carry paths. **What fraction of branches those are is unmeasured**, and it is the number that decides whether this change is sufficient. Nine live previews is too small a sample to answer it from, and guessing would be how a projection became a claim the first time.
+
+## Correcting the PR
+
+The PR body says *"the true saving is probably larger, which is exactly why a projection is not a measurement."* The sentiment was right and **the prediction was wrong in the direction I was warning about** — I projected 49 % and measured 7.9 %. Recorded here rather than only in chat, because the projection is in the PR body and on #843 where somebody will read it next.
+
+## Done when
+
+- [x] A real preview measured after the change is live — done on the PR's own staging, no merge required
+- [x] The measured figure reported rather than the projection
+- [ ] The share of branches that touch none of the five carry paths — the number that decides whether `reference/`'s 38.7 MiB is reachable in practice. NOT measurable from nine previews
