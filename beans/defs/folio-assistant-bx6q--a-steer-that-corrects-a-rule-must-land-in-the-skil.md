@@ -90,3 +90,42 @@ work. The analysis in this entry is the one to trust on that point: *"the
 actionable set was 1 of 6"*, and it is recorded here rather than dropped
 because two sessions converging on a verdict says nothing about whether either
 was entitled to act on it.
+
+---
+
+### The branch check is a TRIGGER, not a verdict — measured 2026-09-22
+
+The entry above is right that `bean-coordination` §"A claim is branch-local"
+must run before acting, and right that this session skipped it. But run to
+completion, it does not say what it was read to say.
+
+All three branches were examined by CONTENT rather than by existence:
+
+| branch | finding |
+|---|---|
+| `…-q2wn` | `partition-imports.test.ts` byte-identical to main (0 branch-only lines); `graph-kind-registry.ts` is **1382** lines on main against **1324** on the branch |
+| `…-fkjo` | **12** branch-only lines, every one superseded prose — the old *"~38 MB per preview"* staging figure, re-measured to ~88 MiB on main by `tebu` |
+| `…-sj6m` | the bean's boxes are **unticked** on the branch and ticked on main, and the branch lacks main's `## CORRECTION 2026-09-22` entirely |
+
+**All three are stale snapshots strictly BEHIND main.** Their substantive work
+landed by other routes — `doneWhenState` and `bean-self-declared-done` are on
+main, and so is the bare-side-effect `IMPORT_RE`. No commit on any of them is
+unlanded.
+
+Two instruments gave the wrong answer here and both are worth naming:
+
+- **`git cherry` marked every commit `+`** (not in main). Patch-ids do not
+  survive the merges these branches' work went through, so `+` means *"no
+  identical patch"* and not *"this change is missing"*.
+- **`git diff main...branch` showed 18 changed files** for `q2wn`. That is a
+  merge-base diff, and a branch that last merged main hours ago has a stale
+  base, so the stat counts changes main has since acquired by another route.
+
+So the rule stands and its reading needs one more clause: an unmerged branch
+naming the bean is the **trigger to look**, not the conclusion. What settles
+it is whether the branch's CONTENT is absent from main — and here, the
+direction ran the other way in all three cases.
+
+Recorded on this bean because this is where the claim-check analysis lives,
+and a caution that stops at "a branch exists" would leave six correctly-closed
+beans reopened.
