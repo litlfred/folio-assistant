@@ -275,7 +275,7 @@ would lose:
 | **R24** | the folio visualisation is **`cat-harness`'s**, and SHALL be available by convention on **any** harness, for a consistent feel | the harness supplies the folio; the instance supplies the library |
 | **R25** | a reader SHALL be able to **pull their folio down** over whatever they are browsing | *"the user in visualization should be able to pull down their folio"* |
 | **R26** | `cat-harness` SHALL declare **`folio/`** as the directory of the reader's own content | a declared `ContentDirectory`, like every other graph |
-| **R27** | **materialised** assets from the static KG SHALL live in `folio/` | *"clarifying if KG is static w/ materizlied…, materialized should live in folio"* |
+| **R27** | **materialised** assets from the static KG SHALL live in the folio — **settled 2026-09-21, see below** | *"clarifying if KG is static w/ materizlied…, materialized should live in folio"* |
 | **R28** | new documents a reader creates **or links to** go in `folio/` | linking is a creation act here, not a reference |
 | **R29** | todos and sticky notes MAY reference things **across** KG libraries | *"todo, etc can refernces cross KG library"* |
 
@@ -353,7 +353,7 @@ four options put to them:
 
 | | the rule |
 |---|---|
-| **R19b** | a thing renders as a **tile** iff the **harness** declares it; as an **avatar** iff the **folio** holds it (a note, a document, a materialised asset under `folio/`). A **theme** is how either one looks, never a third kind |
+| **R19b** | a thing renders as a **tile** iff the **harness** declares it; as an **avatar** iff the **folio** holds it (a note, a document, a materialised asset in `library/` or `uploads/`). A **theme** is how either one looks, never a third kind |
 | **R19c** | a tile is one of **two kinds**. A **functional** tile (a directory or sub-graph) is the visual interface to a **skill**, implemented by a **tool** chosen from potentially several — so it names the skill, never the tool. A **content** tile stands for a set of **schema instances** |
 
 **R19c is the owner's correction to R19b, the same day**, and it is recorded
@@ -419,12 +419,102 @@ the skill rather than left as an omission: nothing classifies a folio item
 yet, so a gate would be a declared property whose check cannot answer its own
 claim — R17's lesson, one round later.
 
+### R27 and question 1 — answered by the corpus, then settled
+
+**The requester's own parenthetical marked this unsettled**: *"clarifying if
+KG is static w// materizlied…"*. Measured 2026-09-21, the answer was already
+in the corpus in three places, none of which had been read as answering it:
+
+| | |
+|---|---|
+| `folio-assistant-core/schemas/materialization.ts` | **three states** — `referenced` (we know where, we hold no bytes), `materialized` (the bytes are here), `unknown` (we have not established which) — with **no default**, plus five gates, and `localPath` present **iff** `materialized` |
+| `skills/workflows/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
+| `skills/folio-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
+
+**So: yes.** The knowledge graph is static and modelled by reference;
+materialisation is a separate, gated, checked act that produces bytes.
+Question 1 needed no decision — it needed reading.
+
+#### Where the bytes land — the part that DID need deciding
+
+R27 says *"materialized should live in folio"*, and `who-iris` materialises
+into `library/` (items and covers) and `uploads/` (source PDFs). **Neither is
+`folio/`.** Three readings were put to the owner; they chose **the folio is
+the reader's REPOSITORY**, of which `library/` and `uploads/` are already
+declared parts:
+
+```
+{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
+{ id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+```
+
+`dependents: "reproduce"` is the schema saying **this is the reader's own
+copy** — the exact fact R27 reaches for, and it predates R27.
+
+**The literal reading would have broken a consumer, and that was found AFTER
+the options were tabled.** It is recorded here for that reason rather than
+folded into the argument as though it had been known.
+`schemas/materialization.ts` states it outright — ***`corpus-grep` searches
+`library/` only***, so a node materialised into `folio/` would read as ABSENT
+to every consumer. That is the same defect the schema forbids one state up,
+where collapsing `referenced` into `materialized` hides a node nobody holds.
+Had the owner chosen the literal reading, it would have been a migration into
+a known breakage, and the recommendation put alongside the options did not say
+so because this had not been measured yet.
+
+`folio/` is also the **renderable** graph kind, so the literal reading would
+additionally have put a 40 MB PDF into the site build.
+
+**R27 is therefore already satisfied, and already gated.**
+`who-iris/scripts/check-catalogue.ts` checks that a `materialized` claim names
+bytes that exist, with `local-path.ts`'s three states (`ok` / `missing` /
+`unknown`) and bean `yl5w`'s scar behind it: *three claims resolved to nothing
+and the gate said clean*.
+
 ### Still open from this round
 
-**Whether the library view distinguishes materialised from not-materialised**
-is the half R30 leaves unsaid: the three states are the *asset's*, and nothing
-yet states whether a reader browsing a library can see which of its items they
-already hold. Tracked on
+**Whether the library view distinguishes materialised from not-materialised.**
+The states now have a name and a schema — `referenced` / `materialized` /
+`unknown` — so the question is no longer *is there a distinction* but *does
+the reader's view render it*. Nothing yet says.
+
+**F8/F9 is blocked on R25, structurally rather than by scheduling** — bean
+`jpjt`, settled 2026-09-21.
+
+The gap is measured: on the deployed preview `who-iris/index.html` loads
+`docs-ui.js` **0** times and carries **0** boards and **0** tiles, against
+9 / 1 / 28 on the folio-assistant landing page. A reader browsing that library
+has **no folio at all**, not a degraded one.
+
+**The delivery mechanism is decided** — three ways were tabled and the owner
+chose an **exported mount fragment plus a gate**, the shape
+`staging-banner.ts` already proves, reusing `bodyInsertionPoint()` so that
+`ur84` cannot recur.
+
+**What blocks it is that nothing would mount.** `who-iris` pages are complete
+standalone HTML from their own generator — their own `<style>` built from the
+captured IRIS theme, no Jekyll, no `head_custom.html` — because the page is a
+**faithful replica** and the *"ingested copy — not WHO, not live"* banner is
+its requirement 1. Loading `docs-ui.js` there is safe (all seven mounts guard
+themselves and return without their markers), and that is the whole problem:
+
+| surface | requires | on a replica page |
+|---|---|---|
+| launcher | a **sidebar header** | absent |
+| board | `#main-content` / `.main-content` / `<main>`, inserted at the **top** | absent, and the top is the IRIS content |
+| language bar | `.main-content` | absent |
+
+**Every visible folio surface today is bound to just-the-docs page
+furniture**, and giving a library page that furniture means making it look
+like folio-assistant — the one thing who-iris exists not to do.
+
+**R25 is therefore the unblock rather than the next item.** A pull-down glass
+comes down OVER what is being browsed, so it is the only folio surface that
+does not require the host page to look like the harness. Shipping the mount
+fragment before it would create a gate for a thing with no consumer — R17's
+lesson, a third time.
+
+Both tracked on
 [issue #796](https://github.com/litlfred/folio-assistant/issues/796).
 
 ---

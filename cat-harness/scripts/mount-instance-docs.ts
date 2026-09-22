@@ -103,7 +103,7 @@
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
-import { injectRail, type RailLink } from "./lib/harness-rail.js";
+import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -306,6 +306,117 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
 }
 
 /**
+ * EVERY graph this instance declares — the navbar's scrollable middle.
+ *
+ * Owner, 2026-09-21: *"there shuold be all the harness controlled dirs/graphs"*.
+ *
+ * The navbar used to list only the MOUNTED kinds — the ones whose directory
+ * carries an `index.html`. For who-iris that is two of six: `library` and
+ * `docs` are published, while `catalogue`, `uploads`, `skills` and `themes`
+ * are declared and have no viewer. Listing two answered *"what is in this
+ * KG"* with a shorter and wronger list than the declaration gives.
+ *
+ * So all six appear, and the four without a viewer appear WITHOUT AN HREF.
+ * `harness-tiles` already words the distinction exactly right — *"declared and
+ * not rendered is a GAP, not a dead link"* — and `pb04` is why the gap must
+ * not be drawn as a link: a dead link invites a click and then reads as "this
+ * site is broken", which is a worse answer than "nothing renders this yet".
+ *
+ * Deduped on the KIND rather than the directory. Two entries may declare the
+ * same kind (an override and its default), and a navbar that listed `library`
+ * twice would be reporting the declaration's shape rather than the graph's.
+ *
+ * @param linked  href per kind for the kinds that ARE published, already
+ *   relative to the page being rendered.
+ */
+export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<string, string>): NavItem[] {
+  const decl = declarationPathIn(join(REPO, instanceDirName));
+  if (decl === undefined || !existsSync(decl)) return [];
+  let d: { directories?: { graphKinds?: string[] }[] };
+  try {
+    d = JSON.parse(readFileSync(decl, "utf-8"));
+  } catch {
+    // Not this script's finding — `kg:schema:check` owns an unparseable
+    // declaration. Here it is an empty middle, and the caller still renders
+    // the instance root and the harnesses.
+    return [];
+  }
+  const seen = new Set<string>();
+  const out: NavItem[] = [];
+  for (const entry of d.directories ?? []) {
+    for (const kind of entry.graphKinds ?? []) {
+      if (seen.has(kind)) continue;
+      seen.add(kind);
+      const href = linked.get(kind);
+      out.push({ label: kind, icon: kind.slice(0, 1).toUpperCase(), ...(href ? { href } : {}) });
+    }
+  }
+  return out.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+/**
+ * The INSTANTIATED harnesses, for the navbar's fixed bottom.
+ *
+ * Owner, 2026-09-21: *"keep the navba rmenu/tab of the active/instantiated
+ * harnsesss from folio-asst at bottom of navbar in en aexpanable menu. use
+ * avatar/themes of the hanreses"*.
+ *
+ * Read from `<built>/docs/_data/harness.json`, which `sync-docs-harness.ts`
+ * generates from the declarations and `docs:harness:check` gates. A hardcoded
+ * list here would be the `check:declared-assets` defect, and it would go stale
+ * the first time an instance is instantiated — which happened twice this week.
+ *
+ * `undefined`, not `[]`, when the file is missing or will not parse. The
+ * caller then OMITS the region rather than rendering an empty disclosure
+ * labelled "Harnesses", which would read as a site with no harnesses instead
+ * of as a navbar that could not find out. Third state, said by absence.
+ *
+ * **Avatars come from the data, and today almost none are there** — `icon` is
+ * declared for `cat-harness` alone. That is `603s`'s subject, in flight on PR
+ * #791; when it lands the avatars arrive through this same field and nothing
+ * here changes, which is the test of whether the boundary was drawn in the
+ * right place. Until then an item falls back to its initial.
+ *
+ * @param toRoot the calling page's path back to the site root, since every
+ *   href in `harness.json` is site-absolute and a mounted page is not at the
+ *   root.
+ */
+function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
+  // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
+  // was the first version and `check:declared-paths` refused it -- rightly,
+  // and pointedly, because `publishedDocsPrefix` exists a few lines up in this
+  // same file and was written this session for exactly this. A literal
+  // `"docs"` is a second answer to "where does this instance publish", free to
+  // disagree with the declaration the moment the directory moves.
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string } | null }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  if (!Array.isArray(d.harnesses)) return undefined;
+  return d.harnesses
+    .filter((h) => h.instantiated === true)
+    .map((h) => {
+      const label = h.label ?? h.title ?? h.name ?? "?";
+      // A site-absolute href has to be re-based for a page that is not at the
+      // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
+      const href = h.href ? `${toRoot}${h.href}` : undefined;
+      const avatar = h.icon?.src ? { src: `${toRoot}${h.icon.src}`, ...(h.icon.title ? { title: h.icon.title } : {}) } : undefined;
+      return {
+        label,
+        ...(href ? { href } : {}),
+        ...(avatar ? { avatar } : {}),
+        ...(h.tone ? { tone: h.tone } : {}),
+      };
+    });
+}
+
+/**
  * Inject the harness rail into every mounted HTML page.
  *
  * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
@@ -328,6 +439,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
   siteAbs: string,
   mounts: readonly T[],
   docsPrefix: string | undefined,
+  built: string,
 ): { injected: number; skipped: string[]; unpublished: { route: string; visualiser: string }[] } {
   const byInstance = new Map<string, T[]>();
   for (const m of mounts) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
@@ -380,20 +492,37 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
       // Every route this instance answers at, so the rail can move between
       // them -- the owner's "with who-iris and then link to docs on side in
       // navbar". Rebuilt per file because `toRoot` is per file.
-      const links: RailLink[] = (byInstance.get(m.name) ?? []).map((o) => {
-        const visual = target.get(o.route);
-        return {
-          href: `${toRoot}/${visual ?? `${o.route}/`}`,
-          label: o.route === o.name ? o.name : o.kind,
-          icon: o.route === o.name ? "◆" : o.kind.slice(0, 1).toUpperCase(),
-          // A link that goes somewhere OTHER than this mount is never the
-          // current page, whatever route the page was copied to.
-          current: visual === undefined && o.route === m.route,
-        };
-      });
+      // The instance's own themed root, first — it is the instance rather
+      // than one of its graphs, so it is not inside the graphs group.
+      const own = (byInstance.get(m.name) ?? []).filter((o) => o.route === o.name);
+      const root: NavItem[] = own.map((o) => ({
+        href: `${toRoot}/${o.route}/`,
+        label: o.name,
+        icon: "◆",
+        current: o.route === m.route,
+      }));
 
+      // Which KINDS are actually published, and where. Built from the mount
+      // table, so a kind gains a link the moment it gains a viewer and loses
+      // one the moment it does not — never from a list here.
+      const linked = new Map<string, string>();
+      for (const o of byInstance.get(m.name) ?? []) {
+        if (o.route === o.name) continue;
+        const visual = target.get(o.route);
+        linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
+      }
+
+      const links: NavItem[] = declaredGraphs(m.name, linked);
+
+      const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
-      const after = injectRail(before, { instance: m.name, toRoot, links });
+      const after = injectRail(before, {
+        instance: m.name,
+        toRoot,
+        ...(root[0] ? { root: root[0] } : {}),
+        links,
+        ...(harnesses ? { harnesses } : {}),
+      });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
         continue;
@@ -569,7 +698,7 @@ function main(): number {
         `Rail links fall back to mount routes.`,
     );
   }
-  const railed = injectRails(siteAbs, mounts, docsPrefix);
+  const railed = injectRails(siteAbs, mounts, docsPrefix, built);
   for (const u of railed.unpublished) {
     console.error(
       `  ? /${u.route}/ declares the visualiser ${u.visualiser}, which is not under ` +

@@ -303,6 +303,29 @@
 <meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">
 
 <!--
+  THE SITE'S BASEURL, for the tiles above.
+
+  Every other site-root path on this page is composed by Liquid: `relative_url`
+  prepends `site.baseurl`, which is `/folio-assistant` on the canonical deploy
+  and `/folio-assistant/STAGING/<branch>` on a preview. The tiles cannot use
+  it, because they reach the client as JSON and are composed in `docs-ui.js`
+  after Liquid has finished — so the base has to travel with them.
+
+  IT SHIPPED WITHOUT ONE AND EVERY TILE 404ed (issue #801). `graph-tiles.ts`
+  stores `/beans/`, which is correct as data and is what `harness.links[].path`
+  stores too; written into an `href` unprefixed, a browser resolves it against
+  the ORIGIN, so the beans tile pointed at `litlfred.github.io/beans/`. The
+  owner found it by going looking for the board and landing there.
+
+  A meta of its own rather than reading `#fa-translation-index`, which already
+  carries a `baseurl`: that block is absent when `_data/translations.json` was
+  not built, and its reader returns `null` for it. Composing links out of an
+  optional block means the day it goes missing every tile silently points at
+  the origin again — which is this defect, with a second way to reach it.
+-->
+<meta name="fa-baseurl" content="{{ site.baseurl }}">
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate

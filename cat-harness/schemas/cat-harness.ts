@@ -1447,6 +1447,34 @@ export class GraphKindConflictError extends Error {
  * call site — a second place that knows the old name is a second place that
  * can forget it.
  */
+/**
+ * Where a known-but-unregistered kind is registered, for the error message.
+ *
+ * **The message named the DECLARATION ENTRY and not the caller**, so it
+ * pointed at `cat-harness.json` — a file that is correct — while the mistake
+ * was a missing import in whichever module happened to read it first. Telling
+ * somebody a kind "must be registered" without naming the import leaves them
+ * to grep for it.
+ *
+ * Measured 2026-09-21 before adding this: of the **31 real call sites** of
+ * `directoryForGraph`/`directoriesForGraph`, **31 reach the registration**, so
+ * nothing is broken today and this is a guard against regression rather than a
+ * fix. It is worth having because the repository has already paid for this
+ * once — `bunfig.toml` records the suite green locally (3198 pass) and red in
+ * CI on the same commit, 2026-09-20, from exactly this load-order dependence,
+ * with five files latently order-dependent and CI catching only the first.
+ *
+ * Deliberately a lookup rather than a field on `GraphKindDef`: a kind that is
+ * not registered has no def to carry one, which is the whole situation here.
+ */
+const REGISTRATION_MODULE: Readonly<Record<string, string>> = {
+  // declared-path-literal: NOT a declared path — this is the module SPECIFIER
+  // a reader must import, quoted inside an error message so the remedy can be
+  // pasted. It resolves through the module graph, not through the declaration,
+  // so routing it through a directory resolver would be a category error.
+  folio: "schemas/folio-graph-kind.js",
+};
+
 export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
   kg: "cat-harness",
 };
@@ -2052,6 +2080,33 @@ export const VisualisationSchema = z.object({
   hidden: z.boolean().optional(),
   /** The tile's theme. Absent means the directory's, then the instance's. */
   theme: z.string().min(1).optional(),
+  /**
+   * WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic
+   * node-graph glyph every tile shared before this field existed.
+   *
+   * ## A name, and emphatically not markup
+   *
+   * `tileLink` assigns its glyph with `innerHTML`. A field carrying SVG would
+   * therefore make a DECLARATION an HTML injection site — and a declaration is
+   * inherited: a dependency's `<instance>.json` reaches this instance through
+   * `resolveSkillDirs`, so the markup would not even have to be written by
+   * somebody with commit access here.
+   *
+   * So this names a glyph in the client's own registry and default-denies
+   * anything it does not know, which is R17's rule (*"skill tool hints for
+   * XSSrsiction"*) applied one surface along: an allow-list is wrong only
+   * about things it refuses, and a refusal is visible.
+   *
+   * ## Why an unknown name is a FALLBACK and not a failure
+   *
+   * The registry lives in `docs-ui.js` and the declaration lives here, so the
+   * two are deployed together but AUTHORED apart — a folio may declare a glyph
+   * against a newer platform than the one rendering it. A tile that vanished
+   * or threw on an unrecognised name would turn a cosmetic mismatch into a
+   * missing navigation entry. It renders the generic glyph instead, which is
+   * exactly what it rendered before anybody declared one.
+   */
+  icon: z.string().min(1).optional(),
 });
 export type Visualisation = z.infer<typeof VisualisationSchema>;
 
@@ -3756,7 +3811,12 @@ export function readDeclaration(
           `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
             `Known kinds: ${registry.names().join(", ")}. ` +
             `A kind contributed by a dependency must be registered before the ` +
-            `declaration is read.`,
+            `declaration is read.` +
+            (REGISTRATION_MODULE[g] === undefined
+              ? ""
+              : ` Add \`import "${REGISTRATION_MODULE[g]}";\` to the module that ` +
+                `reads this declaration — the import is for its SIDE EFFECT, so it ` +
+                `takes no binding and must not be elided.`),
         );
       }
     }
