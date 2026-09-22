@@ -49,10 +49,10 @@ Found while verifying PR #949, whose subject is the vocabulary registry. Fixing 
 
 ## Done when
 
-- [ ] `repoPrefix` resolves from the instance declaration rather than being composed, for BOTH the same-instance and cross-instance cases
-- [ ] The `..` case is gone rather than normalised — a cross-instance skill's source lives at a real repo-relative path, and if it cannot be named as one, the page says so instead of emitting a URL that 404s
+- [x] `repoPrefix` resolves from the instance declaration rather than being composed, for BOTH the same-instance and cross-instance cases — ONE line in `gen-skill-docs.ts` (`relative(REPO_ROOT, …)`), plus `gen-schema-docs.ts` derived from `SKILLS_DIR` rather than hardcoded
+- [x] The `..` case is gone **from everything either generator writes**. The 5 pages that still carry it are orphans no generator owns — their `..` is bean `nsbk`, not a composition bug
 - [ ] A check that RESOLVES these links rather than comparing bytes. Byte-comparison cannot see this class, and the two `--check` gates over this directory were green throughout
-- [ ] Re-measure: 244 pages, 0 non-resolving
+- [ ] Re-measure: 0 non-resolving — **blocked on `nsbk`**, and deliberately not reached by deleting five pages that document real skills
 
 
 _2026-09-22T13:50:00Z_ — CLAIMED on `claude/peaceful-heisenberg-dzgsf1`. Liveness checked first per `bean-coordination` §"A claim is branch-local": no unmerged branch names it, no open PR names it, `todo` since 12:09.
@@ -106,9 +106,17 @@ Filed as **`nsbk`**, with the wider cost: those five skills are unreachable to `
 
 Not fixed here: renaming a declared id is a cross-instance change and the id is the override key, so which side is renamed is the owner's judgement rather than a defect with one repair.
 
-## Done when
+## Two boxes ticked, and they are ticked ABOVE
 
-- [x] `repoPrefix` resolves from the instance declaration rather than being composed, for BOTH cases — one line, and `gen-schema-docs.ts` derived rather than hardcoded
-- [x] The `..` case is gone **from everything either generator writes**. The 5 that remain are pages no generator owns; their `..` is `nsbk`'s, not a composition bug
-- [ ] A check that RESOLVES these links rather than comparing bytes
-- [ ] Re-measure 0 non-resolving — **blocked on `nsbk`**, and deliberately not reached by deleting five pages for real skills
+The canonical `## Done when` at the top of this bean now carries them. I first
+appended a second `## Done when` here with the ticks in it, and
+`check:bean-bodies` refused the run: **`shadow-checklist`** — *"a checklist
+item below `## Done when` is ticked while the canonical item it restates is
+still open. The section a reader and every tool consult says this is not
+done."*
+
+Exactly right, and worth leaving on the record rather than quietly deleting.
+A bean with two checklists has two answers to "is this finished", and the one
+a tool reads is the first. That is the same defect this bean is about, one
+layer up: a generated view and its source disagreeing, with the view looking
+fine.
