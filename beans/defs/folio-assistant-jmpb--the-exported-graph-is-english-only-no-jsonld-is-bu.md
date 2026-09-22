@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jmpb
 title: 'The exported graph is English-only: no .jsonld is built per locale, so translated labels reach no consumer of the data'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:03:22Z
-updated_at: 2026-09-21T22:03:40Z
+updated_at: 2026-09-22T06:14:38Z
 parent: folio-assistant-bzyu
 ---
 
@@ -171,3 +171,97 @@ language bar and coverage badge already do.
       not merely intended
 - [ ] staleness is checked per locale, so a stale translated export cannot
       look like a current one
+
+## SHIPPED 2026-09-22 — and measuring first found a defect that LOOKED right
+
+`scripts/kg-locale-export.ts`, run once per instance. Both rulings honoured:
+one document per locale, and the core graph references nothing.
+
+### What the corpus actually holds, measured before building
+
+| | |
+|---|---|
+| `.pot` templates per locale | 62, of which **58 are under `workflows/`** |
+| `.po` catalogues for those 58 | **0, in all five locales** |
+| `.po` stems that exist | `index`, `agent-onboarding`, `crdm-methodology`, `kg-viewer`, `glossary` — all docs pages |
+| `glossary.po` | **not a translation at all** — its own header says so; it is terminology input for `translation-block-qa` |
+| `cat-harness.jsonld` | 2.0 MB |
+
+So the graph's translatable surface has **zero translations today**, and five
+byte-identical copies would publish 10 MB to say nothing (`6tkl`). A locale is
+emitted when it carries at least one translation applying to the graph, and
+**every locale is reported either way** — the zero is loud rather than a
+missing file. `--all-locales` forces emission for the other reading.
+
+### The defect: `"yes"` → `"oui"`
+
+The first implementation merged every `.po` under a locale. Against the real
+corpus it reported *"1 applicable msgid, 40 substitutions"* in three locales.
+The msgid was **`"yes"`, from `index.po`** — a docs page — matching 40 `name`
+values on BPMN sequence flows, a gateway's `yes`/`no` branch labels.
+
+`oui` is the right French for that label. **That is why it had to be caught by
+provenance rather than by reading the output**: it looked correct, while the
+report asserted diagram translation was under way in three locales and no
+diagram catalogue existed in any of them.
+
+A `.po` is now read only when its stem names an asset the graph projects.
+Provenance, not a path — hardcoding `workflows/` would break on a layout move
+and `check:declared-paths` would be right to flag it. Residual, accepted and
+named: a msgid from diagram A applies to an identical string on a node from
+diagram B, which is not a new assumption since `kg-export` already dedupes
+lane-derived `Role` nodes by lane name across every diagram.
+
+### The language tag rides the VALUE
+
+A blanket `"@language": "<locale>"` on the document would assert that language
+over every string that fell through — and fall-through is the normal case,
+because `parsePo` takes only non-empty `msgstr` and skips fuzzy. So a
+translated value is `{"@value", "@language"}` and a fall-through stays plain
+under the document's declared `sourceLanguage` (read from `defaultLocale`, not
+assumed to be English). Fall-through is visible IN THE DATA, not inferred from
+a coverage number.
+
+### No partition wall, unlike slice 2's case
+
+`content/pipeline/po-inject.ts` is already assigned to `agentic-harness`
+("Translation is cat-harness's, stated directly"), so `parsePo` is imported
+rather than duplicated.
+
+### Falsified by mutation, five ways
+
+| mutation | tests red |
+|---|---|
+| translate identity keys too | 1 |
+| merge every `.po` (drop provenance scoping) | 1 |
+| blanket `@language`, untagged values | 4 |
+| translate IRIs too | 1 |
+| stop catching translation references | 2 |
+
+The IRI mutation passed on the first attempt — no fixture had an IRI that was
+also a msgid. A real gap, and a real risk: a docs page's `.po` routinely
+carries URLs as msgids because they appear in the prose, and rewriting one
+turns a resolvable link into a dangling string. Test added, mutation now red.
+
+### Done when — status
+
+[x] one .jsonld per locale that has catalogues, node @ids unchanged
+[x] an untranslated string falls through to the source, as `parsePo` already
+    does everywhere else — not a second answer in the data
+[x] **the core graph carries NO reference to any translation** — checked by
+    `localeDocumentsUnreferenced`, in the gate set as `kg:locale:check`
+[x] staleness is checked per locale — `kg:locale:check` builds every locale and
+    fails on an `@id` that drifts from the core or on any translation
+    reference. What it deliberately does NOT gate is translation COVERAGE:
+    `translate-bpmn --check` owns whether a `.pot` is current, and gating
+    coverage would be a gate on a translator's unfinished work.
+
+### Not done, and named
+
+- **The viewer's chrome is `xcyh`**, still separate: a fully translated viewer
+  rendering an English-only payload was the gap this closed, and the reverse is
+  still open.
+- **Skills and beans reach no catalogue.** 58 of 62 templates are diagrams and
+  4 are docs pages; nothing extracts a skill body or a bean. So the graph's
+  translatable surface is BPMN-derived only, which is worth a bean of its own
+  rather than a silent limitation here.

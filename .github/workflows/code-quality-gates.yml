@@ -334,6 +334,18 @@ jobs:
           bun run glossary:check
           bun run glossary:check:bootstrap
 
+      # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
+      # is NOT about how much is translated (nothing is, measured 2026-09-22:
+      # 58 of 62 .pot templates are diagrams and none has a .po). It checks
+      # the two properties a translation effort must never break: the CORE
+      # graph references no translation -- no hasTranslation, no
+      # availableLocales, no locale key, no per-locale @id -- and a translated
+      # node keeps its @id, because a translation is not a new term.
+      - name: graph per locale
+        run: |
+          bun run kg:locale:check
+          bun run kg:locale:check:bootstrap
+
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
       # move, including the onboarding guide its own banner calls the place to
