@@ -3620,7 +3620,14 @@
     all[key] = {
       shown: true,
       title: (meta && meta.title) || (all[key] && all[key].title) || key,
-      href: (meta && meta.href) || (all[key] && all[key].href) || "",
+      // THROUGH `safeHref`, and the store holds only what survived it.
+      // The value originates in a library page's `data-fa-library-href`,
+      // which is authored markup rather than a composed path, so
+      // `javascript:` is reachable here in a way it is not at the render
+      // points `safe-url.ts` was written against. Default-deny: a refused
+      // scheme becomes no link, which `el` renders by omitting the
+      // attribute entirely — `pb04`, no link beats a link to nowhere.
+      href: safeHref((meta && meta.href) || (all[key] && all[key].href)) || "",
     };
     setFolioAssets(all);
     announceFolio(key, "glass");
@@ -3674,7 +3681,7 @@
       if (row.querySelector(".fa-pullout")) return;   // idempotent
       var key = row.getAttribute("data-fa-library-item");
       var title = row.getAttribute("data-fa-library-title") || key;
-      var href = row.getAttribute("data-fa-library-href") || "";
+      var href = safeHref(row.getAttribute("data-fa-library-href") || undefined) || "";
 
       var btn = el("button", { type: "button", class: "fa-pullout" });
       var note = el("span", { class: "fa-pullout-state" });
@@ -3773,8 +3780,14 @@
       keys.forEach(function (key) {
         var a = all[key];
         var card = el("article", { class: "fa-glass-asset", "data-fa-asset": key });
-        var name = a.href
-          ? el("a", { class: "fa-glass-asset-name", href: a.href }, a.title)
+        // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
+        // store is `localStorage`, which the reader's own devtools can
+        // rewrite, so a value sanitised on the way in is not a value that is
+        // safe on the way out. The boundary is where the URL reaches an
+        // `href`, and that is here.
+        var href = safeHref(a.href);
+        var name = href
+          ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
           : el("span", { class: "fa-glass-asset-name" }, a.title);
         card.appendChild(name);
 

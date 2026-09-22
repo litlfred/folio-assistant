@@ -75,6 +75,34 @@ async function serve(page: import("@playwright/test").Page, body: string, path =
 const rowA = '[data-fa-library-item="who-iris/item-a"]';
 const rowB = '[data-fa-library-item="who-iris/item-b"]';
 
+/**
+ * A library page whose rows carry HOSTILE hrefs.
+ *
+ * Not hypothetical. CI caught this as a red gate — *"every href in the client
+ * goes through the check"* — on the first draft, which rendered
+ * `a.href` from `localStorage` straight into an `<a>`. `safe-url.ts` says the
+ * hazard at the render points it was written for is LATENT, because every URL
+ * there is COMPOSED rather than taken. This one is taken: it originates in a
+ * library page's `data-fa-library-href`, which is authored markup.
+ *
+ * So the vector was real and new, and these specs are the evidence that it is
+ * closed rather than merely that a gate is satisfied.
+ */
+const HOSTILE = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<style>${CSS}</style></head><body>
+<table><tbody>
+  <tr data-fa-library-item="evil/js"
+      data-fa-library-title="Looks ordinary"
+      data-fa-library-href="javascript:window.__pwned=1"><td>x</td></tr>
+  <tr data-fa-library-item="evil/split"
+      data-fa-library-title="Split scheme"
+      data-fa-library-href="java&#9;script:window.__pwned=1"><td>x</td></tr>
+  <tr data-fa-library-item="ok/relative"
+      data-fa-library-title="An ordinary link"
+      data-fa-library-href="/who-iris/item-a.html"><td>x</td></tr>
+</tbody></table>
+<script>${JS}</script></body></html>`;
+
 test.describe("state 1 — in the library", () => {
   test("a row the reader has never touched offers a pull-out and claims nothing", async ({ page }) => {
     await serve(page, LIBRARY);
@@ -226,5 +254,61 @@ test.describe("one asset's state is its own", () => {
     await page.locator(`${rowA} .fa-pullout`).click();
     await expect(page.locator(rowB)).toHaveAttribute("data-fa-folio-state", "library");
     await expect(page.locator(`${rowB} .fa-pullout`)).toHaveText("Pull out to folio");
+  });
+});
+
+test.describe("a hostile href never reaches the glass", () => {
+  test("`javascript:` is refused — the asset renders with NO link", async ({ page }) => {
+    // `pb04` and default-deny together: the refusal is not a broken card, it
+    // is a card with no link. The asset is still the reader's and still
+    // named; only the navigation is withheld.
+    await serve(page, HOSTILE);
+    await page.locator('[data-fa-library-item="evil/js"] .fa-pullout').click();
+    await page.locator(".fa-glass-handle").click();
+    const card = page.locator('.fa-glass-asset[data-fa-asset="evil/js"]');
+    await expect(card).toBeVisible();
+    await expect(card.locator("a")).toHaveCount(0);
+    await expect(card.locator(".fa-glass-asset-name")).toHaveText("Looks ordinary");
+  });
+
+  test("a TAB-split scheme is refused too — the bypass `safeHref`'s own spec caught", async ({ page }) => {
+    // safe-url.ts: "the URL parser strips exactly these three before parsing,
+    // so leaving one in the middle leaves a `javascript:` URL looking like a
+    // relative path. The first version of this function trimmed only the ends
+    // and shipped that bypass."
+    await serve(page, HOSTILE);
+    await page.locator('[data-fa-library-item="evil/split"] .fa-pullout').click();
+    await page.locator(".fa-glass-handle").click();
+    await expect(page.locator('.fa-glass-asset[data-fa-asset="evil/split"] a')).toHaveCount(0);
+  });
+
+  test("and nothing was executed — a BACKSTOP, and measured to be the weak one", async ({ page }) => {
+    // THIS SPEC DOES NOT DETECT THE HOLE, and its first comment claimed the
+    // opposite. Falsified against the vulnerable draft (both `safeHref`
+    // calls removed): specs 1 and 2 above failed, and this one PASSED. So
+    // clicking a `javascript:` anchor does not run the payload under this
+    // harness, and an assertion that nothing ran proves nothing about a
+    // build that renders the link.
+    //
+    // Kept rather than deleted, and relabelled rather than quietly fixed:
+    // it still guards a DIFFERENT regression — a future harness where the
+    // click does navigate — and a reader who believed the old comment would
+    // have trusted the wrong spec of the four. The detectors are 1 and 2,
+    // which assert no anchor is rendered at all.
+    await serve(page, HOSTILE);
+    await page.locator('[data-fa-library-item="evil/js"] .fa-pullout').click();
+    await page.locator(".fa-glass-handle").click();
+    await page.locator('.fa-glass-asset[data-fa-asset="evil/js"] .fa-glass-asset-name').click();
+    expect(await page.evaluate(() => (window as unknown as { __pwned?: number }).__pwned)).toBeUndefined();
+  });
+
+  test("an ORDINARY href still links — default-deny refuses schemes, not links", async ({ page }) => {
+    // The control. Without it, a build that dropped every href would pass
+    // all three specs above while breaking the feature.
+    await serve(page, HOSTILE);
+    await page.locator('[data-fa-library-item="ok/relative"] .fa-pullout').click();
+    await page.locator(".fa-glass-handle").click();
+    await expect(page.locator('.fa-glass-asset[data-fa-asset="ok/relative"] a'))
+      .toHaveAttribute("href", "/who-iris/item-a.html");
   });
 });
