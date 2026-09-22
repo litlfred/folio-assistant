@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jwox
 title: 'CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:03:10Z
+updated_at: 2026-09-22T21:51:43Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -37,3 +37,6 @@ it lands there, not in a second file. It is exposed as a Tool node
 - [ ] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind
 - [ ] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo)
 - [ ] `diff` and `staging-review` read it instead of re-deriving from git
+
+
+Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3PsjvszpF3DyGeBgE), stacked after 5xzc (#976).
