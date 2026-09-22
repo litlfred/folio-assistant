@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 125,
+      "count": 126,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -511,6 +511,14 @@
       "name": "memory",
       "graphNode": "schema",
       "summary": "An agent's memory — what it carries into the next task, as a graph node.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/methodology.ts",
+      "instance": "cat-harness",
+      "name": "methodology",
+      "graphNode": "schema",
+      "summary": "A methodology node's front matter — `folio-methodology/v1`.",
       "isTest": false
     },
     {
@@ -15380,6 +15388,78 @@
       "unresolved": [],
       "external": [
         "MEMORY_LABELS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/methodology.ts#MethodologyFrontMatter",
+      "name": "MethodologyFrontMatter",
+      "module": "cat-harness/schemas/methodology.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/methodology.ts#MethodologyFrontMatterSchema",
+      "name": "MethodologyFrontMatterSchema",
+      "module": "cat-harness/schemas/methodology.ts",
+      "kind": "zod-object",
+      "doc": "Front matter of a methodology node.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(METHODOLOGY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z .string() .min(1) .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, \"a methodology `name` is kebab-case, like a skill id\")",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id, referenced from skills and diagrams. Kebab-case, like a skill's."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What a reader sees. Not the id with capitals — it may name the acronym's expansion."
+        },
+        {
+          "name": "origin",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Authors, a publication, a standards body."
+        },
+        {
+          "name": "applies-when",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When this methodology applies, phrased so `methodology-adoption`'s"
+        },
+        {
+          "name": "evidence",
+          "type": "z .array( z .string() .regex(/^library\\/[a-z0-9][a-z0-9.-]*$/, \"each `evidence` entry is a library reference: `library/…",
+          "optional": true,
+          "array": true,
+          "doc": "The ingested sources, each as `library/<bib-slug>`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "METHODOLOGY_SCHEMA_TAG",
         "z"
       ],
       "exported": true

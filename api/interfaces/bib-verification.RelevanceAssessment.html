@@ -19,7 +19,7 @@ judgement call and an agent's is a claim awaiting review, not a fact.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">RelevanceAssessment</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#assessed_at">assessed_at</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#assessed_by">assessed_by</a><span class="tsd-signature-symbol">:</span> <a href="../types/bib-verification.Verifier.html" class="tsd-signature-type tsd-kind-type-alias">Verifier</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#human_adjudicated">human_adjudicated</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">at</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">note</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">who</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#keyresults">keyResults</a><span class="tsd-signature-symbol">:</span> <a href="bib-verification.KeyResult.html" class="tsd-signature-type tsd-kind-interface">KeyResult</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#proposedactions">proposedActions</a><span class="tsd-signature-symbol">:</span> <a href="bib-verification.ProposedAction.html" class="tsd-signature-type tsd-kind-interface">ProposedAction</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rationale">rationale</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#source_sha">source_sha</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#verdict">verdict</a><span class="tsd-signature-symbol">:</span> <a href="../types/bib-verification.RelevanceVerdict.html" class="tsd-signature-type tsd-kind-type-alias">RelevanceVerdict</a><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:227</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:227</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -45,14 +45,14 @@ judgement call and an agent's is a claim awaiting review, not a fact.</p>
 <div class="tsd-comment tsd-typography"><p>ISO 8601 timestamp.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L238">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:238</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L238">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:238</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="assessed_by"><span>assessed_<wbr/>by</span><a href="#assessed_by" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">assessed_by</span><span class="tsd-signature-symbol">:</span> <a href="../types/bib-verification.Verifier.html" class="tsd-signature-type tsd-kind-type-alias">Verifier</a></div>
 <div class="tsd-comment tsd-typography"><p>Who produced the assessment.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L236">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:236</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L236">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:236</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="human_adjudicated"><code class="tsd-tag">Optional</code><span>human_<wbr/>adjudicated</span><a href="#human_adjudicated" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">human_adjudicated</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">at</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">note</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">who</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
@@ -60,28 +60,28 @@ judgement call and an agent's is a claim awaiting review, not a fact.</p>
 <code>VerificationEntry.human_adjudicated</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L241">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:241</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L241">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:241</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="keyresults"><span>key<wbr/>Results</span><a href="#keyresults" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">keyResults</span><span class="tsd-signature-symbol">:</span> <a href="bib-verification.KeyResult.html" class="tsd-signature-type tsd-kind-interface">KeyResult</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Results worth consuming.  Empty for <code>tangential</code> / <code>not-relevant</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L232">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:232</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L232">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:232</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="proposedactions"><span>proposed<wbr/>Actions</span><a href="#proposedactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">proposedActions</span><span class="tsd-signature-symbol">:</span> <a href="bib-verification.ProposedAction.html" class="tsd-signature-type tsd-kind-interface">ProposedAction</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>What the author could do about it.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L234">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:234</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L234">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:234</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rationale"><span>rationale</span><a href="#rationale" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rationale</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Why this verdict — the reasoning, not a restatement of the verdict.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L230">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:230</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L230">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:230</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="source_sha"><code class="tsd-tag">Optional</code><span>source_<wbr/>sha</span><a href="#source_sha" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">source_sha</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -90,12 +90,12 @@ re-upload changes the hash and marks the assessment stale — the same
 staleness idiom the <code>.qa.json</code> sidecars use.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L249">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:249</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L249">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:249</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="verdict"><span>verdict</span><a href="#verdict" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">verdict</span><span class="tsd-signature-symbol">:</span> <a href="../types/bib-verification.RelevanceVerdict.html" class="tsd-signature-type tsd-kind-type-alias">RelevanceVerdict</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/8c94f3f1303ca5ec68e307f8d6bfb5362c1c59e7/cat-harness/schemas/bib-verification.ts#L228">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:228</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cd014bfec8ad83b8fc4b55b3fdcd787b7678fd8a/cat-harness/schemas/bib-verification.ts#L228">work/folio-assistant/folio-assistant/cat-harness/schemas/bib-verification.ts:228</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
