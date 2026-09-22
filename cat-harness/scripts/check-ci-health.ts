@@ -30,11 +30,15 @@ import {
   render,
   renderPages,
   selfSupersedes,
+  type CitedBean,
   type DeployCommit,
   type PagesReport,
   type RunSummary,
   type Window,
 } from "../src/workflow/ci-health.js";
+
+import { repoRootFor } from "../schemas/cat-harness.js";
+import { readBeanStore } from "./bean-store-read.js";
 
 const argv = process.argv.slice(2);
 const markdown = argv.includes("--markdown");
@@ -441,7 +445,46 @@ const { runs, unreachable } = await fetchRuns();
 // Independent of the default-branch question above, and asked even when that
 // one failed: a repository whose `main` history is unreadable may still be
 // publishing fine, and the reverse. Two facts, never collapsed into one.
-const pages = await fetchPages();
+/**
+ * The beans {@link renderPages} names in its output.
+ *
+ * Listed here rather than discovered, because a renderer's citations are a
+ * property of its PROSE and nothing can derive them from the report object.
+ * Adding one to the output without adding it here renders as "unknown", which
+ * is the honest failure for this — never a confident wrong claim.
+ */
+const PAGES_CITES = ["yzsj"] as const;
+
+/**
+ * Resolve each cited bean's status ONCE, here, where a repository root exists.
+ *
+ * Bean `xfyk`. The renderer used to state these outright and the claim went
+ * stale when the bean closed. It stays a pure function of its report; the
+ * filesystem read belongs where the root is.
+ */
+function citedBeans(): Record<string, CitedBean> {
+  // `repoRootFor`, NOT `process.cwd()`. Bean `a6kl` is precisely this mistake
+  // one script over: a corpus resolved from the cwd found nothing and reported
+  // `nothing to check` over 1,402 files. Here it would silently render every
+  // citation "unknown" whenever the script ran from a subdirectory.
+  const store = readBeanStore(repoRootFor(resolve(import.meta.dir, "..")));
+  if (store.state !== "read") {
+    const why = store.state === "declared-but-absent"
+      ? `the declared bean store at ${store.dir} is not there`
+      : "no bean store in this instance";
+    return Object.fromEntries(PAGES_CITES.map((id) => [id, { state: "unreadable", why }]));
+  }
+  return Object.fromEntries(
+    PAGES_CITES.map((id) => {
+      // The id is a SUFFIX of the bean's own id (`folio-assistant-yzsj`), and
+      // matching on the full id would tie this to one instance's prefix.
+      const bean = store.beans.find((b) => b.id === id || b.id.endsWith(`-${id}`));
+      return [id, bean ? { state: "read", status: bean.status } : { state: "absent" }];
+    }),
+  );
+}
+
+const pages = { ...(await fetchPages()), citedBeans: citedBeans() };
 const headSha = unreachable ? undefined : await fetchHeadSha();
 const changedFiles = headSha ? await fetchChangedFiles(headSha) : undefined;
 const repoRoot = (() => {

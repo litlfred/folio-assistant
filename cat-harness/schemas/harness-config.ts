@@ -133,6 +133,13 @@ export interface TranslationConfig {
 export interface HarnessConfig {
   /** Content type — "document" or "paper". */
   contentType?: string;
+  /**
+   * Static, interactive, or undetermined — the FOURTH axis (issue #764, O1).
+   *
+   * A plain string for the same reason `contentType` and `adapter` above are
+   * plain strings — see the schema field.
+   */
+  interactivity?: string;
   /** Adapter name — "document", "paper", or "dak". */
   adapter?: string;
   /** Path to the adapter module. */
@@ -223,6 +230,39 @@ export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
 
 export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
+  /**
+   * Is this folio's content static, or does it carry interfaces?
+   *
+   * The interactivity axis — issue #764, O1, settled by the owner
+   * 2026-09-22. Vocabulary and the full argument: `CONTENT_INTERACTIVITY`.
+   *
+   * Here rather than beside `graphKinds` because it is a fact about the
+   * CONTENT, which is what `contentType` and `adapter` next to it are also
+   * about. The visualiser axis went the other way, onto the directory, and
+   * the two placements are the axes' own difference rather than an
+   * inconsistency: interactivity describes what the content IS, a visualiser
+   * describes how a graph is SHOWN.
+   *
+   * ABSENT means nobody has said. The VALUE `"undetermined"` means somebody
+   * looked and could not decide — the owner ruled the boundary is
+   * *"not a 'pure' distinction. judgement"*, so that answer has to be
+   * expressible rather than collapsed into silence or into `static`.
+   *
+   * ## A STRING, not the enum, and the partition gate is why
+   *
+   * `check:partition` refuses `schemas/harness-config.ts` [agentic-harness]
+   * importing `schemas/block-kinds.ts` [folio-assist-core]: the harness may
+   * not depend on the content vocabulary. That is not an obstacle to route
+   * around — it is the same reason `contentType` and `adapter` directly
+   * above are `z.string()` rather than enums of `CONTENT_PROFILES` and
+   * `CONTENT_ADAPTERS`, which they name and do not import.
+   *
+   * So the vocabulary lives with the other content axes and the FOLIO layer
+   * is where a value is checked against it. Validating here would put the
+   * content's vocabulary in the harness, which is the boundary this
+   * repository is split along.
+   */
+  interactivity: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
   contributes: z.string().optional(),
