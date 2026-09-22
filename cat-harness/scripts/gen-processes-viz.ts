@@ -34,11 +34,25 @@
  * forgetting silently turns the gate off."*
  *
  * It is NOT right for a reader. "Somebody chose strict" and "nobody said, so
- * the engine assumed strict" are different facts, and **25 of 62** processes
- * are the second. So this index asks the FILE whether a policy is declared —
- * a presence check, not a second interpretation of its meaning — and reports
- * the three states apart. The engine keeps one answer; the reader gets the
- * provenance of it.
+ * the engine assumed strict" are different facts, and this index reports them
+ * apart. The engine keeps one answer; the reader gets the provenance of it.
+ *
+ * **No count is given here, on purpose.** This paragraph carried one — and it
+ * was wrong, by one, in the module whose argument is that a figure belongs in
+ * generated output rather than in prose beside it (bean `osyc`, 2026-09-22).
+ * The page computes it every run; read it there.
+ *
+ * ## What is asked of the file, exactly
+ *
+ * Whether a policy declares an **enforcement value** — not whether a policy
+ * ELEMENT is present. The two differ, and the corpus contains the case:
+ * `crdm-signoff.bpmn:83` is `<folio:policy relaxable="false"/>`, an element
+ * deliberately authored, carrying no `enforcement`. It counts as *defaulted*
+ * here and that is the right answer for the question being asked — *somebody
+ * chose an enforcement* vs *nobody said* — but it means this is NOT the same
+ * measurement as `grep -L 'folio:policy'`, which bean `30hn` takes and which
+ * gives a figure one smaller. Saying which of the two is meant is the whole
+ * value of the column.
  *
  * ## What it is NOT
  *
@@ -85,7 +99,11 @@ export interface ProcessRow {
   skills: string[];
   beanOps: string[];
   enforcement: "strict" | "advisory";
-  /** Whether the FILE declares a policy, as opposed to the engine defaulting one. */
+  /**
+   * Whether the FILE declares an enforcement VALUE, as opposed to the engine
+   * defaulting one. Not the same as carrying a `<folio:policy>` element — see
+   * the module doc, and `crdm-signoff.bpmn`, which has one and no value.
+   */
   enforcementDeclared: boolean;
   activities: number;
   /**
@@ -170,8 +188,9 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
     // (`viewer-undiscovered.test.ts`, the same week).
     const svgRel = join(baseDocs(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
     const svg = existsSync(svgRel) ? relative(repo, svgRel) : undefined;
-    // The DECLARATION, asked of the file. See the module doc: this is a
-    // presence check, not a second reading of what the policy means.
+    // The DECLARATION, asked of the file: is there an enforcement VALUE? A
+    // presence check, not a second reading of what the policy means — and a
+    // presence check on the value, not on the element. See the module doc.
     const declared = /<folio:policy[^>]*\benforcement\s*=/.test(readFileSync(abs, "utf-8"));
     try {
       const m = await loadProcessModel(abs);

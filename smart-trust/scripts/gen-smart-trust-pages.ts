@@ -89,6 +89,18 @@ function pageName(a: FhirArtifact): string {
 }
 
 /**
+ * A category's own page name, sanitised the same way an artefact's is.
+ *
+ * Categories are free text out of the IG (`Requirements: Formal Requirements`,
+ * `Terminology: Value Sets`), so the colon and the spaces have to go before
+ * this is a filename. Uses `pageName`'s character class rather than a second
+ * one, because two sanitisers are two answers to "what is a safe name".
+ */
+function categoryName(label: string | undefined): string {
+  return (label ?? "Other").replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
+/**
  * Above this many artefacts a category is SUMMARISED and linked out rather
  * than listed inline.
  *
@@ -236,34 +248,31 @@ function indexPage(ix: FhirArtifactIndex): string {
       if (list.length > INLINE_LIMIT) {
         // Too many to inline; say so and say where they are, rather than
         // rendering a table nobody can read or silently dropping them.
+        // OVER THE INLINE LIMIT — the category gets its own page.
+        //
+        // This block used to read "None carries a DAK API sidecar, so none has
+        // an artefact page; they are reachable from the IG's own
+        // `artifacts.html`." Both halves stopped being true when every
+        // artefact started getting a page, and a sentence sending the reader
+        // upstream for pages this site now publishes is worse than no
+        // sentence. The owner's INLINE_LIMIT ruling still holds — the index
+        // came to 524KB with one category 90% of it — so the list moves to a
+        // page of its own rather than inline.
         return [
           `<details>`,
           `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
           ``,
-          `${list.length} artefacts, too many to list here. None carries a DAK API sidecar,`,
-          `so none has an artefact page; they are reachable from the IG's own`,
-          `\`artifacts.html\`.`,
+          `${list.length} artefacts — too many to list here without the index becoming`,
+          `unreadable. Every one has its own page: **[browse all ${list.length}](./category/${categoryName(label)}.html)**.`,
           ``,
           `</details>`,
         ].join("\n");
       }
-      const rows = list.map((a) => {
-        const nm = a.title ?? a.name ?? a.id;
-        // `.html`, not a trailing slash. This site sets no `permalink`, so
-        // Jekyll's default emits `artifact/Name.html` -- a directory-style
-        // link would 404 on every one of the 19 artefact pages, and it would
-        // 404 only once BUILT, which no check on the source could see.
-        const linked = a.dak ? `[${mdCell(nm)}](./artifact/${pageName(a)}.html)` : mdCell(nm);
-        const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
-        return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
-      });
       return [
         `<details>`,
         `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
         ``,
-        `| Artefact | Canonical URL | Published as | Bytes |`,
-        `|---|---|---|---|`,
-        ...rows,
+        ...artifactTable(list, "."),
         ``,
         `</details>`,
       ].join("\n");
@@ -346,6 +355,62 @@ function indexPage(ix: FhirArtifactIndex): string {
  * corrupted one, and the corruption looks like a rendering bug rather than
  * like data.
  */
+/**
+ * The artefact table, shared by the index and by a category page.
+ *
+ * `base` is the prefix an `artifact/…` link needs from the page being written
+ * — `.` from `index.md`, `..` from `category/X.md`. Passed rather than derived
+ * so a third caller at a third depth cannot silently inherit the wrong one.
+ *
+ * **`.html`, never a trailing slash.** This site sets no `permalink`, so
+ * Jekyll's default emits `artifact/Name.html`; a directory-style link 404s on
+ * every row, and only once BUILT, which no check on the source can see. That
+ * defect shipped once already (issue #824) and the only test that catches it
+ * reads the href out of the page and resolves it back to a file.
+ */
+function artifactTable(list: FhirArtifact[], base: string): string[] {
+  return [
+    `| Artefact | Canonical URL | Published as | Bytes |`,
+    `|---|---|---|---|`,
+    ...list.map((a) => {
+      const nm = a.title ?? a.name ?? a.id;
+      const linked = `[${mdCell(nm)}](${base}/artifact/${pageName(a)}.html)`;
+      const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
+      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
+    }),
+  ];
+}
+
+/**
+ * One category, listed in full, for a category too large to inline.
+ *
+ * Exists so that "too many to list here" can point somewhere instead of
+ * pointing upstream. Before this, the 604-artefact `Other` bucket told the
+ * reader to go to the IG's own `artifacts.html` — a sentence that was true
+ * only while those artefacts had no pages here.
+ */
+function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[]): string {
+  const name = label ?? "Other";
+  const body = [
+    `[← all ${ix.count} artefacts](../)`,
+    ``,
+    `## ${name}`,
+    ``,
+    `${list.length} of the ${ix.count} artefacts in this IG. Listed here rather than on the`,
+    `index because a table this size makes the front page unreadable.`,
+    ``,
+    ...artifactTable(list, ".."),
+    ``,
+  ].join("\n");
+
+  return shell(
+    `${name} — WHO SMART Trust`,
+    `The ${list.length} WHO SMART Trust artefacts in the ${name} category, with canonical URLs and published representations.`,
+    body,
+    1,
+  );
+}
+
 function mdCell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
@@ -404,15 +469,31 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
         : "upstream, not held here"
     } |`,
     ``,
-    `## DAK API`,
-    ``,
-    `The four sidecars are published independently, so an absent one is a fact about the`,
-    `IG rather than a gap in this index.`,
-    ``,
-    `| Sidecar | Published at | Held locally |`,
-    `|---|---|---|`,
-    ...dakRows,
-    ``,
+    // The sidecar table is worth a screen when there ARE sidecars. On the 655
+    // artefacts with none it was four rows of "*not published for this
+    // artefact*", which is noise dressed as information — so the absence is
+    // stated in one line instead, and it is STATED rather than omitted,
+    // because a missing section reads as "nobody looked".
+    ...(a.dak
+      ? [
+          `## DAK API`,
+          ``,
+          `The four sidecars are published independently, so an absent one is a fact about the`,
+          `IG rather than a gap in this index.`,
+          ``,
+          `| Sidecar | Published at | Held locally |`,
+          `|---|---|---|`,
+          ...dakRows,
+          ``,
+        ]
+      : [
+          `## DAK API`,
+          ``,
+          `No DAK API sidecar is published for this artefact. That is a fact about the IG,`,
+          `not a gap in this index — sidecars are published per artefact, and`,
+          `${ix.artifacts.filter((x) => x.dak).length} of ${ix.count} carry one.`,
+          ``,
+        ]),
   ].join("\n");
 
   return shell(
@@ -445,9 +526,25 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+
+// EVERY artefact, not only the sidecar-bearing ones. The owner's call,
+// 2026-09-22: full parity with the Publisher's 673 artefact pages, against a
+// recommendation to render only the 70 conformance artefacts and leave the 604
+// Endpoint/Organization registry rows as index rows. Recorded because the
+// trade-off is real and the reasoning should not have to be reconstructed:
+// 454 of those 604 carry no `description`, so their pages are a title and four
+// upstream links.
 for (const a of ix.artifacts) {
-  if (!a.dak) continue;
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
+}
+
+// A page for each category too large to inline, so "too many to list here"
+// points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
+// makes — one threshold, read twice, rather than two that can disagree.
+for (const [label, list] of byCategory(ix.artifacts)) {
+  if (list.length > INLINE_LIMIT) {
+    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list));
+  }
 }
 
 function committed(): Map<string, string> {
@@ -489,5 +586,12 @@ if (CHECK) {
   const dak = dakOverlayCensus(ix.artifacts);
   console.log(`smart-trust/docs: ${pages.size} page(s)`);
   console.log(`  index over ${ix.count} artefacts in ${byCategory(ix.artifacts).size} categories`);
-  console.log(`  ${pages.size - 1} artefact page(s) — the DAK-covered ones (schema=${dak.schema})`);
+  // Counted from the page map, never as `pages.size - 1`. That expression was
+  // right while the index was the only non-artefact page and quietly became
+  // wrong the moment a category page joined it — it reported 675 artefact
+  // pages over a corpus of 674.
+  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/")).length;
+  const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
+  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
+  console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
 }
