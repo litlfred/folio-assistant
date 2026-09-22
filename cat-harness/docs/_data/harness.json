@@ -66,6 +66,7 @@
     "library",
     "memory",
     "methodology",
+    "processes",
     "qa",
     "scenarios",
     "schemas",
@@ -74,8 +75,7 @@
     "tools",
     "translation-sources",
     "uploads",
-    "waiver",
-    "workflows"
+    "waiver"
   ],
   "links": [
     {
@@ -902,6 +902,9 @@
           "kind": "methodology"
         },
         {
+          "kind": "processes"
+        },
+        {
           "kind": "qa",
           "path": "/qa/"
         },
@@ -931,14 +934,11 @@
         },
         {
           "kind": "waiver"
-        },
-        {
-          "kind": "workflows"
         }
       ],
       "findings": [
         "cat-harness: 1 graph(s) declare a staging-only viewer, deliberately not linked on the canonical deploy — fsh-guts. Not a gap.",
-        "cat-harness: declares 10 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, scenarios, skills, translation-sources, waiver, workflows. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness: declares 10 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, skills, translation-sources, waiver. Declared and not rendered is a gap, not a dead link.",
         "cat-harness: 2 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/cat-harness/index.html), tools (cat-harness/docs/tools/index.md). Built and unreachable is a different gap from unbuilt.",
         "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
       ]
@@ -959,12 +959,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -974,17 +974,20 @@
       ],
       "visualisations": [
         {
+          "kind": "processes"
+        },
+        {
           "kind": "scenarios"
         },
         {
-          "kind": "skills"
+          "kind": "schemas"
         },
         {
-          "kind": "workflows"
+          "kind": "skills"
         }
       ],
       "findings": [
-        "bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
+        "bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link."
       ]
     }
   ]

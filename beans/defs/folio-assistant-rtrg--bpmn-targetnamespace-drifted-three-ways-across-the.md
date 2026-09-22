@@ -11,7 +11,7 @@ parent: folio-assistant-kupb
 
 
 Split out of `0d99` when that one was fixed, and **measured, not assumed** —
-`grep -rho 'targetNamespace="[^"]*"'` over `skills/workflows/`, 2026-09-20:
+`grep -rho 'targetNamespace="[^"]*"'` over `processes/`, 2026-09-20:
 
 | targetNamespace | diagrams |
 |---|---|

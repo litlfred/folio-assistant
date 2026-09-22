@@ -5,7 +5,7 @@
  * ## The defect
  *
  * `harness.json` says where this instance's graphs live. Nine production
- * sites nevertheless hardcoded `skills/workflows`, so a topical split — the
+ * sites nevertheless hardcoded `processes`, so a topical split — the
  * whole point of the declaration — would have been a nine-file edit.
  * `workflowDirs()` fixed those nine, and then a sweep found **four more** the
  * working list had missed (`check-workflow-policy`, `check-workflow-refs`,
@@ -21,7 +21,7 @@
  * and not free. So a literal naming a declared directory is allowed when:
  *
  *  - **it names a FILE that exists.** Authored prose naming one specific
- *    artefact — `source: "methodologies/crdm/workflows/crdm-requirements.bpmn"` in a docs
+ *    artefact — `source: "methodologies/crdm/processes/crdm-requirements.bpmn"` in a docs
  *    page — is not discovery and no declaration would answer it. Eighteen of
  *    these are correct and must stay. They are **checked to resolve**, which
  *    closes the `blv9` defect class (a link-shaped value that does not
@@ -276,7 +276,7 @@ function stripComments(text: string): string {
  * ## Why context and not shape alone
  *
  * A literal containing `/` is a path whatever surrounds it. A BARE segment is
- * not: `join(root, "skills", "workflows")` is the nine-site defect this gate
+ * not: `join(root, "processes")` is the nine-site defect this gate
  * exists for, and `{ id: "beans", module: … }` in `server.ts` is a tool-group
  * identifier that happens to spell a declared directory. Refusing both would
  * put ~100 identifiers in the findings, and `known-skills.ts`'s own header

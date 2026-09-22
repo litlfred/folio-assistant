@@ -211,70 +211,84 @@ gap that says it is a gap — a reader who sees the tick stops asking.
 > All of it is removed — the numbers, the `roundTripQA` field, the page badge
 > that displayed them, and both scripts.
 
-### The agentic round trip — a PAIR of agents, and the separation is the measurement
+### The agentic round trip — an INSTANCE of untainted verification
 
-| agent | is given | produces |
+**The discipline is generic and lives in
+[`untainted-verification`](untainted-verification.md)**: the two parties, why
+neither may see what would let it shortcut, the `TOOLS_USED` declaration that
+is recorded rather than assumed, which party rules, how both are written as
+witnesses, the `model` / `model_source` rule, and the two traps — a sweep
+replaces only entries whose reviewer is itself, and a verdict is hashed to what
+it was about. Read that first. **This section is only what translation adds.**
+
+The round trip was where that discipline was first written down, and
+generalising it turned up a defect in the generalisation: the spine's
+`UntaintedDispatch` was typed over `CompanionRole`, and **`po` is deliberately
+not one** — a PO is a companion of a *(block, locale)* pair, not of a block. So
+the founding case could not be expressed in the type taken from it. The
+abstraction was widened rather than the case bent; `untaintedPartitionDefects`
+now takes its artefact universe as a parameter.
+
+#### The declaration
+
+`ROUNDTRIP_DISPATCH` in `content/pipeline/translation-block-qa.ts`:
+
+| party | sees | never sees |
 |---|---|---|
-| **back-translator** | the target-language text, and nothing else | an independent rendering back into the source language |
-| **adjudicator** | the original and the back-translation, never the target text | `pass` / `warn` / `fail`, with each drift named |
+| **back-translator** | `po` — the target text, and nothing else | `md`, `ts` |
+| **adjudicator** | `md` — the original, plus the back-translation | `po` |
 
-Three rules make it a measurement rather than a ritual:
+Disjoint, which is the whole rule in one line. Shown the source, a
+back-translator writes the source back and the check passes vacuously —
+measuring the lookup table rather than the translation. That is not a warning
+here any more: `untaintedPartitionDefects` reports it, and a test asserts it.
 
-1. **Neither agent sees what would let it shortcut.** A back-translator shown
-   the English writes the English back and the check passes vacuously. An
-   adjudicator shown the French can talk itself into any reading of the
-   back-translation.
-2. **The back-translator must use no tools, and must say so.** The source is in
-   the repository; an agent with filesystem access can find it, and then the
-   verdict measures its search. Ask for a `TOOLS_USED` line and record the
-   answer.
-3. **One agent doing both halves is not this check.** It compares a text with
-   its own paraphrase of itself.
+#### What counts as drift, and what does not
 
-Tell the adjudicator explicitly what is *not* drift — synonyms, articles,
-re-ordering — and what is: a claim added, dropped, weakened, strengthened or
-reversed; a term of art swapped for something that means a different thing; a
-named entity or a quantifier moved. Without that, a round trip degenerates into
-a style review, and every translation "fails".
+**Both halves, always.** Told only what to look for, an adjudicator returns a
+style review and every translation fails.
 
-Record the result with:
+> Synonyms, articles and re-ordering are **not** drift. A claim added, dropped,
+> weakened, strengthened or reversed **is**; so is a term of art swapped for
+> something that means a different thing, and a named entity or quantifier
+> moved.
+
+This is the part that does **not** generalise — the spine requires a `drift`
+statement and checks only that one exists, because "states what is not drift as
+well as what is" is a reading, and a gate pretending to measure it would be the
+defect the whole mechanism exists to stop.
+
+#### Recording it
 
 ```sh
 bun run content/pipeline/translation-roundtrip.ts --payload <file.json>
 ```
 
-It writes **both** agents as witnesses. The adjudicator's entry carries the
-verdict and leads the criterion (the first entry is the operative one
-everywhere in this repo); the back-translator's sits behind it with
-`result: "n/a"` and the back-translation itself in `notes`, because a reader
-asking "on what basis?" needs the intermediate text and a reader asking "who
-did this?" needs both names.
+Where it lands: `translation-block-qa` writes `translation-semantic-roundtrip:
+[]` on every run, and before `mergeCriteria` an unrelated re-run deleted a
+round trip a pair of agents had produced — silently, with nothing in the output
+to say so. That incident is why the spine carries the replace-only-your-own
+rule.
 
-**Record `model` with `modelSource`, or not at all.** A subagent's serving
-model is not directly observable from the session that dispatched it: it
-inherits the parent unless the harness overrides, and the hand-back does not
-say which model served the turn. A bare model string on an agent witness is
-therefore an inference printed as a fact — the same move as the round-trip
-numbers this skill tells you not to write. `modelSource` states how the
-identifier was established (for example: read from `get_session` at record
-time, subagent inheritance assumed, not independently observed), and the panel
-renders it beside the model. Absent both, the panel prints "not recorded",
-which is a true statement and an acceptable one.
+Staleness is per locale here: the entries hash the `.md`, the `.ts` and the
+`.po`, so editing the source stales **every** locale's round trip and editing
+one translation stales only that locale's.
 
-### Two traps this process has already sprung
+#### The instrument, not the translation
 
-**A script sweep must not clobber an agent's verdict.** `translation-block-qa`
-writes `translation-semantic-roundtrip: []` on every run. Before
-`mergeCriteria`, the next unrelated re-run deleted the round trip a pair of
-agents had produced, silently and with nothing in the output to say so. The
-rule: **a sweep replaces only entries whose reviewer is itself**, and carries
-everything else through.
+`translations/fr/index.ts` carried `roundTripQA: { fail: 21, total: 36, method:
+"jaccard-word-overlap" }`, and its own `description` explained those failures
+away as expected *"with limited vocabulary back-translator"*.
 
-**The verdict is hashed to the text it was about.** The entries hash the `.md`,
-the `.ts` and the `.po`, so editing the source stales every locale's round trip
-and editing a translation stales that locale's. This matters more for an agent
-ruling than a script one: nobody can cheaply re-run it, so an agent verdict is
-exactly the kind that quietly outlives its subject.
+The generator's back-translation map held **6 entries for 36 strings**: every
+string nobody had back-translated scored 0 similarity and was counted as drift,
+so `fail: 21` was a count of absences. A second script back-translated by
+applying a 40-pair word-substitution table to the French and wrote the result
+as a `block-qa/v1` sidecar with an **agent** reviewer.
+
+All of it is removed — the numbers, the `roundTripQA` field, the page badge
+that displayed them, and both scripts. **A measurement whose author has to
+explain it away is about the instrument, not the subject.**
 
 ## Automatic badge rendering
 

@@ -175,7 +175,7 @@ unservable skill, each naming the wrapper that declares it:
 | `smarter-fhir.json` | `smart-launch`, `fhir-client-operations` |
 
 So `bun run kg:audit` reports `Worst severity: major`, the committed sidecar
-`test/results/kg-qa/skills/roles/kg.kg-qa.json` records `fail`, and
+`test/results/kg-qa/scenarios/kg.kg-qa.json` records `fail`, and
 `bun run kg:audit:strict` exits non-zero.
 
 ### What deliberately does NOT fail, and the argument for it

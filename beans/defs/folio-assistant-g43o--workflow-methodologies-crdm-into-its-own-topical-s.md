@@ -25,7 +25,7 @@ reviewable.
 | from | to |
 |---|---|
 | `skills/folio-core/crdm-{detect,requirements-workflow,data-model}.md` | `methodologies/crdm/` |
-| `skills/workflows/crdm-*.bpmn` (8) | `methodologies/crdm/workflows/` |
+| `processes/crdm-*.bpmn` (8) | `methodologies/crdm/processes/` |
 
 A `package-manifest.json` for the package, and `folio-core`'s manifest
 drops the three: 106 → 103.
@@ -53,7 +53,7 @@ Each was a **hardcoded path where a declaration was available** — and the
 third is the interesting one because the refusal was designed in.
 
 1. `scripts/tests/log-writer.test.ts` composed
-   `../../skills/workflows/crdm-requirements.bpmn` and went ENOENT, which
+   `../../processes/crdm-requirements.bpmn` and went ENOENT, which
    the test reported as *"the process does not declare folio:log"* — the
    wrong finding entirely. Now located through `workflowFiles`, with the
    lookup asserted so a missing diagram cannot read as a missing

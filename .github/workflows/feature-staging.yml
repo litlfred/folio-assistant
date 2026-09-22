@@ -144,7 +144,7 @@ jobs:
           bun-version: latest
 
       - name: Install deps
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Determine staging slug
         id: slug
@@ -1036,7 +1036,7 @@ jobs:
 
       - name: Install deps
         working-directory: source
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Check out the publish branch
         uses: actions/checkout@v4
@@ -1356,7 +1356,7 @@ jobs:
 
       - name: Install deps
         working-directory: source
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Refuse to remove a preview that is still in use
         working-directory: source

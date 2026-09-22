@@ -59,7 +59,7 @@ The lane is `business-analyst`, which now carries `methodology-adoption`.
 
 ## 2026-09-20: built, on the trigger the owner authorised
 
-`skills/workflows/options-analysis.bpmn` — one lane (`Business analyst`, a lane name
+`processes/options-analysis.bpmn` — one lane (`Business analyst`, a lane name
 `roles.json` already declares), four activities, indexed on the workflow page,
 rendered to SVG, translated to `.pot`, audited.
 
@@ -217,7 +217,7 @@ each was found by a test failing.
 ## STATE 2026-09-20 — built and called once, by the owner's choice of scope
 
 Measured rather than assumed: `grep` for `calledElement="Process_OptionsAnalysis"`
-across `skills/workflows/` and `methodologies/` returns **exactly one** hit,
+across `processes/` and `methodologies/` returns **exactly one** hit,
 `upstream-version-adoption.bpmn:85`, which is the site the owner authorised.
 
 Placement inside that diagram, recorded because it was a judgement: the call sits

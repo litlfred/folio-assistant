@@ -75,7 +75,7 @@ export interface FallbackUse {
  *
  * Through `kgRoots` and `readRoleGraph` rather than a literal path: the
  * `kg` directory is declared in `harness.json` and an instance may put it
- * anywhere, so a hardcoded `skills/roles/roles.json` is one relocation away
+ * anywhere, so a hardcoded `scenarios/roles.json` is one relocation away
  * from checking nothing. `check:declared-paths` caught exactly that in the
  * first draft of this file.
  */

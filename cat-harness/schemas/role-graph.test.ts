@@ -234,7 +234,7 @@ describe("readActors", () => {
 });
 
 describe("this repository's own role graph", () => {
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"));
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"));
 
   test("is declared and loads", () => {
     expect(g).toBeDefined();
@@ -254,7 +254,7 @@ describe("this repository's own role graph", () => {
 
 describe("this repository's actor registry, after the roles[] migration", () => {
   const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"))!;
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
     expect(actors.filter((a) => a.looksLikeRole).map((a) => a.id)).toEqual([]);

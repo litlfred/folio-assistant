@@ -74,7 +74,7 @@ may not.
       their domain originals named; `domain-fencing.md` carries the ones that
       did not, and the three-question test that separates them
 - [x] the staged process is a BPMN whose stages gate, not advise —
-      `skills/workflows/graph-detanglement.bpmn`, all three gateways DMN-backed
+      `processes/graph-detanglement.bpmn`, all three gateways DMN-backed
 - [x] every rule cites a worked example by SHA and by measurement
 - [x] siblings' SOPs are consolidated rather than duplicated — #494's
       `covered-is-not-reachable` is POINTED AT rather than restated
@@ -148,7 +148,7 @@ Verified: 3838 tests 0 failures; 17 gates rc=0 including `check:workflow-refs`,
 
 ## Surveyed 2026-09-20 — what exists, and one correction to my own framing
 
-**No practice exists.** All 43 diagrams under `skills/workflows/` enumerated:
+**No practice exists.** All 43 diagrams under `processes/` enumerated:
 no process for splitting, extraction, migration or graph management. No
 `methodologies/` entry. Discussions are disabled on the repo. So this is not a
 duplicate — but `vke6`/#223 has been EXECUTING the practice for three days

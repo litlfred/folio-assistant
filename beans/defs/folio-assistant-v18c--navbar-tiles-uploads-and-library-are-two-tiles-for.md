@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v18c
 title: 'Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness''s library is empty'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:09:01Z
-updated_at: 2026-09-21T23:17:17Z
+updated_at: 2026-09-22T06:03:28Z
 parent: folio-assistant-vke6
 ---
 
@@ -105,8 +105,13 @@ tile renders the library's zero while thirty files sit beside it.
 
 - [x] Ruled: none of the three — uploads gets its own harness (recorded above).
 - [x] `uploads` shows its own queue: `gen-uploads-viz.ts`, declared at `cat-harness/uploads/`, with its own inbox glyph.
-- [ ] If the empty rule lands: a test that an empty projection yields a gap,
+- [N/A] If the empty rule lands: a test that an empty projection yields a gap,
       and a guard that a populated one still yields a link.
+      THE EMPTY RULE DID NOT LAND. It was option 3, and the owner ruled none
+      of the three. Marked `[N/A]` rather than ticked, which would claim work
+      that did not happen, and rather than deleted, which would lose the
+      specification if the question is ever reopened — the same treatment
+      `qgpo` gave its option-B items.
 
 *Not started. Recorded by session_01AYHimvYMmf8h8e9fFN6dW5, which measured it
 and fixed only the parse error.*
@@ -172,3 +177,39 @@ right parses to `undefined` and loses authors silently rather than erroring.
 
 `kg:audit` bound the role: `role-has-actor` fired on exactly one role, mine,
 which is how the missing actor was found.
+
+
+## Summary of Changes
+
+Closed by #838 (`e4f58487`), against issue #836.
+
+**Finding 1 — one page, two tiles: RESOLVED.** `uploads` has its own harness
+(`gen-uploads-viz.ts`), its own route, its own inbox glyph, and a view that
+answers queue questions rather than corpus ones. Verified on the staging
+deploy through gh-pages: two distinct tiles, two distinct pages, two distinct
+glyphs, 0 of 12 off-site, live badges reading 20 waiting.
+
+Round 1 also fixed a defect the gates were green across, found by rendering
+the page: five `.extraction.json` sidecars were standing in the queue as units
+*waiting to be ingested*. 27 → 20 waiting. Fixed in the reader, so the library
+badge is corrected by the same change.
+
+Round 2 added the librarian the owner asked for: `role:librarian`,
+`actor:librarian`, and `filing-dublin-core` / `archiving-web-pages` /
+`archiving-arxiv`.
+
+**Finding 2 — cat-harness's library renders 0 entries: NOT A DEFECT, and this
+bean is the wrong place to pursue it.** The `library` entry in
+`cat-harness.json` says so in its own description: *"THIS INSTANCE HOLDS
+NONE"* — bean `frs5` moved all four entries out (three IRIS items to
+who-iris, milnorlink to folio-assistant-sci) *because the platform holds no
+content*, and the declaration is kept only so a DEPENDENT folio inherits the
+convention (`wwi6`). So the count is correct and the directory is deliberately
+empty.
+
+What this bean actually observed is narrower and survives: an empty viewer's
+tile is indistinguishable from a populated one until it is opened. That was
+option 3 — *hide an empty viewer* — which the owner did not take, and which
+changes what a MISSING tile means across the whole system. Left unfiled rather
+than filed as a defect, because it is a design question nobody has ruled on,
+and inventing a bean for it would be inventing the ruling.
