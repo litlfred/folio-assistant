@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(202)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(202) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Health Certificate — WHO SMART Trust artefact | folio-assistant</title>
+<title>Working on materialized content | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Health Certificate — WHO SMART Trust artefact" />
+<meta property="og:title" content="Working on materialized content" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="StructureDefinition/HCert in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
-<meta property="og:description" content="StructureDefinition/HCert in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Health Certificate — WHO SMART Trust artefact" />
+<meta property="twitter:title" content="Working on materialized content" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -797,110 +816,179 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Working on materialized content</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <style>
-.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
-  font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.st-held{color:#0d6e5e}
-.st-ref{color:#6b5b95}
-.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
-.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
-.st-stat span{font-size:.75rem;opacity:.75}
-</style>
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/../large-datasets/skills/copy-out-materialized.md"><code class="language-plaintext highlighter-rouge">../large-datasets/skills/copy-out-materialized.md</code></a> — do not edit here.</p>
 
-<p><a href="../">← all 674 artefacts</a></p>
-<h2 id="health-certificate">
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/../large-datasets/skills/copy-out-materialized.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="working-on-materialized-content--copy-it-out">
   
   
-    <a href="#health-certificate" class="anchor-heading" aria-labelledby="health-certificate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Health Certificate
+    <a href="#working-on-materialized-content--copy-it-out" class="anchor-heading" aria-labelledby="working-on-materialized-content--copy-it-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Working on materialized content — copy it out
+  
+  
+</h1>
+    
+
+<p><strong>Materialized content is a copy of somebody else’s bytes, and this repository
+does not edit it in place.</strong> The owner, 2026-09-21:</p>
+
+<blockquote>
+  <p><em>“if we have a materialized <code class="language-plaintext highlighter-rouge">&lt;stub&gt;/&lt;sub-graph&gt;</code>, the contents of it should be
+immutable … you would need to copy/materialize it to your own <code class="language-plaintext highlighter-rouge">folio/</code> in
+order to mess around with it.”</em></p>
+</blockquote>
+
+<p>And 2026-09-22, choosing between advising and enforcing: <strong>enforce from the
+start.</strong></p>
+
+<p>Diagram: <a href="../../cat-harness/processes/copy-out-materialized.bpmn"><code class="language-plaintext highlighter-rouge">copy-out-materialized.bpmn</code></a>.
+Schema: <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/materialization.ts</code>. Where they disagree,
+the schema wins and this file is wrong.</p>
+<h2 id="what-the-rule-protects-and-what-it-does-not">
+  
+  
+    <a href="#what-the-rule-protects-and-what-it-does-not" class="anchor-heading" aria-labelledby="what-the-rule-protects-and-what-it-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the rule protects, and what it does not
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">StructureDefinition/HCert</code></p>
+<p>It protects the CLAIM. A materialized record asserts <em>“these bytes are what
+upstream published”</em>. Editing them in place leaves that assertion standing over
+bytes it no longer describes — and <code class="language-plaintext highlighter-rouge">check:materialized-fixity</code> is what catches
+one that happened, by hashing the bytes against the digest the record carries.</p>
 
-<p>Logical Model for the HCERT</p>
-
-<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div></div>
-<h2 id="identity-and-bytes-are-different-questions">
+<p>It does <strong>not</strong> protect against the copy being wrong, stale or badly chosen.
+Those are the five gates’ job, at materialisation time
+(<a href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/reference/skill-instructions/materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote</code></a>), and a copy-out re-opens none
+of them: you are copying something this repository already decided it may hold.</p>
+<h2 id="who-may-copy-out">
   
   
-    <a href="#identity-and-bytes-are-different-questions" class="anchor-heading" aria-labelledby="identity-and-bytes-are-different-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Identity and bytes are different questions
+    <a href="#who-may-copy-out" class="anchor-heading" aria-labelledby="who-may-copy-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who may copy out
   
   
 </h2>
     
+
+<p><strong>Any reader</strong> — the owner’s ruling, 2026-09-22. This is deliberately not a
+permission: refusing a copy would not protect the original, because the
+original is protected by being read-only. A gate here would only stop people
+working.</p>
+
+<p>What copying out does NOT confer is the right to publish. The copy inherits its
+source’s <code class="language-plaintext highlighter-rouge">restrictions</code> and <code class="language-plaintext highlighter-rouge">copyright</code> verdicts, and it is a new artefact in
+<strong>your</strong> folio whose publication is your folio’s decision, judged the way any
+other authored content is.</p>
+<h2 id="where-the-copy-goes">
+  
+  
+    <a href="#where-the-copy-goes" class="anchor-heading" aria-labelledby="where-the-copy-goes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the copy goes
+  
+  
+</h2>
+    
+
+<p><strong>Into the copier’s own <code class="language-plaintext highlighter-rouge">folio/</code>, with provenance</strong> — owner’s ruling,
+2026-09-22, chosen over a scratch area. The reason a scratch area lost is that
+it makes the copy publishable by accident: a directory nobody declared is a
+directory nobody gates.</p>
+<h2 id="the-copy-records-what-it-is-a-copy-of">
+  
+  
+    <a href="#the-copy-records-what-it-is-a-copy-of" class="anchor-heading" aria-labelledby="the-copy-records-what-it-is-a-copy-of"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The copy records what it is a copy of
+  
+  
+</h2>
+    
+
+<p>This is the part that is easy to leave out and impossible to reconstruct later.</p>
+
+<p><code class="language-plaintext highlighter-rouge">materialization.provenance</code> is a <strong>pair</strong>:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th> </th>
-      <th> </th>
+      <th>field</th>
+      <th>points at</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Canonical URL</td>
-      <td><code class="language-plaintext highlighter-rouge">http://smart.who.int/trust/StructureDefinition/HCert</code></td>
+      <td><code class="language-plaintext highlighter-rouge">upstream</code></td>
+      <td>the remote thing — a URI, upstream</td>
     </tr>
     <tr>
-      <td>Published</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.html">html</a></td>
-    </tr>
-    <tr>
-      <td>Materialization</td>
-      <td><span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest</td>
+      <td><code class="language-plaintext highlighter-rouge">local</code></td>
+      <td>the original <strong>in this repository</strong> it was taken from</td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="dak-api">
+
+<p>A copy-out writes <strong><code class="language-plaintext highlighter-rouge">local</code></strong>. It does not overwrite <code class="language-plaintext highlighter-rouge">upstream</code>, and it does not
+reuse <code class="language-plaintext highlighter-rouge">upstream</code> for the local original — that was one field until 2026-09-22,
+and by then 5 of the 9 who-iris item records were using it for a local value in
+violation of its own documentation.</p>
+
+<p>Without <code class="language-plaintext highlighter-rouge">local</code>, one rename later a copy is indistinguishable from original
+work. That is the whole failure this step exists to prevent, and nothing
+downstream can repair it: the information was never written down.</p>
+<h2 id="the-copy-is-not-read-only">
   
   
-    <a href="#dak-api" class="anchor-heading" aria-labelledby="dak-api"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DAK API
+    <a href="#the-copy-is-not-read-only" class="anchor-heading" aria-labelledby="the-copy-is-not-read-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The copy is NOT read-only
   
   
 </h2>
     
 
-<p>The four sidecars are published independently, so an absent one is a fact about the
-IG rather than a gap in this index.</p>
+<p>A materialized node is frozen because it is a claim about somebody else’s
+bytes. A copy in your own <code class="language-plaintext highlighter-rouge">folio/</code> is <strong>yours</strong>, makes no such claim, and is
+ordinary authored content — so it is writable, and its directory’s <code class="language-plaintext highlighter-rouge">readOnly</code>
+is <code class="language-plaintext highlighter-rouge">false</code>.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Sidecar</th>
-      <th>Published at</th>
-      <th>Held locally</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>JSON Schema</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.schema.json</a></td>
-      <td><code class="language-plaintext highlighter-rouge">fhir-artifact-index/dak/StructureDefinition-HCert.schema.json</code></td>
-    </tr>
-    <tr>
-      <td>Displays</td>
-      <td><em>not published for this artefact</em></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>OpenAPI</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-HCert.openapi.json</a></td>
-      <td><code class="language-plaintext highlighter-rouge">fhir-artifact-index/dak/StructureDefinition-HCert.openapi.json</code></td>
-    </tr>
-    <tr>
-      <td>JSON-LD</td>
-      <td><em>not published for this artefact</em></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
+<p>If it were frozen too, the copy-out would achieve nothing, and the next person
+would need a copy of the copy.</p>
+<h2 id="the-publication-exception">
+  
+  
+    <a href="#the-publication-exception" class="anchor-heading" aria-labelledby="the-publication-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The publication exception
+  
+  
+</h2>
+    
+
+<p>Publication may write to materialized content — deriving a rendition, stamping
+a manifest — and that is a NAMED step in a declared process, never a carve-out
+in prose. It is not a licence to edit: what it may do is add derived artefacts
+beside the original, and the original’s digest must still verify afterwards.</p>
+<h2 id="what-to-check-afterwards">
+  
+  
+    <a href="#what-to-check-afterwards" class="anchor-heading" aria-labelledby="what-to-check-afterwards"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to check afterwards
+  
+  
+</h2>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">bun run check:materialized-fixity</code> — the original still hashes to its
+recorded digest. If it does not, the copy-out was an edit in place.</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run check:read-only-graphs</code> — your folio’s directory is not accidentally
+declared read-only, and the source’s still is.</li>
+</ul>
 
           
 
