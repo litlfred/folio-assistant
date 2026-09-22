@@ -251,6 +251,10 @@
     "counts": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#counts",
       "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
+      "@container": "@set"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld",
@@ -260,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-21T22:09:48.951Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4a673ff90645a62393a042c77bb1f5fe0964dc97",
-  "sourceCommitSha": "4a673ff90645a62393a042c77bb1f5fe0964dc97",
-  "sourceCommitAt": "2026-09-21T22:08:03Z",
+  "generatedAt": "2026-09-22T06:04:12.315Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ae557ff5f98ef3a3283bd35e908716d970c1d9ee",
+  "sourceCommitSha": "ae557ff5f98ef3a3283bd35e908716d970c1d9ee",
+  "sourceCommitAt": "2026-09-22T06:02:29Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 222,
+    "Skill": 223,
     "Actor": 28,
     "Capability": 28,
     "Role": 131,
@@ -276,9 +280,9 @@
     "SequenceFlow": 741,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 90,
-    "GraphKind": 27,
-    "Directory": 35,
+    "Schema": 91,
+    "GraphKind": 26,
+    "Directory": 34,
     "Asset": 3
   },
   "@graph": [
@@ -1285,6 +1289,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/technical-documentation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/untainted-verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "untainted-verification",
+      "title": "Untainted verification — the producer never writes the verdict",
+      "description": "The party that produced an artefact does not write the verdict on it. How a checker and an adjudicator are dispatched with controlled context, the three rules that make it a measurement rather than a ritual, and the third state that lets it gate at all.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/untainted-verification.md",
+      "instructionLines": 159,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/asset-extraction",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "asset-extraction",
@@ -1701,7 +1722,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 200,
+      "instructionLines": 239,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1752,7 +1773,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/voice-authoring-guidance.md",
-      "instructionLines": 81,
+      "instructionLines": 92,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1819,7 +1840,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 748,
+      "instructionLines": 760,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1853,7 +1874,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-tiles.md",
-      "instructionLines": 107,
+      "instructionLines": 234,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1971,7 +1992,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 384,
+      "instructionLines": 394,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2039,7 +2060,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 511,
+      "instructionLines": 537,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2458,7 +2479,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/board-windows.md",
-      "instructionLines": 147,
+      "instructionLines": 227,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3081,7 +3102,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/coordinate.md",
-      "instructionLines": 271,
+      "instructionLines": 340,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3927,7 +3948,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#package/bootstrap-render"
       ],
       "instructionsPath": "../bootstrap/render/bootstrap-graph-publication.md",
-      "instructionLines": 103,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5438,6 +5459,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/untainted-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/unverified-constraints",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/uploads-watch",
@@ -28792,7 +28814,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/discuss"
     },
@@ -30715,7 +30737,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
       "title": "Instance declaration schema",
-      "description": "The zod definition of `harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+      "description": "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       "install": {
         "none": true
       },
@@ -30898,7 +30920,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/log-message"
     },
@@ -33278,6 +33300,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocabulary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#schema/voice-skill",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "voice-skill",
+      "title": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "module": "schemas/voice-skill.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voice-skill"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#schema/voices",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "voices",
@@ -33574,14 +33605,6 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "voices",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#VoiceGraph",
-      "renderable": false,
-      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todo-feedback",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "todo-feedback",
@@ -33807,8 +33830,9 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/content-publish"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#skill/untainted-verification"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#role/QC%20reviewer",
@@ -34883,18 +34907,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/voices",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "voices",
-      "path": "voices/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices"
-      ],
-      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/voices",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/voices"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
@@ -35068,8 +35080,8 @@
   ],
   "staging": {
     "branch": "claude/kind-bohr-cyt1s4",
-    "sha": "ab16e898f49a6d4c555e457002b3d927918099ae",
+    "sha": "42b287df31fac1020e371e3ead6d4686463db11a",
     "pr": "781/merge",
-    "run": "35661077387"
+    "run": "35693098748"
   }
 }

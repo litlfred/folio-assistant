@@ -1167,6 +1167,61 @@
     'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
     "</svg>";
 
+  /* ── The glyph a tile wears, by declared NAME ────────────────────────
+   *
+   * Every graph tile wore NET_GLYPH — the graph-as-a-thing-to-browse net —
+   * because a tile had no way to say otherwise. `VisualisationSchema.icon`
+   * gives it one, and this is the registry that name resolves against.
+   *
+   * A NAME rather than markup, and the reason is not style. `tileLink` assigns
+   * its glyph with `innerHTML`, so a declaration carrying SVG would make
+   * `<instance>.json` an HTML injection site — and a declaration is INHERITED,
+   * reaching this instance from a dependency through `resolveSkillDirs`. The
+   * markup would not even have to be authored by somebody with commit access
+   * here. R17's rule, one surface along: allow-list, default-deny.
+   *
+   * `hasOwnProperty` and not `TILE_GLYPHS[name]`, because the name comes from
+   * a declaration: `"constructor"` and `"toString"` are inherited properties
+   * of every object literal, and a bare lookup would hand one of them to
+   * `innerHTML`.
+   *
+   * An unknown name falls back rather than failing. The registry ships with
+   * the site and the declaration is authored apart from it, so a folio may
+   * name a glyph a slightly older platform has not got; a tile that vanished
+   * over that would turn a cosmetic mismatch into a missing navigation entry.
+   * The fallback is exactly what every tile rendered before this existed.
+   */
+  /*
+   * TWO beans, not the four the owner's reference art has, and the count was
+   * MEASURED rather than chosen. `.fa-tile svg` is `1.25rem` — 20px — so 20px
+   * is the whole of this glyph's job. Five candidates were rendered at it:
+   * three outlined beans crowd until the hilums merge into one grey mass;
+   * three filled with an oval cut-out read as olives; a filled crescent
+   * collapses to a speck. At two beans the shapes and their hilums stay
+   * separate at 20px and the drawing still looks like the reference at 64.
+   *
+   * Which is the usual trade and worth naming: an icon is not a picture
+   * shrunk, and fidelity to the source art at a size nobody views it at is
+   * not fidelity to anything.
+   */
+  var BEANS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">' +
+    '<g transform="translate(8.4,8.6) rotate(-32)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    '<g transform="translate(15.6,15.4) rotate(26)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    "</g></svg>";
+
+  var TILE_GLYPHS = { beans: BEANS_GLYPH };
+
+  function glyphFor(name) {
+    if (typeof name !== "string") return NET_GLYPH;
+    return Object.prototype.hasOwnProperty.call(TILE_GLYPHS, name)
+      ? TILE_GLYPHS[name]
+      : NET_GLYPH;
+  }
+
   // A magnifier: search. The owner asked for the search to leave the main
   // panel and become "a icon in navbar that expands" -- this is the icon, and
   // the launcher it lives in is the expansion.
@@ -2175,6 +2230,68 @@
     return a;
   }
 
+  /* ── Where a declared, site-root path is composed ────────────────────
+   *
+   * `graph-tiles.ts` stores a tile's href relative to the SITE ROOT — `/beans/`
+   * — which is right, and is what `harness.links[].path` stores as well. Every
+   * other consumer of such a path hands it to Liquid's `relative_url`, which
+   * prepends `site.baseurl`. A tile cannot: it is composed here, after Liquid
+   * has finished, from JSON on a `<meta>`.
+   *
+   * SO IT HAS TO BE DONE HERE, AND IT WAS NOT — issue #801. This site serves
+   * from `/folio-assistant`, so an unprefixed `/beans/` resolves against the
+   * ORIGIN and every one of the twelve tiles 404ed. The rule was already
+   * written down 800 lines above, on the action tiles: *"an absolute `/kg/`
+   * is a 404 rather than a wrong-looking link"*. Two tile families, one rule,
+   * and only one of them was following it.
+   *
+   * NOT applied inside `tileLink`, which both families share. The action tiles
+   * are handed `#fa-site-links` values that Liquid ALREADY composed, so
+   * prefixing there would double the base and break the family that works.
+   * The base belongs where the raw declared value enters, which is here.
+   *
+   * An ABSENT meta falls back to `baseurlFromTodoSrc`, and then to `""`. The
+   * empty answer is the previous behaviour and is deliberate: a site with no
+   * baseurl is the common case (the e2e fixtures, a local `jekyll serve`),
+   * and it is indistinguishable from a declared empty one — `site.baseurl`
+   * renders as the empty string for both. There is nothing here to report as
+   * a finding.
+   *
+   * ## ONE function, because there were briefly two
+   *
+   * A second `siteBaseurl` was defined ~500 lines below this one, deriving
+   * the prefix from `meta[name="fa-todo-src"]` for the sticky art. Same name,
+   * same IIFE scope — so the later declaration silently replaced this one,
+   * and `withBase` began asking a meta that the graph-tile fixtures do not
+   * carry. Every tile lost its base, which is issue #801 coming straight back
+   * on a merge that touched neither feature.
+   *
+   * The two were never different questions. `fa-baseurl` is the DECLARED
+   * answer, written by Liquid from `site.baseurl`; the todo-src derivation is
+   * a RECONSTRUCTION for a page that has the one meta and not the other. So
+   * the declared value wins and the derivation is the fallback, which is the
+   * only order that cannot make a page contradict its own server.
+   */
+  function siteBaseurl() {
+    var meta = document.querySelector('meta[name="fa-baseurl"]');
+    var v = (meta && meta.getAttribute("content")) || "";
+    return v ? v.replace(/\/+$/, "") : baseurlFromTodoSrc();
+  }
+
+  /**
+   * A site-root path, composed against this deploy's base.
+   *
+   * Only a path that starts with `/` is composed. Anything else is already
+   * relative to the page, or is not ours, and prefixing it would invent a URL.
+   * No guard against a base that is already present: a tile whose declared
+   * path genuinely begins with the base's spelling is a directory somebody
+   * named that way, and skipping it would be this bug with the sign flipped.
+   */
+  function withBase(href) {
+    if (typeof href !== "string" || href.charAt(0) !== "/") return href;
+    return siteBaseurl() + href;
+  }
+
     /* ── The DECLARED visualisations, one tile each ──────────────────────
    *
    * Owner: *"if harness declares visaluzers, those should have tile"*, and
@@ -2206,7 +2323,7 @@
       // another surface.
       if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
       if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
-      var tile = tileLink(NET_GLYPH, t.title, t.href,
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
                           "the declared visualisation of " + t.directory);
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
@@ -2611,7 +2728,8 @@
   }
 
   /**
-   * THE SITE'S BASEURL, derived from a path the server already resolved.
+   * THE SITE'S BASEURL, derived from a path the server already resolved —
+   * the FALLBACK arm of `siteBaseurl`, never called directly.
    *
    * Every backdrop in the todo index was arriving as `/assets/img/...` —
    * site-ROOT-absolute with no baseurl — and this site is served from
@@ -2640,7 +2758,7 @@
    * board does not mount at all without it. Stripping the known suffix gives
    * the prefix the same page used to fetch the index itself.
    */
-  function siteBaseurl() {
+  function baseurlFromTodoSrc() {
     var m = document.querySelector('meta[name="fa-todo-src"]');
     var src = m && m.getAttribute("content");
     var suffix = "/assets/todos/index.json";
@@ -2996,6 +3114,43 @@
     return row;
   }
 
+  /**
+   * One line of text, from prose that was never one line.
+   *
+   * Owner, 2026-09-21, on what a CLOSED sticky shows: *"just the condensend
+   * text"*, and then *"(strip whitesaplnce, newlines, bullets....)"*.
+   *
+   * ## Why this rather than an `aria-label`
+   *
+   * The first proposal was a visually-hidden name. The owner rejected it —
+   * *"that's new data to maintain"* — and the rejection is the better
+   * design: a hidden label is a SECOND string beside the visible one, and two
+   * strings for one fact is the defect `1rta` and `6lb8` §6 already name about
+   * a badge that can disagree with its own panel. The card's own text IS its
+   * name; a screen reader and a sighted reader get the same string because
+   * there is only one.
+   *
+   * ## What it strips, and what it deliberately does not
+   *
+   * Markdown list markers, blockquote carets, heading hashes and every run of
+   * whitespace — the structure that makes prose readable DOWN a card and
+   * unreadable ACROSS one. It does not truncate: cutting at a character count
+   * puts the elision in the model, where a stylesheet cannot undo it for a
+   * wider card. `text-overflow` is the renderer's job and stays there.
+   */
+  function condense(text) {
+    if (!text) return "";
+    return String(text)
+      // List markers and blockquote carets, at the start of any line only —
+      // a hyphen mid-sentence is a hyphen.
+      .replace(/^[ \t]*(?:[-*+\u2022]|\d+[.)]|>)+[ \t]*/gm, "")
+      // Heading hashes, same rule.
+      .replace(/^[ \t]*#{1,6}[ \t]*/gm, "")
+      // Every run of whitespace, newlines included, becomes one space.
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
     var attrs = {
@@ -3041,7 +3196,7 @@
       class: "fa-sticky-toggle",
       "aria-expanded": "false",
     });
-    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, todo.summary));
+    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, condense(todo.summary)));
     head.appendChild(toggle);
 
     var chips = el("div", { class: "fa-sticky-chips" });
@@ -3332,15 +3487,63 @@
     /* THE OTHER SURFACE for the same declarations. Q11: declared once,
      * per-surface visibility. This filters the same array the navbar reads, so
      * a tile cannot be one thing in the sidebar and another here. */
+    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
+     * tiles do not go to the window. they are stacked around (bottom?) of
+     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+     *
+     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
+     * so on the landing board it landed below every full-bleed card and read
+     * as absent. The DECLARATION side was already right and is untouched:
+     * `harness-tiles` — *"declared once, per-surface visibility, never two
+     * registries free to disagree about what a tile is"* — and the call below
+     * still filters the same array the navbar reads. Only the placement was
+     * wrong.
+     *
+     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
+     * records: *"the tiles must NOT be projected onto the glass — they are
+     * folio chrome, where a window is content."* So the dock is a SIBLING of
+     * the board's content, at its edge, and never a layer over it. Same arrow
+     * as `board-diagram-interchange`: chrome frames content, never the
+     * reverse.
+     *
+     * A `<details>` for the same reason the sticky drawer is one — the
+     * disclosure, the keyboard path, Escape and the expanded state are the
+     * browser's, and it degrades to everything-visible with no JavaScript,
+     * which is R4's floor rather than a convenience. */
+    var boardStrip = el("details", { class: "fa-board-strip", open: "" });
+    boardStrip.appendChild(el("summary", {
+      class: "fa-board-strip-summary",
+      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
+      // to spend a keystroke needs the subject.
+      "aria-label": "Visualisations for this folio",
+      title: "Visualisations for this folio",
+    }, "\u25A6 Visualisations"));
     var boardTiles = el("div", {
       class: "fa-board-tiles",
       role: "group",
       "aria-label": "Visualisations",
     });
+    boardStrip.appendChild(boardTiles);
 
     var grid = el("div", { class: "fa-sticky-grid" });
+    /* THE STRIP IS ALONG THE TOP, and OPEN by default — owner, 2026-09-21:
+     * *"lets have the square tiles lined up on the top of the
+     * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
+     *
+     * It was a `<details>` dock at the BOTTOM, closed, which got two things
+     * wrong at once: the edge, and the default. Tiles a reader has to open
+     * before they can see what a folio offers are tiles that read as absent —
+     * which is the same complaint that opened `v0jv` about the in-flow row.
+     * So `open` is the initial state and sliding it UP is the reader's act,
+     * not the other way round.
+     *
+     * NOT A SUB-PANEL, which the owner ruled in the same breath: *"i dont
+     * want sub-panels of the folio, just one open (miro-like) board.
+     * everything lives on fa-sticky-board, fa-landing-board."* The strip is
+     * chrome ALONG the board rather than a panel within it — it carries no
+     * card, no content and no second surface. */
+    board.appendChild(boardStrip);
     board.appendChild(grid);
-    board.appendChild(boardTiles);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
     // which layers initiated -- and putting the todos above them would answer

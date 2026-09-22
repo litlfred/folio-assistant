@@ -337,6 +337,10 @@
                             "theme": {
                               "type": "string",
                               "minLength": 1
+                            },
+                            "icon": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -597,6 +601,10 @@
             "owes": {
               "type": "string",
               "minLength": 1
+            },
+            "reachableAt": {
+              "type": "string",
+              "minLength": 1
             }
           },
           "required": [
@@ -623,12 +631,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.schema.json",
   "title": "CatHarness declaration",
-  "description": "The root declaration every instance carries as `harness.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
+  "description": "The root declaration every instance carries as `<name>.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/cat-harness.jsonld",
   "staging": {
     "branch": "claude/kind-bohr-cyt1s4",
-    "sha": "ab16e898f49a6d4c555e457002b3d927918099ae",
+    "sha": "42b287df31fac1020e371e3ead6d4686463db11a",
     "pr": "781/merge",
-    "run": "35661077387"
+    "run": "35693098748"
   }
 }
