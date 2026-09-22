@@ -556,6 +556,14 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * rendering no icon — a missing favicon looks exactly like a slow one.
    */
   icon?: string;
+  /**
+   * Which icons this instance's navbar row shows — see `NavbarIconsSchema`.
+   *
+   * Three states: absent inherits, `[]` shows none, a list decides. The two
+   * empty-looking answers are deliberately different and must not be read
+   * through a truthiness test.
+   */
+  navbarIcons?: NavbarIcon[];
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -1898,6 +1906,102 @@ export function renderExemptionProblems(
   return problems;
 }
 
+/**
+ * The navbar icon row — WHICH icons, declared per instance.
+ *
+ * Owner, 2026-09-22: *"[x] should be on the navbar w/ other icons, can make
+ * two lines avatar+name of harness/catalogue/sub-grrraph as approrirate, the
+ * second line are the icons. max is 6"*, and then, on where the list lives:
+ * *"should be in each harness config which are shown (so some could show
+ * none, but make this default in cat-harness that is inherited)."*
+ *
+ * ## A CLOSED set, not free strings
+ *
+ * Each id is an affordance the navbar knows how to render and where to point.
+ * A free string would let an instance name an icon nothing draws, and the
+ * failure would be a silent gap in a row capped at six — `pb04` one layer up
+ * from a dead link: a slot that renders nothing reads as a navbar that lost
+ * something.
+ *
+ * ## SIX, and the cap is the owner's
+ *
+ * Refused rather than truncated. Truncating drops whichever the instance
+ * listed last, silently, and an instance that declared seven has made a
+ * decision the navbar would then be overruling without saying so.
+ */
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+
+export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
+
+export const NavbarIconsSchema = z
+  .array(z.enum(NAVBAR_ICONS))
+  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .refine((xs) => new Set(xs).size === xs.length, {
+    message: "an icon listed twice is two slots doing one job",
+  });
+
+/**
+ * Which icons an instance's navbar row shows, after inheritance.
+ *
+ * Owner: *"should be in each harness config which are shown (so some could
+ * show none, but make this default in cat-harness that is inherited)."*
+ *
+ * ## The walk is `needs`, because that is the inheritance this repo already has
+ *
+ * Nearest declaration wins: the instance itself, then its `needs` chain toward
+ * the foundation, breadth-first so a nearer layer beats a deeper one. It is
+ * the same direction `resolveSkillDirs` composes and the same spine `builtOn`
+ * documents — a second traversal would be a second answer to "what is this
+ * instance built on", free to disagree with the first.
+ *
+ * ## `[]` STOPS the walk; absent continues it
+ *
+ * An instance that declares `[]` has said "show none", and inheriting over
+ * that would overrule a decision it made. An instance that declares nothing
+ * has said nothing. The two are different answers and this function must not
+ * turn one into the other — which is why the guard is `!== undefined` rather
+ * than a truthiness test, the shape that collapses exactly this distinction.
+ *
+ * ## `undefined` is the THIRD state and callers must not render it as none
+ *
+ * Returned when neither the instance nor anything it needs has decided, and
+ * `floor` has not either. "Nobody has said" is not "nothing to show": a caller
+ * that draws an empty row for it reports an un-migrated instance as a
+ * deliberate one. Report it.
+ *
+ * @param name the instance to resolve
+ * @param declared every instance's own value, keyed by name — absent key and
+ *   `undefined` value both mean "did not declare"
+ * @param needs each instance's dependency names
+ * @param floor the instance whose list is the default when nothing else has
+ *   decided; `cat-harness` here, passed rather than named so this function
+ *   does not know which repository it is in
+ */
+export function resolveNavbarIcons(
+  name: string,
+  declared: ReadonlyMap<string, readonly NavbarIcon[] | undefined>,
+  needs: ReadonlyMap<string, readonly string[] | undefined>,
+  floor?: string,
+): readonly NavbarIcon[] | undefined {
+  const seen = new Set<string>();
+  const queue: string[] = [name];
+  while (queue.length > 0) {
+    const at = queue.shift()!;
+    // A `needs` cycle is somebody else's finding — `check:harness-dirs` and the
+    // dependency order own it. Here it must simply not hang.
+    if (seen.has(at)) continue;
+    seen.add(at);
+    const own = declared.get(at);
+    if (own !== undefined) return own;
+    for (const n of needs.get(at) ?? []) queue.push(n);
+  }
+  if (floor !== undefined && !seen.has(floor)) {
+    const f = declared.get(floor);
+    if (f !== undefined) return f;
+  }
+  return undefined;
+}
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1911,6 +2015,22 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   assets: z.array(KgAssetSchema).optional(),
   icon: z.string().min(1).optional(),
+  /**
+   * Which icons this instance's navbar row shows.
+   *
+   * THREE STATES, and the third is the point. **Absent** means *inherit* —
+   * this instance has not decided, and the answer comes from its dependency
+   * stack with `cat-harness`'s list as the floor. **`[]`** means *show none*,
+   * which the owner asked for by name (*"some could show none"*). **A list**
+   * is this instance's own answer and overrides what it inherits.
+   *
+   * Absent and `[]` must not collapse into each other. They are the same
+   * failure `renderExemption` and the graph-kind declarations already guard:
+   * "nobody has said" rendered as "nothing to show" is a decision nobody made,
+   * and here it would make an un-migrated instance indistinguishable from one
+   * that deliberately wants a bare navbar.
+   */
+  navbarIcons: NavbarIconsSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),

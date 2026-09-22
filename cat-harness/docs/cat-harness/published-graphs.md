@@ -99,7 +99,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 1 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/fsh-guts/index.md' | relative_url }})
+- [C@T Harness]({{ '/fsh-guts/' | relative_url }})
 
 ### `glossary`
 
@@ -169,7 +169,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/processes/index.md' | relative_url }})
+- [C@T Harness]({{ '/processes/' | relative_url }})
 - SMART Base — *declared, not published*
 
 ### `qa`
@@ -231,7 +231,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 3 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/tools/index.md' | relative_url }})
+- [C@T Harness]({{ '/tools/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - SMART Base — *declared, not published*
 
