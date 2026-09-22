@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T06:51:09.788Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2c04eb53a71b1a40b3b7d78f62012126e8a9029e",
-  "sourceCommitSha": "2c04eb53a71b1a40b3b7d78f62012126e8a9029e",
-  "sourceCommitAt": "2026-09-22T06:49:14Z",
+  "generatedAt": "2026-09-22T07:10:15.255Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/11566541c402db249801731cba2167362d17c2f0",
+  "sourceCommitSha": "11566541c402db249801731cba2167362d17c2f0",
+  "sourceCommitAt": "2026-09-22T07:08:05Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 228,
+    "Skill": 229,
     "Actor": 29,
     "Capability": 28,
     "Convention": 2,
@@ -1840,7 +1840,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 761,
+      "instructionLines": 762,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1863,6 +1863,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/communication-language",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "communication-language",
+      "title": "The language you communicate in",
+      "description": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/communication-language.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/communication-language"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/harness-tiles",
@@ -5446,6 +5463,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/communication-language",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/content-acquisition",
@@ -35208,8 +35226,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-fermi-xvs06i",
-    "sha": "bf772d6c010c7d055e0cd911f162474226a66098",
+    "sha": "5410d65a6eb657b092be6f6d588fd848cbe71f31",
     "pr": "841/merge",
-    "run": "35696581087"
+    "run": "35698100734"
   }
 }
