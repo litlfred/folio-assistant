@@ -50,11 +50,26 @@ describe("invocations", () => {
     // `./bootstrap`, not `./cat-bootstrap`: #771 renamed the directory an hour
     // after #790 added this assertion, and neither branch carried the other's
     // change. Both were green on their own head and main went red on the
-    // merge -- which is this witness doing precisely its job. The fixtures
-    // above keep saying `cat-bootstrap` on purpose: they are synthetic YAML
-    // testing that the parser returns WHATEVER instance string it is given,
-    // so the name there is arbitrary and no directory has to exist for it.
-    // This line is the only one that reads the real file.
+    // merge -- which is this witness doing precisely its job.
+    //
+    // THE FIXTURES ABOVE ALSO SAY `./bootstrap`, AND THAT IS A COINCIDENCE.
+    // They are synthetic YAML testing that the parser returns WHATEVER
+    // instance string it is handed, so the name there is arbitrary and no
+    // directory has to exist for it. They would pass just as well spelled
+    // anything else; they happen to match this line because a rename swept
+    // them along, not because they are required to agree with it.
+    //
+    // So do not "fix" a fixture to match this line, and do not read a fixture
+    // as evidence about the real workflow. This line is the only one that
+    // reads the real file.
+    //
+    // This note said the opposite until #854 -- it claimed the fixtures still
+    // read `cat-bootstrap`, ten lines below fixtures that did not. #807 had
+    // warned in advance that they "must not be swept up in a find-and-replace";
+    // they were, and the comment defending them was not updated. Recorded
+    // because a note whose example is wrong is worse than no note: it is the
+    // same drift, one layer up, as the `--layer` message that listed an
+    // allow-list it no longer matched.
     const got = invocations(wf("docs-site.yml"));
     expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
