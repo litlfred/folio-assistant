@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 484,
+      "count": 488,
       "unit": "beans"
     }
   },
@@ -2115,16 +2115,30 @@
       "file": "beans/defs/folio-assistant-ahvw--process-how-an-agent-decides-what-it-is-doing-and.md"
     },
     {
+      "id": "folio-assistant-ai9u",
+      "title": "check-workflow-paths trusts working-directory as input and never checks it exists — green over 8 dead ones",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:29:05Z",
+      "updatedAt": "2026-09-22T08:48:12Z",
+      "preview": "_2026-09-22T08:35:00Z_ — Found while working `u9r9` on `claude/peaceful-heisenberg-dzgsf1`. `u9r9` is about two stale paths; **this is about the gate that should have caught them and reports clean.**\n\n## The gate exists, and it is green over the whole defect\n\n`cat-harness/scripts/check-workflow-paths.ts` — 701 lines, written for bean `52dz`, whose stated subject is *\"every script path a workflow i",
+      "file": "beans/defs/folio-assistant-ai9u--check-workflow-paths-trusts-working-directory-as-i.md"
+    },
+    {
       "id": "folio-assistant-alox",
       "title": "The landing panel and its onboarding block — what shipped, and what is still judgement",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T07:27:54Z",
-      "updatedAt": "2026-09-19T07:28:25Z",
+      "updatedAt": "2026-09-22T08:17:09Z",
       "preview": "_2026-09-19T07:28:25Z_ — WHY THIS BEAN EXISTS: the owner asked, 2026-09-19, that the landing work be 'implemented as a todo' rather than carried ad-hoc through a chat. This is that record. WHAT SHIPPED, all on branch claude/festive-galileo-s7ibx0 / PR #345, all verified by a local jekyll build rather than by reading the template. (1) THE BACKDROP 404. docs/_includes/landing.html interpolated card.",
       "file": "beans/defs/folio-assistant-alox--the-landing-panel-and-its-onboarding-block-what-sh.md"
     },
@@ -3105,14 +3119,14 @@
     {
       "id": "folio-assistant-gjli",
       "title": "ALL UI must follow accessibility guidelines — standing rule, and the KG viewer has known gaps",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:23:00Z",
-      "updatedAt": "2026-09-19T00:53:03Z",
+      "updatedAt": "2026-09-22T06:54:25Z",
       "preview": "_2026-09-19T00:23:16Z_ — OWNER, 2026-09-19, verbatim: 'ALL UI MUST FOLLOW ACCESSIBATILITY GUIDELIENS'. Stated in caps, so a STANDING RULE rather than one task. It binds the KG viewer, the action-icon tiles (bean 1le7), the docs site and anything future. AGENTS.md says the discipline lives in skills/, so this needs a skill — provisionally folio-core/ui-accessibility — not just a bean, and the skill",
       "file": "beans/defs/folio-assistant-gjli--all-ui-must-follow-accessibility-guidelines-standi.md"
     },
@@ -3171,6 +3185,20 @@
       "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "Found 2026-09-22 while driving `a58y` to green. **Pre-existing on `main`, not\nintroduced by the branch that found it** — measured both sides: 55 modules\ncall a directory accessor on `main` and 55 on the branch, so the workload is\nidentical.\n\n## What it actually was\n\nNot a flake, and not an assertion failure:\n\n    (fail) each one resolves `library` in a FRESH process [5038.08ms]\n      ^ this test t",
       "file": "beans/defs/folio-assistant-gr5h--declared-directory-resolves-has-been-over-buns-def.md"
+    },
+    {
+      "id": "folio-assistant-h2s9",
+      "title": "The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T00:47:08Z",
+      "updatedAt": "2026-09-22T00:47:22Z",
+      "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
+      "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
     },
     {
       "id": "folio-assistant-h32d",
@@ -3383,6 +3411,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i9xp",
+      "title": "beans update --body-file REPLACES the body silently; the skill named only the inline --body-append",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:53:49Z",
+      "updatedAt": "2026-09-22T06:54:12Z",
+      "preview": "_2026-09-22T07:00:00Z_ — FOUND BY BREAKING IT, 2026-09-22, while closing bean `gjli`. A four-paragraph closing note was too long to pass as an inline string, so I reached for `beans update <id> --body-file <f>`. It **replaced** the body: the owner's 2026-09-19 verbatim note ('ALL UI MUST FOLLOW ACCESSIBATILITY GUIDELIENS', stated in caps and load-bearing — it is what makes the rule STANDING rather",
+      "file": "beans/defs/folio-assistant-i9xp--beans-update-body-file-replaces-the-body-silently.md"
+    },
+    {
       "id": "folio-assistant-ie9l",
       "title": "READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness's by accident",
       "status": "completed",
@@ -3518,7 +3560,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:40:00Z",
-      "updatedAt": "2026-09-21T21:40:00Z",
+      "updatedAt": "2026-09-22T08:55:33Z",
       "preview": "Owner, 2026-09-21, in one message plus three follow-ups. The verbatim text and\nthe full R18-R32 table are in the design record\n(`cat-harness/docs/architecture/folio-board-requirements.md`, \"Round three\");\nthis bean carries only what is to be built and what would falsify it.\n\n## Why this is a round and not an amendment\n\nTwo of these requirements **reverse work that had not yet merged**. `v0jv`\nbuil",
       "file": "beans/defs/folio-assistant-j2if--folio-visualisation-r18-r32-square-strip-on-top-co.md"
     },
@@ -3711,14 +3753,14 @@
     {
       "id": "folio-assistant-jpjt",
       "title": "F8/F9 is structurally blocked on R25's glass: every folio surface today needs just-the-docs furniture",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:20:00Z",
-      "updatedAt": "2026-09-22T08:21:52Z",
+      "updatedAt": "2026-09-22T08:54:18Z",
       "preview": "F8/F9: *\"the folio visualisation … should by convention be available on any\nharness for consistent feel. who-iris, smart-\\*, etc are content libraries a\nuser is browsing and their 'folio' from the cat-harness is consistent across\nthem.\"*\n\n## The mechanism is decided. The owner chose it 2026-09-21\n\nThree ways to reach a downstream harness were tabled; the owner chose\n**an exported mount fragment pl",
       "file": "beans/defs/folio-assistant-jpjt--f8f9-is-structurally-blocked-on-r25s-glass-every-f.md"
     },
@@ -4047,14 +4089,14 @@
     {
       "id": "folio-assistant-lxpq",
       "title": "CLEAN MERGE, WRONG ARTEFACT: a generated file neither side would emit, and no conflict to flag it",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:41:04Z",
-      "updatedAt": "2026-09-22T08:41:04Z",
+      "updatedAt": "2026-09-22T08:58:35Z",
       "preview": "Measured on `main` at `3341108a`, 2026-09-22, minutes after it landed.\n\n## What happened\n\nTwo branches changed the SAME generated artefact in ways git merged cleanly:\n\n| side | change to `docs/assets/voices/index.json` |\n|---|---|\n| main (`tis1`) | added `tile.voices.count` — a projection declares its own count |\n| #827 (`26tu`) | added a sixth voice, `agent-skill-authoring` |\n\nGit had no textual ",
       "file": "beans/defs/folio-assistant-lxpq--clean-merge-wrong-artefact-a-generated-file-neithe.md"
     },
@@ -5491,6 +5533,20 @@
       "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
     {
+      "id": "folio-assistant-tebu",
+      "title": "Staging previews are at 878.7 MiB of a 1 GB Pages limit, nothing is prunable, and the check's remedy addresses a different budget",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:03:07Z",
+      "updatedAt": "2026-09-22T09:03:43Z",
+      "preview": "`health` reports `staging-preview-size` **critical**: 10 previews, **878.7 MiB**,\npast three-quarters of GitHub's 1 GB Pages limit, which the main site shares.\n\n## Pruning cannot fix it, and the check's own action says to prune\n\nEvery one of the ten belongs to an **open and active** pull request — oldest\nidle 12.9 h, six touched within six minutes of measuring. So the finding's\naction —\n\n> Ask whi",
+      "file": "beans/defs/folio-assistant-tebu--staging-previews-are-at-8787-mib-of-a-1-gb-pages-l.md"
+    },
+    {
       "id": "folio-assistant-tfo1",
       "title": "INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused",
       "status": "in-progress",
@@ -5593,14 +5649,14 @@
     {
       "id": "folio-assistant-u9r9",
       "title": "TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T05:57:48Z",
+      "updatedAt": "2026-09-22T07:19:07Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
