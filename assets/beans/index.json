@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 490,
+      "count": 491,
       "unit": "beans"
     }
   },
@@ -2821,6 +2821,20 @@
       "updatedAt": "2026-09-20T16:38:20Z",
       "preview": "AGENTS.md lists `bunx playwright test` under Commands. It cannot work:\nplaywright.config.ts has\n\n    webServer: { command: 'node test-server.cjs', port: 8080 }\n\nand test-server.cjs is absent from the repo and not in .gitignore, so the run\ndies with MODULE_NOT_FOUND before a single test executes. Confirmed absent on\norigin/main, so this is not a local-checkout problem.\n\nFound 2026-09-18 while addin",
       "file": "beans/defs/folio-assistant-dzl3--playwrightconfigts-runs-a-test-servercjs-that-does.md"
+    },
+    {
+      "id": "folio-assistant-ebvl",
+      "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:12:58Z",
+      "updatedAt": "2026-09-22T09:13:04Z",
+      "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
+      "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
     },
     {
       "id": "folio-assistant-eief",
