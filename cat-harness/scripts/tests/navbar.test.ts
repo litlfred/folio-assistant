@@ -12,6 +12,8 @@
  * sidebar, after #791 lands) has to be able to satisfy.
  */
 import { describe, expect, it } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import {
   NAV_COLLAPSED_PX,
@@ -24,6 +26,17 @@ import {
   type NavbarModel,
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
+import { documentIndexOf } from "../lib/navbar.js";
+import {
+  BEGIN,
+  END,
+  NAVBAR_GEOMETRY_MARKER_ERROR,
+  navbarGeometryCssPath,
+  renderNavbarGeometryCss,
+  withGeometry,
+} from "../gen-navbar-geometry-css.js";
+import { publishedUrlOf } from "../harness-tiles.js";
+import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const model: NavbarModel = {
@@ -364,5 +377,269 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `kg:schema:check`'s finding, not this script's; here it is an empty
     // middle, and the caller still renders the root and the harnesses.
     expect(declaredGraphs("does-not-exist", new Map())).toEqual([]);
+  });
+});
+
+describe("the geometry is stated ONCE — `sjic`", () => {
+  // The defect this guards was invisible to a suite that had a test on each
+  // side: `navbar.ts` asserted its own numbers and `sidebar-strip.test.ts`
+  // asserted `docs-ui.css`'s, and they were 40px against 56px at rest.
+  // DERIVED, not spelled out. `site-dir-single-answer` refuses a literal site
+  // root anywhere in source, including here — and it caught this file's first
+  // draft, which is the gate working: a test that hardcodes `docs/` is a
+  // second answer to the question `siteDirFor` exists to answer, and it goes
+  // on passing against a path nothing serves.
+  const INSTANCE = instanceRootFor(import.meta.dir);
+  const uiCss = readFileSync(join(INSTANCE, navbarGeometryCssPath(INSTANCE)), "utf8");
+  // The generated REGION, sliced out of the authored stylesheet it now lives
+  // in. See the "self-sufficient" spec below for why it is a region rather
+  // than a second file.
+  const geometryCss = uiCss.slice(uiCss.indexOf(BEGIN), uiCss.indexOf(END) + END.length);
+
+  it("the generated stylesheet carries the module's own numbers", () => {
+    expect(geometryCss).toBe(renderNavbarGeometryCss());
+  });
+
+  it("the rail's px and the sidebar's rem are THE SAME LENGTH", () => {
+    // The whole bean in one assertion. Read the rem out of the generated file
+    // rather than restating it, or this test becomes a third copy.
+    const rem = (name: string): number => {
+      const m = new RegExp(`--fa-nav-${name}:\\s*([0-9.]+)rem`).exec(geometryCss);
+      expect({ name, found: m !== null }).toEqual({ name, found: true });
+      return Number(m![1]) * 16;
+    };
+    expect(rem("collapsed")).toBe(NAV_COLLAPSED_PX);
+    expect(rem("open")).toBe(NAV_OPEN_PX);
+    expect(rem("mark")).toBe(NAV_GLYPH_PX);
+  });
+
+  it("defines every width ONLY inside the generated region", () => {
+    // The duplication this bean exists to end, checked from the other side: a
+    // hand-authored definition anywhere outside the fences is the second copy
+    // coming back.
+    //
+    // NOT "exactly once" — the first draft asserted that and was wrong about
+    // the CSS rather than finding a bug in it. `--fa-nav-open` is defined
+    // TWICE on purpose, at `:root` and again inside the wide media query,
+    // because the theme widens its own sidebar there. The invariant is about
+    // WHERE a definition may appear, not how many there are.
+    const authored = uiCss.slice(0, uiCss.indexOf(BEGIN)) + uiCss.slice(uiCss.indexOf(END));
+    for (const prop of ["--fa-nav-collapsed", "--fa-nav-open", "--fa-nav-mark", "--fa-nav-pad"]) {
+      expect({ prop, definedOutsideTheRegion: new RegExp(`${prop}:\\s*[0-9]`).test(authored) }).toEqual({
+        prop,
+        definedOutsideTheRegion: false,
+      });
+      expect({ prop, definedInside: new RegExp(`${prop}:\\s*[0-9]`).test(geometryCss) }).toEqual({
+        prop,
+        definedInside: true,
+      });
+    }
+    expect(uiCss).toContain("var(--fa-nav-collapsed)");
+  });
+
+  it("docs-ui.css is SELF-SUFFICIENT — the region travels with it", () => {
+    // WHY A REGION AND NOT A SECOND FILE, and it cost a debugging session.
+    //
+    // The first version generated `navbar-geometry.css` beside docs-ui.css and
+    // linked it from `head_custom.html`. That made docs-ui.css depend on a
+    // file 23 sources inline it WITHOUT — every e2e fixture that builds a page
+    // from `readFileSync(docs-ui.css)`. Those pages got
+    // `width: var(--fa-nav-collapsed)` with the property undefined, which is
+    // INVALID AT COMPUTED-VALUE TIME and therefore silent: the sidebar took
+    // `auto` width, `.side-bar + .main` lost its margin, the main column
+    // landed on top of the fixed sidebar, and a11y clicks timed out against a
+    // button that was visible, enabled and stable throughout.
+    //
+    // Patching 23 fixtures would have been 23 places to forget. One
+    // self-sufficient stylesheet is none.
+    expect(uiCss.indexOf(BEGIN)).toBeGreaterThanOrEqual(0);
+    expect(uiCss.indexOf(END)).toBeGreaterThan(uiCss.indexOf(BEGIN));
+    // Before every rule that reads it, or the cascade order stops being true.
+    expect(uiCss.indexOf(END)).toBeLessThan(uiCss.indexOf("var(--fa-nav-collapsed)"));
+  });
+
+  it("refuses an unterminated region rather than guessing where it ends", () => {
+    // A wrong guess eats authored CSS, which is the one outcome a generator
+    // over a hand-written file must never have.
+    expect(() => withGeometry(`${BEGIN}\n:root{}\n/* no end */`)).toThrow(
+      NAVBAR_GEOMETRY_MARKER_ERROR,
+    );
+  });
+
+  it("is idempotent — regenerating replaces the region, never stacks it", () => {
+    const once = withGeometry("body{}");
+    expect(withGeometry(once)).toBe(once);
+    expect([...withGeometry(once).matchAll(/navbar-geometry:begin/g)]).toHaveLength(1);
+  });
+
+  it("the strip is the mark and its two gutters, derived either way", () => {
+    expect(NAV_COLLAPSED_PX).toBe(NAV_PAD_PX * 2 + NAV_GLYPH_PX);
+  });
+});
+
+describe("the document index — `documentIndexOf`", () => {
+  const page = (body: string) => `<html><body>${body}</body></html>`;
+
+  it("takes h2 and h3 that carry an id, nesting the h3s", () => {
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
+    );
+    expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
+      ["#a", "Alpha", 0],
+      ["#b", "Beta", 1],
+      ["#c", "Gamma", 0],
+    ]);
+  });
+
+  it("SKIPS a heading with no id — it is not a destination", () => {
+    // `pb04` one layer in: a fragment link to a heading with no id goes
+    // nowhere, and a dead row invites a click and then reads as broken.
+    const g = documentIndexOf(page(`<h2 id="a">Alpha</h2><h2>Nowhere</h2><h2 id="c">Gamma</h2>`));
+    expect(g?.items.map((i) => i.label)).toEqual(["Alpha", "Gamma"]);
+  });
+
+  it("ignores h1 and h4 — the title, and past where an index helps", () => {
+    const g = documentIndexOf(
+      page(`<h1 id="t">Title</h1><h2 id="a">A</h2><h4 id="d">D</h4><h2 id="b">B</h2>`),
+    );
+    expect(g?.items.map((i) => i.label)).toEqual(["A", "B"]);
+  });
+
+  it("strips markup and entities out of a heading's text", () => {
+    const g = documentIndexOf(page(`<h2 id="a">A <code>b&amp;c</code></h2><h2 id="z">Z</h2>`));
+    expect(g?.items[0]!.label).toBe("A b&c");
+  });
+
+  it("is ABSENT below two rows, never an empty or one-row menu", () => {
+    // Same rule as the harnesses region: an empty disclosure invites a click
+    // that does nothing, and a "Contents" holding the one section the reader
+    // is looking at is that defect with a row in it.
+    expect(documentIndexOf(page(`<p>no headings</p>`))).toBeUndefined();
+    expect(documentIndexOf(page(`<h2 id="a">Only</h2>`))).toBeUndefined();
+  });
+
+  it("`injectRail` reads it off the page it is given", () => {
+    // Not passed in: the mount loops over hundreds of files, and the other
+    // shape invites the right nav carrying the previous page's contents.
+    const html = injectRail(page(`<h2 id="a">Alpha</h2><h2 id="b">Beta</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(html).toContain("Alpha");
+    expect(html).toContain('href="#b"');
+  });
+
+  it("a page with nothing to index gets NO index region", () => {
+    const html = injectRail(page(`<p>flat</p>`), { instance: "who-iris", toRoot: "..", links: [] })!;
+    // Asserted on the FIXED TOP, not on the page: `fa-nav-group` is also the
+    // graphs group's class and that region always renders. The first draft of
+    // this test checked the whole document and failed for that reason — which
+    // is the assertion being wrong, not the code.
+    expect(region(html, "fa-nav-top")).not.toContain("fa-nav-group");
+    expect(html).toContain("fa-nav-graphs");
+  });
+
+  it("sits in the FIXED top, with the instance", () => {
+    const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(region(html!, "fa-nav-top")).toContain('href="#a"');
+    expect(region(html!, "fa-nav-graphs")).not.toContain('href="#a"');
+  });
+});
+
+describe("a declared avatar region crops the mark — `603s`", () => {
+  const withRegion = (region?: { x: number; y: number; w: number; h: number }) =>
+    navbarHtml({
+      instance: "i",
+      graphs: { label: "Graphs", items: [] },
+      harnesses: {
+        label: "Harnesses",
+        items: [{ href: "/x", label: "X", avatar: { src: "/a.png", ...(region ? { region } : {}) } }],
+      },
+    });
+
+  it("an avatar with NO region is the plain image it always was", () => {
+    const h = withRegion();
+    expect(h).toContain('<img src="/a.png"');
+    expect(h).not.toContain("fa-nav-crop");
+  });
+
+  it("scales by 1/w and 1/h and offsets by -x and -y of the SCALED image", () => {
+    // `603s`'s arithmetic. A half-width, half-height box at (0, 0.46) — the
+    // measured `landing-card` crop — doubles the image and lifts it 92%.
+    const h = withRegion({ x: 0, y: 0.46, w: 0.5, h: 0.5 });
+    expect(h).toContain("width:200%");
+    expect(h).toContain("height:200%");
+    expect(h).toContain("left:0%");
+    expect(h).toContain("top:-92%");
+  });
+
+  it("clips, and the frame is a positioning context", () => {
+    const css = navbarCss();
+    expect(css).toContain(".fa-nav-crop{position:relative;overflow:hidden");
+    // Without these the `img` rule's fixed width and height fight the inline
+    // percentages and the crop silently does nothing.
+    expect(css).toContain(".fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}");
+  });
+
+  it("the region is stated in PERCENTAGES, so it survives a mark resize", () => {
+    const h = withRegion({ x: 0.25, y: 0.25, w: 0.25, h: 0.25 });
+    expect(h).not.toContain("px;");
+    expect(h).toContain("width:400%");
+    expect(h).toContain("left:-100%");
+  });
+});
+
+describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () => {
+  // Owner, 2026-09-22: *"fix the .md paths in the harness tabs too."*
+  //
+  // Swept with a HEAD request per link against a local build: 3 of 31 distinct
+  // harness-tab links 404'd, all three `index.md`. The conversion had handled
+  // `.html` and passed `.md` through untouched.
+
+  it("an index leaf addresses as its directory — either extension", () => {
+    expect(publishedUrlOf("processes/index.md")).toBe("/processes/");
+    expect(publishedUrlOf("processes/index.html")).toBe("/processes/");
+  });
+
+  it("any OTHER page addresses as itself, with `.html`", () => {
+    // This is the row that stops the obvious fix from being right. Stripping
+    // `.md` would give `/tool-graph/`, which is a 404 — measured against the
+    // built site, where `/tool-graph.html` is 200 and `/tool-graph/` is not.
+    expect(publishedUrlOf("tool-graph.md")).toBe("/tool-graph.html");
+    expect(publishedUrlOf("subgraph-viewers.md")).toBe("/subgraph-viewers.html");
+  });
+
+  it("a directory is already a URL and is left alone", () => {
+    expect(publishedUrlOf("cat-harness/library/cat-harness/")).toBe("/cat-harness/library/cat-harness/");
+  });
+
+  it("does not mistake a mid-path `index` for the leaf", () => {
+    // `.../index/skills/...` is a real shape here — the docs-auto tree — and a
+    // rule anchored anywhere but the end would eat a directory called `index`.
+    expect(publishedUrlOf("cat-harness/docs-auto/index/skills/")).toBe(
+      "/cat-harness/docs-auto/index/skills/",
+    );
+  });
+
+  it("no harness tab link ends in `.md`, over the REAL committed data", () => {
+    // The regression guard, run over what actually ships rather than over a
+    // fixture: a fixture would have passed throughout the defect.
+    // Derived, never spelled out — `site-dir-single-answer` refuses a literal
+    // site root anywhere in source, and it caught this file once already.
+    const root = instanceRootFor(import.meta.dir);
+    const data = JSON.parse(
+      readFileSync(join(root, siteDirFor(root), "_data", "harness.json"), "utf8"),
+    ) as { harnesses: { name: string; visualisations?: { kind: string; path?: string }[] }[] };
+    const offenders = data.harnesses.flatMap((h) =>
+      (h.visualisations ?? [])
+        .filter((v) => v.path?.endsWith(".md"))
+        .map((v) => `${h.name}:${v.kind} -> ${v.path}`),
+    );
+    expect(offenders).toEqual([]);
   });
 });

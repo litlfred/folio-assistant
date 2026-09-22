@@ -191,6 +191,81 @@ naming a tool id where a skill name belongs is decidable against
 gated today — but the difference between the two halves is that this one has a
 subject the moment one does, and the other still would not.
 
+## The navbar icon row is DECLARED, and three states is not two
+
+Owner, 2026-09-22: *"max is 6 and one for todos one for beans one for
+processes viewer/ (the factory flow) one for KG viewer"*, and then, on where
+the list lives: *"should be in each harness config which are shown (so some
+could show none, but make this default in cat-harness that is inherited)."*
+
+`navbarIcons` on the instance declaration. A **closed** set — `close`,
+`todos`, `beans`, `processes`, `kg`, `launcher` — because a free string lets an
+instance name an icon nothing draws, and the failure is a silent gap in a row
+capped at six. Six is the cap and it is **refused, never truncated**: an
+instance that declared seven has made a decision, and silently dropping its
+last entry overrules that decision without saying so.
+
+**The three states are the part to get right, and two of them look the same:**
+
+| declared | means |
+|---|---|
+| absent | **inherit** — walk `needs`, site owner as the floor |
+| `[]` | **show none**, which the owner asked for by name |
+| a list | this instance's own answer |
+
+Absent and `[]` must not collapse. The guard is `!== undefined`, never a
+truthiness test — that shape is exactly what turns "nobody has said" into
+"nothing to show", and it would make an un-migrated instance
+indistinguishable from one that deliberately wants a bare navbar. The same
+rule runs all the way down: `resolveNavbarIcons` returns `undefined` for
+undetermined, `harness-tiles.ts` **omits** the field rather than writing `[]`,
+`sync-docs-harness.ts` emits `null`, and the client draws no row and says so
+once. Four layers, one distinction, preserved at each.
+
+**The walk is `needs`**, not a second traversal. Nearest declaration wins,
+breadth-first toward the foundation. It is the direction `resolveSkillDirs`
+already composes and the spine `builtOn` documents; a new walk would be a
+second answer to "what is this instance built on", free to disagree with the
+first.
+
+**Destinations are looked up, never written down.** They come from the
+instance's own declared visualisations plus `siteLinks`, so an icon whose
+graph this instance does not publish gets no href and renders as a **non-link**
+— `pb04`, the same choice the tabs' graph list makes. `close` and `launcher`
+carry no href on purpose: they drive controls on the page, and giving them one
+would make them look like navigation.
+
+## The theme avatar: the assignment is theme-mediated, and I got this wrong once
+
+*"use theme avatar not the purply thing."* The navbar's mark is the instance's
+**theme card art, clipped** — not its `icon`, which on this instance is the `@`
+glyph.
+
+The chain, and every link of it already existed:
+
+> instance → its sticky contribution → the sticky's `theme` → the theme's
+> `imageRole` → the instance's images carrying that role → the `card` layout →
+> its `avatarRegion`
+
+`resolveThemeBackdrop` is the join and returns the `DeclaredImage`, so the crop
+comes with it.
+
+**This was reported on 2026-09-22 as "an assignment nobody has made", and gap 6
+was left unwired on that basis.** The report was wrong: it looked only for a
+direct harness→card link, found none, and concluded none existed — while the
+mapping ran through the theme the whole time. Worth keeping because the failure
+is cheap to repeat: *an indirection is not an absence*, and "I could not find
+it" is a statement about the search.
+
+**Take the `card` layout, not laptop or mobile.** `KgImageSchema` refuses a
+non-square `avatarRegion` in **pixels**, and only the square crop can satisfy
+that — equal fractions on a landscape image are a box 1.78× wider than tall,
+and the clip scales width and height separately.
+
+**A card with no declared crop is a finding, not an avatar.** Rendering the
+whole 1254px composition in a 2rem frame is `603s`'s "grey mush". Report it and
+fall back to the mark.
+
 ## Where a tile lives, and what it must not eat
 
 Tiles render in the navbar **and** on the board: one declaration, per-surface

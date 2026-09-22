@@ -155,6 +155,54 @@ doing that *feels* defined.** It is not. The names you coined an hour ago inside
 an issue are the ones most likely to reach the reader undefined, precisely
 because you can no longer see them as new.
 
+#### The prose does not travel — the question object must stand alone (STRICT)
+
+The six parts above assume the reader is **in the conversation**, reading the
+prose that precedes the question. Often they are not. A question asked by a
+background session, a cloud session, a subagent or a scheduled run reaches the
+person through a channel that carries **only the structured fields** — the
+question text, the option labels, the option descriptions. Everything written
+around the call stays in a transcript the person would have to go and open.
+
+So the test grows one clause:
+
+> **Can the reader answer without opening anything — including the session that
+> asked?**
+
+**Measured here, 2026-09-22.** Two of four consolidation streams blocked on an
+`AskUserQuestion` and both containers then disconnected. Their reasoning was in
+their own transcripts. A sibling session relaying the block to the owner had to
+**reconstruct** the context from session metadata, PR bodies and bean files —
+and the owner read *the relay's* reconstruction rather than the asker's. The
+askers had done the analysis; none of it travelled. One of the four questions
+would have committed to a different repository, so the reconstruction was
+load-bearing.
+
+**Put in the structured fields everything needed to choose:**
+
+| field | carries |
+|---|---|
+| the question | what will **differ** depending on the answer, with every identifier expanded. Never a bare noun phrase — *"`kupb` scope"* is a topic, not a question. |
+| each option's description | that option's own consequence and **how reversible** it is. A reader comparing two options must be able to do it from the two descriptions alone. |
+| **one** option's description | **what happens if they say nothing**, marked as the default and phrased as what you will then do. |
+
+**The comparison table still belongs in the prose**, where rows can be read
+against each other — a selection tool shows one option at a time, so a table is
+genuinely better there. What changes is that **nothing may be load-bearing
+*only* in the prose**. The prose is where a comparison is easier to read; the
+fields are where it survives.
+
+Two things this rules out, both of which read as complete to their author:
+
+- **A question whose context sits in the paragraph above the call.** Correct in
+  a live conversation, invisible through a relay.
+- **An option label carrying the trade-off and a description carrying nothing**
+  — or the reverse. A label is a handle; the description is the argument.
+
+And when you are the one **relaying** somebody else's blocked question: say
+that you are relaying, and say where the answer has to be given. An answer
+typed at the relay does not reach the asker.
+
 #### Worked example — a real failure, 2026-09-18
 
 Ending a turn, this agent wrote:
@@ -192,6 +240,45 @@ The same decision, askable:
 
 Same information, same length, and the second can be answered by typing one
 character.
+
+#### A pending question is not a STATUS — ask it (STRICT)
+
+Owner, 2026-09-22, after four sessions sat blocked while this agent reported
+that they were blocked: *"show the questions!!!!!!!! why are you not. dont say
+a unansnwered question is a blocker, ask a question."*
+
+**"Stream 3 is blocked on four questions" is not a report. It is a question you
+declined to ask.** Naming a block, linking to where it lives, and summarising
+what it is about all *feel* like diligence — the information is accurate and
+the person is informed. They still cannot answer, because nothing was put to
+them in a form that takes a click.
+
+The failure has a specific shape, and it is seductive because each step is
+defensible:
+
+1. A sibling session blocks on a question it cannot deliver.
+2. You notice, and correctly judge it worth surfacing.
+3. You describe it — what it asks, why it matters, where to answer it.
+4. **You stop there**, because the question "belongs to" the other session.
+
+Step 4 is the error. **Whoever can put the question to the person owns asking
+it.** If you can act on the answer — and an agent with repository access
+usually can — the question is yours to ask, not merely to relay. If you truly
+cannot act, ask anyway and carry the answer back; an answer you can hand over
+is worth more than a pointer the person has to follow.
+
+**Pointing somewhere is the failure mode, not the fix.** *"Answer it in that
+session"* asks the person to navigate, load, read and choose. For somebody who
+types with difficulty that is not a small ask — it is the whole cost of the
+decision, moved onto them. Reserve it for what genuinely cannot be done from
+here, and say plainly that it cannot.
+
+**When several are pending and they do not fit one ask**, ask the most
+consequential in full and say **how many remain and what they are about** in one
+line each. Do not ask *"which question would you like me to ask?"* — that is a
+turn spent on nothing, and it is still not a question they can act on. Choose,
+ask, and say what is queued behind it. §"More than one decision pending" below
+carries the rest of that rule.
 
 #### More than one decision pending — ask ONE, count the rest
 

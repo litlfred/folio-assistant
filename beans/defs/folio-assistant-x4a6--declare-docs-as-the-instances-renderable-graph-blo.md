@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x4a6
-title: Declare docs/ as the instance's renderable graph — blocked on core's folio registration reaching every declaration reader
+title: Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn
 status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T08:00:02Z
-updated_at: 2026-09-21T22:22:00Z
+updated_at: 2026-09-22T18:18:15Z
 parent: folio-assistant-vke6
 ---
 
@@ -205,3 +205,41 @@ see, so it would be built on a blind resolver.
 - [ ] Whether a reachability gate is worth having once `q2wn` is settled.
       **Not red on arrival**: 31 of 31 pass today, so this one could be turned
       on the day the edges are visible.
+
+
+## RE-VERIFIED 2026-09-22 — the blocker in this bean's own TITLE is complete
+
+_Stream 1/3 (`upgd`), re-measured on `main` at `b7f8945b`._ The claim that
+opened that stream says to re-verify a critical path against the store before
+acting on it (`k59d`). This bean is the first one that measurement contradicts.
+
+**The title advertises a blocker this bean's own body already measured away.**
+It reads *"blocked on core's folio registration reaching every declaration
+reader"*. §"Worth recording" records the answer: **31 of 31 readers reach it**,
+established with `bun build` — the bundler IS the resolver — after three
+hand-rolled regex walkers each produced a different plausible wrong number.
+A bean whose title states a blocker its body has disproved reads as blocked to
+every sibling that does not open it.
+
+**The one item under "Still open" is also closed.** It names `q2wn` — the bare
+side-effect import `check:partition`'s regex could not see. `q2wn` is
+`completed`, `updated_at: 2026-09-22T10:28:50Z`, and
+`cat-harness/scripts/partition/engine.ts` now documents the bare form at lines
+172 and 189, naming **`folio-graph-kind`** as the worked case:
+
+> The bare side-effect form — `import "./x.js";`, no binding and no `from` —
+> … side-effect-importing core's `folio-graph-kind` to get the `folio` kind
+
+So the precondition this bean set for a reachability gate — *"`q2wn` has to be
+settled first: a gate proving 'every reader reaches the registration' needs
+edges that `check:partition` currently cannot see, so it would be built on a
+blind resolver"* — is satisfied. The edges are visible.
+
+**What is actually left is a DECISION, not a blocker**, and this bean already
+framed it: is the reachability gate worth having, given it is *not red on
+arrival* (31 of 31 pass today)? That is the owner's call, so it is put to them
+rather than taken here.
+
+Withdrawing the blocker rather than closing the bean: the declaration work this
+bean names is real and unfinished. What is withdrawn is the claim that it
+cannot start.

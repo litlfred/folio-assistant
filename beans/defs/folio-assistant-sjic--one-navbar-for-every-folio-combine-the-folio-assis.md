@@ -4,9 +4,9 @@ title: 'ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the 
 status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-p5wm
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-21T21:26:39Z
+updated_at: 2026-09-22T21:28:43Z
+parent: folio-assistant-p5wm
 ---
 
 ## What — the owner's spec, verbatim
@@ -76,13 +76,17 @@ So this bean RECORDS the spec and claims nothing. Sequencing is the owner's.
 
 - [ ] One renderer produces the navbar for a Jekyll page and for a mounted
       page, with the difference DECLARED rather than branched on
-- [ ] The three regions are structural, not a styling convention -- the middle
+      — **STILL OPEN after PR #959.** The sidebar shares the GEOMETRY (one
+      generated region, gated) and the BEHAVIOUR, so the two can no longer
+      disagree about a width. It is still Liquid plus CSS and does not call
+      the renderer. "Cannot disagree" is not "one renderer".
+- [x] The three regions are structural, not a styling convention -- the middle
       scrolls and the other two cannot
-- [ ] An instance's graphs appear from its DECLARATION, so a new graph kind
+- [x] An instance's graphs appear from its DECLARATION, so a new graph kind
       with content needs no edit to the navbar
-- [ ] An open document's index appears in the fixed top, and disappears with it
-- [ ] Harness avatars come from the theme, not from a list in the renderer
-- [ ] The rail and the sidebar no longer state any number twice
+- [x] An open document's index appears in the fixed top, and disappears with it
+- [x] Harness avatars come from the theme, not from a list in the renderer
+- [x] The rail and the sidebar no longer state any number twice
 
 ## CLAIMED, and the boundary is the point — 2026-09-21, session_014HGPQoUnzXGqSspA8x6YyD
 
@@ -153,3 +157,134 @@ That is the remaining half of this bean and it may well be all of it.
 
 **Suggested: re-scope rather than close.** The bean as written reads as though
 nothing is built.
+
+
+## ROUND 1, 2026-09-22 — the geometry is stated once, and it DISAGREED
+
+Re-claimed. The 2026-09-21 claim above named branch
+`claude/lhs-navbar-harness-folios-cqo9mu`; that branch now carries `624f`
+sticky geometry (PR #955) and no navbar work, so the claim had lapsed. **No
+open PR touches the navbar** — the four-way contention this bean was written to
+sequence around has cleared, which is what makes the remaining half workable
+now.
+
+The `RE-MEASURED` section above is right that the shared RENDERER exists.
+What it could not establish — *"whether the Jekyll/theme half now derives from
+the same component"* — is measured, and the answer is **no, and the two were
+different widths**:
+
+| | `navbar.ts` | `docs-ui.css` |
+|---|---|---|
+| strip at rest | 40px | `3.5rem` = **56px** |
+| open | 232px | `15.5rem` = **248px** |
+| open, ≥66.5rem | *(no such state)* | `16.5rem` = **264px** |
+
+Three of four disagreed and the fourth existed on one side only. **Both were
+green**: `navbar.test.ts` asserts `navbarCss()`'s numbers and
+`sidebar-strip.test.ts` asserts `docs-ui.css`'s, each against its own copy.
+That is the failure mode this bean names — agreement by maintenance — caught
+only by putting the two files side by side.
+
+**Fixed by deriving both from one record**, not by copying one into the other:
+`scripts/lib/navbar-geometry.ts`, rendered to `assets/css/navbar-geometry.css`
+by `bun run navbar:geometry` and gated by `navbar:geometry:check` (in
+`code-quality-gates.yml`, so `bun run gates` carries it).
+
+**The sidebar's numbers won, and not by seniority.** Both sides derived their
+strip — the rail from a 20px glyph and two 10px gutters, the sidebar from the
+theme's gutter plus `.fa-site-mark` at 2rem plus a matching one. Neither was
+arbitrary. What settles it is that only the sidebar is constrained from
+OUTSIDE this repository: just-the-docs' `layout.scss` carries
+`.side-bar { min-width: 16.5rem }`, and `docs-ui.css` already records what
+crossing that floor cost. So the constrained side sets the numbers and the free
+side adopts them. The rail's mark grows 20px → 32px, which also moves it the
+right way against this instance's declared low-dexterity profile.
+
+The two derivations turned out to be the same arithmetic in different units:
+`NAV_PAD_PX` derives to 12px, which is `0.75rem` — exactly the "matching right
+gutter" the stylesheet's own comment described.
+
+### Remaining, this session
+
+- [x] the three regions are structural in the sidebar (gap 2)
+- [x] harness avatars in the sidebar (gap 3) and home at the bottom (gap 5)
+- [x] `documentIndex` gets a supplier — it had none anywhere (gap 4)
+- [x] `avatarRegion` reaches the navbar mark (gap 6) — the MECHANISM, with the
+      missing harness→card assignment reported rather than invented
+
+## ROUNDS 2-4 — and two defects the plan did not contain
+
+Rounds 2-4 closed gaps 2-6. Two things were found only by **opening the page
+in a browser**, which is now the `rendered-verification` skill.
+
+### The harness dividers had no colour at all
+
+`harness-tiles.ts` writes `tone` as a HUE and nine CSS rules fed that angle
+straight to `color-mix()` and to a `border-left` shorthand. Proven with a
+control in the page rather than from the spec:
+
+    --h: 268; background: color-mix(in oklab, var(--h) 28%, transparent)
+      -> rgba(0, 0, 0, 0)        INVALID at computed-value time
+    --h: 268; background: hsl(var(--h) 45% 28%)
+      -> rgb(69, 39, 104)        works
+
+So the coloured tabs — *"as if you are opening a giant tabbed folio"* — had
+**no background and no stripe**, and nothing caught it because an invalid
+custom-property substitution fails silently. Derived through `--fa-tile-ink`
+now, from the avatar generator's own two lightness targets. Contrast
+re-measured in both schemes: worst stripe 4.41:1, all above the 3:1 bar.
+
+`--fa-tile-on` carries the absence: `GENERIC.tone` is **0** and means "no
+avatar declared", not red, and 9 of 14 harnesses are generic.
+
+### The regions' caps competed, and the measurement is the argument
+
+Each region got a cap and the arithmetic was never checked against a viewport.
+With the document index open: 60px header + 33% index + 50% footer left the
+middle **93px** in a 900px column. The middle now carries an **8rem floor**
+and both capped siblings yield to it, which they can afford because each
+scrolls inside its own cap.
+
+### Measured, before -> after, Chromium 1280x900
+
+| | before | after |
+|---|---|---|
+| `.side-bar` scroll | 1200/900 | 900/900 |
+| `.site-nav` (middle) | 64px holding 944px | 297-386px, scrolls |
+| `.site-footer` (bottom) | 1076px, overflowing | capped, scrolls internally |
+| home | absent | pinned, y=884 |
+| divider stripe | `0px none` | 6px solid, ≥4.41:1 |
+| harness mark | none | avatar or initial |
+
+### Gap 6 has no subject, and that is the finding
+
+`603s` slice 1 declared seven `avatarRegion` crops and they are on
+`landing-*-card` art. Every instance's `icon` is a **different image**
+(`cat-harness` declares `mark`). **Which card belongs to which harness is an
+assignment nobody has made** — the card names are roles and topics (engineer,
+analyst, architecture), not instances. The crop mechanism is built and tested;
+choosing the mapping is the owner's, not mine.
+
+
+## Status against `## Done when` — 2026-09-22, PR #959
+
+I set this bean `completed` and put it straight back to `in-progress`. Five of
+the six criteria are met and are now ticked **in the canonical list above**;
+the first is not, and it is the one the bean is named after.
+
+That list is the only one. An earlier version of this section restated it here
+with its own ticks, which `check:bean-bodies` correctly refuses as a
+`shadow-checklist`: a reader consulting `## Done when` would have seen six
+open boxes while a section further down claimed five were done. One checklist,
+ticked in place.
+
+**What the remaining half needs**, so the next agent does not re-derive it: the
+Jekyll side would have to render `NavbarModel` — which means either a build
+step emitting the sidebar's markup into `_includes/generated/`, or overriding
+the theme's `sidebar.html`. This file already refuses the second for a
+*placement*; for the whole sidebar it is a different trade and is the owner's
+to make. Both are bigger than anything in #959 and neither is blocked.
+
+**Everything the owner asked for on 2026-09-21 and 2026-09-22 is built and
+green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
+"the same navbar" and "one navbar", and it is stated rather than closed.
