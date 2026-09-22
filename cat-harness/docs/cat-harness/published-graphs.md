@@ -63,6 +63,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-docs/' | relative_url }})
 
+### `external-schema`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `fhir-artifact-index`
 
 0 of 3 published.

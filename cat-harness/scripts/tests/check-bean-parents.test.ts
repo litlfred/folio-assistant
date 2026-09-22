@@ -149,3 +149,66 @@ describe("every open bean belongs to an epic", () => {
     expect(r.open).toBeGreaterThan(50);
   });
 });
+
+/*
+ * THE RULE IS REACHABLE — `itka`, issue #941.
+ *
+ * `check-bean-parents.ts` carried an epic-under-epic branch and built the set
+ * it ran over by filtering `ROOT_TYPES` out, so no `b` in the loop was ever an
+ * epic and the branch could not be taken. The summary printed it as verified.
+ *
+ * THE FIRST TEST HERE IS THE ONE THAT MATTERS, and it is written to fail if
+ * the exclusion is ever widened back: it asserts a FINDING rather than the
+ * absence of one, so it cannot pass vacuously the way the rule itself did.
+ */
+describe("an epic's parent is a milestone, not another epic", () => {
+  test("catches an epic parented to an epic — the rule the filter made unreachable", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["ep2", "in-progress", "epic", "ep1"],
+      ]),
+    );
+    expect(r.problems).toHaveLength(1);
+    expect(r.problems[0]).toContain("ep2");
+    expect(r.problems[0]).toContain("not another epic");
+  });
+
+  test("an epic under a milestone is fine", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+      ]),
+    );
+    expect(r.problems).toEqual([]);
+  });
+
+  /* THE EXCLUSION STILL DOES ITS JOB, which is the half a careless fix breaks:
+   * deleting it outright would demand a parent of every root. A root is not
+   * REQUIRED to carry one — it is only judged on the one it has. */
+  test("a root with no parent is still excused", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", ""],
+      ]),
+    );
+    expect(r.problems).toEqual([]);
+  });
+
+  /* `open` counts what sits BELOW the roots, and kept meaning that when the
+   * loop widened to include them. A count that silently changed definition
+   * would make every historical reading of this report wrong. */
+  test("the open count still excludes roots", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["t1", "todo", "task", "ep1"],
+      ]),
+    );
+    expect(r.open).toBe(1);
+  });
+});

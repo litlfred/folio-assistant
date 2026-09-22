@@ -256,6 +256,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // reader does with it: looks a word up. `tone: 84` is unused and sits
   // between `qa`'s green verdict and `library`'s, which is right for a
   // reference rather than a judgement.
+  "external-schema": {
+    glyph: "M4 6h7v12H4zM13 6h7v12h-7zM11 9h2M11 12h2M11 15h2",
+    tone: 208,
+    reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
+  },
   glossary: {
     glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
     tone: 84,

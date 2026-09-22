@@ -1,12 +1,12 @@
 ---
 # folio-assistant-itka
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
-status: todo
+status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-21T21:59:36Z
-updated_at: 2026-09-21T21:59:36Z
+updated_at: 2026-09-22T11:46:10Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-21 by tripping it: a new epic was parented to another epic, and

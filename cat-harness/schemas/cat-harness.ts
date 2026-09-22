@@ -1071,9 +1071,88 @@ export const SubgraphCoverageSchema = z.object({
 });
 export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 
+/**
+ * How a graph is shown, and what can be done to it.
+ *
+ * Owner, 2026-09-21: *"folio is the only visualizer provided by cat-harness,
+ * document is its own object. they have semantic different meanings =>
+ * different visaluzation/operations/etc."*
+ *
+ * ONE MEMBER, and the count is the claim rather than an accident. A folio is
+ * a board: nodes start closed as avatars, stickies can be added, sub-graphs
+ * are held, and a layout layer is a diagram OF it rather than part of it
+ * (issue #764 §3, F1–F6). Nothing else cat-harness ships answers that
+ * description, and a second member added without that argument would make
+ * the axis a synonym for "renderer".
+ *
+ * DECLARED HERE, in the HARNESS layer, rather than beside the content axes
+ * in `block-kinds.ts` where the first draft put it. The owner's sentence is
+ * *"folio is the only visualizer provided by CAT-HARNESS"*: a visualiser is
+ * something the harness provides, while an adapter, a profile and an
+ * interactivity are facts about content. `check:partition` is what settled
+ * it — it refused `cat-harness.ts` [agentic-harness] importing
+ * `block-kinds.ts` [folio-assist-core], and reading that refusal as a
+ * misclassification rather than an obstacle produced the better placement.
+ *
+ * WHERE IT ATTACHES is per graph — issue #764, O2, settled 2026-09-22 — on
+ * {@link ContentDirectorySchema}, beside `graphKinds`. Per instance
+ * cannot distinguish the two graphs one folio shows (F2: the library and the
+ * working documents, and which one a node came from must stay visible); per
+ * node kind inverts F1, where a folio renders nodes of OTHER objects and a
+ * node kind does not choose its own chrome.
+ *
+ * NOT `coverage.visualiser`, which is a different question wearing a similar
+ * word: that names the PAGE THAT RENDERS a graph, while this classifies the
+ * graph. One field answering two questions is the defect this repository
+ * names most often, and half the reason `where-does-this-go` was written.
+ */
+export const VISUALISER_KINDS = ["folio"] as const;
+export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * HOW this graph is shown, and what can be done to it.
+   *
+   * The visualiser axis, declared PER GRAPH — issue #764, O2, settled by the
+   * owner 2026-09-22. The vocabulary is `VISUALISER_KINDS` and the argument
+   * for its single member is there; this is where it attaches.
+   *
+   * ## Why here rather than on the instance or on a node kind
+   *
+   * Per instance cannot answer it. F2 of the spec: a folio shows the LIBRARY
+   * (static) and the WORKING documents, assets and artefacts (dynamic), and
+   * which of the two a node came from must stay visible — so the graph is
+   * already the unit carrying that provenance, and one answer per instance
+   * would flatten exactly the distinction the folio has to draw.
+   *
+   * Per node kind inverts F1, where a folio renders nodes of OTHER objects.
+   * A node kind choosing its own chrome would mean the thing being shown
+   * decides how, which is the relationship the spec exists to reverse.
+   *
+   * ## NOT `coverage.visualiser`, which is a different question
+   *
+   * That field names the PAGE THAT RENDERS this graph. This one says which
+   * visualiser's semantics and operations apply. They travel together and
+   * are not the same fact: a graph can have a published page and no folio
+   * semantics, and — once more than one visualiser exists — folio semantics
+   * and no page yet. One field answering two questions is the defect this
+   * repository names most often.
+   *
+   * ## ONE VALUE PER DIRECTORY, and what would change that
+   *
+   * A directory may list several `graphKinds`, so this is strictly coarser
+   * than "per graph" wherever that happens. It is one value today because
+   * `folio` is the only member, which makes the coarseness unobservable. The
+   * day two kinds in one directory need different visualisers, this becomes
+   * a map from graph kind to visualiser — a schema change with a migration,
+   * not a field to quietly reinterpret.
+   *
+   * ABSENT means not declared, never a default. A consumer that reads an
+   * absent value as `folio` is inventing a declaration.
+   */
+  visualisedAs: z.enum(VISUALISER_KINDS).optional(),
   /**
    * This directory holds MATERIALIZED content: readable, and not editable here.
    *
