@@ -85,7 +85,14 @@ import { basename, dirname, join, relative } from "node:path";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { classify } from "./check-docs-populated.ts";
 import { isSkillMd, skillMdDirs } from "./known-skills.ts";
-import { readDeclaration, resolveDirectories, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
+import {
+  findDeclarationFile,
+  instanceRootsIn,
+  readDeclaration,
+  resolveDirectories,
+  siteDirFor,
+  visualisationsOf,
+} from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
@@ -128,6 +135,23 @@ export interface AutoDocType {
    * rather than about its copies.
    */
   graph: string;
+  /**
+   * Where this type's sub-graphs come from, when the ROOT declaration is not
+   * the right source.
+   *
+   * Defaults to {@link declaredDirectories}`(graph)` — the root's own view,
+   * which is correct for every type whose dependents' directories the root
+   * already declares. `docs` is the exception and the reason this hook
+   * exists: the root declares dependents' `skills/` and `library/` but CANNOT
+   * declare their `docs/`, because `compose-docs.docsLayers` treats every
+   * docs-kind entry in that file as a COMPOSITION LAYER — declaring
+   * `smart-trust/docs/` there overlays its `index.md` onto the site's own.
+   * Measured: `compose-docs.test.ts` failed exactly that way when tried.
+   *
+   * So the docs type asks each instance about itself instead, which is what
+   * `mount-instance-docs` already does.
+   */
+  directories?: () => Array<{ id: string; absPath: string; path: string }>;
   /** One line on the page saying what was extracted and from where. */
   extracts: string;
   collect(): AutoDocItem[];
@@ -165,6 +189,50 @@ function frontMatterDescription(text: string): string | undefined {
  * such a page carries instead, and an absent one yields `undefined` rather
  * than a guess: a listing with no summary says less than a wrong one.
  */
+/**
+ * Docs directories across EVERY instance, each read from its own declaration.
+ *
+ * `instanceRootsIn` rather than a list: its own docstring records two gates
+ * that each carried `["cat-harness", "bootstrap"]` while four instances
+ * existed, and reported clean runs over half the subject. A list that must be
+ * edited when a directory is added is a list that will be wrong.
+ *
+ * `scope !== "repository"` matches what `mount-instance-docs` publishes, so
+ * this index covers exactly the docs that get a route and no more.
+ *
+ * Ids are the DECLARING instance's own, which is what makes the sub-page a
+ * per-dependency answer — `who-iris-docs`, `smart-trust-docs` — rather than
+ * one page for the root's docs and silence about everyone else's.
+ */
+function docsDirectoriesAcrossInstances(): Array<{ id: string; absPath: string; path: string }> {
+  const out = new Map<string, { id: string; absPath: string; path: string }>();
+  for (const d of declaredDirectories("docs")) out.set(d.absPath, d);
+  for (const instance of instanceRootsIn(REPO)) {
+    // `findDeclarationFile` returns a BASENAME, not a path — join it.
+    // Without the join this reads relative to the process cwd, which silently
+    // "works" for whichever instance happens to sit there and fails for every
+    // other, leaving one sub-graph where there should be three. That is how
+    // the first attempt at this looked correct.
+    const declName = findDeclarationFile(instance);
+    if (declName === undefined) continue;
+    const decl = join(instance, declName);
+    let parsed: { directories?: Array<{ id?: string; path?: string; scope?: string; graphKinds?: string[] }> };
+    try {
+      parsed = JSON.parse(readFileSync(decl, "utf-8"));
+    } catch {
+      continue; // an unreadable declaration is somebody else's finding, not a silent drop of this index
+    }
+    for (const e of parsed.directories ?? []) {
+      if (!e.id || !e.path || e.scope === "repository") continue;
+      if (!(e.graphKinds ?? []).includes("docs")) continue;
+      const absPath = join(instance, e.path);
+      if (!existsSync(absPath) || out.has(absPath)) continue;
+      out.set(absPath, { id: e.id, absPath, path: relative(REPO, absPath).split("\\").join("/") });
+    }
+  }
+  return [...out.values()].sort((a, b) => a.id.localeCompare(b.id, "en"));
+}
+
 /**
  * Pages a declared visualiser marks `publish: "staging-only"`.
  *
@@ -287,6 +355,7 @@ export const TYPES: AutoDocType[] = [
     id: "index/docs",
     title: "Docs",
     graph: "docs",
+    directories: docsDirectoriesAcrossInstances,
     extracts:
       "every AUTHORED documentation page an instance publishes, with the title and description its own front matter declares",
     collect(): AutoDocItem[] {
@@ -315,7 +384,7 @@ export const TYPES: AutoDocType[] = [
       // calling the result clean. Measured before this was written.
       const items: AutoDocItem[] = [];
       const withheld = stagingOnlyRefs();
-      for (const d of declaredDirectories("docs")) {
+      for (const d of docsDirectoriesAcrossInstances()) {
         for (const abs of walk(d.absPath, (n) => n.endsWith(".md") || n.endsWith(".html"))) {
           const rel = relative(REPO, abs).split("\\").join("/");
           if (withheld.has(rel)) continue;
@@ -641,7 +710,7 @@ if (import.meta.main) {
   const built = new Map<string, number>();
 
   for (const type of TYPES) {
-    const dirs = declaredDirectories(type.graph);
+    const dirs = (type.directories ?? (() => declaredDirectories(type.graph)))();
     const items = type.collect();
     // Attribute each item to its most specific declared sub-graph, then keep
     // only the sub-graphs that actually have something. An empty one gets no
