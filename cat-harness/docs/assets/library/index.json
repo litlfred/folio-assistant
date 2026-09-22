@@ -62,6 +62,80 @@
       "referencedBy": []
     },
     {
+      "id": "rfc2119-key-words-requirement-levels",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/rfc2119-key-words-requirement-levels",
+      "title": "rfc2119-key-words-requirement-levels",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "rfc2119-key-words-requirement-levels",
+      "sourceFile": "rfc2119-key-words-requirement-levels.pdf",
+      "sourceSha256": "3c11b6002f839b8f98c65d5c8eb8918413a0d215589f0131013d86c696bcf002",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 6,
+      "blocks": 6,
+      "images": 0,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 6,
+      "words": 786,
+      "chars": 5618,
+      "bytes": 16744,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "folio-assistant-core",
+          "from": "folio-assistant-core/skills/voices/technical-writer/voice.json",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "title": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "sourceFile": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "sourceSha256": "ce9339e636af66e53b4a79d3887afc273fa1f5f9d209204801e7786eec82c60e",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 8,
+      "blocks": 8,
+      "images": 0,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 8,
+      "words": 1067,
+      "chars": 7184,
+      "bytes": 22347,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "folio-assistant-core",
+          "from": "folio-assistant-core/skills/voices/technical-writer/voice.json",
+          "count": 2
+        }
+      ]
+    },
+    {
       "id": "milnorlink",
       "instance": "folio-assistant-sci",
       "dir": "folio-assistant-sci/library/milnorlink",
@@ -92,9 +166,9 @@
       "referencedBy": [
         {
           "kind": "voices",
-          "instance": "cat-harness",
-          "from": "cat-harness/voices/milnor.json",
-          "count": 12
+          "instance": "folio-assistant-sci",
+          "from": "folio-assistant-sci/skills/voices/milnor/voice.json",
+          "count": 13
         }
       ]
     },
@@ -136,7 +210,7 @@
         {
           "kind": "voices",
           "instance": "who-style-guide",
-          "from": "who-style-guide/voices/who-guideline-development.json",
+          "from": "who-style-guide/skills/voices/who-guideline-development/voice.json",
           "count": 9
         }
       ]
@@ -179,7 +253,7 @@
         {
           "kind": "voices",
           "instance": "who-style-guide",
-          "from": "who-style-guide/voices/who-editorial.json",
+          "from": "who-style-guide/skills/voices/who-editorial/voice.json",
           "count": 10
         }
       ]
@@ -222,7 +296,7 @@
         {
           "kind": "voices",
           "instance": "who-style-guide",
-          "from": "who-style-guide/voices/who-publication-design.json",
+          "from": "who-style-guide/skills/voices/who-publication-design/voice.json",
           "count": 9
         }
       ]
@@ -254,18 +328,6 @@
       "declaredFiles": 0
     },
     {
-      "file": "2602.12670v4.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/2602.12670v4.pdf.extraction.json",
-      "bytes": 338,
-      "ext": "json",
-      "ingestedBy": "",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
       "file": "2607.25032v1.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -273,18 +335,6 @@
       "bytes": 370414,
       "ext": "pdf",
       "ingestedBy": "arxiv-2607.25032v1",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
-      "file": "2607.25032v1.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/2607.25032v1.pdf.extraction.json",
-      "bytes": 298,
-      "ext": "json",
-      "ingestedBy": "",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -302,36 +352,12 @@
       "declaredFiles": 0
     },
     {
-      "file": "2608.08453v1.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/2608.08453v1.pdf.extraction.json",
-      "bytes": 337,
-      "ext": "json",
-      "ingestedBy": "",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
       "file": "Agent Skill best practices - Gemini CLI.pdf",
       "kind": "file",
       "instance": "folio-assistant",
       "path": "uploads/Agent Skill best practices - Gemini CLI.pdf",
       "bytes": 339744,
       "ext": "pdf",
-      "ingestedBy": "",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
-      "file": "Agent Skill best practices - Gemini CLI.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/Agent Skill best practices - Gemini CLI.pdf.extraction.json",
-      "bytes": 390,
-      "ext": "json",
       "ingestedBy": "",
       "docId": "",
       "title": "",
@@ -518,13 +544,25 @@
       "declaredFiles": 0
     },
     {
-      "file": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
+      "file": "rfc2119-key-words-requirement-levels.pdf",
       "kind": "file",
       "instance": "folio-assistant",
-      "path": "uploads/Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
-      "bytes": 443,
-      "ext": "json",
-      "ingestedBy": "",
+      "path": "uploads/rfc2119-key-words-requirement-levels.pdf",
+      "bytes": 116959,
+      "ext": "pdf",
+      "ingestedBy": "rfc2119-key-words-requirement-levels",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "bytes": 122275,
+      "ext": "pdf",
+      "ingestedBy": "rfc8174-uppercase-vs-lowercase-2119-key-words",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -542,36 +580,12 @@
       "declaredFiles": 0
     },
     {
-      "file": "Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
-      "bytes": 419,
-      "ext": "json",
-      "ingestedBy": "",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
       "file": "Skills in OpenAI API.pdf",
       "kind": "file",
       "instance": "folio-assistant",
       "path": "uploads/Skills in OpenAI API.pdf",
       "bytes": 94337,
       "ext": "pdf",
-      "ingestedBy": "",
-      "docId": "",
-      "title": "",
-      "declaredFiles": 0
-    },
-    {
-      "file": "Skills in OpenAI API.pdf.extraction.json",
-      "kind": "file",
-      "instance": "folio-assistant",
-      "path": "uploads/Skills in OpenAI API.pdf.extraction.json",
-      "bytes": 351,
-      "ext": "json",
       "ingestedBy": "",
       "docId": "",
       "title": "",
@@ -637,9 +651,9 @@
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 28,
-      "ingested": 2,
-      "uningested": 26
+      "total": 23,
+      "ingested": 4,
+      "uningested": 19
     },
     {
       "instance": "who-iris",
@@ -650,7 +664,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 842,
+    "filesRead": 1438,
     "unreadable": []
   }
 }
