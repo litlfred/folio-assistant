@@ -217,6 +217,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
   },
+  // A CHIP, because the subject is the machine rather than what it says. The
+  // tempting glyph — a speech bubble, a globe — draws LANGUAGE, and this
+  // graph is not about language: it is about which languages somebody has
+  // checked a given model is good at. A globe here would read as the
+  // translation pipeline, which is a different kind two rows down.
+  models: {
+    glyph: "M8 8h8v8H8zM4 10h4M4 14h4M16 10h4M16 14h4M10 4v4M14 4v4M10 16v4M14 16v4",
+    tone: 300,
+    reads: "a chip with its pins — the machine an agent is running on, not what it says",
+  },
   // An OPEN BOOK, and the choice is between two readings of "glossary". A tag
   // or a label would draw the `notation` — the code a term carries — which is
   // one field of a concept and not the thing itself. A book draws what a

@@ -71,6 +71,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
+| [The language you communicate in](communication-language.html) | `communication-language` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
 | [Acquisition is the step before ingestion, and it had no home](content-acquisition.html) | `content-acquisition` | — | `document-ingestion.bpmn` begins at **`StartEvent_Dropped` — "a file lands in |

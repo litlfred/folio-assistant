@@ -139,6 +139,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - folio-assistant (cat-harness) — *declared, not published*
 
+### `models`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+
 ### `processes`
 
 0 of 2 published.

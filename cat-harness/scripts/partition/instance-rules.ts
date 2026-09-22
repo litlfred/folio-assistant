@@ -225,6 +225,7 @@ export const RULES: Rule[] = [
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`

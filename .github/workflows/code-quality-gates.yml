@@ -346,6 +346,15 @@ jobs:
           bun run kg:locale:check
           bun run kg:locale:check:bootstrap
 
+      # A model declares its languages, or it is a finding -- bean `46uh`.
+      # This gate is NOT red on an empty registry: an agent is not a valid
+      # source for the evidence `validation` asks for, so it ships empty and a
+      # person adds entries. It IS red (exit 2) on a registry this code cannot
+      # read, because reporting a malformed file as "no models" would let an
+      # agent fall through to English believing a determination was made.
+      - name: model languages declared
+        run: bun run check:model-languages
+
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
       # move, including the onboarding guide its own banner calls the place to

@@ -859,6 +859,21 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // + `process-state` in #266; the rationale is in this map's doc comment above,
   // and the #263 version it supersedes is preserved there too. PR #266 changed
   // the map and left that comment describing the old five-kind design.
+  models: {
+    type: termIri("ModelGraph"),
+    renderable: false,
+    // `context`: READ when a session opens, never written by a process. The
+    // distinction is the whole point of the kind — a person grants a
+    // validation, an agent never does, because a model's own claim about
+    // which languages it handles well is precisely what the validation state
+    // exists to distrust. A `state` kind would say a process may write it,
+    // and the first process that did would be manufacturing its own evidence.
+    holds: "context",
+    summary:
+      "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
+      "as ONE input to the communication-language determination and never as the answer. " +
+      "Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+  },
   glossary: {
     type: termIri("GlossaryGraph"),
     renderable: false,
