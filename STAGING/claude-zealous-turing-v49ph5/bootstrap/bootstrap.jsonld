@@ -270,10 +270,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-22T10:02:54.311Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dd7b9e0f55f59dac430664e5235108b41b834438",
-  "sourceCommitSha": "dd7b9e0f55f59dac430664e5235108b41b834438",
-  "sourceCommitAt": "2026-09-22T09:53:58Z",
+  "generatedAt": "2026-09-22T10:36:26.389Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98d2786d4a3887be6faeefd4d74f5ec6fa3a2fcd",
+  "sourceCommitSha": "98d2786d4a3887be6faeefd4d74f5ec6fa3a2fcd",
+  "sourceCommitAt": "2026-09-22T10:26:30Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -281,8 +281,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 5,
-    "Directory": 6,
+    "GraphKind": 7,
+    "Directory": 8,
     "Asset": 2
   },
   "@graph": [
@@ -1395,6 +1395,22 @@
       "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "renderable": false,
+      "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "models",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ModelGraph",
+      "renderable": false,
+      "summary": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "translation-sources",
@@ -1535,6 +1551,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-render"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/bootstrap/bootstrap.jsonld#directory/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "models",
+      "path": "models/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models"
+      ],
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/bootstrap/bootstrap.jsonld#directory/models",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/bootstrap/bootstrap.jsonld#directory/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "glossary",
+      "path": "glossary/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+      ],
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/bootstrap/bootstrap.jsonld#directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/glossary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "bootstrap-translations",
@@ -1569,8 +1609,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-turing-v49ph5",
-    "sha": "03f425e4a59d7f885bbe2bfef871833a43bffdb7",
+    "sha": "89cd99fae512c4d4902044905d696d8b672f36c9",
     "pr": "889/merge",
-    "run": "35713664697"
+    "run": "35716779981"
   }
 }

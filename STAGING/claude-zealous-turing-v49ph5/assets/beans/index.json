@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 490,
+      "count": 495,
       "unit": "beans"
     }
   },
@@ -223,14 +223,14 @@
     {
       "id": "folio-assistant-10s1",
       "title": "MATERIALIZED IS READ-ONLY: a copy of someone else's artefact is not yours to edit — copy it into your own folio first, and that copy-out is step one of review",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-22T06:55:01Z",
+      "updatedAt": "2026-09-22T09:35:05Z",
       "preview": "## What — owner, 2026-09-21, verbatim\n\n> note:  if we have a mateiralized <stub>/<sub-graph>, the contents of it\n> should be immutable (expect for publication worfklow purposes or so)... so if\n> you browsw to it through whatever interface, it is functionally\n> diabled/read only/greyed out.   you would need to copy/mateiralize it to\n> your own folio/ in order to mess around with it.   docuemnt the ",
       "file": "beans/defs/folio-assistant-10s1--materialized-is-read-only-a-copy-of-someone-elses.md"
     },
@@ -431,6 +431,20 @@
       "updatedAt": "2026-09-19T11:58:51Z",
       "preview": "A gate that does not fire is indistinguishable from one that passed.\n\nThat is `xom7`'s lesson one layer up, and every item here is an instance:\n`3pqn` (a PR that opens with zero checks looks exactly like one whose checks\nare green), `dzl3` (playwright fails before any test body runs), `t373`\n(`readme:audit` is in no workflow at all, and `main` carried eight dead links),\n`bgle` (a guard that enumer",
       "file": "beans/defs/folio-assistant-1xhc--ci-reliability-a-gate-that-does-not-fire-is-indist.md"
+    },
+    {
+      "id": "folio-assistant-1xrg",
+      "title": "STATE DASHBOARDS: 4 of 7 render a shell — a declared page that displays nothing is dh4f with a URL",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:48:40Z",
+      "updatedAt": "2026-09-22T08:24:50Z",
+      "preview": "Found 2026-09-22 by LOOKING at a page rather than at the generator that wrote\nit. `lqo9` slice 2 added the `glossary` state graph, `state:visualizer`\ngenerated `docs/glossary/index.html` for it, every gate went green, and the\npage displays **nothing about the glossary**.\n\nIt is not a defect that slice introduced. Measured across all seven state\ngraphs the visualizer writes a page for:\n\n| graph | p",
+      "file": "beans/defs/folio-assistant-1xrg--state-dashboards-4-of-7-render-a-shell-a-declared.md"
     },
     {
       "id": "folio-assistant-23bc",
@@ -827,14 +841,14 @@
     {
       "id": "folio-assistant-46uh",
       "title": "An agent's opening steps must DETERMINE the language it communicates in, rather than defaulting to the one the tooling happens to be written in",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:04:33Z",
-      "updatedAt": "2026-09-21T22:04:53Z",
+      "updatedAt": "2026-09-22T06:58:36Z",
       "preview": "Owner, 2026-09-21:\n\n> part of agent first task is to determine appropriate lanaguge when\n> speaking/communicating regrafless of context\n\n## What is missing\n\nThis repository has a great deal about the language its **content** is in —\n`translation-manager` carries `available_locales`, the source-language rule,\ncoverage badges, the per-locale `.po` resolution. Searching the skills for a\nrule about th",
       "file": "beans/defs/folio-assistant-46uh--an-agents-opening-steps-must-determine-the-languag.md"
     },
@@ -1541,6 +1555,20 @@
       "file": "beans/defs/folio-assistant-7o7i--raci-declare-involvement-a-c-i-over-the-roles-and.md"
     },
     {
+      "id": "folio-assistant-7pdi",
+      "title": "ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T23:27:42Z",
+      "updatedAt": "2026-09-22T09:22:33Z",
+      "preview": "Owner, 2026-09-21 (session_017PqeiS4JYySSWGAYLedmus), queued as an aside —\nverbatim, because the ask ties five things together and a paraphrase would\ndrop one:\n\n> aside, find bean on code review: need to see if semantic/narrative assertion\n> matches code written. similar skills for lean already. generalize process,\n> and provde high levels skills + specific lean things in own subgraph.\n> probably ",
+      "file": "beans/defs/folio-assistant-7pdi--adjudication-a-first-class-process-for-when-review.md"
+    },
+    {
       "id": "folio-assistant-7po1",
       "title": "WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos",
       "status": "todo",
@@ -1553,6 +1581,20 @@
       "updatedAt": "2026-09-20T16:14:51Z",
       "preview": "Owner, 2026-09-20, verbatim — three separate instructions in one message:\n\n> workflows/ is declared under the id cat-harness-workflows, content should be\n> at graph cat-harness/workflows except the bare minimum declarations (what is\n> bpmn, how use) under bootstrap/,\n> cat-harness/workflows is for more elboration on use of bpmn and such\n> cat-harness/workflows/state should describe beans and todos",
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-7rna",
+      "title": "PROCESS DEFINITIONS: 16 of 61 diagrams have no process-level <documentation>, and sqtq made that visible",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:23:40Z",
+      "updatedAt": "2026-09-22T08:18:50Z",
+      "preview": "Found 2026-09-22 while adding the `glossary` auto-doc type. Not a new defect —\na pre-existing authoring gap that became **visible and then actively harmful**\ntwo days ago.\n\n## The mechanism\n\n`gen-docs-auto.ts`'s `index/processes` took the first `<documentation>` after\nthe `<process>` open tag as the process's summary. For a process carrying its\nown documentation that is right. For one that does no",
+      "file": "beans/defs/folio-assistant-7rna--process-definitions-16-of-61-diagrams-have-no-proc.md"
     },
     {
       "id": "folio-assistant-7s52",
@@ -2823,6 +2865,20 @@
       "file": "beans/defs/folio-assistant-dzl3--playwrightconfigts-runs-a-test-servercjs-that-does.md"
     },
     {
+      "id": "folio-assistant-ebvl",
+      "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:12:58Z",
+      "updatedAt": "2026-09-22T09:13:04Z",
+      "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
+      "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
+    },
+    {
       "id": "folio-assistant-eief",
       "title": "CSVW skill + ingestion tools: tabular metadata as far as it can be determined",
       "status": "todo",
@@ -3753,14 +3809,14 @@
     {
       "id": "folio-assistant-jmpb",
       "title": "The exported graph is English-only: no .jsonld is built per locale, so translated labels reach no consumer of the data",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:03:22Z",
-      "updatedAt": "2026-09-21T22:03:40Z",
+      "updatedAt": "2026-09-22T06:14:38Z",
       "preview": "Owner, 2026-09-21, while `j28g` was being worked:\n\n> but we should also build the json/jsonld for the rendered result of the\n> translations. no reason that is english only\n\n## The gap, measured\n\n`kg-export.ts` contains **one** occurrence of the string `locale`. The graph\nit writes carries labels and documentation in whatever language the source\nasset was authored in — English throughout this corpu",
       "file": "beans/defs/folio-assistant-jmpb--the-exported-graph-is-english-only-no-jsonld-is-bu.md"
     },
@@ -4749,14 +4805,14 @@
     {
       "id": "folio-assistant-prhr",
       "title": "PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-22T08:20:36Z",
+      "updatedAt": "2026-09-22T09:34:57Z",
       "preview": "## What — owner, 2026-09-21\n\n> bean, we also need a processes/ visualization as it is controlled.... its\n> basically a bpmn searcher tool or so. with various filters.\n\n## THE TITLE SAYS 58 AND THE NUMBER IS 61\n\nNot a typo worth quietly fixing — it is this repository's own rule catching\nits author mid-sentence. `bpmn-processes` says *\"Count the directory rather\nthan quoting a number from this parag",
       "file": "beans/defs/folio-assistant-prhr--processes-visualiser-58-bpmn-diagrams-and-no-viewe.md"
     },
@@ -5943,6 +5999,20 @@
       "file": "beans/defs/folio-assistant-vhmz--r27-settled-the-folio-is-the-readers-repository-li.md"
     },
     {
+      "id": "folio-assistant-vigi",
+      "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:50:21Z",
+      "updatedAt": "2026-09-22T08:50:42Z",
+      "preview": "Found 2026-09-22 while answering ruling 2 on #596 — the owner asked what is\nJSON-LD-centric in this ecosystem and what has pre-existing wrappers. The\nanswer to the second is **nothing**, and that turns out to matter beyond the\nquestion that produced it.\n\n## Measured\n\n**28 dependencies, and not one is an RDF, JSON-LD, SPARQL or FHIR library.**\n\nEvery JSON-LD document this repository publishes — the",
+      "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
+    },
+    {
       "id": "folio-assistant-vjbl",
       "title": "Second annotator for the crdm-detect eval corpus",
       "status": "todo",
@@ -6705,14 +6775,14 @@
     {
       "id": "folio-assistant-z9ax",
       "title": "69 modules carry a folio registration import that is now a no-op",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:29:45Z",
-      "updatedAt": "2026-09-22T06:30:00Z",
+      "updatedAt": "2026-09-22T09:37:04Z",
       "preview": "Left behind by `q2wn`, deliberately and with the attempt recorded.\n\n## What is true now\n\n`schemas/cat-harness.ts` imports `schemas/folio-graph-kind.js` at its foot, so\nthe `folio` kind is registered by the time any reader can be called — a reader\nlives in that module, so loading it is a precondition of calling one. Proved\nin a fresh process importing only `readDeclaration`.\n\nThat makes every OTHER",
       "file": "beans/defs/folio-assistant-z9ax--69-modules-carry-a-folio-registration-import-that.md"
     },
