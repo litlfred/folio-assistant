@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 496,
+      "count": 497,
       "unit": "beans"
     }
   },
@@ -1555,6 +1555,20 @@
       "file": "beans/defs/folio-assistant-7o7i--raci-declare-involvement-a-c-i-over-the-roles-and.md"
     },
     {
+      "id": "folio-assistant-7ofc",
+      "title": "folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:48:40Z",
+      "updatedAt": "2026-09-22T10:48:40Z",
+      "preview": "Owner, 2026-09-22: *\"folio must be in cat-harness and visualizer owned by it. transations too... there should be visualizer.\"*\n\nMeasured against that ruling — the three graphs the ruling names:\n\n| graph | in cat-harness | visualiser declared | present |\n|---|---|---|---|\n| `library/` | yes | `docs/cat-harness/library/cat-harness/index.html` | yes |\n| `translations/` | yes | `docs/translation-statu",
+      "file": "beans/defs/folio-assistant-7ofc--folio-is-the-only-cat-harness-graph-with-no-visual.md"
+    },
+    {
       "id": "folio-assistant-7pdi",
       "title": "ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for",
       "status": "completed",
@@ -2867,14 +2881,14 @@
     {
       "id": "folio-assistant-ebvl",
       "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:12:58Z",
-      "updatedAt": "2026-09-22T09:13:04Z",
+      "updatedAt": "2026-09-22T10:02:36Z",
       "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
       "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
     },
