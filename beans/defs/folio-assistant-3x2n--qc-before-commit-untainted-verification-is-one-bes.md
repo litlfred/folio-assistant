@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3x2n
 title: 'UNTAINTED VERIFICATION: one dispatch mechanism for code QC and for evidence review, and qa-reporting is declared with zero consumers'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-21T21:53:39Z
-updated_at: 2026-09-21T21:53:39Z
+updated_at: 2026-09-22T10:45:31Z
 ---
 
 Opened 2026-09-21 on the owner's instruction, given over four messages that
@@ -105,16 +105,92 @@ stop being written.
 
 ## Done when
 
-- [ ] Every child is opened, each carrying its area's measured baseline
-- [ ] The generic skill exists and both domains — code QC and evidence review —
-      are expressed as instances of it rather than as parallel texts
-- [ ] `qa-reporting` has its first consumer
-- [ ] The three states are kept apart everywhere: verified, **could not
-      dispatch**, not attempted. "Could not dispatch" is recordable and is
-      never a pass
+- [x] Every child is opened, each carrying its area's measured baseline —
+      all eight `completed`, verified from the bean files rather than from a
+      count in prose
+- [x] The generic skill exists and both domains — code QC and evidence review —
+      are expressed as instances of it rather than as parallel texts.
+      `skills/folio-core/untainted-verification.md` is the spine;
+      `evidence-review.md` opens *"that is `untainted-verification`'s sentence
+      with the nouns changed"*, and `translation-manager.md` §"The agentic
+      round trip" is headed **an INSTANCE of untainted verification**. Both
+      bound to `qc-reviewer` in `scenarios/roles.json`
+- [x] `qa-reporting` has its first consumer —
+      `scripts/check-qa-reviewer-permission.ts`, which resolves the actor and
+      requires the permission. Before it, the permission was declared with
+      **zero** consumers while reading as a control
+- [x] The three states are kept apart everywhere: verified, **could not
+      dispatch**, not attempted. `isVerified` is the predicate a gate asks;
+      `couldNotDispatchEntry` throws on an empty reason, so a bare "could not
+      dispatch" cannot be recorded; `isCheckerWitness` distinguishes the
+      checker's `n/a` witness from a pass
 
-## Open with the owner
+## Settled with the owner
 
-Whether "could not dispatch" may be **recorded by the coder** as an `n/a`
-witness with a reason (which satisfies the gate), or must **block the commit**.
-It decides whether this can gate at all in an environment with no subagents.
+**Whether "could not dispatch" may be recorded by the coder as an `n/a` witness
+with a reason, or must block the commit.** Answered: **recorded, with a stated
+reason** — option (a). It keeps the third state honest and recordable without
+making the rule unenforceable, and it is the only option under which "could not
+dispatch" is distinguishable from "nobody tried". `couldNotDispatchEntry`
+enforces the "with a reason" half by throwing on an empty one.
+
+**Whether `zakj`'s finding needs a dispatched adjudication.** Answered
+2026-09-22: **not applicable, reason recorded.** `check:secret-leaks` is
+prefix-anchored and deterministic, and `0grh` is for judgements, not for greps.
+It becomes live the day an entropy or heuristic detector is added — an entropy
+threshold IS a judgement. See `zakj` §"The ruling".
+
+**Whether a dependency-audit step earns its place (`j41m`).** Answered
+2026-09-22: **an advisory step AND Dependabot, both** — they answer different
+questions, and neither gates a merge. See `j41m` §"The ruling".
+
+## Summary of Changes
+
+**Eight of eight children complete**, each carrying its area's measured
+baseline — which was the ask: *"evidence based best practices"*, with the
+constraint that a best practice with no measurement behind it is the thing this
+epic exists to stop being written.
+
+| bean | what it established |
+|---|---|
+| `0grh` | the spine — the producer never writes the verdict; checker and adjudicator each see a controlled context and not the other's |
+| `a58y` | `qa-reporting` gains its first consumer; before it, a declared permission read as a control with **zero** readers |
+| `zakj` | secrets — no leaked-token scanning existed at all; `could-not-scan` exits **2** and outranks clean |
+| `j41m` | supply chain — 14 install sites defeating or skipping their pin, and nothing asking whether a dependency was known-vulnerable |
+| `1wef` | injection — three surfaces, three real defects |
+| `jfr6` | schema + compilation — 42 generated-artefact checks all asking currency, none asking validity |
+| `3vc6` | translation re-expressed as an INSTANCE of the spine rather than a parallel text |
+| `8rwa` | evidence review — the same separation carried into guideline development |
+
+### Four real defects, each demonstrated before being fixed
+
+| | |
+|---|---|
+| workflow shell injection (`lake-cache-refresh.yml`) | attacker-controlled input reaching a shell |
+| DOM XSS from an ingested corpus (`library-graph.ts`) | a string `n_words` reaching `innerHTML` through `+` |
+| prompt injection into a system prompt (`adapters/document/index.ts`) | a `"""` fence closing the region it was meant to sit inside |
+| an unpinned install in the **release** workflow | hidden by a wrong denominator, found by re-deriving it |
+
+**The finding worth more than any single fix: all three injection surfaces are
+ONE bug** — content closing a delimiter it was meant to sit inside. Different
+delimiters, different sinks, same shape.
+
+### What this epic kept getting wrong, and kept recording
+
+Three times a number in this epic took its **denominator from the numerator's
+shape**, and each time that excluded — and therefore hid — the rows it did not
+match: *"11 of 18 install steps"* hid three that never pinned at all; *"1 of 28
+at an exact version"* was one manifest of five; *"every generated viewer"* was
+12 of 31 pages.
+
+Every one is recorded in place rather than silently corrected, because the
+second and third occurrences are what make it a pattern rather than a slip.
+That is `w4tq`'s lesson — counting what matches a SHAPE rather than what
+satisfies the CONTRACT — and this epic is its longest worked example.
+
+### What is NOT claimed
+
+The gates report that a check ran and what it said. None of them claims the
+repository is safe. An advisory not yet published is not one `bun audit` can
+see; a clean secret scan is evidence about the patterns it knows. Saying so is
+the point of the three-state discipline every child implements.

@@ -768,6 +768,40 @@ const GraphNodeDirectoryShape = z.object({
   // graph. That is why `GraphKind` read as redundant beside it: the type was
   // honest and the data was not.
   graphKinds: z.array(z.string().min(1)).min(1),
+  /**
+   * This directory is DECLARED and deliberately not on disk, with the reason.
+   *
+   * ## Why a declared-but-absent directory needs saying out loud
+   *
+   * `resolveDirectories` is **existence-filtered**: a declared directory that
+   * is not there is dropped, silently, before any consumer sees it. That is
+   * the right behaviour for a consumer — scanning a path that does not exist
+   * is not useful — and it is exactly why nothing reported one. A declaration
+   * is an assertion that this directory is ours; when the assertion is false,
+   * every consumer reports a clean run over nothing. The `dh4f` shape, in the
+   * resolver they all depend on (bean `8mbk`).
+   *
+   * So `check:declared-dirs` fails on an absent directory unless the
+   * declaration says it is meant to be absent, HERE, in a field a reader sees
+   * in the diff.
+   *
+   * ## The reason is required, and that is the whole design
+   *
+   * Same rule as `folio:no-skill`, `folio:fulfilment` and `folio:judgement`:
+   * an exemption whose justification is `""` is one somebody adds to get to
+   * green. `library/` is the worked example — its description already argues
+   * the cost at length and says outright that the shape is known rather than
+   * overlooked. That argument belongs in a field a checker can read, not only
+   * in prose a checker cannot.
+   *
+   * **It is checked in both directions.** A directory that declares `absent`
+   * and then EXISTS is also a finding: an exemption that outlived its cause
+   * reads as a live decision and is not one. That direction is the one that
+   * rots quietly, because nothing goes wrong when it does.
+   */
+  absent: z
+    .object({ reason: z.string().min(1, "an absent directory's reason cannot be empty") })
+    .optional(),
   ...kgNodeLabelShape,
 });
 

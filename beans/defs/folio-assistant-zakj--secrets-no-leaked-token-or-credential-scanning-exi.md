@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-22T10:58:19Z
+updated_at: 2026-09-22T10:44:42Z
 parent: folio-assistant-3x2n
 ---
 
@@ -41,8 +41,8 @@ this repository's own history:
       of scope (below)
 - [x] The false-positive rate is measured on this corpus BEFORE gating, and
       the number decided the design (below)
-- [x] A finding is dispatched and adjudicated per `0grh` — **not needed and
-      deliberately not built.** A prefix-anchored match is deterministic: the
+- [x] A finding is dispatched and adjudicated per `0grh` — **considered, put
+      to the owner, and declined 2026-09-22: not applicable, reason recorded.** A prefix-anchored match is deterministic: the
       string either is a `ghp_` token or it is not. Dispatching an adjudicator
       to confirm a regex would be ceremony, and `0grh` exists for judgements,
       not for greps. This becomes live the day an entropy or heuristic
@@ -86,34 +86,36 @@ which it names and redacts, and removing it, which turns it green.
 remedy — rotation, not deletion — and claiming it here would be the over-claim
 this gate exists to avoid. From here forward, and the docstring says so.
 
-## Summary of Changes — closed on EVIDENCE, 2026-09-22
+## The ruling, 2026-09-22 — not applicable, and the reason is the record
 
-Closed by a session that did **not** write this work, per `bean-coordination`
-§"Closing a bean whose work has already landed": **evidence, not authorship.**
-Everything below was re-derived rather than taken from the bean's own prose.
+Put to the owner with both sides rather than as a recommendation dressed as a
+question. **Answer: tick as not-applicable, reason recorded.**
 
-| claim | how it was re-derived |
-|---|---|
-| the scanner exists | `cat-harness/scripts/check-secret-leaks.ts`, with `scripts/tests/secret-leaks.test.ts` beside it |
-| it is a real gate, not just a script | `package.json:116` registers `check:secret-leaks`, and `.github/workflows/code-quality-gates.yml:812` runs it — so CI gates on it |
-| it runs clean | 3,928 text files across 5 declared roots, **0 findings**, exit 0 |
-| **it can actually fire** | planted a fake `ghp_` token in a scanned root: it reported `github-pat-classic`, **redacted the value** in its own output (`ghp_0123…wxyz`), and exited **1**. Removed; tree clean |
+The argument for declining: `check:secret-leaks` matches **prefix-anchored**
+regexes against committed bytes. The string either is a `ghp_` token or it is
+not — same input, same output, every run, on any machine, with no judgement
+anywhere in it. `0grh`'s separation exists because a producer's judgement about
+its own work is not trustworthy; **a regex has no judgement to distrust.**
+Dispatching an adjudicator to confirm that a grep grepped correctly costs a
+model call and yields a verdict *less* reliable than the grep.
 
-The redaction is worth naming: a scanner that prints the credential it found has
-copied it into a CI log, which is a second leak. This one truncates.
+The argument against, which was put alongside it and is not dismissed: the
+value of a rule is partly that it has no exceptions, and *"this one is
+obviously fine"* is how every exception starts.
 
-It also prints its own scope on **every clean run** — prefix-anchored by design,
-entropy measured unusable here, git history deliberately out of scope with
-rotation named as the remedy. That is the third-state discipline applied to a
-green result: the run says what it did *not* look at, so a pass cannot be read
-as more coverage than it is.
+**What settles it is the axis, not the convenience.** `0grh` is for checks that
+carry judgement. The line is not "is this check important" — a leaked
+credential is about as important as findings get — but **"is there a judgement
+here that a second party could disagree with?"** For a prefix-anchored match
+there is not.
 
-### The last checkbox
+**This becomes live the day an entropy or heuristic detector is added**, and
+that day is foreseeable: an entropy threshold IS a judgement, a high-entropy
+string is a *candidate* rather than a finding, and the producer of a threshold
+is exactly the party who should not adjudicate what it catches. The item is
+ticked for today's checker, not for the class.
 
-*"A finding is dispatched and adjudicated per `0grh`"* was the only unticked
-item, and its own text already resolved it: **not needed and deliberately not
-built**, because a prefix-anchored match is deterministic — the string either is
-a `ghp_` token or it is not, and dispatching an adjudicator to confirm a regex
-would be ceremony. Ticked as resolved rather than left hanging, with the
-condition that revives it recorded there: the day an entropy or heuristic
-detector is added.
+**Recorded rather than silently skipped** because a declined rule with no
+reasoning is indistinguishable from a forgotten one, and the next agent
+touching this gate would have to re-derive the whole argument — or, worse,
+build the ceremony.
