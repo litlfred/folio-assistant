@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/skills/quality-control/output.schema.json",
+  "title": "Quality Control Output",
+  "description": "Output schema for quality control results.",
+  "type": "object",
+  "required": [
+    "overallResult"
+  ],
+  "properties": {
+    "overallResult": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "pass-with-warnings",
+        "fail"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "category",
+          "message"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checklistResults": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "not-applicable"
+        ]
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/amazing-ptolemy-2ceyvg",
+    "sha": "5fdd60f508b5b5431be84504e8d58b62ee017b32",
+    "pr": "929/merge",
+    "run": "35718119216"
+  }
+}

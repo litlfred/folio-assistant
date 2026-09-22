@@ -1,0 +1,336 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/tool-types.schema.json",
+  "title": "Tool I/O types",
+  "description": "The shared types a Tool's io.inputs/io.outputs reference by absolute IRI. Generated from schemas/tool-types.ts, which is authoritative.",
+  "$defs": {
+    "BeanId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "A bean identifier, e.g. folio-assistant-1dfh",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "SkillName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "A skill name, e.g. todo-manager",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "PackageName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "A skill package, e.g. folio-core",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "ProcessId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "A BPMN process id, e.g. crdm-requirements",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "NodeId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$",
+      "description": "A node id within a BPMN process, e.g. A_Implement",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "InstanceId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Locale": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+      "description": "A BCP-47 language tag, e.g. en or fr-CA",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+      "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "TimeWindow": {
+      "type": "string",
+      "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+      "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Flag": {
+      "type": "boolean",
+      "description": "A boolean switch — projects to a bare flag, with no value word",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "BeanStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "todo",
+        "in-progress",
+        "completed",
+        "scrapped"
+      ],
+      "description": "A bean status. Exactly what `beans update --status` accepts.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RepoPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A path relative to the repository root. No `..` segments.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Url": {
+      "type": "string",
+      "format": "uri",
+      "description": "An absolute http(s) URL",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Branch": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+      "description": "A git branch name",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "ChangeProposalNumber": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "description": "A change-proposal number — a pull request on GitHub, a merge request on GitLab",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Markdown": {
+      "type": "string",
+      "description": "Markdown text. Not admissible as a command-line argument — see INJECTION_SAFE.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400,
+      "description": "A short single-line human string. Not admissible as a command-line argument.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "FilesystemPath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A filesystem path, possibly outside the repository. Not admissible as a command-line argument.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Slug": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "A folio slug, e.g. quantum-observable-universe",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "ContentType": {
+      "type": "string",
+      "enum": [
+        "paper",
+        "document"
+      ],
+      "description": "A folio's content type. `paper` extends `document` — see AGENTS.md on content types.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "LinkMode": {
+      "type": "string",
+      "enum": [
+        "submodule",
+        "sibling"
+      ],
+      "description": "How a new folio links the platform: a git submodule, or a sibling checkout.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "LakeCacheAction": {
+      "type": "string",
+      "enum": [
+        "status",
+        "restore",
+        "restore-toolchain",
+        "install-toolchain",
+        "verify",
+        "seed",
+        "contribute",
+        "list",
+        "doctor"
+      ],
+      "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "NamespaceLayer": {
+      "type": "string",
+      "enum": [
+        "bootstrap",
+        "harness",
+        "core"
+      ],
+      "description": "A namespace layer: bootstrap resolves before anything else, then harness, then core.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "PreferenceAction": {
+      "type": "string",
+      "enum": [
+        "get",
+        "set",
+        "reset"
+      ],
+      "description": "Read, write or clear the stored preferences.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "CommitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RenderEvent": {
+      "type": "string",
+      "enum": [
+        "rendered",
+        "removed",
+        "restored",
+        "retained"
+      ],
+      "description": "A render-log event: rendered, removed, restored or retained.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RenderFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "html"
+      ],
+      "description": "A render target: pdf or html.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "PreviewFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "html",
+        "png"
+      ],
+      "description": "A previewable artefact: pdf, html or png.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RenderScope": {
+      "type": "string",
+      "enum": [
+        "full",
+        "chapter",
+        "section"
+      ],
+      "description": "How much of the folio to render.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "LatexEngine": {
+      "type": "string",
+      "enum": [
+        "pdflatex",
+        "lualatex",
+        "xelatex"
+      ],
+      "description": "The TeX engine.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "MathRenderer": {
+      "type": "string",
+      "enum": [
+        "katex",
+        "mathjax"
+      ],
+      "description": "The browser-side math renderer.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "PrintMode": {
+      "type": "string",
+      "enum": [
+        "formal",
+        "compact"
+      ],
+      "description": "Typesetting density.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "LinkStyle": {
+      "type": "string",
+      "enum": [
+        "blob",
+        "pages",
+        "raw"
+      ],
+      "description": "How a README link addresses its target.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "ReadmeSection": {
+      "type": "string",
+      "enum": [
+        "folio:toc",
+        "folio:lean-coverage",
+        "folio:lean-modules",
+        "folio:simulators",
+        "folio:workflows"
+      ],
+      "description": "A generated README section, named by its marker.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "TranslationLevel": {
+      "type": "string",
+      "enum": [
+        "block",
+        "section",
+        "chapter",
+        "folio"
+      ],
+      "description": "What a translation sign-off covers.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000,
+      "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Dpi": {
+      "type": "integer",
+      "minimum": 24,
+      "maximum": 1200,
+      "description": "Dots per inch for rendered formulae.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "DecisionFacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
+      "description": "Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  "staging": {
+    "branch": "claude/amazing-ptolemy-2ceyvg",
+    "sha": "5fdd60f508b5b5431be84504e8d58b62ee017b32",
+    "pr": "929/merge",
+    "run": "35718119216"
+  }
+}
