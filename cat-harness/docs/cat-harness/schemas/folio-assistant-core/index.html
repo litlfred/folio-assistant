@@ -365,9 +365,34 @@ function diaWidth(svg) {
   return svg.getBoundingClientRect().width || 900;
 }
 
+/* THE LIST AND THE PICTURE FILTER THROUGH ONE PREDICATE, and that is the
+   point of this function existing rather than each caller writing its own.
+   They drifted precisely because there were two: render() honoured search,
+   kind and module while diaModel() honoured module alone, so a reader who
+   typed into the search box narrowed the list and the diagram did not move.
+   Nothing on the page said why, which makes a deliberate choice and a bug
+   look identical to the person looking at them. */
+function matchesFilter(d, q, k, m) {
+  if (!inScope(d)) return false;
+  if (k && d.kind !== k) return false;
+  if (m && d.module !== m) return false;
+  if (!q) return true;
+  return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
+}
+
+/** The three filter controls, read once so every caller sees one state. */
+function filterState() {
+  return {
+    q: $("q") ? $("q").value.trim().toLowerCase() : "",
+    k: $("kind") ? $("kind").value : "",
+    m: $("mod") ? $("mod").value : "",
+  };
+}
+
 function diaModel() {
-  var mod = $("mod") ? $("mod").value : "";
-  var core = G.decls.filter(function (d) { return inScope(d) && (!mod || d.module === mod); });
+  var f = filterState();
+  var mod = f.m;
+  var core = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
   var index = {}, decls = [];
   core.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = false; });
 
@@ -391,12 +416,24 @@ function diaModel() {
   var ctxShown = ctx.slice(0, DIA_CONTEXT_MAX);
   ctxShown.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = true; });
 
-  var edges = [];
+  var edges = [], ctxEdges = 0;
   G.edges.forEach(function (e) {
     var a = index[e.from], b = index[e.to];
     if (a === undefined || b === undefined || a === b) return;
-    /* Context-to-context would draw a graph the page is not about. */
-    if (decls[a].__ctx && decls[b].__ctx) return;
+    /* Context-to-context would draw a graph the page is not about -- but BOTH
+       boxes are on screen, so a reader sees two declarations with no line and
+       has no way to know a relationship was suppressed rather than absent.
+       Counted, not dropped: the same contract the module-aggregation count
+       used to carry before the layered diagram replaced it, and the reason
+       this bean's own closing line requires the report survive every mode.
+       Measured when this was added, over the COMMITTED projection of 842
+       declarations and 525 edges: 15 summed across the 79 module filters,
+       and 0 across eight sample searches -- so it is a SMALL loss, and the
+       reason to report it is that it is INVISIBLE, not that it is large. An
+       earlier draft of this comment claimed a tighter filter makes more of
+       them; that was asserted, then measured, and it is false. The figures
+       move as the corpus does; the contract does not. */
+    if (decls[a].__ctx && decls[b].__ctx) { ctxEdges++; return; }
     edges.push({ a: a, b: b, via: e.via, kind: e.kind, array: e.array, optional: e.optional });
   });
   return {
@@ -407,6 +444,10 @@ function diaModel() {
     coreCount: core.length,
     ctxShown: ctxShown.length,
     ctxHidden: ctx.length - ctxShown.length,
+    ctxEdges: ctxEdges,
+    /* Whether any filter is NARROWING the picture, so an empty result can say
+       which. Module is included: it empties the set the same way. */
+    filtered: !!(f.q || f.k || f.m),
   };
 }
 
@@ -452,7 +493,15 @@ function diagram() {
   var m = diaModel();
 
   if (!m.decls.length) {
-    cap.textContent = "Nothing in scope to draw.";
+    /* NAME THE CAUSE. This said "Nothing in scope to draw" while only scope
+       and the module select could empty it, and that was true then. Once the
+       search and kind filters narrow the picture too, the same words blame
+       the SUBJECT for what a filter did, and a reader who typed a word that
+       matches nothing is told the page is empty. */
+    var why = m.filtered
+      ? "No declaration matches the filters above, so there is nothing to draw. Clear the search or the kind to get the picture back."
+      : "Nothing in scope to draw.";
+    cap.textContent = why;
     svg.innerHTML = ""; key.innerHTML = "";
     return;
   }
@@ -638,6 +687,11 @@ function diagram() {
     (m.ctxShown ? " <b>" + m.ctxShown + "</b> faded box(es) sit OUTSIDE this filter and are drawn because " +
       "something here links to them — a cut edge is the one most worth seeing." : "") +
     (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "") +
+    /* Both endpoints ARE drawn, so an unreported suppression reads as "these
+       two are unrelated" -- a false statement the picture makes silently. */
+    (m.ctxEdges ? " <b>" + m.ctxEdges + "</b> relationship(s) BETWEEN two faded boxes are not drawn, because " +
+      "the picture is about this filter rather than about its surroundings — counted here so a missing " +
+      "line is never mistaken for a missing relationship." : "") +
     /* Said rather than left to be noticed: a wrapped layer looks like two
        layers to a reader who was not told, and the alternative the panel used
        to take was to shrink the whole picture without saying so. */
@@ -651,15 +705,8 @@ function diagram() {
 }
 
 function render() {
-  var q = $("q").value.trim().toLowerCase();
-  var k = $("kind").value, m = $("mod").value;
-  var rows = G.decls.filter(function (d) {
-    if (!inScope(d)) return false;
-    if (k && d.kind !== k) return false;
-    if (m && d.module !== m) return false;
-    if (!q) return true;
-    return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
-  });
+  var f = filterState();
+  var rows = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
   $("items").innerHTML = rows.slice(0, 400).map(function (d) {
     return '<li><button type="button" data-id="' + esc(d.id) + '" aria-current="' + (SEL === d.id) + '">' +
       '<span class="nm">' + esc(d.name) + "</span>" +
@@ -726,15 +773,28 @@ fetch(DATA_HREF).then(function (r) {
     o.textContent = nameCount[m.name] > 1 ? m.instance + " / " + m.name : m.name;
     $("mod").appendChild(o);
   });
-  $("q").addEventListener("input", render);
-  $("kind").addEventListener("change", render);
-  $("mod").addEventListener("change", function () {
-    render();
-    /* The diagram narrows with the module filter — that is how a
-       754-declaration instance still has a readable picture. Redrawn only
-       when the panel is open; a closed one costs nothing. */
+  /* Redrawn only when the panel is OPEN; a closed one costs nothing, and the
+     toggle handler below draws it on first open. */
+  function redrawIfOpen() {
     if ($("overview").open) diagram();
+  }
+  /* Search is debounced and the two selects are not: a select fires once per
+     choice, while typing fires per keystroke and the layout is the expensive
+     part -- the same trade the resize handler below makes, at the same 150ms.
+     The LIST stays undebounced either way, so typing still feels immediate;
+     only the picture waits. */
+  var flt;
+  $("q").addEventListener("input", function () {
+    render();
+    clearTimeout(flt);
+    flt = setTimeout(redrawIfOpen, 150);
   });
+  /* The diagram narrows with EVERY filter, not just the module one. A
+     754-declaration instance is over DIA_MAX and refuses to draw, so before
+     this the only way to get a picture was to know which module to pick;
+     a search that narrows the set under the limit now earns one too. */
+  $("kind").addEventListener("change", function () { render(); redrawIfOpen(); });
+  $("mod").addEventListener("change", function () { render(); redrawIfOpen(); });
   $("items").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-id]");
     if (b) select(b.getAttribute("data-id"));

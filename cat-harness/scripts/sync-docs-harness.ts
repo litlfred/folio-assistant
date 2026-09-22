@@ -78,6 +78,20 @@ const icon = decl.images?.find((i) => i.id === decl.icon);
 // Substituting the large mark silently is how a 24 px blob ships.
 const smallIcon = imageForRole(decl.images, "browser-icon");
 
+// THE DARK-SCHEME MARK, resolved by ROLE like the small one above.
+//
+// A separate image rather than a CSS filter on the light one: a filter that
+// lightens an arbitrary path is a guess about the result, and the whole
+// point of the dark variant is a MEASURED ratio (7.00:1 on the dark sidebar,
+// against the light ink's 2.60:1, which is under the 3:1 bar for meaningful
+// non-text content).
+//
+// ABSENT IS A REAL STATE and the templates handle it: an instance that
+// declares no `mark-dark` shows its one mark in both schemes, which is what
+// every instance did before this existed. `imageForRole` returns undefined
+// and nothing downstream has to special-case a folio that never opted in.
+const iconDark = imageForRole(decl.images, "mark-dark");
+
 // The landing backdrop's variants, keyed by layout, so the template can pick
 // by viewport rather than parse a filename. An instance with none gets `{}`,
 // and the template renders its description plainly — see `landing.html`, which
@@ -203,6 +217,9 @@ const payload = {
   title: decl.title ?? decl.name,
   description: decl.description ?? "",
   icon: icon ? { src: siteRelative(icon.src), title: icon.title ?? "", description: icon.description ?? "" } : null,
+  iconDark: iconDark
+    ? { src: siteRelative(iconDark.src), title: iconDark.title ?? "", description: iconDark.description ?? "" }
+    : null,
   smallIcon: smallIcon
     ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
     : null,

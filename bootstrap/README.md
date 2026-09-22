@@ -222,16 +222,22 @@ and it is not this file.
 | [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
 | [`scenarios/roles.json`](scenarios/roles.json) | the four personas of §1 |
 | [`skills/package-manifest.json`](skills/package-manifest.json) | the skills package declaration |
-| **render** | |
-| [`render/bootstrap-graph-emission.md`](render/bootstrap-graph-emission.md) | emitting this instance's own graph |
-| [`render/bootstrap-graph-publication.md`](render/bootstrap-graph-publication.md) | publishing it |
-| [`render/package-manifest.json`](render/package-manifest.json) | the render package declaration |
+| **tools** | |
+| [`tools/bootstrap-graph-emission.md`](tools/bootstrap-graph-emission.md) | emitting this instance's own graph |
+| [`tools/bootstrap-graph-publication.md`](tools/bootstrap-graph-publication.md) | publishing it |
+| [`tools/package-manifest.json`](tools/package-manifest.json) | the render package declaration |
 
-**Why `render/` is here at all**, given an Initiator runs nothing: bootstrap is
+**Why `tools/` is here at all**, given an Initiator runs nothing: bootstrap is
 the one layer **exempt** from having a visualiser, and what it owes instead is
 its own `.json`/`.jsonld` — *that is its existence*. A layer that cannot emit
 its own graph has not shown it is a graph. The two skills above are that
 exemption's substitute, which is why they are reachable from here.
+
+This directory was `render/` until 2026-09-22. It holds SKILLS, not Tool
+nodes — the package is still `bootstrap-render`, because an id names what
+something is and survives a move. bootstrap declares no `tools` graph: its
+Tool nodes live in `cat-harness/tools/`, deliberately, since an Initiator has
+no MCP server and that constraint is the role.
 
 ---
 

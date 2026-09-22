@@ -5227,14 +5227,14 @@
     {
       "id": "folio-assistant-tac5",
       "title": "KG viewer: a cross-tallied facet can hide a button that is still filtering",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:29:51Z",
-      "updatedAt": "2026-09-20T16:30:17Z",
+      "updatedAt": "2026-09-22T06:05:00Z",
       "preview": "Found by review 2026-09-20, in the Subgraph facet this branch added.\n\n`scripts/kg-viewer.ts:761`. The facet buttons are cross-tallied: a button is\nhidden when the current selection in the OTHER facets leaves it with no\nmatching nodes. But a Subgraph button that is already SELECTED is still\nfiltering, so narrowing another facet can hide the selected button while its\nfilter stays in force. The resul",
       "file": "beans/defs/folio-assistant-tac5--kg-viewer-a-cross-tallied-facet-can-hide-a-button.md"
     },

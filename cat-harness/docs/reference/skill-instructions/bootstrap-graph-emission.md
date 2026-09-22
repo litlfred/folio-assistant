@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../bootstrap/render/bootstrap-graph-emission.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/render/bootstrap-graph-emission.md) — do not edit here.
+> Generated from [`../bootstrap/tools/bootstrap-graph-emission.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/tools/bootstrap-graph-emission.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/render/bootstrap-graph-emission.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/tools/bootstrap-graph-emission.md){: .fa-edit-source }
 
 {% raw %}
 # Emitting bootstrap's own graph

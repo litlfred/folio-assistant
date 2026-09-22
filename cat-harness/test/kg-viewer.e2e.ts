@@ -504,3 +504,79 @@ test.describe("kg viewer — the failed fetch", () => {
     await expect(page.locator(".detail")).toContainText("not an empty graph");
   });
 });
+
+/**
+ * Bean `tac5` asked whether a cross-tallied facet can hide a button that is
+ * still filtering — the `l4zi` shape, *an action whose inverse is not
+ * reachable is not a toggle*.
+ *
+ * **These assert the INVARIANT, not the defect**, because driving the page
+ * could not produce the defect and reading the source says why: `kind` and
+ * `sub` are written in exactly two places, both `onPick` handlers, and
+ * `drawGroup` wires `onPick` only to buttons it rendered. A button exists only
+ * for a non-zero tally, so every pick leaves the two selections with a
+ * non-empty intersection — and a non-empty intersection is precisely the
+ * condition for both buttons to be re-rendered.
+ *
+ * A test that reproduced nothing would be worth little; these pin the property
+ * that makes the defect unreachable, so a future change that breaks the
+ * invariant fails here rather than shipping the bean's scenario for real.
+ */
+test.describe("kg viewer — a selected facet is always unselectable", () => {
+  // Local copies: the originals are scoped to the first describe block, and
+  // hoisting them would edit tests this change has no business touching.
+  const UNSTAMPED = "(no declared subgraph)";
+  const subTally = (): Record<string, number> => {
+    const c: Record<string, number> = {};
+    for (const n of KG["@graph"]) {
+      const v = n.inSubgraph;
+      const k = typeof v === "string" && v.length > 0 ? String(v).split("/").pop()! : UNSTAMPED;
+      c[k] = (c[k] ?? 0) + 1;
+    }
+    return c;
+  };
+
+  test("picking a subgraph then a kind leaves BOTH selected buttons on the page", async ({ page }) => {
+    await page.goto(PAGE);
+    const [biggest] = Object.entries(subTally())
+      .filter(([id]) => id !== UNSTAMPED)
+      .sort((a, b) => b[1] - a[1])[0]!;
+    await page.locator("#subs .facet", { hasText: new RegExp(`^${escapeRe(biggest)}\\d+$`) }).click();
+
+    // Whatever kinds remain are, by construction, kinds present in `biggest`.
+    const kindText = (await page.locator("#facets .facet").allTextContents()).find((t) => !t.startsWith("All"));
+    expect(kindText, "the subgraph must admit at least one kind").toBeTruthy();
+    const kindName = kindText!.replace(/\d+$/, "");
+    await page.locator("#facets .facet", { hasText: new RegExp(`^${escapeRe(kindName)}\\d+$`) }).click();
+
+    // The defect would be: one of these is gone while its filter still bites.
+    await expect(page.locator("#subs .facet[aria-pressed='true']")).toHaveCount(1);
+    await expect(page.locator("#facets .facet[aria-pressed='true']")).toHaveCount(1);
+    // ...and the list is non-empty, which is what "still filtering" would empty.
+    expect(await page.locator("#list li").count()).toBeGreaterThan(0);
+  });
+
+  test("EVERY facet group always has exactly one pressed control", async ({ page }) => {
+    await page.goto(PAGE);
+    // This is the property that makes the bean's scenario impossible, and it
+    // is stronger than "the selected button survives": `drawGroup` marks
+    // `All` pressed when the selection is null, so a group is never without a
+    // pressed control — and the bean's failure state is precisely a group
+    // with NONE, its selected button hidden while `All` reads false.
+    const groups = ["#facets", "#subs"] as const;
+    const pressedIn = async (g: string) => page.locator(`${g} .facet[aria-pressed='true']`).count();
+
+    for (const g of groups) expect(await pressedIn(g), `${g} at rest`).toBe(1);
+    const all = await page.locator("#list li").count();
+    expect(all).toBeGreaterThan(0);
+
+    await page.locator("#facets .facet", { hasText: /^Tool\d+$/ }).click();
+    for (const g of groups) expect(await pressedIn(g), `${g} while filtered`).toBe(1);
+
+    // The inverse is REACHABLE — the whole of `l4zi`. Clicking the pressed
+    // control returns the full list rather than merely changing something.
+    await page.locator("#facets .facet[aria-pressed='true']").click();
+    for (const g of groups) expect(await pressedIn(g), `${g} after undo`).toBe(1);
+    expect(await page.locator("#list li").count()).toBe(all);
+  });
+});

@@ -52,6 +52,7 @@ import {
 } from "./checks.ts";
 import type {
   BeanEvidence,
+  DoneWhenState,
   HealthContext,
   Probe,
   RepoSizeEvidence,
@@ -639,6 +640,76 @@ export function hasRenderedDecision(text: string): boolean {
   return RENDERED_DECISION_ROWS.every((r) => r.test(text));
 }
 
+/**
+ * The `## Done when` heading, in every spelling the store actually uses.
+ *
+ * Measured 2026-09-21 across 457 beans: **25 distinct spellings**, among them
+ * `### Done when`, `## Done when — revised`, `## Done when — REPLACES the list
+ * above` and `## Done when — status`. All 25 begin with the two words, so the
+ * prefix is what is matched and the qualifier is deliberately not parsed —
+ * reading "revised" or "REPLACES" as an instruction about WHICH list counts
+ * would make this check adjudicate supersession, which is a judgement about
+ * intent rather than a fact about the file.
+ */
+const DONE_WHEN_HEADING = /^#{2,3}\s+done when\b/i;
+/** A GFM task-list item, ticked or not. The store writes both `- [x]` and `[x]`. */
+const DONE_WHEN_BOX = /^\s*(?:[-*]\s*)?\[([ xX])\]/;
+
+/**
+ * What a bean's own completion criteria say about it.
+ *
+ * Four states, and the two that are NOT about ticking are the point — bean
+ * `fkjo`, which exists because an `in-progress` bean is a CLAIM a sibling
+ * honours, so one that says "done" in its body and "claimed" in its front
+ * matter is two answers to one question.
+ *
+ * - `absent` — no Done-when section. 26 of 96 claimed beans, measured
+ *   2026-09-21. Nothing was recorded, so nothing can be concluded.
+ * - `unreadable` — a Done-when section carrying **no checkboxes at all**, so
+ *   its criteria are prose or plain bullets. 15 of 96.
+ * - `open` / `all-ticked` — the machine-readable cases.
+ *
+ * **`unreadable` wins over `all-ticked` when a bean has both**, and that rule
+ * is the whole reason this is not a plain box count. Bean `z4mq` carries TWO
+ * matching headings: its real criteria are a `•` bullet list under the first,
+ * and under `## Done when — item 3` sits a three-box SUB-CHECKLIST of one
+ * item — all ticked. A body-wide count of `[x]` calls that bean finished; so
+ * does a count scoped to its Done-when sections. What separates it is that one
+ * of those sections states criteria this cannot read, and a bean with any
+ * unreadable criterion is not a bean whose criteria are all met.
+ *
+ * That direction is chosen deliberately. Suppressing a genuinely finished bean
+ * costs a report nobody gets; reporting an unfinished one spends a person's
+ * attention on re-deriving work that is not done — and `fkjo` was opened
+ * precisely because that attention had already been spent once.
+ */
+export function doneWhenState(text: string): DoneWhenState {
+  const lines = text.split("\n");
+  const starts = lines.flatMap((l, i) => (DONE_WHEN_HEADING.test(l) ? [i] : []));
+  if (starts.length === 0) return { kind: "absent" };
+
+  let ticked = 0;
+  let total = 0;
+  for (const at of starts) {
+    let inSection = 0;
+    for (let i = at + 1; i < lines.length; i++) {
+      // Any heading at h1–h3 ends the section. A DEEPER heading does not, so a
+      // `#### Note` inside the criteria keeps them together.
+      if (/^#{1,3}\s/.test(lines[i]!)) break;
+      const m = DONE_WHEN_BOX.exec(lines[i]!);
+      if (!m) continue;
+      inSection++;
+      total++;
+      if (m[1]!.toLowerCase() === "x") ticked++;
+    }
+    // A matching heading whose section holds no checkbox at all: the criteria
+    // are there and this cannot read them. See the type's docs for why this
+    // outranks everything counted above.
+    if (inSection === 0) return { kind: "unreadable" };
+  }
+  return ticked === total ? { kind: "all-ticked", total } : { kind: "open", ticked, total };
+}
+
 export function countConsideredOptions(text: string): number | undefined {
   const lines = text.split("\n");
   const at = lines.findIndex((l) => OPTIONS_HEADING.test(l));
@@ -691,6 +762,7 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       // appear inside front matter, so narrowing the input would only add a
       // parse step that can go wrong.
       consideredOptions: countConsideredOptions(text),
+      doneWhen: doneWhenState(text),
       renderedDecision: hasRenderedDecision(text),
     });
   }

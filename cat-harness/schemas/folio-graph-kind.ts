@@ -27,7 +27,12 @@
  * @graphNode schema
  */
 
-import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./cat-harness";
+// THE LEAF, not `cat-harness.ts`. That is what makes this direction legal and
+// the registration automatic: this module is core, the registry is harness,
+// and core importing the harness is the allowed direction. Importing
+// `cat-harness.ts` here was the cycle that stopped it triggering its own
+// registration — bean `q2wn`, and `graph-kind-registry.ts`'s header.
+import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./graph-kind-registry.js";
 // Straight from the namespace leaf, not via the harness: the IRI is the
 // platform's, not the harness's to re-export.
 import { termIri } from "./namespaces";

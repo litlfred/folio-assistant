@@ -36,13 +36,22 @@
       "findings": []
     },
     "actor-kind-fits-role": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "untainted-adjudicator",
+          "detail": "actor \"untainted-adjudicator\" is a agent and declares role \"qc-reviewer\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
+        },
+        {
+          "where": "untainted-checker",
+          "detail": "actor \"untainted-checker\" is a agent and declares role \"qc-reviewer\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 7,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }
