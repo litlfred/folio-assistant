@@ -379,6 +379,29 @@
 <meta name="fa-staging" content="{{ site.data.build.staging_slug }}">
 
 <!--
+  WHICH SEARCH INDEX THIS PAGE IS SERVING.
+
+  `feature-staging.yml` fetches the PUBLISHED index before the build and
+  stamps what happened; `docs-site.yml` writes no such key, so the canonical
+  deploy leaves this empty and draws no warning. Bean `eof6`, on the owner's
+  ruling of 2026-09-22: *"staging uses last published index (w/ wanrnig)"*.
+
+  Three values, and the empty one is a real state rather than a fallback:
+
+    published    the preview serves the last published index. Results are
+                 about the MAIN SITE, not about this branch.
+    unavailable  the fetch failed; an empty index is served.
+    (empty)      not a staging build. No warning.
+
+  The bean this implements had first concluded that staging must disable
+  search outright, because a stale hit is "a wrong PASS, BELIEVED". The ruling
+  keeps search and attacks the belief instead — which is why the value is
+  emitted at all. An index swapped in with nothing on the page saying so would
+  be the unmarked staleness the bean was right to refuse.
+-->
+<meta name="fa-search-index" content="{{ site.data.build.search_index }}">
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate

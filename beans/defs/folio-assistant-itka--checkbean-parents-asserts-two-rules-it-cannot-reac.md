@@ -1,11 +1,11 @@
 ---
 # folio-assistant-itka
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:36Z
-updated_at: 2026-09-22T10:56:22Z
+updated_at: 2026-09-22T15:17:51Z
 parent: folio-assistant-1xhc
 ---
 
@@ -72,7 +72,7 @@ it is the owner's call rather than a checker's.
       `bean-parents-baseline.json` carries the single pair; a NEW one fails, and
       a **stale** entry fails too, so the file can only shrink (verified by
       adding a bogus entry and watching it exit 1)
-- [ ] Finding 2 is put to the owner as a question and its answer recorded here
+- [x] Finding 2 is put to the owner as a question and its answer recorded here
       before `PARENT_TYPES` is touched
 
 ## Finding 1 — fixed 2026-09-22
@@ -113,3 +113,69 @@ it.
 `PARENT_TYPES` is unchanged. Whether `feature` is a real tier or a label
 changes where existing beans belong, and a checker does not get to decide that
 by being edited.
+
+## Finding 2 — ruled 2026-09-22: `feature` IS a tier
+
+Put to the owner with both readings and **without** the count, deliberately:
+45-of-502 would have made one answer look obvious, and a store with no
+features holding work does not prove `feature` is a label — it proves nobody
+has used it that way yet. **Answer: `feature` is a real tier.**
+`PARENT_TYPES` gains it.
+
+**Measured after the ruling, and it changes what the fix IS.** 45 beans are
+typed `feature`; **every one is parented to an epic and none has a child.**
+So no existing bean was being refused. What the old set refused was a shape
+nobody could create — the change is forward-looking rather than a repair, and
+`beans create -t task --parent <feature>` now produces something placeable.
+
+### The widening opened more than one entry in a Set
+
+`PARENT_TYPES` answers *"may this type be somebody's parent"*, which is not
+*"may it be THIS bean's parent"*. While it held only the two root types those
+questions coincided. A middle tier separates them, and adding `feature` alone
+would have silently permitted an **epic hanging from a feature** and a
+**feature nested in a feature** — an inverted hierarchy in which every parent
+still has an allowed type.
+
+So direction is now checked too, by `RANK`: a parent must sit strictly higher
+in `milestone -> epic -> feature -> task/bug`. A type the hierarchy does not
+mention is **not** ranked and not direction-checked — the rule declines to
+judge what `beans prime` never placed rather than inventing a position for it.
+
+**Falsified independently, which is the part that matters.** Removing the
+direction rule while KEEPING the widening fails exactly the four inversion
+tests — so the guard is doing work the widening does not, rather than
+restating it. Reverting `PARENT_TYPES` fails five.
+
+The epic-under-epic branch survives even though `RANK` subsumes it: folding it
+in would change its baseline key and report `d308`'s recorded entry as
+**stale** after a change that repaired nothing.
+
+## Collision with issue #941 — the same defect, fixed twice
+
+Finding 1 was fixed on `main` by a sibling session under issue #941 while
+PR #938 was open. Its implementation is canonical here; mine is discarded,
+including my duplicate test file. Its baseline key (`<rule>:<bean-id>`) is
+better than mine (the pair), because a title edit cannot disturb it.
+
+**One thing it shipped that this branch had caught and fixed**, worth
+recording because it is this bean's own defect surviving inside the repair:
+with `d308` baselined, `main`'s summary printed
+
+```
+✓ ... and no epic hangs from another
+· outstanding (baselined): ... `folio-assistant-zzmr` is an epic
+```
+
+— a universal asserted on one line and refuted on the next. Its comment read
+*"THE CLAIM IS NOW EARNED ... the sentence stands"*; the sentence did not
+stand. Making the rule reachable was necessary and not sufficient. The tick is
+now narrowed to **"no NEW epic hangs from another"** whenever the baseline is
+non-empty, `formatReport` is exported so that line is testable at all, and a
+test asserts the property — that a universal tick and a listed counterexample
+never appear together — rather than matching one string.
+
+That is the fourth time today a defect found here was independently found by a
+sibling session working the same `main`. Three times theirs was better and
+this branch adopted it. This is the one where reading their output line by
+line was worth more than trusting the verdict.
