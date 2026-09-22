@@ -1,0 +1,80 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>resolveNavbarIcons | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
+<li><a href="" aria-current="page">resolveNavbarIcons</a></li></ul>
+<h1>Function resolveNavbarIcons</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="resolvenavbaricons"><span class="tsd-kind-call-signature">resolveNavbarIcons</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">declared</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><br/>        <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-keyword">readonly</span> (<span class="tsd-signature-type">&quot;beans&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;processes&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;close&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;todos&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;kg&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;launcher&quot;</span>)<span class="tsd-signature-symbol">[]</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">needs</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">floor</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-keyword">readonly</span> (<br/>        <span class="tsd-signature-type">&quot;beans&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;processes&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;close&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;todos&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;kg&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;launcher&quot;</span><br/>    )<span class="tsd-signature-symbol">[]</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#resolvenavbaricons" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Which icons an instance's navbar row shows, after inheritance.</p>
+<p>Owner: <em>&quot;should be in each harness config which are shown (so some could
+show none, but make this default in cat-harness that is inherited).&quot;</em></p>
+<h2 id="the-walk-is-because-that-is-the-inheritance-this-repo-already-has" class="tsd-anchor-link">The walk is <code>needs</code>, because that is the inheritance this repo already has<a href="#the-walk-is-because-that-is-the-inheritance-this-repo-already-has" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Nearest declaration wins: the instance itself, then its <code>needs</code> chain toward
+the foundation, breadth-first so a nearer layer beats a deeper one. It is
+the same direction <code>resolveSkillDirs</code> composes and the same spine <code>builtOn</code>
+documents — a second traversal would be a second answer to &quot;what is this
+instance built on&quot;, free to disagree with the first.</p>
+<h2 id="stops-the-walk-absent-continues-it" class="tsd-anchor-link"><code>[]</code> STOPS the walk; absent continues it<a href="#stops-the-walk-absent-continues-it" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>An instance that declares <code>[]</code> has said &quot;show none&quot;, and inheriting over
+that would overrule a decision it made. An instance that declares nothing
+has said nothing. The two are different answers and this function must not
+turn one into the other — which is why the guard is <code>!== undefined</code> rather
+than a truthiness test, the shape that collapses exactly this distinction.</p>
+<h2 id="is-the-third-state-and-callers-must-not-render-it-as-none" class="tsd-anchor-link"><code>undefined</code> is the THIRD state and callers must not render it as none<a href="#is-the-third-state-and-callers-must-not-render-it-as-none" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Returned when neither the instance nor anything it needs has decided, and
+<code>floor</code> has not either. &quot;Nobody has said&quot; is not &quot;nothing to show&quot;: a caller
+that draws an empty row for it reports an un-migrated instance as a
+deliberate one. Report it.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the instance to resolve</p>
+</div></li>
+<li><span><span class="tsd-kind-parameter">declared</span>: <span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-keyword">readonly</span> (<span class="tsd-signature-type">&quot;beans&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;processes&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;close&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;todos&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;kg&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;launcher&quot;</span>)<span class="tsd-signature-symbol">[]</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span></span>
+<div class="tsd-comment tsd-typography"><p>every instance's own value, keyed by name — absent key and
+<code>undefined</code> value both mean &quot;did not declare&quot;</p>
+</div></li>
+<li><span><span class="tsd-kind-parameter">needs</span>: <span class="tsd-signature-type">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></span>
+<div class="tsd-comment tsd-typography"><p>each instance's dependency names</p>
+</div></li>
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">floor</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the instance whose list is the default when nothing else has
+decided; <code>cat-harness</code> here, passed rather than named so this function
+does not know which repository it is in</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-keyword">readonly</span> (<br/>        <span class="tsd-signature-type">&quot;beans&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;processes&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;close&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;todos&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;kg&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;launcher&quot;</span><br/>    )<span class="tsd-signature-symbol">[]</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9cd2dc9d33d51404189cfb188f46d3739d89f9ba/cat-harness/schemas/cat-harness.ts#L1980">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:1980</a></li></ul></aside></div></li></ul></section></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#the-walk-is-because-that-is-the-inheritance-this-repo-already-has"><span>The walk is , because that is the inheritance this repo already has</span></a><a href="#stops-the-walk-absent-continues-it"><span> <wbr/>STOPS the walk; absent continues it</span></a><a href="#is-the-third-state-and-callers-must-not-render-it-as-none"><span> is the <wbr/>THIRD state and callers must not render it as none</span></a></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

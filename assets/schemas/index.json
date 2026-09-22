@@ -5388,6 +5388,13 @@
           "doc": "The id of the {@link images} entry to use as the browser icon."
         },
         {
+          "name": "navbarIcons",
+          "type": "NavbarIcon[]",
+          "optional": true,
+          "array": true,
+          "doc": "Which icons this instance's navbar row shows — see `NavbarIconsSchema`."
+        },
+        {
           "name": "name",
           "type": "string",
           "optional": false,
@@ -5471,6 +5478,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
         "cat-harness/schemas/cat-harness.ts#RemoteGraph",
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
@@ -5514,6 +5522,13 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "navbarIcons",
+          "type": "NavbarIconsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which icons this instance's navbar row shows."
         },
         {
           "name": "stub",
@@ -5582,6 +5597,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+        "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
@@ -6014,6 +6030,32 @@
       "name": "ModelProvenance",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#NavbarIcon",
+      "name": "NavbarIcon",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
+      "name": "NavbarIconsSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-array",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -22500,6 +22542,13 @@
           "optional": true,
           "array": false,
           "doc": "The quiet interior a sticky's words sit in, in fractions of this image."
+        },
+        {
+          "name": "avatarRegion",
+          "type": "{ x: number; y: number; w: number; h: number } | undefined",
+          "optional": true,
+          "array": false,
+          "doc": "The part of this image that IS the avatar, in fractions of it — `603s`."
         }
       ],
       "extendsNames": [],
@@ -32679,6 +32728,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#NavbarIcon",
+      "via": "navbarIcons",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#Publication",
       "via": "publication",
       "kind": "field",
@@ -32748,6 +32805,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
+      "via": "navbarIcons",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
