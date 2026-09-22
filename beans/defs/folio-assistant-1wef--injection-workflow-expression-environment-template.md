@@ -48,7 +48,10 @@ second bullet.
       foreign data is not baked into the page at build time — it is fetched at
       runtime as `index.json` and built into the DOM client-side, so the vector
       is **DOM XSS**, not template composition
-- [ ] Surface 3 — prompt injection: not started
+- [x] **Surface 3 — a real prompt injection found and fixed.** The falsifier
+      in this bean's brief was: *if no agent reads foreign corpus text into a
+      prompt, the surface is theoretical here and say so.* **It did not
+      fire.**
 - [x] Falsified with a crafted input, not argued (below)
 
 ## Surface 1, measured
@@ -170,5 +173,63 @@ real count survives, and `NaN` no longer poisons the sum.
 value straight out of parsed JSON, with no `typeof` on the line, is the defect
 **whatever the field is called**. Falsified against the real file: restoring
 the original line turns it red and names `library-graph.ts:387`.
+
+`bun run gates` — 108 of 108.
+
+## Surface 3 — the falsifier did not fire
+
+`src/routes/chat.ts` calls Anthropic with a **system prompt** built by
+`getChatSystemPrompt(mode, userRole, userName, body.context)` — one
+implementation in the document adapter, inherited by the paper adapter, so
+both content types share it.
+
+`context.blockMd` is **folio content**. For an ingested corpus — `uploads/`,
+the IRIS catalogue, the 674 smart-trust artefacts, all established foreign in
+surface 2 — that is text this repository did not author. It was fenced with a
+**fixed** `"""`:
+
+    Viewing block "thm:1" (theorem):
+    """<content>"""
+
+**Demonstrated, not asserted.** A block whose body carries a `"""` and a
+`## System` heading produced a prompt with **four** fences instead of two, and
+the injected instruction sat OUTSIDE the quoted region — where a model reads
+it as instruction rather than as the document under discussion.
+
+`userName`, `blockLabel`, `blockKind` and `paperId` were interpolated raw into
+single-line slots, so a newline in any of them opened a section the prompt
+never had.
+
+## The unifying finding
+
+**All three surfaces of this bean are one bug: content closing a delimiter it
+was meant to sit inside.**
+
+| surface | delimiter | sink |
+|---|---|---|
+| 1 | a shell quote | `run:` |
+| 2 | (none — an unescaped numeric assumption) | `innerHTML` |
+| 3 | a `"""` fence | the system prompt |
+
+Surface 2 is the odd one only in that the missing guard was a type rather than
+a quote; the shape — untrusted text reaching a sink that trusts it — is the
+same.
+
+## The fix
+
+`fenced()` wraps untrusted text in a **per-call random nonce**, so the content
+cannot predict the closer. The nonce is also **stripped from the body** —
+unguessable is not the same as impossible, and the strip costs one pass.
+
+`oneLine()` flattens single-line slots: control characters and newlines
+collapse to spaces, with a length cap so a long value cannot push the real
+instructions out of the window. **The text is kept, not censored** — a person
+may legitimately be called anything; it simply occupies one line.
+
+Verified: hostile content is still carried into the prompt and still cannot
+break out — 1 open, 1 close; the nonce differs per call; and content that
+replays a previously-seen nonce still cannot close the current one.
+
+Falsified: restoring the fixed `"""` turns two tests red.
 
 `bun run gates` — 108 of 108.
