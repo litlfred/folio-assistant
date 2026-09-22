@@ -208,7 +208,7 @@ function main(): void {
         const r = rep(source, base, `${stem}.${f}`);
         if (r) published[f] = r;
       }
-      a = { key, resourceType, id: rid, published, materialization: { state: "referenced", of: `${base.replace(/\/$/, "")}/${stem}.html` } };
+      a = { key, resourceType, id: rid, published, materialization: { state: "referenced", provenance: { upstream: `${base.replace(/\/$/, "")}/${stem}.html` } } };
       byKey.set(key, a);
     }
     return a;
@@ -418,7 +418,7 @@ function main(): void {
       }
       a.materialization = {
         state: "materialized",
-        of: a.materialization.of,
+        provenance: a.materialization.provenance,
         localPath: landed,
         purpose: "working",
         // FIXITY AT MATERIALISE TIME, which is the only moment it can be

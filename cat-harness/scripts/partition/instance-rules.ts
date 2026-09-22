@@ -485,6 +485,7 @@ export const RULES: Rule[] = [
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
       "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
+      "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)

@@ -2110,8 +2110,22 @@
       // a page that exists: this one is about whether the page is there.
       // Conflating them would let "show hidden" resurrect a link to a 404.
       if (t.publish === "staging-only" && !isStagingPreview()) continue;
+      // THE TWO GREYS. A tile with no `href` was skipped above — there is
+      // nothing to open. This one opens perfectly and refuses an EDIT, so it
+      // is rendered, marked, and says so. Collapsing the two would tell a
+      // reader "there is nothing here" about content that is present,
+      // complete and deliberately frozen.
+      //
+      // `=== true` and not truthiness: absent means NOT DECLARED, which is a
+      // third state and not `false`. An undeclared directory gets neither the
+      // read-only mark nor a claim that it is writable.
+      var frozen = t.readOnly === true;
       var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
-                          "the declared visualisation of " + t.directory);
+                          frozen
+                            ? "the declared visualisation of " + t.directory
+                              + " — materialized content: readable, not editable here"
+                            : "the declared visualisation of " + t.directory);
+      if (frozen) tile.setAttribute("data-fa-readonly", "");
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
       if (t.theme) tile.setAttribute("data-fa-theme", t.theme);

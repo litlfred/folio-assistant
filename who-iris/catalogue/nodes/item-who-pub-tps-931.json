@@ -19,7 +19,9 @@
       "mediaType": "application/pdf",
       "materialization": {
         "state": "materialized",
-        "of": "https://iris.who.int/handle/10665/36842",
+        "provenance": {
+          "upstream": "https://iris.who.int/handle/10665/36842"
+        },
         "localPath": "uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf",
         "purpose": "both",
         "bytes": 3293424,
@@ -61,7 +63,9 @@
       "pixelHeight": 424,
       "materialization": {
         "state": "materialized",
-        "of": "local:who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf#page=1",
+        "provenance": {
+          "local": "who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf#page=1"
+        },
         "localPath": "library/who-pub-tps-931-cover.png",
         "purpose": "working",
         "bytes": 8425,
@@ -108,7 +112,9 @@
   ],
   "materialization": {
     "state": "materialized",
-    "of": "local:who-pub-tps-931",
+    "provenance": {
+      "local": "who-pub-tps-931"
+    },
     "localPath": "library/who-pub-tps-931",
     "purpose": "working",
     "note": "IDENTIFIERS UNKNOWN. This item was ingested from a PDF the owner uploaded, not from an IRIS capture, so no DSpace UUID, handle or collection path was ever recorded for it. iris.who.int is egress-blocked from this environment, so it cannot be looked up here. `unknown` rather than a plausible handle: a fabricated identifier is the `source: null` defect bean r1lz was opened over, and it would resolve to the wrong item rather than to nothing.",

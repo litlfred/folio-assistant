@@ -232,3 +232,96 @@ field and then fails on a legitimate addition.
 re-open the gap the backfill just closed. It now hashes the source bytes at
 ingestion, which is the point where *original* is still true — a digest recorded
 there proves what a backfilled one cannot.
+
+## OWNER DECISIONS, 2026-09-22 — both corrections implemented
+
+Two questions put with options; both answered with the recommendation.
+
+### 1. Local provenance → `provenance: { upstream, local, signature? }`
+
+`of` is gone. `MaterializationSchema` now carries a **pointer pair**, which is
+the owner's own model: *"a pointer to the asset in `folio/` or elsewhere and a
+reference to the `library/` original reference"*.
+
+**The conflation was already live, which was not expected.** `of` was documented
+as *"the remote thing. A URI, always — never a path, never a bare name"*, and
+**5 of the 9 who-iris item records violated that documentation**, in three
+shapes, two of them inside one file:
+
+| record | old `of` | what it actually was |
+|---|---|---|
+| the item | `local:9789241548960-eng` | its own id — a bare name, not provenance at all |
+| its PDF | `https://iris.who.int/handle/10665/145714` | genuine upstream |
+| its cover PNG | `local:who-iris/uploads/…/foo.pdf#page=1` | a **local** original — a path |
+
+So this is a correction to the corpus as much as to the model. The count is
+5 rather than the 6 in the note that prompted it, because it was **re-counted
+after the migration** instead of quoted from prose.
+
+**Migrated: 1442 records across 16 files** — 1437 upstream, 5 local, 0 empty.
+The `local:` scheme is dropped; it existed only to tell the two apart inside one
+field.
+
+Two consumers got simpler rather than longer. `gen-iris-pages.ts`'s `sourceOf()`
+asked `of?.startsWith("http")` because the SCHEME was the only discriminator —
+a proxy that worked by luck, since a local reference under an `http` URL would
+have rendered as an IRIS source. And `upstreamCell()`'s "local" fallback read
+the same field `sourceOf` had just rejected, so it showed leftovers rather than
+the local reference it claims to show.
+
+**Both pointers may be absent**, and then `note` is REQUIRED. The who-iris item
+above knows it came from IRIS and does not know the handle; that is a state, not
+an unfilled field — the same discipline as `GateSchema.basis`.
+
+**`SignatureSchema` exists from day one** so the owner's *"digital signature
+later that can be checked"* needs no second migration. What is NOT there is a
+trusted-data-object format: the term appears nowhere else in this checkout, so
+inventing one would model something this repository has not adopted. And a
+recorded signature is never a verified one — nothing verifies today, and the
+field says so rather than reading as coverage.
+
+### 2. Read-only → declared, with `check:read-only-graphs` gating it
+
+Declaration + gate, over derivation. The declaration is what a listing reads
+without scanning a corpus; the gate is what stops it drifting from the nodes.
+
+**Absent is not `false`.** It is *not declared* — a directory that has not
+answered has not asserted it is writable.
+
+**The corpus falsified the first version within minutes.** The gate compared two
+booleans, so "declared writable over materialized nodes" was flatly a
+contradiction, and it fired on `who-iris/uploads/` — the ingestion DROP ZONE
+that `adapters/document/paths.ts` creates on a first ingest precisely so
+somebody can write there. The declaration was right and the gate was wrong: the
+bytes are materialized, the directory is a write target, and a boolean
+comparison cannot ask the second question.
+
+So `readOnlyBasis` is required on BOTH values, and a stated exception is a
+fourth verdict rather than a failure — exactly as `GateSchema.basis` is required
+on `permitted` and not only on `refused`. Current corpus: 3 agree, 0 contradict,
+1 stated exception, 0 undeclared.
+
+### 3. The two greys reach the data
+
+`readOnly` flows declaration → `HarnessVisualisation` → `_data/harness.json`,
+resolved **per KIND** and not per instance — who-iris proves why, carrying
+`catalogue: true` and `uploads: false` at once. Kinds whose directories disagree
+resolve to `undefined` and are reported, never settled by a rule nobody chose.
+
+A read-only tile is **dashed, not dimmed**: dimming spells it the same way as
+"nothing to open", which is the collapse being prevented, and it would read as
+"less important" about content that is frozen precisely because it matters. The
+state also reaches a screen reader through `aria-label`, never colour alone.
+
+**MEASURED AND NOT YET OBSERVABLE.** All 3 frozen kinds currently also lack a
+`path`, so in this corpus the two greys are perfectly correlated. The cause is
+not derivation — it is `harness-tiles.ts` discovering viewers only at
+conventional paths, the same `withRoutes` gap `viewer-undiscovered.test.ts`
+measures from the other side. `two-greys.test.ts` asserts the weaker true thing
+and names the stronger one, so the eventual fix will not look like a regression.
+
+### Still open on this bean
+
+The copy-out BPMN with lanes bound to roles, its committed instance under
+`beans/workflows/`, and `todo-review` linking back. Those were waiting on the
+provenance field; they are not waiting on it any more.

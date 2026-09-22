@@ -87,6 +87,23 @@ export type HarnessVisualisation = {
   kind: string;
   /** Site-root-relative, for `relative_url`. Absent when nothing is published. */
   path?: string;
+  /**
+   * The kind's content is materialized: openable, and not editable here.
+   *
+   * ## The two greys, at this level
+   *
+   * Absent {@link path} and `readOnly` both render inert and mean different
+   * things: the first has nothing to open, the second opens and refuses an
+   * edit. The second is the one that offers the copy-out, so collapsing them
+   * takes away the only route to working on frozen content.
+   *
+   * ABSENT IS THREE THINGS AT ONCE HERE, and all three are honestly absent:
+   * no directory declaring this kind has answered; or they disagree, which is
+   * reported as its own finding rather than resolved by a rule; or nothing
+   * here is materialized. None of them is "writable", so none of them earns a
+   * `false`.
+   */
+  readOnly?: boolean;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -289,14 +306,40 @@ function tileFor(
   // kind can be published at are considered, because the instance that owns
   // the site elides its own name and every other instance does not — two rules
   // that live in two generators, read here rather than restated.
+  /**
+   * THE READ-ONLY ANSWER FOR A KIND, resolved across the directories declaring
+   * it — and `undefined` when they do not agree.
+   *
+   * A kind can be declared by more than one directory, so it can be declared
+   * read-only by one and writable by another. `who-iris` is exactly that shape
+   * one field along: `catalogue/` is frozen and `uploads/` is the drop zone.
+   * Picking the first answer would make the listing depend on declaration
+   * order; picking `true` if any says so would freeze a kind on the strength of
+   * one directory. Disagreement is a THIRD state and it is reported as one —
+   * undefined here, and named in a finding below, rather than resolved by a
+   * rule nobody chose.
+   */
+  const readOnlyFor = (kind: string): boolean | undefined => {
+    const said = dirs
+      .filter((d) => (d.graphKinds ?? []).includes(kind))
+      .map((d) => d.readOnly)
+      .filter((v): v is boolean => v !== undefined);
+    if (said.length === 0) return undefined;
+    return said.every((v) => v === said[0]) ? said[0] : undefined;
+  };
+
   const visualisations: HarnessVisualisation[] = [];
   for (const kind of kinds) {
     const candidates = ownsSite
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
     const found = candidates.find((p) => existsSync(join(siteDir, p, "index.html")));
-    if (found) visualisations.push({ kind, path: found });
-    else visualisations.push({ kind });
+    const ro = readOnlyFor(kind);
+    visualisations.push({
+      kind,
+      ...(found ? { path: found } : {}),
+      ...(ro === undefined ? {} : { readOnly: ro }),
+    });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
   //

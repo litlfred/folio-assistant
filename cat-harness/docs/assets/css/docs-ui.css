@@ -1960,6 +1960,35 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 .fa-tile svg { width: 1.25rem; height: 1.25rem; fill: currentColor; flex: 0 0 auto; }
 
+/* ── The two greys ──────────────────────────────────────────────────────
+ *
+ * A graph with no viewer and a graph that is read-only both read as inert,
+ * and they are different facts. The first is not here at all: `docs-ui.js`
+ * skips a tile with no `href`, so it never reaches this stylesheet. The
+ * second opens perfectly and refuses an EDIT.
+ *
+ * So the read-only tile is NOT greyed down, and that is the point. Dimming it
+ * would spell it the same way as "nothing to open" — the collapse this exists
+ * to prevent — and it would also read as "less important", which materialized
+ * content emphatically is not. It gets a DIFFERENT mark instead: a dashed
+ * border, the established convention for a boundary you may look across and
+ * not cross.
+ *
+ * The state also reaches a screen reader through the tile's `aria-label`
+ * (`docs-ui.js`), never through colour alone, and the dashed border survives
+ * forced-colours mode where a background tint would not. */
+a.fa-tile[data-fa-readonly] {
+  border-style: dashed;
+}
+
+a.fa-tile[data-fa-readonly]:hover,
+a.fa-tile[data-fa-readonly]:focus-visible {
+  /* Hover keeps the dash: the tile is still read-only while you point at it,
+     and a mark that vanishes on interaction is a mark that is absent exactly
+     when somebody is about to act. */
+  border-style: dashed;
+}
+
 /* Hover and focus are given the SAME treatment deliberately: a reader driving
    this from the keyboard should see exactly what a reader with a mouse sees,
    and the border alone is not enough of a change to notice. */

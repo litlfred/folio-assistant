@@ -990,7 +990,7 @@ function communityList(all: Node[]): string {
 
       return `<li>
   <div class="row"><span class="chev" aria-hidden="true">&rsaquo;</span>
-    <span class="title"><a href="${esc(m?.of ?? "https://iris.who.int/")}">${esc(c.title)}</a>
+    <span class="title"><a href="${esc(m?.provenance?.upstream ?? "https://iris.who.int/")}">${esc(c.title)}</a>
     ${stateBadge(m?.state ?? "unknown")}</span></div>
   <p class="note">${known}</p>
   ${kids}
@@ -1077,17 +1077,24 @@ function slug(id: string): string {
  * The item's upstream URI, or undefined when it has none.
  *
  * **Undefined is the common case and it must survive to the page.** Two of the
- * three held items carry `of: "local:<slug>"` — they were ingested from a PDF
- * somebody had, not resolved from IRIS — and an earlier version of this
+ * three held items record no IRIS handle at all — they were ingested from a
+ * PDF somebody had, not resolved from IRIS — and an earlier version of this
  * function fell back to `https://iris.who.int/`, so every row rendered a
  * confident "IRIS source →" and one third of them went to the front page. A
  * link that resolves is not the same as a link that is true.
+ *
+ * ## It no longer guesses from the scheme
+ *
+ * This asked `of?.startsWith("http")`, because `of` held upstream URIs and
+ * local references in one field and the scheme was the only thing telling them
+ * apart. That proxy worked by luck: a local reference that happened to be an
+ * `http` URL would have rendered as an IRIS source, and an upstream one under
+ * any other scheme would have vanished. `provenance.upstream` answers the
+ * question the function is actually asking, so the heuristic is gone.
  */
 function sourceOf(n: Node): string | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.of?.startsWith("http"));
-  if (b?.materialization?.of) return b.materialization.of;
-  if (n.materialization?.of?.startsWith("http")) return n.materialization.of;
-  return undefined;
+  const b = n.bitstreams?.find((x) => x.materialization?.provenance?.upstream);
+  return b?.materialization?.provenance?.upstream ?? n.materialization?.provenance?.upstream;
 }
 
 /**
@@ -1235,7 +1242,11 @@ function upstreamCell(n: Node): string {
   const u = sourceOf(n);
   const replica = `<a href="item-${esc(slug(n.id))}.html">Local replica &rarr;</a>`;
   if (u) return `<a href="${esc(u)}">IRIS source &rarr;</a><br>${replica}`;
-  const local = n.bitstreams?.find((b) => b.materialization?.of)?.materialization?.of;
+  // The LOCAL original, now asked for by name. This read `of` — the same field
+  // `sourceOf` had just rejected — so it showed whatever was left over rather
+  // than the local reference it claims to show.
+  const local = n.bitstreams?.find((b) => b.materialization?.provenance?.local)?.materialization
+    ?.provenance?.local;
   return `<span class="none">no upstream URI recorded</span>${
     local ? `<br><code>${esc(local)}</code>` : ""
   }<br>${replica}`;
@@ -1259,7 +1270,7 @@ function collectionPage(c: Node, all: Node[]): string {
 
   return `<h1>${esc(c.title)}</h1>
 <p>Permanent URI for this collection
-  ${c.materialization?.of ? `<a href="${esc(c.materialization.of)}">${esc(c.materialization.of)}</a>` : `<span class="none">none recorded</span>`}
+  ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
 ${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${esc(c.materialization.note)}</p></div>` : ""}
