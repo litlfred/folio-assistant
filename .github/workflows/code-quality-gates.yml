@@ -925,6 +925,15 @@ jobs:
           # on that is one somebody switches off. Non-zero only on the
           # third state: a file whose edges could not be read at all.
           bun run check:subgraphs
+          # Does each methodology's cited `origin` resolve to an ingested
+          # source? Six cited one and NONE was in any library when this
+          # axis was added (2026-09-22), so it REPORTS rather than gates,
+          # on the same reasoning as `check:subgraphs` above. It is
+          # non-zero only for a node whose front matter does not validate
+          # or whose `evidence` points at a bib-slug no library holds —
+          # a citation that claims to resolve and does not is worse than
+          # none, because every listing reads it as backed.
+          bun run check:methodology-evidence
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

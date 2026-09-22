@@ -394,6 +394,13 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // Whether each methodology's cited `origin` resolves to an ingested
+      // source. Harness for the same reason as the two above: it reads the
+      // declaration for the `methodology` and `library` graphs and fans out
+      // over every declared library, and it has nothing to say about any
+      // folio's content — the methodologies it reads are the harness's own
+      // judgement methods, which is why `smart-kg` carries GRADE separately.
+      "scripts/check-methodology-evidence.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
