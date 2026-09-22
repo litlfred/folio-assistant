@@ -5,11 +5,10 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T22:33:27Z
+updated_at: 2026-09-22T23:09:51Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
-    - folio-assistant-p0za
 ---
 
 **What.** A `ChangeSet` node computed between two refs (`origin/main` and the
@@ -35,7 +34,7 @@ it lands there, not in a second file. It is exposed as a Tool node
 
 ## Done when
 - [x] a `ChangeSet` schema in folio-assistant-core/schemas, with the five change kinds. Modelled as added / removed / changed, where changed carries the aspects renamed, prose, manifest and moved (see round 1)
-- [ ] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind. The computation and its fixture tests landed in #981. **The Tool is blocked on p0za**: no instance outside cat-harness can serve a Tool today, and a Tool here would be declared and unreachable
+- [x] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind. `folio-changeset` in `folio-assistant-core/tools/`, reached by p0za's discovery. It satisfies `diff` and `staging-review`, whose skills are referenced by the `content-change-review` and `feature-staging` BPMN tasks. The computation's fixture tests landed in #981
 - [ ] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo). **Re-homed to ojcx**: this repo holds no folio, so an emission step here would compute over nothing. The emission belongs in the reusable staging workflow that ojcx makes for folio repos
 - [x] `diff` and `staging-review` read it instead of re-deriving from git (round 2)
 
@@ -64,3 +63,7 @@ Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3Psjvs
 - **`staging-review` skill.** It gains a folio-content row in "what changed → which page", and step 1 of content-authoring integration computes the ChangeSet rather than a file list. It ranks "where to start" by changed blocks per section.
 - **The Tool is blocked on p0za (new)**, a measured composition gap. Eight of the nine consumers of the tools list read the harness-only barrel. smart-base's Tools are already declared and never served.
 - **Staging emission is re-homed to ojcx.** This repo has no folio for it to compute over.
+
+## Round 3 (2026-09-22)
+
+Once p0za's auto-discovery landed, the `folio-changeset` Tool was declared in `folio-assistant-core/tools/index.ts`, and core declares its `tools/` directory. The one box left is staging emission, which is re-homed to ojcx.

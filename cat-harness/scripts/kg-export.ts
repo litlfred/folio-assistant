@@ -72,7 +72,7 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
-import { tools } from "../tools/index.js";
+import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
@@ -1539,7 +1539,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
   let defs;
   try {
     // The SAME base the document is published against — see tools/index.ts.
-    defs = tools(base);
+    defs = toolsOf(ROOT, base);
   } catch (e) {
     problems.push(`tools/ did not load: ${e instanceof Error ? e.message : String(e)}`);
     return [];
@@ -1613,7 +1613,7 @@ function collectSchemas(doc: string, base: string): Node[] {
   // Tool → artefact, inverted once so each schema node can name its keeper.
   const keeper = new Map<string, string[]>();
   try {
-    for (const t of tools(base)) {
+    for (const t of toolsOf(ROOT, base)) {
       for (const m of t.maintains ?? []) {
         keeper.set(m.source, (keeper.get(m.source) ?? []).concat(makeIri(doc, "tool", t.id)));
       }
