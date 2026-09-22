@@ -256,7 +256,7 @@ one quarter of it. Recorded there.
 - [ ] `glossary` exists as a content kind in core with optional `notation` and scheme-level version fields, validated by schema — **named something other than `GlossaryEntry`**, which is taken twice
 - [ ] The docs/ rendering carries a defined-terms index built from KG assets, with extracted-vs-authored distinguished
 - [ ] Labels and definitions are extracted to `.pot` like BPMN labels and render per locale
-- [ ] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits
+- [x] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits (SKOS adopted; slice 1 took it 0 → 135, slice 2 adds 48 more concepts)
 
 Related: `0lmb` (content model), `zzmr` (KG structure and publication), `bzyu` (translation pipeline), the who-iris catalogue work on PR #477, the existing `glossary-build` skill (folio-core) — check what it already does before adding a second mechanism.
 
@@ -344,7 +344,361 @@ A term whose defining lane is gone becomes `deprecated`, **reported and never
 deleted** — `deletion-requires-confirmation`, and the same reason a scrapped
 bean is not a deleted one: retirement and accident must not look alike.
 
-### Not started
+### SHIPPED 2026-09-21 — and measuring first corrected the mapping above
 
-Implementation waits on `ug4r` merging, so PR #800 stays one reviewable
-subject. Nothing here is built.
+`scripts/glossary-export.ts`, run once per instance (`--instance <root>`, the
+shape `kg-export` and `translate-bpmn` already use — never one wider scan,
+which is `7u3g`). cat-harness: **43 concepts, 150 usages**. bootstrap: **5
+concepts, 7 usages**.
+
+**A concept is a ROLE, not a lane name, and the table above is wrong.** That
+table is mine, not the owner's ruling — the ruling was "its own document", and
+it stands untouched. Measured before writing:
+
+| | |
+|---|---|
+| task-containing lanes | 157 |
+| distinct lane names | 85 |
+| distinct roles those names resolve to | **36** |
+| roles reached by more than one distinct lane name | 17 |
+
+`build-pipeline` is named **ten** ways across the corpus — *"CI/CD Pipeline"*,
+*"Build pipeline — validate · render · publish"*, *"Scheduled log sweep"*,
+*"Graph audit (system)"* and six more. `reviewer` is named nine. A concept per
+lane name mints 85 terms for 36 meanings and copies one authored definition
+onto ten of them — the exact duplication of `roles.json` this bean set out to
+avoid, avoided per lane OCCURRENCE (157 → 85) and **not** per lane NAME. The
+ten names are `skos:altLabel`, which is what `altLabel` is for and what makes
+*"Reviewer / SME"* findable as *"Reviewer"* instead of a rival entry.
+
+Both halves of the owner's *"name, documentation → glossary"* still land:
+`name` as `prefLabel`/`altLabel`, `documentation` as `scopeNote`.
+
+### `scopeNote` sits on the USAGE, never on the concept
+
+Measured: of the **26** lane names appearing in more than one diagram, **26 of
+26** carry different `<bpmn:documentation>` per occurrence — zero
+counter-examples. A scope note answers *"what is this lane accountable for IN
+THIS PROCESS"*, which is a fact about the appearance. Ten unattributed notes on
+one concept would read as ten contradictions.
+
+So each appearance is a `LaneUsage` node: the process, the label that process
+gave the lane, and the note **verbatim**. Verbatim is not a style preference —
+the lane documentation is a `.pot` msgid, so a note stored exactly as the
+diagram wrote it has a translation waiting in all five locales. Wrapping it
+(`In "<process>": <note>`) reads well in English and produces a string no
+catalogue contains, breaking `jmpb` before it is built.
+
+### No second name for one thing
+
+A concept's `@id` is the IRI `kg-export` ALREADY mints —
+`makeIri(docIri, "role", id)`, imported rather than re-spelled. `kg-export` has
+emitted registry-derived `Role` nodes since 2026-09-19, and `performedBy` links
+point at exactly those IRIs; a parallel `cat:reviewer` would be two names for
+one resource and would leave the glossary unjoinable with the graph. Checked
+rather than assumed: **0 of 47 role ids collide with any of the 111 vocabulary
+term names**, exactly and case/hyphen-insensitively.
+
+### Retirement needed a LEDGER, which the design above had not accounted for
+
+A derived document has no memory. Delete a role and its concept stops
+appearing — which is what *"never existed"* also looks like, so "reported and
+never deleted" is unimplementable without storing the one non-derivable fact:
+that a term was once minted.
+
+`glossary/glossary-ledger.json`, declared as graph kind `glossary`
+(`holds: "state"`) in both instances. Keyed on the IRI's **local part**, never
+the absolute IRI: the publication base is a deploy-time variable, and a stored
+absolute IRI would rot the day it moved and take every retirement record with
+it. `glossary:check` in the gate set is what keeps it current.
+
+**Usages are not ledgered**, deliberately: a usage is an occurrence,
+regenerated wholesale, while a concept is a term somebody may have cited.
+Ledgering 157 occurrences would bury the 36 records that matter.
+
+### `laneBinding` used as the only route from a lane to a concept
+
+So `variable` cannot be read as `unbound` by accident. bootstrap's one varying
+lane emits `bs:…#lane/Actor` with a usage and **no** `definition` — an
+assertion, not a gap.
+
+### Reported, never gated
+
+- **11 declared roles no swimlane draws.** They are still concepts (omitting
+  them would be `dh4f`) and are named in the report. 8 declare no `lanes[]` at
+  all — agent personas nothing draws, by design.
+- **1 dangling lane binding** was reported: `translation-adjudicator` binding
+  *"Human reviewer / adjudicator"*. **THAT FINDING WAS FALSE**, corrected
+  2026-09-22 while roasting `7pdi`. The lane is real; the extractor could not
+  see it, because `translation-workflow.bpmn` declares BPMN as the DEFAULT
+  namespace and writes `<lane>` with no `bpmn:` prefix, which every prefixed
+  regex here missed. A false finding is worse than none — the next agent goes
+  looking for a lane to add that is already there.
+
+  Fixed with the namespace-tolerant readers; the corpus is **159**
+  task-containing lanes, not 157, and the glossary is **43 concepts / 152
+  usages**. `log` and `session-record` remain correctly reported as declared
+  roles no swimlane draws: their lanes exist but hold no task, which is not a
+  defect — an `actedUpon` lane holds none by construction.
+
+### Falsified by mutation, six ways
+
+| mutation | tests red |
+|---|---|
+| drop the deprecated node | 1 |
+| re-stamp `retiredOn` every run | 1 |
+| key the ledger on the absolute IRI | 4 |
+| read `variable` as `unbound` | 3 |
+| move `scopeNote` onto the concept | 1 |
+| drop `altLabel` | 1 |
+
+Every count is asserted against **zero first** — a suite checking "every
+concept has a definition" passes perfectly over a document with no concepts,
+which is `6tkl`.
+
+### Not done, and named
+
+- The **docs/ rendering** (piece 1) is not built. It is one `docs-auto`
+  auto-doc-type, per the owner's framing above, and reads this document.
+- The **content kind in core** (piece 2) is untouched: this is the harness's
+  KG glossary, not a paper's.
+- **Per-locale rendering** is `jmpb`. This document is English-only today, and
+  the verbatim scope notes are what make it translatable without a re-extract.
+- Ruling 2 — does `build-glossary.ts` converge? — still open, still untouched.
+
+## PIECE 1 SHIPPED 2026-09-22 — the defined-terms index in docs/
+
+The owner's first piece — *"justthedocs docs/ rendering should include an index
+of all defined terms extracted from KG assets"* — reframed by them later as one
+`docs-auto` auto-doc-type at `cat-harness/docs-auto/glossary/<path>`.
+
+Built as exactly that. `gen-docs-auto.ts`'s own header had listed it as
+*"declared but NOT built: `glossary` (bean `lqo9` holds a roast that gates
+it)"*. **That roast is held and slice 2 shipped**, so the gate lifted and the
+type went in beside `index/skills` and `index/processes`. No new URL rule, no
+fourth pruner — `viewerPlacement` and `orphanSubjectPages` already route it.
+
+**44 terms across 1 sub-graph**, every one carrying its real definition.
+
+### It reads the LEDGER, joined with the REGISTRY
+
+Two sources, each for what only it has:
+
+| source | gives | why not the other |
+|---|---|---|
+| `glossary/glossary-ledger.json` | identity, `firstSeen`, retirement | the glossary DOCUMENT lives in `_kg/`, absent from a checkout — an index built from it would be empty locally and full in CI |
+| `scenarios/roles.json` | the definition | copying definitions into the ledger would be a second copy free to drift from the authored source |
+
+Same join `glossary-export.ts` makes. `glossary-export.ts` itself is
+deliberately NOT imported: it builds the whole KG export to do its job, which
+is seconds of work for a page needing four fields — and `06e3`'s own rule is
+that an index reuses assets rather than recomputing them.
+
+### The first version defined nothing, and only the PAGE showed it
+
+It read the ledger alone, and all 44 rows said *"no description in the
+artefact"* — a glossary index that defines nothing, which is the opposite of
+what #596 asked for. The generator ran clean, the count was right, and the
+defect was visible only by opening the page. `continual-progress` again:
+a description of a rendered artefact is not the artefact.
+
+### And it found a defect in the sibling index
+
+`index/processes` shared the `<bpmn:`-prefixed regexes — the fourth reader
+with that blind spot — so `translation-workflow.bpmn` appeared in the index
+with **its filename for a name and no lanes, skills or summary**. Worse than
+absent: a row is there, so nothing looks missing.
+
+Fixing it exposed a second, larger one: the summary regex took the first
+`<documentation>` anywhere after the process opened, so **16 of 61 diagrams
+were showing a LANE's documentation as the process summary** — which became
+true the day `sqtq` wrote 157 lane documentations. Filed as `7rna`; the
+extractor now takes only a DIRECT child and the 16 say so honestly.
+
+### Done when — status
+
+[x] The docs/ rendering carries a defined-terms index built from KG assets
+
+Extracted-vs-authored is not yet distinguished on the page: every term here is
+AUTHORED (a role in the registry), because slice 2 mints a concept only from a
+declared role or a declared varying lane. The *candidate* state the roast
+described arrives with a source that can produce one, which this is not.
+
+## RULING 2 — FULL ANALYSIS, 2026-09-22, on the owner's ask
+
+Owner: *"2 need full analysis, SKOS vs DCAT vs others... anything json(ld)
+centric for our ecosytem or has pre-exsting warppers? need something robust to
+handle medical codeings (a la ICD) with versision of tersm, translation,
+releases, etc."*
+
+### The question changed, because the measurement did
+
+Ruling 2 was *"does `build-glossary.ts` converge on the new kind?"* — a
+question about two glossary mechanisms. **Measured before answering: this
+repository already has TWO TERMINOLOGY SYSTEMS, each incumbent in its own
+layer**, and the ICD requirement lands squarely on the one nobody was talking
+about.
+
+| | what it is | where |
+|---|---|---|
+| **SKOS** | the harness's KG glossary — 135 vocabulary terms (slice 1) + 44 swimlane roles (slice 2) | `ns-export.ts`, `glossary-export.ts` |
+| **FHIR CodeSystem / ValueSet / ConceptMap** | a folio's CLINICAL terminology | `terminology-management` skill, `schemas/skills/terminology-management/`, a `Terminologist` lane in `l2-dak-authoring.bpmn` |
+
+The FHIR half is not a candidate. Its input schema's `operation` enum is
+already `create-codesystem` / `create-valueset` / `create-conceptmap` /
+`validate-bindings` / `map-to-standard`, and its `targetStandard` enum is
+already **`ICD-11`, `SNOMED-CT`, `LOINC`, `IPS`, `WHO-FIC`, `WHO-ATC`**. The
+`terminologist` has their own swimlane because *"a wrong binding is invisible
+downstream"*. `fhir-validation` validates the output, `smart-base-tools` runs
+the toolchain.
+
+So the ICD question has an incumbent answer in this repository, and the real
+ruling is about the RELATION between the two, not a choice between them.
+
+### What ICD-class codings actually demand
+
+The discriminator list, because "robust" has to mean something checkable:
+
+1. **Concept-level versioning** — a code's meaning can change between releases
+2. **Release / edition management** — ICD-11 has dated releases; ICD-10 is a
+   different system, not an older version
+3. **Designations with a USE** — a fully-specified name, a synonym and a
+   display are different things in the same language
+4. **Per-language designations**, not just a label with a language tag
+5. **Post-coordination** — ICD-11 builds compound expressions from a stem plus
+   extension codes
+6. **Foundation vs linearization** — ICD-11 separates the semantic network
+   from the tabular list you actually code against
+7. **Deprecation with a successor**, not just a `deprecated` flag
+8. **Mapping with equivalence semantics** — "narrower than" is not "equals"
+9. **Licensing** — SNOMED requires an affiliate licence, which constrains what
+   may be redistributed in a published graph
+
+### The scorecard
+
+**SKOS** — *right for a glossary, structurally insufficient for ICD.*
+Native RDF/JSON-LD, drops into the existing `@context`; multilingual labels are
+first-class; `notation` IS the code; `broader`/`narrower` handles
+poly-hierarchy. But: **no versioning model at all** (1, 2), no designation
+*use* (3), no post-coordination (5), and its mapping properties
+(`exactMatch`, `broadMatch`) carry no provenance or confidence (8). Reaching
+for extensions to cover those is rebuilding FHIR's terminology layer in a
+vocabulary that was designed not to have one.
+
+**DCAT** — *not a term model, and the best answer to a question SKOS and FHIR
+both answer badly.* It says nothing about what a concept means. What it IS
+good at is (2): `dcat:Dataset` + `dcat:Distribution` +
+`dcterms:hasVersion` + `adms:versionNotes` is exactly how you describe a
+RELEASE of a terminology as a published, discoverable, versioned artefact.
+Complementary, never competing. The who-iris catalogue-by-reference work
+already speaks this shape.
+
+**FHIR CodeSystem / ValueSet / ConceptMap** — *the only candidate that meets
+the list.* `CodeSystem.version` + `status` + `date` (1, 2);
+`concept.designation` with `use` and `language` (3, 4); `property` for typed
+concept properties including `inactive` and `notSelectable` (7);
+`ValueSet.expansion` with a timestamp, which IS a pinned release artefact (2);
+`ConceptMap.relationship` with equivalence semantics (8); and `$lookup`,
+`$validate-code`, `$subsumes`, `$translate` — an OPERATIONAL layer, not only a
+data model. Post-coordination (5) and foundation-vs-linearization (6) are
+handled by the code system's own rules, which is the honest answer: FHIR
+carries them rather than solving them.
+
+Costs, stated: JSON is native and **RDF/JSON-LD is a defined but second-class
+serialization**; and it carries clinical machinery a paper glossary never uses.
+
+**Others, named so they are ruled out by a reason rather than by silence:**
+
+- **SKOS-XL** — labels as resources, so a label can carry provenance. Fixes
+  part of (3). Still nothing for (1), (2), (5).
+- **ISO 25964** — the thesaurus rules; SKOS is its carrier. Adds version
+  notes, not a version model.
+- **OWL** — ICD-11's foundation is OWL-shaped, so this is not absurd. Overkill
+  here: definitions in this repository are prose, not axioms, and nothing runs
+  a reasoner.
+- **CTS2** (OMG) — explicitly designed for versioned terminology services, and
+  genuinely covers (1) and (2). Superseded in practice by FHIR terminology
+  services; adopting it would mean leaving the ecosystem this repo is in.
+- **SSSOM** — Simple Standard for Sharing Ontological Mappings. TSV/JSON with
+  a JSON-LD context, biomedical, and **better than `ConceptMap` at recording
+  HOW a mapping was made** — confidence, justification, author, date. Worth
+  naming as a complement for (8) where provenance of a mapping matters more
+  than its operational use.
+- **schema.org `DefinedTerm` / `DefinedTermSet`** — too thin to author in; the
+  right RENDERED projection for a docs page, because it is what a search
+  engine reads.
+- **OMOP / ATHENA** — relational, not JSON-LD, and a research-analytics model
+  rather than an authoring one.
+- **Wikibase** — statements with qualifiers and references give per-assertion
+  provenance and validity dates, which is genuinely more than any of the
+  above. It is a whole platform, not a vocabulary.
+
+### JSON-LD centricity, and the wrappers — MEASURED
+
+The owner asked what is JSON-LD-centric *for this ecosystem* and what has
+pre-existing wrappers. The measurement is blunt:
+
+**This repository has 28 dependencies and NOT ONE of them is an RDF, JSON-LD,
+SPARQL or FHIR library.** Every JSON-LD document here — the content context,
+`ns-export`, `kg-export`, `glossary-export` — is hand-rolled object literals
+with a hand-written `@context`. Nothing validates them as RDF, and no
+`jsonld.js` expands them.
+
+That is a real finding independent of this ruling: the graph is JSON-LD by
+*convention*, not by *construction*, and a malformed `@context` would be
+caught by no test here.
+
+| standard | JSON-LD | wrapper, if adopted |
+|---|---|---|
+| SKOS | native | none needed; `jsonld.js` to validate |
+| DCAT | native | same |
+| SSSOM | JSON-LD context published | reference impl is Python |
+| FHIR | RDF is defined; **`smart-base` already carries `generate_jsonld_vocabularies`** | `sushi` (FSH→FHIR) is ALREADY in this ecosystem — `l3-fhir-authoring`, `fhir-validation` |
+| ICD-11 | WHO publishes a REST API (OAuth) with per-release URIs | thin clients only; the API is the integration point |
+
+The FHIR bridge is the one that matters and it already exists upstream:
+`smart-base`'s `generate_jsonld_vocabularies`.
+
+### Recommendation — three layers, and the bridge is the answer
+
+**1. SKOS stays the harness's glossary.** A swimlane persona has no release,
+no designation use and no post-coordination, and never will. Adding a version
+model to it would be machinery for a requirement that does not exist here.
+
+**2. FHIR stays a folio's clinical terminology.** It is incumbent, it is the
+only candidate meeting the ICD list, and the `Terminologist` lane already
+exists to work it.
+
+**3. DCAT describes a RELEASE of either**, when one is published as a dataset
+somebody else consumes. This is the piece neither of the other two does, and
+the one genuinely missing today.
+
+**The bridge is `ConceptMap` (operationally) or SSSOM (for provenance):** a
+harness glossary term MAY map to a clinical code, and that mapping is a third
+object with its own equivalence semantics. What must not happen is SKOS
+growing a `version` field, or a swimlane persona acquiring a `CodeSystem`.
+
+### What this does to Ruling 2 as originally posed
+
+**`build-glossary.ts` should converge on the SKOS kind — and that is now the
+SMALL half of the answer.** A paper's glossary and the KG glossary are both
+"what does this word mean to a reader", so one mechanism is right and two is
+the duplication the bean set out to remove.
+
+**Convergence STOPS at SKOS.** The larger half: a clinical code system is a
+different object with different obligations, and the failure mode this
+analysis exists to prevent is somebody reading "one glossary mechanism" as
+"one terminology mechanism" and binding an ICD-11 code to a `skos:Concept`
+with a `notation` and no version. That produces a graph that looks right,
+validates, publishes, and is wrong the next release.
+
+### Open, and genuinely the owner's
+
+- **Does DCAT get built, or only named?** Nothing publishes a release
+  descriptor today. It is the missing third layer, and it is also the least
+  urgent because nothing outside this repo consumes these graphs yet.
+- **Is the hand-rolled JSON-LD worth a real processor?** `jsonld.js` would
+  catch a malformed `@context` that nothing catches now. That is a dependency
+  decision, not a terminology one, and it wants its own bean.
+- **SSSOM alongside `ConceptMap`, or only `ConceptMap`?** Only if mapping
+  PROVENANCE has to be queryable. Do not adopt both without that requirement.

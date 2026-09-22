@@ -207,3 +207,30 @@ skill names it — which is the existing relation, not a new one.
 Recorded here as well as on `yunp` because the instruction was given while
 `yunp` was in hand, and an instruction found only on the bean that happened to
 be open is an instruction the next agent does not find.
+
+## RE-MEASURED 2026-09-22 (bean `osyc`, item 2) — it is 3, not 4, and the fourth is the interesting one
+
+| | bean says | measured now |
+|---|---|---|
+| skills declaring `user_invocable: true` | 34 | **35** (`main` gained one) |
+| `.claude/commands/*.md` FILES | 4 | 4 |
+| skills with a matching command, BY NAME | **4** | **3** — `goal-review`, `staging-review`, `watch` |
+
+**The "4" counted files in a directory, not skills that are reachable.** So the
+gap is **32**, not 30.
+
+### The fourth command is the inverse of this bean's defect
+
+`.claude/commands/prepare-merge.md` exists and works — `AGENTS.md` documents
+`/prepare-merge`. But `cat-harness/skills/folio-core/prepare-merge.md` has **no
+YAML front matter at all**: it opens `# Prepare-merge`, declaring neither
+`name:` nor `user_invocable: true`.
+
+So it is a skill a human CAN invoke and that no enumeration of user-invocable
+skills will ever list — the same declared-vs-reachable mismatch this bean is
+about, running the other way. Option A ("emit a command for every skill
+declaring `user_invocable`") would not produce it, and would not notice.
+
+Worth folding into this bean's options rather than opening a fifth: whatever
+generates commands has to reconcile BOTH directions, or the next count is
+wrong again in the other one.

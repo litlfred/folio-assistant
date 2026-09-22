@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_Adjudication"
+                  targetNamespace="http://folio-assistant.dev/bpmn/adjudication">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       Adjudication — folio-assistant
+       Bean: folio-assistant-7pdi
+
+       Owner, 2026-09-21: "during review process a concensus/mechanical
+       agreemenet was not reached, in this case Judgment is needed and
+       Adjudication process being … it is Judgment of >= 1 Feedback
+       Provider's feedback. still have same dispensation process (reason
+       for choice as per contextual requirements)."
+
+       THE POINT OF DRAWING THIS is that the shape was already implemented
+       SEVEN times — five adjudicate activities across processes/, plus
+       `/api/relevance/adjudicate` and `bib-verification.ts`, which share
+       no code with the diagrams and arrived at the same rule anyway. The
+       eighth subject would have restated it again.
+
+       ADVISORY at the process level, because a judgement cannot be gated:
+       the whole reason this process exists is that the mechanism ran out
+       of facts. What is NOT relaxable is A_RecordEntry. A judgement
+       nobody wrote down is indistinguishable from a checker that was
+       never run, so the judgement is free and the record is not.
+
+       Skill: skills/folio-core/adjudication.md
+       ═══════════════════════════════════════════════════════════ -->
+
+  <bpmn:collaboration id="Collab_Adjudication">
+    <bpmn:participant id="Participant_Adjudication" name="Adjudication" processRef="Process_Adjudication"/>
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_Adjudication" name="Adjudication" isExecutable="true">
+    <bpmn:documentation>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.
+
+You are in this process when a sidecar holds two entries for ONE criterion that do not agree — a script failing what a reviewer passed, an agent and a person reading the same block differently. That is the entry condition and it is computable, which is why the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate, and neither is adjudicable. Nobody enters this process by declaring that they have entered it.
+
+Three things the diagram holds that prose kept losing. The adjudicator is DISPATCHED rather than briefed — given the findings and the checker's output and, deliberately, never the artefact, because an adjudicator shown the artefact can talk itself into any reading of the finding and that failure raises no error. The adjudication LEADS the criterion and the checker's entry is KEPT beneath it, because a disagreement between a checker and a reviewer is information and a sidecar showing only the winner has lost it. And the dispensation is scoped to the version it was granted against by its `field_hash`, so it lapses when the source moves and never becomes precedent.
+
+The three outcomes are the ones `review-narrative` and `voice-review` already use: the finding stands, the criterion does not apply here, or it applies and this is a stated exception. All three converge on the same write, because what makes an outcome legitimate is not which one it is but that its reason was recorded.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory"/>
+    </bpmn:extensionElements>
+
+    <bpmn:laneSet id="LaneSet_Adjudication">
+      <bpmn:lane id="Lane_FeedbackProvider" name="Feedback provider">
+        <bpmn:documentation>Drawn once for any number of providers — the owner's "Judgment of &gt;= 1 Feedback Provider's feedback" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.
+
+This lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="feedback-provider"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Disagreement</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_StateFinding</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Adjudicator" name="Adjudicator">
+        <bpmn:documentation>Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, "a human or agentic decision, never a merge rule" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.
+
+A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="adjudicator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>GW_Adjudicable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_Dispatch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_Judge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Outcome</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ScopeCriterion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_Dispensation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RecordEntry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Settled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotAdjudicable</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Disagreement" name="Entries for one criterion disagree">
+      <bpmn:documentation>The sidecar, not a complaint. `block-qa/v1` allows several entries per criterion and declares three reviewer kinds, so "they disagree" is read off the record rather than asserted by whoever is unhappy.</bpmn:documentation>
+      <bpmn:outgoing>F_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="A_StateFinding" name="State the finding and what it read">
+      <bpmn:documentation>Each provider says what it found and on what evidence. A finding that does not show what it read is an opinion, and an adjudicator cannot tell it from a finding about some other version of the block.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="content-feedback"/></bpmn:extensionElements>
+      <bpmn:incoming>F_1</bpmn:incoming>
+      <bpmn:outgoing>F_2</bpmn:outgoing>
+    </bpmn:task>
+
+    <!-- Deliberately carries NEITHER `folio:decision` NOR `folio:judgement`,
+         and the absence is the honest answer rather than an oversight. This
+         branch is COMPUTABLE — `block-qa/v1` holds the entries and two of
+         different kinds disagreeing is a fact about the sidecar — so marking
+         it a judgement would be false. Nothing computes it yet, which is
+         exactly the "no table because nobody has written one" state bean
+         `q0tc` is counting. It belongs in the DMN column, not this one. -->
+    <bpmn:exclusiveGateway id="GW_Adjudicable" name="Are both sides present?">
+      <bpmn:documentation>A missing entry is not a disagreement. One reviewer and no checker is a review; one checker and no reviewer is a gate. Leaving here is the correct outcome for both, and it is why an actor cannot enter this process simply by declaring that it has.</bpmn:documentation>
+      <bpmn:incoming>F_2</bpmn:incoming>
+      <bpmn:outgoing>F_Adjudicable</bpmn:outgoing>
+      <bpmn:outgoing>F_NotAdjudicable</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:endEvent id="End_NotAdjudicable" name="Not adjudicable — it is a review, a gate, or a bug report">
+      <bpmn:documentation>Each of those has somewhere else to go, and sending it there is the outcome rather than a failure of this process.</bpmn:documentation>
+      <bpmn:incoming>F_NotAdjudicable</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="A_Dispatch" name="Dispatch with adjudicator_sees — never the artefact">
+      <bpmn:documentation>`UntaintedDispatch` on the criterion declares what each party is given; the caller names a subject and a criterion and does not hand-assemble a brief, because the party composing a brief by hand is the producer. `untaintedPartitionDefects` reports `overlap` when the checker and the adjudicator can read the same file — one of them is then grading its own input, and the verdict measures nothing while raising no error.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="untainted-verification"/></bpmn:extensionElements>
+      <bpmn:incoming>F_Adjudicable</bpmn:incoming>
+      <bpmn:outgoing>F_3</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_Judge" name="Judge the disagreement">
+      <bpmn:documentation>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. What IS checkable is that the outcome is one of the three below and that it carries a reason, which is what the steps after this gateway exist for.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="adjudication"/>
+        <folio:fulfilment kinds="person agent" reason="an agent adjudicates here as legitimately as a person — `untainted-adjudicator` is a declared agent actor and `refresh-materialized` already says 'a human or agentic decision' — so drawing this as a userTask would assert a person the model does not require. Said explicitly rather than left to the abstract task's silence, because the kinds are a real constraint: a mechanical system may NOT take this step, which is the whole reason the process exists."/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_3</bpmn:incoming>
+      <bpmn:outgoing>F_4</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_Outcome" name="Which of the three?">
+      <bpmn:extensionElements>
+        <folio:judgement reason="This is THE judgement — the branch the whole process exists to take, and the one thing nothing here can compute. A table deciding it would decide the case that, by the entry condition, no mechanism could: the checker and the reviewer both read the artefact and reached different answers, so a rule keying on either would be picking a side by construction rather than by reason."/>
+      </bpmn:extensionElements>
+      <bpmn:documentation>The same three `review-narrative` and `voice-review` already name, and they are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason.</bpmn:documentation>
+      <bpmn:incoming>F_4</bpmn:incoming>
+      <bpmn:outgoing>F_Stands</bpmn:outgoing>
+      <bpmn:outgoing>F_Scope</bpmn:outgoing>
+      <bpmn:outgoing>F_Exception</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_ScopeCriterion" name="Scope the criterion so it stops applying here">
+      <bpmn:documentation>One edit to the criterion rather than ten overrules on the blocks it should never have covered. This branch is the one an adjudicator under time pressure converts into a dispensation, and the conversion is a defect: a dispensation lapses when the source moves, so a mis-scoped criterion granted its way past comes back every time anybody touches the block.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:incoming>F_Scope</bpmn:incoming>
+      <bpmn:outgoing>F_5</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_Dispensation" name="Grant a dispensation, with its reason">
+      <bpmn:documentation>The rule applies and this subject is a stated exception. A `kind: "human"` entry with `result: "pass"` overrides the script's `fail` for that criterion, and ONLY while its `field_hash` matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it.
+
+A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="adjudication"/>
+        <folio:policy relaxable="false"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_Exception</bpmn:incoming>
+      <bpmn:outgoing>F_6</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_RecordEntry" name="Write the entry that LEADS — keeping the checker's beneath it">
+      <bpmn:documentation>Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not.
+
+Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="adjudication"/>
+        <folio:policy relaxable="false"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_Stands</bpmn:incoming>
+      <bpmn:incoming>F_5</bpmn:incoming>
+      <bpmn:incoming>F_6</bpmn:incoming>
+      <bpmn:outgoing>F_7</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_Settled" name="Settled, with the reason on the record">
+      <bpmn:documentation>Settled for this version of the source. The sidecar now holds both readings and the reason one of them leads.</bpmn:documentation>
+      <bpmn:incoming>F_7</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="F_1" sourceRef="Start_Disagreement" targetRef="A_StateFinding"/>
+    <bpmn:sequenceFlow id="F_2" sourceRef="A_StateFinding" targetRef="GW_Adjudicable"/>
+    <bpmn:sequenceFlow id="F_Adjudicable" name="both sides present" sourceRef="GW_Adjudicable" targetRef="A_Dispatch"/>
+    <bpmn:sequenceFlow id="F_NotAdjudicable" name="only one side" sourceRef="GW_Adjudicable" targetRef="End_NotAdjudicable"/>
+    <bpmn:sequenceFlow id="F_3" sourceRef="A_Dispatch" targetRef="A_Judge"/>
+    <bpmn:sequenceFlow id="F_4" sourceRef="A_Judge" targetRef="GW_Outcome"/>
+    <bpmn:sequenceFlow id="F_Stands" name="the finding stands" sourceRef="GW_Outcome" targetRef="A_RecordEntry"/>
+    <bpmn:sequenceFlow id="F_Scope" name="the criterion does not apply here" sourceRef="GW_Outcome" targetRef="A_ScopeCriterion"/>
+    <bpmn:sequenceFlow id="F_Exception" name="it applies; this is an exception" sourceRef="GW_Outcome" targetRef="A_Dispensation"/>
+    <bpmn:sequenceFlow id="F_5" sourceRef="A_ScopeCriterion" targetRef="A_RecordEntry"/>
+    <bpmn:sequenceFlow id="F_6" sourceRef="A_Dispensation" targetRef="A_RecordEntry"/>
+    <bpmn:sequenceFlow id="F_7" sourceRef="A_RecordEntry" targetRef="End_Settled"/>
+  </bpmn:process>
+
+  <!-- Layout only. Nothing below changes what the process does. -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Adjudication">
+    <bpmndi:BPMNPlane id="BPMNPlane_Adjudication" bpmnElement="Collab_Adjudication">
+      <bpmndi:BPMNShape id="Shape_Participant_Adjudication" bpmnElement="Participant_Adjudication" isHorizontal="true">
+        <dc:Bounds x="160" y="60" width="1320" height="520"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_FeedbackProvider" bpmnElement="Lane_FeedbackProvider" isHorizontal="true">
+        <dc:Bounds x="190" y="60" width="1290" height="150"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Adjudicator" bpmnElement="Lane_Adjudicator" isHorizontal="true">
+        <dc:Bounds x="190" y="210" width="1290" height="370"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_Disagreement" bpmnElement="Start_Disagreement">
+        <dc:Bounds x="230" y="117" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_StateFinding" bpmnElement="A_StateFinding">
+        <dc:Bounds x="320" y="95" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Adjudicable" bpmnElement="GW_Adjudicable" isMarkerVisible="true">
+        <dc:Bounds x="370" y="250" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NotAdjudicable" bpmnElement="End_NotAdjudicable">
+        <dc:Bounds x="377" y="480" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Dispatch" bpmnElement="A_Dispatch">
+        <dc:Bounds x="480" y="235" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Judge" bpmnElement="A_Judge">
+        <dc:Bounds x="680" y="235" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Outcome" bpmnElement="GW_Outcome" isMarkerVisible="true">
+        <dc:Bounds x="880" y="250" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ScopeCriterion" bpmnElement="A_ScopeCriterion">
+        <dc:Bounds x="980" y="340" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Dispensation" bpmnElement="A_Dispensation">
+        <dc:Bounds x="980" y="450" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_RecordEntry" bpmnElement="A_RecordEntry">
+        <dc:Bounds x="1190" y="235" width="160" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Settled" bpmnElement="End_Settled">
+        <dc:Bounds x="1410" y="257" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_F_1" bpmnElement="F_1">
+        <di:waypoint x="266" y="135"/>
+        <di:waypoint x="320" y="135"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_2" bpmnElement="F_2">
+        <di:waypoint x="395" y="175"/>
+        <di:waypoint x="395" y="250"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_Adjudicable" bpmnElement="F_Adjudicable">
+        <di:waypoint x="420" y="275"/>
+        <di:waypoint x="480" y="275"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_NotAdjudicable" bpmnElement="F_NotAdjudicable">
+        <di:waypoint x="395" y="300"/>
+        <di:waypoint x="395" y="480"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_3" bpmnElement="F_3">
+        <di:waypoint x="630" y="275"/>
+        <di:waypoint x="680" y="275"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_4" bpmnElement="F_4">
+        <di:waypoint x="830" y="275"/>
+        <di:waypoint x="880" y="275"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_Stands" bpmnElement="F_Stands">
+        <di:waypoint x="930" y="275"/>
+        <di:waypoint x="1190" y="275"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_Scope" bpmnElement="F_Scope">
+        <di:waypoint x="905" y="300"/>
+        <di:waypoint x="905" y="380"/>
+        <di:waypoint x="980" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_Exception" bpmnElement="F_Exception">
+        <di:waypoint x="905" y="300"/>
+        <di:waypoint x="905" y="490"/>
+        <di:waypoint x="980" y="490"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_5" bpmnElement="F_5">
+        <di:waypoint x="1130" y="380"/>
+        <di:waypoint x="1270" y="380"/>
+        <di:waypoint x="1270" y="315"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_6" bpmnElement="F_6">
+        <di:waypoint x="1130" y="490"/>
+        <di:waypoint x="1310" y="490"/>
+        <di:waypoint x="1310" y="315"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F_7" bpmnElement="F_7">
+        <di:waypoint x="1350" y="275"/>
+        <di:waypoint x="1410" y="275"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

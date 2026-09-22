@@ -35,6 +35,11 @@
        ═══════════════════════════════════════════════════════════ -->
 
   <bpmn:process id="Process_BeanLifecycle" name="Agent bean lifecycle" isExecutable="false">
+    <bpmn:documentation>The whole life of a work-plan item, and the rules that make one agent's bean legible to another: check before you create, claim before you work, keep the body current as you go, and end it in a state that says why.
+
+You are in this process the moment durable work is identified — which is before the first tool call, not after the work is done. The second lane exists because a bean you did not open is not yours to close: coordination replaces a decision you are not entitled to make.
+
+The one irreversible thing is refused outright. Unwanted work is SCRAPPED with its reasons, never deleted, because a scrapped bean stops the next agent re-entering a dead end while a deleted one leaves a sibling unable to tell abandonment from accident.</bpmn:documentation>
 
     <bpmn:laneSet id="LaneSet_BeanLifecycle">
       <bpmn:lane id="Lane_Agent" name="Agent (this session)">

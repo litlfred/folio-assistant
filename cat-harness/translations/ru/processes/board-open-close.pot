@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: board-open-close\n"
-"POT-Creation-Date: 2026-09-21T19:12:04.322Z\n"
+"POT-Creation-Date: 2026-09-22T08:18:09.971Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,22 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/board-open-close.bpmn:148
+#: processes/board-open-close.bpmn:153
 #. Diagram label
 msgid "[x]"
 msgstr ""
 
-#: processes/board-open-close.bpmn:71
+#: processes/board-open-close.bpmn:76
 #. Diagram label
 msgid "A board is opened"
 msgstr ""
 
-#: processes/board-open-close.bpmn:59
+#: processes/board-open-close.bpmn:64
 #. Diagram element documentation
 msgid "Acts and decides nothing: the start, the gateway and the end all sit in the reader's lane, so every node here is downstream of a choice somebody else made. That split is the point — a renderer that chose what to open would put layout in charge of what the folio asserts."
 msgstr ""
 
-#: processes/board-open-close.bpmn:58
+#: processes/board-open-close.bpmn:63
 #. Diagram label
 msgid "Board renderer"
 msgstr ""
@@ -39,72 +39,77 @@ msgstr ""
 msgid "Board: open and close content"
 msgstr ""
 
-#: processes/board-open-close.bpmn:105
+#: processes/board-open-close.bpmn:110
 #. Diagram label
 msgid "Close the window back to its avatar"
 msgstr ""
 
-#: processes/board-open-close.bpmn:150
+#: processes/board-open-close.bpmn:155
 #. Diagram label
 msgid "leave"
 msgstr ""
 
-#: processes/board-open-close.bpmn:111
+#: processes/board-open-close.bpmn:116
 #. Diagram label
 msgid "Leave a reachable way back"
 msgstr ""
 
-#: processes/board-open-close.bpmn:146
+#: processes/board-open-close.bpmn:151
 #. Diagram label
 msgid "open a card"
 msgstr ""
 
-#: processes/board-open-close.bpmn:92
+#: processes/board-open-close.bpmn:97
 #. Diagram label
 msgid "Project a window onto the board"
 msgstr ""
 
-#: processes/board-open-close.bpmn:98
+#: processes/board-open-close.bpmn:103
 #. Diagram label
 msgid "Raise the window the reader selected"
 msgstr ""
 
-#: processes/board-open-close.bpmn:47
+#: processes/board-open-close.bpmn:52
 #. Diagram label
 msgid "Reader"
 msgstr ""
 
-#: processes/board-open-close.bpmn:75
+#: processes/board-open-close.bpmn:80
 #. Diagram label
 msgid "Render every card as its avatar"
 msgstr ""
 
-#: processes/board-open-close.bpmn:149
+#: processes/board-open-close.bpmn:154
 #. Diagram label
 msgid "resize the board"
 msgstr ""
 
-#: processes/board-open-close.bpmn:123
+#: processes/board-open-close.bpmn:128
 #. Diagram label
 msgid "Resolve the kind's zoom threshold"
 msgstr ""
 
-#: processes/board-open-close.bpmn:147
+#: processes/board-open-close.bpmn:152
 #. Diagram label
 msgid "select a window"
 msgstr ""
 
-#: processes/board-open-close.bpmn:129
+#: processes/board-open-close.bpmn:134
 #. Diagram label
 msgid "Swap cards below the threshold; leave open windows alone"
 msgstr ""
 
-#: processes/board-open-close.bpmn:139
+#: processes/board-open-close.bpmn:144
 #. Diagram label
 msgid "The reader leaves the board"
 msgstr ""
 
-#: processes/board-open-close.bpmn:82
+#: processes/board-open-close.bpmn:38
+#. Diagram element documentation
+msgid "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from. You are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it. The rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes."
+msgstr ""
+
+#: processes/board-open-close.bpmn:87
 #. Diagram label
 msgid "What did the reader do?"
 msgstr ""

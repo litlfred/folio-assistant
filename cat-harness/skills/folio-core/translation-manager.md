@@ -87,6 +87,61 @@ fallback). Later entries override earlier for the same msgid.
 | Lean companions | ❌ | Formal mathematics |
 | FHIR resources | ⚠️ | Use FHIR's own `designation` system, not gettext |
 
+## The exported GRAPH per locale
+
+The pipeline used to end at the rendered page: a `.po` was injected into a
+diagram and an SVG rendered per locale, while the graph a machine consumes was
+produced once, in the source language. `bun run kg:locale` closes that
+(`kg:locale:bootstrap` for the nested instance, `kg:locale:check` in the gate
+set). Bean `jmpb`.
+
+Four rules, and the first is the owner's and is the one an implementation
+breaks by default.
+
+**1. The core graph must not reference its translations.** No
+`hasTranslation`, no `availableLocales`, no `translationOf`, no per-locale
+`@id`, no locale key in the `@context`. The obvious implementation hangs a
+pointer off each node; that grows the core by an edge per locale per node and
+makes bootstrap's graph reference artefacts it does not own and cannot
+validate. The arrow runs **one way** — a per-locale document references the
+core, never the reverse — and the core is complete with no translation
+existing. The same relation
+[`board-diagram-interchange`](board-diagram-interchange.md) states for a board
+and its folio. `localeDocumentsUnreferenced` checks it rather than trusting it.
+
+**2. A translated node keeps its `@id`.** A translation is not a new term.
+Locale-suffixed IRIs are ruled out by that, not chosen against.
+
+**3. The language tag rides the VALUE, never the document.** A blanket
+`"@language": "fr"` would assert French over every string that fell through —
+and fall-through is the normal case, because `parsePo` takes only non-empty
+`msgstr` and skips fuzzy entries. A translated value is
+`{"@value": …, "@language": …}`; a fall-through stays a plain string under the
+document's declared `sourceLanguage`. Fall-through is then visible *in the
+data* rather than inferable from a coverage number.
+
+**4. A catalogue is scoped to the asset it was extracted from.** This one was
+learned the expensive way. The first implementation merged every `.po` under a
+locale and reported *"1 applicable msgid, 40 substitutions"* in three
+locales — the msgid was **`"yes"` → `"oui"`, from `index.po`, a docs page**,
+matching 40 BPMN gateway branch labels. `oui` is the right French for that
+label, which is exactly why it had to be caught by provenance rather than by
+reading the output: the result looked right while the report claimed diagram
+translation was under way in three locales and **no diagram catalogue existed
+in any of them**.
+
+So a `.po` is read only when its stem names an asset the graph projects. A
+residual is accepted and named: a msgid from diagram A applies to an identical
+string on a node from diagram B — not a new assumption, since `kg-export`
+already dedupes lane-derived `Role` nodes by lane name across every diagram.
+
+**What the gate is not.** `kg:locale:check` says nothing about how much is
+translated. Measured 2026-09-22: 58 of this instance's 62 `.pot` templates are
+diagrams and **none has a `.po` in any locale**, so the exporter writes nothing
+and reports every locale saying so. A locale with nothing to say is
+**reported**, never a missing file a reader cannot tell from a broken build;
+`--all-locales` emits a source-language copy per locale for the other reading.
+
 ## Workflow
 
 ### 1. Extract (POT generation)

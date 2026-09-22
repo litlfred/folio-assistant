@@ -1,11 +1,11 @@
 ---
 # folio-assistant-46uh
 title: An agent's opening steps must DETERMINE the language it communicates in, rather than defaulting to the one the tooling happens to be written in
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:04:33Z
-updated_at: 2026-09-21T22:04:53Z
+updated_at: 2026-09-22T06:58:36Z
 parent: folio-assistant-bzyu
 ---
 
@@ -124,3 +124,110 @@ the bean's existing question about where the answer is recorded still stands.
       silent default to English
 - [ ] the determination reads the model's languages as one input among the
       person's stated preference and their own turns — never as the answer
+
+## SHIPPED 2026-09-22 — and it uncovered a silent failure in the sweep itself
+
+### What was built
+
+| piece | where |
+|---|---|
+| the model registry's schema | `bootstrap/schemas/model-registry.ts` |
+| the registry, declared as graph kind `models` (`holds: "context"`) | `bootstrap/models/models.json` |
+| the determination, with its four inputs and the speaking/writing boundary | `skills/folio-core/communication-language.md` |
+| the gate | `scripts/check-model-languages.ts`, `check:model-languages` |
+| the session-start report | `session-start-coord-sweep.sh` §0b |
+
+### Question 2 was already answered by a working mechanism
+
+*"What is it recorded IN, so a sibling session does not re-ask?"* —
+`interaction/interaction.json`, which already carries `profiles`, `note` and
+**`source`**. That last field is the declared-versus-assumed distinction the
+owner's model ruling asks for, already present on the user side. A `language`
+field rides it with no new machinery.
+
+### THE REGISTRY SHIPS EMPTY, and that is the design
+
+An agent is not a valid source for the evidence `validation` asks for. A
+model's own claim about which languages it handles well is a generated
+assertion about a generated system — which is exactly what the validation
+state exists to distrust — so an agent populating this would be manufacturing
+the evidence. Only `human-validated` is ever read, and only a person grants
+it.
+
+`check:model-languages` therefore **reports** an empty registry rather than
+refusing it: a gate red on a repository where nobody has looked at a model yet
+is a gate somebody switches off. It IS red (exit 2) on a registry it cannot
+parse, because reporting a malformed file as "no models" would let an agent
+fall through to `defaultLocale` believing a determination had been made — the
+default-masquerading-as-a-decision this bean exists to end.
+
+### The sweep's own interaction block had not printed since the split
+
+Found while adding §0b beside it. `REPO_ROOT` in
+`session-start-coord-sweep.sh` is `scripts/..` — the **instance** root
+(`cat-harness/`) since `scripts/` moved under it. Right for every
+`$REPO_ROOT/scripts/…`; wrong for the data directories at the repository root:
+
+| call site | resolved to | consequence |
+|---|---|---|
+| `interaction/interaction.json` | `cat-harness/interaction/…` | **the section never printed** |
+| `beans/` (CLI-absent fallback) | `cat-harness/beans` | empty work plan on the one path that exists for a broken container |
+| ...and it globbed `beans/*.md` | defs are at `beans/defs/` | wrong by a second level |
+| `beans/workflows` | correct — it does `$REPO_ROOT/..` inline | **one call site knew** |
+
+So the owner's accessibility profile — *"Very limited hand function. Every
+question is to be answerable by selecting"* — has not been reaching sessions
+through the mechanism built for it, failing inside `if [ -f ]` so the whole
+section simply did not appear. The block's own comment cites WCAG 2.2 SC
+3.3.7: *"A preference re-learned each session is a question asked twice."*
+
+`a6kl`, the CWD-vs-instance-root shape, and the tell was there all along: one
+block compensated with an inline `$REPO_ROOT/..` while two did not. Fixed with
+a single `CHECKOUT_ROOT` so there is one answer. Verified by running the
+sweep: the profile now prints.
+
+### No `language` was recorded for the owner
+
+They have written in English throughout and have never STATED a preference,
+and the skill this bean ships forbids writing one they did not state: *"an
+inferred language recorded as though stated is worse than no record — it is a
+wrong answer wearing the authority of a right one, and the next session will
+not re-ask."* So the sweep correctly reports *"No stated preference on
+record."*
+
+### Falsified by mutation, three ways
+
+| mutation | tests red |
+|---|---|
+| accept `self-reported` as evidence | 2 |
+| give `validation` a default | 1 |
+| stop requiring who/when on a human validation | 1 |
+
+### Done when — status
+
+[x] a skill states how an agent determines the language it communicates in,
+    and when it re-asks
+[x] the determination is recorded where a sibling session reads it —
+    `interaction.json`, and the sweep that reads it now actually works
+[x] the boundary between SPEAKING and WRITING durable artefacts is stated:
+    chat follows the determination, commit messages / PR bodies / issue
+    comments / code / skills follow the instance's source language, because
+    the reason is the READER and those have other readers
+[x] the session-start sweep reports the determination, so "never decided" is
+    visible rather than silent
+[x] each model declared in bootstrap names its preferred language(s) —
+    the declaration point exists and is gated; the registry is empty
+[x] that declaration carries whether a HUMAN validated the claim
+[x] adding a model without the declaration is a finding rather than a silent
+    default to English
+[x] the determination reads the model's languages as ONE input, never the
+    answer — `validatedLanguages()` returns nothing for the other two states
+
+### Not done, and named
+
+- **No model has been declared**, so input 3 is absent rather than English,
+  and the sweep says exactly that. A person adds the first entry.
+- `interaction.json`'s CONTENTS are not Zod-backed — only its path is, in
+  `HarnessDirsSchema`. `language` is therefore a convention the skill
+  documents rather than a validated field. Worth its own bean if the file
+  grows further.

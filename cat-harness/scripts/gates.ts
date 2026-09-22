@@ -464,6 +464,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
+    // The third spelling, and the reason there are three: `match` is a
+    // substring, and a deploy step whose destination carries a shell variable
+    // must quote it. `--out "./_site` and `--out-dir ./_site` were the two
+    // forms that had occurred; `--out-dir "./_site` had not until a per-locale
+    // export wrote into a foreign instance's subdirectory. Same reason, not a
+    // new exemption — a step that got to green by being spelled differently
+    // would be the thing this ratchet exists to stop.
+    match: '--out-dir "./_site',
+    kind: "ci-only",
+    reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
+  },
+  {
     match: "$RUNNER_TEMP",
     kind: "ci-only",
     reason: "a scheduled report written to the runner's temp dir and posted to an issue; the script runs locally, the reporting does not",

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tr1m
 title: 'GLASS HANDLE OVERLAPS CONTENT: a fixed 71x44 tab sits on the top of every page''s content column'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T07:00:07Z
-updated_at: 2026-09-22T07:00:07Z
+updated_at: 2026-09-22T09:29:41Z
 parent: folio-assistant-6lb8
 ---
 
@@ -61,6 +61,36 @@ not a defect in it.
 
 ## Done when
 
-- [ ] the owner picks one of the three, or names a fourth
-- [ ] whichever it is, the `translation-badges` off-centre click and its
+- [x] the owner picks one of the three, or names a fourth
+- [x] whichever it is, the `translation-badges` off-centre click and its
       overlap guard are revisited — they encode today's answer
+
+## Resolution — the owner chose ACCEPT, 2026-09-22
+
+Of the three options, option 1. A tab at the top edge IS the pull-down
+metaphor, and the measurement is what makes accepting it defensible rather
+than merely convenient: 71 px of a 1238 px line, 5.7%, and only content
+pinned at the very top of the column is permanently affected — scrolling
+moves everything else out from under it.
+
+Not chosen, and worth recording so nobody re-derives them:
+
+- **Reserve the space** would cost 44 px of top padding on every page in the
+  repository to fix a 5.7% dead spot on one control.
+- **Move the handle** to a corner would trade the metaphor the owner asked
+  for against the same 5.7%.
+
+### What changed, and what deliberately did not
+
+No product change. The two tests in `translation-badges.e2e.ts` now say they
+encode an ACCEPTED design rather than a workaround pending a decision —
+which is the whole of the second done-when. A comment that reads "we click
+off-centre because of an unresolved overlap" invites the next agent to
+"fix" the overlap and delete the guard.
+
+**The guard stays, and it is what makes accepting safe.** The decision rests
+on a NUMBER — 5.7% of one line — not on the overlap being harmless in
+principle. A decision resting on a number needs the number checked, or it
+quietly becomes a decision about something else the day the glass grows. The
+sibling test asserts the boxes DO overlap vertically (the fact, not a wish)
+and that the horizontal overlap stays under a tenth of the line.
