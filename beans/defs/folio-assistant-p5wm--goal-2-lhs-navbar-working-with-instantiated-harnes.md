@@ -144,21 +144,56 @@ each says why it still reads the other way."*
 
 ## Blocked on the owner — RE-VERIFIED 2026-09-22
 
-**Four, not six.** Still genuinely waiting:
+**Two, not six** — and the list shrank twice, because three of the six were
+answered in beans other than the one recording the block.
 
-`yj32` (*"i wanted bootsrap/ harness/ etc as todos, not landing page info"*,
-and what the writable store is), `v1hw` (which write path), `h32d`, `g196`.
+Still genuinely waiting on a decision:
 
-Plus two that need somebody to **look at a deployed page**: `alox`, and `o3xy`
-as a class.
+| bean | the open question |
+|---|---|
+| `h32d` | memory/todos as one attachable schema — *"Still open, and the one that needs a decision"*. Its own body records the work is **not** blocked on it: agent-scoping works today. |
+| `g196` | per-preview full site copies — *"Not doing without the owner deciding"*. |
+
+And `yj32` keeps **one** of its two: *"Where does the background live?"* — a
+theme's `backdrop` is sticky-scoped today, and making it the docs page ground is
+a different CSS surface and possibly a different crop set, since a sticky's crop
+is chosen for a CARD.
 
 **Withdrawn from this list:**
 
 | withdrawn | why |
 |---|---|
-| `6lb8` (persistence) | **Ruled, 2026-09-21.** The fear was *"a position is state, `todos/` is committed, so two sessions moving one note is a merge conflict in a generated file"*. `db7g` records the owner narrowing relocation to **this reader's board** — reader-local, `localStorage`, sharing `d1r6`'s path. A position that never leaves one reader's view is not state the folio holds, so there is no second session to conflict with. `6lb8` stays open for the board itself; its persistence question is closed. |
+| `6lb8` (persistence) | **Ruled 2026-09-21.** The fear was *"a position is state, `todos/` is committed, so two sessions moving one note is a merge conflict in a generated file"*. `db7g` records the owner narrowing relocation to **this reader's board** — reader-local, `localStorage`, sharing `d1r6`'s path. A position that never leaves one reader's view is not state the folio holds, so there is no second session to conflict with. `6lb8` stays open for the board itself. |
 | `jbx2` | `completed` 2026-09-20 — the `library/` visualiser shipped, including the write path the block was about. |
-| `rptk` | `completed` 2026-09-21 — the language-bar contrast defect was fixed in both schemes, and the bean names what it does *not* close (`anchorPanelInSidebar` is unreachable CSS, recorded rather than swept). It no longer needs eyes. |
+| `rptk` | `completed` 2026-09-21 — language-bar contrast fixed in both schemes. No longer needs eyes. |
+| `v1hw` (write path) | **Answered 2026-09-20, inside `yj32`.** *"There is no 'the' write path"* — there are several TOOLS (checkout commit, forge API, host connector), and which one a session may use is its **capabilities** and **permissions**. `yj32` names `v1hw`, `jbx2`, `ivfw` and `5y4b` as what this unblocks. `v1hw` still says *"still blocked on `yj32`'s write-path question, and deliberately so"* — that sentence is stale; it should ask which write tool is available and degrade through `CapabilityRef` when none is. |
+| `yj32` (writable store) | Same answer. Struck through in `yj32`'s own body, and *"KG-DS"* is answered too — **Knowledge Graph Data Store**, already declared as a role in `bootstrap/scenarios/roles.json`, with git named as its machine. |
+
+**The pattern is worth naming, because it is the one this milestone keeps
+paying for.** Not one of these five was recorded as stale where the block was
+advertised. Each was answered in a *neighbouring* bean, leaving the block live
+in the only place an agent starting from this milestone would read it. That is
+`k59d`'s defect applied to rulings instead of to statuses, and it is worse:
+a stale blocker wastes a session, a stale ruling gets implemented. `6n23`/#695
+implemented `b5f0` §1's REPLACE faithfully and it then had to be reversed.
+
+## Needs eyes on a deployed page — not an agent's to substitute
+
+`alox` (the landing panel and its onboarding block; item (a) resolved
+2026-09-22, the rest still wants looking at) and `o3xy` **as a class**.
+
+A rendered page cannot be assessed from a description of it, and a green gate
+set is not a rendered page — `gjli` was a live accessibility defect that
+`gates --all` was green across, because the generator's own output looked
+right. These go to the owner with a **page** link, never the site root.
+
+## Pull requests on this surface, 2026-09-22
+
+| PR | state | disposition |
+|---|---|---|
+| #955 | `clean`, 7/7 checks green | **Shipped round 1 alone**, marked ready for review 2026-09-22 with reasons on the PR. Round 1 is requirement 2's prerequisite, not a half of it: `min-height: 0` is what makes the square hold, and this PR's own §3 says the square and the scroll are ONE mechanism. Requirement 2 stays open on `624f`. **Not merged** — that is the owner's. |
+| #959 | draft, `unstable` | Bean `sjic`, **under this milestone**, mid-flight by a sibling session on the navbar — which is `603s`'s surface. Not touched: `bean-coordination` obligation 3. It reports `avatarRegion` (from `603s`) as **declared and consumed by nothing**, and the two navbars' widths disagreeing while both test suites were green. Coordinate here rather than opening anything parallel. |
+| #229 | stale since 09-18, `mergeable: unknown` | Its own body says *"Do NOT merge — this PR exists only for the staging preview."* Disposition is the owner's; queued as a question, not closed unilaterally. |
 
 ## Done when
 

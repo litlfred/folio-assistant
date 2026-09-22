@@ -107,6 +107,8 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
       already complete and closed 2026-09-22 on re-derived evidence; `2krx`
       shipped 2026-09-20 *with* the exemption, so the findings were never
       going to fire
-- [ ] #955 shipped or held with a stated reason
+- [x] #955 shipped or held with a stated reason — **shipped**, marked ready
+      for review 2026-09-22, reasons on the PR. Round 1 is requirement 2's
+      prerequisite rather than half of it. Not merged: that is the owner's
 - [ ] The six owner-blocked beans asked as questions the owner can answer by
       selecting, with a preview URL where one is needed
