@@ -1,11 +1,11 @@
 ---
 # folio-assistant-alox
-title: 'The landing panel and its onboarding block — what shipped, and what is still judgement'
-status: todo
+title: The landing panel and its onboarding block — what shipped, and what is still judgement
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T07:27:54Z
-updated_at: 2026-09-19T07:28:25Z
+updated_at: 2026-09-22T08:17:09Z
 parent: folio-assistant-o3xy
 ---
 
