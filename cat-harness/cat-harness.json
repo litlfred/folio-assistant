@@ -605,7 +605,8 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
+        "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count \u2014 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library \u2014 which the library viewer cannot do by construction.",
+        "visualiser": [{ "ref": "cat-harness/docs/cat-harness/uploads/index.html", "icon": "uploads" }]
       },
       "description": "The incoming queue of the document-ingestion pipeline \u2014 raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphKinds": [

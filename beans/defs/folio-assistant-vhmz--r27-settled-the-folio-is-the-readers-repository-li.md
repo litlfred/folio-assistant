@@ -83,6 +83,15 @@ bean `yl5w` behind it.
 the open question is no longer *is there a distinction* but *does the reader's
 view render it*.
 
+> **CORRECTED 2026-09-22, bean `mm36`: the paragraph above is wrong and is
+> left standing rather than edited.** The library view DOES render it —
+> `gen-iris-pages.ts` emits all three states as distinct badges and defaults
+> to `unknown` rather than `referenced`, and a live collection page carries
+> them. Rewriting the claim would make a bean that was wrong
+> indistinguishable from one that was right the first time, which is the
+> `v0jv` lesson. What is missing is one ACTION — the way from a library row
+> onto the glass — not a view.
+
 **F8/F9 measured, not built.** On the deployed preview `who-iris/index.html`
 loads `docs-ui.js` 0 times and carries 0 boards and 0 tiles, against 9 / 1 /
 28 on the folio-assistant landing page. A reader browsing that library has no

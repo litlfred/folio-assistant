@@ -318,10 +318,11 @@ function tileFor(
   // change to how every tile resolves and belongs in its own right rather than
   // bolted on. Naming the case is what stops the report lying in the meantime,
   // and tells whoever does that work which gap they are closing.
-  const declaredFor = (kind: string): string | undefined => {
+  const declaredFor = (kind: string, stagingOnly: boolean): string | undefined => {
     for (const d of dirs) {
       if (!(d.graphKinds ?? []).includes(kind)) continue;
       for (const v of visualisationsOf(d.coverage, d.id)) {
+        if ((v.publish === "staging-only") !== stagingOnly) continue;
         if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
       }
     }
@@ -329,8 +330,24 @@ function tileFor(
   };
 
   const unlinked = visualisations.filter((v) => v.path === undefined).map((v) => v.kind);
-  const undiscovered = unlinked.filter((k) => declaredFor(k) !== undefined);
-  const unbuilt = unlinked.filter((k) => declaredFor(k) === undefined);
+  // A STAGING-ONLY viewer is unlinked ON PURPOSE, so it is neither of the two
+  // gaps below. Saying otherwise would have this generator report the
+  // `publish: "staging-only"` design as a defect — which it did for `fsh-guts`
+  // the moment the split above started working, and a report that flags an
+  // intended state as a finding is the same disease as one that hides a real
+  // gap. It is STATED rather than dropped: silence would make "deliberately
+  // withheld" indistinguishable from "nobody looked".
+  const stagingOnly = unlinked.filter((k) => declaredFor(k, true) !== undefined);
+  const rest = unlinked.filter((k) => !stagingOnly.includes(k));
+  const undiscovered = rest.filter((k) => declaredFor(k, false) !== undefined);
+  const unbuilt = rest.filter((k) => declaredFor(k, false) === undefined);
+
+  if (stagingOnly.length > 0) {
+    findings.push(
+      `${decl.name}: ${stagingOnly.length} graph(s) declare a staging-only viewer, deliberately ` +
+        `not linked on the canonical deploy — ${stagingOnly.join(", ")}. Not a gap.`,
+    );
+  }
 
   if (unbuilt.length > 0) {
     findings.push(
@@ -342,7 +359,7 @@ function tileFor(
     findings.push(
       `${decl.name}: ${undiscovered.length} graph(s) have a declared viewer that exists but is ` +
         `not at a conventional path, so no tile links it — ` +
-        `${undiscovered.map((k) => `${k} (${declaredFor(k)})`).join(", ")}. ` +
+        `${undiscovered.map((k) => `${k} (${declaredFor(k, false)})`).join(", ")}. ` +
         `Built and unreachable is a different gap from unbuilt.`,
     );
   }

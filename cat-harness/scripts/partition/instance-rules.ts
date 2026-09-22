@@ -479,6 +479,7 @@ export const RULES: Rule[] = [
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/gen-uploads-viz.ts",          // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
