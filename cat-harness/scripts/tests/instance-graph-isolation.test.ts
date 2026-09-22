@@ -4,7 +4,7 @@
  * @module scripts/tests/instance-graph-isolation.test
  *
  * The defect these guard was LIVE on `main` on 2026-09-19, not hypothetical:
- * `findBpmnDirs` walked the filesystem, so `bootstrap/workflows/bootstrap.bpmn`
+ * `findBpmnDirs` walked the filesystem, so `bootstrap/processes/bootstrap.bpmn`
  * was discovered from the repository root as well as from bootstrap, and
  * `_kg/folio-assistant.jsonld` carried **88** references to `Process_InitializeHarness`.
  * CatBootstrap's process was published as part of folio-assistant's graph.

@@ -45,7 +45,7 @@ not, do not.
 | **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
 | **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
 | **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
-| **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
+| **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
 
 *Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*
 
@@ -167,7 +167,7 @@ flowchart LR
 ## How a change gets published
 
 The editing and publication processes are modelled as **BPMN 2.0 swimlane
-diagrams**. Sources live in [`skills/workflows/`](cat-harness/skills/workflows) — open them in
+diagrams**. Sources live in [`processes/`](cat-harness/processes) — open them in
 [bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
 generated from them by `bun run render:bpmn`.
 
@@ -184,13 +184,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="cat-harness/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/editing-hci-validation.bpmn)
+[BPMN source](cat-harness/processes/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="cat-harness/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/draft-to-publication.bpmn)
+[BPMN source](cat-harness/processes/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -201,16 +201,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="cat-harness/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/content-lifecycle.bpmn)
+[BPMN source](cat-harness/processes/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](cat-harness/skills/workflows/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](cat-harness/skills/workflows/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](cat-harness/skills/workflows/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](cat-harness/skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](cat-harness/processes/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](cat-harness/processes/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](cat-harness/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](cat-harness/processes/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

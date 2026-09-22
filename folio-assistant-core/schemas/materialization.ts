@@ -21,7 +21,7 @@
  * | `bootstrap` | a harness | the `cat-harness` checkout | `upstream-pins.json` + `check:upstream-pins` |
  *
  * The second row is the one that makes this a discovery rather than a design.
- * `bootstrap/workflows/initialize-harness.bpmn` fetches a harness that is
+ * `bootstrap/processes/initialize-harness.bpmn` fetches a harness that is
  * REMOTE CONTENT and lands it locally; `upstream-pins.json` exists because that
  * local copy goes stale. That is a materialisation and its refresh, built, in
  * production, and named neither.

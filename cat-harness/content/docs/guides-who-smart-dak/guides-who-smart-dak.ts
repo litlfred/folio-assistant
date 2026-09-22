@@ -15,11 +15,11 @@ export default webpage({
       title: "The L2 artifacts",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/l2-dak-authoring.bpmn",
+        source: "processes/l2-dak-authoring.bpmn",
         rendered: "../assets/img/workflows/l2-dak-authoring.svg",
         alt: "BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l2-dak-authoring.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn" },
           { text: "full-size SVG", href: "../assets/img/workflows/l2-dak-authoring.svg" },
         ],
         linkStyle: "caption",

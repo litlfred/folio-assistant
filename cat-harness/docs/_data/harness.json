@@ -1,12 +1,17 @@
 {
   "_generated": "scripts/sync-docs-harness.ts — do not hand-edit; edit cat-harness.json",
   "name": "cat-harness",
-  "title": "folio-assistant",
+  "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": {
     "src": "/assets/img/icons/cat-mark.svg",
     "title": "c@t",
     "description": "An at-sign whose inner a is a cat: the a's bowl is the head, its counter is the face, the ears grow out of the top of the bowl and cross the ring, and the whiskers are cut in white across the sage. The ring keeps its gap and its tail, so it still reads as an @."
+  },
+  "iconDark": {
+    "src": "/assets/img/icons/cat-mark-dark.svg",
+    "title": "c@t (dark scheme)",
+    "description": ""
   },
   "smallIcon": {
     "src": "/assets/img/icons/cat-mark-small.svg",
@@ -66,6 +71,7 @@
     "library",
     "memory",
     "methodology",
+    "processes",
     "qa",
     "scenarios",
     "schemas",
@@ -74,8 +80,7 @@
     "tools",
     "translation-sources",
     "uploads",
-    "waiver",
-    "workflows"
+    "waiver"
   ],
   "links": [
     {
@@ -120,6 +125,18 @@
       "icon": "beans"
     },
     {
+      "id": "bootstrap-render",
+      "directory": "bootstrap-render",
+      "title": "Skills — bootstrap rendering",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/bootstrap-render/",
+      "hidden": false
+    },
+    {
       "id": "bootstrap-tools-schemas",
       "directory": "bootstrap-tools-schemas",
       "title": "bootstrap-tools-schemas",
@@ -129,6 +146,18 @@
         "board"
       ],
       "href": "/cat-harness/schemas/bootstrap-tools/",
+      "hidden": false
+    },
+    {
+      "id": "cat-harness",
+      "directory": "cat-harness",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
       "hidden": false
     },
     {
@@ -181,6 +210,18 @@
       "publish": "staging-only"
     },
     {
+      "id": "kg-navigation",
+      "directory": "kg-navigation",
+      "title": "Skills — kg-navigation",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/kg-navigation/",
+      "hidden": false
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -190,6 +231,18 @@
         "board"
       ],
       "href": "/cat-harness/schemas/large-datasets/",
+      "hidden": false
+    },
+    {
+      "id": "large-datasets-skills",
+      "directory": "large-datasets-skills",
+      "title": "Skills — large-datasets",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
       "hidden": false
     },
     {
@@ -203,6 +256,32 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false
+    },
+    {
+      "id": "methodology-crdm",
+      "directory": "methodology-crdm",
+      "title": "Skills — CRDM methodology",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-crdm/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/methodology-crdm/",
+      "hidden": false,
+      "theme": "analyst"
+    },
+    {
+      "id": "methodology-raci",
+      "directory": "methodology-raci",
+      "title": "Skills — RACI methodology",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-raci/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/methodology-raci/",
+      "hidden": false,
+      "theme": "analyst"
     },
     {
       "id": "schemas",
@@ -241,6 +320,18 @@
       "hidden": false
     },
     {
+      "id": "translation-sources",
+      "directory": "translation-sources",
+      "title": "translation-sources",
+      "ref": "cat-harness/docs/translation-status/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/translation-status/",
+      "hidden": false
+    },
+    {
       "id": "uploads",
       "directory": "uploads",
       "title": "uploads",
@@ -263,6 +354,18 @@
         "board"
       ],
       "href": "/cat-harness/library/who-iris/",
+      "hidden": false
+    },
+    {
+      "id": "who-iris-skills",
+      "directory": "who-iris-skills",
+      "title": "Skills — who-iris",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
       "hidden": false
     }
   ],
@@ -341,7 +444,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -350,11 +453,11 @@
           "path": "/cat-harness/library/agent-skills/"
         },
         {
-          "kind": "voices"
+          "kind": "voices",
+          "path": "/cat-harness/voices/"
         }
       ],
       "findings": [
-        "agent-skills: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — voices (cat-harness/docs/cat-harness/voices/index.html). Built and unreachable is a different gap from unbuilt.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -429,12 +532,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/detangle/"
         },
         {
           "kind": "qa"
@@ -446,7 +550,6 @@
       ],
       "findings": [
         "detangle: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "detangle: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/detangle/index.html). Built and unreachable is a different gap from unbuilt.",
         "detangle: no avatar declared for this instance — showing the generic mark.",
         "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
         "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -564,12 +667,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/large-datasets/"
         },
         {
           "kind": "schemas",
@@ -581,7 +685,6 @@
       ],
       "findings": [
         "large-datasets: declares 1 graph(s) with no published viewer — skills. Declared and not rendered is a gap, not a dead link.",
-        "large-datasets: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/large-datasets/index.html). Built and unreachable is a different gap from unbuilt.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -589,8 +692,8 @@
     },
     {
       "name": "who-iris",
-      "title": "who-iris",
-      "label": "who-iris",
+      "title": "WHO IRIS",
+      "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
       "icon": null,
@@ -614,7 +717,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -637,12 +740,13 @@
         },
         {
           "kind": "uploads",
+          "path": "/cat-harness/library/who-iris/",
           "readOnly": false
         }
       ],
       "findings": [
         "who-iris: declares 3 graph(s) with no published viewer — docs, skills, themes. Declared and not rendered is a gap, not a dead link.",
-        "who-iris: 2 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — catalogue (who-iris/docs/catalogue.html), uploads (cat-harness/docs/cat-harness/library/who-iris/index.html). Built and unreachable is a different gap from unbuilt.",
+        "who-iris: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — catalogue (who-iris/docs/catalogue.html). Built and unreachable is a different gap from unbuilt.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -733,8 +837,8 @@
     },
     {
       "name": "folio-assistant",
-      "title": "folio-assistant",
-      "label": "folio-assistant",
+      "title": "Folio Assistant",
+      "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
       "footer": false,
       "needs": [
@@ -772,8 +876,7 @@
       ],
       "findings": [
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark.",
-        "folio-assistant: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "folio-assistant: no avatar declared for this instance — showing the generic mark."
       ]
     },
     {
@@ -806,12 +909,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/folio-assistant-core/"
         },
         {
           "kind": "folio"
@@ -827,14 +931,13 @@
       ],
       "findings": [
         "folio-assistant-core: declares 1 graph(s) with no published viewer — folio. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html). Built and unreachable is a different gap from unbuilt.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ]
     },
     {
       "name": "cat-harness",
-      "title": "folio-assistant",
-      "label": "folio-assistant (cat-harness)",
+      "title": "C@T Harness",
+      "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
       "footer": false,
       "needs": [
@@ -864,7 +967,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 8
+          "value": 13
         }
       ],
       "visualisations": [
@@ -873,7 +976,8 @@
           "path": "/beans/"
         },
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/cat-harness/"
         },
         {
           "kind": "docs"
@@ -882,7 +986,8 @@
           "kind": "folio"
         },
         {
-          "kind": "fsh-guts"
+          "kind": "fsh-guts",
+          "path": "/fsh-guts/index.md"
         },
         {
           "kind": "health",
@@ -906,6 +1011,9 @@
           "kind": "methodology"
         },
         {
+          "kind": "processes"
+        },
+        {
           "kind": "qa",
           "path": "/qa/"
         },
@@ -917,17 +1025,20 @@
           "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "skills"
+          "kind": "skills",
+          "path": "/cat-harness/docs-auto/index/skills/bootstrap-render/"
         },
         {
           "kind": "todos",
           "path": "/todos/"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "path": "/tools/index.md"
         },
         {
-          "kind": "translation-sources"
+          "kind": "translation-sources",
+          "path": "/translation-status/"
         },
         {
           "kind": "uploads",
@@ -935,22 +1046,16 @@
         },
         {
           "kind": "waiver"
-        },
-        {
-          "kind": "workflows"
         }
       ],
       "findings": [
-        "cat-harness: 1 graph(s) declare a staging-only viewer, deliberately not linked on the canonical deploy — fsh-guts. Not a gap.",
-        "cat-harness: declares 10 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, scenarios, skills, translation-sources, waiver, workflows. Declared and not rendered is a gap, not a dead link.",
-        "cat-harness: 2 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/cat-harness/index.html), tools (cat-harness/docs/tools/index.md). Built and unreachable is a different gap from unbuilt.",
-        "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "cat-harness: declares 8 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
       "name": "bootstrap",
-      "title": "bootstrap",
-      "label": "bootstrap",
+      "title": "Bootstrap",
+      "label": "Bootstrap",
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],
@@ -959,16 +1064,18 @@
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
+      "href": "/bootstrap/initialization.html",
+      "hrefKind": "handled",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -978,17 +1085,21 @@
       ],
       "visualisations": [
         {
+          "kind": "processes"
+        },
+        {
           "kind": "scenarios"
         },
         {
-          "kind": "skills"
+          "kind": "schemas"
         },
         {
-          "kind": "workflows"
+          "kind": "skills"
         }
       ],
       "findings": [
-        "bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
+        "bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ]
     }
   ]

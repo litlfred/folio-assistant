@@ -579,7 +579,7 @@ test.describe("the sticky todo board", () => {
           return route.fulfill({ status: 404, body: "not found" });
         });
         await page.goto("http://todo.a11y/page.html");
-        await page.locator(".fa-qr-toggle").click();
+        await page.locator(".fa-tiles-toggle").click();
         await page.locator(".fa-tile", { hasText: "Todos" }).click();
         // Expand one body and pin one sticky, so every surface this PR adds is
         // actually on screen when axe looks at it.

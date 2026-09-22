@@ -22,8 +22,8 @@ both halves and has nowhere to put the relation:
 
 | RACI needs | this repo already has |
 |---|---|
-| tasks | BPMN activities under `skills/workflows/` |
-| parties | `skills/roles/roles.json` (33 roles), `.claude/skills/actors/` (27 actors) |
+| tasks | BPMN activities under `processes/` |
+| parties | `scenarios/roles.json` (33 roles), `.claude/skills/actors/` (27 actors) |
 | **the involvement between them** | only **R** — a lane says who PERFORMS |
 
 A BPMN lane expresses **Responsible** and nothing else. *Accountable*
@@ -92,7 +92,7 @@ to do when the answer is "everyone".
 ## Built 2026-09-20 — three edge kinds, one enforced rule, a chart
 
 Owner: *"1y"* (exactly one Accountable, enforced), *"1"* (roles for all
-four letters), *"overlay RACI onto process/actors/skills/roles as needed"*,
+four letters), *"overlay RACI onto process/actors/scenarios as needed"*,
 *"skills to make raci charts across processes"*, and
 *"put CRDM and RACI under methodologies as well"*.
 

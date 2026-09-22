@@ -20,6 +20,6 @@ FOUR GATES THE CURRENT INGESTION HAS NONE OF, each of which is a real decision s
 - COPYRIGHT. What the licence permits, per bitstream, and whether it permits the derived work. `LICENSE-CONTENT.md` exists in this repo and the import does not read it.
 
 ## Done when
-- `skills/workflows/sample-import.bpmn` with a lane per actor and the four gates as real gateways, not documentation.
+- `processes/sample-import.bpmn` with a lane per actor and the four gates as real gateways, not documentation.
 - A strawperson skill naming what each gate REFUSES on, since a gate that only warns is a gate nobody fails.
 - Rendered via `render:bpmn`, and `render:bpmn:check` green.

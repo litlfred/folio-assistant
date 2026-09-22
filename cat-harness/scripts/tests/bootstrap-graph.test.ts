@@ -338,14 +338,20 @@ function processIds(doc: Record<string, unknown>): string[] {
  * clean run over it — the `dh4f` defect, verified by probe to fail here.
  */
 function skillFilesOnDisk(): string[] {
-  // TWO directories, named. `render/` joined `skills/` with bean `hfkl`: it
+  // TWO directories, named. `tools/` joined `skills/` with bean `hfkl`: it
   // holds the skills governing bootstrap's own `.jsonld`/`.json` emission,
   // which is the obligation bootstrap carries INSTEAD of a visualiser.
   //
   // Adding it here is the axis working rather than a maintenance tax — the
   // disk side names its directories on purpose, so a resolver that silently
   // stopped seeing one would fail here instead of exporting an empty section.
-  return ["skills", "render"]
+  //
+  // It was `render/` until 2026-09-22 and this list is STILL hardcoded on
+  // purpose. Reading the declaration here would collapse the two axes into
+  // one and the comparison below would compare the export against itself —
+  // which is the whole defect this file exists to catch. The literal going
+  // stale and failing loudly IS the mechanism, not a cost of it.
+  return ["skills", "tools"]
     .flatMap((name) => {
       const dir = join(CAT_BOOTSTRAP, name);
       return readdirSync(dir)
@@ -355,9 +361,9 @@ function skillFilesOnDisk(): string[] {
     .sort();
 }
 
-/** The processes actually drawn in `bootstrap/workflows/`, by their BPMN id. */
+/** The processes actually drawn in `bootstrap/processes/`, by their BPMN id. */
 function diagramsOnDisk(): string[] {
-  const dir = join(CAT_BOOTSTRAP, "workflows");
+  const dir = join(CAT_BOOTSTRAP, "processes");
   return readdirSync(dir)
     .filter((f) => f.endsWith(".bpmn"))
     .map((f) => /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(dir, f), "utf-8"))?.[1] ?? f)

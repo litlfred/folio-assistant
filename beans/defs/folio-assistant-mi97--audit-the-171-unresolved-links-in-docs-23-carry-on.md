@@ -19,7 +19,7 @@ They are NOT one problem. Measured, by trying each repair against disk:
 
 | shape | count | example |
 |---|---|---|
-| one `../` too many | **23** | `docs/agentic-harness.md -> ../../skills/workflows/authoring-a-paper.bpmn`, where the file is at `cat-harness/skills/workflows/` |
+| one `../` too many | **23** | `docs/agentic-harness.md -> ../../processes/authoring-a-paper.bpmn`, where the file is at `cat-harness/processes/` |
 | resolves only in the PUBLISHED tree | the rest | `docs/architecture.md -> api/` (the docs build generates it); `docs/skills.md -> ...migration.html` |
 | points at the bean store | several | `docs/translation-support.md -> beans/folio-assistant-ktt2--....md`, where beans live at the REPOSITORY root, not under `docs/` |
 

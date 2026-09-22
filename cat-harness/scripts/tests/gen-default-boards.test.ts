@@ -62,7 +62,18 @@ describe("who owes a board", () => {
     const deps = names().filter((n) => !existsSync(join(REPO, instanceConfigFilename(n))));
     // Vacuity guard: with every candidate instantiated there is no dependency
     // left to exclude, and `not.toContain` over an empty list asserts nothing.
-    expect(deps.length).toBeGreaterThan(0);
+    //
+    // The message says what to DO, because this failure is the one most
+    // likely to be "fixed" by deleting the test. It fires only when somebody
+    // instantiates the last remaining dependency, at which point the rule it
+    // guards is still real and only the example is gone — exactly the
+    // situation that produced this rewrite in the first place.
+    expect(
+      deps.length,
+      `no candidate in [${names().join(", ")}] is a non-instantiated dependency, so this ` +
+        "test has no subject. Add a declared-but-not-instantiated instance to `names()` " +
+        "rather than deleting the test.",
+    ).toBeGreaterThan(0);
     const owed = harnessesOwedABoard(REPO, names());
     for (const d of deps) expect(owed).not.toContain(d);
   });

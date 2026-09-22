@@ -124,8 +124,8 @@ export interface DetangleNode {
  *   This is the three-state rule the rest of this repository already runs on:
  *   "could not determine" is a distinct answer from "determined to be a
  *   source", and collapsing them is how a wrong partition looks like a clean
- *   one. Under the first cut of this module `skills/workflows` and
- *   `skills/roles` were both confidently `source` on 100% recorded edges.
+ *   one. Under the first cut of this module `processes` and
+ *   `scenarios` were both confidently `source` on 100% recorded edges.
  */
 export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undetermined";
 
@@ -142,7 +142,7 @@ export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undeter
  *   `<folio:skill ref="S">` is written on the diagram, so the arrow runs
  *   diagram → skill. Had the repository put `workflows: [...]` in each skill's
  *   front matter instead, the identical coupling would be stored the other way
- *   and `skills/workflows` would measure as a sink rather than a source.
+ *   and `processes` would measure as a sink rather than a source.
  *
  * The test that settles it is **what breaks each way**. Delete a skill and
  * `roles.json` has a dangling ref; delete `roles.json` and every skill still
@@ -218,7 +218,7 @@ export interface DetangleMetrics {
    * mostly one way"*, and `oneWayness` alone scores `0.0` both for a group with
    * fifty edges each way (genuinely tangled) and for one with zero in and 334
    * out (perfectly one-way, pointing outward). Measured 2026-09-20,
-   * `skills/workflows` scored 0.00 on `oneWayness` while being the single most
+   * `processes` scored 0.00 on `oneWayness` while being the single most
    * one-way group in the repository.
    */
   directionality: number;
@@ -301,7 +301,7 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     // Measured against the boundary only. Dividing by `total` made cohesion and
     // one-wayness both dominated by `outbound`, so a source-like group failed
     // two clauses for ONE underlying reason and read as twice as bad as it was.
-    // `skills/workflows` has 41 internal edges among 41 diagrams — a well
+    // `processes` has 41 internal edges among 41 diagrams — a well
     // connected family — and scored 0.11 because 334 outward references swamped
     // them.
     cohesion: total === 0 ? 0 : internal / total,
@@ -334,7 +334,7 @@ export const DEFAULT_THRESHOLDS = {
   minDirectionality: 0.8,
   /**
    * "maybe some light detangling" — counted in DISTINCT groups referenced, not
-   * in raw references. 334 references from `skills/workflows` resolve to 57
+   * in raw references. 334 references from `processes` resolve to 57
    * files in 6 packages; the thing a declared dependency list would hold is
    * SIX. Counting multiplicity made one dependency stated 36 times
    * (`document-intake.md`, from the ingestion diagrams) look like 36 problems.

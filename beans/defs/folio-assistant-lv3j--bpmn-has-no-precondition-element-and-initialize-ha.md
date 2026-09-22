@@ -104,7 +104,7 @@ satisfied             checkable  readme-present
 ```
 
 Loaded BY PATH in the test, because no corpus sweep covers
-`bootstrap/workflows/` — the platform scans `cat-harness/skills/workflows/`
+`bootstrap/workflows/` — the platform scans `cat-harness/processes/`
 only, which is the `pve3` asymmetry. Without that the element could have
 shipped and the one diagram needing it been left behind.
 

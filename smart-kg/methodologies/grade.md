@@ -21,7 +21,7 @@ GRADE, which is why this is a separate, extractable sub-graph.
 
 ## It has a slot waiting
 
-`skills/workflows/evidence-retrieval.bpmn` already frames the question as PICO,
+`processes/evidence-retrieval.bpmn` already frames the question as PICO,
 retrieves candidates across three classes, and runs `Task_AppraiseGrade` —
 *"Certainty of evidence per the grading system the folio declares. The grade
 attaches to the BODY of evidence for one PICO question, not to an individual

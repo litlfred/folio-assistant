@@ -1,0 +1,54 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "platform-authoring-agent",
+    "path": "scenarios/roles.json"
+  },
+  "source_hash": "sha256:a5d37372bf4dc69ca24cb32cb7e9bf10343a893817d0c7ee57678d55d20aa5a1",
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "platform-authoring-agent",
+          "detail": "role \"platform-authoring-agent\" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead."
+        }
+      ]
+    },
+    "role-has-persona": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-declares-voice": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-use-cases": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-actor": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 7,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

@@ -678,7 +678,7 @@ describe("a Role comes from the registry as well as from a lane", () => {
   });
 
   test("every role the registry declares is a node", () => {
-    const declared = readRoleGraph(join(import.meta.dir, "../../skills"))!.roles;
+    const declared = readRoleGraph(join(import.meta.dir, "../../scenarios"))!.roles;
     expect(declared.length).toBeGreaterThan(20);
     const byName = new Set(registry.map((r) => r.name));
     expect(declared.filter((d) => !byName.has(d.id)).map((d) => d.id)).toEqual([]);
@@ -780,25 +780,31 @@ describe("a package's id is declared, not derived from its path", () => {
   // witness went with it.
   //
   // Deleting them would have deleted a live contamination guard along with
-  // the witness. `bootstrap/render/` is still declared here and has the
-  // same shape — basename `render`, manifest `bootstrap-render` — so the
+  // the witness. `bootstrap/tools/` is still declared here and has the
+  // same shape — basename `tools`, manifest `bootstrap-render` — so the
   // RULE is still witnessed against the real corpus rather than a fixture.
+  //
+  // The directory was `render/` until 2026-09-22 and the witness SURVIVED the
+  // move, which is the point the paragraph above is making: the rule is
+  // "manifest over basename", and it is now witnessed by a basename that
+  // suggests an entirely different graph kind. A stronger example than the
+  // one it replaced, and it cost nothing because the id did not move.
   //
   // The lesson, since this is the second time a corpus witness has been lost
   // to a declaration change: a test that asserts a RULE through one named
   // example dies with that example. Where `packageIdFor` can be called
   // directly against a root, prefer that.
   test("`bootstrap-render` is named by its manifest, not by its directory", () => {
-    // Its directory is `bootstrap/render/`, basename `render`. The
+    // Its directory is `bootstrap/tools/`, basename `tools`. The
     // manifest says `bootstrap-render`. Exactly the case the basename rule
     // got wrong.
     const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"));
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
     expect(p!["name"]).toBe("bootstrap-render");
-    expect(String(p!["path"])).toContain("bootstrap/render");
+    expect(String(p!["path"])).toContain("bootstrap/tools");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
-    expect(p!["name"]).not.toBe("render");
+    expect(p!["name"]).not.toBe("tools");
   });
 
   test("its members are that package's own skills and nothing else", () => {

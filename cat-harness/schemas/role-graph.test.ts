@@ -234,7 +234,7 @@ describe("readActors", () => {
 });
 
 describe("this repository's own role graph", () => {
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"));
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"));
 
   test("is declared and loads", () => {
     expect(g).toBeDefined();
@@ -254,7 +254,7 @@ describe("this repository's own role graph", () => {
 
 describe("this repository's actor registry, after the roles[] migration", () => {
   const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"))!;
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
     expect(actors.filter((a) => a.looksLikeRole).map((a) => a.id)).toEqual([]);
@@ -367,9 +367,16 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // NOT `ci-pipeline`: it runs where the reader is, once per click, and
     // publishes nothing. Folding a reader-facing renderer into the build
     // actor would put a person's click behind a build.
+    // `local-sweep` (bean `a58y`) is the same QA sweep programs as
+    // `ci-pipeline`, run on a contributor's machine — mechanical by the same
+    // test, and a SEPARATE actor for a reason that is not bookkeeping: a CI
+    // verdict is reproducible from the `reviewed_sha` it records, while a
+    // local one may rest on an uncommitted edit, so the same sha addresses a
+    // tree that produced something else. Folding the two together would make
+    // `reviewed_sha` a decoration rather than an address.
     expect(by("system")).toEqual([
       "attestation-service", "board-renderer", "ci-health-watcher", "ci-pipeline",
-      "ig-publisher-service", "lean-mcp",
+      "ig-publisher-service", "lean-mcp", "local-sweep",
     ]);
   });
 

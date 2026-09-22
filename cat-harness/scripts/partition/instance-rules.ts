@@ -34,7 +34,7 @@
 
 import { resolve } from "path";
 
-import type { PartitionSpec, Rule } from "./engine.js";
+import type { PartitionSpec, PermittedEdge, Rule } from "./engine.js";
 
 // ── The proposed repositories ───────────────────────────────────
 
@@ -136,13 +136,19 @@ export const RULES: Rule[] = [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
-      "scripts/render-bpmn.ts",              // BPMN → SVG (the skills/workflows one)
+      "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS, by the same test as `check-ci-health` above: its subject is
+      // this repository's own Jekyll templates and the baseurl its site is
+      // served under, and it reads no folio content at all. It parses HTML
+      // with a regex and imports nothing but `fs` and `path`, so it cannot
+      // drag a folio in (bean `blv9`).
+      "scripts/check-docs-templates.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -736,6 +742,14 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
+      // The graph-kind registry, split out of the line above so core could
+      // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
+      // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus
+      // the registry mechanism, and imports only `namespaces.ts`. Core does
+      // not own it; core CONTRIBUTES `folio` to it, which is the whole
+      // distinction `folio-graph-kind.ts` argues. Left to triage it landed
+      // in core on a keyword, which had the ownership exactly backwards.
+      "schemas/graph-kind-registry.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.
@@ -777,6 +791,19 @@ export const RULES: Rule[] = [
       // is a fact about the checkout's build wiring, not about any folio's
       // material — it imports `repoRootFor` and nothing else.
       "scripts/check-workflow-script-paths.ts",
+      // The supply-chain gate, and harness by the same argument: it reads this
+      // repository's own `.github/workflows/` and grades whether a pinned
+      // install can silently degrade to an unpinned one. A fact about the
+      // checkout's build wiring, not about any folio's material — it imports
+      // node builtins and nothing else.
+      "scripts/check-lockfile-pinning.ts",
+      // The credential gate. Harness by SUBJECT rather than by import: it
+      // walks this checkout's declared roots and grades the bytes committed
+      // there. It reads a folio's files where one is present, but what it
+      // asserts is a property of the CHECKOUT — "no credential is committed
+      // here" — which is the same claim `check-portable-paths.ts` makes about
+      // filenames. Imports node builtins only.
+      "scripts/check-secret-leaks.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge
@@ -1004,6 +1031,19 @@ export const RULES: Rule[] = [
       // is the second file that has caught — a reminder that the keyword rule
       // is a heuristic and the triage list is where its misses are corrected.
       "content/pipeline/qa-witness.ts",
+      // `qa-reporting`'s first consumer — the gate that refuses a QA verdict
+      // whose reviewer acts as an actor lacking the permission.
+      //
+      // CORE rather than harness, and the reason is an import direction rather
+      // than a subject. Its subject would argue for harness: it grades the
+      // actor/permission graph, which is harness material. But it imports
+      // `schemas/block-qa.ts` for `QaReviewer` and
+      // `content/pipeline/untainted-verification.ts` for the could-not-dispatch
+      // predicate, and both are core. Core may import the harness; the harness
+      // may not import core. Placing it in harness would reintroduce exactly
+      // the wrong-direction edge `schemas/namespaces.ts` was extracted to
+      // remove, a few rules up.
+      "scripts/check-qa-reviewer-permission.ts",
     ],
   },
 
@@ -1180,6 +1220,18 @@ export const RULES: Rule[] = [
       // `beans.ts` in the harness block. The fix is not an exemption, it is
       // the right owner — the same sentence `gen-landing-data.ts` opens with.
       "scripts/state-visualizer.ts",
+      // The translation status page, and CORE by the same test read the same
+      // way: it is a RENDERER. It reads the instance declaration to find the
+      // `translation-sources` directory — harness, and downward, which costs
+      // nothing — and its subject is the gettext corpus a folio is translated
+      // from. What it PRODUCES is a page.
+      //
+      // Deliberately NOT beside `state-visualizer.ts` as a variant of it:
+      // that generator draws only STATE graphs, and `translation-sources` is
+      // not state. They are two renderers of two different things that happen
+      // to share a shape, and folding one into the other would make the
+      // state generator answer for a graph it correctly skips.
+      "scripts/gen-translation-status.ts",
       // Three of the 19 unassigned that are CONTENT-side, by the same test
       // read the other way: each operates on a folio's own material, not on
       // the machinery that runs a process. Classifying them harness alongside
@@ -1226,11 +1278,43 @@ export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */
+/**
+ * The one edge permitted despite the direction rule.
+ *
+ * `cat-harness.ts` imports core's `folio-graph-kind.ts` for its side effect,
+ * which is what makes the `folio` registration automatic instead of something
+ * 110 commands had to remember. Bean `q2wn`, and the header of
+ * `schemas/graph-kind-registry.ts` for why the alternatives were worse.
+ *
+ * ONE entry, naming BOTH endpoints. That is the difference between this and
+ * the blanket rule first tried here — "a bare side-effect import is exempt"
+ * would have let any harness module reach any core module silently, which is
+ * the blindness `q2wn` was opened about wearing a different hat. Any other
+ * edge across this boundary still fails.
+ *
+ * It is a debt and is recorded as one: it exists because the two layers live
+ * in one repository (#223). After the split, core is a dependency that
+ * registers its own kinds on load and this line goes away.
+ */
+const PERMITTED_EDGES: readonly PermittedEdge[] = [
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/folio-graph-kind.ts",
+    reason:
+      "The registration trigger. Core owns `folio`; this import is what makes it registered " +
+      "by the time any reader can be called, because a reader lives in `cat-harness.ts` and " +
+      "loading that module is therefore a precondition of calling one. Without it the kind is " +
+      "registered only if the process happened to import core first — an import-order property " +
+      "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+  },
+];
+
 export const SPEC: PartitionSpec = {
   root: ROOT,
   repos: REPOS,
   allowed: ALLOWED,
   rules: RULES,
   scanRoots: SCAN_ROOTS,
+  permittedEdges: PERMITTED_EDGES,
   skipDirs: SKIP_DIRS,
 };

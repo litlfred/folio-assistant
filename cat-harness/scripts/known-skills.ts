@@ -16,14 +16,14 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 
 import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories and the instance now
-// DECLARES a folio graph — without this import `resolveDirectories` throws
-// `unknown graph kind "folio"`, which `kgDirectories` used to swallow into an
-// empty list. See the comment on that catch for what that cost (issue #464).
-import "../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it, and `check:composition-roots` refuses a
+// command that reads a declaration without it — bean `q2wn`, which is also
+// where the measurement lives.
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -149,6 +149,27 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
  * knowledge-graph node AND the schema definitions, and its `.md` files are
  * READMEs. See {@link kgDirectories} for the measurement that established it.
  */
+/**
+ * This instance's role graph, found across EVERY declared graph root.
+ *
+ * Callers wrote `readRoleGraph(kgRoots(root)[0])`, which worked only while the
+ * roles lived under the first root returned. Since 2026-09-21 they are in
+ * `scenarios/`, a declared directory of its own, and `[0]` is `skills/` — so
+ * taking the first root silently returned `undefined` and every consumer read
+ * that as "this instance declares no roles".
+ *
+ * That is the `kgRoots(root)[0]` hazard AGENTS.md names outright: taking the
+ * first root is the `dh4f` defect arriving through the helper written to
+ * prevent it. One root is today's shape, never the contract.
+ */
+export function roleGraphFor(root: string): RoleGraph | undefined {
+  for (const r of kgRoots(root)) {
+    const g = readRoleGraph(r);
+    if (g !== undefined) return g;
+  }
+  return undefined;
+}
+
 export function kgRoots(root: string): string[] {
   return kgDirectories(root).map((d) => d.absPath);
 }
@@ -168,7 +189,7 @@ export function kgRoots(root: string): string[] {
  * ## judgement to make
  *
  * `kgRoots` resolves a DEPENDENCY's directories too, so it returns paths like
- * `../bootstrap/render`. Walking them is forbidden by
+ * `../bootstrap/tools`. Walking them is forbidden by
  * `instance-graph-isolation.test.ts`, which guards a live 2026-09-19 leak of
  * 88 references: one instance's graph must not carry another's nodes.
  * `unreadNestedInstances` states the same rule in its own finding text — *"do
@@ -647,7 +668,7 @@ export function knownSkills(root: string): Set<string> {
  *
  * ## The literal this replaces
  *
- * Nine production sites hardcoded `skills/workflows` — `src/tools/workflow.ts`,
+ * Nine production sites hardcoded `processes` — `src/tools/workflow.ts`,
  * `src/impact/stakeholder-map.ts`, `src/workflow/corpus-gate.ts`,
  * `scripts/kg-audit.ts`, `scripts/translate-bpmn.ts`, `scripts/render-bpmn.ts`,
  * `scripts/xml-comment-check.ts` among them. Nine copies of one fact is the
@@ -659,7 +680,7 @@ export function knownSkills(root: string): Set<string> {
  *
  * A `cat-harness` directory's `workflows/` subdirectory, plus the directory
  * itself when it holds diagrams directly. That covers today's
- * `skills/workflows/` and a topical `bootstrap/workflows/` without either
+ * `processes/` and a topical `bootstrap/processes/` without either
  * being written down.
  *
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
@@ -668,7 +689,14 @@ export function knownSkills(root: string): Set<string> {
 export function workflowDirs(root: string): string[] {
   const out: string[] = [];
   for (const d of kgDirectories(root)) {
-    const wf = joinPath(d.absPath, "workflows");
+    // `processes/`, the convention since 2026-09-21. An instance that has not
+    // migrated declares its diagrams directly and is reached by the second
+    // branch below, so no legacy name is needed here.
+    // declared-path-literal: the convention fallback, at the call site. This
+    // walks a DEPENDENCY's directory, so the local declaration cannot answer
+    // for it — the second branch below is what catches an instance that
+    // declares its diagrams directly instead.
+    const wf = joinPath(d.absPath, "processes");
     if (existsSync(wf)) out.push(wf);
     else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
       out.push(d.absPath);
@@ -676,9 +704,9 @@ export function workflowDirs(root: string): string[] {
   }
   // DE-DUPLICATED, because the two branches above can name one directory.
   //
-  // `skills/` reaches `skills/workflows/` by the CONVENTION in the first
-  // branch; since the 2026-09-21 split `skills/workflows/` is also declared in
-  // its own right, kind `workflows`, and reaches itself by the second. One
+  // `skills/` reaches `processes/` by the CONVENTION in the first
+  // branch; since the 2026-09-21 split `processes/` is also declared in
+  // its own right, kind `processes`, and reaches itself by the second. One
   // directory, two routes, and every caller here walks what it is given — so
   // the duplicate arrived in the export as 1,354 nodes sharing 677 `@id`s,
   // which is the one thing a JSON-LD consumer may not be handed.

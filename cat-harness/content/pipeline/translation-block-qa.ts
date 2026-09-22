@@ -66,12 +66,12 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 
-import type { QaCriterionEntry, QaFieldHash, QaReviewer } from "../../schemas/block-qa.ts";
+import type { CompanionRole, QaCriterionEntry, QaFieldHash, QaReviewer, UntaintedDispatch } from "../../schemas/block-qa.ts";
 import { parsePo, parsePoEntries } from "./po-inject.ts";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
 import { resolvePoSources } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
-import { gitFileCommitSha, gitHeadSha, hashFile, walkBlocks } from "./qa-utils.ts";
+import { gitFileCommitSha, gitHeadSha, hashFile, sweepActor, walkBlocks } from "./qa-utils.ts";
 import { existingTranslationQaPath, translationQaPath } from "./qa-paths.ts";
 import { sourceLocale, targetLocales } from "./translation-index.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
@@ -121,6 +121,50 @@ export const TRANSLATION_CRITERIA = [
  * would be a schema change reaching well past this sweep.
  */
 export type TranslationFieldHash = QaFieldHash & { po?: string };
+
+/**
+ * The artefact vocabulary a translation criterion's untainted dispatch ranges
+ * over — the block's companions plus the `.po`.
+ *
+ * The same widening as {@link TranslationFieldHash}, for the same reason, and
+ * it is why `untaintedPartitionDefects` takes its universe as a parameter
+ * rather than reading `depends_on`: `po` is not a `CompanionRole` and must not
+ * become one.
+ */
+export type TranslationArtefact = CompanionRole | "po";
+
+/**
+ * `translation-semantic-roundtrip` declared against the generic spine.
+ *
+ * This IS the round trip `translation-manager.md` describes, restated in the
+ * vocabulary of `skills/folio-core/untainted-verification.md` — the first
+ * instantiation of it, and the one that showed the spine's own abstraction was
+ * a notch too narrow.
+ *
+ * Read the partition and the discipline falls out of it: the back-translator
+ * is handed the `.po` and nothing else, so it cannot copy the source back; the
+ * adjudicator is handed the `.md` and never the `.po`, so it rules on meaning
+ * rather than talking itself into a reading of the French. The two visible
+ * sets are disjoint, which is the whole rule in one line.
+ */
+export const ROUNDTRIP_DISPATCH: UntaintedDispatch<TranslationArtefact> = {
+  // The target-language text, and nothing else.
+  checker_sees: ["po"],
+  // Shown the source, a back-translator writes the source back and the check
+  // passes vacuously — measuring the lookup table rather than the translation.
+  checker_withheld: ["md", "ts"],
+  // The original, never the target.
+  adjudicator_sees: ["md"],
+  drift:
+    "Synonyms, articles and re-ordering are NOT drift. A claim added, dropped, " +
+    "weakened, strengthened or reversed IS; so is a term of art swapped for " +
+    "something that means a different thing, and a named entity or quantifier " +
+    "moved. Without both halves stated a round trip degenerates into a style " +
+    "review and every translation fails.",
+};
+
+/** The artefacts a translation criterion's dispatch must account for. */
+export const TRANSLATION_ARTEFACTS: readonly TranslationArtefact[] = ["md", "ts", "po"];
 
 /** A block-qa entry whose hashed inputs include the PO. */
 export type TranslationQaEntry = Omit<QaCriterionEntry, "field_hash"> & {
@@ -366,6 +410,8 @@ function reviewer(): QaReviewer {
   return {
     kind: "script",
     id: SELF,
+    // WHO it acted as — `qa-reporting` is checked against this, not `id`.
+    actor: sweepActor(),
     version: "v1",
     script_hash: hashFile(join(INSTANCE_ROOT, SELF)),
     script_commit_sha: gitFileCommitSha(SELF, INSTANCE_ROOT),

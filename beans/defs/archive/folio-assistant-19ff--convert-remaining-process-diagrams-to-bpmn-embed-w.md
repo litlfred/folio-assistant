@@ -12,7 +12,7 @@ Follow-up to ia4m. Three things:
 
 1. Embed the rendered workflow SVGs in README.md and the GitHub Pages docs
    (they are currently only linked as text).
-2. Confirm the BPMN sources are tracked in the repo (skills/workflows/*.bpmn).
+2. Confirm the BPMN sources are tracked in the repo (processes/*.bpmn).
 3. Audit every existing mermaid diagram and convert the PROCESS-shaped ones to
    BPMN. Structural diagrams (component graphs, role inheritance, the docs map)
    are not processes and stay mermaid — BPMN would be the wrong notation.
@@ -36,7 +36,7 @@ Follow-up to ia4m. Three things:
 and in every docs page that previously carried a mermaid strip for the same
 process.
 
-**BPMN sources are tracked** under `skills/workflows/` — six files, all valid BPMN
+**BPMN sources are tracked** under `processes/` — six files, all valid BPMN
 2.0 with diagram interchange, importing with zero bpmn-js warnings.
 
 **Three process diagrams converted from mermaid to BPMN:**

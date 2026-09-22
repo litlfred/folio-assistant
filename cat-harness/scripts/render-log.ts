@@ -7,7 +7,7 @@
  * Owner, 2026-09-20: *"log all staging rendering (when added, when deleted)
  * to a logging directory/file on gh-pages."* This is the tool half; the
  * discipline is in `skills/folio-core/render-logging.md` and the process is
- * `skills/workflows/staging-render-log.bpmn`.
+ * `processes/staging-render-log.bpmn`.
  *
  * ## APPEND, and nothing else
  *

@@ -80,7 +80,7 @@ Three shapes for it, none chosen:
   renderer, so this bean CLEARS half of that finding.
 - **`yj32`**'s open question "what is the writable datastore?" — the upload
   half of this cannot be designed until that is answered. Git is now confirmed
-  as the store (`bootstrap/skills/roles/roles.json`, the
+  as the store (`bootstrap/scenarios/roles.json`, the
   `knowledge-graph-data-store` role), so the remaining question is narrower:
   which write path — a forge API, a local server, or a commit from a checkout.
 

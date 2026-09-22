@@ -668,6 +668,14 @@ jobs:
           # vocabulary is derived from them, so an empty result is reported as
           # unknown rather than as a pass.
           bun run check:declaration-claims
+          # A Liquid interpolation feeding src/srcset/href resolves, or says
+          # it cannot be told (bean `blv9`). The FIFTH shape of one class in
+          # this repo -- a link-shaped value that does not dereference --
+          # and every earlier instance was found by a person asking whether a
+          # URL resolved, never by a test. Only a LITERAL is decidable: a
+          # variable is DECLINED and listed, because `viewHref`/`editHref`
+          # hold absolute forge URLs that the filter would break.
+          bun run check:docs-templates
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -746,6 +754,9 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:secret-leaks
+          bun run check:lockfile-pinning
+          bun run check:qa-reviewer-permission
           bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
@@ -879,6 +890,16 @@ jobs:
           # `--check` says in its own output which of the two it ran.
           bun run iris:covers:check
           bun run translation:block-qa:check
+          # The translation STATUS page and its projection, bean `lnur`.
+          # Stale-checked rather than merely generated, for the reason every
+          # other generated artefact here is: a page carrying numbers nobody
+          # regenerated is a page that lies by aging, which is `d2kp`.
+          #
+          # It exits 2 when no `translation-sources` directory is declared,
+          # and that is NOT a pass — a folio with no translations is a real
+          # state, and this generator is not the thing that gets to decide
+          # the absence means "nothing to report".
+          bun run translation:status:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #

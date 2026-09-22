@@ -34,17 +34,12 @@
  *
  * @module scripts/kg-viewer-strings
  */
-// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
-// and this module resolves a DECLARED directory. Without it the first
-// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
-// 2026-09-20 across the 20 modules that resolve a declared directory: 10
-// threw, including `narratives.ts` and the `translation` MCP tool, while
-// every gate and all 3298 tests passed — nothing covered the path.
-//
-// Importing core's registration is correct by LAYERING, not a workaround:
-// `folio` is CORE's kind, so a content-side module may import it, while the
-// harness alone never sees it (schemas/folio-graph-kind.ts says so).
-import "../schemas/folio-graph-kind.ts";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it, and `check:composition-roots` refuses a
+// command that reads a declaration without it — bean `q2wn`, which is also
+// where the measurement lives.
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 

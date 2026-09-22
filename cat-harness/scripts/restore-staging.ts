@@ -16,7 +16,7 @@
  *
  * `docs-site.yml` is the ONLY `gh-pages` publisher in this repository without
  * `keep_files: true` — measured against all six, 2026-09-19 — and it is the one
- * that fires on every push to `main` touching `docs/`, `skills/workflows/`,
+ * that fires on every push to `main` touching `docs/`, `processes/`,
  * `schemas/` or four scripts. So the most frequently run publisher was the only
  * one that wiped, and what it wiped was every open PR's review preview.
  *

@@ -38,10 +38,10 @@ interface Vis {
 }
 const harnesses = (
   JSON.parse(readFileSync(join(BASE_DOCS, "_data", "harness.json"), "utf-8")) as {
-    harnesses?: { title?: string; visualisations?: Vis[] }[];
+    harnesses?: { name?: string; title?: string; visualisations?: Vis[] }[];
   }
 ).harnesses ?? [];
-const all = harnesses.flatMap((h) => (h.visualisations ?? []).map((v) => ({ ...v, title: h.title })));
+const all = harnesses.flatMap((h) => (h.visualisations ?? []).map((v) => ({ ...v, title: h.name ?? h.title })));
 
 describe("the two states arrive separately", () => {
   it("there are visualisations to reason about", () => {
@@ -70,9 +70,16 @@ describe("the two states arrive separately", () => {
    * `who-iris/catalogue` has one, at `who-iris/docs/catalogue.html`, and that
    * generator reports it as built-but-unlinked rather than as a `path`
    * (`viewer-undiscovered.test.ts`, same measurement from the other side).
-   * Making an instance-relative ref linkable means resolving it through
-   * `withRoutes`, which changes how every tile resolves and belongs in its own
-   * change.
+   *
+   * **A merge from `main` moved this, and not all the way.** Declaration-based
+   * discovery now fills the gap for a declared ref UNDER the published site
+   * directory, which is how `who-iris/uploads` acquired a `path` — so the
+   * corpus now holds a kind that has a viewer AND an explicit `readOnly`,
+   * and the two fields are visibly independent rather than only structurally
+   * so. `who-iris/catalogue` still does not resolve, because its viewer lives
+   * in the instance's own MOUNTED `docs/`, which is copied in after Jekyll
+   * and is not under the site directory the stripping works against. Every
+   * `readOnly: true` kind therefore still lacks a path.
    *
    * So the assertion is written as the WEAKER true thing, with the stronger
    * one named. Asserting the correlation as though it were the design would
@@ -109,7 +116,12 @@ describe("the two states arrive separately", () => {
 });
 
 describe("who-iris — the instance that carries both answers", () => {
-  const iris = harnesses.find((h) => h.title === "who-iris");
+  // KEYED ON `name`, NOT `title`. This read `title` and broke the moment main
+  // gave who-iris the display label "WHO IRIS" — which is precisely the
+  // distinction that change introduced: *"`name` stays the machine identifier
+  // that filenames, `needs` edges and `declaredBy` resolve against; `title` is
+  // what a reader sees and nothing resolves against."* A test is a resolver.
+  const iris = harnesses.find((h) => h.name === "who-iris");
   const vis = (k: string) => (iris?.visualisations ?? []).find((v) => v.kind === k);
 
   it("who-iris is in the report", () => {

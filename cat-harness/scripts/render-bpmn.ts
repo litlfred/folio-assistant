@@ -1,7 +1,7 @@
 /**
  * Render BPMN 2.0 sources to standalone SVG.
  *
- * The `.bpmn` files under `skills/workflows/` are the source of truth — they are
+ * The `.bpmn` files under `processes/` are the source of truth — they are
  * plain BPMN 2.0 with diagram interchange, so they open in bpmn.io, Camunda
  * Modeler, or any other BPMN tool. This script rasterises them to SVG for the
  * docs site and for GitHub's Markdown renderer, which cannot draw BPMN itself.
@@ -25,11 +25,11 @@ import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 const ROOT = resolve(import.meta.dir, "..");
 /**
  * The `.bpmn` sources, from EVERY directory the instance declares as holding
- * its knowledge graph — not from the literal `skills/workflows/`.
+ * its knowledge graph — not from the literal `processes/`.
  *
  * `workflowFiles` returns absolute paths, so `file` below is already complete
  * and nothing joins it to a base. That is the point: a topical layout
- * (`bootstrap/workflows/`, `crdm/workflows/`) is found without this script
+ * (`bootstrap/processes/`, `crdm/workflows/`) is found without this script
  * knowing the layout exists.
  *
  * Output names are still the BASENAME, which is a latent collision if two

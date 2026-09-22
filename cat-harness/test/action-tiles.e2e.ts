@@ -137,11 +137,23 @@ async function openTiles(page: import("@playwright/test").Page): Promise<void> {
 }
 
 test.describe("action tiles", () => {
-  test("the header carries ONE control, not a row of them", async ({ page }) => {
-    // The point of the change. Four toggles and a title in a 3.75rem row was
-    // the complaint; six would have been the alternative.
+  test("the header carries THREE named controls, and each is there on purpose", async ({ page }) => {
+    // This asserted ONE until 2026-09-21, when the owner asked for two more
+    // by name: *"can you put dark/light mode switch in mini-icon on top as
+    // well as language icon. to right of folio-asst, to left of the [3x3
+    // checkboard]"*.
+    //
+    // It is still not "however many happen to be there". The original
+    // complaint was FOUR toggles plus a title in a 3.75rem row, with six as
+    // the alternative that decided it (`1le7`). Three asked-for controls is
+    // inside that budget; a fourth that nobody asked for is the regression
+    // this test still exists to catch, which is why they are NAMED rather
+    // than counted loosely.
     await page.setContent(HARNESS);
-    await expect(page.locator(".site-header .fa-qr-toggle")).toHaveCount(1);
+    await expect(page.locator(".site-header .fa-scheme-mini")).toHaveCount(1);
+    await expect(page.locator(".site-header .fa-lang-mini")).toHaveCount(1);
+    await expect(page.locator(".site-header .fa-tiles-toggle")).toHaveCount(1);
+    await expect(page.locator(".site-header .fa-qr-toggle")).toHaveCount(3);
     await expect(page.locator(".fa-tiles-toggle")).toHaveAttribute("aria-expanded", "false");
     // Closed until asked. A panel that starts open is a panel in the way.
     await expect(page.locator(".fa-tiles")).toBeHidden();
@@ -196,14 +208,22 @@ test.describe("action tiles", () => {
     expect(captions).toEqual(["Search", "Settings", "Language", "QR code"]);
   });
 
-  /* ── The search, moved off the main panel ───────────────────────────── */
+  /* ── The search, back in the top display navbar ─────────────────────── */
 
-  test("the search leaves the main panel on load, before anything is opened", async ({ page }) => {
-    // "keep main display panel uncluttered". If this only happened on first
-    // open, every reader who never opens the launcher still sees the clutter.
+  test("the search is IN the main navbar on load, not behind the launcher", async ({ page }) => {
+    // THE INVERSE OF WHAT THIS ASSERTED UNTIL 2026-09-21. It used to hold
+    // that search had LEFT the main panel, on the owner's "keep main display
+    // panel uncluttered". Reversed by the owner the same day: *"i want the
+    // search restored back to the top display navbar, with option to slide
+    // out to the UR corner as an icon."*
+    //
+    // The old test's own reasoning is why this checks load rather than first
+    // open: if it only happened once the launcher was touched, every reader
+    // who never opens it gets the other behaviour.
     await page.setContent(HARNESS);
-    await expect(page.locator(".main-header .search")).toHaveCount(0);
-    await expect(page.locator(".fa-tiles .search")).toHaveCount(1);
+    await expect(page.locator(".main-header .fa-search-home .search")).toHaveCount(1);
+    await expect(page.locator(".fa-tiles .search")).toHaveCount(0);
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
   });
 
   test("the search input is MOVED, not rebuilt — same node, theme handlers intact", async ({ page }) => {
@@ -212,30 +232,37 @@ test.describe("action tiles", () => {
     // a property set on the original node before the script could have seen
     // it... which is not possible here, so the next best thing: the node
     // inside the panel carries the theme's own id and label.
+    //
+    // UNCHANGED IN SUBSTANCE, only in destination: the field now lands in
+    // `.fa-search-home` in the navbar rather than in the tiles panel. This is
+    // the invariant that survived the 2026-09-21 reversal intact, and it is
+    // the one that matters most — a rebuilt box looks right and does nothing.
     await page.setContent(HARNESS);
-    const input = page.locator(".fa-tiles .search input#search-input");
+    const input = page.locator(".fa-search-home .search input#search-input");
     await expect(input).toHaveCount(1);
     // The theme's own label came with it. NOT `aria-label` — the theme does
     // not emit one, which an earlier version of this fixture asserted and a
     // real build disproved.
-    await expect(page.locator(".fa-tiles .search label[for='search-input']")).toHaveCount(1);
+    await expect(page.locator(".fa-search-home .search label[for='search-input']")).toHaveCount(1);
     // The results list travelled with it; a moved input with an orphaned
     // results container renders its hits into the main panel it just left.
-    await expect(page.locator(".fa-tiles .search #search-results")).toHaveCount(1);
+    await expect(page.locator(".fa-search-home .search #search-results")).toHaveCount(1);
   });
 
-  test("the search field is COLLAPSED until the tile is pressed, and then has size", async ({ page }) => {
+  test("in the navbar the field has size; slid to the corner it collapses behind its icon", async ({ page }) => {
     // Geometry, not text. `textContent` is DOM order regardless of CSS
     // display, so a collapsed field still answers every text assertion — the
     // input is in the document the whole time BY DESIGN, because the theme
     // looks it up by id and getElementById does not find a detached node.
+    //
+    // The COLLAPSE half of this test moved rather than disappearing. It used
+    // to describe the launcher ("collapsed until the tile is pressed"); it
+    // now describes the corner, which is where the owner put the collapsed
+    // state: *"option to slide out to the UR corner as an icon."*
     await page.setContent(HARNESS);
     const input = page.locator("#search-input");
-    await expect(input).toBeHidden();
-    expect(await input.boundingBox()).toBeNull();
 
-    await page.locator(".fa-tiles-toggle").click();
-    await page.locator(".fa-tile", { hasText: "Search" }).click();
+    // NAVBAR — visible, and big enough to hit.
     await expect(input).toBeVisible();
     const box = await input.boundingBox();
     expect(box).not.toBeNull();
@@ -243,6 +270,20 @@ test.describe("action tiles", () => {
     // legal minimum in case that comfort is ever spent.
     expect(box!.height).toBeGreaterThanOrEqual(24);
     expect(box!.width).toBeGreaterThan(80);
+
+    // CORNER — collapsed, but still in the document. Both halves matter: the
+    // first is the space the reader asked to reclaim, the second is the
+    // getElementById rule above.
+    await page.locator(".fa-search-slide").click();
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
+    await expect(input).toBeHidden();
+    expect(await input.boundingBox()).toBeNull();
+    await expect(input).toHaveCount(1);
+
+    // ...and the icon is the way back, which is `l4zi`: an action whose
+    // inverse is not reachable is not a toggle.
+    await page.locator(".fa-search-peek").click();
+    await expect(input).toBeVisible();
   });
 
   test("pressing Search puts the cursor in the field, from the keyboard alone", async ({ page }) => {
@@ -258,21 +299,26 @@ test.describe("action tiles", () => {
     await expect(page.locator("#search-input")).toHaveValue("bean");
   });
 
-  test("leaving and re-entering Search keeps the SAME input in the document", async ({ page }) => {
-    // The failure this guards: `view.innerHTML = ""` detaches, and a detached
-    // input is one getElementById away from a dead search. What the reader
-    // typed must survive the round trip too.
+  test("sliding to the corner and back keeps the SAME input, and what was typed in it", async ({ page }) => {
+    // The failure this guards is unchanged and is the reason the slide is a
+    // CLASS CHANGE rather than a move: a detached input is one
+    // getElementById away from a dead search. What the reader typed must
+    // survive the round trip too — that is the cheap observable proof the
+    // node is the same node rather than a convincing replacement.
+    //
+    // The round trip used to be tile -> back -> tile. It is now navbar ->
+    // corner -> navbar, because that is the journey the field actually makes
+    // since 2026-09-21.
     await page.setContent(HARNESS);
-    await page.locator(".fa-tiles-toggle").click();
-    await page.locator(".fa-tile", { hasText: "Search" }).click();
     await page.locator("#search-input").fill("workflow");
 
-    await page.locator(".fa-tiles-back").click();
-    // Parked, hidden, still IN the document — this is the load-bearing bit.
+    await page.locator(".fa-search-slide").click();
+    // Collapsed, still IN the document — this is the load-bearing bit.
     await expect(page.locator("#search-input")).toHaveCount(1);
     await expect(page.locator("#search-input")).toBeHidden();
 
-    await page.locator(".fa-tile", { hasText: "Search" }).click();
+    await page.locator(".fa-search-slide").click();
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
     await expect(page.locator("#search-input")).toBeVisible();
     await expect(page.locator("#search-input")).toHaveValue("workflow");
   });
@@ -339,10 +385,11 @@ test.describe("action tiles", () => {
   test("the magnifier inside the field is hidden without hiding the label", async ({ page }) => {
     // Hidden visually, kept in the accessibility tree. `display: none` would
     // do both, which is the defect above.
+    //
+    // Looked in `.fa-tiles` until 2026-09-21; the field is in the navbar now,
+    // and no tile press is needed to reach it.
     await page.setContent(HARNESS);
-    await page.locator(".fa-tiles-toggle").click();
-    await page.locator(".fa-tile", { hasText: "Search" }).click();
-    const label = page.locator(".fa-tiles .search-label");
+    const label = page.locator(".fa-search-home .search-label");
     await expect(label).toHaveCount(1);
     const style = await label.evaluate((e) => getComputedStyle(e).display);
     expect(style).not.toBe("none");

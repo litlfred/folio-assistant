@@ -81,6 +81,7 @@
     "check:context-emission": "bun run cat-harness/scripts/check-context-emission.ts",
     "check:declaration-filename": "bun run cat-harness/scripts/check-declaration-filename.ts",
     "check:declaration-claims": "bun run cat-harness/scripts/check-declaration-claims.ts",
+    "check:docs-templates": "bun run cat-harness/scripts/check-docs-templates.ts",
     "check:session-staleness": "bun run cat-harness/scripts/check-session-staleness.ts",
     "check:corpus-gate": "bun run cat-harness/scripts/check-corpus-gate.ts",
     "check:graph-kind-work": "bun run cat-harness/scripts/check-graph-kind-work.ts",
@@ -95,6 +96,9 @@
     "check:escaped-markup": "bun run cat-harness/scripts/check-escaped-markup.ts",
     "check:fallback-roles": "bun run cat-harness/scripts/check-fallback-roles.ts",
     "check:harness-dirs": "bun run cat-harness/scripts/check-harness-dirs.ts",
+    "check:secret-leaks": "bun run cat-harness/scripts/check-secret-leaks.ts",
+    "check:lockfile-pinning": "bun run cat-harness/scripts/check-lockfile-pinning.ts",
+    "check:qa-reviewer-permission": "bun run cat-harness/scripts/check-qa-reviewer-permission.ts",
     "check:workflow-script-paths": "bun run cat-harness/scripts/check-workflow-script-paths.ts",
     "check:viewer-backticks": "bun run cat-harness/scripts/check-viewer-backticks.ts",
     "check:head-has-run": "bun run cat-harness/scripts/check-head-has-run.ts",
@@ -238,6 +242,8 @@
     "translation:drift:check": "bun run cat-harness/content/pipeline/translation-drift.ts",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
+    "translation:status": "bun run cat-harness/scripts/gen-translation-status.ts",
+    "translation:status:check": "bun run cat-harness/scripts/gen-translation-status.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

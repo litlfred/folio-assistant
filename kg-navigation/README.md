@@ -44,7 +44,7 @@ owns what it finds. A sibling directory has one owner and no ambiguity.
 ## Known gap, and it predates this move
 
 `bun run kg:audit` reports, in
-`test/results/kg-qa/skills/roles/kg.kg-qa.json`:
+`test/results/kg-qa/scenarios/kg.kg-qa.json`:
 
 > no role carries `"kg-navigation"` and no activity names it — reached, if at
 > all, by direct invocation.
