@@ -239,3 +239,33 @@ The declared `localPath`s are **instance-relative**. Resolved from the
 repository root they all fail, and the first sweep reported **69 missing
 files** over a corpus where every one is present. Caught by the count matching
 the files on disk exactly. Re-run from `smart-trust/`: 0 missing.
+
+### The 654-page gap is really 51 + 604
+
+M3's headline number is true and misleading on its own, so it is decomposed
+here rather than quoted.
+
+**`has canonical` ≡ `not Endpoint/Organization`** — asserted, not assumed:
+the two sets are identical, 70 keys either way.
+
+| | count | has a page | gap |
+|---|---|---|---|
+| conformance artefacts (carry `canonical`/`version`/`name`) | **70** | 19 | **51** |
+| bulk registry entries (`Endpoint` 453, `Organization` 151) | **604** | 0 | 604 |
+
+The 51:
+
+    Requirements          29
+    CodeSystem            15
+    ActorDefinition        5
+    ConceptMap             1
+    ImplementationGuide    1
+
+All 5 `StructureDefinition` and all 14 `ValueSet` already render — they are 19
+of the 19 sidecar-bearing artefacts.
+
+**This is what makes the MVP question answerable.** "654 pages behind the
+Publisher" reads as a rendering backlog; 51 documents plus 604 registry rows is
+a different decision, and 604 of those are `category: Other` bulk entries that
+no reader opens individually. The gap that matters for a SMART Guideline reader
+is **51**, and 45 of those 51 are Requirements and CodeSystems.
