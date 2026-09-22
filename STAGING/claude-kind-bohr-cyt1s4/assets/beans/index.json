@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 498,
+      "count": 502,
       "unit": "beans"
     }
   },
@@ -517,6 +517,20 @@
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
     },
     {
+      "id": "folio-assistant-2j09",
+      "title": "The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-22T11:48:29Z",
+      "preview": "Split out of the 2026-09-22 fix to `external-schemas.ts`, deliberately not taken there because it is a much larger decision than the bug beside it.\n\n## The fix that was taken\n\n`unusedNamespaces` was reporting Dublin Core — 43 real uses, live in the glossary's own `@context` — as *\"a record outliving its dependency\"*, because `namespacesInUse()` reads **only** `processes/*.bpmn|dmn`. A vocabulary c",
+      "file": "beans/defs/folio-assistant-2j09--the-undeclared-namespace-check-reads-only-bpmn-xml.md"
+    },
+    {
       "id": "folio-assistant-2krx",
       "title": "QA AXIS: a declared subgraph with no visualiser and no documentation entry is unreachable — and no skill means no tools",
       "status": "completed",
@@ -921,6 +935,20 @@
       "updatedAt": "2026-09-20T09:21:09Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
+    },
+    {
+      "id": "folio-assistant-4sim",
+      "title": "DCAT: describe a RELEASE of the glossary / terminology as a published dataset — held until the term model lands",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T11:48:00Z",
+      "updatedAt": "2026-09-22T11:48:00Z",
+      "preview": "Owner, 2026-09-22, ruling on #596's ruling 2: **\"DCAT: hold as bean as render of whatever we land on.\"**\n\nSo this is deliberately NOT built, and the reason is in the ruling's own words: DCAT renders *whatever we land on*, so building it before the term model is settled would render a moving target.\n\n## What DCAT is and is not\n\n**Not a term model.** It describes a `dcat:Dataset` and its `dcat:Distr",
+      "file": "beans/defs/folio-assistant-4sim--dcat-describe-a-release-of-the-glossary-terminolog.md"
     },
     {
       "id": "folio-assistant-4v62",
@@ -2923,14 +2951,14 @@
     {
       "id": "folio-assistant-eof6",
       "title": "SEARCH INDEX AS A RELEASE ARTIFACT: build it on release, never on staging refresh",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:02:08Z",
-      "updatedAt": "2026-09-20T09:02:08Z",
+      "updatedAt": "2026-09-22T11:45:48Z",
       "preview": "Owner, 2026-09-20: 'as part of rendeing pipleine, can we tarball or so as binary archives the justthedocs search (and only aviaable on release, not refresh on staging?)'\n\nYES — BUT NOT FOR THE REASON A TARBALL USUALLY WINS, and the distinction decides the design.\n\n**Compression buys nothing on the wire.** GitHub Pages already serves text with `Content-Encoding: gzip`, so a plain `search-data.json`",
       "file": "beans/defs/folio-assistant-eof6--search-index-as-a-release-artifact-build-it-on-rel.md"
     },
@@ -3539,14 +3567,14 @@
     {
       "id": "folio-assistant-itka",
       "title": "check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:36Z",
-      "updatedAt": "2026-09-21T21:59:36Z",
+      "updatedAt": "2026-09-22T11:46:10Z",
       "preview": "Found 2026-09-21 by tripping it: a new epic was parented to another epic, and\n`check:bean-parents` printed *\"✓ every open bean is placed under an epic or a\nmilestone, **and no epic hangs from another**\"* over it.\n\n## Finding 1 — the epic-under-epic rule is structurally unreachable\n\nThe rule exists, at `check-bean-parents.ts`:\n\n```ts\n} else if (b.type === \"epic\" && p.type === \"epic\") {\n```\n\nThe set",
       "file": "beans/defs/folio-assistant-itka--checkbean-parents-asserts-two-rules-it-cannot-reac.md"
     },
@@ -4549,6 +4577,20 @@
       "file": "beans/defs/folio-assistant-oait--tool-613-task-validate-content-graph-dependency-an.md"
     },
     {
+      "id": "folio-assistant-oe98",
+      "title": "480 dead links: 240 of 244 generated skill pages point 'Edit this page's source' at a path that does not exist",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T12:09:09Z",
+      "updatedAt": "2026-09-22T12:09:09Z",
+      "preview": "Found 2026-09-22 while checking that a NEW skill page rendered. The new page was fine; it had simply joined 239 others carrying the same defect.\n\n## Measured\n\n```\ngenerated skill pages with a source link : 244\n  ... whose path does NOT resolve        : 240  (98%)\n  ... dead links (2 per page)            : 480\n```\n\nTwo links per page — *\"Generated from [`…`]\"* and *\"✎ Edit this page's source\"* — bo",
+      "file": "beans/defs/folio-assistant-oe98--480-dead-links-240-of-244-generated-skill-pages-po.md"
+    },
+    {
       "id": "folio-assistant-oh78",
       "title": "ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link",
       "status": "in-progress",
@@ -5419,6 +5461,20 @@
       "updatedAt": "2026-09-21T21:26:39Z",
       "preview": "## What — the owner's spec, verbatim\n\n2026-09-21, with a screenshot of the who-iris rail open and working:\n\n> looks good.\n>\n> we should have same navbar across all folios though.  presented same way.\n> need to comine the two.\n>\n> * keep exploding menu from folio-assisnt\n> * keep [x] from who-iris, keep behavior of open/close, etc.\n> * keep consistent docs/ library/ etc. when content/subgraphs pres",
       "file": "beans/defs/folio-assistant-sjic--one-navbar-for-every-folio-combine-the-folio-assis.md"
+    },
+    {
+      "id": "folio-assistant-sl9u",
+      "title": "skos:prefLabel and dcterms:title carry the identical string on the glossary scheme node, with nothing saying which is authoritative",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-22T11:48:29Z",
+      "preview": "Measured 2026-09-22 on output shipped the same morning, in PR #841:\n\n```\n_kg/cat-harness-glossary.jsonld\n   skos:prefLabel : 'cat-harness swimlane glossary'\n   dcterms:title  : 'cat-harness swimlane glossary'\n   SAME?          : True\n\n_kg/bootstrap-glossary.jsonld   — same, both fields\n```\n\nTwo predicates, one fact, and nothing declaring which is the source. They agree today and will diverge the f",
+      "file": "beans/defs/folio-assistant-sl9u--skospreflabel-and-dctermstitle-carry-the-identical.md"
     },
     {
       "id": "folio-assistant-slw1",
