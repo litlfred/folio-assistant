@@ -1,5 +1,15 @@
 {
   "$schema": "folio-library-index/v1",
+  "tile": {
+    "library": {
+      "count": 8,
+      "unit": "entries"
+    },
+    "uploads": {
+      "count": 20,
+      "unit": "waiting"
+    }
+  },
   "entries": [
     {
       "id": "arxiv-2607.25032v1",
@@ -29,7 +39,14 @@
       "bytes": 59920,
       "upload": "match",
       "uploadInstance": "folio-assistant",
-      "referencedBy": []
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "agent-skills",
+          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
+          "count": 11
+        }
+      ]
     },
     {
       "id": "arxiv-2608.08453v1",
@@ -59,7 +76,14 @@
       "bytes": 96846,
       "upload": "match",
       "uploadInstance": "folio-assistant",
-      "referencedBy": []
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "agent-skills",
+          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
+          "count": 3
+        }
+      ]
     },
     {
       "id": "rfc2119-key-words-requirement-levels",
@@ -664,7 +688,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1442,
+    "filesRead": 1444,
     "unreadable": []
   }
 }

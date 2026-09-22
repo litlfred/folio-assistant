@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "a0d15a218f24"
+    "script_hash": "ef14c302575b"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-21T20:04:06.173Z",
+  "updated_at": "2026-09-22T06:27:02.595Z",
   "verdict": "findings",
   "checks": [
     {
@@ -20,7 +20,7 @@
           "metric": "staging-total-bytes",
           "value": 524288000,
           "unit": "bytes",
-          "basis": "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy change that made the old number mean something different. Until `folio-assistant-1feu`, previews were retained on close AND on merge, so the total was monotonic: any threshold was breached eventually and stayed breached, and \"over\" carried no information after the first time. Now a merged pull request's preview is removed automatically, so the store DRAINS and what remains is bounded by concurrent reviews rather than by cumulative history. At the measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most this repository has reached (eleven on 2026-09-20, three of them prunable) and half the documented 1 GB Pages ceiling, leaving the main site the other half. THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the floor now falls on its own as work merges. The action this finding names is therefore never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO blobs with any other, because the build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
+          "basis": "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy change that made the old number mean something different. Until `folio-assistant-1feu`, previews were retained on close AND on merge, so the total was monotonic: any threshold was breached eventually and stayed breached, and \"over\" carried no information after the first time. Now a merged pull request's preview is removed automatically, so the store DRAINS and what remains is bounded by concurrent reviews rather than by cumulative history. RE-MEASURED 2026-09-22 (bean `tebu`): a full preview is ~88 MiB, not the ~38 MB this basis reasoned from, so 500 MB is about FIVE OR SIX concurrent reviews rather than the thirteen once claimed — below concurrency this repository reaches routinely, which is why an ordinary day trips it. The 500 MB value is the owner's and is left alone; what is corrected here is the arithmetic under it, and whether the number still buys what they wanted is theirs to say. THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be removed, so N concurrent reviews floor the total at N x ~88 MiB. What changed is that the floor now falls on its own as work merges. The action this finding names is therefore never \"prune more\" but preview SIZE. TWO BUDGETS, AND THIS THRESHOLD IS ABOUT ONE OF THEM. The 1 GB Pages ceiling governs the PUBLISHED TREE, where each preview materialises its own copies and blob sharing is irrelevant; git's deduplication governs REPOSITORY growth. This basis used to give a dedup argument (\"27.5 MB of each preview shares ZERO blobs\") as the reason to act on a published-size threshold, which cannot move it. Measured: 878.7 MiB summed against 616.7 MiB unique, only 47.3 MiB shared — so sharing now exists (bean `g196` made the banner a constant fragment) and still cannot reduce what Pages counts. WHERE THE BYTES ARE, measured rather than estimated: of 676 HTML pages, `reference/` is 257 of them and 35.8 MiB — 38% of the pages, 66% of the HTML, at 143 KiB per page against 26 KiB for TypeDoc's. The inflation is just-the-docs inlining the whole navigation into every page. `tebu` acted on that: a preview omits `reference/` and `api/` unless its branch touches their sources, measured at 88.3 -> 39.2 MiB (55.6%) on a real preview. See STAGING_WARN_BYTES for the per-page addressing sources and bean `xxku` for the flushable-container framing.",
           "severity": "major"
         },
         {
@@ -34,20 +34,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 525816404,
+          "value": 781503153,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 6,
+          "value": 9,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "6 staging preview(s) total 501.5 MB, over the 500.0 MB warning point.",
+          "summary": "9 staging preview(s) total 745.3 MB, over the 500.0 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -82,7 +82,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 6,
+          "value": 9,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -91,7 +91,7 @@
     },
     {
       "id": "repository-size",
-      "state": "finding",
+      "state": "ok",
       "summary": "The repository's tracked content, and what a full-history clone of it costs. Two different questions, reported separately.",
       "thresholds": [
         {
@@ -126,43 +126,36 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 102586569,
+          "value": 148834215,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1101857411,
+          "value": 384740020,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 1087610880,
+          "value": 361436160,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 47,
+          "value": 55,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 10.74,
+          "value": 2.59,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
-      "findings": [
-        {
-          "summary": "`.git` is 1.03 GB against 97.8 MB of tracked content — 10.7x, in 47 pack(s).",
-          "metric": "git-dir-to-tree-ratio",
-          "severity": "minor",
-          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "bean-store",
@@ -215,19 +208,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 406,
+          "value": 464,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 191,
+          "value": 218,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 215,
+          "value": 246,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -245,19 +238,19 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 90,
+          "value": 99,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-quiet-claims",
-          "value": 0,
+          "value": 9,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-decision-records",
-          "value": 10,
+          "value": 11,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         },
@@ -269,12 +262,18 @@
         },
         {
           "metric": "bean-thin-decision-records",
-          "value": 1,
+          "value": 2,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         }
       ],
       "findings": [
+        {
+          "summary": "`folio-assistant-j6t3` records a decision and lists no options (\"INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host\").",
+          "metric": "bean-thin-decision-records",
+          "severity": "minor",
+          "action": "Either list the options that were weighed, or drop the section — an empty options section claims an analysis that did not happen, which is worse than not claiming one."
+        },
         {
           "summary": "`folio-assistant-xgd8` records a decision and lists no options (\"SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired\").",
           "metric": "bean-thin-decision-records",
@@ -282,13 +281,67 @@
           "action": "Either list the options that were weighed, or drop the section — an empty options section claims an analysis that did not happen, which is worse than not claiming one."
         },
         {
-          "summary": "215 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "`folio-assistant-7sf1` has been `in-progress` with no change for 77 hours (\"Move MEMORY.md into the kg graph, with correct skill/task pairings\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-1le7` has been `in-progress` with no change for 76 hours (\"Action-icon tiles: one QR-sized tile template, expandable, for settings / languages / KG viewer / src\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-t8g3` has been `in-progress` with no change for 77 hours (\"Translation support foundation (issue #206)\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-gjli` has been `in-progress` with no change for 77 hours (\"ALL UI must follow accessibility guidelines — standing rule, and the KG viewer has known gaps\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-iumj` has been `in-progress` with no change for 76 hours (\"e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-8xx6` has been `in-progress` with no change for 77 hours (\"BPMN re-render for translated labels\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-z4mq` has been `in-progress` with no change for 73 hours (\"Zod modules are tool KG nodes that maintain the public JSON-LD / JSON Schema\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-hylg` has been `in-progress` with no change for 77 hours (\"Workflow interpreter descends into call activities — subprocesses give increasing context\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "`folio-assistant-9gyz` has been `in-progress` with no change for 77 hours (\"QA-review schemas: Finding, Decision and AuditNote are three entities, not one\") — 9 of 99 claims are quiet.",
+          "metric": "bean-quiet-claims",
+          "severity": "minor",
+          "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
+        },
+        {
+          "summary": "246 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
         },
         {
-          "summary": "191 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "218 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."

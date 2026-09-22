@@ -3,13 +3,13 @@
   "name": "who-iris",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. WHO IRIS was not one of the three the owner spelled out; it is titled here because it is instantiated in the same window, and an instance that gains a tab needs a label.",
   "title": "WHO IRIS",
-  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference \u2014 1,057,223 files known, three materialized.",
+  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 who-iris",
+      "title": "AGENTS.md — who-iris",
       "description": "Cold start for work in this layer. The gap between twelve modelled nodes and a million upstream files is the POINT rather than a backlog, so it is never work to be done; every node declares its state with no default, because \"the author did not say\" and \"the author said they could not tell\" are different facts."
     },
     {
@@ -20,6 +20,16 @@
       "description": "What is here, what is only referenced, and how to tell."
     }
   ],
+  "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse \u2014 board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
+  "folioMount": {
+    "roots": ["library/", "docs/"],
+    "exempt": [
+      {
+        "path": "uploads/",
+        "reason": "captured IRIS source \u2014 the artefact ingestion exists to preserve, not a page this repository authors"
+      }
+    ]
+  },
   "directories": [
     {
       "id": "library",
@@ -35,30 +45,38 @@
         "skill": "library-ingestion"
       },
       "instanceRoot": true,
-      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves \u2014 the owner's ruling, 'who-iris themed at /who-iris/'. Without this the route goes to whichever kind sorts first, which is `docs`."
+      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Without this the route goes to whichever kind sorts first, which is `docs`."
     },
     {
       "id": "who-iris-catalogue",
+      "readOnly": true,
+      "readOnlyBasis": "Records of content materialized from IRIS. Editing one in place would change what this repository claims IRIS holds, with nothing saying so -- which is the case bean `10s1` exists for. To work on one, copy it out.",
       "_coverage_comment": "The KG view, NOT the replica. `library/community-list.html` and its collection/item pages answer \"what does IRIS look like\"; this answers \"what does this catalogue know, and what does it record that it does not know\". The difference is load-bearing here: who-iris/AGENTS.md says the gap between the modelled nodes and the million upstream files IS THE POINT rather than a backlog, and nothing rendered that until 2026-09-22 -- the one fact the instance is built around was the one fact no reader could see. It also surfaces the gate verdicts, where `copyright` and `restrictions` are `unknown` on every held bitstream: a question nobody has answered, which a page showing only \"3 materialized\" would have read as a clearance. HTML rather than markdown because who-iris declares no `composed` directory -- its docs are MOUNTED after Jekyll, so a .md here would be copied verbatim and never rendered.",
       "coverage": {
         "visualiser": [
-          { "ref": "who-iris/docs/catalogue.html", "title": "Catalogue" }
+          {
+            "ref": "cat-harness/docs/cat-harness/catalogue/who-iris/index.html",
+            "_ref_comment": "THE CONVENTIONAL PATH, not this instance's own tree. `harnessTiles` links a declared visualiser only when its ref is under the published site directory, because the published path is then the ref with that prefix stripped -- nothing to resolve, nothing to guess. This ref was `who-iris/docs/catalogue.html` until 2026-09-22: inside who-iris's own tree, which the build MOUNTS at /docs/who-iris/, so the strip could not compute it and no tile linked the page. Built, declared, resolving and unreachable -- bean `ha78`, issue #886. The page is generated by `gen-iris-pages.ts`, which composes this same route from `subjectPage` rather than spelling it, so the generator and the discovery cannot drift apart.",
+            "title": "Catalogue"
+          }
         ],
         "docs": "who-iris/docs/index.html",
         "skill": "iris-dspace"
       },
       "path": "catalogue/",
       "dependents": "skip",
-      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today \u2014 9 referenced, 3 materialized, 0 unknown \u2014 against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
       "graphKinds": [
         "catalogue"
       ]
     },
     {
       "id": "who-iris-uploads",
+      "readOnly": false,
+      "readOnlyBasis": "NOT frozen, and the exception is worth stating. This is the ingestion DROP ZONE -- `adapters/document/paths.ts` creates it on a first ingest precisely so somebody can put something in it. The bytes it holds are materialized; the directory is a write target, and those are different questions. Declaring it read-only because its contents are materialized would freeze the one place a person is supposed to write.",
       "path": "uploads/",
       "dependents": "reproduce",
-      "description": "The incoming queue \u2014 raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF \u2014 the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
+      "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
       "graphKinds": [
         "uploads"
       ],
@@ -94,7 +112,16 @@
       "dependents": "skip",
       "graphKinds": [
         "docs"
-      ]
+      ],
+      "coverage": {
+        "visualiser": [
+          {
+            "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/who-iris-docs/index.html",
+            "title": "Docs — who-iris"
+          }
+        ]
+      },
+      "description": "The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory IS mounted verbatim at `/docs/who-iris/` as well, and the two are different things: the mount is a byte-for-byte copy of the directory, this is an index OF it. The rail links here, which is what `visualiserHref` exists to make happen."
     }
   ]
 }

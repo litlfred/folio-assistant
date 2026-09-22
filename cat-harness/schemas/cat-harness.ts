@@ -508,6 +508,18 @@ export interface ContentDirectory extends GraphNodeDirectory {
   coverage?: SubgraphCoverage;
 
   /**
+   * This directory holds MATERIALIZED content: readable, and not editable here.
+   *
+   * **Absent means NOT DECLARED, never `false`.** See the schema field for the
+   * owner's ruling, why it is declared rather than derived, and the two greys
+   * a listing must keep apart.
+   */
+  readOnly?: boolean;
+
+  /** Why — required whenever {@link readOnly} is declared, either value. See the schema field. */
+  readOnlyBasis?: string;
+
+  /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
    *
@@ -1028,6 +1040,58 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * This directory holds MATERIALIZED content: readable, and not editable here.
+   *
+   * Owner, 2026-09-21: *"if we have a materialized `<stub>/<sub-graph>`, the
+   * contents of it should be immutable … you would need to copy/materialize it
+   * to your own `folio/` in order to mess around with it."* And 2026-09-22,
+   * choosing between advising and enforcing: **enforce from the start.**
+   *
+   * ## It is DECLARED, and `check:read-only-graphs` checks it against the bytes
+   *
+   * The owner chose declare-plus-gate over deriving it from the content. The
+   * declaration is what a listing reads — cheaply, without scanning a corpus —
+   * and the gate is what stops it drifting from the nodes, which is the failure
+   * this repository keeps paying for: a declaration nothing checks reads as
+   * coverage while the content says otherwise.
+   *
+   * ## Absent is not `false`
+   *
+   * It is **not declared**, and the gate reports the two apart. A directory
+   * whose nodes are materialized and which says nothing has not asserted that
+   * it is writable; it has failed to answer. Rendering that as `false` would
+   * be the third-state collapse this schema spends most of its length
+   * preventing — and it is the same distinction `dependents` is required for,
+   * arrived at the same way.
+   *
+   * ## What a listing does with it — the two greys
+   *
+   * A graph with no viewer and a graph that is read-only both render inert, and
+   * they are different facts. The first has nothing to open. The second opens
+   * fine and refuses an edit, and it is the one that offers the copy-out.
+   * Collapsing them tells a reader "there is nothing here" about content that
+   * is present, complete and deliberately frozen.
+   */
+  readOnly: z.boolean().optional(),
+  /**
+   * WHY, and required whenever `readOnly` is declared — either value.
+   *
+   * Same discipline as {@link GateSchema}'s `basis`: *"we checked and it is
+   * fine"* and *"nobody looked"* must not share a spelling. Here the second
+   * value is the one that needs it most, and the corpus proved it within
+   * minutes of the gate existing.
+   *
+   * `who-iris/uploads/` is the ingestion DROP ZONE — `adapters/document/paths.ts`
+   * creates it on a first ingest precisely so somebody can write there — and it
+   * holds a materialized node. So it is declared writable OVER materialized
+   * content, which is exactly the shape of the finding the gate raises, and is
+   * correct. The bytes are materialized; the directory is a write target; those
+   * are different questions. Without a stated basis that case is
+   * indistinguishable from a directory whose declaration is simply wrong, and
+   * the gate would have to either fail on it or stop checking the class.
+   */
+  readOnlyBasis: z.string().min(1).optional(),
   /**
    * This directory is what answers at the instance's own route, `/<instance>/`.
    *
@@ -4307,4 +4371,18 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
 //
 // `@ts-expect-error` is not needed and no binding is taken: the import is for
 // its side effect, which is also why it must not be elided.
+//
+// WHAT THIS ONE IMPORT REPLACED, kept here because it was the evidence and
+// this is now its only home. Before the trigger moved here, every module that
+// resolved a declared directory had to carry its own copy. Measured
+// 2026-09-20 across the 20 modules that do: **10 of them threw** `unknown
+// graph kind "folio"` on a valid declaration — including `narratives.ts` and
+// the `translation` MCP tool — **while every gate and all 3298 tests
+// passed.** Nothing covered the path. That is the #464 class, and the reason
+// the fix had to be a precondition of loading a reader rather than a rule
+// each caller remembers.
+//
+// The 74 redundant copies were removed by bean `z9ax` once this made them
+// no-ops. Two were NOT removed and are the mechanism rather than instances of
+// the problem: this import, and `schemas/test-preload.ts`.
 import "./folio-graph-kind.js";

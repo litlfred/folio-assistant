@@ -278,10 +278,19 @@ function resolveSpecifier(spec: PartitionSpec, fromFile: string, ref: string): s
  * **What this does NOT license.** A library reaching across a layer is still a
  * violation and still fails — which is the half that was actually load-bearing,
  * because a library's edge is inherited by every module that imports it, and
- * `repo-root.ts` alone has 92 importers. `check:composition-roots` is the
- * other half: it refuses a command that READS a declaration without carrying
- * the registration, so removing those library imports cannot reintroduce the
- * `unknown graph kind "folio"` class (#464) by forgetting one.
+ * `repo-root.ts` alone has 92 importers.
+ *
+ * **The other half was named and never built.** This paragraph said
+ * `check:composition-roots` *"refuses a command that READS a declaration
+ * without carrying the registration"*, and seven source files repeated it.
+ * There is no such script: `bun run check:composition-roots` exits "Script
+ * not found". So the guarantee that a library could safely omit the
+ * registration rested on a gate nobody wrote, and nothing failed to say so.
+ *
+ * It is MOOT rather than fixed (bean `z9ax`). #840 put the registration
+ * trigger at the foot of `cat-harness.ts`, and a reader lives in that module,
+ * so loading it is a precondition of calling one — there is no longer a
+ * command that can forget it, and the 74 redundant copies were removed.
  */
 export function isCompositionRoot(src: string): boolean {
   return /^#!/.test(src) || /\bimport\.meta\.main\b/.test(src);

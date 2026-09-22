@@ -572,6 +572,22 @@ to spend the words: **do not start the topic.**
 
 ## More
 
+- **Not sure where a thing goes? There is a router now** —
+  [`where-does-this-go`](cat-harness/skills/folio-core/where-does-this-go.md).
+  This repository answers "where does this file?" nine separate times, each
+  well and each in its own skill, and until 2026-09-22 nothing said WHICH
+  question you were asking. The router answers none of them: every row is a
+  discriminating question and a pointer, because a router that summarised
+  nine answers would be nine summaries free to drift from nine skills. It is
+  for the moment you notice yourself about to guess, not for every turn. Its
+  companion is
+  [`surprise-to-corpus`](cat-harness/skills/folio-core/surprise-to-corpus.md)
+  — notice what was logically unexpected, filter it by whether the next agent
+  in that process would hit it too, and then **prompt**: the agent never
+  writes corpus guidance unasked, which is
+  `deletion-requires-confirmation` pointed the other way. Bean `f258`, and
+  the owner's question about which methodologies to draw on is recorded there
+  **unanswered** rather than quietly decided.
 - **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*
   must have read to follow a block. Agent/human maintained, authored content;
   **not** the formal dependency graph, which is machine-derived from `lean.ref`.

@@ -74,12 +74,6 @@ import { findContentRepoRoot } from "./repo-root";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories, and the instance
-// DECLARES a folio graph — without this the read throws `unknown graph kind
-// "folio"` on a perfectly valid declaration (issue #464).
-import "../../schemas/folio-graph-kind.js";
 
 interface StructureSection {
   id: string;

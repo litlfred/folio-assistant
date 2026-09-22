@@ -24,10 +24,6 @@
  * Prints the stub and nothing else, so `STUB=$(bun run …)` captures it cleanly.
  */
 import { artefactStub, readDeclaration } from "../schemas/cat-harness.js";
-// REQUIRED: `folio` is registered by core on import, and this instance declares
-// a folio graph. Without it `readDeclaration` throws on a valid declaration —
-// which is exactly how the three inline evals this file replaces failed.
-import "../schemas/folio-graph-kind.js";
 
 const root = process.argv[2] ?? "./cat-harness";
 const decl = readDeclaration(root);

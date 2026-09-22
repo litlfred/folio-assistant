@@ -127,13 +127,20 @@ export const VoiceRuleSourceSchema = z
      * voice that is a house standard rather than a reading of an outside
      * document.
      *
-     * The `milnor` voice is the case, and pretending otherwise would have been
-     * the more damaging option: its eight hallmarks are named after Milnor's
-     * exposition but were not extracted from his writing, and giving it a
-     * `libraryId` for a document nobody ingested is exactly the false provenance
-     * this schema exists to prevent. A house standard citing the file that
-     * states it is honest; a house standard citing a PDF that is not in
-     * `library/` is not.
+     * A house standard citing the file that states it is honest; a house
+     * standard citing a PDF that is not in `library/` is not — giving a rule a
+     * `libraryId` for a document nobody ingested is exactly the false
+     * provenance this schema exists to prevent.
+     *
+     * **`milnor` was this field's worked example and is no longer one.** Its
+     * hallmarks were named after Milnor's exposition without being extracted
+     * from his writing, so `kgRef` was the honest citation at the time. The
+     * paper was then ingested and each hallmark traced to a page — the last on
+     * 2026-09-21, bean `w0hi` — so all twelve rules now carry a `libraryId`.
+     * The voice keeps `provenance: "house"` regardless, because the citations
+     * are evidence FOR this project's standard rather than its source; see
+     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `kgRef` case,
+     * citing `skills/folio-core/technical-documentation.md`.
      */
     kgRef: z.string().min(1).optional(),
     /**
@@ -222,21 +229,130 @@ export type VoiceRef = z.infer<typeof VoiceRefSchema>;
  * - `assertion` — a publisher describing its own product or house style. True
  *   by declaration, revisable without notice, and in one case in this
  *   repository describing a product that no longer exists.
- * - `evidence` — a measurement somebody else can repeat. An arXiv paper
- *   reporting what 138,000 SKILL.md files actually contain is a different kind
- *   of claim from a vendor page saying what they should contain.
- * - `house` — a standard this project set for itself, citing the node that
- *   states it rather than an ingested document. The `milnor` voice is the
- *   case.
+ * - `evidence` — the voice's rules are CITED. Each one names the document and
+ *   the place in it that the rule was read from, and carries the passage
+ *   verbatim, so a reader can go and check. Owner, 2026-09-21: *"start
+ *   formalizeing evidence. already a process…. citation is evidence"* — which
+ *   is why this is not the narrower "a measurement somebody else can repeat"
+ *   it said until then. A measurement is one kind of citable source and not
+ *   the only one: a judgement about exposition, read off a named page of a
+ *   named paper, is evidence in exactly the sense that matters here — somebody
+ *   else can open the page. The apparatus already exists and is REQUIRED by
+ *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `kgRef`,
+ *   plus the quote. Formalising `evidence` means naming that apparatus as what
+ *   the value MEANS, not building a second one.
+ * - `house` — a standard THIS PROJECT set for itself. The `milnor` voice is
+ *   the case, and it keeps the value although all twelve of its rules cite an
+ *   ingested paper, because the citations are evidence FOR the standard rather
+ *   than its source: Milnor did not write a style guide, and the decision to
+ *   adopt his exposition as this project's is ours. Owner, 2026-09-21, asked
+ *   whether `milnor` should be reclassified: *"c) keep, but is a QA flag"*.
+ *
+ * ## The value is a property of the VOICE, not of its rules
+ *
+ * Asked on 2026-09-21 whether `provenance` should move onto the rule — a
+ * corpus sweep had found `milnor` declaring `house` with 12/12 rules citing an
+ * ingested document, and `technical-writer` declaring `assertion` with 3/9
+ * citing a node in this project — the owner refused it, and the reason is the
+ * part worth keeping:
+ *
+ * > voices may be comprised of many composite voices w/ unclear attribution.
+ * > attrinution by rule makes no sense in a collaborative/synethsizing process.
+ *
+ * A voice is a SYNTHESIS. Its rules are read, merged, narrowed and re-derived
+ * from several sources by several hands, and the attribution of any one rule
+ * to any one of them is frequently not recoverable — so a per-rule field would
+ * be precise about something nobody can actually determine, which is worse
+ * than a coarse field that is honest. `overrides` already carries composition;
+ * this carries the character of the result.
+ *
+ * **The divergence is therefore a QA FLAG, never a schema error.** A voice
+ * whose declared value sits oddly against its rules' citations is a question
+ * for a person, and {@link VOICE_PROVENANCE_FLAGS} is where that is computed.
+ * Refusing such a voice at parse time would encode the per-rule model the
+ * owner just refused, one level down.
  *
  * REQUIRED, with no default. A rule read from a vendor page is a CONVENTION
- * and a rule read from a measurement is a FINDING; treating the first as the
+ * and a cited rule is one a reader can go and check; treating the first as the
  * second is how "best practice" acquires the authority of a result. Nothing in
  * the rule text distinguishes them, and a default would pick one silently for
  * every voice somebody forgets to classify.
  */
 export const VOICE_PROVENANCE = ["assertion", "evidence", "house"] as const;
 export type VoiceProvenance = (typeof VOICE_PROVENANCE)[number];
+
+/**
+ * Where a voice's DECLARED provenance sits oddly against what its rules cite.
+ *
+ * Owner, 2026-09-21, on `milnor` declaring `house` while all twelve of its
+ * rules cite an ingested paper: *"c) keep, but is a QA flag"*.
+ *
+ * **A flag is a question for a person, never a defect and never a gate.** That
+ * is forced by the same ruling that produced it: a voice is a synthesis of
+ * composite voices *"w/ unclear attribution"*, so a mixed citation pattern is
+ * the NORMAL case and refusing it would encode per-rule attribution one level
+ * down from where the owner refused it. Nothing here exits non-zero; the
+ * voices viewer renders the flags and a person decides.
+ *
+ * ## What can actually diverge
+ *
+ * {@link VoiceRuleSourceSchema} already refuses a rule that cites nothing, so
+ * "declared `evidence`, cites nothing" is unfireable and is deliberately NOT a
+ * flag — a check that cannot fire is indistinguishable from one that always
+ * passes, and this repository has paid for that confusion often enough to stop
+ * writing them. What remains is the axis the refinement leaves open: whether a
+ * rule cites an OUTSIDE document or a node of this project's own graph.
+ *
+ * | declared | cites this project's own nodes | flag |
+ * |---|---|---|
+ * | `assertion` | any | **yes** — a publisher describing its own house style does not cite ours |
+ * | `evidence` | any | **yes** — a node we wrote is not a source a reader checks us against |
+ * | `house` | none | **no**, by the ruling above — the citations are evidence FOR the standard |
+ *
+ * Measured over the five voices this repository ships, 2026-09-21: **one
+ * fires.** `technical-writer` declares `assertion` with 3 of 9 rules citing
+ * `skills/folio-core/technical-documentation.md`; `milnor` does not fire, by
+ * the ruling; the three WHO voices cite only ingested documents. A flag on
+ * `technical-writer` is the right outcome rather than a false positive — it is
+ * a genuinely mixed voice, and asking whether that makes it `house` is a
+ * question only a person can answer.
+ */
+export interface VoiceProvenanceFlag {
+  code: "declared-outside-cites-inside";
+  /** Rule ids that cite a node of this instance's own graph. */
+  ruleIds: string[];
+  detail: string;
+}
+
+/**
+ * The flags for one voice. Empty is the common and correct case.
+ *
+ * Takes the pieces rather than a parsed voice so a caller holding a raw record
+ * — the viewer's projection does — need not round-trip it through Zod first.
+ */
+export function voiceProvenanceFlags(
+  provenance: string,
+  rules: readonly { id: string; source?: { kgRef?: string } }[],
+): VoiceProvenanceFlag[] {
+  if (provenance === "house") return [];
+  const inside = rules.filter((r) => r.source?.kgRef !== undefined).map((r) => r.id);
+  if (inside.length === 0) return [];
+  return [
+    {
+      code: "declared-outside-cites-inside",
+      ruleIds: inside,
+      detail:
+        // Plain text, no markup: the detail is read by a console reporter AND
+        // escaped into HTML by the voices viewer, so a backtick here renders as
+        // a literal backtick on the page.
+        `declares "${provenance}" — a voice read from outside this project — while ` +
+        `${inside.length} of ${rules.length} rule(s) cite a node of this project's own ` +
+        "graph. That part of it is a house standard. A voice may legitimately be a " +
+        "synthesis of both; this asks whether the declared value still describes the " +
+        "result, and only a person can answer it",
+    },
+  ];
+}
 
 /**
  * When a voice is IN FORCE — the process axis.
@@ -406,6 +522,11 @@ export const VoiceProfileSchema = z.object({
    * ONE parent, not a list. A voice with two parents has no defined answer
    * when they disagree, and the whole point of an override is that there is
    * one thing being overridden.
+   *
+   * **Where such a voice LIVES** is the reserved {@link VOICE_VENDORS_DIR}
+   * sub-sub-graph, on the owner's ruling of 2026-09-22. This field stays the
+   * contract either way: the directory is where a person looks, and nothing
+   * infers the relation from a path.
    */
   extends: VoiceRefSchema.optional(),
   /**
@@ -492,9 +613,34 @@ function voicesFallbackDir(instanceRoot: string): string {
 }
 
 /**
+ * The reserved sub-sub-graph holding VENDOR OVERRIDES of a base voice.
+ *
+ * Owner, 2026-09-22: *"vendor overides go in sub-sub-grahiphs like
+ * voice/vendors or voices-vendors"*.
+ *
+ * Of the two spellings offered, the NESTED one is the shape this declaration
+ * model already has. `voices-vendors/` would need a SECOND declared graph for
+ * one concept, and a declaration inside a declaration is the defect #263's own
+ * comment names — so the vendors live inside the `voices` graph as a
+ * subdirectory, one declaration, and every consumer that already asks for
+ * `voices` gets them with no change.
+ *
+ * **The directory is where a person looks; the FILE is still the contract.** A
+ * vendor voice declares what it overrides through its own {@link
+ * VoiceProfileSchema} `extends` field — the field is `extends`, not
+ * `overrides`, and writing the latter is how this comment was wrong for one
+ * draft — exactly as one sitting flat would, so nothing downstream infers a
+ * relation from a path. That is this repository's standing rule — extension and
+ * location are coincidences, a declaration inside the file is the contract —
+ * and it is why this name is a convention for humans rather than a second
+ * source of truth.
+ */
+export const VOICE_VENDORS_DIR = "vendors";
+
+/**
  * Every voice file under one voices directory, whichever layout it uses.
  *
- * TWO shapes are read, because the migration is a fact about a corpus rather
+ * THREE shapes are read, because the migration is a fact about a corpus rather
  * than an instant:
  *
  *  - `skills/voices/<id>/voice.json` — a voice SKILL, rules beside the
@@ -502,17 +648,37 @@ function voicesFallbackDir(instanceRoot: string): string {
  *  - `skills/voices/<id>.json` — a bare profile, the shape before the move,
  *    still valid and still loaded so a downstream folio is not broken by an
  *    upgrade it did not ask for.
+ *  - `skills/voices/vendors/<id>/voice.json` (and `<id>.json`) — a vendor
+ *    override, in the reserved {@link VOICE_VENDORS_DIR} sub-sub-graph.
  *
- * Read both, prefer neither — they cannot collide, because a directory and a
- * file cannot share a name. The same read-both/write-new asymmetry `qa-paths.ts`
- * argues for, one graph over.
+ * Read all three, prefer none — the first two cannot collide, because a
+ * directory and a file cannot share a name, and the third is one reserved name
+ * deeper. The same read-both/write-new asymmetry `qa-paths.ts` argues for, one
+ * graph over.
+ *
+ * **Descending is not cosmetic, and the cost of not descending was measured
+ * before it was paid.** This scanned ONE level and treated a directory as a
+ * voice only where it held a `voice.json`. `vendors/` holds none — its children
+ * do — so on the owner's layout every vendor override would have been skipped
+ * in silence, and `loadVoices` would have reported a clean read over real
+ * content. That is `dh4f` exactly: a consumer scans nothing and calls it a
+ * clean run. Found by reading this function when the layout was chosen, not
+ * after shipping into it.
  */
 function voiceFilesIn(dir: string): { id: string; path: string }[] {
   const out: { id: string; path: string }[] = [];
   for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     if (e.isDirectory()) {
       const inner = join(dir, e.name, "voice.json");
-      if (existsSync(inner)) out.push({ id: e.name, path: inner });
+      if (existsSync(inner)) {
+        out.push({ id: e.name, path: inner });
+      } else if (e.name === VOICE_VENDORS_DIR) {
+        // ONE level, not arbitrary recursion. A reserved name is a convention
+        // a reader can state; "any directory, any depth" is a rule nobody can
+        // check, and it would make an unrelated nested directory into a silent
+        // part of the graph.
+        out.push(...voiceFilesIn(join(dir, e.name)));
+      }
     } else if (e.isFile() && e.name.endsWith(".json")) {
       out.push({ id: e.name.replace(/\.json$/, ""), path: join(dir, e.name) });
     }

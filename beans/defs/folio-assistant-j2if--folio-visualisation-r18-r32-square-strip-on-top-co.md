@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j2if
-title: "FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset's THREE states"
+title: 'FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset''s THREE states'
 status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-21T21:40:00Z
-updated_at: 2026-09-21T21:40:00Z
+updated_at: 2026-09-22T08:55:33Z
 parent: folio-assistant-6lb8
 ---
 
@@ -79,6 +79,8 @@ requirement is worse than no spec.
 - [x] R18-R32 recorded in the design record with provenance kept
 - [x] `board-windows` carries the three-state rule and the folio-belongs-to-
       the-harness rule; `harness-tiles` carries the strip and square rules
+- [x] **R30's three states are BUILT** — the glass's half and the
+      library's half; see "Stage 2" below
 - [ ] **R24-R29 are RECORDED, NOT BUILT** — see below
 
 ## Not done, and why
@@ -102,3 +104,61 @@ rule exists to forbid.
 when is a thing a tile and when is it an avatar? Nothing states how to choose,
 and a rule invented to close the gap would read like one that was agreed.
 Open on #796.
+
+## Stage 2 (R30): the three states, built
+
+The glass from `funp` held only what a page floated into it. This is the half
+that makes it the reader's folio.
+
+| state | representation | reached by |
+|---|---|---|
+| in the library | **no entry at all** | the default |
+| in the folio, not displayed | entry with `shown: false` | the reader closed it on the glass |
+| on the glass | entry with `shown: true` | the reader pulled it out FROM A LIBRARY ROW |
+
+**The rule is structural rather than remembered.** The store is an object
+keyed by `<instance>/<id>`, not an array of ids like `fa:todos-discarded`.
+With an array, *"closed"* and *"never pulled out"* are the same absence and
+the middle state cannot be represented at all — so the data shape enforces
+`board-windows`'s rule instead of the call sites honouring it.
+`shelveFromGlass` sets a flag and never deletes; there is deliberately no
+`forget` function beside it, because a function with that name next to that
+one gets called by mistake.
+
+**The asymmetry is the feature.** `displayInFolio` is called only by a
+library row; `shelveFromGlass` only by the glass. *"Putting it back on the
+glass is a separate act performed from the library — not from the glass it
+just left."* The row offers no close while an asset is on the glass, so
+"where does this go" is answered once.
+
+Per-viewer `localStorage`, and **the UI says so in words** — the
+discarded-todos rule unchanged, for its stated reason.
+
+## Falsified
+
+**Five specs exist to fail a two-state build**, which would pass every
+happy-path test in the file: closing leaves it the reader's; the way back is
+on the library and NOT on the glass; the glass says where the way back is; a
+shelved asset survives a reload AS SHELVED rather than as forgotten; putting
+it back returns it.
+
+**And one spec failed, for a real reason.** With the glass open the sheet
+covers the library row — Playwright named it as intercepting the pointer. The
+shelved-note had said *"open its library view to put it back"*, sending the
+reader to a control its own surface was covering. That is `pb04`: the
+affordance exists, it is reachable, and not from where the reader is
+standing. The note now says **"Put your folio away, then open the library
+view"**, and a spec pins that the glass really does intercept — otherwise the
+note would be telling readers to do a needless step with nothing saying so.
+
+14 of 14 specs in `test/folio-three-states.e2e.ts`.
+
+## Still not built
+
+The library GENERATORS do not yet emit `data-fa-library-item` rows, and
+`cat-harness` has not opted its library view into `folioMount`. So the
+mechanism is complete and reaches a real page only through a fixture. That is
+the next increment and it is deliberately separate: wiring a generator is a
+different change from establishing the state model, and shipping them
+together would have made the three-state specs hostage to a generator's
+markup.

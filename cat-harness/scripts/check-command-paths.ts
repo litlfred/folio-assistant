@@ -55,9 +55,6 @@ import { join, resolve } from "node:path";
 
 import { findDeclarationFile, directoriesForGraph, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../schemas/cat-harness.js";
 
-// `folio` registers on import, and reading the whole declaration refuses an
-// unregistered kind. Same import, same reason, as `agent-memory.ts`.
-import "../schemas/folio-graph-kind.js";
 import { findEntryFiles } from "./check-agent-entry-links.ts";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */

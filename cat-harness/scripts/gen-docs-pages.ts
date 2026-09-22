@@ -65,6 +65,7 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.ts";
 import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -1241,7 +1242,18 @@ function processHierarchy(): Record<string, string[]> {
   emit(
     TODO_ASSET,
     JSON.stringify(
-      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes, themeArt },
+      {
+        $schema: "folio-todo-index/v1",
+        // The tile's headline number, declared here because only this
+        // generator knows WHICH of the projection's arrays is the one — see
+        // `schemas/tile-count.ts`. `items`, not `processes`: a process is a
+        // lane the board draws, not a todo somebody owes.
+        ...tileCounts({ todos: [items.length, "todos"] }),
+        repoWeb: REPO_WEB,
+        items,
+        processes,
+        themeArt,
+      },
       null,
       2,
     ) + "\n",
@@ -1341,6 +1353,11 @@ function processHierarchy(): Record<string, string[]> {
       JSON.stringify(
         {
         $schema: "folio-bean-index/v1",
+        // `items`, not `items + findings`: a finding is a defect ABOUT the
+        // work plan, not an item on it, and adding them would make the tile
+        // disagree with the board it opens. See `schemas/tile-count.ts` for
+        // why the number is declared here rather than inferred by the reader.
+        ...tileCounts({ beans: [items.length, "beans"] }),
         // The forge, so `work-plan.js` composes its links from DATA rather
         // than carrying one instance's address in shared client code. Same
         // reason `editHref` is composed here, one level further on.
@@ -1415,7 +1432,12 @@ function processHierarchy(): Record<string, string[]> {
     mkdirSync(dirname(out), { recursive: true });
     emit(
       out,
-      JSON.stringify(ix, null, 2) + "\n",
+      // `ix.files`, not `ix.families.length`: a family is a schema the sweep
+      // groups by, and 7 on the tile where 636 documents were swept would be
+      // a number the reader cannot reconcile with the page it opens. The two
+      // third states this block already prints — `unclassified`, `unreadable`
+      // — stay in the console; the tile carries one number and its unit.
+      JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
       "verdict",
     );
     const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");

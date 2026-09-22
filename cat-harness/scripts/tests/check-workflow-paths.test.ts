@@ -13,10 +13,14 @@ import { describe, expect, test } from "bun:test";
 import {
   FOLIO_PATHS,
   Verdict,
+  allWorkDirs,
   cdTarget,
   cwdFlag,
   invocationsFrom,
   invokedPath,
+  workDirBaseline,
+  workDirKey,
+  workDirsFrom,
 } from "../check-workflow-paths.js";
 
 /** A workflow with one job and one step running `body`. */
@@ -436,5 +440,220 @@ describe("FOLIO_PATHS", () => {
     // thing for a test to be sensitive to.
     expect(entry?.reason).toContain("basename");
     expect(entry?.reason).toContain("retired");
+  });
+});
+
+// ── The cwd itself: `working-directory` as a SUBJECT (bean `ai9u`) ─────────
+//
+// Until these, `working-directory` was read only to compute the frame a
+// script path resolved against — trusted input, never checked. Eight
+// declarations named absent directories across four workflows while this
+// module printed `✓ every workflow script path resolves`.
+//
+// Each test below pins a DISCRIMINATION rather than the happy path, for the
+// reason the header of this file gives: the criterion's whole value is that
+// it separates the two `folio-assistant` TypeDoc steps (real, fixable) from
+// the twenty-four folio declarations around them (absent on purpose).
+
+/** A workflow with one job whose single step declares `dir` as its cwd. */
+function wfCwd(dir: string, checkout = ""): string {
+  return `
+jobs:
+  j:
+    steps:
+${checkout}      - name: s
+        working-directory: ${dir}
+        run: echo hi
+`;
+}
+
+const verdictOf = (yaml: string): Verdict | undefined =>
+  workDirsFrom("w.yml", yaml)[0]?.verdict;
+
+describe("working-directory — does the cwd exist at all", () => {
+  test("an ABSENT directory is Missing — the defect `ai9u` exists for", () => {
+    expect(verdictOf(wfCwd("folio-assistant"))).toBe(Verdict.Missing);
+  });
+
+  test("a present one resolves", () => {
+    expect(verdictOf(wfCwd("cat-harness"))).toBe(Verdict.Resolves);
+  });
+
+  test("a trailing slash and a leading ./ are the same directory", () => {
+    expect(verdictOf(wfCwd("cat-harness/"))).toBe(Verdict.Resolves);
+    expect(verdictOf(wfCwd("./cat-harness"))).toBe(Verdict.Resolves);
+  });
+
+  test("a computed value is Undetermined — NOT a pass, and not a defect", () => {
+    // `${{ matrix.lake-root }}`. Reporting it Missing would be a false
+    // positive on a workflow that is fine; reporting it Resolves would be
+    // this module's own founding error.
+    expect(verdictOf(wfCwd("${{ matrix.lake-root }}"))).toBe(Verdict.Undetermined);
+  });
+
+  test("a folio directory is exempt WITH A REASON, not silently skipped", () => {
+    const [wd] = workDirsFrom("w.yml", wfCwd("content"));
+    expect(wd?.verdict).toBe(Verdict.NeedsFolio);
+    expect(wd?.note ?? "").not.toBe("");
+  });
+
+  test("the exemption matches a subdirectory of a folio path too", () => {
+    expect(verdictOf(wfCwd("content/quantum-observable-universe/lean"))).toBe(
+      Verdict.NeedsFolio,
+    );
+  });
+});
+
+describe("working-directory — the checkout layout decides what exists", () => {
+  const co = (spec: string) => `      - uses: actions/checkout@v4\n        with:\n${spec}`;
+
+  test("a checkout `path:` MATERIALISES the cwd, so it resolves", () => {
+    // `source/` is not in the repository and is correct anyway: the checkout
+    // creates it. This is the `7iog` insight applied to the cwd.
+    expect(verdictOf(wfCwd("source", co("          path: source\n")))).toBe(Verdict.Resolves);
+  });
+
+  test("a path UNDER a checkout is measured inside that tree", () => {
+    expect(
+      verdictOf(wfCwd("source/cat-harness", co("          path: source\n"))),
+    ).toBe(Verdict.Resolves);
+    expect(verdictOf(wfCwd("source/nope", co("          path: source\n")))).toBe(
+      Verdict.Missing,
+    );
+  });
+
+  test("a gh-pages checkout ROOT resolves — unlike the same prefix for a script path", () => {
+    // The distinction this criterion turns on. For a script path the question
+    // is what is IN that tree, which HEAD cannot answer. For a cwd the only
+    // question is whether the directory exists, and checkout makes it.
+    // Carrying the invocation rule across would have made `feature-staging`'s
+    // `pages` a permanent unknown nobody could ever retire.
+    const pages = co("          ref: gh-pages\n          path: pages\n");
+    expect(verdictOf(wfCwd("pages", pages))).toBe(Verdict.Resolves);
+  });
+
+  test("...but a path BELOW it is still Undetermined", () => {
+    const pages = co("          ref: gh-pages\n          path: pages\n");
+    expect(verdictOf(wfCwd("pages/STAGING", pages))).toBe(Verdict.Undetermined);
+  });
+
+  test("checked out elsewhere, the workspace root is EMPTY at run time", () => {
+    // `cat-harness` resolves against the repository and is still wrong: this
+    // job never materialised it. Reads as correct, which is the whole point.
+    expect(verdictOf(wfCwd("cat-harness", co("          path: source\n")))).toBe(
+      Verdict.Missing,
+    );
+  });
+});
+
+describe("working-directory — where it is DECLARED", () => {
+  test("a workflow-level default is ONE finding, not one per job", () => {
+    // `snappea_wasm.yml` sets one covering four jobs. Emitting it per job
+    // turns a single edit into four findings and makes the count read as a
+    // severity — measured: 34 declarations reported where the file has 31.
+    const yaml = `
+defaults:
+  run:
+    working-directory: folio-assistant/snappea-wasm
+jobs:
+  a:
+    steps:
+      - name: s
+        run: echo hi
+  b:
+    steps:
+      - name: s
+        run: echo hi
+  c:
+    steps:
+      - name: s
+        run: echo hi
+`;
+    const wds = workDirsFrom("w.yml", yaml);
+    expect(wds.filter((w) => w.step === "(workflow defaults)")).toHaveLength(1);
+  });
+
+  test("...but a SECOND verdict is a second finding, not a duplicate", () => {
+    // Folded only when identical. The same value can resolve in one job and
+    // not another, because each job has its own checkout layout.
+    const yaml = `
+defaults:
+  run:
+    working-directory: cat-harness
+jobs:
+  plain:
+    steps:
+      - name: s
+        run: echo hi
+  relocated:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: source
+      - name: s
+        run: echo hi
+`;
+    const wds = workDirsFrom("w.yml", yaml).filter((w) => w.step === "(workflow defaults)");
+    expect(wds).toHaveLength(2);
+    expect(new Set(wds.map((w) => w.verdict))).toEqual(
+      new Set([Verdict.Resolves, Verdict.Missing]),
+    );
+  });
+
+  test("job defaults and step-level are both read", () => {
+    const yaml = `
+jobs:
+  j:
+    defaults:
+      run:
+        working-directory: cat-harness
+    steps:
+      - name: s
+        working-directory: folio-assistant
+        run: echo hi
+`;
+    const wds = workDirsFrom("w.yml", yaml);
+    expect(wds.map((w) => w.step)).toEqual(["(job defaults)", "s"]);
+    expect(wds.map((w) => w.verdict)).toEqual([Verdict.Resolves, Verdict.Missing]);
+  });
+
+  test("a step with NO cwd contributes nothing — the default is the root", () => {
+    expect(workDirsFrom("w.yml", wf("bun run cat-harness/scripts/x.ts"))).toHaveLength(0);
+  });
+});
+
+describe("working-directory — a `cd` target is deliberately NOT checked", () => {
+  test("a directory the same block creates is not a finding", () => {
+    // GitHub evaluates `working-directory` BEFORE the script runs, so it must
+    // pre-exist. A `cd` need not — `publish.yml` does `mkdir -p appendices/`
+    // and then works in it. Folding the two together reports a correct
+    // workflow as broken, which this module's header calls worse than having
+    // no check at all.
+    const yaml = wf("mkdir -p appendices\ncd appendices\nbun run ../cat-harness/scripts/x.ts");
+    expect(workDirsFrom("w.yml", yaml)).toHaveLength(0);
+  });
+});
+
+describe("the baseline is a RATCHET", () => {
+  test("every entry carries a reason, checked on load", () => {
+    // An allowance nobody wrote a reason for is one nobody can retire.
+    expect(() => workDirBaseline()).not.toThrow();
+    expect(workDirBaseline().size).toBeGreaterThan(0);
+  });
+
+  test("it keys on workflow and value, not on a line number", () => {
+    // So a step added above does not churn the file.
+    const [wd] = workDirsFrom("publish.yml", wfCwd("folio-assistant"));
+    expect(workDirKey(wd!)).toBe("publish.yml: folio-assistant");
+  });
+
+  test("MUTATION: the live tree goes red if the baseline is emptied", () => {
+    // `t6s7` — the reconciliation that held by construction, where mutating
+    // the derivation left every test green. The criterion is only worth
+    // having if removing its allowance actually produces findings, so this
+    // asserts the finding EXISTS rather than asserting the run is clean.
+    const live = allWorkDirs().filter((w) => w.verdict === Verdict.Missing);
+    expect(live.length).toBeGreaterThan(0);
+    expect(live.every((w) => workDirBaseline().has(workDirKey(w)))).toBe(true);
   });
 });

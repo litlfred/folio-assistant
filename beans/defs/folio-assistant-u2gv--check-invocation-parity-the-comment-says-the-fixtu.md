@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u2gv
 title: 'check-invocation-parity: the comment says the fixtures keep saying cat-bootstrap, and they do not'
-status: todo
+status: completed
 type: bug
 priority: low
 created_at: 2026-09-21T21:51:02Z
-updated_at: 2026-09-21T21:51:02Z
+updated_at: 2026-09-21T23:17:21Z
 parent: folio-assistant-1xhc
 ---
 
@@ -59,3 +59,13 @@ same day.
 ## Done when
 
 - [ ] the comment and the fixtures agree
+
+## Fixed 2026-09-21 — and not by restoring the old name
+
+Restoring `cat-bootstrap` would have re-created the exact condition that lost
+it: a fixture naming a real-looking directory is a fixture a blanket rename
+will take along, and the next rename would have done it again.
+
+The fixtures now say `./no-such-instance` — a name no rename will ever match,
+which is the property the comment's argument actually wanted. The comment says
+why, so the next person to see it does not "tidy" it back.

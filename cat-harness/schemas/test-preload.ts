@@ -4,7 +4,28 @@
  * @module schemas/test-preload
  * @graphNode schema
  *
- * ## The failure this removes
+ * ## ITS ORIGINAL RATIONALE IS SUPERSEDED — measured 2026-09-22, bean `z9ax`
+ *
+ * Everything below describes the mechanism as it was before #840, and it is
+ * kept because it is the evidence, not because it is still the situation.
+ * #840 moved the registration trigger to the foot of `cat-harness.ts`, so a
+ * reader cannot be called without the kind being registered: the import-order
+ * dependency this preload exists to defeat no longer exists.
+ *
+ * CHECKED rather than assumed, the way the original bug was found — by
+ * running the five order-dependent files IN ISOLATION with this preload
+ * disabled, since a full run was green by luck the first time. All five pass:
+ * `kg-node` 14, `bootstrap-initialization-convention` 7, `qa-results` 19,
+ * `todos` 14, `topology-conflicts` 18, zero failures. The full suite with the
+ * preload off is green too.
+ *
+ * It is RETAINED anyway, and that is a judgement rather than a measurement:
+ * removing it is a separate behaviour change whose failure mode is a future
+ * test that reads a declaration through a leaf without loading a reader —
+ * exactly the latent shape that cost a round in the first place. Deleting it
+ * is offered as a decision on issue #464's descendant rather than taken here.
+ *
+ * ## The failure this removed, and the evidence for the mechanism
  *
  * `folio` is registered by CORE as a load-time side effect
  * (`folio-graph-kind.ts`: *"a layer that cannot render must not own the

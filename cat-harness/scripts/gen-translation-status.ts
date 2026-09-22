@@ -51,12 +51,6 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { join, relative, resolve } from "node:path";
 
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
-// REQUIRED, for the side effect: `folio` is registered by core on import, and
-// this instance declares a folio graph. Without it `readDeclaration` THROWS on
-// a perfectly valid declaration — the omission that broke three inline evals
-// across two workflows (issue #464). It bites any script that reads a
-// declaration, which is easy to forget when the script is not about folios.
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
