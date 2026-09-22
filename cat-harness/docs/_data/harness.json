@@ -439,12 +439,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
-          "kind": "docs"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
         },
         {
           "kind": "fhir-artifact-index",
@@ -452,7 +453,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 2 graph(s) with no published viewer — docs, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
@@ -757,7 +758,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
@@ -766,7 +767,8 @@
           "readOnly": true
         },
         {
-          "kind": "docs"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/who-iris-docs/"
         },
         {
           "kind": "library",
@@ -785,7 +787,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 3 graph(s) with no published viewer — docs, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — catalogue (who-iris/docs/catalogue.html). Built and unreachable is a different gap from unbuilt.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
