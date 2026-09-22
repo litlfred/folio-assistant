@@ -1,7 +1,19 @@
 #!/usr/bin/env bun
 /**
- * Every script path a workflow invokes must RESOLVE — from the directory the
- * step actually runs in.
+ * TWO criteria over the same parse of `.github/workflows/`:
+ *
+ * 1. **Every script path a workflow invokes must RESOLVE** — from the
+ *    directory the step actually runs in. Bean `52dz`, and the whole of the
+ *    history below.
+ * 2. **Every `working-directory` must EXIST.** Bean `ai9u`, and the section
+ *    §"The second criterion" near the end of this comment.
+ *
+ * They are one module because the second is a by-product of the first's
+ * parse — the cwd model criterion 1 needs is criterion 2's whole subject —
+ * and separating them would mean two readers of the same YAML, free to
+ * disagree about what a job's checkout layout is.
+ *
+ * ## Criterion 1 — a path that does not resolve
  *
  * Bean `folio-assistant-52dz`. The #223 split moved the platform's scripts
  * under `cat-harness/`, and the workflows that name them without that prefix
@@ -112,9 +124,39 @@
  * asserted, and an exemption cannot outlive the step it exempts (an entry
  * matching nothing is itself a failure).
  *
+ * ## The second criterion — `working-directory` must exist (bean `ai9u`)
+ *
+ * Criterion 1 reads `working-directory` to compute the frame a path resolves
+ * against. It was INPUT there, and trusted: nothing asked whether the
+ * directory was there. **Eight declarations across four workflows named
+ * absent directories while this module printed `✓ every workflow script path
+ * resolves`** — a gate that fires, passes, and is blind to the case, which is
+ * `1xhc` one level up from the gate that never fires at all.
+ *
+ * Two causes compounded. The value was never a subject; and a step running
+ * `npx typedoc` rather than a script path contributes NO invocation, so it
+ * was never examined however broken it was. A step whose `working-directory`
+ * is missing fails **every time, whatever it runs** — a stronger and cheaper
+ * property than any path resolution here, and the one not checked.
+ *
+ * Three things about it that are NOT simply criterion 1 applied to the cwd,
+ * each carrying its reason at the code: `cd` targets are excluded (GitHub
+ * evaluates `working-directory` *before* the script runs, so it must
+ * pre-exist, while a `cd` may target what the same block just created); a
+ * checkout at another `ref:` **resolves** at its root here where the same
+ * prefix is {@link Verdict.Undetermined} for a path, because the only
+ * question for a cwd is whether the directory exists and `actions/checkout`
+ * makes it; and a workflow-level default is ONE finding however many jobs
+ * inherit it, folded only when the verdict is identical.
+ *
+ * Its allowlist is {@link FOLIO_WORKDIRS} — absent on purpose, always will
+ * be. Separately, {@link workDirBaseline} is a RATCHET for the ones somebody
+ * still owes an answer for; keeping the two apart is what stops an open
+ * defect becoming accepted architecture.
+ *
  * Usage:
  *   bun run check:workflow-paths          # report and exit non-zero on a finding
- *   bun run check:workflow-paths --list   # print every invocation and its verdict
+ *   bun run check:workflow-paths --list   # print every invocation, verdict and cwd
  *
  * ## Its sibling, `scripts/tests/workflow-paths-resolve.test.ts`
  *
