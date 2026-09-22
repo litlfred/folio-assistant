@@ -582,11 +582,26 @@ function page(
    */
   side: "library" | "docs" | "harness",
 ): string {
+  /* A CRUMB WITH NO HREF IS A LABEL, never `<a href="#">`.
+   *
+   * The fallback used to be `#`, which was harmless while every non-final
+   * crumb carried an href — and stopped being harmless the moment one did
+   * not. Moving the catalogue viewer to the conventional route (bean `ha78`)
+   * dropped its "Documentation" href, because the docs index is on a mount
+   * route and no relative path reaches it from here. The crumb then rendered
+   * as `<a href="#">who-iris</a>`: focusable, styled as a link, announced as
+   * a link, and doing nothing.
+   *
+   * That is the defect the href was dropped to AVOID, reintroduced by the
+   * template one layer down. Verified by rendering the page rather than by
+   * reading the call site, which is what `gjli` is about — the generator's
+   * input looked right and its output did not.
+   */
   const crumbHtml = crumbs
     .map((c, i) =>
-      i === crumbs.length - 1
+      i === crumbs.length - 1 || c.href === undefined
         ? `<span class="here">${esc(c.label)}</span>`
-        : `<a href="${esc(c.href ?? "#")}">${esc(c.label)}</a>`,
+        : `<a href="${esc(c.href)}">${esc(c.label)}</a>`,
     )
     .join('<span class="sep">•</span>');
 
