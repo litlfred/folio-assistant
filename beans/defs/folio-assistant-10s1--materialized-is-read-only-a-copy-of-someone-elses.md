@@ -429,3 +429,67 @@ adding a diagram will otherwise rediscover it the same way:
 `check:workflow-refs` states the reason for #7 exactly: *"a diagram no reader of
 the workflow page can find"* — its own history is a page that opened "Nineteen
 BPMN 2.0 files" and listed eight.
+
+## The publication exception — a RULE, because it has no instance to be a step of
+
+The done-when said *"a NAMED step in a declared process, not a carve-out in
+prose"*. Implemented differently from how it was written, and the measurement
+is why.
+
+**Measured: no publication process in this repository writes to materialized
+content.** `kg-to-portal.bpmn`'s `S_Sign` signs a subgraph cut from the KG —
+derived content, not held upstream bytes — and nothing else comes close. So
+drawing a publication step that writes to materialized content would model
+something that does not happen, which is the `dh4f` defect: a consumer scans a
+declared-but-absent thing and reports a clean run over nothing.
+
+**And one step in the declared corpus DOES rewrite held bytes** —
+`refresh-materialized.bpmn`'s `Task_Apply`. Until 2026-09-22 it named no fixity
+write at all, so a **correct** run of that process would have failed
+`check:materialized-fixity` as a mismatch: the gate saying *"somebody edited
+held content without saying so"* about the one process whose job is to replace
+it. That is a live defect this bean's own gate created, found by asking where
+the exception actually applies rather than by assuming it applies to
+publication.
+
+So the exception is stated as a rule, which is **stronger** than a named step:
+
+> A step that rewrites a materialized artefact records the new fixity in the
+> same change.
+
+An allowlist of permitted writers goes stale the first time somebody adds a
+sixth one, and needs every writer to announce itself — passing silently for
+anyone who forgets. The rule is checkable, asks about BYTES rather than about
+who wrote them, and needs no attribution of a commit to a process step.
+`check-materialized-fixity.ts`'s own header already argued this; what was
+missing was applying it to the one step that needed it.
+
+## `todo-review` no longer starts mid-air
+
+The owner, 2026-09-21: *"this is first/early step of review process, checking
+out local copy to edit, make comments/todos/stickies, etc on it. these feed into
+the comment review pipeline."*
+
+`todo-review` triages feedback and never said how a reviewer came to have an
+editable copy to leave feedback ON. For materialized content the answer is not
+"they opened it" — browsing gives a read-only view with nothing to annotate.
+
+It now opens with the sequence and two consequences that change how an item is
+triaged:
+
+- **feedback is on the COPY**, so resolving an item edits the copy and the
+  original still hashes to its digest — if it does not, somebody annotated held
+  content in place;
+- **`provenance.local` is what keeps a resolved item traceable** to what it was
+  really about; without it a reviewer's comment loses its subject one rename
+  later.
+
+Nothing else in that skill changed. It is not a second pipeline — it is why the
+existing one has somewhere to start.
+
+## A correction to this session's own reporting
+
+I told the owner that `cat-harness/skills/` was gone in the #822 reorg. **It is
+not** — an `ls | head -20` truncated before it. Workflows did move to
+`processes/` and roles to `scenarios/roles.json`; skills did not move. Recorded
+because the claim would have sent somebody looking in the wrong place.

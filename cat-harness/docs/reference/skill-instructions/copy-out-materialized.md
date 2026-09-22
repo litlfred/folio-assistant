@@ -87,12 +87,41 @@ is `false`.
 If it were frozen too, the copy-out would achieve nothing, and the next person
 would need a copy of the copy.
 
-## The publication exception
+## The exception is "say what you did", not a list of who may skip
 
-Publication may write to materialized content — deriving a rendition, stamping
-a manifest — and that is a NAMED step in a declared process, never a carve-out
-in prose. It is not a licence to edit: what it may do is add derived artefacts
-beside the original, and the original's digest must still verify afterwards.
+The owner's exception is *"expect for publication worfklow purposes or so"*.
+Written as an allowlist it would be a list that goes stale the first time
+somebody adds a sixth writer, and it would need every writer to announce itself
+— passing silently for anyone who forgot.
+
+Written as a rule it is checkable and cannot go stale:
+
+> **A step that rewrites a materialized artefact records the new fixity in the
+> same change.**
+
+Then `check:materialized-fixity` passes and the record describes what is
+actually there. A step that rewrites without updating fixity fails, correctly,
+because it has forked upstream without saying so — which is exactly what the
+rule exists to prevent. The check asks a question about BYTES and never about
+who wrote them, so it needs no attribution of a commit to a process step.
+
+### Where this bites, measured
+
+**`refresh-materialized.bpmn`'s `Task_Apply`** — the one step in the declared
+corpus that rewrites bytes a materialization record describes. Until 2026-09-22
+it named no fixity write at all, so a **correct** run of that process would have
+failed the gate as a mismatch: *"somebody edited held content without saying
+so"*, said about the one process whose job is to replace it.
+
+### And where it does NOT bite, also measured
+
+**No publication process in this repository writes to materialized content.**
+`kg-to-portal.bpmn`'s `S_Sign` signs a subgraph cut from the KG — derived
+content, not held upstream bytes — and nothing else comes close. So the
+publication case is a rule with no instance yet, which is why it is stated here
+as a rule rather than drawn as a step in a diagram that does not do it. A
+declared-but-absent step is the `dh4f` defect: a consumer scans it and reports a
+clean run over nothing.
 
 ## What to check afterwards
 
