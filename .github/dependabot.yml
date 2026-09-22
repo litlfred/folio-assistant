@@ -1,0 +1,106 @@
+# Dependabot — the other half of `j41m`, and deliberately not the same half.
+#
+# `check:dependency-advisories` (warn-only, in code-quality-gates.yml) answers
+# "is anything we depend on known-vulnerable, TODAY, on this PR?" It reports
+# and never blocks, because a transitive advisory nobody can patch must not
+# red every PR — the suppression that follows is what rots.
+#
+# Dependabot answers the other question: "what would fixing it look like?" It
+# turns an advisory into a reviewable PR with the bump already made. One tells
+# you; the other does the work. Neither gates a merge.
+#
+# ## Every directory here was verified to carry dependencies
+#
+# Six package.json files exist in this repository. FIVE are listed below; the
+# sixth, `cat-harness/viewer`, declares none, and a manifest with no
+# dependencies is not a Dependabot target — listing it would be a consumer
+# scanning nothing and reporting a clean run over it (bean `dh4f`).
+#
+# Counted 2026-09-22, and worth keeping because it corrects a figure of mine:
+# `j41m` reports "1 of 28 direct dependencies at an exact version". 28 is the
+# ROOT manifest alone. Across all five manifests it is 40 direct dependencies
+# — root 28, mcp-server 5, block-qa-schema 4, scripts/tests 2, schemas 1. The
+# finding is unchanged; the denominator was narrower than it read.
+#
+# ## The bun.lock question, stated rather than assumed
+#
+# This repository installs with bun and commits `bun.lock`, and
+# `check:lockfile-pinning` requires `--frozen-lockfile` to hold. If Dependabot
+# updates a package.json without regenerating `bun.lock`, its own PR fails that
+# gate. Whether it regenerates a bun lockfile is a fact about Dependabot that
+# this file cannot establish — so it is NOT asserted here. The first Dependabot
+# PR settles it, and if those PRs come in red on `--frozen-lockfile`, that is
+# the answer, not a mystery: run `bun install` on the branch and push the lock.
+#
+# ## requirements-extended.txt
+#
+# `pip` at `/` covers `requirements.txt`. `requirements-extended.txt` may not be
+# matched by Dependabot's pip file discovery. Left declared once rather than
+# duplicated per filename: an entry that matches nothing is invisible, and an
+# unmatched file is better found by noticing it never gets a PR than by
+# committing a guess about the matcher.
+
+version: 2
+updates:
+  # ── npm (bun-installed) ────────────────────────────────────────────────
+  - package-ecosystem: npm
+    directories:
+      - "/"
+      - "/cat-harness/schemas"
+      - "/cat-harness/schemas/block-qa-schema"
+      - "/cat-harness/scripts/tests"
+      - "/cat-harness/adapters/mcp-server"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    # Grouped so a quiet week is one PR rather than a dozen. Security updates
+    # are NOT grouped by Dependabot — they arrive on their own, which is the
+    # behaviour we want: an advisory fix should not queue behind a chore.
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "deps"
+
+  # ── pip ────────────────────────────────────────────────────────────────
+  - package-ecosystem: pip
+    directories:
+      - "/"
+      - "/.github/scripts"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "deps"
+
+  # ── GitHub Actions ─────────────────────────────────────────────────────
+  # This one is load-bearing beyond hygiene: an action is code this repository
+  # executes with its own token on every push. `check:workflow-injection`
+  # guards what the workflows THEMSELVES do with untrusted input; nothing
+  # guards the actions they call. A stale `actions/checkout@v4` is a supply
+  # chain this repo had no eyes on at all.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns:
+          - "*"
+    labels:
+      - dependencies
+      - ci
+    commit-message:
+      prefix: "ci"
