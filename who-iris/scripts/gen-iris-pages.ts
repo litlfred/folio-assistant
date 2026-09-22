@@ -192,39 +192,88 @@ const SKILL = join(INSTANCE, "skills", "iris-dspace.md");
 const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-portal-architecture.svg");
 
 /**
- * The filenames this generator OWNS, and may therefore delete.
+ * THE ONE PLACE THAT SAYS WHAT THIS GENERATOR OWNS. Everything below derives.
  *
- * Deliberately a pattern over its own naming rather than "everything in
- * `docs/`". `deletion-requires-confirmation` is about durable artefacts an
- * agent did not create; this prunes only what this file itself emits, which is
- * the same licence `prunableStickies` operates under. A hand-authored page, an
- * asset directory or a `.nojekyll` in the same directory is untouched.
+ * Ownership is what licenses the prune sweep to DELETE, so it is deliberately
+ * a pattern over this generator's own naming rather than "everything in the
+ * directory". `deletion-requires-confirmation` is about durable artefacts an
+ * agent did not create; this reclaims only what this file itself emits, the
+ * same licence `prunableStickies` operates under. A hand-authored page, an
+ * asset directory or a `.nojekyll` beside them is untouched.
+ *
+ * ## Why one declaration, and why it is split this way
+ *
+ * There were SIX enumerations of this one fact — `DOC_PAGES` exported here
+ * with no consumer anywhere, a LOCAL `DOC_PAGES` in the test reusing the name
+ * with different membership, `OWNED`, `OWNED_LIB`, `OWNED_DOCS`, and a
+ * `wanted` set in the test. Two were already broken when this was written
+ * (bean `o6vj`, issue #895): the exported `DOC_PAGES` was dead, and `OWNED`
+ * still named `catalogue` after #888 moved that page out of who-iris.
+ *
+ * `catalogue.html` was written to `docs/` and named in NEITHER side's
+ * pattern, so the sweep could never have reclaimed it — and that sweep is not
+ * decorative: re-keying two items on 2026-09-20 left nine files where seven
+ * were wanted, two serving records the catalogue no longer described.
+ *
+ * FIXED vs FAMILIES is the load-bearing split. Deriving ownership wholesale
+ * from what is being written this run would delete the property the sweep
+ * exists for: `item-*.html` must stay prunable when the item is GONE, which
+ * is precisely when it is absent from the write set. So the families stay
+ * explicit patterns, and only the fixed names — the class `catalogue` fell
+ * through — are enumerated once here.
  */
+const PAGES = {
+  library: {
+    /** The replica: the KG rendered. */
+    fixed: ["index", "community-list"],
+    /** One page per collection and per item; prunable when the node is gone. */
+    families: ["collection-.*", "item-.*"],
+  },
+  docs: {
+    /**
+     * Prose about the work, plus an index.
+     *
+     * `index` is owned on BOTH sides deliberately: the replica needs one
+     * because it is a site, and the docs side needs one because
+     * `mount-instance-docs.ts` will not mount a directory without it. The
+     * cross-side sweep therefore subtracts what is owned HERE, or it deletes
+     * the docs index on sight.
+     */
+    fixed: ["index", "ingestion-notes", "kg-to-portal"],
+    families: [] as string[],
+  },
+} as const;
+
+/** The sides a page can be written to — the keys, never a second list. */
+export type Side = keyof typeof PAGES;
+export const SIDES = Object.keys(PAGES) as Side[];
+
+const ownedPattern = (names: readonly string[]): RegExp =>
+  new RegExp(`^(${names.join("|")})\\.html$`);
+
+/** What it owns in `library/`. */
+export const OWNED_LIB = ownedPattern([...PAGES.library.fixed, ...PAGES.library.families]);
+
+/** What it owns in `docs/`. */
+export const OWNED_DOCS = ownedPattern([...PAGES.docs.fixed, ...PAGES.docs.families]);
+
 /**
- * The documentation pages, named rather than pattern-matched.
+ * Everything this generator writes, on either side.
  *
- * Two of them, and both are prose about the work rather than a rendering of
- * the catalogue. A pattern would have to guess, and guessing which side of the
- * split a page falls on is the one thing this must not do.
+ * A union of the two above rather than a third hand-written pattern. It named
+ * `catalogue` for a day after that page left the repository, which is what a
+ * third answer to one question buys you.
  */
-export const DOC_PAGES = new Set(["index.html", "ingestion-notes.html", "kg-to-portal.html"]);
+export const OWNED = ownedPattern([
+  ...new Set(SIDES.flatMap((s) => [...PAGES[s].fixed, ...PAGES[s].families])),
+]);
 
-/** Everything this generator writes, on either side. */
-export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|catalogue|collection-.*|item-.*)\.html$/;
+/** The fixed pages of one side, as filenames. Used by the guard and the tests. */
+export const fixedPagesOf = (side: Side): string[] =>
+  PAGES[side].fixed.map((n) => `${n}.html`);
 
-/** What it owns in `library/` — the replica, which is the KG rendered. */
-export const OWNED_LIB = /^(index|community-list|collection-.*|item-.*)\.html$/;
-
-/**
- * What it owns in `docs/` — the documentation, and its own index.
- *
- * `index.html` is owned on BOTH sides, deliberately: the replica needs one
- * because it is a site, and the docs side needs one because
- * `mount-instance-docs.ts` will not mount a directory without it. The
- * cross-side sweep below therefore has to exclude a name owned here as well,
- * or it deletes the docs index on sight.
- */
-export const OWNED_DOCS = /^(index|ingestion-notes|kg-to-portal)\.html$/;
+/** The pattern that governs one side. */
+export const ownedOn = (side: Side): RegExp => (side === "library" ? OWNED_LIB : OWNED_DOCS);
 
 /**
  * Where a committed file is actually served from.
@@ -2134,6 +2183,40 @@ function main(): number {
    * repository spent 2026-09-22 on: a committed generated artefact nobody
    * re-derived, asserting a number no generator would emit.
    */
+  /* THE GUARD THAT A LIST CANNOT BE: every page is owned by ITS OWN SIDE.
+   *
+   * `catalogue.html` was written to `docs/` while `OWNED_DOCS` did not name
+   * it, so the orphan sweep could never reclaim it (bean `o6vj`, issue #895).
+   * The existing test did not catch this because it asked the UNION — and
+   * `OWNED` did contain `catalogue`, so it passed. The per-side property is
+   * the one that was missing.
+   *
+   * Asserted at WRITE TIME rather than in a test, and that is the point: a
+   * list of expected pages goes stale silently and is edited by whoever
+   * remembers, which is how six enumerations of this one fact accumulated.
+   * A check that runs on every invocation — including `--check` in CI —
+   * cannot. Adding a page to a side its pattern does not own now fails
+   * immediately, naming the page and the side.
+   */
+  for (const key of files.keys()) {
+    const slash = key.indexOf("/");
+    const side = key.slice(0, slash) as Side;
+    const name = key.slice(slash + 1);
+    if (!SIDES.includes(side)) {
+      throw new Error(
+        `gen-iris-pages: "${key}" names side "${side}", which is not one of ` +
+          `${SIDES.join(", ")}. The map key carries the side; it cannot be invented.`,
+      );
+    }
+    if (!ownedOn(side).test(name)) {
+      throw new Error(
+        `gen-iris-pages: writing "${key}", but the ${side} side does not OWN "${name}" ` +
+          `(${ownedOn(side).source}). An unowned page is one the orphan sweep can never ` +
+          `reclaim — exactly the \`catalogue.html\` defect (issue #895). Add it to ` +
+          `PAGES.${side}.fixed, or write it to the side that owns it.`,
+      );
+    }
+  }
   const targets: { abs: string; rel: string; html: string }[] = [
     ...[...files].map(([key, html]) => ({
       abs: join(INSTANCE, key),
