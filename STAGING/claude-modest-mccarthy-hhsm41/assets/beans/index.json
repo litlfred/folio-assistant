@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 512,
+      "count": 514,
       "unit": "beans"
     }
   },
@@ -25,14 +25,14 @@
     {
       "id": "folio-assistant-03t9",
       "title": "PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:34:13Z",
-      "updatedAt": "2026-09-22T08:55:04Z",
+      "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "Issue #853 requirement 3, and the `a58y` shape in the component that requirement\nwould otherwise have been built on.\n\n## Measured before anything was written\n\n`<folio:precondition>` (bean `lv3j`) has been parsed, three-valued and tested\nsince it landed. Measured 2026-09-22:\n\n| | |\n|---|---|\n| processes declaring a precondition | 1 (`bootstrap/processes/initialize-harness.bpmn`) |\n| preconditions d",
       "file": "beans/defs/folio-assistant-03t9--precondition-gate-had-no-consumer-evaluateprecondi.md"
     },
@@ -655,6 +655,20 @@
       "updatedAt": "2026-09-20T16:13:11Z",
       "preview": "Found while resolving `hfkl`'s recorded contradiction about where bootstrap's\ngraph artefact lives. That contradiction turned out to be one stale comment\n(fixed); **this is the real defect underneath it.**\n\n## A staging preview cannot serve the documents its own graph points at\n\nMeasured 2026-09-20 by diffing every `./_site/...` path the two workflows\nwrite. `docs-site.yml` publishes all of these;",
       "file": "beans/defs/folio-assistant-35kc--staging-parity-a-preview-serves-none-of-the-namesp.md"
+    },
+    {
+      "id": "folio-assistant-3d78",
+      "title": "ingest:ig:check exited 2 on every run — three guards missed it, each differently",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:10:53Z",
+      "updatedAt": "2026-09-22T10:10:53Z",
+      "preview": "A registered script nobody ran, which would have failed if anybody had. Found 2026-09-22 while working 10s1 and recorded then; fixed now.\n\n## The defect\n\n`ingest:ig:check` was registered as:\n\n    bun run …/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --check --source\n\n`--source` takes a value and had none, so **every run** took the\nmissing-argument branch, printed a usage string and ",
+      "file": "beans/defs/folio-assistant-3d78--ingestigcheck-exited-2-on-every-run-three-guards-m.md"
     },
     {
       "id": "folio-assistant-3g13",
@@ -2572,7 +2586,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:48:55Z",
-      "updatedAt": "2026-09-22T10:08:47Z",
+      "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "The owner, 2026-09-21: *\"give structed Q&A w/ context. update skills in fedback\nlike this.\"*\n\nThe second clause is a rule and had no home. `symbiotic-interaction` §1 already\nsaid a steer means *\"do not require the author to repeat the correction\"*, but\napplied to the artefact alone that clause only holds inside one session: the\nproposal is fixed, the rule that produced it is not, and a fresh conte",
       "file": "beans/defs/folio-assistant-bx6q--a-steer-that-corrects-a-rule-must-land-in-the-skil.md"
     },
@@ -3147,14 +3161,14 @@
     {
       "id": "folio-assistant-fkjo",
       "title": "A bean can declare itself finished and stay claimed: 6 in-progress beans with every Done-when box ticked",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:16:09Z",
-      "updatedAt": "2026-09-21T22:16:40Z",
+      "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "Found 2026-09-21 while picking up `tyyc`, which was `in-progress` with all\nfive Done-when boxes ticked and its work fully landed on `main` — gate\nregistered, passing, third states intact. Re-deriving it from a clean\ncheckout cost a session's opening; the claim it carried is what a sibling\nwould have honoured.\n\n## Measured 2026-09-21 on `645dd7dd91`\n\nSix `in-progress` beans have **every** checkbox ",
       "file": "beans/defs/folio-assistant-fkjo--a-bean-can-declare-itself-finished-and-stay-claime.md"
     },
@@ -3784,7 +3798,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-22T10:01:35Z",
+      "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "## Measured 2026-09-21\n\n**11 of 18 install steps defeat their own pin.**\n\n    bun install --frozen-lockfile || bun install\n    bun install --frozen-lockfile 2>/dev/null || bun install\n\nin `lean_ci`, `docs-site`, `publish`, `qa-sweep`, `feature-staging` (×3),\n`blueprint`, `lean-build`, `qa-sweep-nightly`, `section-title-audit`.\n\n`--frozen-lockfile` exists to fail when the lockfile does not satisfy ",
       "file": "beans/defs/folio-assistant-j41m--supply-chain-11-of-18-install-steps-fall-back-from.md"
     },
@@ -4587,7 +4601,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
       "updatedAt": "2026-09-18T15:00:27Z",
-      "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**Blocked on bean `fsch`** — without a folio holding 0..n content instances\nthere is only ever one node to render.\n\nGate: a two-instance folio shows two sections; a zero-instance folio renders\nwithout error.\n\n---\n\n## ",
+      "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**A block was recorded here against bean `fsch`** — without a folio holding\n0..n content instances there is only ever one node to render. **NOT blocked\non `fsch`:**\nit was scrapped 2026-09-20 and the block is void — s",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
     },
     {
@@ -4675,6 +4689,20 @@
       "file": "beans/defs/folio-assistant-oait--tool-613-task-validate-content-graph-dependency-an.md"
     },
     {
+      "id": "folio-assistant-oe98",
+      "title": "480 dead links: 240 of 244 generated skill pages point 'Edit this page's source' at a path that does not exist",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T12:09:09Z",
+      "updatedAt": "2026-09-22T12:09:09Z",
+      "preview": "Found 2026-09-22 while checking that a NEW skill page rendered. The new page was fine; it had simply joined 239 others carrying the same defect.\n\n## Measured\n\n```\ngenerated skill pages with a source link : 244\n  ... whose path does NOT resolve        : 240  (98%)\n  ... dead links (2 per page)            : 480\n```\n\nTwo links per page — *\"Generated from [`…`]\"* and *\"✎ Edit this page's source\"* — bo",
+      "file": "beans/defs/folio-assistant-oe98--480-dead-links-240-of-244-generated-skill-pages-po.md"
+    },
+    {
       "id": "folio-assistant-oh78",
       "title": "ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link",
       "status": "in-progress",
@@ -4733,14 +4761,14 @@
     {
       "id": "folio-assistant-osyc",
       "title": "ROAST: adversarial pass over this session's navbar work, the skill-reachability bean, and the claims made to the owner",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:43:53Z",
-      "updatedAt": "2026-09-21T21:43:53Z",
+      "updatedAt": "2026-09-22T11:04:11Z",
       "preview": "## What\n\nOwner, 2026-09-21: *\"queue roast\"* — queued, not started, per the standing\ninstruction to queue a new task rather than pivot.\n\nAn adversarial pass over what this session produced and, more usefully, over\nwhat it CLAIMED. Scope is deliberately the session rather than a file, because\nthe failures worth finding here were failures of verification and of reading,\nnot of code.\n\n## Where to aim ",
       "file": "beans/defs/folio-assistant-osyc--roast-adversarial-pass-over-this-sessions-navbar-w.md"
     },
@@ -5029,14 +5057,14 @@
     {
       "id": "folio-assistant-q2wn",
       "title": "check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:20:00Z",
-      "updatedAt": "2026-09-21T23:05:00Z",
+      "updatedAt": "2026-09-22T10:28:50Z",
       "preview": "Found 2026-09-21 while measuring `x4a6`, and **not fixed there** because it is\nabout the partition checker rather than about graph kinds.\n\n`scripts/partition/engine.ts`:\n\n```ts\nconst IMPORT_RE = /(?:^|\\n)\\s*(?:import|export)[\\s\\S]{0,400}?from\\s*[\"']([^\"']+)[\"']|import\\s*\\(\\s*[\"']([^\"']+)[\"']\\s*\\)/g;\n```\n\nTwo alternatives: a statement containing `from`, and a dynamic `import()`.\n**Neither matches `",
       "file": "beans/defs/folio-assistant-q2wn--checkpartitions-import-regex-cannot-see-a-bare-si.md"
     },
@@ -5333,7 +5361,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
       "updatedAt": "2026-09-18T15:00:27Z",
-      "preview": "Mechanical but wide: **2,408** literal `content/` occurrences across **429**\nfiles (measured 2026-09-18). `content/` holds no content — it is 431 files /\n46,401 lines of *pipeline*.\n\n**Blocked on bean `fsch`** (the folio schema). Stage by consumer — pipeline,\nscripts, docs, workflows, CI — with wiring moving in the same commit as its\ntargets (`AGENTS.md`: move wiring and script together).\n\nGate: n",
+      "preview": "Mechanical but wide: **2,408** literal `content/` occurrences across **429**\nfiles (measured 2026-09-18). `content/` holds no content — it is 431 files /\n46,401 lines of *pipeline*.\n\n**NOT blocked on bean `fsch`.** It was scrapped 2026-09-20 and the block is\nvoid.\n\n**But the deliverable as written is IMPOSSIBLE, and the sentence that stood\nhere on 2026-09-22 argued the opposite. See §\"FALSIFIED\" b",
       "file": "beans/defs/folio-assistant-rnfl--phase-i-3-rename-content-to-folio-2408-occurrences.md"
     },
     {
@@ -5549,14 +5577,14 @@
     {
       "id": "folio-assistant-sj6m",
       "title": "TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:48:03Z",
-      "updatedAt": "2026-09-22T07:17:42Z",
+      "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "## The ask, owner 2026-09-22 — verbatim\n\nQuoted rather than paraphrased, because it carries four requirements in three\nsentences and a paraphrase would be a second answer free to drift:\n\n| Each tool node needs a QA check and all referenced assets.  Need to check\n| before execution if security gates passed.\n|\n| Note skill.update In general subprocess can be run w/ same agent or\n| dispatch one or mo",
       "file": "beans/defs/folio-assistant-sj6m--tool-nodes-are-unaudited-69-of-them-and-tool-is-no.md"
     },
@@ -5831,14 +5859,14 @@
     {
       "id": "folio-assistant-tis1",
       "title": "TILE COUNT: an empty viewer's tile looks exactly like a populated one — badge the count, absent is a third state",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:52:31Z",
-      "updatedAt": "2026-09-22T06:52:49Z",
+      "updatedAt": "2026-09-22T11:45:32Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/856\n\nOwner ruling 2026-09-22, over greying an empty tile out and over \"an empty\nviewer is fine to open\". Their reason is the stronger argument: a badge also\nmakes a WRONG count visible, where a dimmed tile only ever answers\n\"empty or not\".\n\n## The defect\n\nA tile carries a glyph and a caption and nothing else. An empty viewer's tile\nis indis",
       "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
     },
