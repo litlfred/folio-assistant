@@ -387,20 +387,82 @@
     return true;
   }
 
+  /* ── ONE scheme, TWO controls that must never disagree ─────────────────
+   *
+   * The light/dark switch now exists in two places: the Settings tile it has
+   * always had, and a mini-button in the header row (owner, 2026-09-21:
+   * *"can you put dark/light mode switch in mini-icon on top as well as
+   * language icon. to right of folio-asst, to left of the [3x3 checkboard]"*).
+   *
+   * Two buttons over one fact is how a control starts lying: press the header
+   * one and the tile still shows the old bulb, so the next reader to open
+   * Settings sees "Light" on a dark page. So NEITHER button owns the state.
+   * Each REGISTERS a painter here, one click path mutates, and every
+   * registered painter repaints. Adding a third control is one more
+   * `registerSchemePainter` call and no new coordination.
+   *
+   * This is the same rule the search field is moved rather than rebuilt for:
+   * a second copy that looks identical and disagrees is worse than no copy.
+   */
+  var schemePainters = [];
+  var schemeInitialised = false;
+
+  /**
+   * Apply the reader's STORED choice once, before any control paints.
+   *
+   * Idempotent, because both controls call it and either may mount first --
+   * and their order is not fixed: the tile is built lazily when Settings is
+   * first opened, while the header button mounts on load. `jtd.getTheme()`
+   * reflects the stylesheet the SERVER sent, which does not know what this
+   * reader picked last visit, so without this the page paints in the
+   * configured scheme and then flips.
+   */
+  function initScheme() {
+    if (schemeInitialised) return;
+    schemeInitialised = true;
+    var scheme = currentScheme();
+    if (storedScheme()) applyScheme(scheme);
+    else document.documentElement.setAttribute("data-fa-scheme", scheme);
+  }
+
+  /** Register a control's painter and paint it immediately, so it is never
+   *  briefly showing a scheme the page is not in. */
+  function registerSchemePainter(paint) {
+    initScheme();
+    schemePainters.push(paint);
+    paint(currentScheme());
+  }
+
+  /** The ONE mutation path. Every control calls this and none sets the
+   *  scheme itself. */
+  function toggleScheme() {
+    var next = currentScheme() === "light" ? "dark" : "light";
+    if (!applyScheme(next)) return;
+    try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
+    for (var i = 0; i < schemePainters.length; i++) schemePainters[i](next);
+
+    // No reload. Diagrams are pinned to Mermaid's LIGHT palette on a white
+    // card in both schemes (docs/_includes/mermaid_config.js), so nothing on
+    // the page needs re-rendering when the scheme changes. An earlier version
+    // reloaded here because the diagram palette followed the scheme; that
+    // coupling is gone and the reload went with it.
+  }
+
   /**
    * The light/dark control, as a tile.
    *
-   * The owner placed it "under settings" rather than in the top row, which is
-   * the right call and worth recording: it is the one control here a reader
-   * sets once and then never touches, so it costs a row of prime space for a
-   * single use. It keeps its own class so the e2e spec and any muscle memory
-   * in the stylesheet still find it.
+   * The owner originally placed it "under settings" rather than in the top
+   * row, and that reasoning still holds for the TILE: it is a control a
+   * reader sets once, so it does not earn prime space on its own. What
+   * changed 2026-09-21 is that the owner asked for a header mini-button TOO
+   * -- so this is no longer the only way in, and it keeps its class because
+   * the e2e spec and the stylesheet still find it by that name.
    */
   function buildThemeTile() {
     var btn = el("button", { type: "button", class: "fa-tile fa-theme-toggle" });
     var caption = el("span", { class: "fa-tile-caption" });
 
-    function paint(name) {
+    registerSchemePainter(function (name) {
       // The icon shows the scheme you are IN, not the one you would get. A
       // lit bulb for light, a struck-through one for dark. Labelling it with
       // the destination instead is the other convention and is a coin-flip
@@ -413,29 +475,34 @@
       btn.setAttribute("aria-label",
         name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
       btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
-    }
-
-    var scheme = currentScheme();
-    // Apply the stored choice even on first paint: `jtd.getTheme()` reflects
-    // the stylesheet the server sent, which does not know what this reader
-    // picked last visit.
-    if (storedScheme()) applyScheme(scheme);
-    else document.documentElement.setAttribute("data-fa-scheme", scheme);
-    paint(scheme);
-
-    btn.addEventListener("click", function () {
-      var next = currentScheme() === "light" ? "dark" : "light";
-      if (!applyScheme(next)) return;
-      try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
-      paint(next);
-
-      // No reload. Diagrams are pinned to Mermaid's LIGHT palette on a white
-      // card in both schemes (docs/_includes/mermaid_config.js), so nothing on
-      // the page needs re-rendering when the scheme changes. An earlier
-      // version reloaded here because the diagram palette followed the scheme;
-      // that coupling is gone and the reload went with it.
     });
 
+    btn.addEventListener("click", toggleScheme);
+    return btn;
+  }
+
+  /**
+   * The same switch as a HEADER MINI-BUTTON, beside the tiles launcher.
+   *
+   * No caption -- the header row is capped at 3.75rem and shares its width
+   * with the site title, which is the whole reason `1le7` collapsed four
+   * header icons into one launcher. Two icons come back here because the
+   * owner asked for them by name; the launcher stays, so the row is three
+   * rather than the six that decision was avoiding.
+   *
+   * The bulb alone therefore has to carry the state, which is why the
+   * `aria-label` is a sentence rather than a word: a reader who cannot see
+   * the glyph gets the same fact the tile's caption gives.
+   */
+  function buildSchemeMini() {
+    var btn = el("button", { type: "button", class: "fa-qr-toggle fa-scheme-mini" });
+    registerSchemePainter(function (name) {
+      btn.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      btn.setAttribute("aria-label",
+        name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
+      btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    });
+    btn.addEventListener("click", toggleScheme);
     return btn;
   }
 
@@ -1290,6 +1357,56 @@
       "aria-expanded": "false",
     });
     toggle.innerHTML = TILES_GLYPH; // static markup above, no input involved
+
+    /* ── Two mini-icons, between the title and the launcher ──────────────
+     *
+     * Owner, 2026-09-21: *"can you put dark/light mode switch in mini-icon on
+     * top as well as language icon. to right of folio-asst, to left of the
+     * [3x3 checkboard]"* — the checkerboard being this launcher, confirmed in
+     * the same exchange.
+     *
+     * ## This partly reverses `1le7`, deliberately and on the owner's word
+     *
+     * That bean collapsed FOUR header icons into one launcher because "that
+     * navbar is getting crowded", and the comment on `tileButton` below still
+     * refuses a dedicated search magnifier for exactly that reason. The two
+     * are not in conflict and the difference is worth stating, because the
+     * next reader will otherwise "fix" one of them:
+     *
+     *   - search was refused because it would save ONE PRESS on a control
+     *     reached twice a session, and the owner answered "search is two";
+     *   - these two were ASKED FOR by name.
+     *
+     * A row of three is not the row of six `1le7` was avoiding. If a fourth
+     * is ever proposed, that is the point to go back and ask.
+     *
+     * ## Language OPENS the launcher rather than duplicating its view
+     *
+     * The button presses the same `showView("language")` the tile does, so
+     * there is one language panel and one copy of its state. A second bar
+     * built here would look identical and drift — the failure this file's
+     * header calls out, and the reason the search field is MOVED rather than
+     * rebuilt. The mini-button is a shortcut INTO the panel, not a second
+     * panel.
+     */
+    host.appendChild(buildSchemeMini());
+
+    var langMini = el("button", {
+      type: "button",
+      class: "fa-qr-toggle fa-lang-mini",
+      "aria-label": "Language",
+    });
+    langMini.innerHTML = GLOBE_GLYPH;
+    langMini.addEventListener("click", function () {
+      // Open the launcher first: `showView` hides the grid and renders into
+      // the panel, which is invisible while the host is closed, so a reader
+      // pressing this on a closed launcher would otherwise get nothing and
+      // conclude the button is dead.
+      open(true);
+      showView("language", "Language", langMini);
+    });
+    host.appendChild(langMini);
+
     host.appendChild(toggle);
 
     var panel = el("div", {
@@ -1305,57 +1422,168 @@
     panel.appendChild(view);
     mountPanelInSidebarColumn(host, panel);
 
-    /* ── The search field, adopted out of the main panel ────────────────── */
-
-    /*
-     * The owner: "move the search to a icon in navbar that expands.... keep
-     * main display panel uncluttered." just-the-docs renders its search at
-     * the top of `.main-header`, which is exactly the clutter named.
+    /* ── The search field: in the top navbar, slidable to the corner ─────
      *
-     * ## Moved, never rebuilt
+     * Owner, 2026-09-21: *"also i want the search restored back to the top
+     * display navbar, with option to slide out to the UR corner as an icon."*
+     *
+     * ## THIS REVERSES THE 2026-09-19 DECISION, and the old one is recorded
+     *
+     * The previous version of this block adopted the theme's search OUT of
+     * the main panel and into a Settings tile, on the owner's *"move the
+     * search to a icon in navbar that expands.... keep main display panel
+     * uncluttered."* The tile comment below went further and REFUSED a
+     * header magnifier outright, citing an answer of "search is two" given on
+     * 2026-09-19 when the trade was put to the owner.
+     *
+     * That refusal is now void, superseded by the line above. It is rewritten
+     * rather than deleted, because an agent finding a comment that forbids
+     * what the code does concludes the code is the mistake.
+     *
+     * What survives is the REASON behind the old answer — the main panel
+     * should not be cluttered — and the slide-out is how both hold at once:
+     * the field is in the navbar where it is reached, and a reader who wants
+     * the space back sends it to the corner as an icon.
+     *
+     * ## Moved, never rebuilt — UNCHANGED, and still the load-bearing part
      *
      * The theme's own script binds to the input it rendered. A search box
-     * reconstructed here would look identical and do nothing -- the failure
-     * mode this file's header calls out, a feature that quietly does nothing.
-     * So the theme's `.search` container is MOVED, with its input, its label
-     * and its results list intact, and every handler moves with it because
-     * handlers belong to elements and not to positions.
+     * reconstructed here would look identical and do nothing. So the theme's
+     * `.search` container is MOVED, with its input, its label and its results
+     * list intact, and every handler moves with it because handlers belong to
+     * elements and not to positions.
      *
-     * ## It must never leave the document
+     * ## It must never leave the document — ALSO UNCHANGED
      *
      * just-the-docs looks its input up by id when it initialises, and
-     * `getElementById` does not find a detached node. Parking the container
-     * in a variable until the view is first opened would therefore kill
-     * search outright on any page where the theme initialises second.
-     *
-     * So it is moved at MOUNT time into a holder that is already inside the
-     * panel -- in the document, hidden by CSS -- and shuttled between that
-     * holder and the open view. `display: none` on an ancestor keeps a node
-     * in the tree; removing it from the tree does not.
+     * `getElementById` does not find a detached node. So the holder lives
+     * inside `searchHome`, which is in the document from mount, and the two
+     * states move `searchHome` between CSS classes rather than moving the
+     * input out of the tree. Sliding to the corner is a class change and a
+     * `hidden` on nothing — the node never leaves.
      *
      * ## Absent is a real state
      *
      * `search_enabled: false`, or a theme that renamed the container, means
-     * there is nothing to adopt. The tile is then NOT DRAWN and the warning
-     * says what was looked for -- rather than a Search tile that opens onto
-     * an empty panel.
+     * there is nothing to adopt. Nothing is mounted, no corner icon is drawn,
+     * and the warning says what was looked for.
      */
-    var searchHolder = null;
-    var adopted = firstMatch(SEARCH_SELECTORS);
-    if (adopted) {
-      searchHolder = el("div", { class: "fa-search-holder", hidden: "hidden" });
-      searchHolder.appendChild(adopted);
-      panel.appendChild(searchHolder);
-    } else {
-      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
-                   "); the Search tile was not mounted and the theme's search, if any, " +
-                   "was left where it was.");
+    var SEARCH_PLACE_KEY = "fa-search-place";
+
+    /** "navbar" (default) or "corner". Anything unrecognised is the default —
+     *  a stored value from an older build must not leave search nowhere. */
+    function storedSearchPlace() {
+      try {
+        return window.localStorage.getItem(SEARCH_PLACE_KEY) === "corner" ? "corner" : "navbar";
+      } catch (_e) { return "navbar"; }
     }
 
-    /** Put the search back in its always-in-document holder. */
+    var searchHolder = null;
+    var searchHome = null;
+    var adopted = firstMatch(SEARCH_SELECTORS);
+    if (adopted) {
+      searchHolder = el("div", { class: "fa-search-holder" });
+      searchHolder.appendChild(adopted);
+
+      searchHome = el("div", { class: "fa-search-home", "data-place": "navbar", "data-open": "true" });
+
+      /* The corner's collapsed face. Only ever visible in the corner state,
+       * where the field itself is hidden — so it is the ONE control that can
+       * bring search back, which is `l4zi`'s rule: an action whose inverse is
+       * not reachable is not a toggle, it is a delete. */
+      var cornerIcon = el("button", {
+        type: "button",
+        class: "fa-search-peek",
+        "aria-label": "Open search",
+        "aria-expanded": "false",
+      });
+      cornerIcon.innerHTML = SEARCH_GLYPH;
+
+      /* The slide control, beside the field. Chevron, not an ✕: closing search
+       * is not dismissing it, and an ✕ promises removal. */
+      var slide = el("button", { type: "button", class: "fa-search-slide" });
+
+      function paintSearchPlace(place) {
+        var corner = place === "corner";
+        searchHome.setAttribute("data-place", place);
+        // In the navbar the field is always shown. In the corner it starts
+        // collapsed behind the icon — that IS the point of sending it there.
+        searchHome.setAttribute("data-open", corner ? "false" : "true");
+        cornerIcon.setAttribute("aria-expanded", "false");
+        slide.setAttribute("aria-label",
+          corner ? "Dock search back into the navbar" : "Slide search out to the corner");
+        slide.setAttribute("title", slide.getAttribute("aria-label"));
+        slide.textContent = corner ? "⌄" : "⌃";
+      }
+
+      slide.addEventListener("click", function () {
+        var next = searchHome.getAttribute("data-place") === "corner" ? "navbar" : "corner";
+        try { window.localStorage.setItem(SEARCH_PLACE_KEY, next); } catch (_e) { /* private mode */ }
+        paintSearchPlace(next);
+        // Focus follows the control that replaced the thing that moved, or a
+        // keyboard reader is left on a node that is now display:none.
+        if (next === "corner") cornerIcon.focus();
+        else { var i = searchHolder.querySelector("input"); if (i) i.focus(); }
+      });
+
+      cornerIcon.addEventListener("click", function () { revealSearch(); });
+
+      searchHome.appendChild(cornerIcon);
+      searchHome.appendChild(searchHolder);
+      searchHome.appendChild(slide);
+
+      /* WHERE THE NAVBAR IS. `.main-header` is where just-the-docs renders
+       * search itself, so putting it back there is putting it back. The
+       * fallbacks exist because a theme that renamed the container may also
+       * have renamed the header, and search in the wrong place beats search
+       * nowhere. */
+      var navbar = firstMatch([".main-header", "#main-header", ".main-content-wrap"]);
+      if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
+      else {
+        var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
+        if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(searchHome, mainEl);
+        else document.body.appendChild(searchHome);
+      }
+
+      paintSearchPlace(storedSearchPlace());
+    } else {
+      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
+                   "); search was not mounted in the navbar and no corner icon was drawn.");
+    }
+
+    /**
+     * Show search wherever it currently lives, and put the cursor in it.
+     *
+     * The one entry point for "I want to search": the corner icon presses it,
+     * and so does the Search tile. Neither MOVES the field, because two
+     * places search can be is two places a reader has to look for it.
+     */
+    function revealSearch() {
+      if (!searchHome) return;
+      searchHome.setAttribute("data-open", "true");
+      if (searchHome.getAttribute("data-place") === "corner") {
+        var peek = searchHome.querySelector(".fa-search-peek");
+        if (peek) peek.setAttribute("aria-expanded", "true");
+      }
+      var input = searchHolder && searchHolder.querySelector("input");
+      if (input) input.focus();
+    }
+
+    /**
+     * Formerly: return the search field to its always-in-document holder.
+     *
+     * The field no longer travels into the tiles panel, so in the normal case
+     * there is nothing to undo. It is KEPT as a safeguard rather than deleted
+     * because `showGrid` wipes the view with `innerHTML = ""`, and that
+     * DETACHES whatever is inside — if any future view ever borrows the
+     * holder again, the wipe would silently kill search, which is the exact
+     * failure the long comment above exists about. A no-op guard is cheap;
+     * rediscovering that bug is not.
+     */
     function parkSearch() {
-      if (searchHolder && searchHolder.parentNode !== panel) panel.appendChild(searchHolder);
-      if (searchHolder) searchHolder.setAttribute("hidden", "hidden");
+      if (searchHolder && searchHome && searchHolder.parentNode !== searchHome) {
+        searchHome.insertBefore(searchHolder, searchHome.lastChild);
+      }
     }
 
     /* ── The views ─────────────────────────────────────────────────────── */
@@ -1557,14 +1785,10 @@
       head.appendChild(back);
       head.appendChild(heading);
       view.appendChild(head);
-      if (key === "search") {
-        // A move, not a copy: the holder travels into the view with the
-        // theme's own input inside it, and travels back on the way out.
-        view.appendChild(searchHolder);
-        searchHolder.removeAttribute("hidden");
-      } else {
-        view.appendChild(views[key]);
-      }
+      // No `search` branch any more: search lives in the navbar and the tile
+      // REVEALS it there rather than dragging it into the sidebar. A field
+      // that moves to wherever you summoned it from is a field with no home.
+      view.appendChild(views[key]);
       view.removeAttribute("hidden");
 
       if (key === "qr") renderQr();
@@ -1576,11 +1800,7 @@
       // so a screen reader is still told what it landed on -- the heading is
       // reachable by Shift+Tab, one key away, rather than in the way of the
       // thing the tile exists for.
-      var input = key === "search" && searchHolder
-        ? searchHolder.querySelector("input")
-        : null;
-      if (input) input.focus();
-      else heading.focus();
+      heading.focus();
     }
 
     /* ── The grid ──────────────────────────────────────────────────────── */
@@ -1594,20 +1814,42 @@
     }
 
 
-    // Search leads the grid. It is the one action here a reader reaches for
-    // repeatedly, and it is the one that was taken off the main panel -- so
-    // it gets the first cell rather than being buried behind the others.
-    //
-    // TWO PRESSES IS THE ANSWER, NOT A COMPROMISE. Reaching search costs
-    // launcher-then-tile, and the obvious "improvement" is a second, dedicated
-    // magnifier in the header row: one press instead of two. Do not make it.
-    // That row is capped at 3.75rem and shares its width with the site title,
-    // and a single launcher exists precisely because the navbar was getting
-    // crowded (bean `1le7`). Put to the repo owner on 2026-09-19 with both
-    // costs stated; the answer was "search is two". It is ~20 lines here and
-    // the CSS already exists, which is exactly why this comment is here: the
-    // change is cheap enough to look like a tidy-up.
-    if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
+    /* Search leads the grid, and the tile now REVEALS rather than moves.
+     *
+     * ## The comment that stood here refused what now ships
+     *
+     * It read, in part: *"the obvious 'improvement' is a second, dedicated
+     * magnifier in the header row: one press instead of two. Do not make
+     * it."* — citing the row's 3.75rem cap, bean `1le7`, and an answer of
+     * "search is two" given by the owner on 2026-09-19.
+     *
+     * The owner reversed it on 2026-09-21: *"i want the search restored back
+     * to the top display navbar, with option to slide out to the UR corner as
+     * an icon."* Quoted rather than deleted, because the next agent to read a
+     * prohibition the code plainly violates will assume the CODE is wrong and
+     * revert working behaviour to satisfy a dead instruction.
+     *
+     * ## And the reversal did not cost the row
+     *
+     * Worth noting, because it is why the old objection does not simply
+     * reapply in a new form: search did NOT come back as a fourth icon in the
+     * capped sidebar header. It went to the MAIN DISPLAY navbar, which is
+     * where just-the-docs renders it and which has the width. The sidebar row
+     * is the mark, the scheme bulb, the globe and the launcher — three icons
+     * beside the title, which is what `1le7` costed.
+     *
+     * ## Why this is an action and not a view
+     *
+     * The tile used to drag the live field into the sidebar panel. With
+     * search visible in the navbar that is strictly worse: the same field
+     * would be in two places depending on how you got to it, and a reader who
+     * closed the panel would find search had moved. So the tile calls
+     * `revealSearch`, which un-collapses the field where it lives and focuses
+     * it. One search box, one home, two ways to reach it.
+     */
+    if (searchHolder) {
+      grid.appendChild(tileAction(SEARCH_GLYPH, "Search", revealSearch));
+    }
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must
@@ -2029,16 +2271,32 @@
    * prefixing there would double the base and break the family that works.
    * The base belongs where the raw declared value enters, which is here.
    *
-   * An ABSENT meta yields `""` and the href is returned unchanged. That is the
-   * previous behaviour, deliberately: a site with no baseurl is the common case
-   * (the e2e fixtures, a local `jekyll serve`), and it is indistinguishable
-   * from a declared empty one — `site.baseurl` renders as the empty string for
-   * both. There is nothing here to report as a finding.
+   * An ABSENT meta falls back to `baseurlFromTodoSrc`, and then to `""`. The
+   * empty answer is the previous behaviour and is deliberate: a site with no
+   * baseurl is the common case (the e2e fixtures, a local `jekyll serve`),
+   * and it is indistinguishable from a declared empty one — `site.baseurl`
+   * renders as the empty string for both. There is nothing here to report as
+   * a finding.
+   *
+   * ## ONE function, because there were briefly two
+   *
+   * A second `siteBaseurl` was defined ~500 lines below this one, deriving
+   * the prefix from `meta[name="fa-todo-src"]` for the sticky art. Same name,
+   * same IIFE scope — so the later declaration silently replaced this one,
+   * and `withBase` began asking a meta that the graph-tile fixtures do not
+   * carry. Every tile lost its base, which is issue #801 coming straight back
+   * on a merge that touched neither feature.
+   *
+   * The two were never different questions. `fa-baseurl` is the DECLARED
+   * answer, written by Liquid from `site.baseurl`; the todo-src derivation is
+   * a RECONSTRUCTION for a page that has the one meta and not the other. So
+   * the declared value wins and the derivation is the fallback, which is the
+   * only order that cannot make a page contradict its own server.
    */
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
-    return v.replace(/\/+$/, "");
+    return v ? v.replace(/\/+$/, "") : baseurlFromTodoSrc();
   }
 
   /* ── Is this a STAGING preview? ──────────────────────────────────────
@@ -2110,8 +2368,22 @@
       // a page that exists: this one is about whether the page is there.
       // Conflating them would let "show hidden" resurrect a link to a 404.
       if (t.publish === "staging-only" && !isStagingPreview()) continue;
+      // THE TWO GREYS. A tile with no `href` was skipped above — there is
+      // nothing to open. This one opens perfectly and refuses an EDIT, so it
+      // is rendered, marked, and says so. Collapsing the two would tell a
+      // reader "there is nothing here" about content that is present,
+      // complete and deliberately frozen.
+      //
+      // `=== true` and not truthiness: absent means NOT DECLARED, which is a
+      // third state and not `false`. An undeclared directory gets neither the
+      // read-only mark nor a claim that it is writable.
+      var frozen = t.readOnly === true;
       var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
-                          "the declared visualisation of " + t.directory);
+                          frozen
+                            ? "the declared visualisation of " + t.directory
+                              + " — materialized content: readable, not editable here"
+                            : "the declared visualisation of " + t.directory);
+      if (frozen) tile.setAttribute("data-fa-readonly", "");
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
       if (t.theme) tile.setAttribute("data-fa-theme", t.theme);
@@ -2320,7 +2592,7 @@
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
    *
    * Owner: *"confrim arctions [fishbones] on open content puts in fsh guts"*,
-   * and CRDM Q5: **delete becomes MOVE**. `skills/workflows/board-relocate.bpmn`
+   * and CRDM Q5: **delete becomes MOVE**. `processes/board-relocate.bpmn`
    * is the drawn process; this is its reader-facing half.
    *
    * ## THE CONFIRM IS THE REQUIREMENT, AND IT MUST NOT OVERSTATE EITHER WAY
@@ -2514,6 +2786,74 @@
     return widthPx < t.belowPx;
   }
 
+  /**
+   * THE SITE'S BASEURL, derived from a path the server already resolved —
+   * the FALLBACK arm of `siteBaseurl`, never called directly.
+   *
+   * Every backdrop in the todo index was arriving as `/assets/img/...` —
+   * site-ROOT-absolute with no baseurl — and this site is served from
+   * `/folio-assistant/` on the canonical deploy and
+   * `/folio-assistant/STAGING/<branch>/` on a preview. So every one of them
+   * 404'd, and the owner saw todo cards with a broken-image placeholder
+   * beside landing stickies that had their art: *"i want the theme on the
+   * lower ones too. why are they dispalyed differently."*
+   *
+   * They were not displayed differently by design. The theme WAS applied —
+   * `data-fa-sticky-theme` and `fa-sticky--backdrop` both set — and only the
+   * picture failed to load. A styling answer would have been the wrong fix
+   * for a broken path.
+   *
+   * ## Why derive it rather than read it
+   *
+   * `gen-docs-pages.ts` cannot write the baseurl in: the SAME index file is
+   * served from the canonical prefix and from every staging prefix, so a
+   * baked-in prefix is wrong on all but one. Liquid could pass it, and
+   * `#fa-translation-index` does carry `site.baseurl` — but that island is
+   * about translations and may legitimately be absent, which would make the
+   * art depend on an unrelated feature being switched on.
+   *
+   * `meta[name="fa-todo-src"]` is the honest source: it is emitted through
+   * `relative_url`, so the SERVER has already resolved the prefix, and the
+   * board does not mount at all without it. Stripping the known suffix gives
+   * the prefix the same page used to fetch the index itself.
+   */
+  function baseurlFromTodoSrc() {
+    var m = document.querySelector('meta[name="fa-todo-src"]');
+    var src = m && m.getAttribute("content");
+    var suffix = "/assets/todos/index.json";
+    if (src && src.length >= suffix.length && src.slice(-suffix.length) === suffix) {
+      return src.slice(0, -suffix.length);
+    }
+    return "";
+  }
+
+  /**
+   * Prefix every art path in a `themeArt` map with the site's baseurl.
+   *
+   * Left alone: anything already absolute (`http:`, `//`) and anything that
+   * already starts with the prefix. The second guard is what stops a
+   * double-prefix if the generator is ever changed to resolve paths itself —
+   * at which point this becomes a no-op rather than a bug.
+   */
+  function baseurlResolved(themeArt) {
+    var base = siteBaseurl();
+    if (!base) return themeArt;
+    var out = {};
+    Object.keys(themeArt).forEach(function (theme) {
+      var layouts = themeArt[theme] || {};
+      out[theme] = {};
+      Object.keys(layouts).forEach(function (layout) {
+        var src = layouts[layout];
+        if (typeof src !== "string" || /^([a-z]+:)?\/\//i.test(src) || src.indexOf(base + "/") === 0) {
+          out[theme][layout] = src;
+        } else {
+          out[theme][layout] = base + src;
+        }
+      });
+    });
+    return out;
+  }
+
   /** Fetch the folio's declaration. Absent is a real answer and stays null. */
   function fetchZoom(done) {
     var src = document.querySelector('meta[name="fa-zoom-src"]');
@@ -2552,7 +2892,7 @@
         // theme would otherwise carry fifty copies of the same three paths.
         // Absent is a real state: a theme with no backdrop renders a flat
         // themed card, which is correct rather than degraded.
-        todoState.themeArt = doc.themeArt || {};
+        todoState.themeArt = baseurlResolved(doc.themeArt || {});
         done(doc.items);
       })
       .catch(function (e) {
@@ -2763,6 +3103,76 @@
     return pic;
   }
 
+  /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
+   *
+   * Which glyph a font actually has for those two characters varies, and `⎘`
+   * falls back to a box on several common stacks — a control that looks
+   * broken without anybody changing it. An inline path draws the same shape
+   * everywhere and takes `currentColor`. */
+  var EYE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 5c-5 0-8.6 4.2-9.6 6a1 1 0 0 0 0 1c1 1.8 4.6 6 9.6 6s8.6-4.2 9.6-6a1 1 0 0 0 0-1c-1-1.8-4.6-6-9.6-6zm0 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-2.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6z"/>' +
+    "</svg>";
+  var PENCIL_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M4 16.5V20h3.5L17.8 9.7l-3.5-3.5L4 16.5zM20.7 7.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0l-1.7 1.7 3.5 3.5 1.7-1.7z"/>' +
+    "</svg>";
+
+  /**
+   * View and Edit for a todo's source file, as a caption row.
+   *
+   * ## The SLOT owns these, not the card
+   *
+   * The owner asked for them below the sticky rather than inside it, and the
+   * slot is what "below" means here — but there is a second reason the slot
+   * is the right owner rather than merely a convenient one. A card can be
+   * PINNED onto the glass, where it is positioned freely and has no "below"
+   * to put a caption in. Hanging the links on the card would mean either
+   * dragging a caption around the glass behind it or losing the links
+   * whenever a sticky is pinned.
+   *
+   * On the slot they simply stay put: the card floats away, the greyed recall
+   * button takes its place, and View and Edit are still exactly where the
+   * reader left them. That is the same reasoning the board already uses for
+   * keeping a floating sticky's slot in the grid rather than reflowing it.
+   *
+   * ## Absent, never disabled
+   *
+   * `sourceLinks` returns `undefined` for anything that is not a github.com
+   * origin, so the keys are simply missing when the pipeline has no forge.
+   * `pb04`: a dead link invites a click and then 404s for exactly the reader
+   * who cannot edit, which reads as "this page is broken" rather than "you
+   * cannot do this". Returns null so the caller appends nothing at all.
+   */
+  function buildSourceLinks(todo) {
+    if (!todo.viewHref && !todo.editHref) return null;
+    var row = el("p", { class: "fa-sticky-links" });
+    if (todo.viewHref) {
+      var v = el("a", {
+        class: "fa-node-edit fa-sticky-view",
+        href: safeHref(todo.viewHref),
+        title: "View this todo's source on GitHub",
+        // No visible text, so the label and the title are BOTH needed and are
+        // not interchangeable: the label names the action for a screen
+        // reader, the title gives a pointer user the same words on hover.
+        "aria-label": "View the source of " + todo.summary,
+      });
+      v.innerHTML = EYE_GLYPH;
+      row.appendChild(v);
+    }
+    if (todo.editHref) {
+      var e = el("a", {
+        class: "fa-node-edit fa-sticky-edit",
+        href: safeHref(todo.editHref),
+        title: "Edit this todo's markdown on GitHub",
+        "aria-label": "Edit " + todo.summary,
+      });
+      e.innerHTML = PENCIL_GLYPH;
+      row.appendChild(e);
+    }
+    return row;
+  }
+
   /**
    * One line of text, from prose that was never one line.
    *
@@ -2922,8 +3332,6 @@
      * visible" with no JavaScript, which is `R4`'s floor rather than a
      * convenience.
      */
-    var sourceLinks = [];
-
     // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
     // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
     // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
@@ -2937,24 +3345,11 @@
     // A dead link is worse than no link: it invites a click, and on a private
     // repository it 404s for exactly the reader who cannot edit, which reads
     // as "this page is broken" rather than "you cannot do this".
-    if (todo.viewHref) {
-      sourceLinks.push(el("a", {
-        class: "fa-node-edit fa-sticky-view",
-        href: safeHref(todo.viewHref),
-        title: "View this todo's source on GitHub",
-        "aria-label": "View the source of " + todo.summary,
-      }, "⎘ View"));
-    }
-    if (todo.editHref) {
-      sourceLinks.push(el("a", {
-        class: "fa-node-edit fa-sticky-edit",
-        href: safeHref(todo.editHref),
-        title: "Edit this todo's markdown on GitHub",
-        "aria-label": "Edit " + todo.summary,
-      }, "✎ Edit"));
-    }
-
-
+    // THE SOURCE LINKS ARE NOT IN THE CARD ANY MORE. Owner, 2026-09-21:
+    // *"i want the [pencil] edit icon, (edit, view links can be below, not
+    // inside stick)"*. `buildSourceLinks` renders them, and the SLOT places
+    // them under the card — see the note on that function for why the slot
+    // and not the card is the right owner.
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
@@ -2983,41 +3378,25 @@
       tools.appendChild(discard);
     }
 
-    /* THE ONE THAT HOLDS THE REST — appended LAST, so the face reads
-     * Pin, Discard, [Move], ⋯ and the drawer is where a row ends rather than
-     * where it starts.
+    /* THE `⋯` DRAWER IS GONE, and this note is why rather than a silence.
      *
-     * Built only when there is something to hold: a `⋯` opening an empty
-     * drawer is `pb04`'s failure in a new costume, an affordance that
-     * promises and delivers nothing. With no forge both links are absent and
-     * so is this.
+     * `main` answered `qefk` by collapsing View and Edit into a `<details>`
+     * on the card's face — the owner's *"3+1"*: three board gestures on the
+     * face, the two forge links one level in. That was the right shape for
+     * the instruction it had.
      *
-     * AND NOT ON AN INLINE STICKY. A compact card carries no Pin and no
-     * Discard, so collapsing its only two controls would leave a card whose
-     * entire chrome is a `⋯` — more clicks for less, which is the opposite
-     * of what `qefk` asked for. The drawer exists to make room for board
-     * gestures; where there are none it earns nothing.
+     * The owner then went further, 2026-09-21: *"i want the [pencil] edit
+     * icon, (edit, view links can be below, not inside stick)"*. The links
+     * leave the card entirely, which is the same direction `qefk` was
+     * pointing and one step past the drawer. A drawer with nothing to hold
+     * is `pb04`'s failure in a new costume — an affordance that promises and
+     * delivers nothing — so it goes rather than staying as an empty control.
+     *
+     * WHAT SURVIVES IS THE SPLIT ITSELF, and it is main's: board gestures
+     * (Pin, Discard, Move) belong on the face because they act on the card;
+     * the forge links act on the FILE and now sit below it, in the cell.
+     * `buildSourceLinks` renders them and the slot places them.
      */
-    if (sourceLinks.length) {
-      if (compact) {
-        for (var ci = 0; ci < sourceLinks.length; ci++) tools.appendChild(sourceLinks[ci]);
-      } else {
-        var more = el("details", { class: "fa-sticky-more" });
-        more.appendChild(el("summary", {
-          class: "fa-sticky-more-summary",
-          // NAMES THE CONTENTS, not the shape. "More" tells a screen-reader
-          // user nothing about whether it is worth opening; the subject and
-          // the count do.
-          "aria-label": "Source links for " + todo.summary + " — " +
-            sourceLinks.length + (sourceLinks.length === 1 ? " link" : " links"),
-          title: "View and edit the source",
-        }, "⋯"));
-        var drawer = el("div", { class: "fa-sticky-more-body" });
-        for (var di = 0; di < sourceLinks.length; di++) drawer.appendChild(sourceLinks[di]);
-        more.appendChild(drawer);
-        tools.appendChild(more);
-      }
-    }
 
     head.appendChild(tools);
 
@@ -3060,6 +3439,104 @@
    * makes the next one you want move under your cursor -- and the greyed entry
    * is a real button that docks it again.
    */
+  /**
+   * THE GLASS — the reader's folio, pulled down over whatever they are
+   * browsing. R25: *"the user in visualization should be able to pull down
+   * their folio."*
+   *
+   * ## Why this is its own function, and what the move cost before it
+   *
+   * The layer already existed and was already `document.body`'s, fixed to the
+   * viewport — structurally a glass. It was created INSIDE `mountTodoBoard`,
+   * after two guards that have nothing to do with a glass:
+   *
+   *   mountTodoStickies -> fetchTodoIndex -> `if (items === null) return`
+   *   mountTodoBoard    -> `if (!main) return null`   (#main-content / main)
+   *
+   * So the folio existed only on a page that had a just-the-docs main region
+   * AND a readable todo index. A `who-iris` replica page has neither — its
+   * own `<style>`, no Jekyll, no `<main>` — which is why bean `jpjt` measured
+   * `docs-ui.js` 0 / boards 0 / tiles 0 there and concluded F8/F9 was blocked
+   * on this. **A folio that only exists where a board mounted is not a folio
+   * a reader carries between libraries.**
+   *
+   * ## Idempotent, and it returns the SAME layer the board floats into
+   *
+   * Called from `init` before anything else and again by `mountTodoBoard`.
+   * One layer or the glass and the board would be two surfaces that agree
+   * only by accident — the shape `harness-tiles` calls two registries.
+   *
+   * ## An empty glass still comes down
+   *
+   * `.fa-sticky-layer:empty { display: none }` hides a layer with no children,
+   * which is right for a float layer and wrong for a glass: "nothing on your
+   * glass" and "the glass is broken" are opposite facts, and the first is a
+   * state a reader reaches by tidying. The open glass therefore always holds
+   * its own chrome, so it is never `:empty` while open.
+   */
+  var glassLayer = null;
+  function mountGlass() {
+    if (glassLayer && glassLayer.isConnected) return glassLayer;
+
+    var layer = el("div", {
+      class: "fa-sticky-layer",
+      "aria-live": "polite",
+      "data-fa-glass": "closed",
+    });
+    document.body.appendChild(layer);
+    glassLayer = layer;
+
+    // The handle. A BUTTON, not a div with a click: the disclosure, the focus
+    // ring and the keyboard path are the browser's, and this instance's
+    // declared interaction profile is low-dexterity, so the way in is never a
+    // pointer-only gesture.
+    var handle = el("button", {
+      type: "button",
+      class: "fa-glass-handle",
+      "aria-expanded": "false",
+      "aria-label": "Pull down your folio",
+      title: "Pull down your folio",
+    }, "\u25BE Folio");
+    document.body.appendChild(handle);
+
+    // The glass's own chrome, so an open glass is never `:empty`.
+    var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
+    var empty = el("p", { class: "fa-glass-empty" },
+      "Nothing on your folio glass. Open a library and pull an item out to put it here.");
+    sheet.appendChild(empty);
+    layer.appendChild(sheet);
+
+    function setOpen(open) {
+      layer.setAttribute("data-fa-glass", open ? "open" : "closed");
+      handle.setAttribute("aria-expanded", open ? "true" : "false");
+      handle.setAttribute("aria-label", open ? "Put your folio away" : "Pull down your folio");
+      handle.title = handle.getAttribute("aria-label");
+      // The EMPTY LINE is about the glass's contents, not about the sheet:
+      // the sheet is chrome and is always present. `slots` are the cards the
+      // board floats here, so the count is taken from them rather than from
+      // the layer's children, which would count the sheet itself.
+      var floating = layer.querySelectorAll(".fa-sticky-floating").length;
+      empty.hidden = floating > 0;
+    }
+    setOpen(false);
+
+    // `l4zi`: the inverse is reachable, and by the same control. The handle
+    // stays on the page while the glass is open — a glass whose only way out
+    // is Escape excludes a reader who never learned that Escape was a way out.
+    handle.addEventListener("click", function () {
+      setOpen(layer.getAttribute("data-fa-glass") !== "open");
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      if (layer.getAttribute("data-fa-glass") !== "open") return;
+      setOpen(false);
+      handle.focus();
+    });
+
+    layer.__faSetGlassOpen = setOpen;
+    return layer;
+  }
+
   function mountTodoBoard(items) {
     // THE LANDING FOLIO BOARD FIRST, when the page has one. The owner, 2026-09-20:
     // "i want todo board inside of the landing folio/board."
@@ -3081,15 +3558,36 @@
       return null;
     }
 
-    var layer = el("div", { class: "fa-sticky-layer", "aria-live": "polite" });
-    document.body.appendChild(layer);
+    // THE LAYER IS THE GLASS, and it is no longer created here. `mountGlass`
+    // made it before this ran, because a folio that only exists where a board
+    // mounted is not a folio a reader carries. See that function for what the
+    // two guards above used to cost.
+    var layer = mountGlass();
 
     // VISIBLE on the landing board, hidden everywhere else. On a page whose
     // whole content is a board of stickies, a hidden board of stickies is the
     // one thing a reader cannot find; anywhere else it is an overlay and must
     // not cover the page it was opened from.
+    /* ONE PANEL, NOT TWO. Owner, 2026-09-21, on the staging preview:
+     * *"why are there two panels???"*
+     *
+     * `.fa-sticky-board` carries a border, a background, padding, an `<h2>`
+     * and a close button — correct when it is an overlay opened by a
+     * launcher, and wrong the moment it is mounted INSIDE the landing
+     * board, because the landing board is now itself inside
+     * `.fa-sticky-panel`. The reader got panel-inside-panel: a bordered box
+     * headed "Todos" sitting in a bordered panel headed "Stickies", with a
+     * close button next to a summary that already toggles.
+     *
+     * So a board nested in the sticky panel renders BARE. The chrome is not
+     * restyled smaller — it is the OUTER panel's job and is already there
+     * once.
+     */
+    var bare = !!(landing && landing.closest && landing.closest(".fa-sticky-panel"));
+
     var boardAttrs = {
-      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : ""),
+      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : "") +
+             (bare ? " fa-sticky-board--bare" : ""),
       tabindex: "-1",
       role: "region",
       "aria-label": "Todos",
@@ -3097,14 +3595,40 @@
     if (!landing) boardAttrs.hidden = "hidden";
     var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
-    var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
+
+    /* THE HEADING SURVIVES BARE, VISUALLY HIDDEN.
+     *
+     * Deleting it was the obvious move and is wrong twice. It is the focus
+     * target for `discard()` and `setOpen()` — without it focus lands on
+     * `<body>` and a keyboard reader loses their place, which is the defect
+     * `l4zi` already records against this very board. And the section is
+     * `role="region"`, so it owes an accessible name: "Stickies" on the
+     * summary and "Todos" here are different facts, and a screen-reader user
+     * moving by region needs the inner one.
+     *
+     * `fa-sr-only` is the clip-not-hide class the search label uses, for the
+     * same reason spelled out there: `display: none` would take it out of the
+     * accessibility tree along with the pixels. */
+    var heading = el("h2", {
+      class: "fa-sticky-board-title" + (bare ? " fa-sr-only" : ""),
+      tabindex: "-1",
+    }, "Todos");
     head.appendChild(heading);
+
+    /* THE CLOSE BUTTON DOES NOT SURVIVE BARE, and that is not a lost control.
+     *
+     * Its inverse is the `<summary>` one line up, which closes the whole
+     * panel — so `l4zi` is satisfied by the panel rather than by a second
+     * button inside it. Keeping it would have given the reader two closes
+     * doing different things at the same spot: one collapsing the panel, one
+     * swapping the board for a "Todos (n)" reopen button INSIDE the still-open
+     * panel. That second state is the one nobody would be able to describe. */
     var boardClose = el("button", {
       type: "button",
       class: "fa-sticky-board-close",
       "aria-label": "Close the todo board",
-    }, "×");
-    head.appendChild(boardClose);
+    }, "\u00d7");
+    if (!bare) head.appendChild(boardClose);
     board.appendChild(head);
 
     /* THE READER'S FILTER, in the board's head and nowhere in any document.
@@ -3290,12 +3814,13 @@
           setMoveMode(card, on, live);
           moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
         });
-        // Before the drawer, after the other board gestures: Move is a board
-        // gesture and belongs on the face (`qefk`'s "3+1"). `firstChild` put
-        // it ahead of Pin, which reordered the row every time a card floated.
-        var drawerEl = tools.querySelector(".fa-sticky-more");
-        if (drawerEl) tools.insertBefore(moveBtn, drawerEl);
-        else tools.appendChild(moveBtn);
+        // APPENDED, after the other board gestures. This used to insert
+        // before the `⋯` drawer, which no longer exists — the forge links
+        // moved out of the card altogether — so the face is Pin, Discard,
+        // Move and nothing else. `firstChild` was the version before that
+        // and put Move ahead of Pin, which reordered the row every time a
+        // card floated; appending keeps the order stable.
+        tools.appendChild(moveBtn);
       }
 
       wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
@@ -3344,6 +3869,9 @@
         slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
       }
       slot.appendChild(buildSticky(row.todo, float, dock, discard));
+      // BELOW the card, and it stays here when the card is pinned away.
+      var links = buildSourceLinks(row.todo);
+      if (links) slot.appendChild(links);
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
@@ -3683,9 +4211,52 @@
       return isOpen;
     }
     boardClose.addEventListener("click", function () { setOpen(false); });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
-    });
+
+    /* ESCAPE CLOSES AN OVERLAY. IT MUST NOT CLOSE A BARE BOARD.
+     *
+     * Everywhere else this board is an overlay over the page, so Escape
+     * dismissing it is the standard gesture. Inside `.fa-sticky-panel` it is
+     * page content with no close button (see above), and letting Escape run
+     * would produce exactly the state that button was removed to prevent: the
+     * board swapped for a "Todos (n)" reopen control INSIDE a panel that is
+     * still open, reached by a key the reader pressed for some other reason.
+     *
+     * The panel's own `<summary>` is the way to close it, and it is one Tab
+     * away. So: no handler at all when bare, rather than a handler that
+     * checks and returns — an event listener that never acts is a thing the
+     * next reader has to prove is dead. */
+    if (!bare) {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
+      });
+    }
+
+    /* THE COLLAPSED PANEL'S COUNT has to include what THIS function just
+     * mounted, or it understates the thing it exists to declare.
+     *
+     * `landing.html` renders the panel's summary server-side and can only
+     * count the stickies Liquid knows about; the todo cards arrive here,
+     * after a fetch. A collapsed panel saying "3" over six cards is the badge
+     * defect `rta` pinned a test against — a count that is not the
+     * cardinality of the thing it labels.
+     *
+     * Added to the SERVER'S number, read back from `data-fa-sticky-count`,
+     * rather than recomputed from the DOM. The attribute is the one value
+     * that does not change when this runs twice; counting `.fa-sticky` nodes
+     * would double on a re-mount, and re-reading the text content would
+     * compound whatever it wrote last time.
+     *
+     * No panel (an ordinary page, or a landing page with no stickies) is not
+     * a failure — there is simply nothing to relabel, and the board's own
+     * heading already carries the count there. */
+    var panelCount = document.querySelector(".fa-sticky-panel__count");
+    if (panelCount) {
+      var declared = parseInt(panelCount.getAttribute("data-fa-sticky-count"), 10);
+      // NaN when the attribute is missing or not a number. Falling back to 0
+      // would silently drop the stickies from the total and report only the
+      // todos, which is a wrong number rather than a missing one.
+      if (!isNaN(declared)) panelCount.textContent = String(declared + live.length);
+    }
 
     return {
       toggle: function () { return setOpen(board.hasAttribute("hidden")); },
@@ -3760,7 +4331,16 @@
       var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
       (function (list, mine) {
         for (var k = 0; k < mine.length; k++) {
-          list.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          /* A CELL, for the same reason the board uses a slot: the source
+           * links live BELOW the sticky now, not inside it, so something has
+           * to hold the pair. An inline sticky keeps them when it loses Pin,
+           * Close and Discard — that is the point of the inline case, which
+           * drops the BOARD's controls and keeps the content object's. */
+          var cell = el("div", { class: "fa-sticky-cell" });
+          cell.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          var inlineLinks = buildSourceLinks(mine[k]);
+          if (inlineLinks) cell.appendChild(inlineLinks);
+          list.appendChild(cell);
         }
       })(list, mine);
       var shown = list.children.length;
@@ -4481,17 +5061,75 @@
     }, sweepIcon + " " + sweepLabel);
     container.appendChild(sweepBadge);
 
-    // Unverified translation warning — auto-injected on translated pages
+    /* Unverified translation notice — ONE LINE, opening to the detail.
+     *
+     * Owner, 2026-09-21, on a translated page: *"should be a slim one line
+     * '⚠️ Unverified translation — This page has been translated
+     * automatically and has not been reviewed by a subject-matter expert.'
+     * which then can open to the full trnslation QA report."*
+     *
+     * It was four lines of banner above the page title — the warning, the
+     * source, and two tool names a reader cannot run from a browser. On a
+     * translated page that is the first thing between the reader and the
+     * content they came for, every page, permanently.
+     *
+     * ## `role="alert"` is gone, and that is not a downgrade
+     *
+     * An alert demands immediate announcement and is for something that has
+     * just happened. This is a standing property of the page, true before
+     * the reader arrived and still true when they leave. As a `<summary>`
+     * it is in the tab order, states its own expanded/collapsed state, and
+     * can be returned to — which an alert that fires once cannot.
+     *
+     * ## "The full report" is the EXISTING panel, not a second one
+     *
+     * The page already carries a Translation QA badge that opens a panel
+     * over the real sidecar. Restating its contents here would be a second
+     * answer to one question, free to disagree — the defect this file warns
+     * about in several other places. So the drawer holds the two facts that
+     * are NOT in that panel (which file this translates, and how to sign it
+     * off) and a control that opens the panel itself.
+     *
+     * The badge is looked up AT CLICK TIME, not here: it is built further
+     * down this same function, so it does not exist yet. When there is no
+     * badge — a page with no projection — the control is not drawn at all
+     * rather than drawn dead (`pb04`).
+     */
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("div", { class: "fa-translation-warning", role: "alert" });
-      warning.innerHTML =
+      var warning = el("details", { class: "fa-translation-warning" });
+      var warnSummary = el("summary", { class: "fa-translation-warning__line" });
+      warnSummary.innerHTML =
         "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
-        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
+        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert.";
+      warning.appendChild(warnSummary);
+
+      var warnBody = el("div", { class: "fa-translation-warning__body" });
+      warnBody.innerHTML =
         (meta.translationSource
-          ? "<br><strong>Source:</strong> " + meta.translationSource + " (English)"
+          ? "<p><strong>Source:</strong> " + meta.translationSource + " (English)</p>"
           : "") +
-        "<br><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
-        "or use <code>translation_validate</code> to check for staleness and coverage.";
+        "<p><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
+        "or use <code>translation_validate</code> to check for staleness and coverage.</p>";
+      warning.appendChild(warnBody);
+
+      if (meta.translationQa && meta.translationQa.src) {
+        var openReport = el("button", {
+          type: "button",
+          class: "fa-translation-warning__report",
+        }, "Open the translation QA report");
+        openReport.addEventListener("click", function () {
+          var badge = document.querySelector('.fa-qa-badge[data-qa-family="translation"]');
+          // Absent is a real state and is REPORTED, not swallowed: a button
+          // that silently does nothing is worse than one that is not there,
+          // and this path is only reachable if the badge failed to build
+          // after `translationQa.src` promised it.
+          if (badge) badge.click();
+          else console.warn("docs-ui: no translation QA badge to open; the page declared a " +
+                            "projection at " + meta.translationQa.src + " but no badge was built.");
+        });
+        warnBody.appendChild(openReport);
+      }
+
       var mainContent = document.querySelector(".main-content, #main-content");
       if (mainContent && mainContent.firstChild) {
         mainContent.insertBefore(warning, mainContent.firstChild);
@@ -5134,6 +5772,10 @@
     mountTranslationBadges();
     mountQaPanels();
     paintQaBadges();
+    // THE GLASS FIRST, and unconditionally. It is the reader's folio rather
+    // than this page's furniture, so it must not inherit any of the guards
+    // that decide whether a BOARD mounts — see `mountGlass`.
+    mountGlass();
     mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the

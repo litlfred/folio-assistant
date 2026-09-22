@@ -391,6 +391,13 @@
                 },
                 "additionalProperties": false
               },
+              "readOnly": {
+                "type": "boolean"
+              },
+              "readOnlyBasis": {
+                "type": "string",
+                "minLength": 1
+              },
               "instanceRoot": {
                 "type": "boolean"
               },
@@ -607,6 +614,10 @@
             "owes": {
               "type": "string",
               "minLength": 1
+            },
+            "reachableAt": {
+              "type": "string",
+              "minLength": 1
             }
           },
           "required": [
@@ -637,8 +648,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld",
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "d5baa89741544cddf295ea7cdf32c5aeeec59137",
+    "sha": "df429e07234451acdd3002c5b82ae0f68992127d",
     "pr": "858/merge",
-    "run": "35697900065"
+    "run": "35700718096"
   }
 }
