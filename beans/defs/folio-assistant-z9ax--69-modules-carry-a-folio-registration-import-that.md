@@ -1,11 +1,11 @@
 ---
 # folio-assistant-z9ax
 title: 69 modules carry a folio registration import that is now a no-op
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T06:29:45Z
-updated_at: 2026-09-22T06:30:00Z
+updated_at: 2026-09-22T09:37:04Z
 parent: folio-assistant-vke6
 ---
 
