@@ -6236,6 +6236,86 @@
 
 
 
+  /* ── THE OPEN DOCUMENT'S INDEX, in the navbar's fixed top ────────────────
+   *
+   * Owner, 2026-09-21: *"when a document or other indexed object is opened,
+   * the document index/idices are shown in a navbar tab/menu."*
+   *
+   * `navbar.ts` has carried a `documentIndex` region since it was written and
+   * NOTHING SUPPLIED ONE -- a repo-wide search on 2026-09-22 found the type,
+   * the render branch and a single test. `documentIndexOf` now supplies it on
+   * every mounted page, server-side, from the HTML being injected into.
+   *
+   * THIS HALF IS SCRIPTED AND THAT ASYMMETRY IS DELIBERATE, not an oversight.
+   * The rail is injected into documents copied verbatim from instances the
+   * harness does not control, where "injecting a nav is one claim and
+   * injecting script is a larger one" -- so it must be server-side. This site
+   * is ours, already loads this file, and Jekyll hands Liquid no way to see a
+   * page's rendered headings: kramdown assigns the ids downstream of the
+   * template. A build step that re-parsed our own output to learn what
+   * kramdown had just done would be a second renderer.
+   *
+   * The SELECTION RULE is `navbar.ts`'s, restated rather than approximated:
+   * `h2`/`h3` that carry an `id`, because a heading with no id is not a
+   * destination (`pb04`); nested by level; and the region is ABSENT rather
+   * than empty below two rows, since a "Contents" holding the one section the
+   * reader is looking at is a row that buys nothing in a region that does not
+   * scroll.
+   *
+   * It mounts as a `.side-bar` child so the region rules in docs-ui.css make
+   * it fixed-top with no further styling: `.side-bar > * { flex: 0 0 auto }`.
+   */
+  function mountDocumentIndex() {
+    var bar = document.querySelector(".side-bar");
+    var main = document.querySelector(".main-content");
+    if (!bar || !main) return;
+    if (bar.querySelector(".fa-doc-index")) return;
+
+    var heads = main.querySelectorAll("h2[id], h3[id]");
+    var rows = [];
+    for (var i = 0; i < heads.length; i++) {
+      var text = (heads[i].textContent || "").replace(/\s+/g, " ").trim();
+      if (!text) continue;
+      rows.push({ id: heads[i].id, text: text, depth: heads[i].tagName === "H3" ? 1 : 0 });
+    }
+    if (rows.length < 2) return;
+
+    var box = document.createElement("details");
+    box.className = "fa-doc-index";
+    var sum = document.createElement("summary");
+    sum.className = "fa-doc-index__heading";
+    // textContent throughout: a heading is page content, and this script's own
+    // header records that nothing here interpolates into markup.
+    sum.textContent = "On this page";
+    var count = document.createElement("span");
+    count.className = "fa-doc-index__count";
+    count.textContent = String(rows.length);
+    sum.appendChild(count);
+    box.appendChild(sum);
+
+    var list = document.createElement("ul");
+    list.className = "fa-doc-index__list";
+    for (var j = 0; j < rows.length; j++) {
+      var li = document.createElement("li");
+      li.className = "fa-doc-index__item";
+      if (rows[j].depth) li.className += " fa-doc-index__item--sub";
+      var a = document.createElement("a");
+      a.className = "fa-doc-index__link";
+      a.setAttribute("href", "#" + rows[j].id);
+      a.textContent = rows[j].text;
+      li.appendChild(a);
+      list.appendChild(li);
+    }
+    box.appendChild(list);
+
+    // AFTER the header, BEFORE the nav -- the fixed top, with the instance.
+    // It is about the thing the reader is looking at rather than about the
+    // graph they are in, which is `navbar.ts`'s reason for the same placement.
+    var nav = bar.querySelector(".site-nav");
+    if (nav) bar.insertBefore(box, nav);
+    else bar.appendChild(box);
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -6248,6 +6328,7 @@
     }
 
     mountActionTiles();
+    mountDocumentIndex();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();

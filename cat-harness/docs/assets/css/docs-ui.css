@@ -691,14 +691,24 @@
    * default -- it keeps its own height, which is what it had. */
   .side-bar > * { flex: 0 0 auto; }
   .side-bar > .site-nav {
-    /* `min-height: 0` is NOT optional, and it is the whole mechanism. A flex
-     * child defaults to `min-height: auto`, which refuses to shrink below its
-     * content, so the column grows past the viewport and the fixed bottom is
-     * pushed off the screen -- taking the harnesses and home with it. That is
-     * the same sentence `navbar.ts` carries over its own middle region, and it
-     * is here because the failure is identical, not because it was copied. */
+    /* The middle absorbs, and it must be allowed to shrink far below its
+     * content: a flex child defaults to `min-height: auto`, which refuses to,
+     * so the column grows past the viewport and the fixed bottom is pushed off
+     * the screen -- taking the harnesses and home with it. `navbar.ts` carries
+     * the same sentence over its own middle region; it is here because the
+     * failure is identical, not because it was copied.
+     *
+     * BUT NOT TO NOTHING, and that floor was measured rather than guessed.
+     * The other two regions are capped, and with the document index open the
+     * three caps add up: 60px of header, 33% of index and 50% of footer left
+     * the middle **93px** in a 900px column -- one and a half rows of a
+     * navigation that is the whole point of the navbar. A cap on a sibling is
+     * a claim on this region, and `8rem` is the smallest height at which this
+     * still reads as a list rather than as a clipped row. Both siblings yield
+     * to it below (`flex: 0 1 auto`), which they can afford because each
+     * scrolls inside its own cap. */
     flex: 1 1 auto;
-    min-height: 0;
+    min-height: 8rem;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -4059,6 +4069,10 @@ a.fa-tile[data-fa-readonly]:focus-visible {
    * reason. */
   display: flex !important;
   flex-direction: column;
+  /* YIELDS to the middle's floor. `0 1 auto` rather than `0 0 auto`: this
+   * region already scrolls inside its own cap, so giving space back costs no
+   * reachability, while refusing to would take the middle below `8rem`. */
+  flex: 0 1 auto;
   min-height: 0;
   /* AT MOST HALF THE NAVBAR.
    *
@@ -4145,6 +4159,94 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * both schemes are derived, so no tab can be authored legible in one mode and
  * invisible in the other.
  * ───────────────────────────────────────────────────────────────────────── */
+
+/* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
+ *
+ * Owner: *"when a document or other indexed object is opened, the document
+ * index/idices are shown in a navbar tab/menu."* Mounted by
+ * `mountDocumentIndex` in docs-ui.js, which carries why this half is scripted
+ * while the rail's is not.
+ *
+ * IN THE FIXED TOP, and it needs no rule to get there: it is inserted as a
+ * `.side-bar` child, so `.side-bar > * { flex: 0 0 auto }` already makes it
+ * one of the two regions that do not scroll.
+ *
+ * ITS OWN SCROLL, capped. The fixed top must not do to the middle what the
+ * fixed bottom was doing before its cap — and a long page's index is exactly
+ * the content that would. A third of the navbar, and it scrolls beyond that.
+ *
+ * CLOSED ON ARRIVAL, unlike the graphs group. The graphs are what the navbar
+ * is FOR, so they arrive open; this is about one page, and a reader who
+ * wanted the current page's structure is already looking at the page. It is a
+ * `<details>` for the reason every disclosure here is one: keyboard-operable,
+ * announces its own state, no script needed to open it.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-doc-index {
+  width: 100%;
+  /* Yields, for the same reason the footer does and with the same safety: it
+   * scrolls inside its cap. A quarter rather than a third — with all three
+   * regions capped the arithmetic is what squeezed the middle, and this is
+   * the region a reader asked for least. */
+  flex: 0 1 auto;
+  max-height: 25%;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 0.75rem;
+}
+
+.fa-doc-index__heading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem var(--fa-nav-pad);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fa-doc-index__count {
+  padding: 0 0.375rem;
+  border-radius: 0.625rem;
+  background: rgba(128, 128, 128, 0.28);
+  font-weight: 700;
+}
+
+.fa-doc-index__list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-doc-index__link {
+  display: block;
+  padding: 0.1875rem var(--fa-nav-pad);
+  overflow: hidden;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.fa-doc-index__link:hover,
+.fa-doc-index__link:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* An `h3` under the `h2` it follows. Indented by the SAME step `navbar.ts`
+ * gives a sub-item — `--fa-nav-pad` plus the mark column plus its gap — so a
+ * reader moving between the two surfaces meets one indent, not two. */
+.fa-doc-index__item--sub .fa-doc-index__link {
+  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
+  opacity: 0.7;
+}
 
 /* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
  *

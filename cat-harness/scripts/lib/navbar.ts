@@ -75,6 +75,15 @@ export interface NavItem {
   tone?: number;
   /** True for the route the current page belongs to. */
   current?: boolean;
+  /**
+   * Nesting under the item above it — 0 or absent for a top-level row.
+   *
+   * Only the document index uses it today. It is on `NavItem` rather than in
+   * that function because a *rendered* indent is the renderer's business: a
+   * caller that returned pre-indented labels would be composing markup, which
+   * is the thing this module exists to stop callers doing.
+   */
+  depth?: number;
 }
 
 /** A labelled group of items, which may be collapsed behind a disclosure. */
@@ -261,8 +270,12 @@ function mark(i: NavItem): string {
 
 function itemHtml(i: NavItem): string {
   const body = `${mark(i)}<span class="fa-nav-label">${esc(i.label)}</span>`;
-  if (i.href === undefined) return `<span class="fa-nav-dead">${body}</span>`;
-  return `<a href="${esc(i.href)}"${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
+  // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
+  // the document index a different shape from every other group here, and the
+  // rows are links either way.
+  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
+  if (i.href === undefined) return `<span class="fa-nav-dead"${d}>${body}</span>`;
+  return `<a href="${esc(i.href)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
 }
 
 function groupHtml(g: NavGroup): string {
@@ -316,4 +329,66 @@ export function injectNavbar(html: string, m: NavbarModel): string | undefined {
   if (!body) return undefined;
   const at = body.index + body[0].length;
   return html.slice(0, at) + `<style>${navbarCss()}</style>` + navbarHtml(m) + html.slice(at);
+}
+
+/**
+ * The open document's own index, read off the page it is being injected into.
+ *
+ * Owner, 2026-09-21: *"when a document or other indexed object is opened, the
+ * document index/idices are shown in a navbar tab/menu."* `NavbarModel` has
+ * carried `documentIndex` since it was written; **nothing supplied one** — a
+ * repo-wide search on 2026-09-22 found the type, the render branch and a
+ * single test, so the sentence was unbuilt on both surfaces.
+ *
+ * ## Only headings the page can actually be scrolled to
+ *
+ * A heading with no `id` is not a destination, and a fragment link to one goes
+ * nowhere. So the `id` is the filter, not the heading level — that is the same
+ * `pb04` rule the rest of this module follows: a dead link invites a click and
+ * then reads as a broken site. It is also what makes this safe on a document
+ * the harness does not control; those pages are copied verbatim and their
+ * heading ids are whatever their own generator assigned.
+ *
+ * ## `h2` and `h3` only
+ *
+ * `h1` is the document's title, which the reader is already looking at, and
+ * the navbar names the instance directly above. Below `h3` an index stops
+ * being a way in and becomes the document again — and this region is in the
+ * FIXED top, so every row it takes is a row the scrollable middle does not
+ * get.
+ *
+ * `h3`s are nested under the `h2` they follow, which is why they carry
+ * `depth`. A flat list of eleven rows where three are subsections of the first
+ * is a list that lies about the document's shape.
+ *
+ * ## Regex rather than a DOM
+ *
+ * This runs over hundreds of copied files during a mount, and the alternative
+ * is a parser dependency in a script whose whole job is string injection. The
+ * cost is that it sees `<h2 id>` in a comment or a `<pre>`; the consequence of
+ * that is one extra row in a menu, which is why it is an acceptable trade
+ * here and would not be in a validator.
+ */
+export function documentIndexOf(html: string, label = "Contents"): NavGroup | undefined {
+  const items: NavItem[] = [];
+  const re = /<(h2|h3)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi;
+  for (const m of html.matchAll(re)) {
+    const text = m[3]
+      .replace(/<[^>]*>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) continue;
+    items.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+  }
+  // ABSENT rather than empty, and rather than a one-item index. An empty
+  // disclosure invites a click that does nothing -- the rule this module
+  // already applies to the harnesses region -- and a "Contents" holding the
+  // single section the reader is looking at is the same defect with a row in
+  // it.
+  if (items.length < 2) return undefined;
+  return { label, icon: "≡", items, collapsible: true };
 }
