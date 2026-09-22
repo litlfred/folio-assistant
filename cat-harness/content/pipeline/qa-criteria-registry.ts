@@ -2445,6 +2445,54 @@ const TRAP: QaCriterionDefinition[] = [
   { id: "trap-nonspeakable", domain: "trap", description: "Noun-heavy chains that parse on the page but stall aloud — written for the eye, not the ear.", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
 ];
 
+// ── ids: a block's label is its identity (bean 5xzc) ────────────
+//
+// The content graph, a block-level diff against `main`, review comments and
+// heat maps all key on the label, so these two gate everything the review
+// epic (q4jm) builds. Both are mechanical. Implemented in
+// `qa-checkers-ids.ts`, which also says why `id-reingest-stable` is not
+// registered yet.
+
+const IDS: QaCriterionDefinition[] = [
+  {
+    id: "id-unique",
+    domain: "ids",
+    description:
+      "MECHANICAL. No other block in the folio declares this block's label, " +
+      "and no other block lists it in `renamedFrom`. A shared label is " +
+      "silently collapsed: `buildContentGraph` overwrites the earlier node and " +
+      "`validate.ts` adds labels to a Set, so one block takes the other's " +
+      "place in every graph, diff and review. `validate.ts` catches a block " +
+      "NAME listed twice in a manifest; it does not catch two blocks declaring " +
+      "one LABEL. Reusing a retired label is the same defect in time: the old " +
+      "block's review history re-attaches to an unrelated block. " +
+      "STALENESS CAVEAT: reads the whole-corpus label index, so adding a block " +
+      "elsewhere can change this verdict without changing this block's hash; " +
+      "re-sweep the axis after adding or relabelling blocks.",
+    default_severity: "critical",
+    depends_on: ["ts"],
+    automated: true,
+    source_file: "content/pipeline/qa-checkers-ids.ts",
+  },
+  {
+    id: "id-stable",
+    domain: "ids",
+    description:
+      "MECHANICAL. A block whose manifest existed at the base ref (env " +
+      "`QA_ID_BASE_REF`, default `origin/main`) keeps that label, or lists " +
+      "the old one in `renamedFrom`. Moves are followed (`git diff -M`), so a " +
+      "block that moved AND was relabelled is still compared with its old " +
+      "self. A new block is an addition and passes. `n/a` when the base ref " +
+      "cannot be reached: an unreachable base is undetermined, never stable. " +
+      "STALENESS CAVEAT: the verdict depends on the base ref, which is not in " +
+      "the block's hash; re-sweep after the base moves.",
+    default_severity: "major",
+    depends_on: ["ts"],
+    automated: true,
+    source_file: "content/pipeline/qa-checkers-ids.ts",
+  },
+];
+
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
   ...VOICE_OVERLAYS,
@@ -2481,6 +2529,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...EXPO,
   ...DAK,
   ...TRAP,
+  ...IDS,
 ];
 
 export const SCRIPT_QUALITY_CRITERIA: string[] = SCRIPT_QUALITY.map(
