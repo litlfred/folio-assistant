@@ -31,6 +31,14 @@ import { join, resolve } from "path";
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const DOCS = join(INSTANCE, "docs");
 const ARTIFACTS = join(DOCS, "artifact");
+const CATEGORIES = join(DOCS, "category");
+
+/** Category pages — one per category over `INLINE_LIMIT`; today that is `Other`. */
+const categoryFiles = existsSync(CATEGORIES)
+  ? readdirSync(CATEGORIES)
+      .filter((f) => f.endsWith(".md"))
+      .sort()
+  : [];
 
 const artifactFiles = existsSync(ARTIFACTS)
   ? readdirSync(ARTIFACTS)
@@ -78,9 +86,13 @@ describe("smart-trust pages are generated at all", () => {
    * an empty `docs/` would make the whole file green while publishing nothing
    * — the `dh4f` shape: a sweep over an empty corpus reporting a clean run.
    */
-  it("has an index and one page per DAK-sidecar artefact", () => {
+  it("has an index and one page per artefact", () => {
     expect(indexSrc.length).toBeGreaterThan(0);
-    expect(artifactFiles.length).toBe(19);
+    // ONE PER ARTEFACT, counted from the index rather than hardcoded. This
+    // read `toBe(19)` while only sidecar-bearing artefacts were rendered; the
+    // owner chose full parity 2026-09-22, and a literal would have had to be
+    // edited in lockstep with the corpus forever.
+    expect(artifactFiles.length).toBe(ix.artifacts.length);
   });
 
   /**
@@ -113,10 +125,12 @@ describe("smart-trust pages are generated at all", () => {
     const keys = (xs: { key: string }[]) => xs.map((x) => x.key).sort();
     expect(keys(dak)).toEqual(keys(materialized));
 
-    // The generator's gate is `dak`, so THAT is the set the page count must
-    // match. Asserted against the property actually read, not the one that
-    // happens to give the same number.
-    expect(artifactFiles.length).toBe(dak.length);
+    // Still asserted although NEITHER now gates page generation, because the
+    // two properties still drive what a page SAYS — the DAK section, and the
+    // materialization tag. The day they diverge, a page claims a sidecar for
+    // something whose bytes are elsewhere, and this is what says so.
+    expect(dak.length).toBeGreaterThan(0);
+    expect(dak.length).toBeLessThan(ix.artifacts.length);
   });
 });
 
@@ -186,8 +200,43 @@ describe("every artefact link resolves to a page that exists", () => {
    */
   const hrefs = [...indexSrc.matchAll(/\]\((\.\/artifact\/[^)]+)\)/g)].map((m) => m[1]);
 
-  it("the index links every artefact page", () => {
-    expect(hrefs.length).toBe(artifactFiles.length);
+  /** Every `../artifact/…` href on every category page, with its source page. */
+  const categoryHrefs = categoryFiles.flatMap((f) => {
+    const src = readFileSync(join(CATEGORIES, f), "utf-8");
+    return [...src.matchAll(/\]\((\.\.\/artifact\/[^)]+)\)/g)].map((m) => ({ file: f, href: m[1] }));
+  });
+
+  /**
+   * EVERY ARTEFACT PAGE IS REACHABLE — from the index, or from a category page.
+   *
+   * This assertion read `hrefs.length === artifactFiles.length` while the index
+   * listed every artefact. It cannot any more: a category over `INLINE_LIMIT`
+   * moves to its own page, so the index links 70 of 674 and the `Other` page
+   * links the rest. Asserting the index alone would now be asserting that the
+   * split did not happen.
+   *
+   * So the union is what is asserted, and in BOTH directions — an artefact
+   * page nothing links is as much a defect as a link to a page that is not
+   * there, and only the second kind 404s loudly. The first just never gets
+   * visited.
+   */
+  it("every artefact page is linked from exactly one index or category page", () => {
+    const linked = [
+      ...hrefs.map((h) => h.replace(/^\.\/artifact\//, "")),
+      ...categoryHrefs.map((c) => c.href.replace(/^\.\.\/artifact\//, "")),
+    ].map((n) => n.replace(/\.html$/, ""));
+
+    expect(linked.length).toBe(ix.artifacts.length);
+    expect(new Set(linked).size).toBe(ix.artifacts.length);
+    expect([...linked].sort()).toEqual(artifactFiles.map((f) => f.replace(/\.md$/, "")).sort());
+  });
+
+  it("the split actually happened — the index does not carry all 674", () => {
+    // A vacuity guard on the assertion above: if every artefact were still
+    // inlined, the union test would pass with an empty category set and the
+    // `INLINE_LIMIT` behaviour would be untested.
+    expect(hrefs.length).toBeLessThan(ix.artifacts.length);
+    expect(categoryHrefs.length).toBeGreaterThan(0);
   });
 
   for (const href of hrefs) {
@@ -195,6 +244,29 @@ describe("every artefact link resolves to a page that exists", () => {
       expect(href.endsWith(".html")).toBe(true);
       const name = href.replace(/^\.\/artifact\//, "").replace(/\.html$/, "");
       expect(existsSync(join(ARTIFACTS, `${name}.md`))).toBe(true);
+    });
+  }
+
+  // THE SAME ASSERTION AT THE NEW DEPTH. A category page sits one level down,
+  // so its links are `../artifact/…`; getting the `..` wrong produces exactly
+  // the #824 defect — a link that looks right on disk and 404s once built —
+  // at a depth no existing test covered.
+  for (const { file, href } of categoryHrefs) {
+    it(`${file} → ${href} is a built URL with a source file behind it`, () => {
+      expect(href.startsWith("../artifact/")).toBe(true);
+      expect(href.endsWith(".html")).toBe(true);
+      const name = href.replace(/^\.\.\/artifact\//, "").replace(/\.html$/, "");
+      expect(existsSync(join(ARTIFACTS, `${name}.md`))).toBe(true);
+    });
+  }
+
+  // And the index's pointer AT the category page, which is the one link whose
+  // breakage hides 604 pages behind a 404 rather than one.
+  for (const m of indexSrc.matchAll(/\]\((\.\/category\/[^)]+)\)/g)) {
+    it(`${m[1]} is a built URL with a source file behind it`, () => {
+      expect(m[1].endsWith(".html")).toBe(true);
+      const name = m[1].replace(/^\.\/category\//, "").replace(/\.html$/, "");
+      expect(existsSync(join(CATEGORIES, `${name}.md`))).toBe(true);
     });
   }
 });

@@ -269,3 +269,89 @@ Publisher" reads as a rendering backlog; 51 documents plus 604 registry rows is
 a different decision, and 604 of those are `category: Other` bulk entries that
 no reader opens individually. The gap that matters for a SMART Guideline reader
 is **51**, and 45 of those 51 are Requirements and CodeSystems.
+
+## FULL PARITY — the owner's call, 2026-09-22
+
+Asked with the decomposition above in hand and a recommendation to render the
+70 conformance artefacts and leave the 604 registry rows as index rows. The
+owner chose **all 674**. Recorded as a decision, with its cost, so the
+reasoning does not have to be reconstructed from the diff.
+
+**Built:** 676 pages — the index, **674 artefact pages** (one per artefact),
+and **1 category page**.
+
+### The category page exists because the owner's earlier ruling still holds
+
+`INLINE_LIMIT` is 100, set 2026-09-21 after the first build put the index at
+524 KB with one category 90 % of it. Full parity does not repeal that. So an
+over-limit category now gets **its own page** rather than an inline table, and
+the index links to it.
+
+That block used to read *"None carries a DAK API sidecar, so none has an
+artefact page; they are reachable from the IG's own `artifacts.html`."* **Both
+halves stopped being true**, and a sentence sending a reader upstream for pages
+this site publishes is worse than no sentence — `pb04` pointed at prose.
+
+| | before | after |
+|---|---|---|
+| `index.md` | 48 001 B | **50 579 B** |
+| `category/Other.md` | — | **413 084 B** |
+| artefact pages | 19 | **674** |
+| `docs/` total | ~90 KB | **3.2 MB** |
+
+**The 413 KB page is the honest cost of the choice.** It is opt-in — a reader
+clicks through to it — so the front page stays at 50 KB and the owner's
+original complaint does not return. Said rather than buried.
+
+### Four defects the change would have shipped, all caught
+
+1. **674 pages, 19 links.** The index's row renderer read
+   `a.dak ? link : plain`. Removing only the generation gate would have
+   produced every page and linked a thirty-fifth of them.
+2. **`pages.size - 1` counted artefact pages.** Right while the index was the
+   only non-artefact page; wrong the moment a category page joined it — it
+   reported **675 artefact pages over a corpus of 674**. Now counted from the
+   page map by prefix.
+3. **655 pages of four `*not published for this artefact*` rows.** The DAK
+   table is worth a screen when there are sidecars and is noise otherwise. The
+   absence is now one line — **stated**, not omitted, because a missing section
+   reads as *nobody looked*.
+4. **A `..` at a depth nothing tested.** A category page's links are
+   `../artifact/…`; getting that wrong is exactly issue #824's defect — right
+   on disk, 404 once built — one level down from where the existing assertions
+   looked.
+
+### The reachability invariant replaced a count
+
+`hrefs.length === artifactFiles.length` cannot hold any more: the index links
+70 of 674 and the `Other` page links the rest. Asserting the index alone would
+now assert that the split did not happen.
+
+So the **union** is asserted, in both directions — an artefact page nothing
+links is as much a defect as a link to a page that is not there, and only the
+second 404s loudly; the first just never gets visited. With a vacuity guard
+that the split actually happened, since the union test would otherwise pass
+over an empty category set.
+
+**Falsified by planting each defect in the GENERATOR and regenerating**, which
+is this test file's own convention:
+
+| planted | result |
+|---|---|
+| category links lose the `..` | **2 fail** (and 606 tests vanish — the vacuity guard is what caught that) |
+| index points at the category with a trailing slash | **1 fail** |
+| one artefact gets no page | **3 fail** |
+| restored | **4056 pass / 0 fail** |
+
+### The two-oracle test survives, for a different reason
+
+Neither `dak` nor `materialization.state` gates page generation any more. The
+assertion stays because both still drive what a page **says** — the DAK section
+and the materialization tag. The day they diverge, a page claims a sidecar for
+something whose bytes are elsewhere.
+
+`bun run gates` **122/122**, `bun test smart-trust/` **4056 pass / 0 fail**.
+
+`docs:auto` had to be regenerated: its viewer index counts these pages, and
+`gates` caught it stale at 122. The sweep's own `✗ 1 of 122` line is what said
+so — the wrapper's exit code read 0.
