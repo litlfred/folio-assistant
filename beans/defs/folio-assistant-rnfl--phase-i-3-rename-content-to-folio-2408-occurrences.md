@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rnfl
-title: 'Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)'
-status: todo
+title: Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-18T15:00:27Z
+updated_at: 2026-09-22T15:14:17Z
 parent: folio-assistant-vke6
 ---
 
@@ -104,3 +104,70 @@ now that `folio/` is taken and the directory holds docs + pipeline rather than
 content — which is a design question with the owner, not a rename. **No files
 were renamed and no code was changed**, per the standing rule against
 speculative changes without the author's consent.
+
+
+---
+
+## RE-SCOPED 2026-09-22 — the owner's ruling, and a correction to the options I put to them
+
+Owner, asked what should happen to `cat-harness/content/` now that `folio/` is
+taken: **split it — `docs/` and `pipeline/` to their own homes.**
+
+### The correction, because one option I offered was wrong
+
+I described the docs half as *"`content/docs/` likely belongs merged into the
+existing `cat-harness/docs/`"*. Measured after the ruling, that is wrong, and
+the zero filename collisions that looked reassuring are the evidence:
+
+| directory | what it actually is |
+|---|---|
+| `cat-harness/docs/` | the **Jekyll site** — `Gemfile`, `_config.yml`, `_includes`, `.md` pages |
+| `cat-harness/content/docs/` | **authored content manifests** — subject directories holding 157 `.ts`, 151 generated `.jsonld`, 143 `.md` |
+
+They share a word and nothing else. Merging them would put the folio inside
+its own rendering, which is the split
+[`board-diagram-interchange`](../../cat-harness/skills/folio-core/board-diagram-interchange.md)
+exists to protect: the folio carries what is true, the layout layer carries
+where it was drawn, and the arrow never runs backwards.
+
+So the docs half is **not taken** and goes back to the owner re-framed. Its
+real question is which declared graph kind `content/docs/` is, given it is
+authored, renderable content in an **undeclared** directory.
+
+### Taken now: the pipeline half
+
+`cat-harness/content/pipeline/` → `cat-harness/pipeline/`. Unambiguous: it is
+code, `cat-harness/pipeline/` does not exist, and the name is true of the
+contents.
+
+Measured blast radius:
+
+| measure | count |
+|---|---|
+| files referencing `content/pipeline` | 903 |
+| occurrences | 12,802 |
+| relative imports INTO pipeline from outside | 184 |
+| imports WITHIN pipeline, unaffected by the move | 235 |
+
+The move shortens the path by one segment, so every `../../schemas/…` inside
+pipeline becomes `../schemas/…`.
+
+### The one finding that is not about the rename
+
+**`content/` is not declared in `cat-harness.json`.** There is no entry whose
+`id` or `path` mentions it, so 672 committed files sit in a directory no
+consumer's declaration covers — the `dh4f` shape at directory level. Whatever
+the two halves are renamed to, each needs a declaration or a stated reason it
+has none.
+
+## Done when
+
+- [ ] `cat-harness/content/pipeline/` is `cat-harness/pipeline/`, with the
+      `../../` → `../` depth change applied to every import leaving it
+- [ ] The 184 external imports resolve, and `bun run gates` is green
+- [ ] The **`dh4f` gate**: a run proving each moved tool still reads a
+      NON-EMPTY corpus — a green check is the symptom, not the reassurance
+- [ ] Either `pipeline/` is declared in `cat-harness.json` or the reason it
+      is not is recorded here
+- [ ] The docs half is put back to the owner re-framed, NOT merged into the
+      Jekyll site
