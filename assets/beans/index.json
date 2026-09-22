@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 497,
+      "count": 498,
       "unit": "beans"
     }
   },
@@ -2495,14 +2495,14 @@
     {
       "id": "folio-assistant-bx6q",
       "title": "A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:48:55Z",
-      "updatedAt": "2026-09-21T22:54:21Z",
+      "updatedAt": "2026-09-22T10:08:47Z",
       "preview": "The owner, 2026-09-21: *\"give structed Q&A w/ context. update skills in fedback\nlike this.\"*\n\nThe second clause is a rule and had no home. `symbiotic-interaction` §1 already\nsaid a steer means *\"do not require the author to repeat the correction\"*, but\napplied to the artefact alone that clause only holds inside one session: the\nproposal is fixed, the rule that produced it is not, and a fresh conte",
       "file": "beans/defs/folio-assistant-bx6q--a-steer-that-corrects-a-rule-must-land-in-the-skil.md"
     },
@@ -3280,7 +3280,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T00:47:08Z",
-      "updatedAt": "2026-09-22T00:47:22Z",
+      "updatedAt": "2026-09-22T10:57:18Z",
       "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
       "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
     },
@@ -5640,7 +5640,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:03:07Z",
-      "updatedAt": "2026-09-22T09:03:43Z",
+      "updatedAt": "2026-09-22T10:51:00Z",
       "preview": "`health` reports `staging-preview-size` **critical**: 10 previews, **878.7 MiB**,\npast three-quarters of GitHub's 1 GB Pages limit, which the main site shares.\n\n## Pruning cannot fix it, and the check's own action says to prune\n\nEvery one of the ten belongs to an **open and active** pull request — oldest\nidle 12.9 h, six touched within six minutes of measuring. So the finding's\naction —\n\n> Ask whi",
       "file": "beans/defs/folio-assistant-tebu--staging-previews-are-at-8787-mib-of-a-1-gb-pages-l.md"
     },
@@ -6519,6 +6519,20 @@
       "updatedAt": "2026-09-21T15:29:13Z",
       "preview": "**BASELINE — measured 2026-09-18 on `main`, command `bun run eval:crdm-detect`.**\nDo not quote as a current answer; re-run it.\n\nAll 27 issues in the repo (whole population, not a sample):\nprecision **71%**, recall **63%**, F1 **67%**.\n\nThe failure pattern is worth more than the score:\n- 7 misses, including **#203 itself** — the issue that asked for the capability\n  — and #1, the framework design.\n",
       "file": "beans/defs/folio-assistant-xfoh--crdm-detect-add-missing-exclusions-and-re-measure.md"
+    },
+    {
+      "id": "folio-assistant-xfyk",
+      "title": "ci-health asserts a bean's status in printed output and it went stale — yzsj reads 'is not done' while completed",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:31:57Z",
+      "updatedAt": "2026-09-22T09:39:18Z",
+      "preview": "_2026-09-22T09:45:00Z_ — Found by being misled by it, ~10 minutes before fixing it. `bun run check:ci-health` printed:\n\n> Cancellations NOT listed here are several sessions racing for the publish ref (`yzsj`), **which is a different fix and is not done.**\n\n`yzsj` has been `completed` since 2026-09-21. I read that sentence, opened the bean, and read 200 lines of finished work — including its own cl",
+      "file": "beans/defs/folio-assistant-xfyk--ci-health-asserts-a-beans-status-in-printed-output.md"
     },
     {
       "id": "folio-assistant-xgd8",

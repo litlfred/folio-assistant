@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 122,
+      "count": 123,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -223,6 +223,14 @@
       "graphNode": "schema",
       "summary": "These schemas provide runtime validation and are used by the",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/content-axes.test.ts",
+      "instance": "cat-harness",
+      "name": "content-axes.test",
+      "graphNode": "undeclared",
+      "summary": "The four axes stay four, and each keeps the property that makes it useful.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/content-type.test.ts",
@@ -3846,6 +3854,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/block-kinds.ts#ContentInteractivity",
+      "name": "ContentInteractivity",
+      "module": "cat-harness/schemas/block-kinds.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/block-kinds.ts#ContentProfile",
       "name": "ContentProfile",
       "module": "cat-harness/schemas/block-kinds.ts",
@@ -5649,6 +5670,13 @@
           "array": false
         },
         {
+          "name": "visualisedAs",
+          "type": "z.enum(VISUALISER_KINDS).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "HOW this graph is shown, and what can be done to it."
+        },
+        {
           "name": "readOnly",
           "type": "z.boolean().optional()",
           "optional": true,
@@ -5695,6 +5723,7 @@
       ],
       "unresolved": [],
       "external": [
+        "VISUALISER_KINDS",
         "z"
       ],
       "exported": false
@@ -6570,6 +6599,19 @@
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-union",
       "doc": "What `coverage.visualiser` accepts: one path, or several visualisations.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserKind",
+      "name": "VisualiserKind",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -12880,6 +12922,13 @@
           "doc": "Content type — \"document\" or \"paper\"."
         },
         {
+          "name": "interactivity",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Static, interactive, or undetermined — the FOURTH axis (issue #764, O1)."
+        },
+        {
           "name": "adapter",
           "type": "string",
           "optional": true,
@@ -12984,6 +13033,13 @@
           "type": "z.string().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "interactivity",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Is this folio's content static, or does it carry interfaces?"
         },
         {
           "name": "adapter",
