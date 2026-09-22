@@ -1,10 +1,11 @@
 ---
 # folio-assistant-whbf
 title: 'Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-20T21:10:28Z
-updated_at: 2026-09-20T21:10:28Z
+updated_at: 2026-09-22T06:40:21Z
 parent: folio-assistant-vke6
 ---
 
@@ -136,3 +137,42 @@ rule makes hit-testing, pointer capture and a position store all hand-rolled.
 The remaining three are all optional improvements to a panel that now works.
 This bean is no longer blocking anything, and a future session should weigh
 each on its own rather than treating "the dynamic half" as one deliverable.
+
+## CLAIMED 2026-09-22 — taking LIVE FILTERING only, of the three
+
+Session `017MEZnJxx7WeekiNCabx4hx`, branch `claude/elegant-albattani-0byaig`.
+
+Honouring this bean's own closing instruction — *"a future session should
+weigh each on its own rather than treating 'the dynamic half' as one
+deliverable"* — rather than opening all three.
+
+**Live filtering, because it is the only one of the three where the current
+behaviour MISLEADS.** A reader filters the list, the picture does not move,
+and nothing on the page says why. The bean records that as deliberate (the
+overview shows SCOPE, not filter) and that is defensible as a design, but an
+undisclosed deliberate choice and a bug look identical to the person looking
+at them. The other two are improvements to a panel `qttr` already made
+legible.
+
+Not taking zoom/pan: this bean already argues it is weakened — 0 of 69 modules
+below a 5px glyph at 1280/768/390px after `qttr`, so zoom serves a reader
+wanting LESS detail, which the module filter gives. Not taking alternate
+layouts: separate judgement, separate cost, and it does not fix anything.
+
+### The precondition I have to establish, not assume
+
+This bean conditions live filtering on the panel being **re-renderable
+cheaply**. That is unmeasured. If a facet click means recomputing the layered
+layout for the largest module, the honest outcome may be to report the cost
+and stop rather than ship a panel that stutters.
+
+### What must survive, from the static half
+
+- adaptive granularity (declarations at/under 70 in scope, modules above)
+- the **counted-and-reported** undrawn edges — 446 of 512 here are
+  intra-module, and a mode that drops that report reintroduces the defect
+- reproducibility, and a way back to the arrangement a reader has learned
+
+### Constraint
+
+No CDN, no framework, no build step. Hand-rolled or it does not ship.
