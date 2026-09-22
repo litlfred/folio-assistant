@@ -1,0 +1,37 @@
+{
+  "_comment": "THE BARE FHIR IG LAYER, staged as a top-level directory on the path who-iris, smart-trust, smart-immunizations and smart-base are already on. Created 2026-09-22 on the owner's stack ruling: `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`, no smart-guidelines. It is bean `nsbb`'s 'base', now named: run the FHIR IG Publisher with NO pre-processing and NO post-processing and publish the result, which is how SMART Guidelines were built BEFORE the DAK phases were added -- a shape that demonstrably worked rather than one being invented. IT MUST STAY WHO-FREE. The package here may be referenced BY `authoring-who-smart-guidelines` and may never reference it; a violation fails nothing, the layer simply stops being usable by the non-WHO IG it exists for, which is why `ig-build-pipeline` states the refusal as a checkable list rather than as an intention. DECLARES ONLY `skills/`, because that is all that exists: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
+  "name": "fhir-harness",
+  "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs (bean `t3n8`). `name` stays the machine identifier that filenames and `needs` edges resolve against.",
+  "title": "FHIR IG Harness",
+  "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+  "directories": [
+    {
+      "id": "fhir-ig-skills",
+      "path": "skills/",
+      "dependents": "reproduce",
+      "description": "The `fhir-ig-base` package. Two skills: `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, and `ig-render-jekyll` states the three contracts for rendering an IG's content through just-the-docs -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded.",
+      "graphKinds": ["skills"],
+      "coverage": {
+        "skill": "smart-stack-layering"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — fhir-harness",
+      "description": "Cold start for work in this layer, and its one rule: nothing here may know about WHO."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "fhir-harness",
+      "description": "What the layer is, what it deliberately excludes, and which two steps came down into it from the WHO build."
+    }
+  ],
+  "_needs_comment": "It sits directly on core. NOT on cat-harness: the harness layer is inherited through core rather than declared twice, in the same shape folio-assistant-core uses. Owner's ordering, 2026-09-20: bootstrap, cat-harness, f-a-core, then the layers above.",
+  "needs": ["folio-assistant-core"]
+}

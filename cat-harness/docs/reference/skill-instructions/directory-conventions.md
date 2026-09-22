@@ -496,7 +496,8 @@ The declaration carries three publication fields beside `name`:
 | `canonicalUrl` | where those artefacts live — the base every `@id`/`$id` is minted against |
 | `previewUrl` | where CI previews are served, when that differs |
 
-Modelled on `WorldHealthOrganization/smart-base`'s `dak.json`, which carries
+Modelled on `WorldHealthOrganization/smart-base`'s `dak.json` (ours is
+`dak.config.json` since 2026-09-22; upstream's spelling is unchanged), which carries
 `canonicalUrl`, `publicationUrl` and `previewUrl` and derives its stub by
 stripping the repository's prefix (`smart-base` → `base` →
 `https://smart.who.int/base`), so stub, directory and published path are one
@@ -530,12 +531,15 @@ and there cannot be one:
 | marker | who owns the name |
 |---|---|
 | `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
-| `dak.json` | WHO's `smart-base` |
+| `dak.config.json` | **ours** — bean `cz17`. Renamed from `dak.json` on 2026-09-22, for consistency with `<name>.config.json`. WHO's `smart-base` still writes and reads `dak.json`, and nothing upstream has been renamed; that divergence is deliberate pre-work, recorded on `DAK_MARKER_FILENAME` |
 | `<name>.json`, `<name>.config.json` | ours |
 | `beans.json`, `todos.json` | ours, and named after the graph KIND |
 
-Two of those are not ours to rename, so any rule claiming to cover the set
-would be false on arrival. **So the type declares its filename, and the
+One of those is not ours to rename — `sushi-config.yaml`, whose name SUSHI
+owns — so any rule claiming to cover the set would still be false on arrival.
+It was two until 2026-09-22, when `dak.json` was renamed on the owner's word;
+that it *could* be renamed is what bean `cz17` settled, against this table's
+own earlier claim. **So the type declares its filename, and the
 convention is that rule rather than a spelling.** What a new type copies is
 *say what your marker is called*, not a pattern to imitate.
 

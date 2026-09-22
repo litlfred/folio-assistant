@@ -1,12 +1,15 @@
 ---
-name: smart-stack-layering
-description: >
-  Which of the five layers a WHO SMART asset, rule, script or page belongs to,
-  and the one question that settles it. Read before adding anything to
-  fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a
-  per-IG harness, and before moving a pre/post-processing step.
+layout: default
+title: 'smart-stack-layering'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`skills/authoring-who-smart-guidelines/smart-stack-layering.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/smart-stack-layering.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/smart-stack-layering.md){: .fa-edit-source }
+
+{% raw %}
 # smart-stack-layering
 
 > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines`
@@ -138,3 +141,4 @@ place to state it is a second place for it to be wrong.
 
 Conventions for the declaration itself:
 [`directory-conventions`](../folio-core/directory-conventions.md).
+{% endraw %}
