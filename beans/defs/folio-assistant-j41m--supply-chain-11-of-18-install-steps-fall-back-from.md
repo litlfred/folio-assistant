@@ -55,6 +55,38 @@ retry. That distinction is this bean's actual deliverable.
       owner's call** (below). Not shipped: adding a CI step on my own initiative
       is the speculative change this repo forbids
 
+## CORRECTION, 2026-09-22 — "11 of 18 install steps" had the wrong denominator
+
+Re-derived adversarially in the spirit of `w4tq`, whose lesson is *counting
+things that match a SHAPE rather than things that satisfy the CONTRACT*. This
+bean did it one workflow over.
+
+**18 was the count of LINES carrying `--frozen-lockfile`, not of install
+steps.** 25 lines mention `bun install`. The eleven and the shape of the fix
+are unaffected — but choosing that denominator excluded, and therefore hid,
+the rows it did not cover:
+
+**Three install steps that never pinned at all.**
+
+| site | what it is |
+|---|---|
+| `release-folio-assistant.yml:76` | `cd $PKG_DIR && bun install` — `PKG_DIR` is `.`, where `bun.lock` exists. **The release workflow**, which is the worst possible place for an unpinned resolve. **Fixed.** |
+| `publish.yml:570` | `bun install \|\| npm install` — and the step's `working-directory` may not exist. Baselined; bean `u9r9` |
+| `discoverability-docs.yml:210` | same. Baselined; bean `u9r9` |
+
+`check:lockfile-pinning` now asks **both** questions and keeps them apart: a
+pin that **degrades** fails always and is never baselined; an install with
+**no pin** is baselined and a NEW one fails. The split is not squeamishness —
+a degrading pin has no defensible instance, while an unpinned install
+sometimes IS right, which is what the guard's own `::warning::` branch does.
+
+Both branches falsified: a new unpinned install fails by name, a restored
+fallback fails by file and line, and removing each turns it green.
+
+**The lesson is the denominator, not the count.** A ratio picks its own
+denominator, and a denominator chosen from the numerator's shape cannot report
+what it excluded.
+
 ## Two classes, and class A is not about lockfiles at all
 
 **Class A — 4 sites** (`lean_ci`, `publish`, `blueprint`, `lean-build`):

@@ -35,6 +35,11 @@ describe("a pin that falls back is not a pin", () => {
   test("a pin with no fallback is clean", () => {
     expect(scanWorkflows(workflows("        run: bun install --frozen-lockfile\n"))).toEqual([]);
   });
+
+  test("a degrading pin is reported as `degrading`, which is never baselined", () => {
+    const f = scanWorkflows(workflows("        run: bun install --frozen-lockfile || bun install\n"));
+    expect(f[0].kind).toBe("degrading");
+  });
 });
 
 describe("`cd X && A || B` runs B in the wrong directory", () => {
@@ -50,7 +55,17 @@ describe("`cd X && A || B` runs B in the wrong directory", () => {
     expect(scanWorkflows(workflows("          cd content && bun install --frozen-lockfile\n"))).toEqual([]);
   });
 
-  test("the guarded form this repo now uses is clean", () => {
+  test("an install with NO pin at all is reported — the row the first denominator hid", () => {
+    // The first version of this gate counted LINES carrying --frozen-lockfile
+    // and called that the set of install steps. It was not: three steps never
+    // pinned at all, one of them in the release workflow, and choosing the
+    // wrong denominator is what hid them.
+    const f = scanWorkflows(workflows("        run: cd $PKG_DIR && bun install\n"));
+    expect(f).toHaveLength(1);
+    expect(f[0].kind).toBe("unpinned");
+  });
+
+  test("the guarded form this repo now uses carries no DEGRADING finding", () => {
     const guarded = [
       "        run: |",
       "          if [ ! -d content ]; then",
@@ -63,7 +78,13 @@ describe("`cd X && A || B` runs B in the wrong directory", () => {
       "          fi",
       "",
     ].join("\n");
-    expect(scanWorkflows(workflows(guarded))).toEqual([]);
+    // The guard's deliberate fallback branch IS an unpinned install and is
+    // reported as one — baselined rather than failed, because failing on it
+    // would make the honest branch unreachable. What must NOT appear is a
+    // `degrading` finding.
+    const f = scanWorkflows(workflows(guarded));
+    expect(f.map((x) => x.kind)).toEqual(["unpinned"]);
+    expect(f[0].text).toBe("(cd content && bun install)");
   });
 });
 
@@ -86,6 +107,6 @@ describe("the three states the guard keeps apart", () => {
     expect(guarded).toContain("::notice::");
     expect(guarded).toContain("::warning::");
     expect(guarded).toContain("--frozen-lockfile");
-    expect(scanWorkflows(workflows(guarded))).toEqual([]);
+    expect(scanWorkflows(workflows(guarded)).every((f) => f.kind === "unpinned")).toBe(true);
   });
 });
