@@ -67,6 +67,7 @@
   "declaredKinds": [
     "beans",
     "cat-harness",
+    "code",
     "docs",
     "external-schema",
     "folio",
@@ -132,7 +133,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 513,
+      "count": 522,
       "unit": "beans"
     },
     {
@@ -943,12 +944,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -971,12 +972,15 @@
           "kind": "processes"
         },
         {
+          "kind": "tools"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/smart-base/"
         }
       ],
       "findings": [
-        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, library, methodology, processes. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 5 graph(s) with no published viewer — fhir-artifact-index, library, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: no avatar declared for this instance — showing the generic mark.",
         "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/smart-base/) rather than the instance's own themed root."
@@ -1023,6 +1027,50 @@
       ],
       "findings": [
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
+      ]
+    },
+    {
+      "name": "fhir-harness",
+      "title": "FHIR IG Harness",
+      "label": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "skills"
+        },
+        {
+          "kind": "tools"
+        }
+      ],
+      "findings": [
+        "fhir-harness: declares 2 graph(s) with no published viewer — skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: no avatar declared for this instance — showing the generic mark."
       ]
     },
     {
@@ -1103,12 +1151,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 40
+          "value": 44
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 23
+          "value": 24
         },
         {
           "id": "views",
@@ -1124,6 +1172,9 @@
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/"
+        },
+        {
+          "kind": "code"
         },
         {
           "kind": "docs",
@@ -1205,7 +1256,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 7 graph(s) with no published viewer — code, external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {

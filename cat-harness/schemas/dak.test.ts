@@ -32,7 +32,7 @@ function inTempRepo(contents: string | undefined, run: (root: string) => void): 
 
 describe("the marker", () => {
   test("is a fixed filename, so a consumer knows what to open first", () => {
-    expect(DAK_MARKER_FILENAME).toBe("dak.json");
+    expect(DAK_MARKER_FILENAME).toBe("dak.config.json");
   });
 
   test("projects to WHO's own logical model, not a folio-local type", () => {

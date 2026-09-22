@@ -54,6 +54,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [WHO IRIS]({{ '/cat-harness/catalogue/who-iris/' | relative_url }})
 
+### `code`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `docs`
 
 3 of 3 published.
@@ -195,11 +202,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-1 of 5 published.
+1 of 6 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/bootstrap-render/' | relative_url }})
+- FHIR IG Harness — *declared, not published*
 - kg-navigation — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*
@@ -220,10 +228,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 1 published.
+1 of 3 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/index.md' | relative_url }})
+- FHIR IG Harness — *declared, not published*
+- SMART Base — *declared, not published*
 
 ### `translation-sources`
 

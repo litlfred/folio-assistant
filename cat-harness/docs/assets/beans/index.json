@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 513,
+      "count": 522,
       "unit": "beans"
     }
   },
@@ -657,6 +657,20 @@
       "file": "beans/defs/folio-assistant-35kc--staging-parity-a-preview-serves-none-of-the-namesp.md"
     },
     {
+      "id": "folio-assistant-3d78",
+      "title": "ingest:ig:check exited 2 on every run — three guards missed it, each differently",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:10:53Z",
+      "updatedAt": "2026-09-22T10:10:53Z",
+      "preview": "A registered script nobody ran, which would have failed if anybody had. Found 2026-09-22 while working 10s1 and recorded then; fixed now.\n\n## The defect\n\n`ingest:ig:check` was registered as:\n\n    bun run …/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --check --source\n\n`--source` takes a value and had none, so **every run** took the\nmissing-argument branch, printed a usage string and ",
+      "file": "beans/defs/folio-assistant-3d78--ingestigcheck-exited-2-on-every-run-three-guards-m.md"
+    },
+    {
       "id": "folio-assistant-3g13",
       "title": "PLATFORM BOUNDARY: bpmn-authoring and dmn-authoring sit in a CONTENT-TYPE package",
       "status": "completed",
@@ -1019,6 +1033,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"soverign cloud: hosted git server, staging and publcation URLs follows different\ndeployment pattern (jusidiction defined). in L4-L5 context may have data stores\nlike hapi. for (public health) portals, (health) digital wallets),etc. or health\nworker decision spport. bean up to may strwperson and create issue to r",
       "file": "beans/defs/folio-assistant-4y2i--topology-sovereign-cloud-hosted-forge-jurisdiction.md"
+    },
+    {
+      "id": "folio-assistant-4yvj",
+      "title": "KG DOCS: the IG Publisher and FHIR content as knowledge-graph documentation under docs/",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:24:34Z",
+      "preview": "Knowledge-graph documentation on the **IG Publisher** and on **FHIR content** —\nunder `docs/`, reachable, and generated where it can be.\n\nToday the Publisher appears in this repository as a `java -jar` line in\n`ig-publication` and a Docker image name in someone else's workflow. Nothing\nsays what it *is* as a node in the graph: what it consumes, what it emits, what\nit resolves, or what it cannot be",
+      "file": "beans/defs/folio-assistant-4yvj--kg-docs-the-ig-publisher-and-fhir-content-as-knowl.md"
     },
     {
       "id": "folio-assistant-502c",
@@ -2213,6 +2241,20 @@
       "file": "beans/defs/folio-assistant-a98i--translate-kg-viewer-extract-refreshes-every-pot-bu.md"
     },
     {
+      "id": "folio-assistant-a9tx",
+      "title": "IG PUBLISHER FORK: requirements for an agent working a local experimental fork, and what the AST must carry",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:54:07Z",
+      "preview": "Requirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than an upstream ask alone\n\nMeasured, from `nsbb`, using the Publisher's current metadata exports as an AST\nproxy across two real IGs:\n\n| export | smart-trust | smart-immunizations |\n|---|---|---|\n| `valu",
+      "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
+    },
+    {
       "id": "folio-assistant-aazi",
       "title": "WORKFLOW-STATEMGMT RENDERING: a status dashboard atop the root README, and beans/todos mapped to their BPMNs",
       "status": "todo",
@@ -2323,6 +2365,20 @@
       "updatedAt": "2026-09-19T12:31:11Z",
       "preview": "## What\n\n`uploads/` and `library/` are two stages of ONE pipeline, but there is no single\nentry point that takes a file across. Today the move is done by\n`scripts/migrate-uploads-to-library.py` plus whatever the ingesting agent\nremembers to run.\n\n## Why it matters more than it looks\n\n**The corpus-grep checklist searches `library/` only.** Anything still in\n`uploads/` is invisible to every \"has the",
       "file": "beans/defs/folio-assistant-apui--ingest-one-pipeline-entry-point-uploads-to-library.md"
+    },
+    {
+      "id": "folio-assistant-aqb6",
+      "title": "PIPELINE INVENTORY: the 13 DAK pre/post-processing steps, each assigned to a layer and written into the skill that owns it",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:23:57Z",
+      "preview": "Assign every step of the WHO build to exactly one layer, and write each into\nthe skill that owns its phase.\n\n**This is the falsification test for the stack**, not documentation for its own\nsake: if a step cannot be placed, or two siblings both need it, the sibling\nsplit is wrong.\n\n## Read, not inferred\n\n`WorldHealthOrganization/smart-base` — `.github/workflows/ghbuild.yml` and\n`input/scripts/` — o",
+      "file": "beans/defs/folio-assistant-aqb6--pipeline-inventory-the-13-dak-prepost-processing-s.md"
     },
     {
       "id": "folio-assistant-augv",
@@ -4045,6 +4101,20 @@
       "file": "beans/defs/folio-assistant-km90--beans-in-the-rendering-pipeline-beans-has-no-publi.md"
     },
     {
+      "id": "folio-assistant-kn0t",
+      "title": "PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:54:07Z",
+      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\nOwner: *\"i want to slowly get rid of IG publisher in the publication/iteration\npahse… we can use this for iterative delta's (if we dont care about\nindexing/versioning so much in STAGING, we need full IG AST rereun)\"*, and on\nsmart-immunizations: *",
+      "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
+    },
+    {
       "id": "folio-assistant-koth",
       "title": "check:undeclared-files reports a gitignored directory, so stale __pycache__ reds the gate forever",
       "status": "completed",
@@ -4565,14 +4635,14 @@
     {
       "id": "folio-assistant-nsbb",
       "title": "IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
-      "parent": "folio-assistant-yj32",
+      "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T15:37:14Z",
-      "updatedAt": "2026-09-21T15:37:14Z",
+      "updatedAt": "2026-09-22T19:07:23Z",
       "preview": "Owner, 2026-09-21, verbatim:\n\n> 'that should be the basic bare FHIR IG (not DAK, not SMART) pipeline= running fhir IG, no pre-post processing and outpuing to gh-pages (how smart-guidelines generated before pre/post peocess) for those what are not WHO specfic.... those can be upgraded to do pre/post, but would need chnages/overlays .'\n\n## The layering\n\n**Base — generic, not WHO.** Run the FHIR IG P",
       "file": "beans/defs/folio-assistant-nsbb--ig-pipeline-layering-a-bare-fhir-ig-pipeline-is-th.md"
     },
@@ -4747,14 +4817,14 @@
     {
       "id": "folio-assistant-osyc",
       "title": "ROAST: adversarial pass over this session's navbar work, the skill-reachability bean, and the claims made to the owner",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:43:53Z",
-      "updatedAt": "2026-09-21T21:43:53Z",
+      "updatedAt": "2026-09-22T11:04:11Z",
       "preview": "## What\n\nOwner, 2026-09-21: *\"queue roast\"* — queued, not started, per the standing\ninstruction to queue a new task rather than pivot.\n\nAn adversarial pass over what this session produced and, more usefully, over\nwhat it CLAIMED. Scope is deliberately the session rather than a file, because\nthe failures worth finding here were failures of verification and of reading,\nnot of code.\n\n## Where to aim ",
       "file": "beans/defs/folio-assistant-osyc--roast-adversarial-pass-over-this-sessions-navbar-w.md"
     },
@@ -5307,6 +5377,20 @@
       "updatedAt": "2026-09-21T15:35:10Z",
       "preview": "**Owner's decision, 2026-09-21: C now, B as the destination.** Answering the\nthree-way question `zlmp` parked — who registers a BUILT-IN adapter's\ncontributions. C is built-ins self-registering at the outermost layer; B is no\nbuilt-ins at all, every adapter a real dependency with a `contributes` module.\n\n## Why this is wiring, not extending\n\n`schemas/contributions.ts` is 370 lines and complete — c",
       "file": "beans/defs/folio-assistant-rfev--c-built-ins-self-register-at-the-outermost-layer-w.md"
+    },
+    {
+      "id": "folio-assistant-rjug",
+      "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T20:23:45Z",
+      "preview": "Three things the pipeline already produces and this graph cannot hold. Proposal\nwith **options**, because at least two of the three have more than one\ndefensible shape and picking silently is how a kind gets registered wrong.\n\n## 1. Metadata indexes\n\nAlready partly solved: `fhir-artifact-index` exists, registered\n`renderable: false`, reconstructed from four partial views with `provenance`\nnaming t",
+      "file": "beans/defs/folio-assistant-rjug--schema-proposal-metadata-indexes-binary-releases-a.md"
     },
     {
       "id": "folio-assistant-rkqp",
@@ -5997,6 +6081,20 @@
       "file": "beans/defs/folio-assistant-ugid--workflow-package-a-workflow-sub-graph-in-cat-harne.md"
     },
     {
+      "id": "folio-assistant-uhkv",
+      "title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:07:55Z",
+      "preview": "## The owner's ruling, verbatim\n\nParaphrase would lose the shape, and the shape is the whole decision:\n\n> `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.\n\nGiven 2026-09-22, in answer to four options offered on the same question. The\noption chosen was NOT among the four — the owner supplied a fifth, and the\ndifference matters: every option offered k",
+      "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
+    },
+    {
       "id": "folio-assistant-uhzh",
       "title": "BOOTSTRAP LOGGING: log-message sub-process, skill and Tool an Initiator can reach",
       "status": "completed",
@@ -6505,6 +6603,20 @@
       "file": "beans/defs/folio-assistant-wlqd--skillsremote-packages-is-declared-but-nothing-sync.md"
     },
     {
+      "id": "folio-assistant-wm63",
+      "title": "FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, between core and smart-base",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:07:23Z",
+      "updatedAt": "2026-09-22T19:23:56Z",
+      "preview": "`fhir-harness` — the layer bean `nsbb` called \"the bare FHIR IG pipeline\", now\nnamed by the owner's stack ruling of 2026-09-22.\n\n## What it is\n\nSUSHI → IG Publisher → Jekyll → a pages branch. **No pre-processing and no\npost-processing.** This is how SMART Guidelines were built before the DAK\nphases were added, so it is a shape that demonstrably worked rather than one\nbeing invented.\n\n## The defini",
+      "file": "beans/defs/folio-assistant-wm63--fhir-harness-the-bare-fhir-ig-pipeline-as-its-own.md"
+    },
+    {
       "id": "folio-assistant-wp49",
       "title": "TEST MODE: benchmarking output is a report, and deliberately not KG content",
       "status": "todo",
@@ -6897,6 +7009,20 @@
       "updatedAt": "2026-09-21T07:38:38Z",
       "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
       "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
+    },
+    {
+      "id": "folio-assistant-ylj7",
+      "title": "UNCLAIMED CODE: 85% of this repository's code sits in no declared directory — declare them, do not move them",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T19:40:16Z",
+      "updatedAt": "2026-09-22T20:51:42Z",
+      "preview": "The owner, 2026-09-22: *\"QA - unclaimed code. all src under `<stub>/src` as\ncontroleed dir? does that work?\"*\n\n**The mechanism works. The destination does not, and the measurement says why.**\n\n## Measured before answering\n\n`.ts` files inside a **declared** directory, repository-wide:\n\n| instance | directory | kinds | files |\n|---|---|---|---|\n| cat-harness | `schemas/` | schemas, cat-harness | 124",
+      "file": "beans/defs/folio-assistant-ylj7--unclaimed-code-85-of-this-repositorys-code-sits-in.md"
     },
     {
       "id": "folio-assistant-yt7j",
