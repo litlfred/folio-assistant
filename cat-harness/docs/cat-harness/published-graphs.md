@@ -208,11 +208,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `uploads`
 
-1 of 3 published.
+2 of 3 published.
 {: .fa-hx-dim }
 
 - [folio-assistant (cat-harness)]({{ '/uploads/' | relative_url }})
-- folio-assistant — *declared, not published*
+- [folio-assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - who-iris — *declared, not published*
 
 ### `voices`

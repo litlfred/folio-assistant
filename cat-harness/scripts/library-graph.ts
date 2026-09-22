@@ -416,7 +416,29 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       }
     }
 
-    const files = filesIn(upDir);
+    const loose = filesIn(upDir);
+    // A SIDECAR IS NOT A QUEUED DOCUMENT.
+    //
+    // `<source>.extraction.json` describes the capture of `<source>`; counting
+    // it as a unit of its own is the same error `UploadItem`'s own note records
+    // for an intake's declared files, and that note names THIS case in the same
+    // breath: *"counting the `.extraction.json` sidecars beside them would have
+    // made it 7."* The intake half was handled when it was written; the loose
+    // half was not, so a queue of fifteen sources counted as thirty and the
+    // uploads view's headline — the number the whole page exists to state —
+    // was inflated by its own metadata. Found by rendering it (issue #836).
+    //
+    // Keyed on the SOURCE being present, so an ORPHAN sidecar whose source has
+    // gone stays visible as a unit rather than vanishing. A file nothing
+    // accounts for is precisely what a queue view exists to surface, and
+    // silently dropping it would be this defect with the sign flipped.
+    const present = new Set(loose);
+    const files = loose.filter((f) => {
+      const source = f.endsWith(".extraction.json")
+        ? f.slice(0, -".extraction.json".length)
+        : "";
+      return source === "" || !present.has(source);
+    });
     for (const file of files) {
       const hit = named.get(file);
       if (hit) {
