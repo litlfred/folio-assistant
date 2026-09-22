@@ -12,9 +12,6 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { readDeclaration } from "./cat-harness.js";
-// `folio` is registered by core on import and this instance declares a folio
-// graph, so without this `readDeclaration` throws on a valid declaration.
-import "./folio-graph-kind.js";
 import {
   THEME_LAYOUTS,
   ResolvedThemeSchema,

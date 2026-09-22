@@ -14,7 +14,6 @@ import { join, resolve } from "node:path";
 
 import { libraryIdsIn, scanLibraryRefs, type RefSource } from "../library-refs.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 /** READ, never spelled: `site-dir-single-answer` is a gate, and it is right. */

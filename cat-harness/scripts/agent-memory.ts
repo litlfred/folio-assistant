@@ -68,19 +68,6 @@ import {
 } from "../schemas/memory.js";
 import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { portableSegment } from "../schemas/portable-path";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), and `directoriesForGraph` reads the WHOLE declaration,
-// which refuses an unregistered kind. Needed here the moment this module
-// started asking the declaration a question rather than composing a path —
-// and it surfaced the same hour, when `main` declared a `folio` directory.
-//
-// The old `kgRoots` path swallowed it: `kgDirectories` wraps the read in
-// try/catch and returns [] on a throw, so an unreadable declaration produced
-// "no memory directories" rather than an error. That is the quieter bug of
-// the two, and worth naming: this import is not a workaround for a stricter
-// reader, it is what the reader was always entitled to expect.
-import "../schemas/folio-graph-kind.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 /**

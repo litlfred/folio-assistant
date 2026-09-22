@@ -192,3 +192,44 @@ Every green result reported on #858 between 08:14 and the final merge was a
 and **CI confirmed none of it**. That is not a reporting failure, but it is a
 weaker claim than it reads as, and the difference was invisible until somebody
 went looking for runs that did not exist.
+
+### The control, 2026-09-22 09:36 — hypothesis confirmed
+
+The note above inferred the mechanism from a correlation: #858 was
+`mergeable_state: "dirty"` and its `pull_request` workflows had stopped. That is
+suggestive, not conclusive — a GitHub-side outage or a queue backlog would look
+the same from here, and `ci-health`'s own first rule is that a
+could-not-determine is never rendered as a finding.
+
+**#899 is the control.** Same repository, same workflows, same branch name, a
+new PR opened minutes later with **0 conflicts** against main. Within one
+minute it had **five check runs** — `TypeScript — tests, lint, types`,
+`End-to-end + accessibility`, and the Python / Rust / Lean gates — every one of
+them `pull_request`-triggered, and every one of them a workflow that had fired
+nothing on #858 for six consecutive pushes.
+
+So the variable is mergeability, not the forge and not the clock:
+
+| PR | conflicts vs main | `pull_request` workflow runs |
+|---|---|---|
+| #858, 08:14 → 09:34 | yes | **0 across 6 pushes** |
+| #899, 09:35 | no | **5 within one minute** |
+
+That is what makes this worth building a detector for rather than filing as
+weather. The gap is real, reproducible, and invisible from a checkout — and
+the only reason it was noticed at all is that somebody listed workflow runs and
+saw the newest was forty minutes old.
+
+### A second cost, measured after the merge
+
+**The staging preview is deleted when its PR closes.** `#858`'s tree went at
+09:36 — `staging(cleanup): remove STAGING/claude-determined-euler-gqhkk0 (PR
+#858 closed)` — which is correct behaviour and the right default.
+
+But it means a preview that only became reachable AFTER the conflict cleared
+(09:05, the first staging deploy in fifty minutes) existed for about half an
+hour and was gone before anybody looked. The rendered `/processes/` page has
+now been unverifiable twice for two different reasons: first because staging
+never ran, then because its output was swept. Not a defect to fix here —
+recorded so the next agent knows the preview is a *perishable* artefact and
+looks while it exists.

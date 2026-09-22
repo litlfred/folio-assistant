@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -34,6 +34,12 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 const SITE = siteDirFor(ROOT);
+// The published site directory, ABSOLUTE. Named for what it holds: the first
+// version called this `SITE_REL` while holding an absolute path and was then
+// joined onto the repo root again, producing
+// `/home/user/folio-assistant/home/user/folio-assistant/...`. A name that
+// lies about a path is a name that gets joined wrongly.
+const SITE_ABS = join(ROOT, SITE);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
@@ -310,5 +316,147 @@ test.describe("a hostile href never reaches the glass", () => {
     await page.locator(".fa-glass-handle").click();
     await expect(page.locator('.fa-glass-asset[data-fa-asset="ok/relative"] a'))
       .toHaveAttribute("href", "/who-iris/item-a.html");
+  });
+});
+
+test.describe("rows that are rebuilt, which is what the real library view does", () => {
+  /**
+   * `gen-library-viz` renders rows client-side and replaces them WHOLESALE on
+   * every filter keystroke and every sort — `$("listing").innerHTML = …`.
+   *
+   * Every spec above uses static fixture rows, and that is exactly why the
+   * first implementation's per-row `document.addEventListener` passed all 18
+   * of them while being an unbounded leak on the real page. Bean `ebvl`. The
+   * fixture below is the shape the author did not have in mind.
+   */
+  const rebuild = async (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const body = document.querySelector("tbody")!;
+      body.innerHTML = body.innerHTML; // eslint-disable-line no-self-assign
+    });
+
+  test("the control survives a wholesale re-render", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await rebuild(page);
+    await expect(page.locator(`${rowA} .fa-pullout`)).toHaveText("Pull out to folio");
+  });
+
+  test("and state survives it — a rebuilt row still knows the asset is the reader's", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await rebuild(page);
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+    await expect(page.locator(`${rowA} .fa-pullout-state`)).toHaveText("On your folio glass");
+  });
+
+  test("a rebuilt row is still clickable — delegation, not a re-bound handler", async ({ page }) => {
+    await serve(page, LIBRARY);
+    await rebuild(page);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+  });
+
+  test("ten re-renders leave ONE control per row, not ten", async ({ page }) => {
+    // The visible half of the leak. The listener half cannot be counted from
+    // here, which is why the fix is structural: delegation has no per-row
+    // registration to leak.
+    await serve(page, LIBRARY);
+    for (let i = 0; i < 10; i++) await rebuild(page);
+    await expect(page.locator(`${rowA} .fa-pullout`)).toHaveCount(1);
+    await expect(page.locator(".fa-pullout")).toHaveCount(2); // two rows
+  });
+
+  test("the painter does not re-enter on its own mutations", async ({ page }) => {
+    // The observer watches childList; the painter writes textContent, which
+    // IS a childList mutation. Unguarded, it re-enters and never returns —
+    // measured, not feared: the first spec run hung and was killed. If this
+    // regresses, this spec times out rather than failing quietly.
+    await serve(page, LIBRARY);
+    await page.locator(`${rowA} .fa-pullout`).click();
+    await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "glass");
+    // The page is still responsive: a second interaction completes.
+    await page.locator(`${rowB} .fa-pullout`).click();
+    await expect(page.locator(rowB)).toHaveAttribute("data-fa-folio-state", "glass");
+  });
+});
+
+test.describe("the REAL generated library view, not a fixture", () => {
+  /**
+   * Everything above runs against fixtures this file writes — which is the
+   * author's idea of the page. `check-invocation-parity`'s standing lesson,
+   * and it has already cost this feature twice: #890's static rows hid a
+   * per-row listener leak, and its fixture had no re-render at all.
+   *
+   * So this reads the page `gen-library-viz` actually wrote, with the rows
+   * it actually emits, rendered by its own client-side code.
+   */
+  const VIEW = join(SITE_ABS, "cat-harness", "library", "who-iris", "index.html");
+  // Read from the page's OWN `DATA_HREF` rather than guessed: the first
+// version guessed `assets/cat-harness/library/who-iris/`, the real path is
+// `assets/library/`, and a wrong guess serves `{}` — which renders an empty
+// corpus and would have made every spec below pass over nothing.
+const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
+
+  const serveReal = async (page: import("@playwright/test").Page) => {
+    const html = readFileSync(VIEW, "utf8");
+    const data = existsSync(PROJECTION) ? readFileSync(PROJECTION, "utf8") : "{}";
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.pathname.endsWith("assets/css/docs-ui.css")) {
+        return route.fulfill({ status: 200, contentType: "text/css", body: CSS });
+      }
+      if (url.pathname.endsWith("assets/js/docs-ui.js")) {
+        return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
+      }
+      if (url.pathname.endsWith(".json")) {
+        return route.fulfill({ status: 200, contentType: "application/json", body: data });
+      }
+      return route.fulfill({ status: 200, contentType: "text/html", body: html });
+    });
+    await page.goto("http://127.0.0.1:8080/cat-harness/library/who-iris/index.html");
+    await page.waitForLoadState("networkidle");
+  };
+
+  test("the generated page exists and carries the mount", () => {
+    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run library:viz\``).toBe(true);
+    expect(readFileSync(VIEW, "utf8")).toContain("data-fa-folio-mount");
+  });
+
+  test("its rows declare themselves, and the folio decorates them", async ({ page }) => {
+    await serveReal(page);
+    const rows = page.locator("[data-fa-library-item]");
+    await expect(rows.first()).toBeVisible();
+    await expect(page.locator("[data-fa-library-item] .fa-pullout").first())
+      .toHaveText("Pull out to folio");
+  });
+
+  test("the glass comes down on it — the mount really resolved its root", async ({ page }) => {
+    await serveReal(page);
+    await expect(page.locator(".fa-glass-handle")).toBeVisible();
+  });
+
+  test("pulling a real entry out puts it on the glass", async ({ page }) => {
+    await serveReal(page);
+    const first = page.locator("[data-fa-library-item]").first();
+    const key = await first.getAttribute("data-fa-library-item");
+    await first.locator(".fa-pullout").click();
+    await page.locator(".fa-glass-handle").click();
+    await expect(page.locator(`.fa-glass-asset[data-fa-asset="${key}"]`)).toBeVisible();
+  });
+
+  test("and FILTERING — the re-render that a fixture cannot exercise", async ({ page }) => {
+    // The whole reason `ebvl` existed. `renderList` replaces the tbody on
+    // every keystroke; the control must come back and the state with it.
+    await serveReal(page);
+    const first = page.locator("[data-fa-library-item]").first();
+    const key = await first.getAttribute("data-fa-library-item");
+    await first.locator(".fa-pullout").click();
+    await expect(page.locator(`[data-fa-library-item="${key}"]`))
+      .toHaveAttribute("data-fa-folio-state", "glass");
+
+    await page.locator("#q").fill("a");
+    await page.locator("#q").fill("");
+    await expect(page.locator(`[data-fa-library-item="${key}"] .fa-pullout-state`))
+      .toHaveText("On your folio glass");
   });
 });

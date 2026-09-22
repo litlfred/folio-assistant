@@ -23,7 +23,6 @@ import {
   prunableDashboards,
 } from "../state-visualizer.ts";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));

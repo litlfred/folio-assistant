@@ -13,11 +13,6 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
-// The `folio` kind is registered by CORE as a load-time side effect. Without
-// this import `directoryForGraph` cannot read a declaration that names it —
-// which is the fragility `ot9a` recorded, and which `folioDir` now refuses to
-// paper over.
-import "./folio-graph-kind.js";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 /** A repository root with an optional declaration. */
