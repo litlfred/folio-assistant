@@ -707,7 +707,7 @@ export function workflowDirs(root: string): string[] {
   //
   // `skills/` reaches `processes/` by the CONVENTION in the first
   // branch; since the 2026-09-21 split `processes/` is also declared in
-  // its own right, kind `workflows`, and reaches itself by the second. One
+  // its own right, kind `processes`, and reaches itself by the second. One
   // directory, two routes, and every caller here walks what it is given — so
   // the duplicate arrived in the export as 1,354 nodes sharing 677 `@id`s,
   // which is the one thing a JSON-LD consumer may not be handed.

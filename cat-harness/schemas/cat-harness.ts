@@ -4504,10 +4504,16 @@ export const KG_GRAPH_KIND = "cat-harness";
  * still spells a skill directory that way, and dropping it would make every
  * unmigrated instance's skills unreachable rather than merely unclassified.
  *
- * `workflows` and `scenarios` are NOT here, and that is the split doing its
- * job: `processes/` holds 51 `.bpmn` files and `scenarios/` holds one
- * `roles.json`, so neither ever contributed a skill body — they were scanned
- * only because they sat inside a directory that did.
+ * `processes` and `scenarios` are NOT here, and that is the split doing its
+ * job: `processes/` holds only `.bpmn` and `scenarios/` only `roles.json`, so
+ * neither ever contributed a skill body — they were scanned only because they
+ * sat inside a directory that did.
+ *
+ * No count on purpose. This said "51 `.bpmn` files" and the directory holds
+ * 50 — a number that was either wrong when written or true for an afternoon,
+ * and AGENTS.md's rule for exactly this is to count the directory rather than
+ * quote the paragraph. It also still said `workflows` after that kind was
+ * renamed to `processes`.
  */
 export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
 

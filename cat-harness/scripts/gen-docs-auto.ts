@@ -250,11 +250,16 @@ export const TYPES: AutoDocType[] = [
     extracts: "every BPMN process, with its own documentation, its lanes, and the skills its activities name",
     collect(): AutoDocItem[] {
       const items: AutoDocItem[] = [];
-      // BOTH the split kind and the umbrella it came out of. `workflows` is
+      // BOTH the split kind and the umbrella it came out of. `processes` is
       // where an in-tree diagram lives after 2026-09-21; `cat-harness` is
       // where a downstream instance's still is, and dropping it would make
       // this index silently empty for them — which is worse than useless,
       // because an empty index reads as "this instance has no processes".
+      //
+      // This comment said `workflows` until the kind was renamed later the
+      // same day, while the call below already read `processes` — a comment
+      // naming a kind the code does not use is the one kind of staleness a
+      // type checker cannot catch.
       const seen = new Set<string>();
       for (const d of [...declaredDirectories("processes"), ...declaredDirectories("cat-harness")]) {
         if (seen.has(d.absPath)) continue;
