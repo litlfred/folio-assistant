@@ -126,7 +126,6 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
-  readdirSync,
   unlinkSync,
   writeFileSync,
 } from "node:fs";
@@ -148,6 +147,7 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 // The same line `print-stub.ts` carries, for the same reason.
 import "../schemas/folio-graph-kind.js";
 import { unportableSegment } from "../schemas/portable-path";
+import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -418,23 +418,22 @@ export const GENERATED_BY =
  * @returns the orphans' paths relative to `site`, sorted
  */
 export function prunableDashboards(site: string, wantedIds: readonly string[]): string[] {
-  if (!existsSync(site)) return [];
-  const keep = new Set(wantedIds);
-  return readdirSync(site, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && !keep.has(e.name))
-    .map((e) => join(e.name, "index.html"))
-    .filter((rel) => {
-      const abs = join(site, rel);
-      if (!existsSync(abs)) return false;
-      try {
-        return readFileSync(abs, "utf-8").includes(GENERATED_BY);
-      } catch {
-        // Unreadable is NOT ours. A file we cannot read is a file we cannot
-        // prove we wrote, and the safe answer to that is to leave it.
-        return false;
-      }
-    })
-    .sort();
+  // A CALL SITE NOW, not a fourth implementation (bean `s8nu`). The unit is
+  // the same one `orphanSubjectPages` walks -- a directory holding an
+  // `index.html` -- and only the ownership TEST differs, which is why that is
+  // what the shared selector takes.
+  //
+  // The marker is the right test HERE and the weaker of the two: dashboards
+  // publish at the site root among directories nothing here owns, and their
+  // identity is the graph id rather than the path, so there is no self-naming
+  // for a page to do. `declaresItsOwnDirectory` would claim none of them.
+  //
+  // `foreign` is deliberately not returned. This function's contract is the
+  // prunable set, and its callers act on that; the directories declined are
+  // reported by the caller that wants them. Keeping the signature means the
+  // three tests below still falsify the same things.
+  const { owned } = orphanSubjectPages(site, wantedIds, carriesMarker(GENERATED_BY));
+  return owned.map((dir) => join(dir, "index.html")).sort();
 }
 
 /** One generated file, with the `--check` contract every generator here uses. */
