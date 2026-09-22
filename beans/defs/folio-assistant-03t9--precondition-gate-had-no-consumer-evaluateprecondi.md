@@ -3,8 +3,10 @@
 title: 'PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks'
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-22T08:34:13Z
-updated_at: 2026-09-22T08:34:13Z
+updated_at: 2026-09-22T08:55:04Z
+parent: folio-assistant-ahvw
 ---
 
 Issue #853 requirement 3, and the `a58y` shape in the component that requirement
