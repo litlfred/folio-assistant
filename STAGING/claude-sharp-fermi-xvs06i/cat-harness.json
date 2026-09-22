@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:43:18.301Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/83a3e974f3186f813afbc744265d06386d3efaa0",
-  "sourceCommitSha": "83a3e974f3186f813afbc744265d06386d3efaa0",
-  "sourceCommitAt": "2026-09-22T09:41:32Z",
+  "generatedAt": "2026-09-22T10:11:20.338Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9750b35a981c54c57ea5e7529fd42fbf24f0e909",
+  "sourceCommitSha": "9750b35a981c54c57ea5e7529fd42fbf24f0e909",
+  "sourceCommitAt": "2026-09-22T10:09:24Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 233,
@@ -276,9 +276,9 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 60,
-    "SequenceFlow": 761,
+    "SequenceFlow": 763,
     "Role": 139,
-    "ProcessNode": 725,
+    "ProcessNode": 726,
     "Tool": 69,
     "Schema": 93,
     "GraphKind": 27,
@@ -15199,8 +15199,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -15333,6 +15333,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_13"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -15353,7 +15371,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All five,&#10;in parallel",
+      "name": "All six,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -15369,7 +15387,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -15485,6 +15504,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dependency advisories&#10;(WARN-ONLY)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -15500,7 +15541,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -36097,8 +36139,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-fermi-xvs06i",
-    "sha": "e46260457b5b0a839c33154163906e65bd595267",
+    "sha": "369e683c8f56086c25c504bfa52d15433fad6e18",
     "pr": "841/merge",
-    "run": "35711828686"
+    "run": "35714434465"
   }
 }

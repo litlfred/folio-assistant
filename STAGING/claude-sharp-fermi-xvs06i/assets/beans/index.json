@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 493,
+      "count": 495,
       "unit": "beans"
     }
   },
@@ -2865,6 +2865,20 @@
       "file": "beans/defs/folio-assistant-dzl3--playwrightconfigts-runs-a-test-servercjs-that-does.md"
     },
     {
+      "id": "folio-assistant-ebvl",
+      "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:12:58Z",
+      "updatedAt": "2026-09-22T09:13:04Z",
+      "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
+      "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
+    },
+    {
       "id": "folio-assistant-eief",
       "title": "CSVW skill + ingestion tools: tabular metadata as far as it can be determined",
       "status": "todo",
@@ -3636,7 +3650,7 @@
     },
     {
       "id": "folio-assistant-j41m",
-      "title": "SUPPLY CHAIN: 11 of 18 install steps fall back from --frozen-lockfile to an unpinned resolve, and there is no audit or dependabot",
+      "title": "SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable",
       "status": "in-progress",
       "type": "task",
       "priority": "high",
@@ -3644,7 +3658,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T09:05:00Z",
       "preview": "## Measured 2026-09-21\n\n**11 of 18 install steps defeat their own pin.**\n\n    bun install --frozen-lockfile || bun install\n    bun install --frozen-lockfile 2>/dev/null || bun install\n\nin `lean_ci`, `docs-site`, `publish`, `qa-sweep`, `feature-staging` (×3),\n`blueprint`, `lean-build`, `qa-sweep-nightly`, `section-title-audit`.\n\n`--frozen-lockfile` exists to fail when the lockfile does not satisfy ",
       "file": "beans/defs/folio-assistant-j41m--supply-chain-11-of-18-install-steps-fall-back-from.md"
     },
@@ -4477,6 +4491,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "The rendered site is what a reader actually judges, and several of these are\ninvisible from inside the repo.\n\n`gjli` is the standing rule (all UI follows accessibility guidelines) and\n`rptk` is a live instance of breaking it. `blv9` and `g4dv` are links that do\nnot resolve or do not land where they claim; `1le7` and `alox` are surfaces\nthat shipped with their judgement calls unrecorded.\n\nGrouped b",
       "file": "beans/defs/folio-assistant-o3xy--ui-accessibility-the-rendered-site-is-the-artefact.md"
+    },
+    {
+      "id": "folio-assistant-o6vj",
+      "title": "OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:27:56Z",
+      "updatedAt": "2026-09-22T09:38:02Z",
+      "preview": "Issue #895. Found during #886/#888 (bean `ha78`) and deliberately not fixed\nthere — moving a viewer and reworking a generator's ownership model are\ndifferent changes.\n\n## The defect\n\n`gen-iris-pages.ts` prunes its own orphans against two regexes.\n`catalogue.html` was written to `docs/` and named in NEITHER, so the sweep that\nexists to reclaim stale output could never have reclaimed it.\n\nThat sweep",
+      "file": "beans/defs/folio-assistant-o6vj--owned-patterns-six-enumerations-of-one-fact-and-th.md"
     },
     {
       "id": "folio-assistant-o7eq",

@@ -236,7 +236,15 @@ function renderList(){
       '><button type="button" data-k="'+c.k+'">'+esc(c.t)+"</button></th>";
   }).join("") + "</tr></thead><tbody>";
   h += r.map(function(e){
-    return "<tr>" + COLS.map(function(c){
+    /* THE ROW DECLARES ITSELF, and the folio reads nothing else.
+       A selector guessing at cell positions would bind to this generator's
+       markup and break silently the next time a column moves; an attribute
+       is a contract. docs-ui.js decorates any row carrying these and
+       ignores every page that has none -- so this generator knows nothing
+       about the folio beyond emitting three attributes. R30, bean j2if. */
+    var key = e.instance + "/" + e.id;
+    return '<tr data-fa-library-item="' + esc(key) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c){
       return "<td"+(c.n?' class="num"':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
@@ -342,5 +350,16 @@ fetch(DATA_HREF).then(function(r){
     "That is not an empty corpus \u2014 it is a corpus that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>
+<script data-fa-folio-mount>(function(){
+var m=location.pathname.match(new RegExp("^(.*?)cat-harness\\/library\\/"));
+if(!m||m[1]==null)return;
+var r=m[1];
+var l=document.createElement('link');
+l.rel='stylesheet';l.href=r+'assets/css/docs-ui.css';
+document.head.appendChild(l);
+var s=document.createElement('script');
+s.src=r+'assets/js/docs-ui.js';s.defer=true;
+document.head.appendChild(s);
+})();</script>
 </body>
 </html>

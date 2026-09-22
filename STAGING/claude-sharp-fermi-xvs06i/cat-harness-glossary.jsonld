@@ -1523,7 +1523,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CodeQualityGates",
       "label": "CI/CD Pipeline",
-      "scopeNote": "Joins all five jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — Rust's warn-only result reaches the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.",
+      "scopeNote": "Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.",
       "source": "cat-harness/processes/code-quality-gates.bpmn"
     },
     {

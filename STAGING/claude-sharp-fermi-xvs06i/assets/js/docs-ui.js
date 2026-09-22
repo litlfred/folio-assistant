@@ -3692,57 +3692,119 @@
    * safe.
    */
   function mountLibraryPullouts() {
-    var rows = document.querySelectorAll("[data-fa-library-item]");
-    if (rows.length === 0) return;   // not a library page; nothing to offer
+    // ONE listener each, on `document`, rather than a pair per row.
+    //
+    // The first version registered `document.addEventListener` inside the
+    // per-row loop. With this file's own 18 specs that is correct and
+    // bounded, because their fixture rows are static -- and the real library
+    // view is NOT: `gen-library-viz` renders rows client-side and replaces
+    // them WHOLESALE on every filter keystroke and every sort
+    // (`$("listing").innerHTML = ...`). Each re-render would destroy the rows
+    // and leave their listeners attached, closing over detached elements,
+    // unbounded in the number of keystrokes. Bean `ebvl`.
+    //
+    // The specs could not have caught it: the shape that makes it a leak
+    // never occurs in a fixture with no re-render. So the fix is structural
+    // -- delegation cannot grow with the row count -- rather than a rule to
+    // remember when adding the next control.
+    if (document.__faPulloutsMounted) return;
+    document.__faPulloutsMounted = true;
 
+    document.addEventListener("click", function (ev) {
+      var btn = ev.target && ev.target.closest && ev.target.closest(".fa-pullout");
+      if (!btn) return;
+      var row = btn.closest("[data-fa-library-item]");
+      if (!row) return;
+      displayInFolio(row.getAttribute("data-fa-library-item"), {
+        title: row.getAttribute("data-fa-library-title") || row.getAttribute("data-fa-library-item"),
+        href: safeHref(row.getAttribute("data-fa-library-href") || undefined) || "",
+      });
+      // `displayInFolio` already fired `fa:folio-changed`, which repaints.
+    });
+
+    // Rows appear AFTER this runs, and again after every re-render, so the
+    // decoration cannot be a one-shot pass at init. Observing the document
+    // keeps the generated page ignorant of the folio: it emits attributes
+    // and calls nothing.
+    // THE OBSERVER MUST NOT SEE ITS OWN WORK. `paintLibraryRows` appends a
+    // slot and writes `textContent`, both of which are `childList`
+    // mutations, so an unguarded observer re-enters immediately and never
+    // returns -- measured, not feared: the spec run hung and had to be
+    // killed. Disconnect around the paint and reconnect after, which is the
+    // only form that cannot loop regardless of what the paint does next.
+    if (typeof MutationObserver === "function") {
+      var observing = false;
+      var obs = new MutationObserver(function () {
+        if (observing) return;
+        repaint();
+      });
+      var repaint = function () {
+        observing = true;
+        obs.disconnect();
+        try {
+          paintLibraryRows();
+        } finally {
+          obs.observe(document.body, { childList: true, subtree: true });
+          observing = false;
+        }
+      };
+      repaint();
+      // The folio changing is not a DOM mutation, so it needs its own way in
+      // -- and it must go through `repaint` rather than straight to the
+      // paint, or the paint's own mutations reach a connected observer.
+      document.addEventListener("fa:folio-changed", repaint);
+      document.__faRepaintLibraryRows = repaint;
+    } else {
+      document.addEventListener("fa:folio-changed", paintLibraryRows);
+      paintLibraryRows();
+    }
+  }
+
+  /**
+   * Give every library row its control and its state word.
+   *
+   * Idempotent and cheap to re-run: a row that already carries its slot is
+   * repainted rather than rebuilt, so the observer firing on unrelated DOM
+   * changes costs an attribute read per row and nothing else.
+   */
+  function paintLibraryRows() {
+    var rows = document.querySelectorAll("[data-fa-library-item]");
     Array.prototype.forEach.call(rows, function (row) {
-      if (row.querySelector(".fa-pullout")) return;   // idempotent
       var key = row.getAttribute("data-fa-library-item");
       var title = row.getAttribute("data-fa-library-title") || key;
-      var href = safeHref(row.getAttribute("data-fa-library-href") || undefined) || "";
-
-      var btn = el("button", { type: "button", class: "fa-pullout" });
-      var note = el("span", { class: "fa-pullout-state" });
-
-      function paint() {
-        var state = folioStateOf(key);
-        row.setAttribute("data-fa-folio-state", state);
-        if (state === "glass") {
-          // NOT a close control. Closing happens on the glass; offering it
-          // here as well would make the same asset closeable from two
-          // surfaces and leave "where does this go" answered twice.
-          btn.hidden = true;
-          note.textContent = "On your folio glass";
-        } else if (state === "folio") {
-          // THE WAY BACK, and the whole reason this mount exists.
-          btn.hidden = false;
-          btn.textContent = "Put back on glass";
-          btn.setAttribute("aria-label", "Put " + title + " back on your folio glass");
-          note.textContent = "In your folio, not displayed";
-        } else {
-          btn.hidden = false;
-          btn.textContent = "Pull out to folio";
-          btn.setAttribute("aria-label", "Pull " + title + " out to your folio glass");
-          note.textContent = "";
-        }
+      var slot = row.querySelector(".fa-pullout-slot");
+      if (!slot) {
+        slot = el("span", { class: "fa-pullout-slot" });
+        slot.appendChild(el("button", { type: "button", class: "fa-pullout" }));
+        slot.appendChild(el("span", { class: "fa-pullout-state" }));
+        // A TABLE ROW takes no `<span>` child -- the browser hoists it out of
+        // the table entirely, which is how a control disappears while the
+        // markup looks right. Into the last cell when there is one.
+        var cell = row.lastElementChild;
+        (cell && cell.tagName === "TD" ? cell : row).appendChild(slot);
       }
-
-      btn.addEventListener("click", function () {
-        displayInFolio(key, { title: title, href: href });
-        paint();
-      });
-
-      // Repaint on any folio change, so closing on the glass updates the row
-      // behind it. Without this the row would still read "On your folio
-      // glass" for an asset the reader had just shelved, and the way back
-      // would be invisible on the one surface that offers it.
-      document.addEventListener("fa:folio-changed", paint);
-
-      var slot = el("span", { class: "fa-pullout-slot" });
-      slot.appendChild(btn);
-      slot.appendChild(note);
-      row.appendChild(slot);
-      paint();
+      var btn = slot.querySelector(".fa-pullout");
+      var note = slot.querySelector(".fa-pullout-state");
+      var state = folioStateOf(key);
+      row.setAttribute("data-fa-folio-state", state);
+      if (state === "glass") {
+        // NOT a close control. Closing happens on the glass; offering it here
+        // as well would make the same asset closeable from two surfaces and
+        // leave "where does this go" answered twice.
+        btn.hidden = true;
+        note.textContent = "On your folio glass";
+      } else if (state === "folio") {
+        // THE WAY BACK, and the whole reason this mount exists.
+        btn.hidden = false;
+        btn.textContent = "Put back on glass";
+        btn.setAttribute("aria-label", "Put " + title + " back on your folio glass");
+        note.textContent = "In your folio, not displayed";
+      } else {
+        btn.hidden = false;
+        btn.textContent = "Pull out to folio";
+        btn.setAttribute("aria-label", "Pull " + title + " out to your folio glass");
+        note.textContent = "";
+      }
     });
   }
 
