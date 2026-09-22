@@ -70,6 +70,7 @@
  *   bun run regen --dry-run      # report what is stale, change nothing
  */
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { loadGates, type Gate } from "./gates.ts";
@@ -132,9 +133,9 @@ function run(root: string, script: string): boolean {
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const scripts = (JSON.parse(
-    require("node:fs").readFileSync(join(repoRoot, "package.json"), "utf-8"),
-  ) as { scripts?: Record<string, string> }).scripts ?? {};
+  const scripts = (JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf-8")) as {
+    scripts?: Record<string, string>;
+  }).scripts ?? {};
 
   const gates = loadGates(repoRoot, { all });
   const repairable = repairableGates(gates, scripts);
