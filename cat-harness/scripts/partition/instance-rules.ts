@@ -828,6 +828,12 @@ export const RULES: Rule[] = [
       // fact about the checkout's build wiring, not about any folio's
       // material — node builtins only.
       "scripts/check-workflow-injection.ts",
+      // The artefact-verification gate. Harness by the same argument as its
+      // neighbours: it derives its inventory from THIS repository's own
+      // package.json and grades whether a generated artefact has any
+      // consumer-level verification. A fact about the checkout's build
+      // wiring — node builtins only.
+      "scripts/check-artefact-verification.ts",
       // The credential gate. Harness by SUBJECT rather than by import: it
       // walks this checkout's declared roots and grades the bytes committed
       // there. It reads a folio's files where one is present, but what it
@@ -981,6 +987,9 @@ export const RULES: Rule[] = [
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
+      "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
+      "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
+      "scripts/check-folio-mount.ts",       // ...and the gate that every declared page carries it
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",
