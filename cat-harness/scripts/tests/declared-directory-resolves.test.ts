@@ -72,19 +72,23 @@ function modulesResolvingADirectory(): string[] {
 }
 
 /**
- * Budget for the two tests that spawn ONE SUBPROCESS PER DISCOVERED MODULE.
+ * Per-module spawn budget, shared by BOTH tests below that spawn one
+ * subprocess per discovered module.
  *
- * Their cost grows with a population this file goes and finds, so bun's 5 s
- * default is a time bomb: it fires on whoever adds the module that tips the
- * total over, and a timeout is indistinguishable from the defect this file
- * exists to catch — a module that cannot resolve a declared directory.
+ * Hoisted out of the `library` test on 2026-09-22, when this branch and main
+ * fixed the same timeout independently. Main's reasoning is the one kept —
+ * *"a number is what went stale"*, so the budget is DERIVED from the module
+ * count — and this branch's contribution is noticing it was applied to only
+ * one of the two tests that pay this cost. "IMPORTING one writes nothing"
+ * spawns per module too; its spawn is cheaper (a bare import, no probe) but it
+ * sits on the same curve and was still on bun's 5 s default.
  *
- * It fired on 2026-09-22, at **38 modules and 4 695 ms**, on a change that
- * added one unrelated script. Measured rather than guessed, and set an order
- * of magnitude above the measurement because the number that matters is the
- * one a slower CI runner sees, not the one this machine did.
+ * Measured 2026-09-22: 55 modules, 9.3 s for the probe loop (169 ms/spawn,
+ * three runs within 170 ms of each other). 600 ms/module is ~3.5x that, and
+ * the cheaper loop gets the same headroom rather than a second number nobody
+ * would re-measure.
  */
-const SUBPROCESS_PER_MODULE_TIMEOUT_MS = 60_000;
+const SPAWN_BUDGET_MS = 600;
 
 describe("a module that resolves a declared directory can resolve one", () => {
   const modules = modulesResolvingADirectory();
@@ -117,34 +121,50 @@ describe("a module that resolves a declared directory can resolve one", () => {
     const before = status();
     for (const m of modules) Bun.spawnSync(["bun", "-e", `import "./${m}";`], { cwd: ROOT });
     expect(status()).toBe(before);
-  }, SUBPROCESS_PER_MODULE_TIMEOUT_MS);
+  }, modules.length * SPAWN_BUDGET_MS);
 
-  test("each one resolves `library` in a FRESH process, without throwing", () => {
-    // Fresh process per module is the whole point. In one process the first
-    // module to reach core registers `folio` for all of them, and this test
-    // becomes incapable of failing — the exact shape of the defect it exists
-    // to catch.
-    const broken: string[] = [];
-    for (const m of modules) {
-      const r = Bun.spawnSync(
-        [
-          "bun",
-          "-e",
-          `import "./${m}";` +
-            `import { directoriesForGraph, directoryForGraph, instanceDirectoryForGraph }` +
-            ` from "./schemas/cat-harness.js";` +
-            // All THREE accessors, because all three go through the same
-            // registry and any of them can be the first call a module makes.
-            // Testing only the plural one would leave the two added by bean
-            // `a02m` un-probed in exactly the modules that now use them.
-            `directoriesForGraph(".", "library"); directoryForGraph(".", "library");` +
-            ` instanceDirectoryForGraph(".", "library");`,
-        ],
-        { cwd: ROOT },
-      );
-      const err = new TextDecoder().decode(r.stderr);
-      if (err.includes("unknown graph kind")) broken.push(m);
-    }
-    expect(broken).toEqual([]);
-  }, SUBPROCESS_PER_MODULE_TIMEOUT_MS);
+  // A fresh subprocess per module is the point, and it is also the cost:
+  // measured 2026-09-22, 55 modules take **9.3 s** (169 ms/spawn, three runs
+  // within 170 ms of each other). Bun's default test timeout is **5 s**, so
+  // this test has been over budget for as long as the corpus has been this
+  // size and passed only where the machine was fast enough — which is the
+  // worst failure mode available: green on CI, red on a contributor's laptop,
+  // and nothing saying which.
+  //
+  // The budget is DERIVED from the module count rather than written as a
+  // number, because a number is what went stale: the corpus grows, the spawn
+  // count grows with it, and a fixed timeout silently tightens every time
+  // somebody adds a module. 600 ms/module is ~3.5x the measured cost.
+  test(
+    "each one resolves `library` in a FRESH process, without throwing",
+      () => {
+      // Fresh process per module is the whole point. In one process the first
+      // module to reach core registers `folio` for all of them, and this test
+      // becomes incapable of failing — the exact shape of the defect it exists
+      // to catch.
+      const broken: string[] = [];
+      for (const m of modules) {
+        const r = Bun.spawnSync(
+          [
+            "bun",
+            "-e",
+            `import "./${m}";` +
+              `import { directoriesForGraph, directoryForGraph, instanceDirectoryForGraph }` +
+              ` from "./schemas/cat-harness.js";` +
+              // All THREE accessors, because all three go through the same
+              // registry and any of them can be the first call a module makes.
+              // Testing only the plural one would leave the two added by bean
+              // `a02m` un-probed in exactly the modules that now use them.
+              `directoriesForGraph(".", "library"); directoryForGraph(".", "library");` +
+              ` instanceDirectoryForGraph(".", "library");`,
+          ],
+          { cwd: ROOT },
+        );
+        const err = new TextDecoder().decode(r.stderr);
+        if (err.includes("unknown graph kind")) broken.push(m);
+      }
+      expect(broken).toEqual([]);
+    },
+    modules.length * SPAWN_BUDGET_MS,
+  );
 });
