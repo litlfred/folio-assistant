@@ -62,17 +62,39 @@ do, the move has not happened and a fork has.
 
 ## Where ownership lives
 
-`litlfred/smart-base` — a fork, taken so the scripts can be rewritten without
-waiting on upstream review.
+**`litlfred/folio-assistant`, in its `smart-base/` directory.** The owner,
+2026-09-22: *"make litlfred/folio-assitant/smart-base"*.
 
-> **It does not exist yet.** Searched 2026-09-22: no `litlfred/smart-base`.
-> Recorded rather than assumed, because every instruction below is conditional
-> on it and an agent that infers the fork exists will rewrite into thin air.
-> `WorldHealthOrganization/smart-base` is read-only from here.
+> **This corrects what this skill said one commit earlier.** It read
+> `litlfred/smart-base`, a separate fork, and recorded that no such repository
+> existed. The owner's answer was not "create it" — it was that the ownership
+> home is the `smart-base/` instance **already staged in this repository**.
+>
+> Written down rather than quietly fixed, because the wrong reading is the
+> natural one: the earlier instruction said *"take ownership of the scrips in
+> litlfred/smart-base"*, and a fork is what that sounds like. An agent that
+> re-derives the fork reading will recreate the error.
+
+That puts the toolchain on the same path as every other `smart-*` asset here —
+`who-iris`, `smart-trust`, `smart-immunizations`, `smart-base` — under the
+owner's standing ruling: *"want KG assets here, can break apart later."*
+
+**What already exists there:** `smart-base/tools/`, holding the Tool nodes.
+That is the destination, and it is why the nodes were written before any script
+moved.
 
 **Nothing at `WorldHealthOrganization/*` changes.** This is pre-work in
 `litlfred/*`, which is also why `dak.json` → `dak.config.json` is ours alone
-until upstream follows.
+until upstream follows. `WorldHealthOrganization/smart-base` is read-only from
+here and stays the executing home until the gate above is satisfied per script.
+
+**One consequence worth stating.** Because the ownership home is a directory in
+this repository rather than a fork of the IG, a moved script arrives somewhere
+that is **not a FHIR IG** — it cannot be run by `ghbuild.yml`, and there is no
+`input/scripts/` for it to sit in. So a move is not a copy plus a delete: it is
+a rewrite to this repository's own invocation surface, which is the same work
+the Skill I/O requirements below describe. That is a feature of the destination,
+not an obstacle to it.
 
 ## What "adhere to Skill I/O requirements" means concretely
 

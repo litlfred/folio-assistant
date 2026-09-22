@@ -134,9 +134,18 @@ scripts and emits a phase report: `successes`, `warnings`, `errors`,
 and a completion timestamp. `qa.json` from the Publisher run is uploaded as a
 workflow artifact.
 
-**Both are produced and neither is read downstream.** That is the evidence bean
-`rjug` proposes a `qa-report` graph kind from — the shape is what these scripts
-already emit, not a design.
+**Both are produced and neither was read downstream.** That is the evidence the
+`qa-report` graph kind was registered from on 2026-09-22 —
+`schemas/qa-report.ts`. The shape is what these scripts already emit, not a
+design.
+
+Three rules are enforced structurally rather than left to a checker, each one a
+discipline this repository has already paid for in prose: a summary may not
+disagree with the details it counts; `files_missing` must be a subset of
+`files_expected`, which is what keeps a determined empty distinguishable from a
+not-found; and `running` is never a pass — a script that died before writing
+anything has zero errors, and `qaReportVerdict` returns `unknown` for it rather
+than `ok`.
 
 ## Where the counterparts are
 

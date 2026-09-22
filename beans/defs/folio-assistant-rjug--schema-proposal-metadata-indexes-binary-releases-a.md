@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rjug
 title: 'SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-22T19:24:34Z
+updated_at: 2026-09-22T20:23:45Z
 parent: folio-assistant-uhkv
 ---
 
@@ -66,3 +66,50 @@ adding a fourth needs the argument made, not assumed.
 - [ ] `holds` and `renderable` decided for each — a kind that has not decided
       does not compile
 - [ ] `content-context-and-state-graphs` consulted before any registration
+
+## RULED, 2026-09-22 — option A for QA reports, and it has shipped
+
+The owner chose the evidence-led option: a new `qa-report` kind, shape taken
+from what the scripts already emit.
+
+| | |
+|---|---|
+| schema | `cat-harness/schemas/qa-report.ts` — `qa-report/v1` |
+| kind | `qa-report`, `holds: "state"`, `renderable: false`, `recordsWork: false` |
+| tests | `cat-harness/schemas/qa-report.test.ts` — 16 |
+
+**`state`, and `derived` was considered and rejected.** A derived graph is
+regenerated from a source that still exists; re-running a tool produces a
+DIFFERENT report rather than the same one again. It is the same shape as
+`health` one level in — where a RUN got to, rather than where the repository
+got to.
+
+**Upstream's snake_case field names are kept**, against this repository's own
+convention, because that was the point of the option chosen: renaming them
+would insert a translation step between a producer we do not control and a
+consumer we do, and a translation step is a place for the two to drift
+silently. The wrapper fields this module adds — `$schema`, `producer`,
+`source`, `toolchain` — are ours, so the line between the two halves is visible
+in the spelling.
+
+**Three rules enforced structurally**, each already paid for in prose here:
+
+1. a summary may not disagree with the details it counts — otherwise a report
+   can lie about itself invisibly, because a reader sees only the number;
+2. `files_missing` must be a subset of `files_expected` — which is what keeps
+   "the DMN directory held no decisions" apart from "the DMN directory was not
+   found", the most valuable property the upstream reporter already has;
+3. `running` is never a pass — a script that died before writing anything has
+   zero errors, and `qaReportVerdict` returns `unknown` for it.
+
+**`py74`'s objection was answered, not waived.** It found six schemas with
+three incompatible verdict shapes, so a fifth family needed the argument made.
+The argument is the subject: a `qa` witness judges an ARTEFACT, a `health`
+report judges the REPOSITORY, a `qa-report` records an EXECUTION. A test
+asserts the three kinds stay distinct so a later tidy-up cannot fold them
+silently.
+
+## Still open — the other two of the three
+
+Metadata indexes and binary releases are NOT ruled and nothing has been
+registered for them. Their options stand as written above.
