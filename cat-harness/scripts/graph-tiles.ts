@@ -90,6 +90,29 @@ export interface GraphTile {
   /** Where it appears, resolved: absent on the declaration means both. */
   surfaces: TileSurface[];
   /**
+   * The directory holds materialized content: openable, and not editable here.
+   *
+   * ## THE TWO GREYS, and why they must not collapse
+   *
+   * A tile with no {@link href} and a tile that is `readOnly` both render
+   * inert, and they are different facts:
+   *
+   * - **no `href`** — nothing to open. Either nobody built a viewer, or the
+   *   declared page is not under the published site (`pb04`: no link beats a
+   *   dead one).
+   * - **`readOnly`** — it opens perfectly. It refuses an EDIT, and it is the
+   *   one that offers the copy-out.
+   *
+   * Collapsing them tells a reader "there is nothing here" about content that
+   * is present, complete, and deliberately frozen — and then the copy-out, the
+   * only way to work on it, has nowhere to be offered from.
+   *
+   * ABSENT MEANS NOT DECLARED, never `false`. Same as the declaration it comes
+   * from, and for the same reason: a directory that has not answered has not
+   * asserted it is writable.
+   */
+  readOnly?: boolean;
+  /**
    * Whether it starts out of frame.
    *
    * The DECLARED default only. A reader's own hiding is theirs alone and is
@@ -149,6 +172,8 @@ export type TiledDirectory = {
   id: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
   theme?: string;
+  /** The directory holds materialized content. Absent is NOT DECLARED, never `false`. */
+  readOnly?: boolean;
 };
 
 /**
@@ -172,7 +197,15 @@ export function publishedHref(siteDirFromRepoRoot: string, ref: string): string 
   // link being worse than no link. Every visualisation was `.html` until
   // `fsh-guts` was authored as markdown (2026-09-21), which is why this went
   // unnoticed: the bug needed a markdown viewer to exist before it could fire.
-  return `/${rest.replace(/(^|\/)index\.(html|md)$/, "$1")}`;
+  //
+  // A NAMED markdown page is the same 404 and the fix above did not cover it.
+  // `processes-index.md` (2026-09-22) is not `index.md`, so the directory
+  // rewrite left the extension alone and the tile pointed at a source file.
+  // The argument in the paragraph above applies verbatim — Jekyll serves no
+  // `.md` — so the extension is mapped rather than stripped, which is what
+  // Jekyll actually does to a page that is not a directory index.
+  const route = rest.replace(/(^|\/)index\.(html|md)$/, "$1").replace(/\.md$/, ".html");
+  return `/${route}`;
 }
 
 export function graphTiles(
@@ -200,6 +233,11 @@ export function graphTiles(
               return href === undefined ? {} : { href };
             })()),
         hidden: v.hidden === true,
+        // FROM THE DIRECTORY, NOT THE VISUALISATION. Read-only is a property of
+        // the CONTENT — several visualisations of one directory are several
+        // views of the same frozen nodes, so a per-view answer could disagree
+        // with itself about one corpus.
+        ...(d.readOnly === undefined ? {} : { readOnly: d.readOnly }),
         ...(v.icon === undefined ? {} : { icon: v.icon }),
         ...(v.publish === undefined ? {} : { publish: v.publish }),
         ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
