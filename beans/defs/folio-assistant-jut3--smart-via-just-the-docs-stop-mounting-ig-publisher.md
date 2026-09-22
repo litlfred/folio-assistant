@@ -355,3 +355,31 @@ something whose bytes are elsewhere.
 `docs:auto` had to be regenerated: its viewer index counts these pages, and
 `gates` caught it stale at 122. The sweep's own `✗ 1 of 122` line is what said
 so — the wrapper's exit code read 0.
+
+### Verified on the BUILD — the one check a local run structurally cannot make
+
+The category page's links are `../artifact/…`. On disk that string and a wrong
+one are both just text; the difference appears only once Jekyll has emitted the
+tree. Issue #824's second defect was exactly this, one level up, and it shipped.
+
+Measured against the staging deploy on `origin/gh-pages`
+(`STAGING/claude-determined-euler-gqhkk0/`, build `d2c27b2`):
+
+| | |
+|---|---|
+| pages built under `smart-trust/` | **676** — 674 artefact + 1 category + 1 index |
+| `../artifact/…` links on the built `category/Other.html` | **604** |
+| ...resolving to a file that exists in the BUILT tree | **604** |
+| ...that would 404 | **0** |
+| built page size | 600 390 B |
+
+Sample href, taken from the built HTML rather than from the generator:
+`../artifact/Endpoint-GDHCNParticipantDID-ALB-All.html`.
+
+**And the `loading` count was chased rather than waved through.** The page
+carries 2 occurrences, which is the signature of this session's roast finding
+#1 — the library visualiser that passed every upstream check and shipped as
+224 chars of `loading…`. Both are the staging harness's own banner
+(`— loading build details…`), and the control settles it: the canonical home
+page carries **3**. Not that defect. Checked because the cost of assuming it
+was fine is the exact failure this session spent a bean on.
