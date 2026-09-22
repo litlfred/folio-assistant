@@ -454,25 +454,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790116119">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790116571">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790116119">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790116571">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790116119">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790116571">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790116119">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790116571">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -489,7 +489,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790116119" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790116571" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1089,6 +1089,53 @@ of change that is painful to reverse.</li>
 
 <p>Same information, same length, and the second can be answered by typing one
 character.</p>
+<h4 id="a-pending-question-is-not-a-status--ask-it-strict">
+  
+  
+    <a href="#a-pending-question-is-not-a-status--ask-it-strict" class="anchor-heading" aria-labelledby="a-pending-question-is-not-a-status--ask-it-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A pending question is not a STATUS — ask it (STRICT)
+  
+  
+</h4>
+    
+
+<p>Owner, 2026-09-22, after four sessions sat blocked while this agent reported
+that they were blocked: <em>“show the questions!!!!!!!! why are you not. dont say
+a unansnwered question is a blocker, ask a question.”</em></p>
+
+<p><strong>“Stream 3 is blocked on four questions” is not a report. It is a question you
+declined to ask.</strong> Naming a block, linking to where it lives, and summarising
+what it is about all <em>feel</em> like diligence — the information is accurate and
+the person is informed. They still cannot answer, because nothing was put to
+them in a form that takes a click.</p>
+
+<p>The failure has a specific shape, and it is seductive because each step is
+defensible:</p>
+
+<ol>
+  <li>A sibling session blocks on a question it cannot deliver.</li>
+  <li>You notice, and correctly judge it worth surfacing.</li>
+  <li>You describe it — what it asks, why it matters, where to answer it.</li>
+  <li><strong>You stop there</strong>, because the question “belongs to” the other session.</li>
+</ol>
+
+<p>Step 4 is the error. <strong>Whoever can put the question to the person owns asking
+it.</strong> If you can act on the answer — and an agent with repository access
+usually can — the question is yours to ask, not merely to relay. If you truly
+cannot act, ask anyway and carry the answer back; an answer you can hand over
+is worth more than a pointer the person has to follow.</p>
+
+<p><strong>Pointing somewhere is the failure mode, not the fix.</strong> <em>“Answer it in that
+session”</em> asks the person to navigate, load, read and choose. For somebody who
+types with difficulty that is not a small ask — it is the whole cost of the
+decision, moved onto them. Reserve it for what genuinely cannot be done from
+here, and say plainly that it cannot.</p>
+
+<p><strong>When several are pending and they do not fit one ask</strong>, ask the most
+consequential in full and say <strong>how many remain and what they are about</strong> in one
+line each. Do not ask <em>“which question would you like me to ask?”</em> — that is a
+turn spent on nothing, and it is still not a question they can act on. Choose,
+ask, and say what is queued behind it. §”More than one decision pending” below
+carries the rest of that rule.</p>
 <h4 id="more-than-one-decision-pending--ask-one-count-the-rest">
   
   
@@ -1580,7 +1627,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35792501841"><code>82ebb50</code></a> &middot; 2026-09-22T22:28:31Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35793164472"><code>e1fc181</code></a> &middot; 2026-09-22T22:36:07Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
