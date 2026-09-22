@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 483,
+      "count": 484,
       "unit": "beans"
     }
   },
@@ -1805,6 +1805,20 @@
       "updatedAt": "2026-09-20T19:09:25Z",
       "preview": "## Why this is a bean and not a PR comment\n\nThe two moves below are invisible from the branches they affect. A sibling\nreading its own diff sees a file it edited; it does not see that the file has\na different name on `main`. `bean-coordination` makes the bean store the\nchannel for exactly this, and a bean cannot be missed the way a comment on a\n72-hour-old PR can.\n\nWritten in a bean NEITHER affect",
       "file": "beans/defs/folio-assistant-8ka1--coordination-two-files-moved-under-sibling-prs-fee.md"
+    },
+    {
+      "id": "folio-assistant-8mbk",
+      "title": "folio/ is declared in cat-harness.json and the directory does not exist — the dh4f shape, undocumented this time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:21:16Z",
+      "updatedAt": "2026-09-22T08:21:16Z",
+      "preview": "Measured 2026-09-22 while opening jpjt.\n\n`cat-harness.json` declares 34 directories. Three of them are not on disk:\n\n| id | path | documented? |\n|---|---|---|\n| `library` | `library/` | YES — the description argues the cost at length (`wwi6`, `a02m`) and says outright \"IT IS THE dh4f SHAPE AND THAT IS KNOWN, NOT OVERLOOKED\" |\n| `translation-sources` | `translations/` | not checked yet |\n| `folio` ",
+      "file": "beans/defs/folio-assistant-8mbk--folio-is-declared-in-cat-harnessjson-and-the-direc.md"
     },
     {
       "id": "folio-assistant-8nzu",
@@ -3697,14 +3711,14 @@
     {
       "id": "folio-assistant-jpjt",
       "title": "F8/F9 is structurally blocked on R25's glass: every folio surface today needs just-the-docs furniture",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:20:00Z",
-      "updatedAt": "2026-09-21T23:20:00Z",
+      "updatedAt": "2026-09-22T08:21:52Z",
       "preview": "F8/F9: *\"the folio visualisation … should by convention be available on any\nharness for consistent feel. who-iris, smart-\\*, etc are content libraries a\nuser is browsing and their 'folio' from the cat-harness is consistent across\nthem.\"*\n\n## The mechanism is decided. The owner chose it 2026-09-21\n\nThree ways to reach a downstream harness were tabled; the owner chose\n**an exported mount fragment pl",
       "file": "beans/defs/folio-assistant-jpjt--f8f9-is-structurally-blocked-on-r25s-glass-every-f.md"
     },
