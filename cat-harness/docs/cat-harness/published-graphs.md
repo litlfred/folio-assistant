@@ -221,10 +221,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 2 published.
+1 of 3 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/index.md' | relative_url }})
+- FHIR IG Harness — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `translation-sources`

@@ -10,9 +10,23 @@
       "path": "skills/",
       "dependents": "reproduce",
       "description": "The `fhir-ig-base` package. Two skills: `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, and `ig-render-jekyll` states the three contracts for rendering an IG's content through just-the-docs -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded.",
-      "graphKinds": ["skills"],
+      "graphKinds": [
+        "skills"
+      ],
       "coverage": {
         "skill": "smart-stack-layering"
+      }
+    },
+    {
+      "id": "fhir-ig-tools",
+      "path": "tools/",
+      "dependents": "skip",
+      "description": "The two `Library` strippers, moved down from the WHO build's \"DAK Postprocessing\" phase because neither is DAK-shaped -- any IG depending on `hl7.fhir.uv.cql` produces oversized `Library` resources. Declared here rather than only described in a skill: a layer boundary that exists in prose is one no consumer can act on, and these were described as belonging here for a whole round while being declared nowhere.",
+      "graphKinds": [
+        "tools"
+      ],
+      "coverage": {
+        "skill": "ig-build-pipeline"
       }
     }
   ],
@@ -33,5 +47,9 @@
     }
   ],
   "_needs_comment": "It sits directly on core. NOT on cat-harness: the harness layer is inherited through core rather than declared twice, in the same shape folio-assistant-core uses. Owner's ordering, 2026-09-20: bootstrap, cat-harness, f-a-core, then the layers above.",
-  "needs": ["folio-assistant-core"]
+  "needs": [
+    "folio-assistant-core"
+  ],
+  "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, NOT a FHIR canonical: this layer publishes no FHIR artefacts, it publishes a Tool graph. It exists because a Tool node's I/O type IRIs are minted against it at load and Zod refuses a relative one. Stated rather than left blank so nobody reads it as a claim that fhir-harness is an IG.",
+  "canonicalUrl": "https://litlfred.github.io/folio-assistant/fhir-harness"
 }

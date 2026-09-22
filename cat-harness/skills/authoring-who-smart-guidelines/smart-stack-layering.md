@@ -129,6 +129,27 @@ this one carries the rule they are placed by.
 
 Do not resolve a conflict by adding a layer. Report it.
 
+### The test has been run, and here is what it returned
+
+**All 26 steps place.** 6 pre-processing, 1 Publisher run, 9 post-processing,
+10 deploy. Three of them moved against their own step names, which is the only
+outcome that tells you a split is load-bearing rather than descriptive:
+
+| step | labelled | placed |
+|---|---|---|
+| `strip_library_binaries.py` | DAK Postprocessing | `fhir-harness` |
+| `strip_library_content.py` | DAK Postprocessing | `fhir-harness` |
+| comment on PR — deployment completed | (deploy) | `cat-harness` |
+
+And the deploy phase as a whole came back **entirely generic** — see
+[`ig-build-pipeline`](../../../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md)
+§"The deploy phase". The overlay does not reach the deployment end at all,
+which is the strongest evidence for `nsbb`'s base-plus-overlay claim.
+
+**No step required a sixth layer, and none needed two owners.** The split
+survives its own test. Re-run it when a step is added upstream; a test that was
+passed once is not a test.
+
 ## Where an instance says which layer it is
 
 In its declaration's `needs`, and nowhere else. `needs: ["smart-base"]` is what

@@ -40,6 +40,38 @@ layer. Do not restate the list here — two copies of an emission list is two
 copies free to drift, and the emission list is exactly the thing a new Publisher
 release changes.
 
+## The deploy phase, and the result that surprised me
+
+The WHO build's deploy phase is **ten steps**, read from `ghbuild.yml`:
+
+| step | layer |
+|---|---|
+| `update_branch_index.py` — history page, README branch links | `fhir-harness` |
+| `inject_build_banner.py` — CI-build banner into output pages | `fhir-harness` |
+| `fix_release_links.py` — release links in output pages | `fhir-harness` |
+| delete files >100 MB before deployment | `fhir-harness` |
+| deploy candidate / deploy main, each with a ref-conflict retry (4 steps) | `fhir-harness` |
+| commit the README branch-links update | `fhir-harness` |
+| comment on the PR that deployment completed | **`cat-harness`** |
+
+**Nothing in the deploy phase is WHO-specific.** Every step is a property of
+publishing a FHIR IG to a pages branch: an IG's history page is a FHIR IG
+convention, a CI banner distinguishes a preview from a release, the 100 MB
+purge is GitHub's file-size limit, and the ref-conflict retry is what concurrent
+pages deploys do.
+
+That was not the expected answer — the phase sits inside a workflow whose other
+two phases are gated on `do_dak`, so the obvious reading is that it is WHO's
+too. It is not, and this is the strongest single piece of evidence for `nsbb`'s
+claim that **the base is the real pipeline and DAK is an overlay on it**: the
+overlay does not reach the deployment end at all.
+
+**One step places outside the stack, and that is not a failure.** Commenting on
+a pull request is forge plumbing, which `cat-harness` already owns — it is not
+an IG concern in any layer. The falsification test asks whether a step can be
+placed, not whether it lands in one of the five; a step with a home elsewhere
+in the harness is placed.
+
 ## What this layer refuses to know about
 
 A list, because "generic" is a claim and a list is checkable. `fhir-harness`
