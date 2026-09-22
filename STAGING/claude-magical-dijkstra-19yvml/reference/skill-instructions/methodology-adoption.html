@@ -434,25 +434,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790108986">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790109525">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790108986">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790109525">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790108986">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790109525">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790108986">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790109525">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -469,7 +469,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790108986" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790109525" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -877,7 +877,48 @@ invisible to every tool that reads the graph.</li>
   <li><strong>State its refusals.</strong> The part of a method a platform must not do is as
 load-bearing as the part it follows, and it is the part a later agent will
 breach first.</li>
+  <li><strong>Ingest the source and cite it as <code class="language-plaintext highlighter-rouge">evidence</code>.</strong> <code class="language-plaintext highlighter-rouge">origin</code> names the work;
+<code class="language-plaintext highlighter-rouge">evidence: library/&lt;bib-slug&gt;</code> points at a copy a reader can open from this
+checkout. Use <a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/literature-search.html"><code class="language-plaintext highlighter-rouge">literature-search</code></a> to find it and
+<a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> to bring it in. Where the source
+cannot be fetched, that is an outcome to report — a located-but-unreachable
+document, never a missing one — and the node keeps its <code class="language-plaintext highlighter-rouge">origin</code> with no
+<code class="language-plaintext highlighter-rouge">evidence</code> until somebody closes the gap.</li>
 </ol>
+<h2 id="an-origin-nobody-can-open-is-not-evidence">
+  
+  
+    <a href="#an-origin-nobody-can-open-is-not-evidence" class="anchor-heading" aria-labelledby="an-origin-nobody-can-open-is-not-evidence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An origin nobody can open is not evidence
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-22: six methodologies cited an origin and not one of those
+sources was in any declared library.</strong> Every citation resolved against nothing
+— the shape the retired skill <code class="language-plaintext highlighter-rouge">roles:</code> field cost 260 dangling values (<code class="language-plaintext highlighter-rouge">qif9</code>),
+on the one kind whose entire justification is being somebody else’s named,
+external work.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:methodology-evidence</code> is the axis that makes this visible, and
+<code class="language-plaintext highlighter-rouge">test/results/methodology-evidence.qa-results.json</code> is where it is recorded. It
+<strong>reports and does not gate</strong>: whether a methodology whose source nobody can
+open may still be used is the owner’s call, and a gate failing on the whole
+corpus at once is one somebody switches off. Two things it does fail on — front
+matter that does not validate, and an <code class="language-plaintext highlighter-rouge">evidence</code> pointing at a bib-slug no
+library holds, because a citation that claims to resolve and does not is worse
+than none.</p>
+
+<p><strong>The evidence is an input to SELECTION, not only to adoption.</strong>
+<code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code>’s <code class="language-plaintext highlighter-rouge">A_CheckEvidence</code> reads it before the chosen
+methodology is applied. Adoption happens once; selection happens at every
+decision, and a source can stop being reachable in between.</p>
+
+<p><strong>A contested origin is recorded as contested.</strong> <code class="language-plaintext highlighter-rouge">methodologies/swot.md</code> is the
+worked example: the usual attribution is repeated everywhere and its own source
+says no academic reference supports it, so the node declines to name an
+inventor. Flattening that into a fact would carry the authority of a citation
+while resting on nothing, which is the failure this whole section is about.</p>
 <h2 id="refusals">
   
   
@@ -898,6 +939,10 @@ never quoting a count from prose as though it were evidence.</li>
   <li><strong>Never let a rejected option go unrecorded.</strong> Whichever methodology was used,
 the alternatives and why they lost are part of the output — the same argument
 <code class="language-plaintext highlighter-rouge">bean-coordination</code> makes for <code class="language-plaintext highlighter-rouge">scrapped</code> over deleted.</li>
+  <li><strong>Never write a method from recall and cite a paper nobody fetched.</strong> Read the
+source, or say you read it through another and mark each attribution
+second-hand. See <a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/literature-search.html"><code class="language-plaintext highlighter-rouge">literature-search</code></a> §”Never fill the
+gap with recall”.</li>
 </ul>
 
           
