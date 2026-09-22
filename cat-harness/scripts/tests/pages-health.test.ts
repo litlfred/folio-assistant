@@ -388,6 +388,85 @@ describe("renderPages — what it refuses to say", () => {
     expect(out).toContain("yzsj"); // the rest are pointed somewhere, not dropped
   });
 
+  // ── A cited bean's STATUS is read, never asserted (bean `xfyk`) ──────────
+  //
+  // This renderer used to state it outright — "which is a different fix and
+  // is not done" about `yzsj` — and the clause went stale the moment `yzsj`
+  // closed on 2026-09-21, sending the next reader to a finished 200-line
+  // bean. The comment beside it records fixing the POINTER (`6pfo` ->
+  // `yzsj`) and names the class: a reference inside printed output that
+  // resolves to the wrong thing. The pointer was fixed; the claim attached
+  // to it was hardcoded, so it drifted instead.
+  //
+  // Each test below pins one branch, and the point of each is a DIFFERENT
+  // honesty: a closed bean must not read as open, an unreadable store must
+  // not read as either, and a missing bean must be called out rather than
+  // silently rendered as fine.
+
+  const raced = {
+    health: { total: 10, success: 4, cancelled: 6, failure: 0, unsettled: 0 },
+    supersedes: [{ slug: "aaa", by: "1", superseded: "0", secondsApart: 9 }],
+  };
+
+  test("a SETTLED bean does not read as open — the `xfyk` defect itself", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "completed" } } }));
+    expect(out).toContain("`yzsj`, now `completed`");
+    expect(out).not.toContain("is not done");
+    // And it must say what that means for the reader, not just the status:
+    // cancellations past a shipped fix are new ground, not its residue.
+    expect(out).toContain("NEW ground");
+  });
+
+  test("`scrapped` counts as settled too — abandoned is not open", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "scrapped" } } }));
+    expect(out).toContain("now `scrapped`");
+    expect(out).toContain("NEW ground");
+  });
+
+  test("an OPEN bean still reads as work outstanding", () => {
+    // The original sentence was not wrong when written — it was wrong later.
+    // This branch keeps it correct for as long as it IS correct.
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "in-progress" } } }));
+    expect(out).toContain("is `in-progress`");
+    expect(out).toContain("a different fix");
+    expect(out).not.toContain("NEW ground");
+  });
+
+  test("an unreadable work plan is UNKNOWN — not open, not done", () => {
+    // The house rule. An unknown rendered as either answer is worse than the
+    // question, and this is the branch a fresh container actually takes.
+    const out = renderPages(
+      ok({ ...raced, citedBeans: { yzsj: { state: "unreadable", why: "no bean store in this instance" } } }),
+    );
+    expect(out).toContain("could not read the work plan");
+    expect(out).toContain("no bean store in this instance");
+    expect(out).toContain("not assumed either way");
+    expect(out).not.toContain("is not done");
+    expect(out).not.toContain("NEW ground");
+  });
+
+  test("NOBODY LOOKED renders the same as unreadable, not as a status", () => {
+    // `citedBeans` absent entirely — the shape every existing caller had
+    // before this change, and the one a new caller gets by forgetting.
+    const out = renderPages(ok(raced));
+    expect(out).toContain("could not read the work plan");
+    expect(out).not.toContain("is not done");
+  });
+
+  test("a citation resolving to NOTHING says so — beans are never deleted", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "absent" } } }));
+    expect(out).toContain("no such bean");
+    expect(out).toContain("renamed or mistyped");
+  });
+
+  test("the clause wraps, because the watchdog commits this as markdown", () => {
+    // One long line reads fine in a terminal and raggedly in the committed
+    // report, which is the surface people actually read.
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "completed" } } }));
+    const long = out.split("\n").filter((l) => l.length > 90);
+    expect(long).toEqual([]);
+  });
+
   test("no self-supersede says so rather than going quiet", () => {
     // Silence would read as "not checked". This is the measurement that shows
     // `bm6d`'s fix holding, so it has to be stated when it is clean.
