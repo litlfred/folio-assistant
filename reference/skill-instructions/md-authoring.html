@@ -415,25 +415,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790068110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790068439">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790068110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790068439">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790068110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790068439">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790068110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790068439">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -450,7 +450,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790068110" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790068439" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -471,140 +471,34 @@
 -->
 <style>
   .folio-landing { position: relative; margin: 0 0 2rem; }
-  .folio-landing__art { display: block; }
-  .folio-landing__art img {
-    display: block; width: 100%; height: auto; border-radius: 8px;
-  }
-  /* Fade the backdrop so the overlaid text reads more clearly against it.
-     Scoped to the region-overlay case only: `--no-region` puts the words
-     BELOW the picture rather than over it, so there is nothing there for a
-     fade to help legibility of — it would just be a dimmer picture.
 
-     The two schemes need different values, not the same one, because
-     `opacity` does not tint toward a fixed colour: it blends the image with
-     whatever renders behind it, which is the page background — near-black
-     under this site's default `color_scheme: dark`, near-white under the
-     `data-fa-scheme="light"` override `docs-ui.js` sets (see docs-ui.css).
-     The overlay's ink is a fixed dark green (`#2f4636`, above) sized against
-     the cream thought-cloud in the artwork, so fading toward WHITE only
-     brightens that cloud and widens the contrast margin; fading toward BLACK
-     by the same amount darkens it and narrows it — enough fade in dark mode
-     reads as the ink sinking into a dimmed cloud rather than standing out
-     from one. Dark mode therefore gets the gentler value.
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
 
-     Chosen without being able to render the page (see the commit message) —
-     modest on both sides so the art is dimmed, not washed out: 0.9 by
-     default, 0.8 under the light override where fading only helps. */
-  .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
-    opacity: 0.9;
-  }
-  :root[data-fa-scheme="light"] .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
-    opacity: 0.8;
-  }
-  .folio-landing__text {
-    position: absolute;
-    /* The properties are set by `landing.html`, per breakpoint, from each
-       variant's OWN region — the swap has to happen at the same breakpoint as
-       the `<picture>` swap or the words stay where the wide crop was quiet. */
-    left: var(--fl-x); top: var(--fl-y);
-    width: var(--fl-w); height: var(--fl-h);
-    /* The type scales with THIS BOX, not with the picture and not with the
-       viewport — so `cqw` below is a fraction of the space the words actually
-       have. Sizing against the picture was the second attempt and it is wrong
-       for a reason worth keeping: each layout's box is a different fraction of
-       its image (62.5% wide on the laptop crop, 72% on the phone), so one
-       ratio against the image is too small on one and too large on another.
-       Against the box, one ratio is right everywhere. */
-    container-type: inline-size;
-    display: flex; flex-direction: column; justify-content: center;
-    /* `overflow: visible`, deliberately. The region is where the text is AIMED,
-       not a clip path: it is centred in the quiet area, so a description too
-       long for the box grows symmetrically into the margin that area has on
-       either side. `hidden` was the first version and it silently truncated
-       the last line on the square crop — a landing page that drops words is
-       strictly worse than one whose words sit a little proud of their box. */
-    overflow: visible;
-    /* The cloud is cream in both colour schemes — it is part of the picture,
-       not of the theme — so the overlay fixes its own ink rather than
-       inheriting a light-on-light body colour under `color_scheme: dark`. */
-    color: #2f4636;
-  }
-  .folio-landing__text > :first-child { margin-top: 0; }
-  .folio-landing__text > :last-child { margin-bottom: 0; }
-  .folio-landing__text p {
-    margin: 0; line-height: 1.35; font-weight: 600;
-    /* The LEAD size. 6% of the box's width — deliberately large enough that
-       the claim wraps to two lines rather than being sized down to fit one:
-       it is the headline, and a headline that fits on one line only because
-       it was shrunk is not a headline. The rungs below are sized to leave
-       room for that wrap.
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
 
-       It lives HERE, on the children, and not on `.folio-landing__text`: an
-       element that declares `container-type` is not its own query container,
-       so `cqw` in a rule on the box resolves against an ancestor and every
-       layout came out the same size. The first declaration is the fallback
-       for browsers without container queries — viewport-relative, rather than
-       a default 16px that overflows the cloud. */
-    font-size: clamp(0.95rem, 2.5vw, 1.85rem);
-    font-size: clamp(0.95rem, 5.6cqw, 1.85rem);
-    /* 3.6% of the box's width, ceiling 1.35rem. Derived rather than picked:
-       the longest line here is 47 characters, a bold sans runs about 0.52em
-       per character, and 47 x 0.52 x F must stay under the box width — which
-       gives F <= 0.0387 of it. 4.2% was the first try and it wrapped that line
-       on the laptop crop, pushing a fifth line down onto the cat's ear.
-       Bounded at both ends because the box is not the only constraint — below
-       about 11px nobody can read
-       it however roomy the cloud, and on a 4K monitor an unbounded ratio is
-       absurd. The first declaration is the fallback for browsers without
-       container queries: viewport-relative, rather than a default 16px that
-       overflows the cloud. */
-  }
-
-  /* The FIRST block of the description leads; everything after it supports.
-     Styled by POSITION rather than by class, because the description is one
-     markdown node an instance authors freely — there is no class to put on it,
-     and requiring one would make the landing page a second thing to maintain
-     beside the declaration.
-
-     An instance whose description is a single block gets the lead size for all
-     of it, which is the right default: one paragraph is all lead. */
-  .folio-landing__text > p + p {
-    /* Quieter, not hidden. The ladder is the point of the lead line — it shows
-       where `c@t-harness` comes from — so it stays legible on a cream cloud.
-       0.72 is about as far as it goes before thin strokes start dropping out
-       at phone sizes. */
-    /* SUBTITLE size — about a third of the lead, stated in the same units
-       rather than as `em`: `em` on a sibling resolves against the CONTAINER's
-       inherited 16px, not against the lead, and came out a constant 10.56px at
-       every viewport. Its own floor is proportionally higher than the lead's,
-       because on the square crop the lead is already at ITS floor and a third
-       of that is 4px — small enough that the ladder stops being readable,
-       which defeats the point of showing it at all. */
-    font-size: clamp(0.6rem, 0.95vw, 0.82rem);
-    font-size: clamp(0.6rem, 2.1cqw, 0.82rem);
-    font-weight: 500;
-    opacity: 0.66;
-    margin-top: 0.45em;
-    /* The rungs align on their leading characters, so they must not be
-       re-flowed and their leading whitespace must not be collapsed. */
-    white-space: pre-wrap;
-  }
-  /* Only the first rung needs the gap; the rest of the ladder is tight. */
-  .folio-landing__text > p + p + p { margin-top: 0; }
-
-  /* No declared region → the picture stands alone and the words go beneath it.
-     Guessing a position is how text lands on the cat. */
-  .folio-landing--no-region .folio-landing__text,
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
   .folio-landing--plain {
     position: static; width: auto; height: auto; color: inherit;
   }
-  .folio-landing--no-region .folio-landing__text { margin-top: 1rem; }
-  .folio-landing--no-region .folio-landing__text p,
   .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .folio-landing__art img { transition: opacity .2s ease; }
-  }
 </style>
 
 
@@ -1338,7 +1232,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35708605159"><code>ca457fc</code></a> &middot; 2026-09-22T09:08:26Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35709088582"><code>cf7f335</code></a> &middot; 2026-09-22T09:13:55Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
