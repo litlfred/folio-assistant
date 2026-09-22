@@ -53,6 +53,7 @@
  *
  * @module scripts/check-bean-parents
  */
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 // ONE reader, imported. Until 2026-09-20 this file carried its own
@@ -104,49 +105,117 @@ const PARENT_TYPES = new Set(["milestone", "epic"]);
 export interface BeanParentsReport {
   store: string | null;
   open: number;
+  /** Defects NOT in the baseline. These fail. */
   problems: string[];
+  /** Defects the baseline already records. Listed, never failed. */
+  outstanding: string[];
+  /** Baseline entries nothing matched — repaired, so the baseline can shrink. */
+  stale: string[];
+}
+
+/**
+ * Defects that predate the rule becoming reachable.
+ *
+ * `itka` / issue #941: the epic-under-epic rule was structurally unreachable,
+ * so the corpus was never judged against it. Making it reachable surfaces
+ * what was always there — and re-parenting somebody's epic is a judgement
+ * about that epic's content, not a repair the checker's author may make.
+ * OUTSTANDING IS THE OWNER'S; the check's job is to stop the count growing.
+ *
+ * Same shape as `bean-bodies-baseline.json`, deliberately: a recorded defect
+ * is listed and never fails, anything outside fails, and an entry nothing
+ * matches is reported STALE so the file can only shrink.
+ */
+export const BASELINE_FILE = "cat-harness/scripts/bean-parents-baseline.json";
+
+/** A defect's identity, stable across a title edit: the bean and the rule. */
+const key = (id: string, rule: string): string => `${rule}:${id}`;
+
+function loadBaseline(root: string): Set<string> {
+  const f = resolve(root, BASELINE_FILE);
+  if (!existsSync(f)) return new Set();
+  const raw: unknown = JSON.parse(readFileSync(f, "utf-8"));
+  const entries = (raw as { outstanding?: unknown }).outstanding;
+  return new Set(Array.isArray(entries) ? entries.filter((e): e is string => typeof e === "string") : []);
 }
 
 export function checkBeanParents(root: string): BeanParentsReport {
   const beans = readBeans(root);
-  if (beans === null) return { store: null, open: 0, problems: [] };
+  if (beans === null) return { store: null, open: 0, problems: [], outstanding: [], stale: [] };
 
   const byId = new Map(beans.map((b) => [b.id, b]));
-  const open = beans.filter((b) => OPEN_STATUSES.has(b.status) && !ROOT_TYPES.has(b.type ?? ""));
-  const problems: string[] = [];
+  /* EVERY open bean, roots included — `itka`, issue #941.
+   *
+   * This filtered `ROOT_TYPES` out here, which made the epic-under-epic rule
+   * below STRUCTURALLY UNREACHABLE: no `b` in the loop was ever an epic, so
+   * the branch could not be taken, and the summary printed it as verified.
+   * A rule nothing can reach, asserted as checked, is worse than no rule.
+   *
+   * The exclusion's intent is right and is documented on `ROOT_TYPES`: a root
+   * is not REQUIRED to carry a parent. It was applied one scope too wide —
+   * removing roots from every rule rather than from that one. It now lives on
+   * the has-a-parent branch alone, so a root that DOES carry a parent is
+   * judged on it like anything else.
+   */
+  const open = beans.filter((b) => OPEN_STATUSES.has(b.status));
+  /** The non-roots, which is what "below the roadmap roots" counts. */
+  const placed = open.filter((b) => !ROOT_TYPES.has(b.type ?? ""));
+  const found: { key: string; message: string }[] = [];
 
   for (const b of open.sort((a, c) => a.id.localeCompare(c.id))) {
     const where = `${b.id} (${b.title.slice(0, 60)})`;
     if (!b.parent) {
-      problems.push(`${where}: open with no \`parent\` — it lands in the roadmap's Miscellaneous section`);
+      // A ROOT NEED NOT HAVE ONE. This is the whole of what the exclusion
+      // was for, and now the whole of where it applies.
+      if (ROOT_TYPES.has(b.type ?? "")) continue;
+      found.push({
+        key: key(b.id, "no-parent"),
+        message: `${where}: open with no \`parent\` — it lands in the roadmap's Miscellaneous section`,
+      });
       continue;
     }
     const p = byId.get(b.parent);
     if (!p) {
-      problems.push(`${where}: \`parent: ${b.parent}\` names no bean — the roadmap omits this child entirely`);
+      found.push({
+        key: key(b.id, "parent-missing"),
+        message: `${where}: \`parent: ${b.parent}\` names no bean — the roadmap omits this child entirely`,
+      });
     } else if (!PARENT_TYPES.has(p.type ?? "")) {
-      problems.push(
-        `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic or a milestone`,
-      );
+      found.push({
+        key: key(b.id, "parent-type"),
+        message: `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic or a milestone`,
+      });
     } else if (b.type === "epic" && p.type === "epic") {
       // Epics nest under a GOAL, not under each other, and `beans prime`'s
       // hierarchy says so: milestone -> epic -> feature -> task/bug. Its own
       // case rather than a narrower PARENT_TYPES, because the two are not the
       // same rule — a task's parent may be an epic, and this one may not — and
       // because the message can then say WHY instead of "wrong type".
-      problems.push(
-        `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
+      found.push({
+        key: key(b.id, "epic-under-epic"),
+        message:
+          `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
           `\`${b.parent}\` is an epic`,
-      );
+      });
     }
   }
-  return { store: beanDefsDir(root), open: open.length, problems };
+  const baseline = loadBaseline(root);
+  const matched = new Set(found.map((f) => f.key).filter((k) => baseline.has(k)));
+  return {
+    store: beanDefsDir(root),
+    open: placed.length,
+    problems: found.filter((f) => !baseline.has(f.key)).map((f) => f.message),
+    outstanding: found.filter((f) => baseline.has(f.key)).map((f) => f.message),
+    stale: [...baseline].filter((k) => !matched.has(k)).sort(),
+  };
 }
 
 function formatReport(r: BeanParentsReport): string {
   if (r.store === null) return "Bean parents\n  · no bean store — nothing to check";
   const out = [`Bean parents (${r.open} open, below the roadmap roots)`];
   if (r.problems.length === 0) {
+    // THE CLAIM IS NOW EARNED. It was printed over a rule that could not be
+    // taken (`itka`, #941); the rule is reachable, so the sentence stands.
     out.push("  ✓ every open bean is placed under an epic or a milestone, and no epic hangs from another");
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);
@@ -156,6 +225,14 @@ function formatReport(r: BeanParentsReport): string {
     out.push("  — skills/folio-core/todo-manager.md §\"A GOAL is a `milestone` bean\".");
     out.push("  `beans roadmap` shows the current structure.");
   }
+  /* LISTED, NEVER FAILED, and never silent either. A defect the baseline
+   * records is still shown: hiding it would make "nobody has fixed this" and
+   * "there is nothing here" the same output, which is the disease this whole
+   * check exists to treat. */
+  for (const o of r.outstanding) out.push(`  · outstanding (baselined): ${o}`);
+  /* A BASELINE ENTRY NOTHING MATCHED means somebody repaired it, so the file
+   * must shrink. Left in place it would licence the defect's return. */
+  for (const k of r.stale) out.push(`  ✗ baseline entry \`${k}\` matches nothing — remove it from ${BASELINE_FILE}`);
   return out.join("\n");
 }
 
@@ -169,5 +246,5 @@ if (import.meta.main) {
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(report, null, 2) : formatReport(report));
-  process.exit(report.problems.length ? 1 : 0);
+  process.exit(report.problems.length || report.stale.length ? 1 : 0);
 }
