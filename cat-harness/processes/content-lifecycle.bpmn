@@ -86,7 +86,7 @@
       <bpmn:documentation>The plan becomes beans. From here on, beans/ is the shared answer to &#x27;what is done, what is next&#x27; — for humans and agents alike.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>H02</bpmn:incoming>
       <bpmn:outgoing>H03</bpmn:outgoing>
@@ -134,7 +134,7 @@
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:skill ref="content-feedback" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>H07</bpmn:incoming>
       <bpmn:outgoing>H08</bpmn:outgoing>

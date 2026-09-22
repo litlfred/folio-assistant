@@ -141,7 +141,7 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:documentation>An unresolvable citation is not dropped and not silently kept. It becomes a tracked item, so the gap is visible in the work plan rather than surviving as a footnote nobody re-checks.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12</bpmn:incoming>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
@@ -164,7 +164,7 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:documentation>Insufficient evidence is a RESULT. It is recorded as such -- an honest gap the guideline can state -- rather than being closed by weakening the recommendation until the available evidence supports it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16</bpmn:incoming>
       <bpmn:outgoing>Flow_18</bpmn:outgoing>

@@ -391,7 +391,42 @@ function readWorkPlanOp(
   nodeId: string,
   ext: { $type: string; op?: string }[],
 ): WorkPlanOp | undefined {
-  const op = ext.find((v) => v.$type === "folio:bean")?.op;
+  const bean = ext.find((v) => v.$type === "folio:bean");
+  if (bean === undefined) return undefined;
+
+  // AN UNKNOWN ATTRIBUTE IS REFUSED, not ignored — and this is a different
+  // check from the one below, which refuses an unknown op VALUE.
+  //
+  // The gap between them has a measured cost recorded in
+  // `processes/bean-lifecycle.bpmn`: a diagram carried
+  // `<folio:bean action="create"/>`, the engine reads `op` and never looked at
+  // `action`, and "the step silently did nothing for weeks". Nothing could
+  // have caught it, because an absent `op` is DOCUMENTED as meaningful —
+  // {@link ProcessNode.workPlanOp} says it means the step "touches the plan in
+  // some way the tools do not perform automatically". So a misspelling and a
+  // deliberate abstention produced the identical parse, and the abstention
+  // reading is the one a reader would reach for.
+  //
+  // Both readings stay available; what is removed is the ambiguity between
+  // them. A bare `<folio:bean/>` is still legal and still means abstention.
+  //
+  // moddle carries an unregistered attribute through as an own enumerable
+  // string property beside `$type` — the same behaviour `folio:role variable`
+  // relies on — so the check is over own keys, with moddle's own `$`-prefixed
+  // internals excluded.
+  const unknown = Object.keys(bean).filter((k) => !k.startsWith("$") && k !== "op");
+  if (unknown.length > 0) {
+    throw new UnsupportedBpmn(
+      `${nodeId}: folio:bean carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
+        `which the engine does not read. The attribute is \`op\` — and an absent op ` +
+        `MEANS something ("touches the plan in some way the tools do not perform ` +
+        `automatically"), so a misspelling here is indistinguishable from a deliberate ` +
+        `abstention. Use op="${[...WORK_PLAN_OPS].join('" | op="')}", or drop the ` +
+        `attribute entirely if abstention is what you meant.`,
+    );
+  }
+
+  const op = bean.op;
   if (op === undefined) return undefined;
   if (!WORK_PLAN_OPS.has(op)) {
     throw new UnsupportedBpmn(

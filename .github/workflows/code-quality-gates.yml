@@ -262,6 +262,24 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # The same question one level up: declared assets are FILES, these are
+      # DIRECTORIES, and nothing asked about them until bean `8mbk`.
+      #
+      # It could not have been caught by reading a consumer, because every
+      # consumer is correct: `resolveDirectories` is existence-filtered, so an
+      # absent declared directory is dropped before anyone sees it. The
+      # declaration then asserts a directory is ours, and every scan of it
+      # reports a clean run over nothing — the `dh4f` shape inside the resolver
+      # they all share.
+      #
+      # Gating from the first commit, same reasoning as the step above: 66
+      # declared directories across 14 instances, ZERO findings, so this starts
+      # at zero rather than measuring debt. The escape hatch is a declared
+      # `absent: { reason }`, and an exemption whose directory later appears is
+      # a finding too — that is the direction that rots quietly.
+      - name: declared directories exist, or say why not
+        run: bun run check:declared-dirs
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -1015,6 +1033,17 @@ jobs:
       # every time, which is exactly the test stated twenty lines above.
       - name: voices projection and viewer are current
         run: bun run voices:viz:check
+
+      # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
+      # whole reason this is gated while `library:viz:check` twenty lines
+      # below is not. The folio projection derives from the declared `folio`
+      # directories and the JSON nodes in them — three stickies in one
+      # directory today — so it changes when somebody edits or adds a landing
+      # sticky, and NOT when somebody else merges. A red here is an omission
+      # by the author of the diff, every time, which is the test the comment
+      # above states. Bean `7ofc`.
+      - name: folio projection and viewer are current
+        run: bun run folio:viz:check
 
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each

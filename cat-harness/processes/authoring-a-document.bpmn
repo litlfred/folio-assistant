@@ -83,7 +83,7 @@
       <bpmn:documentation>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>D02</bpmn:incoming>
       <bpmn:outgoing>D03</bpmn:outgoing>

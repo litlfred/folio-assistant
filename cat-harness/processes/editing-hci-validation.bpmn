@@ -103,7 +103,7 @@
       <bpmn:documentation>Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
@@ -209,7 +209,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:documentation>Findings are appended to the bean, so the next agent or human sees what is outstanding.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_19</bpmn:incoming>
       <bpmn:outgoing>Flow_20</bpmn:outgoing>
@@ -276,7 +276,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
       <bpmn:documentation>Resolved when the change landed clean; left open with the residue when it did not.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="resolve" />
+        <folio:bean op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_26</bpmn:incoming>
       <bpmn:outgoing>Flow_27</bpmn:outgoing>

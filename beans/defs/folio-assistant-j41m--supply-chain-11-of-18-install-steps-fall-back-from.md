@@ -1,12 +1,12 @@
 ---
 # folio-assistant-j41m
 title: 'SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-22T09:05:00Z
+updated_at: 2026-09-22T10:01:35Z
+parent: folio-assistant-3x2n
 ---
 
 ## Measured 2026-09-21
@@ -204,3 +204,34 @@ It is not hygiene. An action is code this repository executes **with its own
 token** on every push. `check:workflow-injection` guards what the workflows
 themselves do with untrusted input; nothing guarded the actions they call. That
 was a supply chain with no eyes on it whatsoever.
+
+## Summary of Changes
+
+Merged as `011ea91` ([#893](https://github.com/litlfred/folio-assistant/pull/893)).
+
+**The lockfile half** (landed earlier): `check:lockfile-pinning` fails any pin
+that DEGRADES — `--frozen-lockfile || bun install` — always, never baselined,
+because the failure it swallows is the one it exists to raise. An install with
+no pin at all is baselined and a NEW one fails. Falsified against the real
+workflows: restoring one fallback turns it red and names file and line.
+
+**The audit half** (the owner's ruling, both options): `check:dependency-advisories`
+reports on every PR and blocks nothing; `.github/dependabot.yml` turns the same
+advisories into reviewable PRs. Neither gates a merge. The warn-only gate keeps
+three states apart in its OUTPUT — `clean`, `advisories`, `undetermined` —
+because a step that exits 0 in every state has no other channel, and this
+workflow already has a recorded case of a step reporting "a clean baseline it
+had never computed". Falsified: making `undetermined` render a tick turns the
+suite red on exactly that assertion.
+
+Confirmed externally rather than asserted: GitHub's own Dependabot API validated
+the config (its check run passed), and the advisory job ran green on a real
+runner. Left explicitly open, because this checkout cannot settle it: whether
+Dependabot regenerates a **bun** lockfile.
+
+**What this bean got wrong twice, both recorded above rather than quietly
+fixed.** Its title's "11 of 18" took the denominator from the numerator's shape
+and hid three install steps that never pinned at all. Its "1 of 28 at an exact
+version" was the ROOT manifest alone; across all five manifests carrying
+dependencies it is 40. A ratio picks its own denominator — `w4tq`'s lesson,
+twice in one bean.

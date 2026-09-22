@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yv4z
 title: '3pqn cause: why does a PR sometimes get NO pull_request-event run at all?'
-status: in-progress
+status: completed
 type: bug
 priority: low
 created_at: 2026-09-20T16:33:37Z
-updated_at: 2026-09-22T06:11:40Z
+updated_at: 2026-09-22T10:41:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -136,9 +136,10 @@ already dead.
 
 ## Done when
 
-- [ ] either the cause is established, or it is recorded as **not determinable
+- [x] either the cause is established, or it is recorded as **not determinable
       from here** with what was tried — and *"could not determine"* is written
-      as a determined answer, not left as an open question nobody returns to
+      as a determined answer, not left as an open question nobody returns to.
+      **ESTABLISHED**, 2026-09-22 — see the closing summary below
 
 ## Where the rest lives
 
@@ -550,3 +551,54 @@ consequence) is already recorded as not needing resolution.
 **Not ticked here.** The bean is `in-progress` under another session and the
 owner acknowledged it as filed; this is evidence added to an open record, not
 a claim on it. Recommending closure rather than performing it.
+
+---
+
+## Summary of Changes — closed 2026-09-22
+
+**The cause is established.** A PR that is unmergeable carries no
+`refs/pull/N/merge`, and `pull_request`-event workflows therefore do not run,
+while `push`-event workflows on the identical sha complete normally —
+`actions/checkout@v4` with no `ref:` resolves the merge commit for a
+`pull_request` event, and a conflicted PR has none. Both sides return within
+seconds of the conflict being resolved.
+
+Built from three measurements that each closed a different gap:
+
+| | what it settled |
+|---|---|
+| **#797 vs #806** (matched pair, same branch, same session, same token) | one variable differs — mergeability — and it decides. Independently re-falsifies app-token suppression |
+| **the merge-ref census** (owner, `d1143b0f6f`) | twelve open mergeable PRs held merge refs at the instant the conflicted one did not. *"The merge ref is the discriminator; the clock is not"* |
+| **observation 15** (`677e05dc24`) | extends it from `opened` to **`synchronize`**: ten heads on one branch and one PR, exactly the two inside a bounded conflict window carry no run, and the run returns 11 s after resolution |
+
+Observations 8–14 were the last set the mechanism did not reach, because that
+series recorded no mergeability. Observation 15 is the same event type with
+mergeability measured, so the anomaly is resolved rather than outstanding.
+
+### What is NOT settled, and why the bean closes anyway
+
+**Direction of causation.** GitHub may decline to compute the merge commit and
+therefore skip the event, or skip the event and never compute the commit. Both
+are consistent with every reading here, and nothing observable from inside a
+repository discriminates them. This bean's own text already records that it
+does not need that resolved: what an operator needs — read `mergeable_state`
+first, never dispatch on a conflicted PR — is in `prepare-merge` §Guardrails
+and holds under either direction.
+
+### What this bean leaves behind
+
+- **Three falsified hypotheses** under "do not re-test these": paths filter,
+  ref-update race, app-token suppression. The last was independently
+  re-derived and believed by a later session before it read this bean.
+- **Two narrowings**: not a force-push property; not "recently pointed at a
+  merged commit".
+- **Lag is a third state.** Observation 7 measured runs appearing 1–2 minutes
+  later with nothing dispatched, so an occurrence counts as *dropped* only
+  after a stated wait. Some of the early six may have been lag.
+- **A merge-ref probe means nothing unless the PR is confirmed OPEN in the
+  same breath** — refs are reaped on close, so a merged PR reads exactly like
+  an open conflicted one. Nearly reported as a finding twice.
+
+Closed on **evidence rather than authorship**: four sessions and the owner
+contributed, and the closing measurement is re-derivable from
+`list_workflow_runs` and the commit timestamps named above.

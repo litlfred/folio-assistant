@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T06:03:07Z
-updated_at: 2026-09-22T09:03:43Z
+updated_at: 2026-09-22T10:51:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -279,3 +279,102 @@ The PR body says *"the true saving is probably larger, which is exactly why a pr
 - [x] A real preview measured after the change is live — done on the PR's own staging, no merge required
 - [x] The measured figure reported rather than the projection
 - [ ] The share of branches that touch none of the five carry paths — the number that decides whether `reference/`'s 38.7 MiB is reachable in practice. NOT measurable from nine previews
+
+
+_2026-09-22T10:50:00Z_ — **THE OPEN BOX IS MEASURED: 32 %, and the answer is that this change is not sufficient.**
+
+The box asked what share of branches touch none of the five carry paths. I said nine previews could not answer it — true, and the wrong place to look. **Git history can**, and the carry rule is a pure function of a branch's changed files, so it can be evaluated retrospectively against merges that predate it.
+
+## Method
+
+120 merge commits into `origin/main`, newest first. For each, `git diff --name-only <merge>^1 <merge>` gives exactly what that merge brought, and the two patterns are read **off `feature-staging.yml` on main** rather than from memory:
+
+    reference/   ^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness/scripts/gen-(schema|skill|docs)-
+    api/         ^cat-harness/schemas/
+
+| class | n | share | sheds |
+|---|---|---|---|
+| touches **neither** | 38 | **32 %** | `reference/` + `api/` = **46.0 MiB** |
+| touches ref, not api | 22 | 18 % | `api/` alone = **7.3 MiB** |
+| touches both | 60 | 50 % | nothing |
+
+`api ⊆ ref` exactly — 82 = 60 + 22 — which is a structural check on the measurement rather than a coincidence: `^cat-harness/schemas/` is a subset of the `reference/` alternation, so any branch carrying `api/` must carry `reference/`. The three classes being disjoint and summing to 120 is the second.
+
+## The number
+
+    EXPECTED saving per preview    15.9 MiB of 92.5  =  17 %
+    measured on THIS branch         7.3 MiB of 92.5  =   8 %   (a skills-touching branch)
+    projected in the PR body       43.2 MiB of 88.3  =  49 %
+
+So the projection was wrong by ~3× against a realistic branch mix, and by ~6× against the branch I happened to measure on. **8 % was not unrepresentative — it was the second-most-likely case**, and the single most likely case (50 %) saves nothing at all.
+
+## What it means for the 1 GB cap, which is the question behind the question
+
+A ten-preview tree at today's composition: **925 MiB → 766 MiB**. That is 90 % → **75 % of the 1024 MiB limit** — still past the three-quarters threshold `staging-preview-size` fires on, which is why `bun run health` still reports it **critical** after this shipped.
+
+This change buys roughly **two** extra concurrent reviews rather than the halving the PR body implies. It is worth having — it is the only lever that does not delete somebody's open preview — and it is **not sufficient on its own.**
+
+## One reason the 32 % case may be better than 46.0 MiB
+
+`reference/` carries the just-the-docs nav and `api/` does not; that is why dropping `api/` saved exactly its own weight (measured) while dropping `reference/` should also shrink **every remaining page**. **No preview has yet dropped `reference/`**, so 46.0 MiB is a floor for that class, not an estimate. If the nav effect is as large for it as the 143 KiB/page figure suggests, the 32 % class could shed materially more — and the honest way to find out is to wait for a preview on a branch that touches none of the five paths, then measure it.
+
+## Caveat on the sample
+
+Merge commits into `main` are a **proxy** for "branches that had a preview": some are dependabot bumps, some are bean-only closures. Both are exactly the kind of branch that touches none of the five paths, so the 32 % may be **optimistic** for human feature branches specifically. Splitting the sample by author is the refinement if anyone wants a tighter number; 120 is enough to rule out the 49 % projection, which is what the box was for.
+
+## Done when
+
+- [x] A real preview measured after the change is live
+- [x] The measured figure reported rather than the projection
+- [x] The share of branches touching none of the five carry paths — **32 % of 120 merges**, giving a 17 % expected saving and 75 % of the cap
+- [ ] **NEW, and the box this one opens:** 17 % does not clear the threshold. The next lever needs choosing — and it is the owner's call, not an agent's, because every candidate either deletes somebody's artefact or changes what a reviewer can see
+
+
+_2026-09-22T11:00:00Z_ — **THE NAV BONUS IS REAL AND MEASURED — and this corrects my own correction.** The opportunity arrived within the hour: this branch became a `neither` branch (its remaining diff touches `src/`, non-`gen-*` `scripts/` and `beans/` only), its preview rebuilt, and two siblings did the same.
+
+## A live three-against-five comparison
+
+| class | previews | MiB |
+|---|---|---|
+| **neither** (`ref:1 api:0`) | `determined-euler` 40.2, `peaceful-heisenberg` 41.0, `dependabot-github_actions` 40.6 | mean **40.6**, spread 40.2–41.0 |
+| **carrying** (`ref:256–264 api:307`) | 83.1, 91.9, 98.1, 97.1, 94.8 | mean **93.0**, spread 83.1–98.1 |
+
+    MEASURED saving, neither class   52.4 MiB = 56%
+    arithmetic floor stated above    46.0 MiB   (reference 38.7 + api 7.3)
+    NAV BONUS beyond the two trees   +6.4 MiB   over ~3212 remaining pages
+
+File counts check out structurally: 3782 → 3212 is **570 dropped**, against 264 `reference/` + 307 `api/` = **571**. One file of slack is the `reference/` stub the trim leaves behind, which is the intended behaviour rather than a rounding artefact.
+
+## What this corrects, and I was wrong in two directions
+
+Earlier today I measured **8 %** on this same branch and wrote: *"I argued the saving would be LARGER than the arithmetic. It is six times smaller, and the error is in the direction I was warning about."*
+
+**That sentence is now wrong, and precisely so.** The 8 % was real — but it was measured while this branch still carried `reference/`, because it had edited `cat-harness/skills/`. Once the branch's diff no longer touched any carry path, the same preview shed **56 %**.
+
+So the original PR's two claims split cleanly:
+
+| claim | verdict |
+|---|---|
+| *"~49 % saving"* | **right for a `neither` branch** — 56 % measured, better than projected |
+| *"the true saving is probably larger than the arithmetic"* | **right for `reference/`** (+6.4 MiB nav bonus), **wrong for `api/`** (TypeDoc, no nav — sheds exactly its own weight) |
+| 49 % as a blanket figure | **wrong** — it assumed every branch is a `neither` branch, and only 32 % are |
+
+The defect in the projection was never the arithmetic. It was **quantifying over the wrong population**: one branch's saving stated as every branch's.
+
+## Revised expected value
+
+    32% × 52.4  +  18% × 7.3  +  50% × 0   =  18.1 MiB of 93.0  =  19%
+
+Up from the 17 % computed on the 46.0 floor. **The conclusion does not move**: 19 % is not 49 %, and the half of branches that touch `schemas/` still shed nothing.
+
+## The live tree, which is better news than the check reports
+
+**586.8 MiB across 8 previews = 57 % of the 1024 MiB cap** — comfortably under the three-quarters threshold, where `bun run health` reported `critical` at 804.4 MB this morning.
+
+Two causes, and they must not be conflated: three of the eight are now `neither` previews shedding 52 MiB each, **and** two previews were cleaned up as their PRs closed. The second is ordinary churn, not this change working. A single reading cannot separate them, so **the honest claim is that the tree is under threshold today, not that this change put it there.**
+
+## Done when
+
+- [x] The share of branches touching none of the five carry paths — 32 % of 120 merges
+- [x] **The nav bonus on `reference/` measured** — +6.4 MiB, so 52.4 rather than the 46.0 floor
+- [ ] 19 % still does not make the threshold unreachable on a bad day: eight carrying previews alone would be 744 MiB, 73 % of the cap, with no headroom for a ninth. The next lever remains the owner's call
