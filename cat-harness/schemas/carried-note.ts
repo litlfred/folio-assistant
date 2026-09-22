@@ -171,7 +171,7 @@ export type ArtefactRef = z.infer<typeof ArtefactRefSchema>;
  * resolver answers with its own third state.
  */
 export const NoteTagsSchema = z.object({
-  /** Role ids — the swimlane this sits in. `skills/roles/roles.json`. */
+  /** Role ids — the swimlane this sits in. `scenarios/roles.json`. */
   roles: z.array(z.string()).default([]),
   /** BPMN process ids this belongs to. */
   processes: z.array(z.string()).default([]),

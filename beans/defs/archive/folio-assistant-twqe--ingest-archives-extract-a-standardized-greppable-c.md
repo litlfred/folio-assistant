@@ -29,7 +29,7 @@ archive entry is not a different kind of thing.
 `library/<slug>/contents.jsonld` exists for every archive, is referenced from
 `manifest.jsonld`, and a grep for a filename inside an archive finds it.
 
-Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Archive`.
+Diagram: `processes/ingest-derive-content.bpmn`, `Task_Archive`.
 
 _2026-09-19T15:34:30Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 

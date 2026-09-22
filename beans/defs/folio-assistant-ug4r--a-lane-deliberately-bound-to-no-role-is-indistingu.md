@@ -85,7 +85,7 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
       definition, nobody wrote one" — #596 slice 2, which consumes
       `laneBinding`; not this bean
 - [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
-      `bootstrap/skills/roles/roles.json` points at it rather than being
+      `bootstrap/scenarios/roles.json` points at it rather than being
       the only record
 
 ## Investigated 2026-09-21 — the fix is aimed at the right layer, and the shape is settled
@@ -190,7 +190,7 @@ of hiding real defects, and four tests refuse it.
 
 ### The prose is now the rationale, not the record
 
-`bootstrap/skills/roles/roles.json`'s `_lanes_comment` says so explicitly
+`bootstrap/scenarios/roles.json`'s `_lanes_comment` says so explicitly
 and points at the declaration. It was the only record until today, and a fact
 that lives only in a comment is one `lane-binds-role` reports as `major` for
 ever.

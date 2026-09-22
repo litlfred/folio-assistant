@@ -161,8 +161,8 @@ added line a `<bpmn:documentation>`.
 Two corrections, in the order they were found, because the second is the
 interesting one.
 
-**First**, the resolver read `cat-harness/skills/roles/roles.json` alone.
-`bootstrap/skills/roles/roles.json` declares four roles of its own —
+**First**, the resolver read `cat-harness/scenarios/roles.json` alone.
+`bootstrap/scenarios/roles.json` declares four roles of its own —
 `initiator`, `requestor`, `logger`, `knowledge-graph-data-store` — each with
 a description and a matching `lanes[]`. Six of the seven were already bound.
 Resolving against both, over all 157 lanes read from the diagrams: **27 by

@@ -78,7 +78,7 @@ to ask for it. Concretely, and each part is separable:
    `build-pipeline` and `validation-pipeline`. Smallest step, unblocks
    `memoryForRoles`, and is independently correct.
 2. **Place the two dispatch points in a diagram.** They are process events, so
-   they belong in BPMN under `skills/workflows/`, not in prose here. The likely
+   they belong in BPMN under `processes/`, not in prose here. The likely
    homes are `draft-to-publication` (the merge-to-main gate) and a
    feature-branch process that may not exist yet — that needs checking, not
    assuming.
@@ -98,7 +98,7 @@ store.
 
 _2026-09-19T08:39:19Z_ — Not claiming this bean — it is about the CI-HEALTH watcher's two dispatch points (feature-branch change, and approval for merge to main), and I have not drawn those.
 
-What I did do, on branch `claude/pin-theme-upstream-watch` (PR #362, bean `1rlj`), is apply this bean's RULE to a different watcher, so there is now a worked instance of it to copy from: `skills/workflows/upstream-pin-watch.bpmn` puts an upstream-pin watcher's dispatch point in a diagram rather than in prose. It uses exactly the placement 29ij argues for — every mechanical step sits in the `CI/CD Pipeline` lane, which binds `build-pipeline` (`actorKind: system`, 'runs a fixed program and exercises no judgement'), and no role was invented. The one step that needs judgement is a `callActivity` out to a separate process whose accepting step is a `bpmn:userTask` in a person-only lane.
+What I did do, on branch `claude/pin-theme-upstream-watch` (PR #362, bean `1rlj`), is apply this bean's RULE to a different watcher, so there is now a worked instance of it to copy from: `processes/upstream-pin-watch.bpmn` puts an upstream-pin watcher's dispatch point in a diagram rather than in prose. It uses exactly the placement 29ij argues for — every mechanical step sits in the `CI/CD Pipeline` lane, which binds `build-pipeline` (`actorKind: system`, 'runs a fixed program and exercises no judgement'), and no role was invented. The one step that needs judgement is a `callActivity` out to a separate process whose accepting step is a `bpmn:userTask` in a person-only lane.
 
 The specific thing that transfers: the three-state discipline. `current` / `behind` / `unknown`, with `unknown` never rendered as green and the job failed — which is `check-ci-health.ts`'s own rule, drawn as a gateway and an end event rather than left in the script.
 

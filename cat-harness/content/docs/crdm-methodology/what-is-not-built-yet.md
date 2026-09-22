@@ -27,7 +27,7 @@ there, or lets them assume something exists because nobody updated the list.
   they would be a second answer to "where are we", free to disagree with the
   first.
 - **BPMN diagram of the process itself** —
-  [`methodologies/crdm/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/workflows/crdm-requirements.bpmn),
+  [`methodologies/crdm/processes/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/processes/crdm-requirements.bpmn),
   with lanes for the BA / feature requestor, the agent, and stakeholders.
 - **The six-phase workflow as a skill** —
   [`methodologies/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-requirements-workflow.md),

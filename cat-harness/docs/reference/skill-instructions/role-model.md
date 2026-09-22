@@ -21,9 +21,9 @@ Four objects, each with a home:
 | object | what it is | declared in |
 |---|---|---|
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
-| **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
+| **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `schemas/skills/<name>/`, `.claude/skills/local/` |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
 | **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
 
@@ -103,7 +103,7 @@ Three facts, in case the question comes up again:
   swimlane roles into it. At removal, across the 114 skill files: 288
   annotations, **260 of them — 90 % — resolving to nothing.**
 
-To learn who performs a skill, read `skills/roles/roles.json`. The registry is
+To learn who performs a skill, read `scenarios/roles.json`. The registry is
 the only answer that resolves.
 
 **What the removal did not decide.** Whether a skill *should* declare its
@@ -529,7 +529,7 @@ group of something else is a one-line addition.
 The role graph is the substrate every diagram's lanes bind to. Changing it —
 adding an actor, opening a role, granting a permission, retiring a
 participant — is therefore a process like any other, and it is drawn:
-[`actor-role-administration.bpmn`](../workflows/actor-role-administration.bpmn),
+[`actor-role-administration.bpmn`](../../processes/actor-role-administration.bpmn),
 in the `administrator` lane.
 
 **That was a question, not a deduction.** Until the owner answered it, there
@@ -560,7 +560,7 @@ uniquely was had no picture.
 
 ## Adding a role
 
-1. Add it to `skills/roles/roles.json` with a **`description`** that says what
+1. Add it to `scenarios/roles.json` with a **`description`** that says what
    the **position** is, not what it is called. **`actorKinds` is a SET** drawn
    from `person`, `agent`, `system` and `external` — human, agentic,
    mechanical, or outside this instance. It is what `activity-fulfilment-kind`

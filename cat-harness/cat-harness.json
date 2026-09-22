@@ -382,8 +382,12 @@
   "directories": [
     {
       "id": "tools",
+      "_coverage_comment": "`docs` pointed at `cat-harness/docs/skills.md` until 2026-09-22 — a page titled \"Skills & roles\" whose headings are Skills, Roles and Capabilities, with no tools section in it. The tools graph had no documentation of its own and named a page about something else. That is worse than an absent ref, because an absent one is a legible gap while a ref that RESOLVES reports coverage: the check in force asks only whether the path exists, it did, and nothing ever flagged it. Found by applying the owner's instruction of 2026-09-21, \"keep tools and skills separate!\". `tool-graph.md` is the prose; `tools/index.md` is the generated view, and the two are different objects rather than two names for one.",
       "coverage": {
-        "docs": "cat-harness/docs/skills.md",
+        "docs": "cat-harness/docs/tool-graph.md",
+        "visualiser": [
+          { "ref": "cat-harness/docs/tools/index.md", "title": "Tools" }
+        ],
         "skill": "skills-and-tools"
       },
       "path": "tools/",
@@ -428,8 +432,8 @@
       ]
     },
     {
-      "id": "cat-harness-roles",
-      "path": "skills/roles/",
+      "id": "scenarios",
+      "path": "scenarios/",
       "dependents": "skip",
       "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
       "graphKinds": [
@@ -437,12 +441,12 @@
       ]
     },
     {
-      "id": "cat-harness-workflows",
-      "path": "skills/workflows/",
+      "id": "processes",
+      "path": "processes/",
       "dependents": "skip",
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here \u2014 that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs.",
       "graphKinds": [
-        "workflows"
+        "processes"
       ]
     },
     {
@@ -464,18 +468,18 @@
       "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
-      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
+      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in processes/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
       "graphKinds": [
         "skills"
       ]
     },
     {
-      "id": "methodology-crdm-workflows",
-      "path": "methodologies/crdm/workflows/",
+      "id": "methodology-crdm-processes",
+      "path": "methodologies/crdm/processes/",
       "dependents": "skip",
-      "description": "CRDM's own executable processes \u2014 the eight BPMN diagrams that RUN the requirements methodology rather than describe it. Declared as `workflows` on 2026-09-21 for the same reason `skills/workflows/` is: before the split these sat inside a `cat-harness` directory and were reached by convention, and the moment the parent became `skills` the processes index pruned them as an orphan. A diagram's kind follows what the FILE is, not which methodology owns the directory above it.",
+      "description": "CRDM's own executable processes \u2014 the eight BPMN diagrams that RUN the requirements methodology rather than describe it. Declared as `workflows` on 2026-09-21 for the same reason `processes/` is: before the split these sat inside a `cat-harness` directory and were reached by convention, and the moment the parent became `skills` the processes index pruned them as an orphan. A diagram's kind follows what the FILE is, not which methodology owns the directory above it.",
       "graphKinds": [
-        "workflows"
+        "processes"
       ]
     },
     {
@@ -499,6 +503,12 @@
     },
     {
       "id": "fsh-guts",
+      "_coverage_comment": "THE OWNER RULED, 2026-09-21: render it, keep it off the canonical deploy. They asked to see this graph (\"i eant to see beans/ todos/ fsh-guts/\") and the description below says it is DELIBERATELY unrendered so something can be kept without being published. Both were wanted, so `publish: \"staging-only\"` is the third answer: `compose-docs.ts` withholds the page unless told `--staging`, which a local build and a STAGING preview pass and the canonical deploy does not. The default is the restrictive one because the two failure directions are not symmetric -- a forgotten flag loses a page from a preview, where whoever is looking at the preview sees it missing, while the opposite default publishes withheld content with nothing to show for it. The page INDEXES rather than republishes: each entry links to the file, so the graph stays the one copy.",
+      "coverage": {
+        "visualiser": [
+          { "ref": "cat-harness/docs/fsh-guts/index.md", "title": "fsh-guts", "publish": "staging-only" }
+        ]
+      },
       "path": "fsh-guts/",
       "dependents": "skip",
       "scope": "repository",
@@ -595,7 +605,8 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
+        "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count \u2014 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library \u2014 which the library viewer cannot do by construction.",
+        "visualiser": [{ "ref": "cat-harness/docs/cat-harness/uploads/index.html", "icon": "uploads" }]
       },
       "description": "The incoming queue of the document-ingestion pipeline \u2014 raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphKinds": [
@@ -748,7 +759,7 @@
       "path": "large-datasets/skills/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/skills/workflows/ -- a skill ref resolves across the declared graphs, not within one directory.",
+      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/processes/ -- a skill ref resolves across the declared graphs, not within one directory.",
       "graphKinds": [
         "skills"
       ]

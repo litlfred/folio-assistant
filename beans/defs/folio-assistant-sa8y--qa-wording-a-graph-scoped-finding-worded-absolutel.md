@@ -27,7 +27,7 @@ times**, and `bootstrap/harness.json` declares the directory holding it.
 
 Reading it as absolute, I concluded the audit had a blind spot, traced it to
 `workflowDirs` probing `<declared>/workflows` (so the `bootstrap` entry pointing
-at `bootstrap/skills/` probes `bootstrap/skills/workflows/`, a sibling of the real
+at `bootstrap/skills/` probes `bootstrap/processes/`, a sibling of the real
 directory), and **declared `bootstrap/workflows/` at the root to fix it.**
 
 `scripts/tests/instance-graph-isolation.test.ts` failed immediately, and it was
@@ -150,7 +150,7 @@ compose", applied to a diagnostic rather than to a link.
       either shape, through one shared walk so they cannot drift apart again.
       `skill-has-entry-point` went 1 → 0
 - [~] the three unbound lanes — **NOT work, a recorded decision.** The four
-      roles exist in `bootstrap/skills/roles/roles.json` with the right flags
+      roles exist in `bootstrap/scenarios/roles.json` with the right flags
       (`knowledge-graph-data-store` and `logger` `actedUpon`, `requestor`
       `judgementOnly`); what is missing is `lanes` on each, and that absence is
       **deliberate**. The file's own `_lanes_comment` records why: the root

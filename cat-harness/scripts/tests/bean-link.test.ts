@@ -112,7 +112,7 @@ describe("an instance with no bean", () => {
 
 describe("the diagrams declare which operation each step performs", () => {
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    const dir = resolve(import.meta.dir, "../../skills/workflows");
+    const dir = resolve(import.meta.dir, "../../processes");
     let marked = 0;
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
                      "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
@@ -132,7 +132,7 @@ describe("the diagrams declare which operation each step performs", () => {
 
   test("the editing process claims, notes, then resolves — in that order", async () => {
     const model = await loadProcessModel(
-      resolve(import.meta.dir, "../../skills/workflows/editing-hci-validation.bpmn"),
+      resolve(import.meta.dir, "../../processes/editing-hci-validation.bpmn"),
     );
     expect(model.nodes.get("Task_ClaimBean")!.workPlanOp).toBe("claim");
     expect(model.nodes.get("Task_LogFindings")!.workPlanOp).toBe("note");

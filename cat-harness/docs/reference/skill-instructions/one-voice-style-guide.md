@@ -13,7 +13,7 @@ parent: Skill instructions
 ## The voice comes from the ROLE, not from this file
 
 Before writing or auditing a block, resolve its audience and read that role's
-`persona`, `voice` and `useCases` in `skills/roles/roles.json`.
+`persona`, `voice` and `useCases` in `scenarios/roles.json`.
 
 **A block sits in a lane; the lane is a role; the role is who the prose is
 for.** The audience is not restated per block — copying it onto every block

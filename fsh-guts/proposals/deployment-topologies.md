@@ -358,7 +358,7 @@ fit in with the software development lifecycle (SDLC - it needs to be formal
 formal, subprocess includes developing MVP etc, align/cleanup exisrting
 documentation)."
 
-**Measured 2026-09-19.** `skills/workflows/` holds 33 BPMN files (this said
+**Measured 2026-09-19.** `processes/` holds 33 BPMN files (this said
 31 when first written; two landed the same day, which is why
 [the audit](sdlc-process-audit.html) re-measures rather than quotes). The
 content-agnostic, `strict` ones — `content-lifecycle`, `draft-to-publication`,

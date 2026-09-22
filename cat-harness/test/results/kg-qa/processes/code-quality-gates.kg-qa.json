@@ -1,0 +1,98 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CodeQualityGates",
+    "path": "processes/code-quality-gates.bpmn"
+  },
+  "source_hash": "sha256:3d410538399a57bb826eac7615e4a5d115aa4b3e0d33dd3bb6305f075238fd52",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Lean",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Python",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_TypeScript",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_E2E",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Rust",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 1,
+    "n/a": 8,
+    "unknown": 0
+  }
+}

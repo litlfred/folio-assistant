@@ -17,7 +17,7 @@ _2026-09-19T08:55:32Z_ — Found while verifying PR #362's staging preview. Not 
 
 ## Cause
 
-`peaceiris/actions-gh-pages@v4` replaces the publish branch's contents unless `keep_files: true`. `grep -rl keep_files .github/workflows/` lists five workflows — `lean_ci`, `publish`, `discoverability-docs`, `feature-staging`, `blueprint` — and `docs-site.yml` is NOT among them, while it is the workflow that fires on every push to main touching `docs/`, `skills/workflows/`, `schemas/` or three scripts. So the most frequently-run publisher is the only one that wipes.
+`peaceiris/actions-gh-pages@v4` replaces the publish branch's contents unless `keep_files: true`. `grep -rl keep_files .github/workflows/` lists five workflows — `lean_ci`, `publish`, `discoverability-docs`, `feature-staging`, `blueprint` — and `docs-site.yml` is NOT among them, while it is the workflow that fires on every push to main touching `docs/`, `processes/`, `schemas/` or three scripts. So the most frequently-run publisher is the only one that wipes.
 
 ## Why it matters more than it looks
 

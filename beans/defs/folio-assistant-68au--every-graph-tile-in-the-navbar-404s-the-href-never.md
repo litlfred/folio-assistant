@@ -1,11 +1,11 @@
 ---
 # folio-assistant-68au
 title: Every graph tile in the navbar 404s — the href never gets the baseurl
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T20:47:15Z
-updated_at: 2026-09-21T20:52:36Z
+updated_at: 2026-09-21T22:58:51Z
 parent: folio-assistant-o3xy
 ---
 
@@ -37,4 +37,22 @@ Two commits on `claude/zealous-turing-v49ph5`, PR #803.
 
 `f99b1735` — the glyph. Declared by name, default-deny registry, fallback on unknown. TWO beans rather than the reference's four: five candidates were rendered at 20px and only two-outlined kept its shapes and hilums separate there. An icon is not a picture shrunk.
 
-Stays `in-progress` until the PR merges — closure is on evidence, not on authorship.
+## Closed on evidence
+
+PR #803 merged to `main` as `170bae8d`, 2026-09-21. Closure is on evidence
+rather than on authorship, so the evidence is the check rather than the merge
+notification: every changed symbol was read back OUT of `origin/main` —
+`withBase`, `glyphFor`, `BEANS_GLYPH`, the `fa-baseurl` meta, `TERM_LAYERS`,
+`layerArgError`, and the beans entry's `icon: "beans"` — and all eight changed
+files are byte-identical between the merged branch and `main`. A squash merge
+makes commit ancestry useless for this (`aa4fdcb6` is not an ancestor of
+`main`), which is exactly why the content was checked instead.
+
+`main` is green on the merge: Code-quality gates run 2381 on `170bae8d`,
+success.
+
+WHAT THIS BEAN DID NOT COVER, deliberately: bean `v18c` — the owner's *"way
+too many tiles (non functional)"*. This fixed "non functional"; the other half
+(`uploads` and `library` pointing at one page with no tab deep-linking, and
+cat-harness's own library empty) is `v18c`'s, still `todo`, with three options
+and no decision.

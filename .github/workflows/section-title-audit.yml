@@ -33,7 +33,7 @@ jobs:
       - name: Install content deps
         run: |
           cd content
-          bun install --frozen-lockfile 2>/dev/null || bun install
+          bun install --frozen-lockfile
 
       # MACHINE review — HARD GATE. The chapter-restructure " : <tag>"
       # artifact baseline (was 23) has been fully reorged to 0, so this

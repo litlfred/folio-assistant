@@ -92,7 +92,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
@@ -118,7 +118,33 @@ function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
 }
 
 const root = resolve(import.meta.dir, "..");
-const WORKFLOW_DIR = join(root, "skills", "workflows");
+
+/**
+ * THIS instance's own directory with `id`, or the convention if it declares none.
+ *
+ * Not {@link instanceDirectoryForGraph}: that asks by KIND, and this instance
+ * declares TWO directories holding `processes` — its own `processes/` and
+ * CRDM's `methodologies/crdm/processes/` — so a by-kind lookup throws rather
+ * than choosing, which is bean `wggr` working as designed. A path-less
+ * subject belongs to the instance's own graph, and that is a question only
+ * the id answers: *"a by-ID lookup through `resolveDirectories` is the answer
+ * when you want a particular one."*
+ */
+function ownDirectoryById(root: string, id: string, fallback: string): string {
+  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
+    (d) => d.id === id && d.own && d.scope !== "repository",
+  );
+  return found?.absPath ?? join(root, fallback);
+}
+
+// declared-path-literal: the convention fallback, at the call site — an
+// instance that declares no `processes` directory still needs a sidecar home
+// for a path-less subject, and the convention is where one would look.
+const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
+// declared-path-literal: the convention fallback, at the call site. Same
+// reasoning as `WORKFLOW_DIR` — the role graph moved out of the skills tree
+// on 2026-09-21 and a path-less subject needs a sidecar home.
+const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -325,7 +351,7 @@ async function auditProcess(
       case "unbound":
         unboundLane.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in skills/roles/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
+          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
         });
         break;
     }
@@ -510,7 +536,7 @@ async function auditProcess(
       "raci-single-accountable",
       "raci-accountable-not-consulted",
     ]) {
-      criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
+      criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at scenarios/roles.json." }] };
     }
   }
   return report("process", m.id, rel, hash, criteria);
@@ -550,7 +576,7 @@ async function auditDecisions(
     for (const id of ids) {
       const ref = `${f}#${id}`;
       if (!referenced.has(ref)) {
-        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in skills/workflows/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
+        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
         continue;
       }
       try {
@@ -1045,7 +1071,7 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  *
  * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
  * leak that was LIVE on 2026-09-19: a filesystem walk discovered
- * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * `bootstrap/processes/` from the repository root and put 88 references to a
  * bootstrap process into folio-assistant's published graph. One instance's graph
  * must not carry another's nodes, and this audit is right not to.
  *
@@ -1110,7 +1136,7 @@ function unreadNestedInstances(): KgFinding[] {
  * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
  * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
  * fact about the repository, and on 2026-09-20 a session read it that way:
- * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
+ * `confirm-harness` is named three times by `bootstrap/processes/`, which this
  * audit does not read, so the absolute wording looked like a blind spot. The
  * session "fixed" it by declaring that directory at the root and re-introduced a
  * defect `instance-graph-isolation.test.ts` had been written the day before to
@@ -1374,7 +1400,7 @@ function sidecarPath(r: KgQaReport): string {
   // live under several packages, so one directory per kind would collide two
   // packages' same-named skills into one sidecar. Processes have exactly that
   // shape the moment an instance declares more than one knowledge-graph
-  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // directory — `bootstrap/processes/` and `crdm/workflows/` can each hold a
   // `review.bpmn`, and a kind-keyed table sends both to one file, so one
   // silently overwrites the other's findings.
   //
@@ -1384,10 +1410,10 @@ function sidecarPath(r: KgQaReport): string {
   const dirFor: Record<KgSubjectKind, string> = {
     process: WORKFLOW_DIR,
     decision: DECISION_DIR,
-    role: join(KG_ROOT, "roles"),
+    role: SCENARIO_DIR,
     requirement: join(KG_ROOT, "requirements"),
     skill: KG_ROOT,
-    graph: join(KG_ROOT, "roles"),
+    graph: SCENARIO_DIR,
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
@@ -1412,8 +1438,27 @@ const actors = readActors(ACTOR_DIR);
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
+/**
+ * WHERE the role graph was actually found, for the findings that cite it.
+ *
+ * Not a constant: `scenarios/` is the convention since 2026-09-21 and
+ * `skills/roles/` is what an unmigrated instance still has, so a message
+ * naming either unconditionally is wrong for half the corpus — and a
+ * "roles.json is missing" pointing at the path the reader does not use is
+ * worse than no path at all.
+ */
+let roleGraphPath = "";
 try {
-  graph = readRoleGraph(KG_ROOT);
+  // declared-path-literal: the convention fallback, at the call site. The
+  // role graph moved out of the skills tree on 2026-09-21 and is a declared
+  // directory of its own; `KG_ROOT` is the second branch for an instance
+  // that has not migrated.
+  graph = readRoleGraph(SCENARIO_DIR);
+  roleGraphPath = join(SCENARIO_DIR, "roles.json");
+  if (!graph) {
+    graph = readRoleGraph(KG_ROOT);
+    if (graph) roleGraphPath = join(KG_ROOT, "roles", "roles.json");
+  }
 } catch (e) {
   graphError = e instanceof Error ? e.message : String(e);
 }
@@ -1429,7 +1474,7 @@ const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : []
 for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
 reports.push(...(await auditDecisions(processes)));
 if (graph) {
-  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills));
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
 }
 reports.push(...auditRequirements(readRequirements(), skills, actors));
 reports.push(...auditSkills());
@@ -1563,8 +1608,8 @@ for (const r of reports) {
 // structurally invisible: nothing regenerates it, nothing prunes it, and
 // `--check` compares it against nothing.
 //
-// Measured, bean `3jj9`: `bootstrap/workflows/bootstrap.kg-qa.json` sat in
-// the tree auditing `bootstrap/workflows/bootstrap.bpmn`, a path that does
+// Measured, bean `3jj9`: `bootstrap/processes/bootstrap.kg-qa.json` sat in
+// the tree auditing `bootstrap/processes/bootstrap.bpmn`, a path that does
 // not exist — the process had been renamed to `initialize-harness.bpmn`.
 // It reported `lane-binds-role: pass` over a file nobody had, while the live
 // diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
@@ -1573,7 +1618,7 @@ for (const r of reports) {
 //
 // REPORTED, NEVER DELETED. An orphan can also mean the subject is
 // temporarily unreachable — here the real cause is bean `pve3`, the root
-// declaring `bootstrap/skills/` but not `bootstrap/workflows/`, so the
+// declaring `bootstrap/skills/` but not `bootstrap/processes/`, so the
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.

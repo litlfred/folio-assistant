@@ -30,7 +30,7 @@ next step is.
 **There are 33 BPMN files, not 31.** The count in
 [deployment-topologies §5](deployment-topologies.html) was taken 2026-09-19 and
 two diagrams landed after it. A count in prose is a claim; this one had already
-decayed within the day. Re-measured with `ls skills/workflows/*.bpmn | wc -l`.
+decayed within the day. Re-measured with `ls processes/*.bpmn | wc -l`.
 
 **MVP is already a subprocess, and it is `crdm-deliver.bpmn`.** The bean flagged
 this as *probable* and said to check first. Checked: `crdm-deliver.bpmn`

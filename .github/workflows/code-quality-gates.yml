@@ -745,6 +745,14 @@ jobs:
           bun run check:kind-validators
           bun run check:artifact-index
           bun run smart-trust:pages:check
+          # The fsh-guts index is generated from the graph, so it goes stale the
+          # moment a file is relocated there -- which is the ONE operation that
+          # graph exists for. Gated here rather than trusted, same as every
+          # other generated page.
+          bun run fsh-guts:viz:check
+          # The tools index is generated from the Tool nodes, so it goes stale
+          # the moment one is added or its `satisfies` changes.
+          bun run tools:viz:check
           bun run check:actor-reach
           bun run check:harness-dirs
           # Does a path-filtered workflow rebuild when the scripts it RUNS
@@ -754,6 +762,9 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:secret-leaks
+          bun run check:lockfile-pinning
+          bun run check:qa-reviewer-permission
           bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be

@@ -13,7 +13,7 @@ From #203 comment 5731501752 (2026-09-18 14:31).
 > "Beans are for the agents to help manage state in a process. need bpmn for
 > agents describing when they create/edut/disable(**never delete!**) beans."
 
-Author a BPMN under `skills/workflows/` for the AGENT bean lifecycle: when an
+Author a BPMN under `processes/` for the AGENT bean lifecycle: when an
 agent creates a bean, when it edits one, when it disables one — and **never
 deletes**. `beans delete` exists in the CLI, so the prohibition has to be
 stated somewhere an agent reads, not merely implied.

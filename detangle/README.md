@@ -34,7 +34,7 @@ somebody can disagree with later, and *"it felt right"* is not.
 
 ```sh
 bun run detangle/scripts/kg-detangle.ts
-bun run detangle/scripts/kg-detangle.ts --group cat-harness/skills/workflows
+bun run detangle/scripts/kg-detangle.ts --group cat-harness/processes
 bun run detangle/scripts/kg-detangle.ts --json
 ```
 
@@ -76,7 +76,7 @@ Measured the same hour:
   `<folio:skill ref="S">` is written on the diagram, so the arrow runs
   diagram → skill. Had the repo put `workflows: [...]` in each skill's front
   matter instead, the identical coupling would be stored the other way and
-  `skills/workflows` would measure as a **sink**.
+  `processes` would measure as a **sink**.
 
 The test that settles it is **what breaks each way**. Delete a skill and
 `roles.json` has a dangling ref; delete `roles.json` and every skill still works
@@ -104,8 +104,8 @@ Measured 2026-09-20, 443 nodes and 758 edges:
 | `skills/content-lifecycle` | 10 | 88 | 1 | 1 | 0.98 | sink |
 | `skills/authoring-who-smart-guidelines` | 11 | 60 | 0 | 0 | 1.00 | sink |
 | `cat-harness/schemas` | 132 | 5 | 1 | 1 | 0.67 | sink |
-| `skills/workflows` | 41 | **0** | **334** | 6 | 1.00 | **source** |
-| `skills/roles` | 1 | 0 | 122 | 6 | 1.00 | source |
+| `processes` | 41 | **0** | **334** | 6 | 1.00 | **source** |
+| `scenarios` | 1 | 0 | 122 | 6 | 1.00 | source |
 | `skills/memory` | 37 | 0 | 0 | 0 | 1.00 | isolated |
 | `skills/folio-paper-adapter` | 66 | 47 | 16 | 2 | **0.49** | **tangled** |
 
@@ -116,7 +116,7 @@ orchestration (`workflows`, `roles`, `tools`) is the root. Only
 
 ## Reach is counted in groups, not references
 
-334 raw references out of `skills/workflows` resolve to **57 distinct files in
+334 raw references out of `processes` resolve to **57 distinct files in
 6 packages**. `document-intake.md` alone accounts for 36 of them, from the
 ingestion diagrams. That is **one dependency stated 36 times**, not 36
 problems — so the "light detangling" clause counts distinct target *groups*,
@@ -132,14 +132,14 @@ number nobody can re-derive is a number nobody can argue with.
    `upstream-version-adoption` — are *also* basenames of diagrams in the same
    directory. Preferring a same-group hit resolved every one to the diagram
    referring to it. That manufactured **31 phantom internal edges and all 8
-   reported inbound edges** for `skills/workflows`. A skill ref names a skill;
+   reported inbound edges** for `processes`. A skill ref names a skill;
    the resolver is now restricted by extension.
 2. **Missing call edges.** `<bpmn:import>`, `calledElement` and `decisionRef`
    were not extracted at all — 39 edges, and they are precisely the *internal*
    edges of a workflow graph. Cohesion for the group under discussion was
    understated for the whole time its carve was being argued.
 
-After both fixes `skills/workflows` reads **0 in / 334 out**, not 8 / 303. The
+After both fixes `processes` reads **0 in / 334 out**, not 8 / 303. The
 conclusion held; the evidence for it did not.
 
 ## Known limits, stated rather than discovered later

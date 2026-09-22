@@ -308,7 +308,7 @@ defect a test had been written to catch.
 **2. Undoing a decision that was recorded elsewhere.** The expensive one.
 `sa8y`'s *"the three unbound lanes get roles"* reads like a gap. The roles
 exist; what is missing is `lanes`, and its absence is deliberate —
-`bootstrap/skills/roles/roles.json` carries a `_lanes_comment` explaining that
+`bootstrap/scenarios/roles.json` carries a `_lanes_comment` explaining that
 binding them mints three dangling links in the root's graph, with bean `pve3`
 owning the question. **Doing the obvious thing would have re-created the exact
 shape of the wrong fix `sa8y` exists to record.**

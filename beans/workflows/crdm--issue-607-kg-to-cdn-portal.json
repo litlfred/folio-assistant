@@ -2,7 +2,7 @@
   "$schema": "folio-workflow-instance/v1",
   "id": "crdm--issue-607-kg-to-cdn-portal",
   "processId": "Process_CRDM",
-  "source": "cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn",
+  "source": "cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn",
   "subject": "issue-607-kg-to-cdn-portal",
   "bean": "folio-assistant-xies",
   "tokens": [
@@ -48,7 +48,7 @@
     "Call_Issue": {
       "id": "crdm--issue-607-kg-to-cdn-portal/Call_Issue",
       "processId": "Process_CRDM_Issue",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-issue-linking.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn",
       "subject": "issue-607-kg-to-cdn-portal",
       "bean": "folio-assistant-xies",
       "tokens": [],
@@ -91,7 +91,7 @@
     "Call_Needs": {
       "id": "crdm--issue-607-kg-to-cdn-portal/Call_Needs",
       "processId": "Process_CRDM_Needs",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-needs.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn",
       "subject": "issue-607-kg-to-cdn-portal",
       "bean": "folio-assistant-xies",
       "tokens": [
@@ -114,7 +114,7 @@
           "at": "2026-09-20T21:36:44.298Z",
           "node": "A_Synthesise",
           "actor": "claude",
-          "note": "Synthesised as the six stages and the four constraints in skills/folio-core/kg-to-portal.md, drawn as skills/workflows/kg-to-portal.bpmn, and measured against this instance in who-iris/docs/kg-to-portal.html. Three decisions are recorded as the DEPLOYMENT's rather than the pipeline's: the transport (undetermined, and drawn as a gateway with no default branch), the versioned store (required; which store is a choice), and the package-vs-per-asset scheme. The trust anchor is settled -- GDHCN -- with four questions open against its specification, which is unfetchable from this container."
+          "note": "Synthesised as the six stages and the four constraints in skills/folio-core/kg-to-portal.md, drawn as processes/kg-to-portal.bpmn, and measured against this instance in who-iris/docs/kg-to-portal.html. Three decisions are recorded as the DEPLOYMENT's rather than the pipeline's: the transport (undetermined, and drawn as a gateway with no default branch), the versioned store (required; which store is a choice), and the package-vs-per-asset scheme. The trust anchor is settled -- GDHCN -- with four questions open against its specification, which is unfetchable from this container."
         },
         {
           "at": "2026-09-21T06:14:27.079Z",

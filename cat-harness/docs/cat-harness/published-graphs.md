@@ -139,6 +139,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - folio-assistant (cat-harness) — *declared, not published*
 
+### `processes`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+- folio-assistant (cat-harness) — *declared, not published*
+
 ### `qa`
 
 1 of 2 published.
@@ -157,9 +165,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-5 of 5 published.
+5 of 6 published.
 {: .fa-hx-dim }
 
+- bootstrap — *declared, not published*
 - [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [folio-assistant (cat-harness)]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})
@@ -207,11 +216,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `uploads`
 
-1 of 3 published.
+2 of 3 published.
 {: .fa-hx-dim }
 
 - [folio-assistant (cat-harness)]({{ '/uploads/' | relative_url }})
-- folio-assistant — *declared, not published*
+- [folio-assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - who-iris — *declared, not published*
 
 ### `voices`
@@ -229,14 +238,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- folio-assistant (cat-harness) — *declared, not published*
-
-### `workflows`
-
-0 of 2 published.
-{: .fa-hx-dim }
-
-- bootstrap — *declared, not published*
 - folio-assistant (cat-harness) — *declared, not published*
 
 ---

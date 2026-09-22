@@ -43,7 +43,7 @@ adapter. That question has been got wrong here before and is written up.
 
 - [ ] fixed and generated sets live in separately declared graph directories,
       and a consumer can tell which it is reading from the file, not the path
-- [ ] the general process is BPMN under `skills/workflows/`, with the
+- [ ] the general process is BPMN under `processes/`, with the
       content-type specialisation as a called subprocess
 - [ ] FHIR templating is one specialisation, named as such, not the design
 
