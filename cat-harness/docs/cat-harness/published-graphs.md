@@ -184,11 +184,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-0 of 5 published.
+1 of 5 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/bootstrap-render/' | relative_url }})
 - kg-navigation — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*

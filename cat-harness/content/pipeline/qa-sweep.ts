@@ -101,24 +101,7 @@ function findContentRepoRoot(startAbs: string): string {
     dir = parent;
   }
 }
-import {
-  hashBlockFiles,
-  gitHeadSha,
-  walkBlocks,
-  loadQaReport,
-  saveQaReport,
-  entryIsFresh,
-  freshnessKeys,
-  preserveNonScriptEntries,
-  sameScriptVerdict,
-  applicabilityGap,
-  missingCompanionNote,
-  computeCriterionScriptHashes,
-  saveQaScriptSidecar,
-  loadQaScriptSidecar,
-  GIT_SHA_UNKNOWN,
-  type CriterionScriptHashes,
-} from "./qa-utils";
+import { GIT_SHA_UNKNOWN, applicabilityGap, computeCriterionScriptHashes, entryIsFresh, freshnessKeys, gitHeadSha, hashBlockFiles, loadQaReport, loadQaScriptSidecar, missingCompanionNote, preserveNonScriptEntries, sameScriptVerdict, saveQaReport, saveQaScriptSidecar, sweepActor, type CriterionScriptHashes, walkBlocks } from "./qa-utils.ts";
 import {
   qaCriteriaFor,
   qaCriteriaByIdFor,
@@ -549,6 +532,9 @@ async function run(): Promise<void> {
       const scriptReviewer = {
         kind: "script" as const,
         id: scriptHashes?.source_file ?? "content/pipeline/qa-sweep.ts",
+        // WHO it acted as, which is a different question from WHAT ran and is
+        // the one `qa-reporting` is checked against — see `sweepActor`.
+        actor: sweepActor(),
         version: "v1",
         script_hash: scriptHashes?.script_hash || undefined,
         script_commit_sha:

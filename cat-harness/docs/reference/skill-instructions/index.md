@@ -286,7 +286,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
-## CatBootstrap rendering (bootstrap/render)
+## CatBootstrap rendering (bootstrap/tools)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
