@@ -2397,6 +2397,22 @@
       // a page that exists: this one is about whether the page is there.
       // Conflating them would let "show hidden" resurrect a link to a 404.
       if (t.publish === "staging-only" && !isStagingPreview()) continue;
+      // THE TWO GREYS. A tile with no `href` was skipped above — there is
+      // nothing to open. This one opens perfectly and refuses an EDIT, so it
+      // is rendered, marked, and says so. Collapsing the two would tell a
+      // reader "there is nothing here" about content that is present,
+      // complete and deliberately frozen.
+      //
+      // `=== true` and not truthiness: absent means NOT DECLARED, which is a
+      // third state and not `false`. An undeclared directory gets neither the
+      // read-only mark nor a claim that it is writable.
+      //
+      // IT RIDES THE SAME `hint` AS THE COUNT BADGE, which arrived from main in
+      // the same merge, and for the same stated reason: the accessible name is
+      // where a reader who cannot glance at the tile learns what it is. A
+      // read-only state shown only as a dashed border is invisible to exactly
+      // the reader the border was meant to inform.
+      var frozen = t.readOnly === true;
       var hint = "the declared visualisation of " + t.directory;
       // THE COUNT IS PART OF THE ACCESSIBLE NAME, not an ornament hung beside
       // it. A badge a screen reader does not announce leaves exactly the
@@ -2404,7 +2420,9 @@
       // from a full one -- which is the whole defect, made worse.
       var badge = tileCountOf(t);
       if (badge) hint += ", " + badge.count + " " + badge.unit;
+      if (frozen) hint += " — materialized content: readable, not editable here";
       var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint);
+      if (frozen) tile.setAttribute("data-fa-readonly", "");
       if (badge) {
         // `aria-hidden` is belt and braces, not the mechanism: `tileLink` sets
         // `aria-label` on the anchor, and a label REPLACES the subtree as the

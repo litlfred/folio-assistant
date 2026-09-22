@@ -193,6 +193,27 @@ describe("a declared path is NOT a published URL — `prc5` one layer down", () 
     expect(publishedHref(SITE, "cat-harness/docs/guides/x.html")).toBe("/guides/x.html");
   });
 
+  test("A NAMED MARKDOWN PAGE BECOMES `.html`, because Jekyll serves no `.md`", () => {
+    // The half the first fix missed. `index.md` was rewritten to the directory
+    // route on 2026-09-21, when `fsh-guts` became the first markdown viewer —
+    // and a viewer named anything else kept its `.md`, which is the identical
+    // 404 the comment above argues against.
+    //
+    // Measured 2026-09-22: `processes-index.md` produced `href:
+    // "/processes-index.md"`, a tile pointing at a SOURCE file. `pb04` — a
+    // dead link is worse than no link.
+    expect(publishedHref(SITE, "cat-harness/docs/processes-index.md")).toBe("/processes-index.html");
+    expect(publishedHref(SITE, "cat-harness/docs/guides/x.md")).toBe("/guides/x.html");
+  });
+
+  test("...and the directory form still wins where both would apply", () => {
+    // `index.md` must reach `/x/`, not `/x/index.html`: two spellings of one
+    // page are two entries in a reader's history, which is why the directory
+    // rewrite exists at all. The `.md` mapping must not undo it.
+    expect(publishedHref(SITE, "cat-harness/docs/processes/index.md")).toBe("/processes/");
+    expect(publishedHref(SITE, "cat-harness/docs/tools/index.md")).toBe("/tools/");
+  });
+
   test("a ref OUTSIDE the site gets no href rather than a guessed one", () => {
     // `pb04`: a tile with no href is not a link, which is better than a link
     // to nowhere. Guessing would turn a viewer this site does not serve into a

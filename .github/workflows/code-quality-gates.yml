@@ -746,6 +746,15 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          bun run processes:viz:check
+          # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
+          # (owner's ruling, 2026-09-22). Hashes every materialized artefact
+          # against its recorded digest: an edit in place fails here. A
+          # publication step that legitimately rewrites one updates the fixity
+          # in the same change, which is what makes the exception checkable
+          # instead of a carve-out.
+          bun run check:materialized-fixity
+          bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
           # Does a path-filtered workflow rebuild when the scripts it RUNS
@@ -1099,3 +1108,34 @@ jobs:
           else
             echo "OK — no non-test wildcard imports in $count Rust file(s)"
           fi
+
+  dependency-advisories:
+    name: Dependency advisories (warn-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
+      # worth keeping next to the step: a HARD gate on advisories hands a
+      # transitive advisory nobody can patch the power to red every PR until
+      # somebody adds a suppression — and the suppression is what rots.
+      # `.github/dependabot.yml` is the other half: it turns the same
+      # advisories into reviewable PRs rather than into a gate.
+      #
+      # `bun audit` needs the registry, not the modules, so there is no
+      # install step. Adding one would make a dependency resolve a
+      # precondition of asking whether dependencies are safe.
+      #
+      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
+      # state on purpose, and keeps the three states apart in its OUTPUT
+      # instead — which is the only place they can be kept apart once the exit
+      # code carries no information. `|| true` is exactly how "could not
+      # determine" becomes "fine", and this workflow has paid for that once
+      # already: see the ruff note at the top of this file, where a step
+      # "warned about the missing paths and exited 0, so it reported a clean
+      # baseline it had never computed."
+      - name: Known advisories against the resolved tree
+        run: bun run check:dependency-advisories

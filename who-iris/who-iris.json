@@ -49,6 +49,8 @@
     },
     {
       "id": "who-iris-catalogue",
+      "readOnly": true,
+      "readOnlyBasis": "Records of content materialized from IRIS. Editing one in place would change what this repository claims IRIS holds, with nothing saying so -- which is the case bean `10s1` exists for. To work on one, copy it out.",
       "_coverage_comment": "The KG view, NOT the replica. `library/community-list.html` and its collection/item pages answer \"what does IRIS look like\"; this answers \"what does this catalogue know, and what does it record that it does not know\". The difference is load-bearing here: who-iris/AGENTS.md says the gap between the modelled nodes and the million upstream files IS THE POINT rather than a backlog, and nothing rendered that until 2026-09-22 -- the one fact the instance is built around was the one fact no reader could see. It also surfaces the gate verdicts, where `copyright` and `restrictions` are `unknown` on every held bitstream: a question nobody has answered, which a page showing only \"3 materialized\" would have read as a clearance. HTML rather than markdown because who-iris declares no `composed` directory -- its docs are MOUNTED after Jekyll, so a .md here would be copied verbatim and never rendered.",
       "coverage": {
         "visualiser": [
@@ -70,6 +72,8 @@
     },
     {
       "id": "who-iris-uploads",
+      "readOnly": false,
+      "readOnlyBasis": "NOT frozen, and the exception is worth stating. This is the ingestion DROP ZONE -- `adapters/document/paths.ts` creates it on a first ingest precisely so somebody can put something in it. The bytes it holds are materialized; the directory is a write target, and those are different questions. Declaring it read-only because its contents are materialized would freeze the one place a person is supposed to write.",
       "path": "uploads/",
       "dependents": "reproduce",
       "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",

@@ -130,7 +130,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 466,
+      "count": 482,
       "unit": "beans"
     },
     {
@@ -317,6 +317,18 @@
       "theme": "analyst"
     },
     {
+      "id": "processes",
+      "directory": "processes",
+      "title": "processes",
+      "ref": "cat-harness/docs/processes/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/processes/",
+      "hidden": false
+    },
+    {
       "id": "schemas",
       "directory": "schemas",
       "title": "schemas",
@@ -450,11 +462,13 @@
           "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
         },
         {
-          "kind": "fhir-artifact-index"
+          "kind": "fhir-artifact-index",
+          "readOnly": true
         }
       ],
       "findings": [
         "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ]
     },
@@ -764,7 +778,8 @@
       "visualisations": [
         {
           "kind": "catalogue",
-          "path": "/cat-harness/catalogue/who-iris/"
+          "path": "/cat-harness/catalogue/who-iris/",
+          "readOnly": true
         },
         {
           "kind": "docs",
@@ -782,11 +797,13 @@
         },
         {
           "kind": "uploads",
-          "path": "/cat-harness/library/who-iris/"
+          "path": "/cat-harness/library/who-iris/",
+          "readOnly": false
         }
       ],
       "findings": [
         "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -866,11 +883,13 @@
       ],
       "visualisations": [
         {
-          "kind": "fhir-artifact-index"
+          "kind": "fhir-artifact-index",
+          "readOnly": true
         }
       ],
       "findings": [
         "smart-immunizations: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-immunizations: no avatar declared for this instance — showing the generic mark."
       ]
     },
@@ -1005,7 +1024,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 14
+          "value": 15
         }
       ],
       "visualisations": [
@@ -1050,7 +1069,8 @@
           "kind": "methodology"
         },
         {
-          "kind": "processes"
+          "kind": "processes",
+          "path": "/processes/index.md"
         },
         {
           "kind": "qa",
@@ -1088,7 +1108,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — folio, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
