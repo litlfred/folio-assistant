@@ -17,17 +17,12 @@
  * @module content/pipeline/repo-root
  */
 
-// `folioDir` reads the instance's declaration, and the `folio` graph kind is
-// registered by CORE as a load-time side effect. Without this, `folioDir`
-// THROWS here rather than quietly returning the convention — which is the
-// contract it was given deliberately, and which this import satisfies.
-//
-// `schemas/cat-harness.ts` cannot carry the import itself: `folio-graph-kind`
-// imports IT, so the dependency is a cycle. Same pattern as
-// `schemas/harness-config.ts` and `src/tools/skill-fetch.ts`, which already
-// do this. That it must be repeated per entry point is `ot9a`'s fragility,
-// not a new one (bean `hs08`).
-import "../../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it, and `check:composition-roots` refuses a
+// command that reads a declaration without it — bean `q2wn`, which is also
+// where the measurement lives.
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";

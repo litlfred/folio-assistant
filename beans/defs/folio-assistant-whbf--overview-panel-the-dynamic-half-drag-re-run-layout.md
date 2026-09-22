@@ -1,10 +1,11 @@
 ---
 # folio-assistant-whbf
 title: 'Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-20T21:10:28Z
-updated_at: 2026-09-20T21:10:28Z
+updated_at: 2026-09-22T06:40:21Z
 parent: folio-assistant-vke6
 ---
 
@@ -136,3 +137,153 @@ rule makes hit-testing, pointer capture and a position store all hand-rolled.
 The remaining three are all optional improvements to a panel that now works.
 This bean is no longer blocking anything, and a future session should weigh
 each on its own rather than treating "the dynamic half" as one deliverable.
+
+## CLAIMED 2026-09-22 — taking LIVE FILTERING only, of the three
+
+Session `017MEZnJxx7WeekiNCabx4hx`, branch `claude/elegant-albattani-0byaig`.
+
+Honouring this bean's own closing instruction — *"a future session should
+weigh each on its own rather than treating 'the dynamic half' as one
+deliverable"* — rather than opening all three.
+
+**Live filtering, because it is the only one of the three where the current
+behaviour MISLEADS.** A reader filters the list, the picture does not move,
+and nothing on the page says why. The bean records that as deliberate (the
+overview shows SCOPE, not filter) and that is defensible as a design, but an
+undisclosed deliberate choice and a bug look identical to the person looking
+at them. The other two are improvements to a panel `qttr` already made
+legible.
+
+Not taking zoom/pan: this bean already argues it is weakened — 0 of 69 modules
+below a 5px glyph at 1280/768/390px after `qttr`, so zoom serves a reader
+wanting LESS detail, which the module filter gives. Not taking alternate
+layouts: separate judgement, separate cost, and it does not fix anything.
+
+### The precondition I have to establish, not assume
+
+This bean conditions live filtering on the panel being **re-renderable
+cheaply**. That is unmeasured. If a facet click means recomputing the layered
+layout for the largest module, the honest outcome may be to report the cost
+and stop rather than ship a panel that stutters.
+
+### What must survive, from the static half
+
+- adaptive granularity (declarations at/under 70 in scope, modules above)
+- the **counted-and-reported** undrawn edges — 446 of 512 here are
+  intra-module, and a mode that drops that report reintroduces the defect
+- reproducibility, and a way back to the arrangement a reader has learned
+
+### Constraint
+
+No CDN, no framework, no build step. Hand-rolled or it does not ship.
+
+## DONE 2026-09-22 — live filtering. The bean stays open for the other two.
+
+Shipped: the overview panel follows **every** filter, not the module select
+alone. `bun run gates` 103/103, `bunx playwright test` **371 passed**.
+
+### The root cause was two predicates, not a missing feature
+
+`render()` honoured search, kind and module; `diaModel()` honoured module
+alone. Two filter expressions over one question is how they drifted, so the
+fix is `matchesFilter(d, q, k, m)` with both callers going through it. Adding
+`q` and `kind` to `diaModel`'s own expression would have shipped the feature
+and left the defect.
+
+### A search now EARNS a picture that did not exist before
+
+This is the part worth knowing, and it was not in the bean. At 842
+declarations the page is over `DIA_MAX = 40` and **refuses to draw** — so
+before this, the only way to get a diagram at all was to already know which
+module to pick. Measured:
+
+| filter | in scope | draws? |
+|---|---|---|
+| none | 842 | **no** — refuses |
+| search `workflow` | 6 | yes |
+| search `bean` | 10 | yes |
+| search `role` | 26 | yes |
+| kind `zod-enum` | 35 | yes |
+
+A reader who does not know the module name had no picture and now has one.
+
+### The bean's own "done when" cited a DELETED mechanism
+
+*"the undrawn-edge count survives every mode."* It could not: `ovModel`'s
+intra-module counter — the "446 of 512" this bean quotes — went with the ring
+when the layered diagram replaced it in `3f629d42b`. No `internal`, no
+`OV_DECL_MAX`, no aggregation survives; `DIA_MAX` **refuses** rather than
+aggregating, so there was nothing left to count and nothing said so.
+
+Restored for the loss the current layout actually has: a relationship between
+two **faded context boxes**. Both boxes are drawn, and the line between them
+is suppressed because the picture is about the filter rather than its
+surroundings — so an unreported drop tells the reader *these two are
+unrelated*, which is a false statement the picture makes silently. Measured
+over the committed projection: **15 summed across the 79 module filters**, 0
+across eight sample searches.
+
+Self-edges are also dropped there. Measured at **0** occurrences, so no report
+was added for a case that does not arise — said here so the next reader does
+not re-derive it as an omission.
+
+### My own change made an existing message wrong, and that is the interesting bug
+
+The empty state read *"Nothing in scope to draw."* That was **true** while
+only scope and the module select could empty the set. Once a search can, the
+same words blame the SUBJECT for what a filter did, and a reader who typed a
+word matching nothing is told the page is empty. It now names the cause and
+says how to get back.
+
+A correct message can be falsified by a change elsewhere. Nothing would have
+caught this: it is not a type error, not a failing assertion, and the words
+did not change.
+
+### Two errors of mine, both caught by measuring rather than by review
+
+1. I wrote into a code comment that *"a tighter filter makes more of them"*
+   about the suppressed edges. Plausible, and **false**: 15 across module
+   filters versus 0 across eight searches. Asserted, then measured, then
+   corrected in place with the correction left visible.
+2. The first draft of the suppression test ended
+   `expect(typeof sawSuppression).toBe("boolean")` — **true whether the loop
+   found anything or nothing.** A check that passes over an empty examination
+   is the `dh4f` shape, and writing one into the test for the
+   count-it-rather-than-drop-it contract is that defect one level up. Now
+   asserts the loss occurs, on the 15-across-79 margin.
+
+### Falsified both ways, twice
+
+- Reverted the search wiring → **4 of 7 fail**, and the 3 that do not depend
+  on it stay green. Restored → 7 pass.
+- Removed the suppression clause from the caption → test 5 reddens with its
+  named reason. Restored → passes.
+
+### Accessibility is part of the deliverable, not a follow-up
+
+`gjli` is load-bearing here rather than boilerplate: the declared interaction
+profile is low-dexterity, so a filter only a mouse can reach would have made
+the picture follow the list for everyone except the person the page is built
+for. Two tests drive the whole path from the keyboard — `<summary>` focus +
+Enter to open, type to narrow, select-all + Backspace to return — and assert
+an accessible name on all three controls, the `gjli` finding (3) shape.
+
+### What is NOT in this change
+
+The regenerated projection. `schema:viz:check` is deliberately **not** gated
+(owner, 2026-09-20) because both projections derive from the whole repository
+and go stale whenever `main` moves. Regenerating grew it 842 -> 901
+declarations from four merged commits that are not this work, so it is
+reverted: 2511 lines of somebody else's churn in a live-filtering diff is
+review noise and manufactures conflicts with the sibling branches. The
+published copy is rebuilt by `docs-site.yml`.
+
+### Still open on this bean
+
+- **zoom and pan** — weakened by `qttr`, and weakened further by this change:
+  a search now narrows the picture, which is the other way to get less on
+  screen.
+- **alternate layouts** — grouped-by-module versus the layered arrangement.
+
+Unchanged from the re-scope: neither blocks anything, and each deserves its
+own weighing rather than being inherited as "the dynamic half".

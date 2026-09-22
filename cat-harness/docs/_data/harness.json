@@ -130,6 +130,18 @@
       "icon": "beans"
     },
     {
+      "id": "bootstrap-render",
+      "directory": "bootstrap-render",
+      "title": "Skills — bootstrap rendering",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/bootstrap-render/",
+      "hidden": false
+    },
+    {
       "id": "bootstrap-tools-schemas",
       "directory": "bootstrap-tools-schemas",
       "title": "bootstrap-tools-schemas",
@@ -139,6 +151,18 @@
         "board"
       ],
       "href": "/cat-harness/schemas/bootstrap-tools/",
+      "hidden": false
+    },
+    {
+      "id": "cat-harness",
+      "directory": "cat-harness",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
       "hidden": false
     },
     {
@@ -191,6 +215,18 @@
       "publish": "staging-only"
     },
     {
+      "id": "kg-navigation",
+      "directory": "kg-navigation",
+      "title": "Skills — kg-navigation",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/kg-navigation/",
+      "hidden": false
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -200,6 +236,18 @@
         "board"
       ],
       "href": "/cat-harness/schemas/large-datasets/",
+      "hidden": false
+    },
+    {
+      "id": "large-datasets-skills",
+      "directory": "large-datasets-skills",
+      "title": "Skills — large-datasets",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
       "hidden": false
     },
     {
@@ -213,6 +261,32 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false
+    },
+    {
+      "id": "methodology-crdm",
+      "directory": "methodology-crdm",
+      "title": "Skills — CRDM methodology",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-crdm/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/methodology-crdm/",
+      "hidden": false,
+      "theme": "analyst"
+    },
+    {
+      "id": "methodology-raci",
+      "directory": "methodology-raci",
+      "title": "Skills — RACI methodology",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-raci/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/methodology-raci/",
+      "hidden": false,
+      "theme": "analyst"
     },
     {
       "id": "schemas",
@@ -285,6 +359,18 @@
         "board"
       ],
       "href": "/cat-harness/library/who-iris/",
+      "hidden": false
+    },
+    {
+      "id": "who-iris-skills",
+      "directory": "who-iris-skills",
+      "title": "Skills — who-iris",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
       "hidden": false
     }
   ],
@@ -881,7 +967,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 12
+          "value": 13
         }
       ],
       "visualisations": [
@@ -939,7 +1025,8 @@
           "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "skills"
+          "kind": "skills",
+          "path": "/cat-harness/docs-auto/index/skills/bootstrap-render/"
         },
         {
           "kind": "todos",
@@ -962,7 +1049,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 9 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, skills, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {

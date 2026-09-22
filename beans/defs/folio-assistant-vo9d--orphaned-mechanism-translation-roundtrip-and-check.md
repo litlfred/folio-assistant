@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vo9d
 title: 'ORPHANED MECHANISM: translation-roundtrip and check-l1-complete have entry points and no callers, while the BPMN asserts the step runs'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T14:23:53Z
+updated_at: 2026-09-22T07:23:02Z
 parent: folio-assistant-d308
 ---
 
@@ -472,3 +472,19 @@ the corpus, how many translated blocks carry a round-trip verdict and how many
 do not. Left unbuilt rather than guessed at — the bean says "worth having on
 its own terms" without saying which shape, and inventing scope here is the
 failure this session has already met several times.
+
+## Closed on re-derived evidence, 2026-09-22
+
+Every `## Done when` item was ticked while the bean stayed open. Re-derived
+against `main` at `2ce66fc`:
+
+| claim | evidence |
+|---|---|
+| `check-l1-complete` gained a caller | the `l1-complete-check` Tool node is present in `cat-harness/tools/index.ts` |
+| `covered-is-not-reachable` gains the inverse as case 5 | that skill names both `translation-roundtrip` and `check-l1-complete` |
+
+The owner's *"1 2 3 are all triggers"* ruling is recorded in the body above and
+is not reopened here — `3vc6` deliberately did not revisit it.
+
+Closed by **evidence, not authorship** — `bean-coordination` §"Closing a bean
+whose work has already landed".

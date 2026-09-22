@@ -18,13 +18,12 @@ import { basename, isAbsolute, join, join as joinPath, relative, resolve } from 
 import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories and the instance now
-// DECLARES a folio graph — without this import `resolveDirectories` throws
-// `unknown graph kind "folio"`, which `kgDirectories` used to swallow into an
-// empty list. See the comment on that catch for what that cost (issue #464).
-import "../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it, and `check:composition-roots` refuses a
+// command that reads a declaration without it — bean `q2wn`, which is also
+// where the measurement lives.
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -190,7 +189,7 @@ export function kgRoots(root: string): string[] {
  * ## judgement to make
  *
  * `kgRoots` resolves a DEPENDENCY's directories too, so it returns paths like
- * `../bootstrap/render`. Walking them is forbidden by
+ * `../bootstrap/tools`. Walking them is forbidden by
  * `instance-graph-isolation.test.ts`, which guards a live 2026-09-19 leak of
  * 88 references: one instance's graph must not carry another's nodes.
  * `unreadNestedInstances` states the same rule in its own finding text — *"do

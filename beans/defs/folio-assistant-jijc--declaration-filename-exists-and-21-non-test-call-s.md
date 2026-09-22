@@ -1,10 +1,11 @@
 ---
 # folio-assistant-jijc
 title: DECLARATION_FILENAME exists and 21 non-test call sites bypass it, so the REPLACE ruling is a 121-file sweep instead of one constant
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-21T07:14:08Z
-updated_at: 2026-09-21T07:14:08Z
+updated_at: 2026-09-22T07:23:02Z
 parent: folio-assistant-vke6
 ---
 
@@ -280,3 +281,13 @@ box was ticked early, or they are a residue the ruling permits and the gate's
 wording is stale. Both are one measurement away and neither is safe to assume
 — closing on the ticks is exactly what `fkjo` exists to stop.
 
+## Closed on re-derived evidence, 2026-09-22
+
+Every `## Done when` item was ticked while the bean stayed open. Re-derived
+against `main` at `2ce66fc`: **`check:declaration-filename` is declared in
+`package.json` and wired into `code-quality-gates.yml`**, which is items 1 and
+3; the owner's two rulings and the `.yml` classification are recorded in the
+body above.
+
+Closed by **evidence, not authorship** — `bean-coordination` §"Closing a bean
+whose work has already landed".

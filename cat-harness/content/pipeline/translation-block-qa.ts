@@ -71,7 +71,7 @@ import { parsePo, parsePoEntries } from "./po-inject.ts";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
 import { resolvePoSources } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
-import { gitFileCommitSha, gitHeadSha, hashFile, walkBlocks } from "./qa-utils.ts";
+import { gitFileCommitSha, gitHeadSha, hashFile, sweepActor, walkBlocks } from "./qa-utils.ts";
 import { existingTranslationQaPath, translationQaPath } from "./qa-paths.ts";
 import { sourceLocale, targetLocales } from "./translation-index.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
@@ -410,6 +410,8 @@ function reviewer(): QaReviewer {
   return {
     kind: "script",
     id: SELF,
+    // WHO it acted as — `qa-reporting` is checked against this, not `id`.
+    actor: sweepActor(),
     version: "v1",
     script_hash: hashFile(join(INSTANCE_ROOT, SELF)),
     script_commit_sha: gitFileCommitSha(SELF, INSTANCE_ROOT),
