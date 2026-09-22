@@ -6546,6 +6546,13 @@
           "optional": true,
           "array": false,
           "doc": "WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic"
+        },
+        {
+          "name": "publish",
+          "type": "z.enum([\"staging-only\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHERE this visualisation may be published. Absent means everywhere, which"
         }
       ],
       "extendsNames": [],
