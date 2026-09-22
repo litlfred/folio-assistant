@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 123,
+      "count": 125,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -593,6 +593,22 @@
       "name": "python-deps",
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/qa-report.test.ts",
+      "instance": "cat-harness",
+      "name": "qa-report.test",
+      "graphNode": "undeclared",
+      "summary": "A report in the shape the upstream `QAReporter` writes, plus the wrapper",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/qa-report.ts",
+      "instance": "cat-harness",
+      "name": "qa-report",
+      "graphNode": "schema",
+      "summary": "QA reports — what a pipeline TOOL recorded about its own run.",
       "isTest": false
     },
     {
@@ -9716,7 +9732,7 @@
       "name": "DakComponentEntries",
       "module": "cat-harness/schemas/dak.ts",
       "kind": "type-alias",
-      "doc": "One component's contents, as read from a `dak.json`.",
+      "doc": "One component's contents, as read from a `dak.config.json`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -9730,7 +9746,7 @@
       "name": "DakDeclaration",
       "module": "cat-harness/schemas/dak.ts",
       "kind": "interface",
-      "doc": "A `dak.json`, as much of it as is settled.",
+      "doc": "A `dak.config.json`, as much of it as is settled.",
       "fields": [
         {
           "name": "name",
@@ -15888,6 +15904,454 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "name": "DetailsShape",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "successes",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "warnings",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "errors",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_processed",
+          "type": "z.array(QaReportFileSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_expected",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_missing",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+        "cat-harness/schemas/qa-report.ts#QaReportFileSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReport",
+      "name": "QaReport",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportEntry",
+      "name": "QaReportEntry",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "name": "QaReportEntrySchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "One narrative entry — a success, a warning or an error.",
+      "fields": [
+        {
+          "name": "message",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Free-form, because upstream's is. Carried through rather than parsed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportFile",
+      "name": "QaReportFile",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportFileSchema",
+      "name": "QaReportFileSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "One file the tool touched, with what happened to it.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Upstream uses `success`, `error`, `skipped_existing`, `updated`, … — an OPEN set, so a string. Narrowing it here would reject a real report the day upstream adds a case."
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportProducer",
+      "name": "QaReportProducer",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+      "name": "QaReportProducerSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-enum",
+      "doc": "Which tool produced the report.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "dak-script",
+        "ig-publisher"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "name": "QaReportSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "A QA report, as a `qa-report/v1` document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(QA_REPORT_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "QaReportProducerSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "QaReportSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toolchain",
+          "type": "QaReportToolchainSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "phase",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Upstream's own field: `preprocessing`, `postprocessing`, or a build phase."
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "QaReportStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "SummaryShape",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "DetailsShape",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-report.ts#DetailsShape",
+        "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+        "cat-harness/schemas/qa-report.ts#SummaryShape"
+      ],
+      "unresolved": [],
+      "external": [
+        "QA_REPORT_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+      "name": "QaReportSourceSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "Where the report came from. OURS, not upstream's — upstream records no provenance.",
+      "fields": [
+        {
+          "name": "tool",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The script or binary, as invoked. `generate_valueset_schemas.py`, `publisher.jar`."
+        },
+        {
+          "name": "repository",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The repository the run happened in, if known."
+        },
+        {
+          "name": "commit",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The commit under test, if known."
+        },
+        {
+          "name": "runUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A URL for the run, if one exists."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportStatus",
+      "name": "QaReportStatus",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+      "name": "QaReportStatusSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "running"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+      "name": "QaReportToolchainSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "What produced the result, version by version.",
+      "fields": [
+        {
+          "name": "publisher",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sushi",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fhirVersion",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#SummaryShape",
+      "name": "SummaryShape",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "total_successes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "total_warnings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "total_errors",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_processed_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_expected_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_missing_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "completion_timestamp",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/qa-review.ts#AuditNote",
@@ -33953,6 +34417,86 @@
       "from": "cat-harness/schemas/panel-chrome.ts#PanelControl",
       "to": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
       "via": "needs",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "errors",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "successes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "warnings",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportFileSchema",
+      "via": "files_processed",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "via": "details",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+      "via": "producer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+      "via": "toolchain",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#SummaryShape",
+      "via": "summary",
       "kind": "field",
       "optional": false,
       "array": false

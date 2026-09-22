@@ -58,7 +58,7 @@ correctly:</p>
 
 <p><code>smart-base</code> depends on core, so core recognising a DAK means core importing
 downstream. The comment was right about the destination and wrong that it
-could wait: recognising <code>dak.json</code> needs <code>DAK_TYPE</code>, and reaching for it is
+could wait: recognising <code>dak.config.json</code> needs <code>DAK_TYPE</code>, and reaching for it is
 the edge. They live in module:schemas/dak-content-type, registered by
 the layer that owns the model — exactly as <code>folio-graph-kind.ts</code> registers
 <code>folio</code> rather than the harness declaring a kind it cannot serve.</p>

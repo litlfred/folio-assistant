@@ -11,14 +11,31 @@
 <li><a href="../modules/schemas_dak.html">schemas/dak</a></li>
 <li><a href="" aria-current="page">DAK_MARKER_FILENAME</a></li></ul>
 <h1>Variable DAK_MARKER_FILENAME<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">DAK_MARKER_FILENAME</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;dak.json&quot;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">DAK_MARKER_FILENAME</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;dak.config.json&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>The file whose presence at a repository root declares it a DAK.</p>
 <p>Fixed, not stub-named, for the same reason <code>harness.json</code> is: a consumer
 bootstrapping into a repository it knows nothing about needs one filename to
 open first. See <code>skills/folio-core/directory-conventions.md</code> §Naming.</p>
+<h2 id="→-2026-09-22" class="tsd-anchor-link"><code>dak.config.json</code> → <code>dak.config.json</code>, 2026-09-22<a href="#→-2026-09-22" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The owner's ruling, for consistency with <code>&lt;name&gt;.config.json</code>: a DAK
+repository carries configuration, and this is that file, so it is spelled
+like every other config here rather than like a bare declaration.</p>
+<p><strong>It was renameable because the type is OURS</strong> — bean <code>cz17</code> settled that,
+against an earlier note in <code>79t3</code> that listed it beside <code>sushi-config.yaml</code>
+as somebody else's file. <code>sushi-config.yaml</code> is still not ours; this is.</p>
+<h2 id="the-upstream-gap-stated-rather-than-discovered" class="tsd-anchor-link">The upstream gap, stated rather than discovered<a href="#the-upstream-gap-stated-rather-than-discovered" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>WorldHealthOrganization/smart-base</code> writes and reads <strong><code>dak.config.json</code></strong>:
+<code>generate_dak_from_sushi.py</code> writes it, and <code>ghbuild.yml</code> gates the whole
+DAK phase on its presence. Nothing upstream has been renamed, deliberately —
+this is pre-work in <code>litlfred/*</code> only.</p>
+<p>So until upstream follows, readDak pointed at a real WHO DAK finds
+<strong>nothing</strong>. That is a known divergence, not a bug to work around by
+accepting both spellings: accepting both would make &quot;this repo has migrated&quot;
+and &quot;this repo has not&quot; indistinguishable, which is exactly the state the
+rename exists to end.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/fe25229a66d045fb21da6dd3170b12278c20c3c0/cat-harness/schemas/dak.ts#L65">work/folio-assistant/folio-assistant/cat-harness/schemas/dak.ts:65</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/95e63c12a85d1b97ad20fef7536e20f4724a70ac/cat-harness/schemas/dak.ts#L88">work/folio-assistant/folio-assistant/cat-harness/schemas/dak.ts:88</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -30,7 +47,10 @@ open first. See <code>skills/folio-core/directory-conventions.md</code> §Naming
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
-<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#→-2026-09-22"><span> → , 2026-<wbr/>09-<wbr/>22</span></a><a href="#the-upstream-gap-stated-rather-than-discovered"><span>The upstream gap, stated rather than discovered</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
