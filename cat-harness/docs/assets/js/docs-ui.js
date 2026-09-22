@@ -3519,6 +3519,208 @@
    * state a reader reaches by tidying. The open glass therefore always holds
    * its own chrome, so it is never `:empty` while open.
    */
+  /**
+   * THE READER'S FOLIO — which assets are theirs, and which are on the glass.
+   *
+   * R30, bean `j2if`. Owner, 2026-09-21:
+   *
+   * > pulling down folio panel = glass/window on which stikcy notes/avatrs of
+   * > materialized assets … are visualized. they can also be closed and
+   * > returned to their homes (e.g. "back in library", matieral asset still
+   * > in folio/ but not displayed, need to go back to the library and pull it
+   * > out to folio display window)
+   *
+   * ## THREE states, and the middle one is the whole point
+   *
+   * | state | here | how it got there |
+   * |---|---|---|
+   * | in the library | **no entry at all** | the default |
+   * | in the folio, not displayed | an entry with `shown: false` | the reader closed it |
+   * | on the glass | an entry with `shown: true` | the reader pulled it out |
+   *
+   * `board-windows`: *"A two-state model — in the folio, or not — makes
+   * closing a sticky and un-materialising an asset the same gesture. A reader
+   * tidying their glass would then silently discard work, and would have no
+   * way to tell that they had."*
+   *
+   * **So `close` sets a flag and NEVER removes the entry.** That is why the
+   * store keys on an object rather than holding an array of ids the way
+   * `fa:todos-discarded` does: with an array, "closed" and "never pulled out"
+   * are the same absence, and the middle state cannot be represented at all.
+   * The data shape enforces the rule rather than the call sites remembering
+   * it.
+   *
+   * ## The way back is from the LIBRARY, and that is checkable
+   *
+   * *"Putting it back on the glass is a separate act performed from the
+   * library — not from the glass it just left."* So `shelve` is called by the
+   * glass and `display` only ever by a library row. `l4zi` one level out: the
+   * inverse of close must be reachable, and here it is reachable from a
+   * DIFFERENT SURFACE than the one that closed it. The thing to check when
+   * implementing close is that the library offers the way back.
+   *
+   * ## It is per-viewer and per-browser, and the UI says so
+   *
+   * A published page cannot write to the repository, so this is
+   * `localStorage`, exactly like the reading preferences and the discarded
+   * todos. The rule that mechanism already states applies unchanged and is
+   * the reason it is restated here: *"A reader who thinks they have cleared a
+   * todo for the team when they have cleared it for themselves has been
+   * misled by the control, and that is a worse failure than not having the
+   * control."*
+   *
+   * Every read and write is wrapped. `localStorage` throws in a private
+   * window and returns null with site data cleared, and a folio that threw
+   * would take the whole page's scripts with it.
+   */
+  var FOLIO_KEY = "fa-folio-assets";
+
+  /** Every entry this browser holds, as `{ "<instance>/<id>": {shown, title, href} }`. */
+  function folioAssets() {
+    try {
+      var raw = localStorage.getItem(FOLIO_KEY);
+      var parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function setFolioAssets(map) {
+    try {
+      localStorage.setItem(FOLIO_KEY, JSON.stringify(map));
+      return true;
+    } catch (_e) {
+      // Silence would be worse than a note nobody reads: the reader pulls an
+      // asset onto their glass, reloads, and finds it gone with no reason.
+      console.warn("docs-ui: the folio could not be saved (storage blocked); " +
+                   "this applies to the current page view only.");
+      return false;
+    }
+  }
+
+  /** Which of the three states `key` is in. Never throws, never guesses. */
+  function folioStateOf(key) {
+    var e = folioAssets()[key];
+    if (!e) return "library";
+    return e.shown ? "glass" : "folio";
+  }
+
+  function announceFolio(key, state) {
+    document.dispatchEvent(new CustomEvent("fa:folio-changed",
+      { detail: { key: key, state: state } }));
+  }
+
+  /**
+   * Put an asset on the glass. Called from a LIBRARY row — never from the
+   * glass, which is the asymmetry the three-state rule is made of.
+   */
+  function displayInFolio(key, meta) {
+    var all = folioAssets();
+    all[key] = {
+      shown: true,
+      title: (meta && meta.title) || (all[key] && all[key].title) || key,
+      href: (meta && meta.href) || (all[key] && all[key].href) || "",
+    };
+    setFolioAssets(all);
+    announceFolio(key, "glass");
+  }
+
+  /**
+   * Take it off the glass. THE ENTRY STAYS — it is still the reader's, and
+   * removing it here is precisely the defect the middle state exists to
+   * prevent. There is deliberately no `forgetFolioAsset` beside this:
+   * un-adopting an asset is a different act with a different consequence, and
+   * a function named next to this one would be called by mistake.
+   */
+  function shelveFromGlass(key) {
+    var all = folioAssets();
+    if (!all[key]) return;          // never the reader's; nothing to shelve
+    all[key].shown = false;
+    setFolioAssets(all);
+    announceFolio(key, "folio");
+  }
+
+  /**
+   * THE LIBRARY'S HALF: pull an item out onto the glass, and put it back.
+   *
+   * `board-windows`, R30: *"Putting it back on the glass is a separate act
+   * performed FROM the library — not from the glass it just left."*
+   *
+   * That sentence is why this exists as its own mount rather than as a
+   * control on the glass. It is `l4zi` one level out, and the skill says
+   * exactly where it is easy to get wrong: *"When you implement close, the
+   * thing to check is that the library offers the way back — not that the
+   * glass does."* So the check on this code is not that the button works; it
+   * is that a reader who closed something can find it again HERE.
+   *
+   * ## A row declares itself
+   *
+   * A library page marks each row `data-fa-library-item="<instance>/<id>"`
+   * with a `data-fa-library-title`. Nothing is inferred from the DOM shape:
+   * a selector guessing at table cells would bind to one generator's markup
+   * and break silently when it changed, which is the mechanical half of
+   * `check-invocation-parity`'s lesson.
+   *
+   * A page with no such rows mounts nothing at all — the guard every other
+   * mount here uses, and the reason loading `docs-ui.js` on a replica page is
+   * safe.
+   */
+  function mountLibraryPullouts() {
+    var rows = document.querySelectorAll("[data-fa-library-item]");
+    if (rows.length === 0) return;   // not a library page; nothing to offer
+
+    Array.prototype.forEach.call(rows, function (row) {
+      if (row.querySelector(".fa-pullout")) return;   // idempotent
+      var key = row.getAttribute("data-fa-library-item");
+      var title = row.getAttribute("data-fa-library-title") || key;
+      var href = row.getAttribute("data-fa-library-href") || "";
+
+      var btn = el("button", { type: "button", class: "fa-pullout" });
+      var note = el("span", { class: "fa-pullout-state" });
+
+      function paint() {
+        var state = folioStateOf(key);
+        row.setAttribute("data-fa-folio-state", state);
+        if (state === "glass") {
+          // NOT a close control. Closing happens on the glass; offering it
+          // here as well would make the same asset closeable from two
+          // surfaces and leave "where does this go" answered twice.
+          btn.hidden = true;
+          note.textContent = "On your folio glass";
+        } else if (state === "folio") {
+          // THE WAY BACK, and the whole reason this mount exists.
+          btn.hidden = false;
+          btn.textContent = "Put back on glass";
+          btn.setAttribute("aria-label", "Put " + title + " back on your folio glass");
+          note.textContent = "In your folio, not displayed";
+        } else {
+          btn.hidden = false;
+          btn.textContent = "Pull out to folio";
+          btn.setAttribute("aria-label", "Pull " + title + " out to your folio glass");
+          note.textContent = "";
+        }
+      }
+
+      btn.addEventListener("click", function () {
+        displayInFolio(key, { title: title, href: href });
+        paint();
+      });
+
+      // Repaint on any folio change, so closing on the glass updates the row
+      // behind it. Without this the row would still read "On your folio
+      // glass" for an asset the reader had just shelved, and the way back
+      // would be invisible on the one surface that offers it.
+      document.addEventListener("fa:folio-changed", paint);
+
+      var slot = el("span", { class: "fa-pullout-slot" });
+      slot.appendChild(btn);
+      slot.appendChild(note);
+      row.appendChild(slot);
+      paint();
+    });
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -3551,6 +3753,82 @@
     sheet.appendChild(empty);
     layer.appendChild(sheet);
 
+    /**
+     * The assets the reader pulled out of a library, as closeable avatars.
+     *
+     * Separate from the float layer the board uses: a sticky the board floats
+     * here belongs to THIS page, and an asset belongs to the READER and is on
+     * every page they visit. Rendering them into one list would tell a reader
+     * their page's stickies travel with them.
+     */
+    var shelf = el("div", { class: "fa-glass-shelf", "aria-label": "Assets on your folio" });
+    sheet.appendChild(shelf);
+
+    function renderShelf() {
+      while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
+      var all = folioAssets();
+      var keys = Object.keys(all).filter(function (k) { return all[k].shown; });
+      keys.sort();
+
+      keys.forEach(function (key) {
+        var a = all[key];
+        var card = el("article", { class: "fa-glass-asset", "data-fa-asset": key });
+        var name = a.href
+          ? el("a", { class: "fa-glass-asset-name", href: a.href }, a.title)
+          : el("span", { class: "fa-glass-asset-name" }, a.title);
+        card.appendChild(name);
+
+        // CLOSE, and the word matters. "Remove" and "delete" both say the
+        // asset stops being the reader's, which is exactly what does NOT
+        // happen -- `board-windows`: closing returns it to the middle state
+        // and never to the first. The label says where it goes.
+        var close = el("button", {
+          type: "button",
+          class: "fa-glass-asset-close",
+          "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
+          title: "Back in library view (stays in your folio)",
+        }, "×");
+        close.addEventListener("click", function () { shelveFromGlass(key); });
+        card.appendChild(close);
+        shelf.appendChild(card);
+      });
+
+      // WHERE THE WAY BACK IS, said on the surface that cannot offer it.
+      // `l4zi` one level out: the inverse of close is reachable from the
+      // LIBRARY, not from here, and a reader who is not told that reads a
+      // closed asset as one they lost. Shown whenever the reader holds
+      // anything at all, including when nothing is on the glass -- that is
+      // precisely the state in which the question arises.
+      //
+      // IT SAYS "PUT YOUR FOLIO AWAY FIRST", and that sentence is a measured
+      // fix rather than politeness. The glass is an overlay over whatever is
+      // being browsed, so while it is down the library row underneath takes
+      // no clicks -- an e2e spec failed on exactly that, with the sheet
+      // named as intercepting the pointer. A note sending a reader to a
+      // control the note's own surface is covering is the `pb04` shape: the
+      // affordance is there, it is reachable, and the reader cannot get to
+      // it from where they are standing.
+      var shelved = Object.keys(all).filter(function (k) { return !all[k].shown; });
+      if (shelved.length > 0) {
+        shelf.appendChild(el("p", { class: "fa-glass-shelved-note" },
+          (shelved.length === 1
+            ? "1 item is in your folio but not displayed. "
+            : shelved.length + " items are in your folio but not displayed. ") +
+          "Put your folio away, then open the library view to put it back on the glass."));
+      }
+
+      // Saved in THIS BROWSER, said in words wherever the reader's own items
+      // appear. The discarded-todos mechanism states the reason and it is the
+      // same one: a reader who thinks their folio follows them to another
+      // machine has been misled by the control.
+      if (keys.length > 0 || shelved.length > 0) {
+        shelf.appendChild(el("p", { class: "fa-glass-local-note" },
+          "Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else."));
+      }
+      return keys.length;
+    }
+
+
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
       handle.setAttribute("aria-expanded", open ? "true" : "false");
@@ -3561,8 +3839,22 @@
       // board floats here, so the count is taken from them rather than from
       // the layer's children, which would count the sheet itself.
       var floating = layer.querySelectorAll(".fa-sticky-floating").length;
-      empty.hidden = floating > 0;
+      // An asset the reader pulled out counts too, and this said `floating`
+      // alone until the shelf existed -- a glass holding one asset and no
+      // sticky would have read "Nothing on your folio glass" while showing
+      // the asset, which is the `pb04` shape pointed at a message.
+      empty.hidden = floating + renderShelf() > 0;
     }
+
+    // The glass is on EVERY page, so a pull-out performed on a library row
+    // has to reach it without a reload. One listener rather than the row
+    // calling in: the row does not know a glass is mounted, and a folio that
+    // only updated where the pulling page also hosted the glass would be the
+    // coupling `mountGlass` was hoisted out of `mountTodoBoard` to remove.
+    document.addEventListener("fa:folio-changed", function () {
+      setOpen(layer.getAttribute("data-fa-glass") === "open");
+    });
+
     setOpen(false);
 
     // `l4zi`: the inverse is reachable, and by the same control. The handle
@@ -5821,6 +6113,7 @@
     // than this page's furniture, so it must not inherit any of the guards
     // that decide whether a BOARD mounts — see `mountGlass`.
     mountGlass();
+    mountLibraryPullouts();
     mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
