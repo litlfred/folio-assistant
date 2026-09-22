@@ -466,26 +466,26 @@
      interpolates the same constants into the stylesheet it injects on a
      mounted page. That is `sjic`: the rail and this sidebar were 40px and 56px
      at rest while being called the same navbar. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/navbar-geometry.css?v=1790106751">
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/navbar-geometry.css?v=1790107545">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790107545">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790107545">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790107545">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790107545">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -502,7 +502,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790106751" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790107545" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1005,6 +1005,37 @@ deliverable, so write into the working directory or the scratchpad.</p>
 is <code class="language-plaintext highlighter-rouge">y8cm</code>’s. Both are <em>rendered</em> facts: compute the contrast from the two
 resolved colours rather than from the tokens, because the token you
 authored and the colour that won are different questions.</p>
+<h2 id="listen-for-pageerror-or-a-crash-reads-as-a-missing-feature">
+  
+  
+    <a href="#listen-for-pageerror-or-a-crash-reads-as-a-missing-feature" class="anchor-heading" aria-labelledby="listen-for-pageerror-or-a-crash-reads-as-a-missing-feature"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Listen for <code class="language-plaintext highlighter-rouge">pageerror</code>, or a crash reads as a missing feature
+  
+  
+</h2>
+    
+
+<p>Two in one session, neither visible in a screenshot:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mountInstanceGraphs</code> <strong>moved</strong> <code class="language-plaintext highlighter-rouge">.site-nav</code>, so a later <code class="language-plaintext highlighter-rouge">insertBefore</code> got a
+reference node that was no longer a child, threw <code class="language-plaintext highlighter-rouge">NotFoundError</code>, and took
+<strong>the rest of <code class="language-plaintext highlighter-rouge">init()</code></strong> with it. The symptom was that the document index
+simply was not there — which looks exactly like a feature that did not mount.</li>
+  <li>The same throw, from a different function, reproduced on a build of
+<code class="language-plaintext highlighter-rouge">origin/main</code>: it had been eating <code class="language-plaintext highlighter-rouge">inlineDiagrams</code> and <code class="language-plaintext highlighter-rouge">mountFigures</code> on
+every page load, which is why no figure on the front page had zoom. <strong>Nobody
+had noticed</strong>, because a swallowed init is silent.</li>
+</ul>
+
+<p>So: attach the listener, and assert zero.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">page</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">pageerror</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">stack</span> <span class="o">||</span> <span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>And check the base branch before you claim a crash is yours</strong> — or before you
+claim it is not. One run against a build of <code class="language-plaintext highlighter-rouge">origin/main</code> is what turned
+“something I just broke” into “a live defect nobody had reported”, and it is
+the same measurement either way.</p>
 <h2 id="what-this-does-not-replace">
   
   

@@ -466,26 +466,26 @@
      interpolates the same constants into the stylesheet it injects on a
      mounted page. That is `sjic`: the rail and this sidebar were 40px and 56px
      at rest while being called the same navbar. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/navbar-geometry.css?v=1790106751">
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/navbar-geometry.css?v=1790107545">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790107545">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790107545">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790107545">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790106751">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790107545">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -502,7 +502,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790106751" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790107545" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1115,6 +1115,112 @@ naming a tool id where a skill name belongs is decidable against
 <code class="language-plaintext highlighter-rouge">knownSkills()</code> and the Tool graph. No such tile exists yet, so nothing is
 gated today — but the difference between the two halves is that this one has a
 subject the moment one does, and the other still would not.</p>
+<h2 id="the-navbar-icon-row-is-declared-and-three-states-is-not-two">
+  
+  
+    <a href="#the-navbar-icon-row-is-declared-and-three-states-is-not-two" class="anchor-heading" aria-labelledby="the-navbar-icon-row-is-declared-and-three-states-is-not-two"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The navbar icon row is DECLARED, and three states is not two
+  
+  
+</h2>
+    
+
+<p>Owner, 2026-09-22: <em>“max is 6 and one for todos one for beans one for
+processes viewer/ (the factory flow) one for KG viewer”</em>, and then, on where
+the list lives: <em>“should be in each harness config which are shown (so some
+could show none, but make this default in cat-harness that is inherited).”</em></p>
+
+<p><code class="language-plaintext highlighter-rouge">navbarIcons</code> on the instance declaration. A <strong>closed</strong> set — <code class="language-plaintext highlighter-rouge">close</code>,
+<code class="language-plaintext highlighter-rouge">todos</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">processes</code>, <code class="language-plaintext highlighter-rouge">kg</code>, <code class="language-plaintext highlighter-rouge">launcher</code> — because a free string lets an
+instance name an icon nothing draws, and the failure is a silent gap in a row
+capped at six. Six is the cap and it is <strong>refused, never truncated</strong>: an
+instance that declared seven has made a decision, and silently dropping its
+last entry overrules that decision without saying so.</p>
+
+<p><strong>The three states are the part to get right, and two of them look the same:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>declared</th>
+      <th>means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>absent</td>
+      <td><strong>inherit</strong> — walk <code class="language-plaintext highlighter-rouge">needs</code>, site owner as the floor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[]</code></td>
+      <td><strong>show none</strong>, which the owner asked for by name</td>
+    </tr>
+    <tr>
+      <td>a list</td>
+      <td>this instance’s own answer</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Absent and <code class="language-plaintext highlighter-rouge">[]</code> must not collapse. The guard is <code class="language-plaintext highlighter-rouge">!== undefined</code>, never a
+truthiness test — that shape is exactly what turns “nobody has said” into
+“nothing to show”, and it would make an un-migrated instance
+indistinguishable from one that deliberately wants a bare navbar. The same
+rule runs all the way down: <code class="language-plaintext highlighter-rouge">resolveNavbarIcons</code> returns <code class="language-plaintext highlighter-rouge">undefined</code> for
+undetermined, <code class="language-plaintext highlighter-rouge">harness-tiles.ts</code> <strong>omits</strong> the field rather than writing <code class="language-plaintext highlighter-rouge">[]</code>,
+<code class="language-plaintext highlighter-rouge">sync-docs-harness.ts</code> emits <code class="language-plaintext highlighter-rouge">null</code>, and the client draws no row and says so
+once. Four layers, one distinction, preserved at each.</p>
+
+<p><strong>The walk is <code class="language-plaintext highlighter-rouge">needs</code></strong>, not a second traversal. Nearest declaration wins,
+breadth-first toward the foundation. It is the direction <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code>
+already composes and the spine <code class="language-plaintext highlighter-rouge">builtOn</code> documents; a new walk would be a
+second answer to “what is this instance built on”, free to disagree with the
+first.</p>
+
+<p><strong>Destinations are looked up, never written down.</strong> They come from the
+instance’s own declared visualisations plus <code class="language-plaintext highlighter-rouge">siteLinks</code>, so an icon whose
+graph this instance does not publish gets no href and renders as a <strong>non-link</strong>
+— <code class="language-plaintext highlighter-rouge">pb04</code>, the same choice the tabs’ graph list makes. <code class="language-plaintext highlighter-rouge">close</code> and <code class="language-plaintext highlighter-rouge">launcher</code>
+carry no href on purpose: they drive controls on the page, and giving them one
+would make them look like navigation.</p>
+<h2 id="the-theme-avatar-the-assignment-is-theme-mediated-and-i-got-this-wrong-once">
+  
+  
+    <a href="#the-theme-avatar-the-assignment-is-theme-mediated-and-i-got-this-wrong-once" class="anchor-heading" aria-labelledby="the-theme-avatar-the-assignment-is-theme-mediated-and-i-got-this-wrong-once"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The theme avatar: the assignment is theme-mediated, and I got this wrong once
+  
+  
+</h2>
+    
+
+<p><em>“use theme avatar not the purply thing.”</em> The navbar’s mark is the instance’s
+<strong>theme card art, clipped</strong> — not its <code class="language-plaintext highlighter-rouge">icon</code>, which on this instance is the <code class="language-plaintext highlighter-rouge">@</code>
+glyph.</p>
+
+<p>The chain, and every link of it already existed:</p>
+
+<blockquote>
+  <p>instance → its sticky contribution → the sticky’s <code class="language-plaintext highlighter-rouge">theme</code> → the theme’s
+<code class="language-plaintext highlighter-rouge">imageRole</code> → the instance’s images carrying that role → the <code class="language-plaintext highlighter-rouge">card</code> layout →
+its <code class="language-plaintext highlighter-rouge">avatarRegion</code></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">resolveThemeBackdrop</code> is the join and returns the <code class="language-plaintext highlighter-rouge">DeclaredImage</code>, so the crop
+comes with it.</p>
+
+<p><strong>This was reported on 2026-09-22 as “an assignment nobody has made”, and gap 6
+was left unwired on that basis.</strong> The report was wrong: it looked only for a
+direct harness→card link, found none, and concluded none existed — while the
+mapping ran through the theme the whole time. Worth keeping because the failure
+is cheap to repeat: <em>an indirection is not an absence</em>, and “I could not find
+it” is a statement about the search.</p>
+
+<p><strong>Take the <code class="language-plaintext highlighter-rouge">card</code> layout, not laptop or mobile.</strong> <code class="language-plaintext highlighter-rouge">KgImageSchema</code> refuses a
+non-square <code class="language-plaintext highlighter-rouge">avatarRegion</code> in <strong>pixels</strong>, and only the square crop can satisfy
+that — equal fractions on a landscape image are a box 1.78× wider than tall,
+and the clip scales width and height separately.</p>
+
+<p><strong>A card with no declared crop is a finding, not an avatar.</strong> Rendering the
+whole 1254px composition in a 2rem frame is <code class="language-plaintext highlighter-rouge">603s</code>’s “grey mush”. Report it and
+fall back to the mark.</p>
 <h2 id="where-a-tile-lives-and-what-it-must-not-eat">
   
   
