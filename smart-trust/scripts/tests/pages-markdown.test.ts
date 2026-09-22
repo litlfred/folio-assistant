@@ -38,6 +38,15 @@ const artifactFiles = existsSync(ARTIFACTS)
       .sort()
   : [];
 
+/**
+ * The artefact index the generator reads. Loaded here so a test can assert
+ * against the SOURCE property rather than against the page count that happens
+ * to follow from it.
+ */
+const ix = JSON.parse(
+  readFileSync(join(INSTANCE, "fhir-artifact-index", "index.json"), "utf-8"),
+) as { artifacts: { key: string; dak?: unknown; materialization: { state: string } }[] };
+
 const indexSrc = existsSync(join(DOCS, "index.md"))
   ? readFileSync(join(DOCS, "index.md"), "utf-8")
   : "";
@@ -72,6 +81,42 @@ describe("smart-trust pages are generated at all", () => {
   it("has an index and one page per DAK-sidecar artefact", () => {
     expect(indexSrc.length).toBeGreaterThan(0);
     expect(artifactFiles.length).toBe(19);
+  });
+
+  /**
+   * TWO ORACLES, ONE ANSWER, BY COINCIDENCE — pinned so it cannot go quiet.
+   *
+   * The generator gates on `if (!a.dak) continue`: a page exists for an
+   * artefact carrying a **DAK sidecar**. The index reports a different
+   * property, `materialization.state === "materialized"`. Today both sets are
+   * the same 19 keys, so the count above is green whichever property the
+   * generator reads — and would stay green if the gate were changed to the
+   * other one.
+   *
+   * They are not the same question. A sidecar is *a schema was published for
+   * this artefact*; materialized is *the bytes are in this repository*. The
+   * corpus is free to separate them — an artefact fetched with no schema, or
+   * a schema for something not held — and on the day it does, one of the two
+   * readings silently becomes wrong and nothing says which.
+   *
+   * So the RELATION is asserted rather than the count, and the coincidence is
+   * asserted as a coincidence. Same shape as the two `folio:policy` oracles
+   * (bean `osyc`, 2026-09-22), where a count confirmed twice over was still
+   * measuring two different things.
+   */
+  it("the DAK-sidecar set and the materialized set coincide — for now", () => {
+    const dak = ix.artifacts.filter((a: { dak?: unknown }) => a.dak !== undefined);
+    const materialized = ix.artifacts.filter(
+      (a: { materialization: { state: string } }) => a.materialization.state === "materialized",
+    );
+
+    const keys = (xs: { key: string }[]) => xs.map((x) => x.key).sort();
+    expect(keys(dak)).toEqual(keys(materialized));
+
+    // The generator's gate is `dak`, so THAT is the set the page count must
+    // match. Asserted against the property actually read, not the one that
+    // happens to give the same number.
+    expect(artifactFiles.length).toBe(dak.length);
   });
 });
 

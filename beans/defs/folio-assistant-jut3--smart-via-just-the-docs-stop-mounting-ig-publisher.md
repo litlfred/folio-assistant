@@ -70,14 +70,14 @@ fourth was avoided only by asking first.
 
 ## Done when
 
-- [ ] The three measurements above, recorded with provenance
+- [x] The three measurements above, recorded with provenance
 - [ ] `input/pages/` renders through just-the-docs with Publisher metadata
       populating the Jekyll variables
-- [ ] A stated parity checklist, and MVP declared against it rather than
-      against an impression
-- [ ] `smart-trust` no longer mounted as finished HTML
-
-
+- [ ] A stated parity checklist (STATED 2026-09-22, see M3), and MVP declared
+      against it rather than against an impression — the MVP call is the
+      owner's, and the 19-page ceiling is a data limit, not an effort one
+- [x] `smart-trust` no longer mounted as finished HTML — VERIFIED 2026-09-22
+      on the deployed artefact, with a control; see the section below
 
 ## Round 1 landed — the pages are markdown (PR #825, issue #824, merged c8c25d0d11)
 
@@ -106,13 +106,136 @@ loops over the page list.
 
 ## Still open — three of the four `Done when`
 
-- [ ] the three measurements, with provenance
+- [x] the three measurements, with provenance
 - [ ] `input/pages/` through just-the-docs with Publisher metadata populating
       the Jekyll variables
-- [ ] a stated parity checklist, MVP declared against it
+- [ ] a stated parity checklist (STATED, M3); MVP declared against it — owner's call
 
 The fourth — "smart-trust no longer mounted as finished HTML" — is now
 ambiguous rather than done, and saying so is the point: the GENERATED pages are
 Jekyll markdown, but they are still copied in by `mount-instance-docs.ts`
 rather than built by Jekyll. Bean `2b5s` is the same question from the other
 end and is waiting on the owner.
+
+## The three measurements — 2026-09-22, with provenance
+
+Taken from the artefacts, never inferred from rendered HTML, which is the rule
+this bean set itself and the one round 1's trailing-slash defect was invisible
+to.
+
+### M1 — what the IG Publisher emits as data
+
+Provenance: `smart-trust/fhir-artifact-index/index.json`, `$schema:
+folio-fhir-artifact-index/v1`, read 2026-09-22 in this checkout.
+
+It is **not** a Publisher run here. `source` says
+`{kind: "gh-pages", of: "https://worldhealthorganization.github.io/smart-trust",
+readAt: "2026-09-21"}` — reconstructed from WHO's published build. `provenance`
+names the five upstream files every field came out of: `package.manifest.json`,
+`canonicals.json`, `package.tgz!package/.index.json`, `artifacts.html`, and two
+DAK enumerations.
+
+**674 artefacts. Field coverage is the number that constrains the design:**
+
+| field | on how many | |
+|---|---|---|
+| `key`, `resourceType`, `id`, `published`, `materialization` | **674** | all |
+| `category`, `title` | 673 | |
+| `description` | **219** | |
+| `canonical`, `version`, `name` | 70 | |
+| `dak` | **19** | |
+
+- `published`: 673 carry all four of `json`/`xml`/`ttl`/`html`; one
+  (`ImplementationGuide/smart.who.int.trust`) carries no `html`.
+- `materialization.state`: **655 referenced, 19 materialized**.
+- 9 `resourceType`s — `Endpoint` 453 and `Organization` 151 are 90 % of it.
+- 7 categories, of which `Other` is **604**.
+- 66 `dak` local paths + 3 `contexts` local paths = **69, all present on disk**,
+  against 69 files under `dak/`. Exact accounting.
+
+**The answer to the question the bean asks.** Of everything the index carries,
+only **two** fields are prose a Jekyll variable would want: `title` (673) and
+`description` (**219**). The rest is identity, URL or classification. So
+*"use IG Publisher metadata to populate the variables Jekyll processes"* is
+achievable — **for `title` in full, and for `description` on 219 of 674**. The
+falsifier named in this round's brief therefore does **not** fire, but it comes
+back with a limit that has to be designed around rather than discovered later:
+**455 artefacts have no description to interpolate.**
+
+### M2 — what is in `input/pages/`, and in what markup
+
+**There is no `input/pages/` in this repository.** `smart-trust/` holds
+`fhir-artifact-index/`, `docs/`, `scripts/`, `AGENTS.md`, `README.md` and
+`smart-trust.json` — nothing else.
+
+The pages are **generated, not authored**: `gen-smart-trust-pages.ts` builds
+all 20 from `index.json`, and `smart-trust.json` says so in its own words
+(*"Generated, never authored"*). So the owner's *"i want the input/page(s)/
+content to be rendered via justthedocs pipeline"* has no local subject: the
+narrative pages live in WHO's source IG, which this repository has never held.
+
+**Whether upstream has narrative pages, and how many, COULD NOT BE DETERMINED
+from here** — egress is blocked and no copy exists locally. Recorded as
+undetermined, **not as zero**, because those are different facts and the second
+is what a parity table would silently claim.
+
+### M3 — what parity means, as a checklist rather than a feeling
+
+| page kind | Publisher publishes | rendered here | gap |
+|---|---|---|---|
+| artefact detail | **673** | **19** | 654 |
+| IG index / `artifacts.html` equivalent | ≥ 1 | 1 | — |
+| narrative pages from `input/pages/` | **could not determine** | 0 | **undetermined** |
+
+**The 19 is a ceiling set by the data, not by effort.** The generator's gate is
+`if (!a.dak) continue` — a page exists for an artefact carrying a **DAK
+sidecar**, and only 19 do. Reaching the other 654 is not more rendering work;
+it needs either more sidecars ingested or a second page kind that renders an
+artefact from `key`/`title`/`published` alone. That is a design decision for
+the owner, not something to infer.
+
+## Done-when 4 is DONE, and this bean says otherwise
+
+The bean records the fourth as *"ambiguous rather than done"*: generated pages
+are markdown, but *"still copied in by `mount-instance-docs.ts` rather than
+built by Jekyll"*. **That is no longer true, and it was checked at the deployed
+artefact rather than at the declaration.**
+
+`smart-trust.json` declares `"composed": true`, and `composedInstances()` in
+`cat-harness/scripts/compose-docs.ts:207` honours exactly that flag. A
+declaration is a claim, so:
+
+| | measured |
+|---|---|
+| `.html` files under `smart-trust/docs/` | **0** (20 `.md`) |
+| pages served at `/smart-trust/` on `origin/gh-pages` | **20** |
+| `side-bar` / `search-input` / `site-nav` / `nav-list` in the deployed page | 1 / 3 / 8 / 11 |
+| `<title>` | `WHO SMART Trust — artefact index \| folio-assistant` |
+
+**With the control**, because absence proves nothing on its own: `lang-bar` and
+`aux-nav` are **0 on the site's own `index.html` too**, so their absence here is
+site-wide and not a smart-trust defect. The deployed smart-trust page carries
+*identical* chrome to the site's home page. It is built by Jekyll, not mounted.
+
+### Two oracles agreeing by coincidence — pinned
+
+The generator gates on `dak`; the index reports `materialization.state`. Both
+give the same **19 keys today**, so the existing `toBe(19)` assertion is green
+whichever property the generator reads, and would stay green if the gate were
+switched to the other one. They are not the same question — a sidecar is *a
+schema was published*, materialized is *the bytes are here*.
+
+`pages-markdown.test.ts` now asserts the RELATION and the coincidence as a
+coincidence. Falsified both ways against mutated in-memory copies rather than
+by editing the read-only index: dropping one sidecar gives 18 vs 19 and adding
+a stray one gives 20 vs 19, and the assertion fails in both directions.
+
+Same shape as the two `folio:policy` oracles (bean `osyc`, same day). A count
+confirmed twice can still be measuring two different things.
+
+### One near-miss worth recording
+
+The declared `localPath`s are **instance-relative**. Resolved from the
+repository root they all fail, and the first sweep reported **69 missing
+files** over a corpus where every one is present. Caught by the count matching
+the files on disk exactly. Re-run from `smart-trust/`: 0 missing.
