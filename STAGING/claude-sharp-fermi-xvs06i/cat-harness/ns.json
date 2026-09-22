@@ -448,6 +448,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:ProcessGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ProcessGraph",
+      "comment": "Executable BPMN processes and the DMN tables their gateways compute from.",
+      "prefLabel": "ProcessGraph",
+      "definition": "Executable BPMN processes and the DMN tables their gateways compute from.",
+      "notation": "cat:ProcessGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:QaGraph",
       "@type": [
         "rdfs:Class",
@@ -563,21 +578,6 @@
       "prefLabel": "WaiverGraph",
       "definition": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
       "notation": "cat:WaiverGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat:WorkflowGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "WorkflowGraph",
-      "comment": "Executable BPMN processes and the DMN tables their gateways compute from.",
-      "prefLabel": "WorkflowGraph",
-      "definition": "Executable BPMN processes and the DMN tables their gateways compute from.",
-      "notation": "cat:WorkflowGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

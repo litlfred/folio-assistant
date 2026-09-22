@@ -61,7 +61,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "label": "Initiator",
       "scopeNote": "Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either.",
-      "source": "bootstrap/workflows/discussion.bpmn"
+      "source": "bootstrap/processes/discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_Initiator",
@@ -70,7 +70,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Initiator",
       "scopeNote": "Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.",
-      "source": "bootstrap/workflows/initialize-harness.bpmn"
+      "source": "bootstrap/processes/initialize-harness.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
@@ -91,7 +91,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Knowledge Graph Data Store",
       "scopeNote": "Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Initiator writes anything.",
-      "source": "bootstrap/workflows/initialize-harness.bpmn"
+      "source": "bootstrap/processes/initialize-harness.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#role/requestor",
@@ -112,7 +112,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "label": "Requestor",
       "scopeNote": "Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into \"unsettled\" rather than forcing a guess.",
-      "source": "bootstrap/workflows/discussion.bpmn"
+      "source": "bootstrap/processes/discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_Requestor",
@@ -121,7 +121,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Requestor",
       "scopeNote": "The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Initiator's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Initiator may not break that tie itself.",
-      "source": "bootstrap/workflows/initialize-harness.bpmn"
+      "source": "bootstrap/processes/initialize-harness.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#role/logger",
@@ -142,7 +142,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "label": "Logger",
       "scopeNote": "Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in.",
-      "source": "bootstrap/workflows/log-message.bpmn"
+      "source": "bootstrap/processes/log-message.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#lane/Actor",
@@ -162,7 +162,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "label": "Actor",
       "scopeNote": "Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.",
-      "source": "bootstrap/workflows/log-message.bpmn"
+      "source": "bootstrap/processes/log-message.bpmn"
     }
   ]
 }
