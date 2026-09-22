@@ -237,25 +237,26 @@ Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`
 
 Every one of the **62** diagrams has a rendered SVG.
 
-**31 activit(ies) across 19 diagram(s) carry no `<folio:skill ref>`.** `bpmn-processes` requires one on every activity — without it an agent reaching the step is told what it is called and not what to run.
+### Activities carrying no `<folio:skill ref>` — a census, not a gap list
 
-- `discussion.bpmn` — A_Answer
-- `crdm-close.bpmn` — S_FeatureSignoff
-- `crdm-deliver.bpmn` — A_CodeAudit, Call_OptionsAnalysis, Call_ThemeUIReview, S_TestMVP
-- `crdm-needs.bpmn` — S_ConfirmNeeds
-- `crdm-requirements-definition.bpmn` — S_ApproveReqs
-- `activity-log.bpmn` — A_DoWork
-- `atomic-mass-drift-check.bpmn` — Task_Check
-- `code-change-review.bpmn` — Task_RunCI
-- `content-acquisition.bpmn` — P_Respond, P_Upload
-- `content-change-review.bpmn` — Call_OptionsAnalysis, Task_DescribeChange
-- `docs-site-publish.bpmn` — Task_Build, Task_Export, Task_Publish, Task_Regenerate
-- `document-ingestion.bpmn` — CallActivity_Gate
-- `editing-hci-validation.bpmn` — CallActivity_Evidence, Call_OptionsAnalysis, Task_Commit, Task_DescribeChange
-- `evidence-retrieval.bpmn` — Task_VerifyAuthority
-- `jsonld-drift-check.bpmn` — Task_Check
-- `review-task.bpmn` — Call_CodeReview, Call_NarrativeReview
-- `session-state-machine.bpmn` — A_ReadTurn
-- `theme-ui-review.bpmn` — R_Judge
-- `upstream-version-adoption.bpmn` — Call_OptionsAnalysis
+**31** across **19** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
+
+**10** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **21** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
+
+| lane | steps |
+|---|---|
+| CI/CD Pipeline | 6 |
+| Stakeholders | 4 |
+| Contributor | 2 |
+| Agent (playing the machine) | 1 |
+| Agent (this session) | 1 |
+| CI/CD pipeline | 1 |
+| Content Author | 1 |
+| Corpus (versioned store) | 1 |
+| Editor / author (person) | 1 |
+| Requestor | 1 |
+| Reviewer | 1 |
+| Trusted registries and observatories (external) | 1 |
+
+**No verdict is offered on which of these is a gap**, and that is the honest state rather than a hedge: distinguishing a person's judgement step from an agent step somebody forgot needs the lane's actor KIND, which a free-text lane name does not give — `process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is the join that would answer it, and it is present on **4** of these **21** steps — which is the measurement, not an impression. An earlier draft of this sentence said *few of these* and was counting whether the lane had a NAME, a different question with a different answer.
 

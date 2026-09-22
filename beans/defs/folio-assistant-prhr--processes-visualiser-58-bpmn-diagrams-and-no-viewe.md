@@ -193,3 +193,88 @@ spellings of one page are two entries in a reader's history.
 The staging deploy in hand predates this push, so the rendered page has not been
 inspected — only the href the data now carries and the route it composes to.
 `bun run preview:site` finds no working Jekyll in this container.
+
+## Incoming from the open PRs — two that bear on this directly
+
+Read per the owner's standing ask: *"when working on a PR in a repo, watch all
+open PRs for incoming insights ... can incoming content be used to simplify
+code, exposition, proofs."* Both arrived at the same conclusion this bean
+reached by accident.
+
+### #876 — *"currency is not validity"*, and `processes:viz:check` is one of the 42
+
+Its measurement: all 42 generated-artefact checks ask *would the generator write
+something different from what is committed?* and **none** asks *does this
+artefact work?* Its worked example is `library:viz:check` green while the page
+it generated could not parse.
+
+**`processes:viz:check` is exactly that shape** — a byte comparison, no
+validation. And this bean has the matching incident from the other direction:
+the index reported **11 of 62** diagrams as unrendered while `render:bpmn:check`
+sat green beside it. Currency said yes; the claim was false.
+
+One distinction worth handing back, because it changes what #876 is counting:
+**the validity of this artefact IS asserted, in `processes-viz.test.ts`** —
+every SVG it names exists, every gap it reports is real, the joins are complete.
+That is a THIRD category beside "the check validates" and "nobody validates":
+*validated, but not by the check*. A count that merges it with the second
+over-reports the gap.
+
+### #874 — the route for what could not be verified here
+
+This bean twice recorded *"the rendered page has not been inspected;
+`preview:site` finds no working Jekyll in this container"*. #874 solves it:
+extract the publish ref with `git archive origin/gh-pages`, serve it over a
+local static server, and drive a real Chromium at a fixed viewport with external
+fetches blocked. The live URL being unreachable is not the same as the page
+being uninspectable.
+
+Not applied yet — the staging deploy in hand predates the push that added
+`/processes/`. It is the route to use once it lands, and it retires the excuse.
+
+#874 is also the same defect family as `10s1`'s mark-with-nothing-to-style: a
+CSS rule inlined on **331** published pages for a class emitted on **0**. Three
+instances of one shape in one day, across three agents.
+
+## A SECOND false finding, same page, two hours later
+
+The index's first version said *"31 activities carry no `<folio:skill ref>`.
+`bpmn-processes` requires one on every activity"* and listed them under
+Findings — where a reader goes to act.
+
+**They are deliberate, and this repository had already settled it.** Beans
+`luke` and `uuhu` worked the same corpus from **90** down to this remainder.
+`luke`: *"coverage is deliberately NOT gated — a human sign-off step has no
+skill."* `uuhu` added the call-activity exemption and recorded that its own
+remainder *"are not gaps"* — four stakeholder sign-offs among them.
+
+So the page was accusing 31 design decisions of being defects, in the section
+a reader trusts most. Same shape as the 11 phantom unrendered SVGs, in the same
+file, hours apart. **Both were found by checking the claim against what the
+repository already knew, rather than by re-reading the code that produced it.**
+
+### What it says now
+
+A **census**, not a gap list, with the provenance:
+
+- **10 call activities** — they delegate to a subprocess, where the skill is
+  named. Naming it twice would be one fact in two places.
+- **21 others, broken down by lane** — because the lane says whether a person,
+  a pipeline or an agent performs the step, and only the last has a skill to
+  run. `CI/CD Pipeline` 6, `Stakeholders` 4, `Contributor` 2, then singletons.
+- **No verdict on which is a gap**, stated as the honest third state with its
+  reason: telling a person's judgement step from an agent step somebody forgot
+  needs the lane's actor KIND, and a free-text lane name does not carry it.
+  `<folio:role ref>` is the join that would answer it, present on **4** of
+  those **21**.
+
+### And a third correction, inside the second
+
+That last sentence first read *"present on **few of these** lanes"* — and the
+ternary behind it was testing whether the lane had a NAME, a different question
+with a different answer. A characterisation standing where a number belongs.
+
+The guard against it then tripped on the page's own explanation of the mistake,
+because that prose contains the phrase. It now asserts the CLAIM form —
+`present on **` must be followed by a digit — rather than forbidding the words,
+so the page can describe its own history without failing its own test.

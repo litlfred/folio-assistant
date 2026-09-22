@@ -115,6 +115,72 @@ describe("the joins are the point", () => {
   });
 });
 
+describe("a skill-less activity is a census entry, not an accusation", () => {
+  /**
+   * THE SECOND FALSE FINDING THIS PAGE SHIPPED, caught the same way as the
+   * first — by checking the claim against what the repository already knew.
+   *
+   * The first version said *"31 activities carry no `<folio:skill ref>`.
+   * `bpmn-processes` requires one on every activity"* and listed them as a
+   * defect. Beans `luke` and `uuhu` had already worked this corpus from 90
+   * down to that remainder and settled it: `luke` — *"coverage is deliberately
+   * NOT gated — a human sign-off step has no skill"*; `uuhu` added the
+   * call-activity exemption and recorded that its remainder *"are not gaps"*.
+   *
+   * So the page was accusing 31 deliberate design decisions, in a section a
+   * reader is meant to act on. Same shape as the 11 phantom unrendered SVGs,
+   * two hours apart, in the same file.
+   */
+  const withNone = rows.filter((r) => r.activitiesWithoutSkill.length > 0);
+  const html = page(rows);
+
+  it("there are some to reason about", () => {
+    expect(withNone.length).toBeGreaterThan(0);
+  });
+
+  it("does NOT call them a requirement violation", () => {
+    // The exact wording that was wrong. A reader who believes this section is
+    // a gap list will go and "fix" a stakeholder sign-off by inventing a skill
+    // for it.
+    expect(html).not.toContain("requires one on every activity");
+  });
+
+  it("names the beans that settled it", () => {
+    // Without the provenance the census reads as a softened accusation rather
+    // than as a decision somebody already made.
+    expect(html).toContain("`luke`");
+    expect(html).toContain("`uuhu`");
+  });
+
+  it("separates call activities, which delegate rather than omit", () => {
+    const calls = withNone.flatMap((r) => r.activitiesWithoutSkill).filter((a) => a.type.endsWith("CallActivity"));
+    expect(calls.length).toBeGreaterThan(0);
+    expect(html).toContain("call activities, which delegate to a subprocess");
+  });
+
+  it("and declines to rule on the rest, saying WHY it cannot", () => {
+    // The third state, stated rather than hedged: the lane's actor KIND is
+    // what would decide, and a free-text lane name does not carry it.
+    expect(html).toContain("No verdict is offered");
+    expect(html).toContain("actor KIND");
+  });
+
+  it("counts roleRef rather than characterising it", () => {
+    // An earlier draft said "few of these" and was counting whether the lane
+    // had a NAME — a different question with a different answer. A count in
+    // prose is a claim; this asserts the number is derived.
+    const rest = withNone.flatMap((r) => r.activitiesWithoutSkill).filter((a) => !a.type.endsWith("CallActivity"));
+    const n = rest.filter((a) => a.roleRef).length;
+    expect(html).toContain(`present on **${n}** of these **${rest.length}** steps`);
+    // The CLAIM form, not the words. The page explains the old mistake using
+    // the phrase "few of these", and a bare `not.toContain` for it failed on
+    // the very sentence documenting the fix — a guard tripping over its own
+    // subject's name. What must not come back is the phrase standing where a
+    // NUMBER belongs.
+    expect(html).not.toMatch(/present on \*\*(?!\d)/);
+  });
+});
+
 describe("declared and defaulted are different facts", () => {
   it("reports both, and does not merge them", () => {
     // `loadProcessModel` reads an undeclared policy as `strict`, correctly for

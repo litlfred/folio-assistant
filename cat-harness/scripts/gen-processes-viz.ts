@@ -88,8 +88,16 @@ export interface ProcessRow {
   /** Whether the FILE declares a policy, as opposed to the engine defaulting one. */
   enforcementDeclared: boolean;
   activities: number;
-  /** Activities carrying no `<folio:skill ref>` — `bpmn-processes` requires one. */
-  activitiesWithoutSkill: string[];
+  /**
+   * Activities carrying no `<folio:skill ref>`, with the lane and BPMN type
+   * that decide whether that is a gap or a design.
+   *
+   * NOT a defect list, and the first version of this page made it one. See
+   * `page()`'s census section: beans `luke` and `uuhu` already established
+   * that a human sign-off step and a call activity are deliberately
+   * skill-less, and 31 of 31 fall into categories they settled.
+   */
+  activitiesWithoutSkill: { id: string; lane: string; type: string; roleRef?: string }[];
   /** The rendered SVG, site-relative — or absent, which is reported rather than hidden. */
   svg?: string;
   /** Set when the diagram would not load at all. Reported, never silently dropped. */
@@ -181,7 +189,15 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
         enforcement: m.enforcement,
         enforcementDeclared: declared,
         activities: acts.length,
-        activitiesWithoutSkill: acts.filter((n) => n.skills.length === 0).map((n) => n.id).sort(),
+        activitiesWithoutSkill: acts
+          .filter((n) => n.skills.length === 0)
+          .map((n) => ({
+            id: n.id,
+            lane: (n.lane ?? "").replace(/\s+/g, " ").trim(),
+            type: n.type,
+            ...(n.roleRef ? { roleRef: n.roleRef } : {}),
+          }))
+          .sort((a, b) => a.id.localeCompare(b.id, "en")),
         ...(svg ? { svg } : {}),
       });
     } catch (e) {
@@ -330,14 +346,45 @@ export function page(rows: readonly ProcessRow[]): string {
     L.push("");
   }
   if (noSkill.length > 0) {
-    const n = noSkill.reduce((a, r) => a + r.activitiesWithoutSkill.length, 0);
+    const all = noSkill.flatMap((r) => r.activitiesWithoutSkill);
+    const calls = all.filter((a) => a.type.endsWith("CallActivity"));
+    const rest = all.filter((a) => !a.type.endsWith("CallActivity"));
+    const byLane = new Map<string, number>();
+    for (const a of rest) byLane.set(a.lane || "(no lane)", (byLane.get(a.lane || "(no lane)") ?? 0) + 1);
+
+    L.push("### Activities carrying no `<folio:skill ref>` — a census, not a gap list");
+    L.push("");
     L.push(
-      `**${n} activit(ies) across ${noSkill.length} diagram(s) carry no \`<folio:skill ref>\`.** ` +
-        "`bpmn-processes` requires one on every activity — without it an agent reaching the " +
-        "step is told what it is called and not what to run.",
+      `**${all.length}** across **${noSkill.length}** diagram(s). This section reported them as ` +
+        "defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this " +
+        "corpus from 90 down to this remainder and settled what is left. `luke`: *\"coverage is " +
+        "deliberately NOT gated — a human sign-off step has no skill\"*. `uuhu` added the " +
+        "call-activity exemption and recorded that its own remainder *\"are not gaps\"*.",
     );
     L.push("");
-    for (const r of noSkill) L.push(`- \`${esc(basename(r.file))}\` — ${r.activitiesWithoutSkill.join(", ")}`);
+    L.push(
+      `**${calls.length}** are call activities, which delegate to a subprocess — the skill is ` +
+        "named there, and naming it twice would be one fact in two places. The other " +
+        `**${rest.length}** are listed by lane, because the lane is what says whether a person, ` +
+        "a pipeline or an agent performs the step, and only the last of those has a skill to run.",
+    );
+    L.push("");
+    L.push("| lane | steps |");
+    L.push("|---|---|");
+    for (const [l, n] of [...byLane].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "en"))) {
+      L.push(`| ${esc(l)} | ${n} |`);
+    }
+    L.push("");
+    L.push(
+      "**No verdict is offered on which of these is a gap**, and that is the honest state rather " +
+        "than a hedge: distinguishing a person's judgement step from an agent step somebody " +
+        "forgot needs the lane's actor KIND, which a free-text lane name does not give — " +
+        "`process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is " +
+        `the join that would answer it, and it is present on **${rest.filter((a) => a.roleRef).length}** ` +
+        `of these **${rest.length}** steps — which is the measurement, not an impression. ` +
+        "An earlier draft of this sentence said *few of these* and was counting whether the lane " +
+        "had a NAME, a different question with a different answer.",
+    );
     L.push("");
   }
   return `${L.join("\n")}\n`;
