@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(101)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(198)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(101) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(198) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(101) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(198) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(101) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(198) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Instance kinds | folio-assistant</title>
+<title>Vocabulary authority | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Instance kinds" />
+<meta property="og:title" content="Vocabulary authority" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Instance kinds" />
+<meta property="twitter:title" content="Vocabulary authority" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -759,7 +759,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Instance kinds</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Vocabulary authority</span></li>
   </ol>
 </nav>
 
@@ -768,523 +768,338 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/instance-kinds.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/instance-kinds.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/vocabulary-authority.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/vocabulary-authority.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/instance-kinds.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/vocabulary-authority.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="instance-kinds--naming-one-and-what-a-new-kind-must-declare">
+<h1 id="vocabulary-authority--one-fact-one-home-n-renderings">
   
   
-    <a href="#instance-kinds--naming-one-and-what-a-new-kind-must-declare" class="anchor-heading" aria-labelledby="instance-kinds--naming-one-and-what-a-new-kind-must-declare"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Instance kinds — naming one, and what a new kind must declare
+    <a href="#vocabulary-authority--one-fact-one-home-n-renderings" class="anchor-heading" aria-labelledby="vocabulary-authority--one-fact-one-home-n-renderings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Vocabulary authority — one fact, one home, N renderings
   
   
 </h1>
     
 
-<p>Two different things are called a “kind” here, and a reader who conflates them
-adds the wrong one:</p>
+<blockquote>
+  <p>Skill id: <code class="language-plaintext highlighter-rouge">vocabulary-authority</code> · Capability: <code class="language-plaintext highlighter-rouge">schema</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code></p>
+</blockquote>
+<h2 id="the-rule">
+  
+  
+    <a href="#the-rule" class="anchor-heading" aria-labelledby="the-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p><strong>A fact has ONE authoritative vocabulary. Every other vocabulary that
+carries it is a RENDERING, reached by a declared mapping with stated
+equivalence — never a second copy of the fact.</strong></p>
+</blockquote>
+
+<p>Owner, 2026-09-22: <em>“need to identify one authoritative scheme to map against.
+SKOS?”</em> — asked twice, which is why this is a skill rather than a chat answer.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>the fact</th>
+      <th>authoritative</th>
+      <th>why not the others</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>what a term <strong>MEANS</strong></td>
+      <td><strong>SKOS</strong></td>
+      <td>the only candidate here whose subject IS a meaning</td>
+    </tr>
+    <tr>
+      <td>a <strong>resource’s</strong> metadata</td>
+      <td><strong>Dublin Core</strong></td>
+      <td>a document has a title; a concept has a preferred label. Different subjects</td>
+    </tr>
+    <tr>
+      <td>a <strong>clinical code’s</strong> operational semantics</td>
+      <td><strong>FHIR</strong> <code class="language-plaintext highlighter-rouge">CodeSystem</code> / <code class="language-plaintext highlighter-rouge">ValueSet</code> / <code class="language-plaintext highlighter-rouge">ConceptMap</code></td>
+      <td>versioning, designations with a <code class="language-plaintext highlighter-rouge">use</code>, expansion-as-release. SKOS has none of these</td>
+    </tr>
+    <tr>
+      <td>a <strong>release</strong> of any of the above</td>
+      <td><strong>DCAT</strong> (held, not built)</td>
+      <td>it is not a term model at all; it describes a published dataset</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                      ┌──────────────────────────────┐
+   AUTHORITATIVE  ──▶ │  skos:Concept = the MEANING  │
+                      └───────────────┬──────────────┘
+      skos:exactMatch / closeMatch / broadMatch / relatedMatch
+        │            │            │            │           │
+        ▼            ▼            ▼            ▼           ▼
+   FHIR Code-   Dublin Core   schema.org    TBX        DCAT
+   System       (resource     DefinedTerm   termbase   (release of
+   (clinical    metadata,     (SEO /        (CAT-tool  any of these
+   operations)  bib records)  discovery)    exchange)  as a dataset)
+</code></pre></div></div>
+
+<p><strong>SKOS is the hub because its mapping properties exist for exactly this</strong>, and
+because it is the only one of the five whose subject is a meaning rather than
+an artefact, a record, or a distribution.</p>
+<h2 id="pros-and-cons-as-ruled">
+  
+  
+    <a href="#pros-and-cons-as-ruled" class="anchor-heading" aria-labelledby="pros-and-cons-as-ruled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pros and cons, as ruled
+  
+  
+</h2>
+    
+
+<p>Each ruling is the owner’s. The reasons are measured against this corpus, not
+read off the specs.</p>
+<h3 id="skos--adopted-authoritative-for-meaning">
+  
+  
+    <a href="#skos--adopted-authoritative-for-meaning" class="anchor-heading" aria-labelledby="skos--adopted-authoritative-for-meaning"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> SKOS — <strong>adopted, authoritative for meaning</strong>
+  
+  
+</h3>
+    
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th>what it is</th>
-      <th>where it is declared</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>instance kind</strong></td>
-      <td>what a repository <em>is</em> — <code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">bootstrap</code>, <code class="language-plaintext highlighter-rouge">who-iris</code>. It has a name, a prefix family, a <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, and files it inherits from whatever it was bootstrapped off</td>
-      <td>a <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> at the instance root</td>
+      <td><strong>Pro</strong></td>
+      <td>Native JSON-LD. Multilingual labels first-class. <code class="language-plaintext highlighter-rouge">notation</code> <strong>is</strong> the code — the “coded glossary” requirement was already satisfied by <code class="language-plaintext highlighter-rouge">TermGloss</code>’s prefixed names. Mapping properties with stated equivalence. Carries 135 vocabulary terms + 44 swimlane roles here</td>
     </tr>
     <tr>
-      <td><strong>graph kind</strong></td>
-      <td>what a declared DIRECTORY holds — <code class="language-plaintext highlighter-rouge">tools</code>, <code class="language-plaintext highlighter-rouge">docs</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">library</code>. A value in the graph-kind registry, with <code class="language-plaintext highlighter-rouge">renderable</code>, <code class="language-plaintext highlighter-rouge">holds</code> and a summary</td>
-      <td><code class="language-plaintext highlighter-rouge">defaultGraphKinds</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, or a registration from a layer that owns it</td>
+      <td><strong>Con</strong></td>
+      <td><strong>No versioning model at all.</strong> No designation <code class="language-plaintext highlighter-rouge">use</code>. No post-coordination. Mapping properties carry no provenance</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>An instance kind gets a <strong>name</strong>. A graph kind gets a <strong>declaration</strong>. This
-skill covers both, and §”Most new things are not a new graph kind” first,
-because that is the question people get wrong.</p><hr />
-<h2 id="most-new-things-are-not-a-new-graph-kind">
+<p><strong>The con is why convergence STOPS at SKOS.</strong> The failure this exists to
+prevent: reading <em>“one glossary mechanism”</em> as <em>“one terminology mechanism”</em>
+and binding an ICD-11 code to a <code class="language-plaintext highlighter-rouge">skos:Concept</code> with a <code class="language-plaintext highlighter-rouge">notation</code> and no
+version. That graph validates, publishes, and is wrong the next release.</p>
+<h3 id="dublin-core--kept-authoritative-for-resources">
   
   
-    <a href="#most-new-things-are-not-a-new-graph-kind" class="anchor-heading" aria-labelledby="most-new-things-are-not-a-new-graph-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Most new things are not a new graph kind
+    <a href="#dublin-core--kept-authoritative-for-resources" class="anchor-heading" aria-labelledby="dublin-core--kept-authoritative-for-resources"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Dublin Core — <strong>kept, authoritative for resources</strong>
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>ISO 15836. Qualified, repeatable and language-tagged as IRIS actually uses it — <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/dublin-core.ts</code> is shaped by one measured record that does all three</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>Two predicates overlap SKOS (below)</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="schemaorg--kept-at-3-predicates-never-a-source-of-truth">
+  
+  
+    <a href="#schemaorg--kept-at-3-predicates-never-a-source-of-truth" class="anchor-heading" aria-labelledby="schemaorg--kept-at-3-predicates-never-a-source-of-truth"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> schema.org — <strong>kept at 3 predicates; never a source of truth</strong>
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>Search engines consume it. Native JSON-LD</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>A <strong>publishing vocabulary, not a terminology one</strong>. <code class="language-plaintext highlighter-rouge">DefinedTerm</code> has <code class="language-plaintext highlighter-rouge">name</code> + <code class="language-plaintext highlighter-rouge">description</code> and stops: no versioning, no designation concept at all, no mapping semantics, no deprecation-with-successor</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Owner: <em>“i find it hard to find actual definitions/glossary … not sure of
+utility.”</em> That is diagnosable rather than taste — there is no there there.
+<strong>Measured usage: 3 predicates</strong> (<code class="language-plaintext highlighter-rouge">softwareVersion</code>, <code class="language-plaintext highlighter-rouge">codeRepository</code>, <code class="language-plaintext highlighter-rouge">text</code>).</p>
+
+<p><strong>A measurement warning that belongs with this entry.</strong> A naive grep for
+<code class="language-plaintext highlighter-rouge">schema.org</code> returns <strong>716</strong> hits in this repo. Almost all are
+<code class="language-plaintext highlighter-rouge">json-schema.org</code> — JSON Schema’s <code class="language-plaintext highlighter-rouge">$schema</code> keyword — plus the <code class="language-plaintext highlighter-rouge">schema:viz</code>
+npm script. Two independent false-positive sources in one query. Never cite
+that number.</p>
+<h3 id="tbx--not-closed-and-still-not-adopted">
+  
+  
+    <a href="#tbx--not-closed-and-still-not-adopted" class="anchor-heading" aria-labelledby="tbx--not-closed-and-still-not-adopted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TBX — <strong>not closed, and still not adopted</strong>
+  
+  
+</h3>
+    
+
+<p>ISO 30042:2019 is published <em>both</em> as an ISO standard and as a free open
+industry standard; dialects and schemas are public. So “closed” is false and
+the ruling does not rest on it.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>Genuinely open. Purpose-built for multilingual term entries</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>Its niche is <strong>CAT-tool termbase interchange</strong>. This repo translates through gettext <code class="language-plaintext highlighter-rouge">.po</code>, not a termbase. XML-only</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Legitimate as an export</strong> if translators ever ask for a termbase.</p>
+<h3 id="rejected-outright">
+  
+  
+    <a href="#rejected-outright" class="anchor-heading" aria-labelledby="rejected-outright"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rejected outright
+  
+  
+</h3>
+    
+
+<p><strong>SKOS-XL</strong> — owner: <em>“nah”</em>. It reifies labels to fix part of the designation
+gap and nothing else; the gap it does not fix is the one that matters.
+<strong>OWL</strong> — owner: <em>“no”</em>. Overkill: prose definitions, no reasoner in the
+pipeline. <strong>DCAT</strong> — held as a bean, for the <em>render</em> of whatever is landed on.</p>
+<h2 id="dc--skos-the-overlap-and-what-stops-the-drift">
+  
+  
+    <a href="#dc--skos-the-overlap-and-what-stops-the-drift" class="anchor-heading" aria-labelledby="dc--skos-the-overlap-and-what-stops-the-drift"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DC ↔ SKOS: the overlap, and what stops the drift
   
   
 </h2>
     
 
-<p><strong>Before adding a value to the registry, answer this:</strong></p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>pair</th>
+      <th>relation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:title</code> ↔ <code class="language-plaintext highlighter-rouge">skos:prefLabel</code></td>
+      <td><strong>real overlap</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:description</code> ↔ <code class="language-plaintext highlighter-rouge">skos:definition</code></td>
+      <td><strong>real overlap</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:subject</code> → <code class="language-plaintext highlighter-rouge">skos:Concept</code></td>
+      <td><strong>not overlap — the designed JOIN.</strong> DC points <em>at</em> a concept</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:hasPart</code>, <code class="language-plaintext highlighter-rouge">dcterms:source</code></td>
+      <td>no SKOS equivalent</td>
+    </tr>
+  </tbody>
+</table></div>
 
 <blockquote>
-  <p>Is there a NODE SHAPE here that no existing kind describes — or is there a
-new thing you want to DO with nodes that already have a kind?</p>
+  <p><strong>DC describes a RESOURCE. SKOS describes a CONCEPT. One object, one type,
+one naming predicate.</strong></p>
 </blockquote>
 
-<p>A new verb is not a new kind. Only a new noun is.</p>
-<h3 id="the-worked-example-and-it-is-the-one-this-skill-was-written-for">
+<p>They collide only where a node is genuinely both — and one node here is: the
+glossary document is a <em>file</em> and a <code class="language-plaintext highlighter-rouge">skos:ConceptScheme</code>. Measured 2026-09-22,
+on output shipped that morning:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_kg/cat-harness-glossary.jsonld
+   skos:prefLabel : 'cat-harness swimlane glossary'
+   dcterms:title  : 'cat-harness swimlane glossary'   ← identical
+</code></pre></div></div>
+
+<p>Two predicates, one fact, nothing declaring which is authoritative. <strong>That is
+the drift, already live.</strong> The rule above resolves it: the node is a concept
+scheme, so <code class="language-plaintext highlighter-rouge">skos:prefLabel</code> is the source and <code class="language-plaintext highlighter-rouge">dcterms:title</code> is the derived
+copy for resource-metadata consumers. Bean <code class="language-plaintext highlighter-rouge">sl9u</code>.</p>
+<h2 id="guidance-for-schema-and-data-modelling">
   
   
-    <a href="#the-worked-example-and-it-is-the-one-this-skill-was-written-for" class="anchor-heading" aria-labelledby="the-worked-example-and-it-is-the-one-this-skill-was-written-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked example, and it is the one this skill was written for
+    <a href="#guidance-for-schema-and-data-modelling" class="anchor-heading" aria-labelledby="guidance-for-schema-and-data-modelling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Guidance for schema and data modelling
   
   
-</h3>
+</h2>
     
 
-<p>Three beans (<code class="language-plaintext highlighter-rouge">jbx2</code>, <code class="language-plaintext highlighter-rouge">v1hw</code>, and whatever <code class="language-plaintext highlighter-rouge">docs/</code> and <code class="language-plaintext highlighter-rouge">folio/</code> get) ask for
-<strong>visualisers</strong>, and the bean that commissioned this skill assumed a
-<code class="language-plaintext highlighter-rouge">visualiser</code> graph kind would be needed — that it would be <em>“the first kind
-where the answer is not obvious: it RENDERS, and what it renders is another
-graph’s content rather than its own.”</em></p>
-
-<p>Measured 2026-09-21, the question does not arise:</p>
-
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">coverage.visualiser</code> is a rendered PATH, not a kind.</strong> Every value in the
-corpus has the shape <code class="language-plaintext highlighter-rouge">cat-harness/docs/cat-harness/&lt;graph&gt;/&lt;instance&gt;/index.html</code>.
-It names an artefact, the way <code class="language-plaintext highlighter-rouge">coverage.docs</code> names a page.</li>
-  <li><strong>The owner’s own placement rule says Tool.</strong> <code class="language-plaintext highlighter-rouge">v1hw</code>: <em>“the visualiser lives
-as a tool in the harness that DEFINES the schema, declared in
-<code class="language-plaintext highlighter-rouge">skills</code>/<code class="language-plaintext highlighter-rouge">tools</code>.”</em> Not beside the data, and not in whichever layer happens
-to render it.</li>
-</ul>
-
-<p>So a visualiser is a <strong>Tool node</strong> in the existing <code class="language-plaintext highlighter-rouge">tools</code> graph that emits a
-<strong>page</strong> in the existing <code class="language-plaintext highlighter-rouge">docs</code> or <code class="language-plaintext highlighter-rouge">folio</code> graph. Two kinds that already exist,
-composed. Nothing to register.</p>
-
-<p><strong>Why this is worth a section rather than a sentence.</strong> A registry value is
-cheap to add and expensive to remove: every consumer that switches on a kind
-gains a case, <code class="language-plaintext highlighter-rouge">check:graph-kind-work</code> gains a row, and the JSON-LD vocabulary
-gains a term that downstream instances inherit whether or not they ever hold
-one. The failure is silent — nothing breaks, the vocabulary just stops meaning
-anything, because a kind that describes an activity rather than a shape cannot
-tell a consumer what it will find in the directory.</p>
-<h3 id="when-it-genuinely-is-a-new-kind">
-  
-  
-    <a href="#when-it-genuinely-is-a-new-kind" class="anchor-heading" aria-labelledby="when-it-genuinely-is-a-new-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it genuinely IS a new kind
-  
-  
-</h3>
-    
-
-<p>All three, not a majority:</p>
+<p>Owner, 2026-09-22: <em>“use open standards for modeling. tools can be used to map
+non-standard/proprietary to standards. first step is data normalization in any
+schema data model mapping exercise. (make sure defined processes)”</em></p>
 
 <ol>
-  <li><strong>A directory will hold it.</strong> A kind is what a declared directory holds. If
-nothing gets declared, there is no kind — you have a file format.</li>
-  <li><strong>A consumer must branch on it.</strong> Something reads the directory and would
-behave wrongly if it treated the contents as an existing kind.</li>
-  <li><strong>You can answer <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code> without hedging.</strong> See below. If
-either answer is <em>“it depends what it is used for”</em>, the shape is not
-settled and the kind is premature.</li>
-</ol><hr />
-<h2 id="naming-an-instance--the-prefix-families">
-  
-  
-    <a href="#naming-an-instance--the-prefix-families" class="anchor-heading" aria-labelledby="naming-an-instance--the-prefix-families"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming an instance — the prefix families
-  
-  
-</h2>
-    
-
-<p>A prefix names the <strong>layer</strong> or the <strong>owner</strong> an instance belongs to.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>prefix</th>
-      <th>what it marks</th>
-      <th>instances here</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-</code></td>
-      <td>the agentic-harness layer</td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code>, <code class="language-plaintext highlighter-rouge">bootstrap</code>, <code class="language-plaintext highlighter-rouge">bootstrap-tools</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-</code></td>
-      <td>the content/core layer</td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code>, <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-</code></td>
-      <td>WHO material</td>
-      <td><code class="language-plaintext highlighter-rouge">who-iris</code>, <code class="language-plaintext highlighter-rouge">who-style-guide</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">litlfred-</code></td>
-      <td>the owner’s own</td>
-      <td>— none yet</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Four of the eleven instances here carry no prefix at all</strong> — <code class="language-plaintext highlighter-rouge">agent-skills</code>,
-<code class="language-plaintext highlighter-rouge">detangle</code>, <code class="language-plaintext highlighter-rouge">kg-navigation</code>, <code class="language-plaintext highlighter-rouge">large-datasets</code> (measured 2026-09-21,
-<code class="language-plaintext highlighter-rouge">findDeclarationFile</code> over each directory). That is the state of the corpus, not a backlog: an
-unprefixed name is undecided, not wrong, and this skill does not make it a
-finding. Do not sweep them into a family to make the table tidy; a rename is
-the one act with consequences that cannot be undone later (§”And the owner may
-decline the convention”).</p>
-
-<p><strong>The <code class="language-plaintext highlighter-rouge">cat-</code> prefix reaches the harness layer and stops there.</strong> It does not
-extend to <code class="language-plaintext highlighter-rouge">folio-assistant-*</code>. That ruling settled a live merge conflict —
-<code class="language-plaintext highlighter-rouge">main</code> had renamed the core instance <code class="language-plaintext highlighter-rouge">folio-assist-core</code> while a branch carried
-<code class="language-plaintext highlighter-rouge">folio-assistant-core</code> — which is why it is written down rather than left to be
-re-derived.</p>
-<h3 id="the-default-is-to-keep-the-kinds-name">
-  
-  
-    <a href="#the-default-is-to-keep-the-kinds-name" class="anchor-heading" aria-labelledby="the-default-is-to-keep-the-kinds-name"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The default is to keep the kind’s name
-  
-  
-</h3>
-    
-
-<p>A new instance of a kind <strong>inherits that kind’s name</strong> unless somebody chooses
-otherwise. That is the default, not the rule.</p>
-<h3 id="and-the-owner-may-decline-the-convention">
-  
-  
-    <a href="#and-the-owner-may-decline-the-convention" class="anchor-heading" aria-labelledby="and-the-owner-may-decline-the-convention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And the owner may decline the convention
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">qou</code> would be <code class="language-plaintext highlighter-rouge">litlfred-qou</code> or <code class="language-plaintext highlighter-rouge">folio-assistant-qou</code> by the table above, and
-it is neither, by the owner’s decision.</p>
-
-<blockquote>
-  <p><strong>Do not “fix” <code class="language-plaintext highlighter-rouge">qou</code>.</strong> It is the worked example of a documented override,
-not an instance that was missed. The same goes for <code class="language-plaintext highlighter-rouge">folio-assist-sci</code>, which
-has never been raised — a name that does not match the table is a decision
-until somebody says otherwise, and renaming an instance changes what every
-artefact written into it inherits, which is the one thing that cannot be
-fixed later (<code class="language-plaintext highlighter-rouge">bootstrap/README.md</code>, §2).</p>
-</blockquote>
-
-<p>A skill that presented the convention as mandatory would have renamed <code class="language-plaintext highlighter-rouge">qou</code>.
-A default with a documented override is a different thing from a rule, and the
-difference is the whole content of this section.</p><hr />
-<h2 id="what-a-new-graph-kind-must-declare">
-  
-  
-    <a href="#what-a-new-graph-kind-must-declare" class="anchor-heading" aria-labelledby="what-a-new-graph-kind-must-declare"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a new graph kind must declare
-  
-  
-</h2>
-    
-
-<p>The shape is <code class="language-plaintext highlighter-rouge">GraphKindDef</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>. Read it there for the
-authoritative field list; what follows is what an author has to <em>decide</em>.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>field</th>
-      <th>required</th>
-      <th>the question</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">type</code></td>
-      <td>yes</td>
-      <td>the <code class="language-plaintext highlighter-rouge">@type</code> IRI it projects to — <code class="language-plaintext highlighter-rouge">termIri("SomethingGraph")</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">renderable</code></td>
-      <td>yes</td>
-      <td>does a graph of this kind become a website?</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">holds</code></td>
-      <td>yes</td>
-      <td>what does a running process do with it?</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">recordsWork</code></td>
-      <td>for <code class="language-plaintext highlighter-rouge">state</code> kinds</td>
-      <td>is this something somebody is partway through, that an arriving agent could pick up?</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">summary</code></td>
-      <td>yes</td>
-      <td>one paragraph a consumer can act on</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skill</code></td>
-      <td>optional, and absent means absent</td>
-      <td>which skill says how to READ it</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="holds-has-four-values-not-three">
-  
-  
-    <a href="#holds-has-four-values-not-three" class="anchor-heading" aria-labelledby="holds-has-four-values-not-three"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">holds</code> has FOUR values, not three
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">content</code> · <code class="language-plaintext highlighter-rouge">context</code> · <code class="language-plaintext highlighter-rouge">state</code> · <code class="language-plaintext highlighter-rouge">derived</code>.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>value</th>
-      <th>a running process…</th>
-      <th>example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content</code></td>
-      <td>PRODUCES it; it is the subject</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">docs</code>, <code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">context</code></td>
-      <td>READS it and never writes it — a step that writes is a <strong>defect</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">memory</code>, <code class="language-plaintext highlighter-rouge">interaction</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">state</code></td>
-      <td>WRITES it as it runs</td>
-      <td><code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">workflow-state</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">derived</code></td>
-      <td>produces it <strong>from a source</strong>, and would regenerate rather than re-author it</td>
-      <td><code class="language-plaintext highlighter-rouge">library</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">derived</code> is the newest and the one most often missed: it was added 2026-09-20
-(bean <code class="language-plaintext highlighter-rouge">hqku</code>) when <code class="language-plaintext highlighter-rouge">library/</code> turned out to be neither content nor context —
-<em>not</em> <code class="language-plaintext highlighter-rouge">context</code>, because <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code> writes it and <code class="language-plaintext highlighter-rouge">context</code>
-makes that a defect; <em>not</em> <code class="language-plaintext highlighter-rouge">content</code>, because a QA finding against a derived
-section is a finding against its <strong>generator</strong>, and sends a reviewer to the
-wrong file.</p>
-
-<p><strong>There is no “could not determine” on this axis, and that is deliberate.</strong> A
-third state is right when a CHECK looked and could not tell, and wrong when an
-AUTHOR is registering a kind they are defining. Whoever adds a kind knows what
-a process does with it. The full classification of every existing kind, with
-its reason, and the two supporting questions for a hard case, are in
-<a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>.</p>
-<h3 id="recordswork-is-narrower-than-holds-state">
-  
-  
-    <a href="#recordswork-is-narrower-than-holds-state" class="anchor-heading" aria-labelledby="recordswork-is-narrower-than-holds-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">recordsWork</code> is narrower than <code class="language-plaintext highlighter-rouge">holds: "state"</code>
-  
-  
-</h3>
-    
-
-<p>It asks whether the graph records <strong>work somebody is partway through</strong>, not
-merely whether something writes to it. The distinction was measured rather than
-assumed: reading it as “declares any state graph” made the repository root and
-<code class="language-plaintext highlighter-rouge">who-iris</code> ACTIVE on <code class="language-plaintext highlighter-rouge">uploads</code> alone, and an ingestion queue is live state that
-nobody is partway through. An agent told <em>“this KG is active”</em> on that basis
-arrives looking for something to prioritise and finds unprocessed files.</p>
-
-<p><code class="language-plaintext highlighter-rouge">check:graph-kind-work</code> requires it for every <code class="language-plaintext highlighter-rouge">state</code> kind, so a new state kind
-cannot ship undecided.</p><hr />
-<h2 id="where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render">
-  
-  
-    <a href="#where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render" class="anchor-heading" aria-labelledby="where-a-kind-may-live--a-layer-owns-the-kinds-it-can-render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a kind may live — a layer owns the kinds it can render
-  
-  
-</h2>
-    
-
-<p>Two kinds in this repository are renderable, and they live in different places
-for a reason worth copying.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>kind</th>
-      <th>declared where</th>
-      <th>why</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio</code></td>
-      <td><strong>registered by core</strong>, on import (<code class="language-plaintext highlighter-rouge">schemas/folio-graph-kind.ts</code>)</td>
-      <td>the harness cannot serve it — block viewers, LaTeX, QA badges, translation overlays</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">docs</code></td>
-      <td><strong>in the harness’s own table</strong> (<code class="language-plaintext highlighter-rouge">defaultGraphKinds</code>)</td>
-      <td>the harness ships a plain just-the-docs renderer and can serve it</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>The rule in its true form is <strong>a layer owns the kinds it can render</strong> — not
-“the harness owns no renderable kind”, which was the earlier phrasing and
-stopped being true the day the harness shipped a renderer.</p>
-
-<p><strong>Registration on import is for a kind that may legitimately be ABSENT.</strong> A
-first attempt registered <code class="language-plaintext highlighter-rouge">docs</code> on import too, mirroring <code class="language-plaintext highlighter-rouge">folio</code>, so that the
-sentence <em>“the harness’s own vocabulary contains no renderable kind”</em> could stay
-literally true. That preserved a sentence at the cost of the design: <code class="language-plaintext highlighter-rouge">folio</code> is
-CONTRIBUTED by a dependency and may not be there, whereas <code class="language-plaintext highlighter-rouge">docs</code> ships with the
-harness and can never be absent — twenty consumers would have needed an import
-for a kind that is always present. The test was updated instead. <strong>That is what
-it means for a premise to have changed rather than for a principle to have been
-broken</strong>, and it is the check to run on your own new kind: <em>can this kind be
-absent?</em> If no, it belongs in the table.</p>
-
-<p><strong>The boundary <code class="language-plaintext highlighter-rouge">docs</code> must not cross</strong> is the SUBJECT, not the feature list.
-The moment a <code class="language-plaintext highlighter-rouge">docs</code> page needs a block viewer, a LaTeX pass, a QA badge or a
-translation overlay, it is describing authored CONTENT and is a <code class="language-plaintext highlighter-rouge">folio</code>.</p><hr />
-<h2 id="what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit">
-  
-  
-    <a href="#what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit" class="anchor-heading" aria-labelledby="what-a-new-instance-inherits-and-which-of-it-is-yours-to-edit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a new instance inherits, and which of it is yours to edit
-  
-  
-</h2>
-    
-
-<p>A new instance kind is bootstrapped from an existing one, and it arrives
-carrying that instance’s files. Some of them are <strong>yours</strong>, and nothing
-currently tells a new owner which.</p>
-<h3 id="bootstrapreadmemd-is-the-first-one">
-  
-  
-    <a href="#bootstrapreadmemd-is-the-first-one" class="anchor-heading" aria-labelledby="bootstrapreadmemd-is-the-first-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code> is the first one
-  
-  
-</h3>
-    
-
-<p>It is the page an Initiator reads before it knows anything — <em>“you have been
-pointed at a repository, you know nothing about it”</em> — and it is written for
-<strong>this</strong> repository. Measured 2026-09-21: it resolves <strong>13 links into
-<code class="language-plaintext highlighter-rouge">../cat-harness/</code></strong>, across <strong>6 distinct files</strong>:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>target</th>
-      <th>links</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/dak-blocks.ts</code></td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/role-graph.ts</code></td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/cat-harness.ts</code></td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/skill-package.ts</code></td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/schemas/tool.ts</code></td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">../cat-harness/processes</code></td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Every one of those is a <strong>term definition</strong> — what a role is, what a DAK block
-is, what a harness declaration is. Bootstrap a new instance kind that is not
-built on <code class="language-plaintext highlighter-rouge">cat-harness</code> and its first reader gets a page whose every definition
-points into a harness they are not using.</p>
-
-<p><strong>So repointing it is expected, not a modification of platform code.</strong> Point
-the links at whatever layer defines <em>your</em> vocabulary, or at your own
-instance kind’s schemas. Keep the user-scenario structure — persona, user
-scenario, business process, functional requirement — because that is the
-formalism the page is written in and the bootstrap process reads it; change
-only where the terms resolve.</p>
-
-<blockquote>
-  <p><strong>This is the general shape, not a special case.</strong> Any inherited file whose
-content is a POINTER — a README, an <code class="language-plaintext highlighter-rouge">AGENTS.md</code> stub, a <code class="language-plaintext highlighter-rouge">.mcp.json</code>, a
-builder shim — belongs to the new owner. Any inherited file that is a
-MECHANISM belongs to the layer that ships it, and changing it there is a
-platform change with all the gates that implies.</p>
-</blockquote><hr />
-<h2 id="before-you-push">
-  
-  
-    <a href="#before-you-push" class="anchor-heading" aria-labelledby="before-you-push"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you push
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>what you changed</th>
-      <th>run</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>added a graph kind</td>
-      <td><code class="language-plaintext highlighter-rouge">bun run check:graph-kind-work</code>, <code class="language-plaintext highlighter-rouge">bun run check:harness-dirs</code></td>
-    </tr>
-    <tr>
-      <td>added or renamed an instance</td>
-      <td><code class="language-plaintext highlighter-rouge">bun run check:instance-config</code>, <code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code></td>
-    </tr>
-    <tr>
-      <td>edited this or any skill</td>
-      <td><code class="language-plaintext highlighter-rouge">bun run check:skills</code></td>
-    </tr>
-    <tr>
-      <td>anything</td>
-      <td><code class="language-plaintext highlighter-rouge">bun run gates</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">bun run gates</code> is the one to run, and it is stronger than “a list someone
-maintains” in two distinct ways worth knowing before you trust it (bean <code class="language-plaintext highlighter-rouge">j2w4</code>):</p>
-
-<ol>
-  <li><strong>Its gate list is derived</strong>, from <code class="language-plaintext highlighter-rouge">.github/workflows/code-quality-gates.yml</code>,
-so it cannot drift from that workflow.</li>
-  <li><strong>Every OTHER workflow is scanned too</strong>, and any <code class="language-plaintext highlighter-rouge">bun</code> step CI runs that the
-local set does not is reported on every run — unless it carries a declared
-exemption with a <strong>reason</strong> (<code class="language-plaintext highlighter-rouge">covered-by</code>, <code class="language-plaintext highlighter-rouge">ci-only</code>, <code class="language-plaintext highlighter-rouge">no-folio</code>). <em>“It is
-slow”</em> and <em>“it usually passes”</em> are not reasons.</li>
+  <li><strong>Model in an open standard.</strong> Not a proprietary or house schema that
+happens to be convenient.</li>
+  <li><strong>Proprietary input is mapped, not adopted.</strong> A mapping is a declared
+artefact with stated equivalence — not a rename in a loader.</li>
+  <li><strong>Normalise FIRST.</strong> The first step of any mapping exercise is data
+normalisation. Mapping un-normalised data encodes the source’s accidents
+into the target and they are invisible afterwards.</li>
+  <li><strong>The exercise runs as a defined process</strong>, not as a one-off script.</li>
 </ol>
+<h2 id="where-the-pins-live">
+  
+  
+    <a href="#where-the-pins-live" class="anchor-heading" aria-labelledby="where-the-pins-live"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the pins live
+  
+  
+</h2>
+    
 
-<p>The second half is what makes the first safe to rely on, and it was added
-because a CI failure went red on a gate the local runner had just passed. A
-hand-picked subset of the gate set is not the gate set.</p>
+<p><code class="language-plaintext highlighter-rouge">cat-harness/external-schemas/</code> — one record per specification, pinning the
+<strong>edition</strong> and carrying the operative terms <strong>derived from the corpus</strong>, never
+hand-listed. <code class="language-plaintext highlighter-rouge">bun run cat-harness/scripts/external-schemas.ts --check</code>.</p>
+
+<p>Two things about that registry worth knowing before you trust its output.
+It was <strong>undeclared</strong> in <code class="language-plaintext highlighter-rouge">cat-harness.json</code> until 2026-09-22 — the <code class="language-plaintext highlighter-rouge">dh4f</code> shape
+inverted, a held directory nothing declares, so every consumer that fans out
+over declared directories skipped it. And its unused-record check read <strong>only</strong>
+<code class="language-plaintext highlighter-rouge">processes/*.bpmn|dmn</code>, so it reported Dublin Core — 43 uses, live in the
+glossary’s own <code class="language-plaintext highlighter-rouge">@context</code> — as <em>“a record outliving its dependency”</em>. A
+vocabulary can be used in more than one syntax; a reader that knows one reports
+the other as absent.</p>
 <h2 id="related">
   
   
@@ -1295,13 +1110,11 @@ hand-picked subset of the gate set is not the gate set.</p>
     
 
 <ul>
-  <li><a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/harness-requirements.html"><code class="language-plaintext highlighter-rouge">harness-requirements</code></a> — what an instance OWES for
-every directory it declares. This skill is how to make one; that one is what
-it then owes.</li>
-  <li><a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a> —
-the <code class="language-plaintext highlighter-rouge">holds</code> axis in full, with every existing kind classified and its reason.</li>
-  <li><a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the declaration schema,
-path resolution, and the dot-prefix guard.</li>
+  <li><a href="/folio-assistant/STAGING/claude-modest-mccarthy-hhsm41/reference/skill-instructions/schema-management.html"><code class="language-plaintext highlighter-rouge">schema-management</code></a> — the registry’s own discipline.</li>
+  <li><a href="../authoring-who-smart-guidelines/terminology-management.md"><code class="language-plaintext highlighter-rouge">terminology-management</code></a> —
+the FHIR half, for a folio’s clinical terminology.</li>
+  <li><code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/external-schema.ts</code> — the record contract, and
+why <code class="language-plaintext highlighter-rouge">conforms</code> / <code class="language-plaintext highlighter-rouge">reads</code> / <code class="language-plaintext highlighter-rouge">cites</code> are different answers.</li>
 </ul>
 
           
