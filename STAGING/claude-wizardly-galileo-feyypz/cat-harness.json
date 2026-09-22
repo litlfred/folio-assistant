@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T12:34:10.945Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aa02a02af88c21566efdc0563a0790d563299a46",
-  "sourceCommitSha": "aa02a02af88c21566efdc0563a0790d563299a46",
-  "sourceCommitAt": "2026-09-22T12:32:22Z",
+  "generatedAt": "2026-09-22T13:26:13.484Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/775164c68e613b2f9ba083e7e93cdf1b134a4522",
+  "sourceCommitSha": "775164c68e613b2f9ba083e7e93cdf1b134a4522",
+  "sourceCommitAt": "2026-09-22T13:20:27Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 233,
+    "Skill": 234,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -281,8 +281,8 @@
     "ProcessNode": 726,
     "Tool": 69,
     "Schema": 93,
-    "GraphKind": 27,
-    "Directory": 35,
+    "GraphKind": 28,
+    "Directory": 36,
     "Asset": 3
   },
   "@graph": [
@@ -1857,7 +1857,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 801,
+      "instructionLines": 802,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1948,6 +1948,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-logging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/vocabulary-authority",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "vocabulary-authority",
+      "title": "Vocabulary authority — one fact, one home, N renderings",
+      "description": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/vocabulary-authority.md",
+      "instructionLines": 175,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/vocabulary-authority"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/instance-kinds",
@@ -5694,6 +5711,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/uploads-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/vocabulary-authority",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#skill/voice-overlay-review",
@@ -34477,6 +34495,14 @@
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/external-schema",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "external-schema",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchemaGraph",
+      "renderable": false,
+      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "schemas",
@@ -35709,6 +35735,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/tools"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/external-schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "external-schemas",
+      "path": "external-schemas/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/external-schema"
+      ],
+      "description": "The specifications this instance depends on, one record per specification, each pinning the EDITION in use and carrying the operative terms DERIVED from the corpus rather than hand-listed. Owner, 2026-09-20: \"dont need to materalize, but should reference specific version being used\" and \"some schema that is operational should be in KG\". UNDECLARED UNTIL 2026-09-22, which is the dh4f shape inverted: dh4f is a declared directory nothing holds, reported as a clean scan; this was a held directory nothing declared, so every consumer that fans out over declared directories skipped a registry that pins four external namespaces. It was reachable only by the one script that hardcodes its path. `dependents: reproduce` because a dependent folio consumes its own specifications — it inherits the convention, an id and a relative path, not this instance's records.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/external-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/external-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld#directory/schemas",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "schemas",
@@ -36139,8 +36177,8 @@
   ],
   "staging": {
     "branch": "claude/wizardly-galileo-feyypz",
-    "sha": "3d26e42f2d84798420e3da8e22444ffc41e8d81b",
+    "sha": "ab0f3b853955d766525dcbc6a0b4ad0d8434b601",
     "pr": "951/merge",
-    "run": "35727798794"
+    "run": "35733294309"
   }
 }

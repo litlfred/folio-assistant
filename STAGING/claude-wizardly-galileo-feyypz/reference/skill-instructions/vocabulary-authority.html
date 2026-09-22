@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(198)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(198) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(198) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(198) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Scheme Information — WHO SMART Trust artefact | folio-assistant</title>
+<title>Vocabulary authority | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Scheme Information — WHO SMART Trust artefact" />
+<meta property="og:title" content="Vocabulary authority" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="StructureDefinition/SchemeInformation in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
-<meta property="og:description" content="StructureDefinition/SchemeInformation in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Scheme Information — WHO SMART Trust artefact" />
+<meta property="twitter:title" content="Vocabulary authority" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -732,43 +751,117 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Vocabulary authority</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <style>
-.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
-  font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.st-held{color:#0d6e5e}
-.st-ref{color:#6b5b95}
-.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
-.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
-.st-stat span{font-size:.75rem;opacity:.75}
-</style>
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/vocabulary-authority.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/vocabulary-authority.md</code></a> — do not edit here.</p>
 
-<p><a href="../">← all 674 artefacts</a></p>
-<h2 id="scheme-information">
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/vocabulary-authority.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="vocabulary-authority--one-fact-one-home-n-renderings">
   
   
-    <a href="#scheme-information" class="anchor-heading" aria-labelledby="scheme-information"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Scheme Information
+    <a href="#vocabulary-authority--one-fact-one-home-n-renderings" class="anchor-heading" aria-labelledby="vocabulary-authority--one-fact-one-home-n-renderings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Vocabulary authority — one fact, one home, N renderings
+  
+  
+</h1>
+    
+
+<blockquote>
+  <p>Skill id: <code class="language-plaintext highlighter-rouge">vocabulary-authority</code> · Capability: <code class="language-plaintext highlighter-rouge">schema</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code></p>
+</blockquote>
+<h2 id="the-rule">
+  
+  
+    <a href="#the-rule" class="anchor-heading" aria-labelledby="the-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">StructureDefinition/SchemeInformation</code></p>
+<blockquote>
+  <p><strong>A fact has ONE authoritative vocabulary. Every other vocabulary that
+carries it is a RENDERING, reached by a declared mapping with stated
+equivalence — never a second copy of the fact.</strong></p>
+</blockquote>
 
-<p>Logical Model for Information on the trusted list and its issuing scheme</p>
+<p>Owner, 2026-09-22: <em>“need to identify one authoritative scheme to map against.
+SKOS?”</em> — asked twice, which is why this is a skill rather than a chat answer.</p>
 
-<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div></div>
-<h2 id="identity-and-bytes-are-different-questions">
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>the fact</th>
+      <th>authoritative</th>
+      <th>why not the others</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>what a term <strong>MEANS</strong></td>
+      <td><strong>SKOS</strong></td>
+      <td>the only candidate here whose subject IS a meaning</td>
+    </tr>
+    <tr>
+      <td>a <strong>resource’s</strong> metadata</td>
+      <td><strong>Dublin Core</strong></td>
+      <td>a document has a title; a concept has a preferred label. Different subjects</td>
+    </tr>
+    <tr>
+      <td>a <strong>clinical code’s</strong> operational semantics</td>
+      <td><strong>FHIR</strong> <code class="language-plaintext highlighter-rouge">CodeSystem</code> / <code class="language-plaintext highlighter-rouge">ValueSet</code> / <code class="language-plaintext highlighter-rouge">ConceptMap</code></td>
+      <td>versioning, designations with a <code class="language-plaintext highlighter-rouge">use</code>, expansion-as-release. SKOS has none of these</td>
+    </tr>
+    <tr>
+      <td>a <strong>release</strong> of any of the above</td>
+      <td><strong>DCAT</strong> (held, not built)</td>
+      <td>it is not a term model at all; it describes a published dataset</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                      ┌──────────────────────────────┐
+   AUTHORITATIVE  ──▶ │  skos:Concept = the MEANING  │
+                      └───────────────┬──────────────┘
+      skos:exactMatch / closeMatch / broadMatch / relatedMatch
+        │            │            │            │           │
+        ▼            ▼            ▼            ▼           ▼
+   FHIR Code-   Dublin Core   schema.org    TBX        DCAT
+   System       (resource     DefinedTerm   termbase   (release of
+   (clinical    metadata,     (SEO /        (CAT-tool  any of these
+   operations)  bib records)  discovery)    exchange)  as a dataset)
+</code></pre></div></div>
+
+<p><strong>SKOS is the hub because its mapping properties exist for exactly this</strong>, and
+because it is the only one of the five whose subject is a meaning rather than
+an artefact, a record, or a distribution.</p>
+<h2 id="pros-and-cons-as-ruled">
   
   
-    <a href="#identity-and-bytes-are-different-questions" class="anchor-heading" aria-labelledby="identity-and-bytes-are-different-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Identity and bytes are different questions
+    <a href="#pros-and-cons-as-ruled" class="anchor-heading" aria-labelledby="pros-and-cons-as-ruled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pros and cons, as ruled
   
   
 </h2>
+    
+
+<p>Each ruling is the owner’s. The reasons are measured against this corpus, not
+read off the specs.</p>
+<h3 id="skos--adopted-authoritative-for-meaning">
+  
+  
+    <a href="#skos--adopted-authoritative-for-meaning" class="anchor-heading" aria-labelledby="skos--adopted-authoritative-for-meaning"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> SKOS — <strong>adopted, authoritative for meaning</strong>
+  
+  
+</h3>
     
 
 <div class="table-wrapper"><table>
@@ -780,62 +873,244 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td>Canonical URL</td>
-      <td><code class="language-plaintext highlighter-rouge">http://smart.who.int/trust/StructureDefinition/SchemeInformation</code></td>
+      <td><strong>Pro</strong></td>
+      <td>Native JSON-LD. Multilingual labels first-class. <code class="language-plaintext highlighter-rouge">notation</code> <strong>is</strong> the code — the “coded glossary” requirement was already satisfied by <code class="language-plaintext highlighter-rouge">TermGloss</code>’s prefixed names. Mapping properties with stated equivalence. Carries 135 vocabulary terms + 44 swimlane roles here</td>
     </tr>
     <tr>
-      <td>Published</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.html">html</a></td>
-    </tr>
-    <tr>
-      <td>Materialization</td>
-      <td><span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest</td>
+      <td><strong>Con</strong></td>
+      <td><strong>No versioning model at all.</strong> No designation <code class="language-plaintext highlighter-rouge">use</code>. No post-coordination. Mapping properties carry no provenance</td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="dak-api">
+
+<p><strong>The con is why convergence STOPS at SKOS.</strong> The failure this exists to
+prevent: reading <em>“one glossary mechanism”</em> as <em>“one terminology mechanism”</em>
+and binding an ICD-11 code to a <code class="language-plaintext highlighter-rouge">skos:Concept</code> with a <code class="language-plaintext highlighter-rouge">notation</code> and no
+version. That graph validates, publishes, and is wrong the next release.</p>
+<h3 id="dublin-core--kept-authoritative-for-resources">
   
   
-    <a href="#dak-api" class="anchor-heading" aria-labelledby="dak-api"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DAK API
+    <a href="#dublin-core--kept-authoritative-for-resources" class="anchor-heading" aria-labelledby="dublin-core--kept-authoritative-for-resources"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Dublin Core — <strong>kept, authoritative for resources</strong>
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>ISO 15836. Qualified, repeatable and language-tagged as IRIS actually uses it — <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/dublin-core.ts</code> is shaped by one measured record that does all three</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>Two predicates overlap SKOS (below)</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="schemaorg--kept-at-3-predicates-never-a-source-of-truth">
+  
+  
+    <a href="#schemaorg--kept-at-3-predicates-never-a-source-of-truth" class="anchor-heading" aria-labelledby="schemaorg--kept-at-3-predicates-never-a-source-of-truth"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> schema.org — <strong>kept at 3 predicates; never a source of truth</strong>
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>Search engines consume it. Native JSON-LD</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>A <strong>publishing vocabulary, not a terminology one</strong>. <code class="language-plaintext highlighter-rouge">DefinedTerm</code> has <code class="language-plaintext highlighter-rouge">name</code> + <code class="language-plaintext highlighter-rouge">description</code> and stops: no versioning, no designation concept at all, no mapping semantics, no deprecation-with-successor</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Owner: <em>“i find it hard to find actual definitions/glossary … not sure of
+utility.”</em> That is diagnosable rather than taste — there is no there there.
+<strong>Measured usage: 3 predicates</strong> (<code class="language-plaintext highlighter-rouge">softwareVersion</code>, <code class="language-plaintext highlighter-rouge">codeRepository</code>, <code class="language-plaintext highlighter-rouge">text</code>).</p>
+
+<p><strong>A measurement warning that belongs with this entry.</strong> A naive grep for
+<code class="language-plaintext highlighter-rouge">schema.org</code> returns <strong>716</strong> hits in this repo. Almost all are
+<code class="language-plaintext highlighter-rouge">json-schema.org</code> — JSON Schema’s <code class="language-plaintext highlighter-rouge">$schema</code> keyword — plus the <code class="language-plaintext highlighter-rouge">schema:viz</code>
+npm script. Two independent false-positive sources in one query. Never cite
+that number.</p>
+<h3 id="tbx--not-closed-and-still-not-adopted">
+  
+  
+    <a href="#tbx--not-closed-and-still-not-adopted" class="anchor-heading" aria-labelledby="tbx--not-closed-and-still-not-adopted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TBX — <strong>not closed, and still not adopted</strong>
+  
+  
+</h3>
+    
+
+<p>ISO 30042:2019 is published <em>both</em> as an ISO standard and as a free open
+industry standard; dialects and schemas are public. So “closed” is false and
+the ruling does not rest on it.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pro</strong></td>
+      <td>Genuinely open. Purpose-built for multilingual term entries</td>
+    </tr>
+    <tr>
+      <td><strong>Con</strong></td>
+      <td>Its niche is <strong>CAT-tool termbase interchange</strong>. This repo translates through gettext <code class="language-plaintext highlighter-rouge">.po</code>, not a termbase. XML-only</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Legitimate as an export</strong> if translators ever ask for a termbase.</p>
+<h3 id="rejected-outright">
+  
+  
+    <a href="#rejected-outright" class="anchor-heading" aria-labelledby="rejected-outright"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rejected outright
+  
+  
+</h3>
+    
+
+<p><strong>SKOS-XL</strong> — owner: <em>“nah”</em>. It reifies labels to fix part of the designation
+gap and nothing else; the gap it does not fix is the one that matters.
+<strong>OWL</strong> — owner: <em>“no”</em>. Overkill: prose definitions, no reasoner in the
+pipeline. <strong>DCAT</strong> — held as a bean, for the <em>render</em> of whatever is landed on.</p>
+<h2 id="dc--skos-the-overlap-and-what-stops-the-drift">
+  
+  
+    <a href="#dc--skos-the-overlap-and-what-stops-the-drift" class="anchor-heading" aria-labelledby="dc--skos-the-overlap-and-what-stops-the-drift"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DC ↔ SKOS: the overlap, and what stops the drift
   
   
 </h2>
     
 
-<p>The four sidecars are published independently, so an absent one is a fact about the
-IG rather than a gap in this index.</p>
-
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Sidecar</th>
-      <th>Published at</th>
-      <th>Held locally</th>
+      <th>pair</th>
+      <th>relation</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>JSON Schema</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json</a></td>
-      <td><code class="language-plaintext highlighter-rouge">fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:title</code> ↔ <code class="language-plaintext highlighter-rouge">skos:prefLabel</code></td>
+      <td><strong>real overlap</strong></td>
     </tr>
     <tr>
-      <td>Displays</td>
-      <td><em>not published for this artefact</em></td>
-      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:description</code> ↔ <code class="language-plaintext highlighter-rouge">skos:definition</code></td>
+      <td><strong>real overlap</strong></td>
     </tr>
     <tr>
-      <td>OpenAPI</td>
-      <td><a href="https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json">https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json</a></td>
-      <td><code class="language-plaintext highlighter-rouge">fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:subject</code> → <code class="language-plaintext highlighter-rouge">skos:Concept</code></td>
+      <td><strong>not overlap — the designed JOIN.</strong> DC points <em>at</em> a concept</td>
     </tr>
     <tr>
-      <td>JSON-LD</td>
-      <td><em>not published for this artefact</em></td>
-      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">dcterms:hasPart</code>, <code class="language-plaintext highlighter-rouge">dcterms:source</code></td>
+      <td>no SKOS equivalent</td>
     </tr>
   </tbody>
 </table></div>
+
+<blockquote>
+  <p><strong>DC describes a RESOURCE. SKOS describes a CONCEPT. One object, one type,
+one naming predicate.</strong></p>
+</blockquote>
+
+<p>They collide only where a node is genuinely both — and one node here is: the
+glossary document is a <em>file</em> and a <code class="language-plaintext highlighter-rouge">skos:ConceptScheme</code>. Measured 2026-09-22,
+on output shipped that morning:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_kg/cat-harness-glossary.jsonld
+   skos:prefLabel : 'cat-harness swimlane glossary'
+   dcterms:title  : 'cat-harness swimlane glossary'   ← identical
+</code></pre></div></div>
+
+<p>Two predicates, one fact, nothing declaring which is authoritative. <strong>That is
+the drift, already live.</strong> The rule above resolves it: the node is a concept
+scheme, so <code class="language-plaintext highlighter-rouge">skos:prefLabel</code> is the source and <code class="language-plaintext highlighter-rouge">dcterms:title</code> is the derived
+copy for resource-metadata consumers. Bean <code class="language-plaintext highlighter-rouge">sl9u</code>.</p>
+<h2 id="guidance-for-schema-and-data-modelling">
+  
+  
+    <a href="#guidance-for-schema-and-data-modelling" class="anchor-heading" aria-labelledby="guidance-for-schema-and-data-modelling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Guidance for schema and data modelling
+  
+  
+</h2>
+    
+
+<p>Owner, 2026-09-22: <em>“use open standards for modeling. tools can be used to map
+non-standard/proprietary to standards. first step is data normalization in any
+schema data model mapping exercise. (make sure defined processes)”</em></p>
+
+<ol>
+  <li><strong>Model in an open standard.</strong> Not a proprietary or house schema that
+happens to be convenient.</li>
+  <li><strong>Proprietary input is mapped, not adopted.</strong> A mapping is a declared
+artefact with stated equivalence — not a rename in a loader.</li>
+  <li><strong>Normalise FIRST.</strong> The first step of any mapping exercise is data
+normalisation. Mapping un-normalised data encodes the source’s accidents
+into the target and they are invisible afterwards.</li>
+  <li><strong>The exercise runs as a defined process</strong>, not as a one-off script.</li>
+</ol>
+<h2 id="where-the-pins-live">
+  
+  
+    <a href="#where-the-pins-live" class="anchor-heading" aria-labelledby="where-the-pins-live"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the pins live
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness/external-schemas/</code> — one record per specification, pinning the
+<strong>edition</strong> and carrying the operative terms <strong>derived from the corpus</strong>, never
+hand-listed. <code class="language-plaintext highlighter-rouge">bun run cat-harness/scripts/external-schemas.ts --check</code>.</p>
+
+<p>Two things about that registry worth knowing before you trust its output.
+It was <strong>undeclared</strong> in <code class="language-plaintext highlighter-rouge">cat-harness.json</code> until 2026-09-22 — the <code class="language-plaintext highlighter-rouge">dh4f</code> shape
+inverted, a held directory nothing declares, so every consumer that fans out
+over declared directories skipped it. And its unused-record check read <strong>only</strong>
+<code class="language-plaintext highlighter-rouge">processes/*.bpmn|dmn</code>, so it reported Dublin Core — 43 uses, live in the
+glossary’s own <code class="language-plaintext highlighter-rouge">@context</code> — as <em>“a record outliving its dependency”</em>. A
+vocabulary can be used in more than one syntax; a reader that knows one reports
+the other as absent.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/reference/skill-instructions/schema-management.html"><code class="language-plaintext highlighter-rouge">schema-management</code></a> — the registry’s own discipline.</li>
+  <li><a href="../authoring-who-smart-guidelines/terminology-management.md"><code class="language-plaintext highlighter-rouge">terminology-management</code></a> —
+the FHIR half, for a folio’s clinical terminology.</li>
+  <li><code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/external-schema.ts</code> — the record contract, and
+why <code class="language-plaintext highlighter-rouge">conforms</code> / <code class="language-plaintext highlighter-rouge">reads</code> / <code class="language-plaintext highlighter-rouge">cites</code> are different answers.</li>
+</ul>
 
           
 
