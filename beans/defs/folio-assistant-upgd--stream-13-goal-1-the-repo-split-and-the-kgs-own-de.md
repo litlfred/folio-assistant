@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:08:55Z
-updated_at: 2026-09-22T18:19:35Z
+updated_at: 2026-09-22T18:37:50Z
 parent: folio-assistant-vuip
 ---
 
@@ -165,3 +165,66 @@ check, the baseline-aware summary, the message fix, and its test.
 1. `x4a6`'s reachability gate — *not red on arrival*, 31 of 31 pass today.
 2. `hs08`'s `cat-harness/content/docs/` → where, and declared as what.
 3. The four `zod` PRs and the two `typescript` PRs.
+
+
+---
+
+## Dependabot triaged as three decisions, not ten — measured 2026-09-22 on `b7f8945b`
+
+The claim says to *"state what breaks under `zod` 4 and `typescript` 7 before
+merging either."* Both were run, not reasoned about.
+
+### `zod` 3.25.76 → 4.6.5 — #909, #911, #912, #913 (FOUR, not three)
+
+The claim and #956 both say three. There are four package.json files declaring
+`zod`, and one PR each: root, `cat-harness/adapters/mcp-server`,
+`cat-harness/schemas`, `cat-harness/schemas/block-qa-schema`. One decision, four
+PRs; they must land together or the four declarations disagree.
+
+**Blast radius: 3 lines in 1 file.** Every v4 removal was checked against the
+corpus rather than assumed:
+
+| v4 change | sites | verdict |
+|---|---|---|
+| `z.record(V)` single-arg **removed** | 82 total — **69 already two-arg**, **3 one-arg** | `skill-package.ts:126,312,313` — the only real work |
+| `ZodError.errors` **removed** | 0 | the 15 `.errors` hits are LaTeX AST reports and YAML docs, none a ZodError |
+| `.strict()` / `.passthrough()` | 96 / 15 | **deprecated, still functional** in v4 |
+| `z.string().url()` / `.email()` | 22 / 1 | **deprecated, still functional** in v4 |
+| `z.preprocess`, `.superRefine`, `.default` | 2 / 11 / 102 | unaffected |
+
+The 94 files importing `zod` are almost all unaffected because this corpus
+already writes `z.record(K, V)`.
+
+### `typescript` → 7.0.2 — #910 (root, from 6.0.3) and #914 (block-qa-schema, from 5.9.3)
+
+**Run, not predicted.** `bun add -D typescript@7.0.2 && bun run typecheck`:
+
+    107 errors, in exactly 2 files
+      cat-harness/scripts/schema-graph.ts            69
+      cat-harness/content/pipeline/qa-criterion-hash.ts  38
+
+    68 x TS2339  Property 'isTypeAliasDeclaration' | 'createSourceFile' | … does not exist
+    35 x TS2694  Namespace '…/typescript/lib/version' has no exported member 'Node'
+     4 x TS7006  implicit any
+
+**One cause.** Both files do `import ts from "typescript"` and use the
+**compiler API** — `ts.createSourceFile`, `ts.SyntaxKind`, `ts.isIdentifier`,
+`ts.Node`. TypeScript 7 is the native port; its default entry no longer serves
+that API, and the import resolves to `typescript/lib/version`. Baseline
+confirmed: `typecheck` exits **0** on 6.0.3 before and after, and the tree was
+restored clean.
+
+This is **not a config tweak**. Those two files need pinning to 6, or
+rewriting against whatever TS 7 exposes, or a different parser. It is a real
+piece of work and it is the reason `typescript` is a separate decision from
+`zod` rather than part of the same batch.
+
+### The remaining four
+
+#907 `requests` (Python, 1 line), #908 minor-and-patch group (2 files),
+#915 the actions group (39 files, 16 updates). Not measured here — they carry
+no known breaking surface and are the cheapest of the ten.
+
+### Put to the owner
+
+Asked as a selection. Nothing merged.
