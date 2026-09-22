@@ -326,6 +326,33 @@
 <meta name="fa-baseurl" content="{{ site.baseurl }}">
 
 <!--
+  WHETHER THIS IS A PREVIEW, for the tiles above.
+
+  `feature-staging.yml` writes `staging_slug` into `_data/build.yml`;
+  `docs-site.yml` writes the same file WITHOUT it. So a non-empty value here
+  means "a STAGING/<slug>/ preview", an empty one means the canonical deploy
+  or a local build.
+
+  It exists so a tile can vanish with its page. `compose-docs.ts` withholds a
+  `publish: "staging-only"` page from the canonical tree; a tile still pointing
+  at it would be a link to a 404 — `pb04`, a dead link being worse than no
+  link, and worse than usual here because the tile ALSO advertises content the
+  declaration is deliberately not publishing.
+
+  The filtering is client-side rather than baked into `harness.json` because
+  that file is generated once and committed, so it cannot know which deploy
+  will serve it. The page can be withheld at compose time because compose runs
+  per deploy; the data file cannot.
+
+  EMPTY IS THE SAFE VALUE, and it is what an absent `_data/build.yml` yields:
+  a build that cannot say it is a preview is treated as canonical and hides
+  the tile. That matches `compose-docs.ts`, which withholds unless positively
+  told `--staging` — one direction in both places, so the page and its tile
+  cannot disagree about which deploy they are on.
+-->
+<meta name="fa-staging" content="{{ site.data.build.staging_slug }}">
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate

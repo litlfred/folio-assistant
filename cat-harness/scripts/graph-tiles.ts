@@ -100,6 +100,23 @@ export interface GraphTile {
   /** The tile's theme: its own, then the directory's, then absent (the instance's). */
   theme?: string;
   /**
+   * `"staging-only"` when the page this tile opens is withheld from the
+   * canonical deploy, or absent.
+   *
+   * CARRIED SO THE TILE CAN VANISH WITH ITS PAGE. `compose-docs.ts` withholds
+   * the page on a canonical build; a tile left pointing at it is a link to a
+   * 404, which is `pb04` — a dead link is worse than no link, and worse here
+   * than elsewhere because the tile ALSO advertises the existence of content
+   * the declaration is deliberately not publishing.
+   *
+   * Filtered client-side rather than dropped here, for the same reason
+   * `harness.json` carries `hidden` rather than omitting hidden tiles: this
+   * file is generated once and committed, so it cannot know which deploy will
+   * serve it. The page can be withheld at compose time because compose runs
+   * per deploy; the data file cannot.
+   */
+  publish?: string;
+  /**
    * The declared glyph NAME, passed through untouched — or absent.
    *
    * Nothing here validates it against the client's registry, and that is the
@@ -134,7 +151,14 @@ export function publishedHref(siteDirFromRepoRoot: string, ref: string): string 
   // `…/index.html` is the directory's own route. Served either way, but the
   // directory form is what every other link on this site uses, and two
   // spellings of one page is two entries in a reader's history.
-  return `/${rest.replace(/(^|\/)index\.html$/, "$1")}`;
+  //
+  // `.md` TOO, and it is not cosmetic here. A visualisation authored as
+  // markdown is a SOURCE path; Jekyll renders it and no `.md` is ever served,
+  // so a tile pointing at `/x/index.md` is a guaranteed 404 — `pb04`, a dead
+  // link being worse than no link. Every visualisation was `.html` until
+  // `fsh-guts` was authored as markdown (2026-09-21), which is why this went
+  // unnoticed: the bug needed a markdown viewer to exist before it could fire.
+  return `/${rest.replace(/(^|\/)index\.(html|md)$/, "$1")}`;
 }
 
 export function graphTiles(
@@ -163,6 +187,7 @@ export function graphTiles(
             })()),
         hidden: v.hidden === true,
         ...(v.icon === undefined ? {} : { icon: v.icon }),
+        ...(v.publish === undefined ? {} : { publish: v.publish }),
         ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
       });
     });

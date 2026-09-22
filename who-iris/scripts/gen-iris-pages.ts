@@ -139,7 +139,7 @@ const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-
 export const DOC_PAGES = new Set(["index.html", "ingestion-notes.html", "kg-to-portal.html"]);
 
 /** Everything this generator writes, on either side. */
-export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|collection-.*|item-.*)\.html$/;
+export const OWNED = /^(index|community-list|ingestion-notes|kg-to-portal|catalogue|collection-.*|item-.*)\.html$/;
 
 /** What it owns in `library/` — the replica, which is the KG rendered. */
 export const OWNED_LIB = /^(index|community-list|collection-.*|item-.*)\.html$/;
@@ -561,6 +561,13 @@ function page(
   .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
   .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
   .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  /* The KG view's tables. Deliberately plainer than the replica's furniture:
+     this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
+     it as IRIS would invite a reader to take its counts for IRIS's. */
+  .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th { font-weight: 600; white-space: nowrap; }
+  .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
@@ -786,6 +793,167 @@ ${body}
 
 function stateBadge(state: string): string {
   return `<span class="state ${esc(state)}">${esc(state)}</span>`;
+}
+
+/**
+ * The catalogue as a GRAPH — what it knows, and what it says it does not.
+ *
+ * ## Why this is not `community-list.html` under another name
+ *
+ * The replica pages answer *"what does IRIS look like?"*. They are a faithful
+ * mock and they are supposed to look finished. This page answers a different
+ * question — *"what does this catalogue actually know?"* — and the difference
+ * is not presentational:
+ *
+ * - the replica shows three items; this shows that all six of their bitstreams
+ *   carry `copyright: unknown` and `restrictions: unknown`;
+ * - the replica shows a community; this shows that community is `referenced`,
+ *   meaning nothing of it is held here;
+ * - the replica cannot show a gap at all, because a gap has no page.
+ *
+ * `who-iris/AGENTS.md` states the point this page exists to render: *"the gap
+ * between twelve modelled nodes and a million upstream files is the POINT
+ * rather than a backlog"*. Nothing rendered it until now, so the one fact the
+ * instance is built around was the one fact no reader could see.
+ *
+ * ## Every count here is derived
+ *
+ * Including the one in the sentence above — that prose says twelve and the
+ * corpus holds thirteen, which is exactly why `bpmn-processes`' rule ("count
+ * the directory rather than quoting a number from this paragraph") is general.
+ * Nothing on this page is transcribed.
+ */
+/**
+ * A gate VERDICT, wearing the state palette but never a state's word.
+ *
+ * The first version of this reused `stateBadge` and mapped `permitted` to
+ * `materialized` to borrow the green. That rendered a `retention` gate as the
+ * word **materialized**, which is false: a verdict says whether a question was
+ * answered and how, a state says whether bytes are here. Reusing the badge
+ * meant reusing its vocabulary, and the reader would have had no way to tell
+ * that the word in the cell was not the word in the data.
+ *
+ * Borrowing the COLOURS is fine and deliberate — green for a determined
+ * permit, amber for unknown, so the two axes read consistently at a glance —
+ * but the text is the verdict as recorded.
+ */
+function verdictBadge(verdict: string): string {
+  const tone = verdict === "unknown" ? "unknown" : verdict === "permitted" ? "materialized" : "referenced";
+  return `<span class="state ${tone}">${esc(verdict)}</span>`;
+}
+
+function cataloguePage(all: Node[]): string {
+  const c = catalogue();
+  const byState = (s: string): Node[] => all.filter((n) => (n.materialization?.state ?? "unknown") === s);
+  const materialized = byState("materialized");
+  const referenced = byState("referenced");
+  const unknownState = byState("unknown");
+
+  // Gate verdicts across every bitstream of every node. Counted rather than
+  // sampled: a page that showed one item's gates would invite the reader to
+  // generalise from it, and the interesting fact here is a UNIVERSAL one.
+  const verdicts = new Map<string, Map<string, number>>();
+  let bitstreams = 0;
+  for (const n of all) {
+    for (const b of n.bitstreams ?? []) {
+      bitstreams++;
+      for (const [gate, v] of Object.entries(b.materialization?.gates ?? {})) {
+        const verdict = (v as { verdict?: string }).verdict ?? "unknown";
+        const m = verdicts.get(gate) ?? new Map<string, number>();
+        m.set(verdict, (m.get(verdict) ?? 0) + 1);
+        verdicts.set(gate, m);
+      }
+    }
+  }
+  const unknownGates = [...verdicts.entries()].filter(([, m]) => (m.get("unknown") ?? 0) > 0);
+
+  const gateRows = [...verdicts.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0], "en"))
+    .map(([gate, m]) => {
+      const cells = [...m.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0], "en"))
+        .map(([v, n]) => `${verdictBadge(v)} ${n}`)
+        .join(" ");
+      return `<tr><td><code>${esc(gate)}</code></td><td>${cells}</td></tr>`;
+    })
+    .join("\n");
+
+  const nodeRows = all
+    .map((n) => {
+      const state = n.materialization?.state ?? "unknown";
+      const held = n.libraryId ? `<code>${esc(n.libraryId)}</code>` : "—";
+      const rec = n.metadataRef ? "yes" : "—";
+      const bs = (n.bitstreams ?? []).length;
+      return `<tr>
+  <td>${stateBadge(state)}</td>
+  <td><code>${esc(n.flavour ?? n.kind ?? "?")}</code></td>
+  <td>${esc(n.title)}<br><code class="dim">${esc(n.id)}</code></td>
+  <td>${held}</td>
+  <td>${rec}</td>
+  <td>${bs || "—"}</td>
+</tr>`;
+    })
+    .join("\n");
+
+  const files = c.totalFilesUpstream;
+  const items = c.totalItemsUpstream;
+
+  return `<div class="wrap">
+<h1>The catalogue, as a graph</h1>
+
+<p class="lede">The replica pages show what IRIS looks like. This one shows what this
+catalogue <em>knows</em> — and, more usefully, what it records that it does not know.</p>
+
+<div class="note">
+<p><strong>The gap is the point, not a backlog.</strong> This instance models
+<strong>${all.length}</strong> node(s)${
+    items !== undefined ? ` against <strong>${items.toLocaleString("en")}</strong> items` : ""
+  }${files !== undefined ? ` across <strong>${files.toLocaleString("en")}</strong> files` : ""} upstream.
+Cataloguing by reference means recording that something exists without holding it,
+so a small number here is the design rather than a shortfall.</p>
+</div>
+
+<h2>What is held, and what is only named</h2>
+
+<table class="kg">
+<tr><th>state</th><th>nodes</th><th>what it means</th></tr>
+<tr><td>${stateBadge("materialized")}</td><td>${materialized.length}</td><td>the bytes are in this repository</td></tr>
+<tr><td>${stateBadge("referenced")}</td><td>${referenced.length}</td><td>upstream, not here — a fact, not a gap</td></tr>
+<tr><td>${stateBadge("unknown")}</td><td>${unknownState.length}</td><td>nobody has looked; never rendered as either of the above</td></tr>
+</table>
+
+<h2>What the gates say about the ${bitstreams} held bitstream(s)</h2>
+
+${
+  unknownGates.length > 0
+    ? `<p><strong>Not everything permitted is everything known.</strong> ${unknownGates
+        .map(([g, m]) => `<code>${esc(g)}</code> is unknown on ${m.get("unknown")}`)
+        .join(", ")} of them. A gate that returned <em>unknown</em> is a question
+nobody has answered — which is a different state from a gate that was asked and
+said yes, and collapsing the two would turn an open question into a clearance.</p>`
+    : `<p>Every gate on every held bitstream returned a determined verdict. Stated
+rather than left implicit: an absent warning and a clean result are not the same claim.</p>`
+}
+
+<table class="kg">
+<tr><th>gate</th><th>verdicts</th></tr>
+${gateRows}
+</table>
+
+<h2>Every node</h2>
+
+<table class="kg">
+<tr><th>state</th><th>kind</th><th>node</th><th>held as</th><th>record</th><th>bitstreams</th></tr>
+${nodeRows}
+</table>
+
+<p class="caveat">Generated from <code>catalogue/</code> by
+<code>who-iris/scripts/gen-iris-pages.ts</code>. Every count above is derived from the
+nodes themselves; none is transcribed. <code>bun run check:catalogue</code> separately
+verifies that each node validates and that every <code>metadataRef</code>,
+<code>libraryId</code>, <code>localPath</code> and parent path resolves — so this page
+reports what the catalogue says, and that check reports whether it hangs together.</p>
+</div>`;
 }
 
 /** The community list — the page the owner named. */
@@ -1751,6 +1919,16 @@ function main(): number {
       "What ingesting these documents cost",
       [{ label: "Documentation", href: "index.html" }, { label: "Ingestion notes" }],
       ingestionNotes(requirementsFromSkill(readFileSync(SKILL, "utf-8")), all),
+      "docs",
+    ),
+  );
+
+  files.set(
+    "docs/catalogue.html",
+    page(
+      "The catalogue, as a graph",
+      [{ label: "Documentation", href: "index.html" }, { label: "Catalogue" }],
+      cataloguePage(all),
       "docs",
     ),
   );
