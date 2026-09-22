@@ -197,6 +197,29 @@ Both sessions independently reached the **same substantive conclusion** about
 and only the filename was stale. #780 measured 12 declarations, the second
 session 15; `stub` is set on exactly one, equal to its `name`.
 
+> **Correction, 2026-09-21 (adversarial pass, bean `w4tq`): BOTH counts were
+> wrong, and mine was wrong by my own session's most-repeated mistake.** There
+> were **13** instance declarations at the time; there are 14 now.
+>
+> My probe matched any JSON carrying `name` and `directories`, which swept in
+> `beans/beans.json` and `todos/todos.json` — bean-graph declarations whose
+> stem is not their `name`. `findDeclarationFile` requires the stem to EQUAL
+> the declared name, and **I read that contract earlier in the same session**
+> before writing a probe that ignored it. Counting things that match a shape
+> rather than things that satisfy the contract: the same error as `zq3f`'s
+> "235", `k8rc`'s "344" and the "57 readers" of `x4a6`.
+>
+> **The substantive claim is untouched** — exactly one instance sets a `stub`,
+> and it equals its `name`, so `artefactStub()` and the declaration filename
+> coincide throughout the tree today. That was the argument; the count was
+> decoration.
+>
+> **Where it did NOT land is the interesting half.**
+> `directory-conventions.md` says *"today all of them but `cat-harness`"* and
+> quotes no number, so the skill needed no correction. That is this
+> repository's own rule — *never quote a count from prose* — catching a wrong
+> count before it reached the file people actually read.
+
 ### What the second pass adds beyond the prose
 
 - **Twelve BPMN/DMN documentation strings** across ten diagrams — a file class
