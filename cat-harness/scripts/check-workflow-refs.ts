@@ -48,7 +48,7 @@ const strict = process.argv.includes("--strict");
  * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
  * opens is a broken reference reported as clean."* `bootstrap/` is a separate
  * instance with its own declaration and its own two skills, so
- * `bootstrap/workflows/bootstrap.bpmn` was in exactly that state from the day
+ * `bootstrap/processes/bootstrap.bpmn` was in exactly that state from the day
  * it was written — unchecked, and reported clean by a checker scoped to
  * somebody else's graph.
  *
@@ -171,7 +171,7 @@ if (!dangling.length && !totalUncovered) console.log("\nAll refs resolve, every 
  * The same failure, one layer over: `schemas/translation-tools.ts` lists
  * `bpmnDiagrams` per content type — the diagrams whose labels need
  * re-rendering after translation. One entry named
- * `skills/workflows/publication-workflow.bpmn`, which has never existed, so the
+ * `processes/publication-workflow.bpmn`, which has never existed, so the
  * re-render skipped it silently and a skipped diagram is indistinguishable
  * from a diagram that needed no work.
  */
@@ -217,7 +217,7 @@ if (existsSync(INDEX_DIR)) {
     .join("\n");
   // The page names diagrams by BASENAME (`crdm-close.bpmn`), so that is what
   // is matched — but only where the basename is unambiguous. Under a topical
-  // layout `bootstrap/workflows/review.bpmn` and `crdm/workflows/review.bpmn`
+  // layout `bootstrap/processes/review.bpmn` and `crdm/workflows/review.bpmn`
   // share one, and a single mention of `review.bpmn` indexes NEITHER: a
   // reader who follows it reaches one diagram and cannot tell which. Such a
   // diagram must be named by its repo-relative path to count.

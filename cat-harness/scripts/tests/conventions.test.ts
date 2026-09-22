@@ -23,7 +23,7 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
-const DIAGRAMS = join(INSTANCE, "skills", "workflows");
+const DIAGRAMS = join(INSTANCE, "processes");
 const BOUND = join(DIAGRAMS, "code-change-review.bpmn");
 
 describe("absent binding means NONE, not all", () => {

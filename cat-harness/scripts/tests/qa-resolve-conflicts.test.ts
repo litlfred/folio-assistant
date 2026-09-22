@@ -14,7 +14,7 @@ import { afterAll, describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { isAbsolute, join, relative } from "node:path";
 
 import {
   generatorFor,
@@ -210,5 +210,41 @@ describe("the generator is looked up, never guessed", () => {
       readFileSync(join(import.meta.dir, "..", "..", "..", "package.json"), "utf-8"),
     ) as { scripts: Record<string, string> }).scripts;
     expect(generatorFor(real, "content/pipeline/translation-block-qa.ts")).toBe("translation:block-qa");
+  });
+});
+
+describe("the qa directory is resolved, not assembled", () => {
+  test("`directoryForGraph` returns an ABSOLUTE path, which is what the caller must expect", async () => {
+    // The bug this pins. The command joined the declaration onto the instance
+    // root as though it were instance-relative, producing
+    // `cat-harness/home/user/…/test/results/` — a prefix nothing matches. Every
+    // conflicted sidecar was then classified "outside the declared graph" and
+    // the command did nothing while exiting 0.
+    //
+    // It FAILED OPEN, which is the shape the command exists to prevent, in the
+    // command itself. It was found on its first real conflict rather than by a
+    // test, so the shape of the return value is asserted here directly.
+    const { directoryForGraph, repoRootFor } = await import("../../schemas/cat-harness.ts");
+    await import("../../schemas/folio-graph-kind.js");
+    const instance = join(import.meta.dir, "..", "..");
+    const qa = directoryForGraph(instance, "qa");
+    expect(qa).toBeDefined();
+    expect(isAbsolute(qa!)).toBe(true);
+
+    // And the repo-relative form the command actually needs is what git's
+    // output can be matched against.
+    const rel = relative(repoRootFor(instance), qa!);
+    expect(isAbsolute(rel)).toBe(false);
+    expect(rel).toBe("cat-harness/test/results");
+  });
+
+  test("a conflicted sidecar under the real qa directory is not classed 'outside'", () => {
+    // The end-to-end form of the same regression, on a throwaway repo laid out
+    // the way this one is. With the old joining bug the action was "skip".
+    const path = "cat-harness/test/results/translation-qa/docs/x.translation-qa.json";
+    const dir = conflicted([{ path, ours: sidecar("warn", false), theirs: sidecar("fail", false) }]);
+    const [o] = plan(dir, "cat-harness/test/results/", unmergedPaths(dir));
+    expect(o!.action).not.toBe("skip");
+    expect(o!.action).toBe("resolve");
   });
 });

@@ -86,7 +86,7 @@ jobs:
       - name: Install content deps
         run: |
           cd content
-          bun install --frozen-lockfile 2>/dev/null || bun install
+          bun install --frozen-lockfile
 
       # Warn-only while the baseline still has 213 critical findings
       # (mostly §7c wall-side drift). Once the backlog is cleaned up,

@@ -1,5 +1,5 @@
 /**
- * MCP tools for running a process from `skills/workflows/*.bpmn`.
+ * MCP tools for running a process from `processes/*.bpmn`.
  *
  * Four tools, all content-agnostic, registered next to `work_plan_prime`:
  *
@@ -42,15 +42,15 @@ import { describeCapture, writeLogEntry } from "../logging/log-writer.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
-import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
-import { kgRoots } from "../../scripts/known-skills.js";
+import { type RoleGraph } from "../../schemas/role-graph.js";
+import { roleGraphFor } from "../../scripts/known-skills.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
 /** Resolve a process by file stem (`editing-hci-validation`) or by process id. */
 async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel> {
   // EVERY declared knowledge-graph directory, not the literal
-  // `skills/workflows/`. A topical layout puts diagrams in more than one
+  // `processes/`. A topical layout puts diagrams in more than one
   // place, and a resolver that knows only one of them reports a process that
   // exists as missing — which reads to a caller exactly like a typo.
   const files = workflowFiles(repoRoot).filter((f) => f.endsWith(".bpmn"));
@@ -89,7 +89,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       try {
         // declared-path-literal: the convention fallback, at the call site.
         // A role graph lives in a declared knowledge-graph root.
-        rolesCache = { graph: readRoleGraph(kgRoots(root)[0] ?? join(root, "skills")) };
+        rolesCache = { graph: roleGraphFor(root) };
       } catch {
         rolesCache = { graph: undefined };
       }

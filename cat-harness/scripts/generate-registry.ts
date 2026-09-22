@@ -56,7 +56,7 @@ const rootDir = repoRootFor(instanceDir);
  * This used to be a parallel hand-written interface whose six collections were
  * all `any[]`. Two things went wrong behind that. It omitted
  * `roleAssignments` — a required field of `SkillRegistry`, with a populated
- * `.claude/skills/roles/role-assignments.json` sitting on disk that nothing
+ * `.claude/scenarios/role-assignments.json` sitting on disk that nothing
  * loaded, so every generated registry claimed the repo had no role rules at
  * all. And `hooks` was emitted in the shape of raw `.claude/settings.json`
  * entries rather than `SessionHook`, so `commands[]` held
@@ -87,7 +87,7 @@ function loadJsonFiles<T>(dir: string): T[] {
  * hand-written file in either shape loads.
  */
 function loadRoleAssignments(): RoleAssignment[] {
-  const p = join(rootDir, ".claude", "skills", "roles", "role-assignments.json");
+  const p = join(rootDir, ".claude", "scenarios", "role-assignments.json");
   if (!existsSync(p)) return [];
   try {
     const raw: unknown = JSON.parse(readFileSync(p, "utf-8"));

@@ -15,7 +15,7 @@ Queued rather than started — raised mid-turn while the render logger was in fl
 
 ## The gap
 
-`skills/workflows/crdm-requirements.bpmn` runs the six phases and ends. Requirements are elicited, agreed, signed off — and then they exist as an issue and a conversation. **Nothing asks whether they should become knowledge-graph content**, or which graph, or in what form. So the output of the process that exists to produce durable requirements is the one thing the knowledge graph does not learn.
+`processes/crdm-requirements.bpmn` runs the six phases and ends. Requirements are elicited, agreed, signed off — and then they exist as an issue and a conversation. **Nothing asks whether they should become knowledge-graph content**, or which graph, or in what form. So the output of the process that exists to produce durable requirements is the one thing the knowledge graph does not learn.
 
 That is the same shape as several defects already paid for here: a fact established in a session, and no step that writes it anywhere a later agent looks.
 

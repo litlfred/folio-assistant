@@ -15,7 +15,7 @@ import { complete, enabled, positionOf, startInstance, WorkflowError } from "../
 import { checkGate } from "../../src/workflow/gate";
 import { findInModel, loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
-const WORKFLOWS = resolve(import.meta.dir, "../../skills/workflows");
+const WORKFLOWS = resolve(import.meta.dir, "../../processes");
 const bpmn = (stem: string): string => join(WORKFLOWS, `${stem}.bpmn`);
 
 describe("a call activity resolves to the process it names", () => {

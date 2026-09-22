@@ -185,7 +185,7 @@ a path.**
 ### The hazard for the next slice is a YAML trigger, not code
 
 `.github/workflows/docs-site.yml` fires on `folio-assistant/docs/**` (correct
-after #413) and ALSO on `skills/workflows/**`, `schemas/**` and
+after #413) and ALSO on `processes/**`, `schemas/**` and
 `content/docs/**`. Move any of those three without moving the trigger and the
 site silently stops rebuilding on a skill or schema edit — green CI, stale
 site, nothing saying so. The `xom7` shape, and no code guard covers it. This is
@@ -265,7 +265,7 @@ Not 290 files and one declaration edit. Eight distinct surfaces:
 | surface | what | found by |
 |---|---|---|
 | `harness.json` | `cat-harness` path | — |
-| 2 workflow triggers | `docs-site.yml` `skills/workflows/**`, `feature-staging.yml` `skills/**` | nothing; YAML has no guard |
+| 2 workflow triggers | `docs-site.yml` `processes/**`, `feature-staging.yml` `skills/**` | nothing; YAML has no guard |
 | `scripts/kg-audit.ts` | hardcoded `KG_ROOT`, resolve BY ID | `kg:audit` ENOENT |
 | `src/skills/corpus-grep.ts` | imports `../../skills/framework/types.js` | `tsc` |
 | `folio-assistant/skills/framework/types.ts` | outward import depth `../../` -> `../../../` | `tsc` |

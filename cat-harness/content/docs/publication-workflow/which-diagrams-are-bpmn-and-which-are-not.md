@@ -13,6 +13,6 @@ implies actors performing activities over time, which none of these have:
 | [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 
 If you add a diagram that *does* have actors, activities and a control flow,
-it belongs in `skills/workflows/` as BPMN, not in a Mermaid fence.
+it belongs in `processes/` as BPMN, not in a Mermaid fence.
 
 ---

@@ -2,7 +2,7 @@
 /**
  * Scan an existing repository for material a folio could take over.
  *
- * This runs on the `overlay` branch of `skills/workflows/getting-started.bpmn`,
+ * This runs on the `overlay` branch of `processes/getting-started.bpmn`,
  * before anything is scaffolded and long before anything is moved. It is the
  * "look first" half of a rule that only works in one order: **scan, show, ask,
  * then move.**

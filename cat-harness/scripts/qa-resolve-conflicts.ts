@@ -76,8 +76,8 @@
  *   bun run qa:resolve-conflicts --explain   # ...and why, per file
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
 
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
@@ -219,15 +219,32 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[]):
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const qaRel = directoryForGraph(ROOT, "qa");
-  if (qaRel === undefined) {
+  const qaAbs = directoryForGraph(ROOT, "qa");
+  if (qaAbs === undefined) {
     // NOT a pass. An instance declaring no `qa` graph has no sidecars to
     // resolve, and saying so differs from saying there was nothing to do.
     console.log("qa-resolve-conflicts — this instance declares no `qa` graph, so nothing was considered");
     process.exit(0);
   }
-  // The declaration is instance-relative; conflicts are reported repo-relative.
-  const qaDir = join(ROOT.slice(repoRoot.length + 1), qaRel).replace(/\/*$/, "/");
+  // `directoryForGraph` returns an ABSOLUTE path; `git diff --name-only`
+  // reports repo-relative ones. This joined the declaration onto the instance
+  // root as though it were relative, producing
+  // `cat-harness/home/user/…/test/results/` — a prefix nothing matches, so
+  // every conflicted sidecar was classified "outside the declared graph" and
+  // the command did nothing while exiting 0.
+  //
+  // **It failed OPEN**, which is the shape this whole command exists to
+  // prevent, in the command itself. Found on its first real conflict, not by
+  // a test — hence the guard below and the regression beside it.
+  const qaDir = relative(repoRoot, qaAbs).replace(/\/*$/, "") + "/";
+  if (!existsSync(qaAbs)) {
+    console.error(
+      `qa-resolve-conflicts — the declared \`qa\` directory does not exist: ${qaAbs}\n` +
+        "  Everything would be reported as 'outside the graph', which is indistinguishable\n" +
+        "  from having nothing to do. Refusing rather than exiting clean.",
+    );
+    process.exit(1);
+  }
 
   const paths = unmergedPaths(repoRoot);
   if (paths.length === 0) {

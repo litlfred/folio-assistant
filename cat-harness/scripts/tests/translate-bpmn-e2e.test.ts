@@ -17,7 +17,7 @@ import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 
 const ROOT = join(import.meta.dir, "../..");
-const SRC = join(ROOT, "skills/workflows/bean-lifecycle.bpmn");
+const SRC = join(ROOT, "processes/bean-lifecycle.bpmn");
 
 /** A PO translating a handful of the diagram's msgids. */
 function poFor(pairs: [string, string][]): string {
@@ -31,7 +31,7 @@ describe("bpmn translation end to end", () => {
     const before = await loadProcessModel(SRC);
 
     // Translate every label the extractor offers, so nothing is left to luck.
-    const entries = extractBpmn(xml, "skills/workflows/bean-lifecycle.bpmn");
+    const entries = extractBpmn(xml, "processes/bean-lifecycle.bpmn");
     expect(entries.length).toBeGreaterThan(5);
     const po = poFor(entries.map((e) => [e.msgid, `[fr] ${e.msgid}`] as [string, string]));
 

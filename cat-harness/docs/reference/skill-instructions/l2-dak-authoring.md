@@ -55,7 +55,7 @@ stated as a data element, a decision rule or an indicator, it belongs here.
 
 | step | produces | note |
 |---|---|---|
-| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `skills/roles/roles.json` — do not conflate the two vocabularies. |
+| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `scenarios/roles.json` — do not conflate the two vocabularies. |
 | Data dictionary and core data elements | the data dictionary | `data-dictionary-authoring` is a facet of this skill, not a separate one; the input schema already carries `data-dictionary` as a component. |
 | Indicators and requirements | indicators, functional and non-functional requirements | Requirements here are the DAK's, distinct from `skills/requirements/*.json`, which are this harness's own conformance obligations. |
 

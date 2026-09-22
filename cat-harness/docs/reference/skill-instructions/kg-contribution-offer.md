@@ -232,7 +232,7 @@ indistinguishable from never having asked.
 | the shape of the asking | [`interaction-modality`](interaction-modality.md) §4.1 |
 | a correction to a rule that already exists — no offer | [`symbiotic-interaction`](symbiotic-interaction.md) §2 |
 | where the answer lands | [`placement`](placement.md) |
-| the process step | [`crdm-signoff.bpmn`](../../methodologies/crdm/workflows/crdm-signoff.bpmn) |
+| the process step | [`crdm-signoff.bpmn`](../../methodologies/crdm/processes/crdm-signoff.bpmn) |
 | the round summary that records it | [`issue-working`](issue-working.md) |
 | why work becomes a bean first | [`todo-manager`](todo-manager.md) |
 {% endraw %}
