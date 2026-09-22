@@ -454,25 +454,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790116571">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790117073">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790116571">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790117073">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790116571">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790117073">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790116571">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790117073">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -489,7 +489,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790116571" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790117073" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1439,6 +1439,111 @@ break the overlay to fix a directory-creation problem.</p>
 <p><strong>And it never governs the declaring instance.</strong> <code class="language-plaintext highlighter-rouge">dependents</code> says what a
 DEPENDENT does; an instance always materialises what it declared itself.
 Otherwise marking <code class="language-plaintext highlighter-rouge">schemas/</code> as <code class="language-plaintext highlighter-rouge">skip</code> would stop the platform creating its own.</p>
+<h2 id="nesting-is-declared-from-within-by-a-node-in-the-first-subdirectory-strict">
+  
+  
+    <a href="#nesting-is-declared-from-within-by-a-node-in-the-first-subdirectory-strict" class="anchor-heading" aria-labelledby="nesting-is-declared-from-within-by-a-node-in-the-first-subdirectory-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Nesting is declared FROM WITHIN, by a node in the first subdirectory (STRICT)
+  
+  
+</h2>
+    
+
+<p>Owner’s ruling, 2026-09-22:</p>
+
+<blockquote>
+  <p><em>“the proper way to do nested directories (and only way that will be allowed)
+is if there is a (Sub?)KGraph node within the first subdir that labels all the
+other ones that exist within it. that structure is inherited”</em></p>
+</blockquote>
+
+<p><strong>A declaration never reaches down a path.</strong> An instance declares a directory;
+that directory’s own contents are described by <strong>a node inside its first
+subdirectory</strong>, which names the sibling subdirectories present there. Depth is
+carried one level at a time, by the level that can see itself.</p>
+
+<p>What this forbids, and it is the shape everything currently reaches for:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// WRONG — the root declaration enumerating a path it cannot verify</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docs"</span><span class="p">,</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness/content/docs/"</span><span class="p">,</span><span class="w"> </span><span class="nl">"graphs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"folio"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The root cannot tell you what is under <code class="language-plaintext highlighter-rouge">docs/</code>; it can only assert it. A node
+that lives there can be wrong in a way somebody notices, because it sits beside
+the thing it describes.</p>
+
+<p><strong>And the structure is INHERITED.</strong> A dependent instance gets the nesting the
+same way it gets the directory — through the overlay, resolved by id, in scan
+order. It does not re-describe a dependency’s interior, and it does not have to:
+the describing node came with the directory.</p>
+<h3 id="the-live-case-this-ruling-settles">
+  
+  
+    <a href="#the-live-case-this-ruling-settles" class="anchor-heading" aria-labelledby="the-live-case-this-ruling-settles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The live case this ruling settles
+  
+  
+</h3>
+    
+
+<p>Stream 1 of the #956 consolidation measured <code class="language-plaintext highlighter-rouge">cat-harness/content/docs/</code>,
+2026-09-22: it <strong>exists</strong>, holds <strong>14 documentation subgraphs</strong>, and the
+docs-site generators read it today — live paths, not stale ones. And
+<code class="language-plaintext highlighter-rouge">cat-harness.json</code> <strong>declares it nowhere</strong>, while the declared <code class="language-plaintext highlighter-rouge">folio/</code> holds
+three JSON files.</p>
+
+<p>Bean <code class="language-plaintext highlighter-rouge">hs08</code> had recorded the absent <code class="language-plaintext highlighter-rouge">content</code> entry as the rename having
+<em>landed</em>. It is the opposite: the declaration was emptied of <code class="language-plaintext highlighter-rouge">content/</code> <strong>before</strong>
+the directory holding the content moved, leaving 14 live subgraphs invisible to
+any consumer that scans the declaration. That is <code class="language-plaintext highlighter-rouge">dh4f</code> pointed the other way —
+<strong>present-but-undeclared</strong> rather than declared-but-absent, and the worse of the
+two, because the clean run is over content that is really there.</p>
+
+<p><strong>The fix under this ruling is not to add <code class="language-plaintext highlighter-rouge">content/docs/</code> to the root
+declaration.</strong> It is a node inside the first subdirectory naming the fourteen.</p>
+<h3 id="what-the-owner-left-open-and-it-is-not-an-agents-to-settle">
+  
+  
+    <a href="#what-the-owner-left-open-and-it-is-not-an-agents-to-settle" class="anchor-heading" aria-labelledby="what-the-owner-left-open-and-it-is-not-an-agents-to-settle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the owner left open, and it is NOT an agent’s to settle
+  
+  
+</h3>
+    
+
+<p>The ruling says <em>“(Sub?)KGraph node”</em> — with the question mark. <strong>What that node
+is called, which <code class="language-plaintext highlighter-rouge">graphKinds</code> it carries, and whether it is a new kind or an
+existing one used positionally are undetermined</strong>, and inventing a schema for it
+would be exactly the move <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> and
+<code class="language-plaintext highlighter-rouge">surprise-to-corpus</code> both guard against: an agent settling a naming question in
+the corpus because it needed one to proceed.</p>
+
+<p>Recorded so the next session reads the constraint rather than re-deriving it,
+and knows which part is ruled and which is open:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ruled</strong></td>
+      <td>nesting is described from within, by a node in the first subdirectory, naming the others present there; and that structure is inherited</td>
+    </tr>
+    <tr>
+      <td><strong>ruled</strong></td>
+      <td>a root declaration reaching down a multi-level path is not allowed</td>
+    </tr>
+    <tr>
+      <td><strong>open</strong></td>
+      <td>the node’s kind and name — <code class="language-plaintext highlighter-rouge">SubKGraph</code>, a reused kind, or something else</td>
+    </tr>
+    <tr>
+      <td><strong>open</strong></td>
+      <td>whether existing multi-level declarations are grandfathered or must migrate</td>
+    </tr>
+  </tbody>
+</table></div>
 <h2 id="making-a-field-required-is-a-change-other-branches-pay-for">
   
   
@@ -2182,7 +2287,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35793164472"><code>e1fc181</code></a> &middot; 2026-09-22T22:36:07Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35793797552"><code>604f2a1</code></a> &middot; 2026-09-22T22:44:29Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
