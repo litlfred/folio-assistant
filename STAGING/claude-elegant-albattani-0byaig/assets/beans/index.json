@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 482,
+      "count": 484,
       "unit": "beans"
     }
   },
@@ -393,14 +393,14 @@
     {
       "id": "folio-assistant-1wef",
       "title": "INJECTION: workflow expression, environment, template and prompt injection have no gate, in a repo whose generators write executable pages",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T08:24:54Z",
       "preview": "## Why this repository specifically\n\nIts generators **write executable pages**. `gen-library-viz.ts` composes\nbrowser JavaScript inside a TypeScript template literal — and on 2026-09-21\nthat exact construction shipped six pages whose script did not parse, because a\n`\\n` was consumed at generation time (PR #805). That was a *correctness* bug.\nThe same construction with untrusted input in it is an i",
       "file": "beans/defs/folio-assistant-1wef--injection-workflow-expression-environment-template.md"
     },
@@ -1805,6 +1805,20 @@
       "updatedAt": "2026-09-20T19:09:25Z",
       "preview": "## Why this is a bean and not a PR comment\n\nThe two moves below are invisible from the branches they affect. A sibling\nreading its own diff sees a file it edited; it does not see that the file has\na different name on `main`. `bean-coordination` makes the bean store the\nchannel for exactly this, and a bean cannot be missed the way a comment on a\n72-hour-old PR can.\n\nWritten in a bean NEITHER affect",
       "file": "beans/defs/folio-assistant-8ka1--coordination-two-files-moved-under-sibling-prs-fee.md"
+    },
+    {
+      "id": "folio-assistant-8mbk",
+      "title": "folio/ is declared in cat-harness.json and the directory does not exist — the dh4f shape, undocumented this time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:21:16Z",
+      "updatedAt": "2026-09-22T08:21:16Z",
+      "preview": "Measured 2026-09-22 while opening jpjt.\n\n`cat-harness.json` declares 34 directories. Three of them are not on disk:\n\n| id | path | documented? |\n|---|---|---|\n| `library` | `library/` | YES — the description argues the cost at length (`wwi6`, `a02m`) and says outright \"IT IS THE dh4f SHAPE AND THAT IS KNOWN, NOT OVERLOOKED\" |\n| `translation-sources` | `translations/` | not checked yet |\n| `folio` ",
+      "file": "beans/defs/folio-assistant-8mbk--folio-is-declared-in-cat-harnessjson-and-the-direc.md"
     },
     {
       "id": "folio-assistant-8nzu",
@@ -3611,14 +3625,14 @@
     {
       "id": "folio-assistant-jfr6",
       "title": "SCHEMA + COMPILATION: what the two schema gates and tsc actually cover, and the generated-artefact class neither of them sees",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T08:24:54Z",
       "preview": "## What exists, measured 2026-09-21\n\n- Schema: `check:kind-validators`, `check:schema-nodes` — two gates.\n- Compilation: `typecheck` (`tsc --noEmit -p tsconfig.json`).\n\n## The class neither of them sees, demonstrated the hard way\n\n`tsc` compiles the **generator**. It says nothing about the artefact the\ngenerator writes. On 2026-09-21 six generated viewer pages shipped JavaScript\nthat did not parse",
       "file": "beans/defs/folio-assistant-jfr6--schema-compilation-what-the-two-schema-gates-and-t.md"
     },
@@ -3697,14 +3711,14 @@
     {
       "id": "folio-assistant-jpjt",
       "title": "F8/F9 is structurally blocked on R25's glass: every folio surface today needs just-the-docs furniture",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:20:00Z",
-      "updatedAt": "2026-09-21T23:20:00Z",
+      "updatedAt": "2026-09-22T08:21:52Z",
       "preview": "F8/F9: *\"the folio visualisation … should by convention be available on any\nharness for consistent feel. who-iris, smart-\\*, etc are content libraries a\nuser is browsing and their 'folio' from the cat-harness is consistent across\nthem.\"*\n\n## The mechanism is decided. The owner chose it 2026-09-21\n\nThree ways to reach a downstream harness were tabled; the owner chose\n**an exported mount fragment pl",
       "file": "beans/defs/folio-assistant-jpjt--f8f9-is-structurally-blocked-on-r25s-glass-every-f.md"
     },
@@ -4029,6 +4043,20 @@
       "updatedAt": "2026-09-20T14:37:30Z",
       "preview": "_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. .github/workflows/feature-staging.yml exists with 32 STAGING references and is demonstrably working — it deployed previews for PRs #298 and #308 in this session, each commenting the STAGING URL. Note this bean has an EMPTY body: title and issue #215 only, no statement of what 'done' means, so this verification is against ob",
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
+    },
+    {
+      "id": "folio-assistant-lxpq",
+      "title": "CLEAN MERGE, WRONG ARTEFACT: a generated file neither side would emit, and no conflict to flag it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:41:04Z",
+      "updatedAt": "2026-09-22T08:41:04Z",
+      "preview": "Measured on `main` at `3341108a`, 2026-09-22, minutes after it landed.\n\n## What happened\n\nTwo branches changed the SAME generated artefact in ways git merged cleanly:\n\n| side | change to `docs/assets/voices/index.json` |\n|---|---|\n| main (`tis1`) | added `tile.voices.count` — a projection declares its own count |\n| #827 (`26tu`) | added a sixth voice, `agent-skill-authoring` |\n\nGit had no textual ",
+      "file": "beans/defs/folio-assistant-lxpq--clean-merge-wrong-artefact-a-generated-file-neithe.md"
     },
     {
       "id": "folio-assistant-lzbw",
