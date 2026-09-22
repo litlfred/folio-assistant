@@ -15,10 +15,10 @@ Found while auditing for `folio-assistant-haya`; recorded there in
 
 ## The measurement
 
-`skills/workflows/` holds 33 `.bpmn` files. 17 carry a
+`processes/` holds 33 `.bpmn` files. 17 carry a
 `<folio:policy enforcement="…">`; **16 do not.**
 
-    grep -L 'folio:policy' skills/workflows/*.bpmn | wc -l   # 16
+    grep -L 'folio:policy' processes/*.bpmn | wc -l   # 16
 
 `src/workflow/process-model.ts:502` reads
 

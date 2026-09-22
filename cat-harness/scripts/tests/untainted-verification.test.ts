@@ -10,7 +10,8 @@
 
 import { describe, expect, test } from "bun:test";
 
-import { untaintedPartitionDefects } from "../../schemas/block-qa.ts";
+import { COMPANION_ROLES, untaintedPartitionDefects } from "../../schemas/block-qa.ts";
+import { ROUNDTRIP_DISPATCH, TRANSLATION_ARTEFACTS } from "../../content/pipeline/translation-block-qa.ts";
 import type { UntaintedDispatch } from "../../schemas/block-qa.ts";
 import {
   couldNotDispatchEntry,
@@ -34,50 +35,74 @@ const FIELD_HASH = { md: "aaaaaaaaaaaa", lean: "bbbbbbbbbbbb" };
 
 describe("untaintedPartitionDefects", () => {
   test("a sound declaration has no defects", () => {
-    expect(untaintedPartitionDefects({ id: "c", depends_on: ["md", "ts", "lean"], untainted: SOUND })).toEqual([]);
+    expect(untaintedPartitionDefects({ id: "c", untainted: SOUND }, ["md", "ts", "lean"])).toEqual([]);
   });
 
   test("undeclared is reported, not skipped — nobody-said is not nothing-to-check", () => {
-    const d = untaintedPartitionDefects({ id: "c", depends_on: ["md"] });
+    const d = untaintedPartitionDefects({ id: "c" }, ["md"]);
     expect(d).toHaveLength(1);
     expect(d[0]).toContain("undeclared");
   });
 
   test("overlap: a role visible to BOTH parties is the vacuous pass", () => {
-    const d = untaintedPartitionDefects({
-      id: "c",
-      depends_on: ["md", "ts", "lean"],
-      untainted: { ...SOUND, adjudicator_sees: ["md", "lean"] },
-    });
+    const d = untaintedPartitionDefects({ id: "c", untainted: { ...SOUND, adjudicator_sees: ["md", "lean"] } }, [
+      "md",
+      "ts",
+      "lean",
+    ]);
     expect(d.some((m) => m.includes("grading its own input"))).toBe(true);
   });
 
   test("unpartitioned: a companion added to depends_on later lands in neither set", () => {
-    const d = untaintedPartitionDefects({
-      id: "c",
-      // `bpmn` is new and the declaration has not been updated.
-      depends_on: ["md", "ts", "lean", "bpmn"],
-      untainted: SOUND,
-    });
+    // `bpmn` is new to this criterion's universe and the declaration has not
+    // been updated.
+    const d = untaintedPartitionDefects({ id: "c", untainted: SOUND }, ["md", "ts", "lean", "bpmn"]);
     expect(d.some((m) => m.includes("unpartitioned") && m.includes("bpmn"))).toBe(true);
   });
 
   test("phantom: the declaration describes a criterion other than this one", () => {
-    const d = untaintedPartitionDefects({
-      id: "c",
-      depends_on: ["md", "ts"],
-      untainted: { ...SOUND, checker_sees: ["cql"], checker_withheld: ["md", "ts"] },
-    });
+    const d = untaintedPartitionDefects(
+      { id: "c", untainted: { ...SOUND, checker_sees: ["cql"], checker_withheld: ["md", "ts"] } },
+      ["md", "ts"],
+    );
     expect(d.some((m) => m.includes("phantom") && m.includes("cql"))).toBe(true);
   });
 
   test("an empty drift statement is a defect — it yields a style review", () => {
-    const d = untaintedPartitionDefects({
-      id: "c",
-      depends_on: ["md", "ts", "lean"],
-      untainted: { ...SOUND, drift: "   " },
-    });
+    const d = untaintedPartitionDefects({ id: "c", untainted: { ...SOUND, drift: "   " } }, ["md", "ts", "lean"]);
     expect(d.some((m) => m.includes("drift"))).toBe(true);
+  });
+});
+
+describe("the translation round trip as an INSTANCE — the genericity, demonstrated", () => {
+  // The case the spine was generalised FROM. It is here because instantiating
+  // it is what proves the abstraction fits: asserting genericity is the move
+  // this whole epic exists to stop.
+  test("the founding case declares cleanly against the generic type", () => {
+    expect(untaintedPartitionDefects({ id: "translation-semantic-roundtrip", untainted: ROUNDTRIP_DISPATCH }, TRANSLATION_ARTEFACTS)).toEqual([]);
+  });
+
+  test("its central artefact is NOT a CompanionRole — which is why `universe` is a parameter", () => {
+    // `po` is deliberately absent from COMPANION_ROLES: a PO is a companion of
+    // a (block, locale) pair, not of a block. Typed over CompanionRole alone,
+    // the spine could not express the very round trip it came from.
+    expect(COMPANION_ROLES as readonly string[]).not.toContain("po");
+    expect(ROUNDTRIP_DISPATCH.checker_sees).toEqual(["po"]);
+  });
+
+  test("the two visible sets are disjoint — the whole rule in one line", () => {
+    const both = ROUNDTRIP_DISPATCH.checker_sees.filter((r) => ROUNDTRIP_DISPATCH.adjudicator_sees.includes(r));
+    expect(both).toEqual([]);
+  });
+
+  test("showing the back-translator the source is caught, not merely discouraged", () => {
+    // The vacuous pass translation-manager warns about: handed the `.md`, a
+    // back-translator writes the source back and the check measures nothing.
+    const d = untaintedPartitionDefects(
+      { id: "translation-semantic-roundtrip", untainted: { ...ROUNDTRIP_DISPATCH, checker_sees: ["po", "md"] } },
+      TRANSLATION_ARTEFACTS,
+    );
+    expect(d.some((m) => m.includes("grading its own input"))).toBe(true);
   });
 });
 

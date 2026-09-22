@@ -13,7 +13,7 @@ Claimed by claude/publication-workflow-diagrams-4uw90m.
 
 ## Landed
 
-Three BPMN 2.0 swimlane diagrams under `skills/workflows/` (source of truth,
+Three BPMN 2.0 swimlane diagrams under `processes/` (source of truth,
 modeler-editable), rendered to SVG by `scripts/render-bpmn.ts` (bpmn-js in
 headless Chromium) into `docs/assets/img/workflows/`:
 

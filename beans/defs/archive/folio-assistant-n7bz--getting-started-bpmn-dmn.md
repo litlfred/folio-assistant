@@ -10,10 +10,10 @@ updated_at: 2026-09-18T14:49:11Z
 
 ## What
 
-`skills/workflows/getting-started.bpmn` — the onboarding process, lanes for the
+`processes/getting-started.bpmn` — the onboarding process, lanes for the
 user, the agent, the work plan and the build/publish pipeline. Its intent
 gateway carries `<folio:decision/>` backed by
-`skills/workflows/decisions/folio-intent.dmn`, so the branch is **computed from
+`processes/decisions/folio-intent.dmn`, so the branch is **computed from
 facts**, not asserted by the agent.
 
 This is the concrete answer to "force agentic Q&A into guided questions

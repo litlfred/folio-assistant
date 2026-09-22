@@ -73,7 +73,7 @@ them rather than describing them:
 ## What is already true, so this is not started from nothing
 
 The two dispatch points are process events, so wherever they are performed they
-should be DRAWN in BPMN under `skills/workflows/`. The likely homes are
+should be DRAWN in BPMN under `processes/`. The likely homes are
 `draft-to-publication` for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.
 

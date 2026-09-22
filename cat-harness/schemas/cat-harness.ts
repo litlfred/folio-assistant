@@ -666,8 +666,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
   },
-  workflows: {
-    type: termIri("WorkflowGraph"),
+  processes: {
+    type: termIri("ProcessGraph"),
     renderable: false,
     // The BPMN and DMN are the source of truth and are READ to run a process;
     // where a running instance GOT TO is `workflow-state`, which is `state`.
@@ -1477,6 +1477,21 @@ const REGISTRATION_MODULE: Readonly<Record<string, string>> = {
 
 export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
   kg: "cat-harness",
+  // `workflows` was this kind's name for a few hours on 2026-09-21, between
+  // the `cat-harness` split and the owner settling the term.
+  //
+  // PROCESS won on evidence rather than preference. BPMN's own element is
+  // `<bpmn:process>`, and WHO's DAK component list — which this platform
+  // exists to author against — names "Business processes and decision logic"
+  // and "Personas and scenarios". The earlier ruling on bean `rapm`
+  // ("prefer workflows over processes") was made before either was checked
+  // and is OVERTURNED, not forgotten: the owner, 2026-09-21, *"we have
+  // BPMN... seems like process is best"*.
+  //
+  // An alias rather than a sweep because it is exactly 1:1, which is the one
+  // shape this table can express — the `cat-harness` split could not use it
+  // and had to keep its umbrella instead.
+  workflows: "processes",
 };
 
 /** What a declared kind name means now, and whether it was a deprecated spelling. */
@@ -2107,6 +2122,44 @@ export const VisualisationSchema = z.object({
    * exactly what it rendered before anybody declared one.
    */
   icon: z.string().min(1).optional(),
+  /**
+   * WHERE this visualisation may be published. Absent means everywhere, which
+   * is what every visualisation did before this field existed.
+   *
+   * `"staging-only"` renders the page and keeps it OUT of the canonical
+   * deploy: visible in a local build and in a `STAGING/<slug>/` preview,
+   * absent from the published site.
+   *
+   * ## Why a graph would want that
+   *
+   * `fsh-guts` is the worked case and the owner's ruling of 2026-09-21. Its
+   * declaration calls it *"the trashcan that is kept"* — deprecated content
+   * relocated rather than deleted, because a scrapped item stops the next
+   * agent re-entering a dead end while a deleted one cannot be told from an
+   * accident. It was DELIBERATELY unrendered so that something could be kept
+   * without being published, and the owner then asked to see it. Both things
+   * are wanted: a reader here can browse it, a reader of the published site
+   * does not meet it.
+   *
+   * ## The default is the SAFE direction, and that is the whole design
+   *
+   * Composition hides a staging-only visualisation unless it is positively
+   * told otherwise (`compose-docs --staging`). So a forgotten flag HIDES TOO
+   * MUCH — a missing page in a preview, immediately visible to whoever is
+   * looking at the preview, and fixed by re-running with the flag.
+   *
+   * The opposite default fails the other way: a canonical build that forgets
+   * its flag PUBLISHES content somebody chose not to publish, which is not
+   * visible from the build at all and is not undone by deleting the page
+   * afterwards. When the two error directions are that asymmetric, the
+   * default belongs on the recoverable side.
+   *
+   * This is deliberately NOT expressed as `hidden`. That field says where a
+   * tile appears among tiles; this says whether the page may be deployed, and
+   * a reader who can reach a page by typing its URL is not helped by a tile
+   * that declined to mention it.
+   */
+  publish: z.enum(["staging-only"]).optional(),
 });
 export type Visualisation = z.infer<typeof VisualisationSchema>;
 
@@ -2399,7 +2452,24 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // already has is the right one.
   { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
   { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["cat-harness"] },
+  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
+  // THE CONVENTION, as of 2026-09-21: an instance's KGraph is five sibling
+  // directories rather than one with subdirectories. `scenarios/` and
+  // `processes/` were `skills/roles/` and `skills/workflows/`, found by
+  // walking down from the skills root.
+  //
+  // They are listed here and not only in the declarations because
+  // `DEFAULT_DIRECTORIES` is what an instance with NO declaration resolves
+  // against — AGENTS.md: "an unmigrated instance falls back to today's
+  // conventions". Leaving them out made that fallback describe yesterday's,
+  // which is how the workflow-coverage fixtures went blind: they write a
+  // temp root with no declaration, so every diagram they create resolved
+  // through this list or not at all.
+  //
+  // Existence-filtered like every other entry, so an instance that has no
+  // `processes/` is not claimed to have an empty one — the `dh4f` defect.
+  { id: "scenarios", path: "scenarios/", dependents: "skip", graphKinds: ["scenarios"] },
+  { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
   { id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] },
   { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
   { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
@@ -4505,10 +4575,16 @@ export const KG_GRAPH_KIND = "cat-harness";
  * still spells a skill directory that way, and dropping it would make every
  * unmigrated instance's skills unreachable rather than merely unclassified.
  *
- * `workflows` and `scenarios` are NOT here, and that is the split doing its
- * job: `skills/workflows/` holds 51 `.bpmn` files and `skills/roles/` holds one
- * `roles.json`, so neither ever contributed a skill body — they were scanned
- * only because they sat inside a directory that did.
+ * `processes` and `scenarios` are NOT here, and that is the split doing its
+ * job: `processes/` holds only `.bpmn` and `scenarios/` only `roles.json`, so
+ * neither ever contributed a skill body — they were scanned only because they
+ * sat inside a directory that did.
+ *
+ * No count on purpose. This said "51 `.bpmn` files" and the directory holds
+ * 50 — a number that was either wrong when written or true for an afternoon,
+ * and AGENTS.md's rule for exactly this is to count the directory rather than
+ * quote the paragraph. It also still said `workflows` after that kind was
+ * renamed to `processes`.
  */
 export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
 
@@ -4524,7 +4600,7 @@ export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_
 export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
   KG_GRAPH_KIND,
   "skills",
-  "workflows",
+  "processes",
   "scenarios",
 ];
 

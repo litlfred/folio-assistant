@@ -607,9 +607,18 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
 
-  test("a page that resolves OUTSIDE the site directory is not a viewer", () => {
-    // It exists, and a tile still cannot open it: nothing publishes it. The
-    // tile links what the SITE serves, not what the checkout contains.
+  test("a page that resolves OUTSIDE the site directory is NOT linked — and is named as built", () => {
+    // Two halves, and they were written by two branches that met in a merge.
+    //
+    // NOT LINKED is this block's rule: the tile links what the SITE serves,
+    // and a ref outside the site directory has no published path to compose
+    // without resolving it through `withRoutes` — an instance's own mounted
+    // `docs/` lands somewhere the strip above cannot guess.
+    //
+    // NAMED AS BUILT is main's, and it is the better message. "No published
+    // viewer" would assert something false about a page that exists; the
+    // `undiscovered` finding says exactly what is true — built, and no tile
+    // reaches it — which is what tells the next reader which gap to close.
     const f = fixture({ host: host(), who: { name: "who", directories: [] } });
     mkdirSync(join(f.repo, "who", "elsewhere"), { recursive: true });
     writeFileSync(join(f.repo, "who", "elsewhere", "index.html"), "<!doctype html>");
@@ -617,7 +626,11 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([{ kind: "library" }]);
-    expect(who.findings.join(" ")).toContain("no published viewer");
+    expect(who.findings.join(" ")).toContain("exists but is not at a conventional path");
+    // And NOT the unbuilt message, which is the assertion that would have
+    // been false. Without this line the test passes on a report that says
+    // both things at once.
+    expect(who.findings.join(" ")).not.toContain("no published viewer");
   });
 
   test("the CONVENTIONAL page wins when a kind resolves both ways", () => {

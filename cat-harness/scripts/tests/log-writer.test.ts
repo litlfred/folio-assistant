@@ -245,7 +245,7 @@ describe("command execution", () => {
  * route would have broken.
  */
 describe("the process says whether running it is logged", () => {
-  const dir = join(import.meta.dir, "../../skills/workflows");
+  const dir = join(import.meta.dir, "../../processes");
 
   test("the three processes the owner named declare capture", async () => {
     // Located through `workflowFiles`, not composed from a literal

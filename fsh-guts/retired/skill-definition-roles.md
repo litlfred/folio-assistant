@@ -34,7 +34,7 @@ designed in this repository — no commit here ever argues for it.
 | `publication-manager` | 1 | a declared BPMN role, and an actor |
 
 **The first reading of this was "51 of 54 dangle (94 %)", and it is wrong.**
-That number comes from resolving every value against `skills/roles/roles.json`
+That number comes from resolving every value against `scenarios/roles.json`
 — but 51 of them were never role-graph references. They are the access tier
 from `src/types.ts`:
 

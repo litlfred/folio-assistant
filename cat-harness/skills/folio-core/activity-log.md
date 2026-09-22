@@ -13,7 +13,7 @@ Owner, 2026-09-19:
 
 ## The role is mechanical, and `actedUpon`
 
-`log` in `skills/roles/roles.json`: `actorKinds: ["system"]`,
+`log` in `scenarios/roles.json`: `actorKinds: ["system"]`,
 `actedUpon: true`. It is written to and emptied *by* an actor; it decides
 nothing and performs no task. The two existing precedents are `work-plan`
 and `corpus` — stores that are acted upon rather than acting — and this is

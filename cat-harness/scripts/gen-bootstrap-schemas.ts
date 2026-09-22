@@ -88,9 +88,12 @@ const BOOTSTRAP = bootstrapRoot();
 /** Where each document is published, and the `$id` it is published at. */
 const TARGETS = [
   {
-    // declared-path-literal: half of a published `$id`, cited from five
-    // languages' catalogues — fixed by contract, not by convention.
-    file: "skills/discussion.input.schema.json",
+    // declared-path-literal: the convention fallback, at the call site. The
+    // documents moved from `skills/` to the declared `schemas/` on
+    // 2026-09-21; the `$id` below did NOT move with them, and must not —
+    // it is half of a published contract cited from five languages'
+    // catalogues, and ids are stable across a relocation while paths are not.
+    file: "schemas/discussion.input.schema.json",
     id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
     title: "Discussion Input",
     description:
@@ -99,8 +102,8 @@ const TARGETS = [
     conditionals: [] as readonly unknown[],
   },
   {
-    // declared-path-literal: as above.
-    file: "skills/discussion.output.schema.json",
+    // declared-path-literal: as above — path moved, `$id` deliberately not.
+    file: "schemas/discussion.output.schema.json",
     id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/output.schema.json",
     title: "Discussion Output",
     description:

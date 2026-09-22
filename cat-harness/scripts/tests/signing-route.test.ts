@@ -25,7 +25,7 @@ import { REACH_UNKNOWN, effectiveReach } from "../../schemas/actor-reach";
 import { NETWORK_REACHES } from "../../schemas/cat-harness";
 import { fulfilmentKindsForBpmnType } from "../../schemas/role-graph";
 
-const WF = resolve(import.meta.dir, "../../skills/workflows");
+const WF = resolve(import.meta.dir, "../../processes");
 const DEC = join(WF, "decisions");
 const table = () => loadDecisionTable(join(DEC, "signing-route.dmn"), "Decision_SigningRoute");
 

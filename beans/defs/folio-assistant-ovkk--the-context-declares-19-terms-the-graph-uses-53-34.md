@@ -37,7 +37,7 @@ tree — the graph grew — which is the reason the brief says to re-measure.
   `hasCapability` (actor → capability, 20/20 resolve), `requiresCapability`
   (capability → capability, 12/12).
 - **LITERALS because the referent is not a node here**: `roleName`,
-  `permissionName` (`skills/roles/roles.json` and
+  `permissionName` (`scenarios/roles.json` and
   `skills/permissions/permissions.json` are never collected, and the Role nodes
   that do exist are BPMN **lanes** under other names — 65 IRIs would have
   dangled), and `decisionRef` (no Decision nodes).
@@ -62,7 +62,7 @@ shipping a lossy graph. The same rule `problems[]` has always followed.
    so the same role would acquire two identities unless `roleForLane` resolution
    is applied at export time.
 2. **`#role/role-assignments` is not a Role** — `collectRegistryNodes` types
-   every `.claude/skills/roles/*.json` as one, and that directory holds only the
+   every `.claude/scenarios/*.json` as one, and that directory holds only the
    identity → actor mapping table.
 3. **The document's own report fields are undeclared too** — `repository`,
    `counts`, `problems`, `danglingLinks`, `undeclaredTerms`, and staging's

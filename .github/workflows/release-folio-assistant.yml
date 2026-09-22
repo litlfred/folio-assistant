@@ -73,7 +73,7 @@ jobs:
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
-        run: cd $PKG_DIR && bun install
+        run: cd $PKG_DIR && bun install --frozen-lockfile
 
       - name: Pack tarball (generic core only)
         run: |

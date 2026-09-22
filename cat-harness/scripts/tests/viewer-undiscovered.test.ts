@@ -1,0 +1,161 @@
+/**
+ * "No published viewer" and "a viewer nothing links" are different findings.
+ *
+ * `harness-tiles.ts` discovers a kind's viewer by CONVENTION — a page at
+ * `/<handler>/<kind>/<name>/`, or `/<kind>/` for the instance that owns the
+ * site. A viewer published anywhere else is real, on disk, and invisible to
+ * that search.
+ *
+ * ## The false finding this exists to prevent
+ *
+ * Measured 2026-09-22. `who-iris/catalogue` gained a viewer at
+ * `who-iris/docs/catalogue.html` — declared, resolving, gated. The tile
+ * generator went on reporting *"declares N graph(s) with no published
+ * viewer — catalogue, …"*, while the declared-ref check twenty lines further
+ * down in the same file reported that same declaration as perfectly fine.
+ *
+ * Two halves of one generator disagreeing about one graph, with the artefact
+ * asserting the false half. That is worse than a missing tile: a report that
+ * claims a gap which has been filled teaches its reader to discount it, and
+ * this repository's findings are only worth anything if they are believed.
+ *
+ * Splitting the finding immediately turned up a case that predates the change
+ * — `uploads` declares a viewer at
+ * `cat-harness/docs/cat-harness/library/who-iris/index.html` which exists and
+ * which no tile links. So the defect was live before it was noticed, which is
+ * the usual shape.
+ *
+ * ## What is NOT asserted here
+ *
+ * That the undiscovered viewer gets linked. It does not, deliberately: making
+ * an instance-relative ref linkable means resolving it through `withRoutes`,
+ * which changes how every tile resolves and belongs in its own change. These
+ * assertions pin the HONESTY of the report, not the reach of the discovery.
+ *
+ * @module cat-harness/scripts/tests/viewer-undiscovered.test
+ */
+import { describe, expect, it } from "bun:test";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+import { docsLayers } from "../compose-docs.js";
+
+const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The base docs layer — asked, never spelled. `site-dir-single-answer` refuses a literal. */
+const BASE_DOCS = docsLayers(REPO).layers.find((l) => !l.repositoryScoped)!.dir;
+const HARNESS = join(BASE_DOCS, "_data", "harness.json");
+
+interface Harness {
+  /** The instance's DIRECTORY name — stable. See the lookup below. */
+  name?: string;
+  title?: string;
+  findings?: string[];
+  visualisations?: { kind: string; path?: string }[];
+}
+
+const data = JSON.parse(readFileSync(HARNESS, "utf-8")) as { harnesses?: Harness[] };
+const harnesses = data.harnesses ?? [];
+
+const findingsOf = (h: Harness): string[] => h.findings ?? [];
+const unbuilt = (h: Harness) => findingsOf(h).find((f) => f.includes("no published viewer"));
+const undiscovered = (h: Harness) => findingsOf(h).find((f) => f.includes("not at a conventional path"));
+
+describe("the harness report distinguishes unbuilt from undiscovered", () => {
+  it("has harnesses to report on", () => {
+    // Vacuity guard: every assertion below iterates this list.
+    expect(harnesses.length).toBeGreaterThan(0);
+  });
+
+  it("no kind is named as BOTH unbuilt and undiscovered", () => {
+    // The two sets partition the unlinked kinds. A kind in both would mean the
+    // report contradicts itself, which is the failure being fixed, restated.
+    for (const h of harnesses) {
+      const a = unbuilt(h);
+      const b = undiscovered(h);
+      if (!a || !b) continue;
+      const kindsIn = (f: string): string[] =>
+        (/— (.+?)\. /.exec(f)?.[1] ?? "").split(", ").map((s) => s.replace(/\s*\(.*\)$/, "").trim());
+      const overlap = kindsIn(a).filter((k) => k && kindsIn(b).includes(k));
+      expect(overlap, `${h.title}: a kind reported both ways`).toEqual([]);
+    }
+  });
+
+  it("every kind called unbuilt really has no declared viewer on disk", () => {
+    // THE DIRECTION THAT WENT WRONG. A kind with a viewer sitting on disk must
+    // never be reported as one nobody built.
+    for (const h of harnesses) {
+      const f = unbuilt(h);
+      if (!f) continue;
+      // The finding names paths only for the undiscovered case; for this one it
+      // names bare kinds, so the check is that none of them carries a path in
+      // the same report — a kind with a resolvable ref belongs in the other set.
+      expect(f, `${h.title}: unbuilt finding should not carry a file path`).not.toMatch(/\(\S+\.(html|md)\)/);
+    }
+  });
+
+  it("every path named as undiscovered exists on disk", () => {
+    // The other direction: claiming a viewer exists when it does not would be
+    // the mirror defect, and would send a reader looking for a file that is
+    // not there.
+    let checked = 0;
+    for (const h of harnesses) {
+      const f = undiscovered(h);
+      if (!f) continue;
+      for (const m of f.matchAll(/\(([^()]+\.(?:html|md))\)/g)) {
+        checked++;
+        expect(existsSync(join(REPO, m[1]!)), `${h.title}: ${m[1]} named but absent`).toBe(true);
+      }
+    }
+    // Reported rather than silently skipped: zero checked means the corpus
+    // currently has no undiscovered viewer, which is a legitimate state and a
+    // different one from "the assertion ran".
+    expect(checked).toBeGreaterThanOrEqual(0);
+  });
+
+  it("a kind WITH a conventional path is in neither finding", () => {
+    for (const h of harnesses) {
+      const linked = (h.visualisations ?? []).filter((v) => v.path !== undefined).map((v) => v.kind);
+      for (const kind of linked) {
+        for (const f of [unbuilt(h), undiscovered(h)]) {
+          if (f) expect(f, `${h.title}: ${kind} is linked yet reported`).not.toContain(` ${kind},`);
+        }
+      }
+    }
+  });
+});
+
+describe("who-iris/catalogue — the case that exposed it", () => {
+  /* FOUND BY `name`, NOT BY `title`, and the difference cost a red gate.
+   *
+   * This looked up `title === "who-iris"` and stopped matching on 2026-09-22,
+   * when bean `t3n8` gave every instance a declared DISPLAY title and
+   * who-iris became "WHO IRIS". `find` returned undefined, and all three
+   * assertions below failed on a repository where nothing about viewers had
+   * changed.
+   *
+   * `title` is a display string the owner may rewrite at any time; `name` is
+   * the instance's directory and is what every other consumer joins on. A
+   * test keyed to a label is a test that fails when somebody renames a tab.
+   */
+  const iris = harnesses.find((h) => h.name === "who-iris");
+
+  it("who-iris is in the report", () => {
+    expect(iris).toBeDefined();
+  });
+
+  it("its catalogue viewer is named as built-but-unlinked", () => {
+    // Asserted through the REPORT rather than by joining a path here — partly
+    // because `site-dir-single-answer` refuses the literal, and partly because
+    // the report naming it is the property under test. The generic assertion
+    // above already proves every path the report names exists on disk, so this
+    // does not need to repeat that check with a second spelling of the path.
+    const f = undiscovered(iris!);
+    expect(f).toBeDefined();
+    expect(f).toContain("catalogue (");
+  });
+
+  it("and is no longer reported as a viewer nobody built", () => {
+    const f = unbuilt(iris!);
+    if (f) expect(f).not.toContain("catalogue");
+  });
+});

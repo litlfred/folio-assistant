@@ -430,7 +430,7 @@ Legend — **AH** `cat-harness` · **AHT** `cat-harness-tools` ·
 | `who-smart-dak.md` | 97 | **W** | L2. |
 | `who-smart-ig.md` | 144 | **W** | L3. |
 
-### BPMN processes (`skills/workflows/`) — 20 files
+### BPMN processes (`processes/`) — 20 files
 
 | process | → | reasoning |
 |---|---|---|

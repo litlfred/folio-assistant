@@ -232,7 +232,7 @@ pointed at a repository, you know nothing about it"* — and it is written for
 | `../cat-harness/schemas/cat-harness.ts` | 2 |
 | `../cat-harness/schemas/skill-package.ts` | 1 |
 | `../cat-harness/schemas/tool.ts` | 1 |
-| `../cat-harness/skills/workflows` | 1 |
+| `../cat-harness/processes` | 1 |
 
 Every one of those is a **term definition** — what a role is, what a DAK block
 is, what a harness declaration is. Bootstrap a new instance kind that is not

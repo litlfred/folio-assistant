@@ -71,6 +71,7 @@
     "library",
     "memory",
     "methodology",
+    "processes",
     "qa",
     "scenarios",
     "schemas",
@@ -79,8 +80,7 @@
     "tools",
     "translation-sources",
     "uploads",
-    "waiver",
-    "workflows"
+    "waiver"
   ],
   "links": [
     {
@@ -173,6 +173,19 @@
       "hidden": false
     },
     {
+      "id": "fsh-guts",
+      "directory": "fsh-guts",
+      "title": "fsh-guts",
+      "ref": "cat-harness/docs/fsh-guts/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/fsh-guts/",
+      "hidden": false,
+      "publish": "staging-only"
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -221,6 +234,18 @@
       "hidden": false
     },
     {
+      "id": "tools",
+      "directory": "tools",
+      "title": "Tools",
+      "ref": "cat-harness/docs/tools/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/tools/",
+      "hidden": false
+    },
+    {
       "id": "translation-sources",
       "directory": "translation-sources",
       "title": "translation-sources",
@@ -236,13 +261,14 @@
       "id": "uploads",
       "directory": "uploads",
       "title": "uploads",
-      "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
+      "ref": "cat-harness/docs/cat-harness/uploads/index.html",
       "surfaces": [
         "navbar",
         "board"
       ],
-      "href": "/cat-harness/library/cat-harness/",
-      "hidden": false
+      "href": "/cat-harness/uploads/",
+      "hidden": false,
+      "icon": "uploads"
     },
     {
       "id": "who-iris-library",
@@ -630,7 +656,8 @@
         }
       ],
       "findings": [
-        "who-iris: declares 4 graph(s) with no published viewer — catalogue, docs, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 3 graph(s) with no published viewer — docs, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: 1 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — catalogue (who-iris/docs/catalogue.html). Built and unreachable is a different gap from unbuilt.",
         "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ]
@@ -754,7 +781,7 @@
       "visualisations": [
         {
           "kind": "uploads",
-          "path": "/cat-harness/library/folio-assistant/"
+          "path": "/cat-harness/uploads/folio-assistant/"
         }
       ],
       "findings": [
@@ -850,7 +877,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 10
+          "value": 12
         }
       ],
       "visualisations": [
@@ -869,7 +896,8 @@
           "kind": "folio"
         },
         {
-          "kind": "fsh-guts"
+          "kind": "fsh-guts",
+          "path": "/fsh-guts/index.md"
         },
         {
           "kind": "health",
@@ -893,6 +921,9 @@
           "kind": "methodology"
         },
         {
+          "kind": "processes"
+        },
+        {
           "kind": "qa",
           "path": "/qa/"
         },
@@ -911,7 +942,8 @@
           "path": "/todos/"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "path": "/tools/index.md"
         },
         {
           "kind": "translation-sources",
@@ -923,13 +955,10 @@
         },
         {
           "kind": "waiver"
-        },
-        {
-          "kind": "workflows"
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — docs, folio, fsh-guts, interaction, memory, methodology, scenarios, skills, tools, waiver, workflows. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 9 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, skills, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
@@ -950,12 +979,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -965,17 +994,20 @@
       ],
       "visualisations": [
         {
+          "kind": "processes"
+        },
+        {
           "kind": "scenarios"
         },
         {
-          "kind": "skills"
+          "kind": "schemas"
         },
         {
-          "kind": "workflows"
+          "kind": "skills"
         }
       ],
       "findings": [
-        "bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ]
     }
