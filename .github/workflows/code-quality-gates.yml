@@ -874,6 +874,16 @@ jobs:
           # `--check` says in its own output which of the two it ran.
           bun run iris:covers:check
           bun run translation:block-qa:check
+          # The translation STATUS page and its projection, bean `lnur`.
+          # Stale-checked rather than merely generated, for the reason every
+          # other generated artefact here is: a page carrying numbers nobody
+          # regenerated is a page that lies by aging, which is `d2kp`.
+          #
+          # It exits 2 when no `translation-sources` directory is declared,
+          # and that is NOT a pass — a folio with no translations is a real
+          # state, and this generator is not the thing that gets to decide
+          # the absence means "nothing to report".
+          bun run translation:status:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #

@@ -51,7 +51,7 @@
  * `GENERIC`, which is reported as a finding rather than rendered as a blank.
  */
 import { existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
@@ -137,8 +137,16 @@ export type HarnessTile = {
    * has one, else its first viewer, else absent and the tile is not a link.
    */
   href?: string;
-  /** Whether {@link href} is the instance's own folio view or a fallback viewer. */
-  hrefKind?: "folio" | "viewer";
+  /**
+   * What {@link href} points AT, which is three different kinds of thing:
+   *
+   * - `folio`   — the instance's own themed root
+   * - `viewer`  — a kind handler's view of one of its graphs
+   * - `handled` — a page ANOTHER instance publishes about it, named by its
+   *               own `renderExemption.reachableAt`. Only a render-exempt
+   *               instance can have this, and it is the last resort.
+   */
+  hrefKind?: "folio" | "viewer" | "handled";
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
   /**
@@ -285,6 +293,46 @@ function tileFor(
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
+  // WHERE THE SITE IS, repo-relative, computed once. `siteDir` arrives
+  // absolute while every declared path is relative to the repository root, so
+  // one has to be rebased onto the other; deriving it from the value
+  // `harnessTiles` already passed in means this and `handled` below cannot
+  // disagree about where the site is.
+  const sitePrefix = `${relative(repoRoot, siteDir)}/`;
+
+  /* WHAT THE DECLARATION SAYS, before what the conventions guess.
+   *
+   * `coverage.visualiser` names the page that renders a directory's graph,
+   * and a directory says which kinds it holds — so between them the
+   * declaration answers "is this kind viewable" directly. Reading only the
+   * two conventional paths made that answer unreachable: `translations/`
+   * declared a resolving visualiser at `docs/translation-status/` and the
+   * tile's own `directories` list linked it, while `visualisations` two
+   * lines away still reported the kind as having no viewer. One question,
+   * two answers, free to disagree — and the wrong one is the one that gets
+   * counted in a finding.
+   *
+   * `flh4` is the rule: a DECLARED visualiser that does not resolve is a
+   * different defect from no visualiser at all. It has always been reported
+   * as such below; what was missing is the other side of it, that one which
+   * DOES resolve is a viewer.
+   *
+   * Only a ref under the published site directory counts. A page that
+   * resolves on disk but is not published is not something a tile can open,
+   * and claiming it would put a 404 behind the tab — `pb04`.
+   */
+  const declared = new Map<string, string>();
+  for (const d of dirs) {
+    for (const v of visualisationsOf(d.coverage, d.id)) {
+      if (!v.ref.startsWith(sitePrefix)) continue;
+      if (!existsSync(join(repoRoot, v.ref))) continue;
+      const page = `/${v.ref.slice(sitePrefix.length).replace(/index\.html$/, "")}`;
+      for (const kind of d.graphKinds ?? []) {
+        if (!declared.has(kind)) declared.set(kind, page);
+      }
+    }
+  }
+
   // CANDIDATES FROM THE DECLARATION, presence checked on disk. Both pages a
   // kind can be published at are considered, because the instance that owns
   // the site elides its own name and every other instance does not — two rules
@@ -295,7 +343,16 @@ function tileFor(
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
     const found = candidates.find((p) => existsSync(join(siteDir, p, "index.html")));
-    if (found) visualisations.push({ kind, path: found });
+    // CONVENTION FIRST, declaration as the fallback — and the order is
+    // OBSERVABLE, so it is a decision rather than a detail. Exactly one kind
+    // in this repository resolves both ways today: cat-harness's `uploads`,
+    // which the convention publishes at `/uploads/` and the declaration names
+    // at `/cat-harness/library/cat-harness/`. Preferring the declaration
+    // would repoint a working link nobody asked about; preferring the
+    // convention leaves every existing link exactly where it was and fills
+    // only the gaps, which is the whole of what this is for.
+    const path = found ?? declared.get(kind);
+    if (path) visualisations.push({ kind, path });
     else visualisations.push({ kind });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
@@ -313,11 +370,18 @@ function tileFor(
   // twenty lines below reported the same declaration as perfectly fine. Two
   // halves of one file disagreeing about one graph.
   //
-  // The fix here is the DISTINCTION, not the discovery. Linking an
-  // instance-relative ref means resolving it through `withRoutes`, which is a
-  // change to how every tile resolves and belongs in its own right rather than
-  // bolted on. Naming the case is what stops the report lying in the meantime,
-  // and tells whoever does that work which gap they are closing.
+  // HALF OF THE DISCOVERY NOW HAPPENS, and the two halves met in a merge
+  // (2026-09-22). A declared ref UNDER the published site directory is linked
+  // by the `declared` map above: its published path is the ref with the site
+  // prefix stripped, so there is nothing to resolve and nothing to guess.
+  // Those kinds never reach this block, because they have a `path`.
+  //
+  // What is left here is the case that genuinely needs `withRoutes`: a ref
+  // INSIDE an instance's own tree, which the site build mounts somewhere the
+  // strip above cannot compute — `who-iris/docs/catalogue.html` is the
+  // measured example. For those the fix is still the DISTINCTION rather than
+  // the discovery: naming the case stops the report lying in the meantime,
+  // and tells whoever does the routing work which gap they are closing.
   const declaredFor = (kind: string, stagingOnly: boolean): string | undefined => {
     for (const d of dirs) {
       if (!(d.graphKinds ?? []).includes(kind)) continue;
@@ -436,11 +500,68 @@ function tileFor(
     );
   }
   const firstViewer = visualisations.find((v) => v.path)?.path;
-  const href = folio ?? firstViewer;
+
+  /* THE THIRD TARGET, for an instance that renders nothing of its own.
+   *
+   * bootstrap is instantiated, correctly has no viewer (it declares a
+   * `renderExemption` — the owner, 2026-09-20: *"it is exception to
+   * harness/layer not having visualtion/workflow visualizer"*), and therefore
+   * had no href at all. `nav_footer_custom.html` rendered its tab as a greyed
+   * `<span>`, and the owner read that as broken: *"Boostrap should be
+   * clicable."*
+   *
+   * Nothing was wrong with the declaration OR with `pb04`'s rule that a tab
+   * with nowhere to go is not a link. What was missing is that the exemption
+   * said "I do not render myself" without saying "so go here instead".
+   * `reachableAt` is that second half, and it is DECLARED for the same reason
+   * the exemption itself is — a checker naming one instance states a rule
+   * true only for the instance somebody remembered (`hfkl`).
+   *
+   * THE FILE IS CHECKED, not composed. A declared path that does not resolve
+   * is `flh4`'s defect and a DIFFERENT finding from "nothing is published":
+   * one says the declaration is wrong, the other says nobody built it. Both
+   * leave the tab unlinked, which is correct either way.
+   */
+  let handled: string | undefined;
+  const reachable = decl.renderExemption?.reachableAt;
+  if (folio === undefined && firstViewer === undefined && reachable !== undefined) {
+    // `sitePrefix`, the same repo-relative site directory the declared
+    // visualisers were rebased onto above — one computation, so the two
+    // cannot disagree about where the site is.
+    const prefix = sitePrefix;
+    const onDisk = join(repoRoot, reachable);
+    if (!existsSync(onDisk)) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `not a file. The tab stays unlinked — a declared path that does not resolve is a ` +
+          `wrong declaration, which is a different problem from nothing being published.`,
+      );
+    } else if (!reachable.startsWith(prefix)) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `outside the site-owning harness's site directory (${prefix}), so it is not published ` +
+          `and cannot be linked to.`,
+      );
+    } else {
+      // `.md` is published as `.html` by Jekyll; anything else is served as
+      // it sits. Deriving the extension rather than assuming one keeps this
+      // honest if an exemption ever points at an already-built page.
+      const rest = reachable.slice(prefix.length);
+      handled = `/${rest.replace(/\.md$/, ".html")}`;
+    }
+  }
+
+  const href = folio ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens a kind handler's viewer ` +
         `(${firstViewer}) rather than the instance's own themed root.`,
+    );
+  }
+  if (handled !== undefined) {
+    findings.push(
+      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens the page ` +
+        `another instance publishes about it (${handled}), declared as \`reachableAt\`.`,
     );
   }
 
@@ -458,7 +579,17 @@ function tileFor(
     reads: avatar.reads,
     genericAvatar: !own,
     instantiated: existsSync(join(repoRoot, instanceConfigFilename(decl.name))),
-    ...(href === undefined ? {} : { href, hrefKind: folio === undefined ? ("viewer" as const) : ("folio" as const) }),
+    ...(href === undefined
+      ? {}
+      : {
+          href,
+          hrefKind:
+            folio !== undefined
+              ? ("folio" as const)
+              : firstViewer !== undefined
+                ? ("viewer" as const)
+                : ("handled" as const),
+        }),
     stats: [
       { id: "directories", label: "declared directories", value: dirs.length },
       { id: "kinds", label: "declared graph kinds", value: kinds.length },
