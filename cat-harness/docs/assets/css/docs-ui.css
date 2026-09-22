@@ -4021,6 +4021,52 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
+/* WHAT EACH HARNESS HOLDS, in the sidebar — the owner's *"also missing the
+ * doc/, librayr/ etc."*
+ *
+ * Indented under its tab rather than given a disclosure of its own. A harness
+ * carries two or three kinds here, and a `<details>` per tab would put a
+ * chevron on every row to hide two lines behind it — the "they eat up all the
+ * nav bar sspace" complaint answered by adding a click instead of removing
+ * one. The DEPENDENCIES group above is already the disclosure that keeps this
+ * list short.
+ *
+ * Quieter than the tab: the tab is the destination and these are what is
+ * inside it, so they read as a sub-list and not as four more tabs. */
+.fa-harness-tab__graphs {
+  margin: 0.15rem 0 0.35rem;
+  padding: 0 0 0 1.75rem;
+  list-style: none;
+  font-size: 0.6875rem;
+}
+
+.fa-harness-graph {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.fa-harness-graph__link {
+  color: inherit;
+  opacity: 0.72;
+  text-decoration: none;
+}
+
+.fa-harness-graph__link:hover,
+.fa-harness-graph__link:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`. Marked
+ * with a rule rather than only by opacity, because opacity alone is the same
+ * signal this file already uses for "quiet" and would make "declared but
+ * unbuilt" indistinguishable from "just a sub-item". */
+.fa-harness-graph__link--unlinked {
+  opacity: 0.45;
+  text-decoration: line-through;
+  cursor: help;
+}
+
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════
  *
  * The other half of the divider move. The counts and the viewer links were
