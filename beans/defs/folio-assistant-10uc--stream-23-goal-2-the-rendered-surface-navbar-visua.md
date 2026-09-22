@@ -23,38 +23,34 @@ navbar, the visualisers, the stickies, avatars and themes.
 **Beans** — `p5wm` (39 open), including the `6lb8` folio-board epic and the
 `o3xy` UI & accessibility epic nested under it.
 
-**`p5wm`'s stated path is STALE, and this claim carries the re-measurement
-rather than reproducing it.** Measured 2026-09-22T18:15Z against the store,
-after `check:stale-paths` failed this very bean for quoting it:
+### The path as this claim was written — SUPERSEDED 2026-09-22
 
-`p5wm` names an eight-step path. **Four of those steps are `completed`** —
-`2krx`, `ivfw`, `5y4b`, `pb04` — **and so are both side-conditions** it names,
-`gjli` (the standing accessibility gate) and `1hvo` (the declaration layer).
-The chain is not reproduced here on purpose: a chain through finished work
-reads to the next agent as work still to do, which is what this gate exists to
-catch and what it caught in the first draft of this very bean.
+This claim was created quoting `p5wm`'s eight-step path. Re-verified against the
+store on 2026-09-22 as the claim's own first instruction required, and **four of
+its steps were already finished**: `2krx`, `ivfw`, `5y4b` and `pb04` — plus
+`1hvo`, the declaration layer, and `gjli`, which is a standing rule rather than a
+step. `p5wm` now carries the repair and the withdrawal reasons.
 
-What actually remains, in order:
+**The live path is `b5f0` → `603s` → `6lb8` → `supn`.** Four steps — five when
+this was written, and `hfkl` closed the same day.
 
-| bean | status | |
-|---|---|---|
-| `b5f0` | todo | **first, and not a UI bean** — it holds the ruling that settles `603s`'s own first open question, which file marks an instance |
-| `603s` | in-progress | the LHS navbar as one themed section per instance |
-| `hfkl` | in-progress | bootstrap is the exception |
-| `6lb8` | in-progress | the folio board — its persistence half is blocked on the owner |
-| `supn` | todo | harness cards become todos |
+Two notes this claim carried, both now corrected:
 
-**Two of `p5wm`'s own rationales died with the beans they cite.** It calls
-`hfkl` *"the cheapest real win"* because it unblocks `2krx`, *"which otherwise
-fires 19 findings on day one"* — `2krx` is **completed**, so that argument is
-spent and `hfkl` now needs a reason of its own. And *"stickies that move around
-is `ivfw` + `5y4b`, and they must land together"* describes two beans that have
-**both landed**; what remains of that thread is `6lb8`'s persistence question
-alone.
-
-Do not repair `p5wm` itself — `check:stale-paths` lists it as **outstanding**,
-and an outstanding entry is repaired by the bean's OWNER, not by whoever reads
-it. Put the correction to the owner.
+- **`b5f0` is not a UI bean** — still true, and better than stated. It holds the
+  ruling that settles `603s`'s first open question, which file marks an instance,
+  and **that ruling exists and has already landed in code**. It was ruled
+  REPLACE on 2026-09-20 and then **REVERSED** on 2026-09-21: the standing answer
+  is the PAIR, `<name>.json` (declaration) + `<name>.config.json` (config),
+  resolved by `findDeclarationFile` rather than a fixed filename. `hfkl`'s
+  trailer still says REPLACE and is the most findable — and wrong — statement of
+  it. What is left is prose: `603s`'s recorded answer still names `harness.json`,
+  a file that no longer exists.
+- **`hfkl` is the cheapest real win** — cheaper than that: it was **already
+  done**, and closed 2026-09-22 on evidence re-derived from `origin/main`. The
+  reason given for it was void anyway. *"It unblocks `2krx`, which otherwise
+  fires 19 findings on day one"* — `2krx` has been `completed` since
+  2026-09-20, and it shipped *with* bootstrap's exemption as declared data, so
+  those findings cannot fire.
 
 **Pull requests on this surface:**
 
@@ -65,13 +61,10 @@ it. Put the correction to the owner.
 
 ## First three moves
 
-1. **`b5f0`** — the ruling that settles `603s`'s first open question. The path
-   above is already re-measured, so start here rather than re-deriving it; but
-   re-check anything you are about to spend a session on, because `main` moves
-   and this measurement is only as old as its timestamp.
-2. **`hfkl`, or argue it down.** `p5wm` called it the cheapest win because it
-   unblocks `2krx` — and `2krx` is done. Either give it a live reason or take
-   `603s` next and say why.
+1. **Re-verify the critical path before acting on it.** Bean `k59d` records that
+   `p5wm` specifically advertises blockers that are already complete. Do this
+   before picking a bean off the path.
+2. **`b5f0` then `hfkl`** — the ruling, then the cheapest unblock.
 3. **#955: ship round 1 or hold it.** Its own body argues requirement 2 needs a
    mechanism change (the card does not scroll at all: `clientHeight ===
    scrollHeight === 318` on a 320 card, and the `overflow: hidden` above it is
@@ -99,12 +92,23 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
 
 ## Done when
 
-- [x] `p5wm`'s critical path re-verified against the store (2026-09-22T18:15Z:
-      four of eight steps and both side-conditions already `completed`)
-- [ ] The correction put to the owner — `p5wm` itself is repaired by its owner,
-      not by this stream
-- [ ] `b5f0` ruling recorded and `603s`'s first open question closed
-- [ ] `hfkl` landed, `2krx`'s 19 day-one findings not fired
-- [ ] #955 shipped or held with a stated reason
+- [x] `p5wm`'s critical path re-verified against the store, stale blockers
+      withdrawn with their reasons — 2026-09-22. `check:stale-paths` reports the
+      `p5wm:chain` baseline entry as no longer matching; removed from
+      `stale-paths-baseline.json`, which is how that file shrinks rather than
+      fossilises
+- [x] `b5f0` ruling recorded and `603s`'s first open question closed —
+      2026-09-22. The ruling was ruled, **reversed**, and had already landed;
+      the standing answer is the pair `<name>.json` + `<name>.config.json`,
+      resolved by `findDeclarationFile` rather than any fixed filename. `603s`
+      carried a *superseded* recorded answer AND a supersession note that was
+      itself stale by one ruling; both corrected
+- [x] `hfkl` landed, `2krx`'s 19 day-one findings not fired — `hfkl` was
+      already complete and closed 2026-09-22 on re-derived evidence; `2krx`
+      shipped 2026-09-20 *with* the exemption, so the findings were never
+      going to fire
+- [x] #955 shipped or held with a stated reason — **shipped**, marked ready
+      for review 2026-09-22, reasons on the PR. Round 1 is requirement 2's
+      prerequisite rather than half of it. Not merged: that is the owner's
 - [ ] The six owner-blocked beans asked as questions the owner can answer by
       selecting, with a preview URL where one is needed
