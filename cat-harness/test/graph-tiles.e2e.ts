@@ -31,7 +31,12 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
-import { graphTiles, publishedHref, type TiledDirectory } from "../scripts/graph-tiles.ts";
+import {
+  graphTiles,
+  publishedHref,
+  withTileCounts,
+  type TiledDirectory,
+} from "../scripts/graph-tiles.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = siteDirFor(ROOT);
@@ -74,7 +79,21 @@ const DIRS: TiledDirectory[] = [
   { id: "elsewhere", coverage: { visualiser: "somewhere-else/v.html" } },
 ];
 
-const TILES = graphTiles(DIRS, "cat-harness/docs");
+/**
+ * The counts, attached the same way the real site attaches them — issue #856.
+ *
+ * Deliberately PARTIAL, and the gaps are the point. `beans` has a number,
+ * `library` has ZERO, and `navbar-only` has none at all: the three states a
+ * reader has to be able to tell apart, present in one fixture so a test can
+ * compare them against each other rather than against a remembered string.
+ *
+ * A fixture where every tile had a count would pass just as happily on a
+ * reader that fell back to `0`.
+ */
+const TILES = withTileCounts(graphTiles(DIRS, "cat-harness/docs"), new Map([
+  ["beans", { count: 466, unit: "beans" }],
+  ["library", { count: 0, unit: "entries" }],
+]));
 
 /**
  * The base this fixture is served under — NON-EMPTY on purpose.
@@ -608,5 +627,98 @@ test.describe("a staging-only tile appears only on a preview", () => {
     await ready(page);
     const board = (await tilesOnPage(page, "board")).map((t) => t.id);
     expect(board).not.toContain("staging-only");
+  });
+});
+
+
+/**
+ * Issue #856, bean `tis1`. A tile carried a glyph and a caption and nothing
+ * else, so an empty viewer's tile was indistinguishable from a populated one
+ * until somebody clicked it — `rptk`'s shape moved onto the navigation, and
+ * how #801's twelve off-site tiles survived a hundred-odd green gates.
+ *
+ * The owner chose a badge over greying an empty tile out, for the stronger
+ * reason: a badge also makes a WRONG count visible, where a dimmed tile only
+ * ever answers "empty or not".
+ */
+test.describe("the count on a tile", () => {
+  test("a declared count is drawn", async ({ page }) => {
+    await page.goto(URL_PAGE);
+    const badge = page.locator('.fa-tile[data-fa-tile^="beans"] .fa-tile-count').first();
+    await expect(badge).toHaveText("466");
+  });
+
+  test("ZERO is drawn, and marked as the empty state", async ({ page }) => {
+    // The whole feature. A tile that hid its badge at zero would leave the
+    // reader with exactly the ambiguity this exists to remove.
+    await page.goto(URL_PAGE);
+    const badge = page.locator('.fa-tile[data-fa-tile^="library"] .fa-tile-count').first();
+    await expect(badge).toHaveText("0");
+    await expect(badge).toHaveAttribute("data-fa-empty", "true");
+  });
+
+  test("a tile with NO declared count draws NO badge", async ({ page }) => {
+    // The assertion that would fail on a `?? 0` anywhere in the reader, which
+    // is the only failure mode worth building a fixture for. `dh4f`: an
+    // absent count and an empty graph are opposite facts.
+    await page.goto(URL_PAGE);
+    const tile = page.locator('.fa-tile[data-fa-tile^="navbar-only"]').first();
+    await expect(tile).toHaveCount(1);
+    await expect(tile.locator(".fa-tile-count")).toHaveCount(0);
+  });
+
+  test("absent and zero are distinguishable WITHOUT reading the number", async ({ page }) => {
+    // Asserted as a comparison rather than against a literal: the two states
+    // have to differ from each other, which is what a reader glancing at a row
+    // of tiles actually does. A test pinning a specific colour would pass on
+    // the day both became the same colour by a theme edit.
+    //
+    // STRUCTURE rather than `toBeVisible`. These tiles mount inside the
+    // navbar's collapsible menu, so nothing here is visible until a reader
+    // opens it -- and an assertion that depended on that would be testing the
+    // disclosure, not the badge. What has to hold is that the two states are
+    // different ELEMENTS: zero draws a pill carrying the empty marker, absent
+    // draws nothing at all. A reader cannot confuse those, and a `?? 0` in the
+    // reader would collapse them into one.
+    await page.goto(URL_PAGE);
+    const zero = page.locator('.fa-tile[data-fa-tile^="library"] .fa-tile-count').first();
+    const absent = page.locator('.fa-tile[data-fa-tile^="navbar-only"] .fa-tile-count');
+    await expect(zero).toHaveAttribute("data-fa-empty", "true");
+    await expect(absent).toHaveCount(0);
+  });
+
+  test("the count reaches the ACCESSIBLE NAME, not only the pixels", async ({ page }) => {
+    // A badge a screen reader does not announce leaves exactly the reader who
+    // cannot glance at the tile unable to tell an empty viewer from a full
+    // one — the defect, made worse for the people it hurts most.
+    await page.goto(URL_PAGE);
+    const tile = page.locator('.fa-tile[data-fa-tile^="beans"]').first();
+    await expect(tile).toHaveAttribute("aria-label", /466 beans/);
+  });
+
+  test("a zero count is announced as zero, not omitted", async ({ page }) => {
+    await page.goto(URL_PAGE);
+    const tile = page.locator('.fa-tile[data-fa-tile^="library"]').first();
+    await expect(tile).toHaveAttribute("aria-label", /0 entries/);
+  });
+
+  test("an uncounted tile's name says nothing about a count", async ({ page }) => {
+    // Not "says zero", and not a made-up "unknown": the name carries what the
+    // tile always carried and no more.
+    await page.goto(URL_PAGE);
+    const label = await page
+      .locator('.fa-tile[data-fa-tile^="navbar-only"]')
+      .first()
+      .getAttribute("aria-label");
+    expect(label).not.toMatch(/\b0\b/);
+    expect(label).toMatch(/navbar-only/);
+  });
+
+  test("the badge does not displace the caption", async ({ page }) => {
+    // The tile still has to say what it IS. A count that pushed the caption
+    // out would answer "how many" and lose "how many of what".
+    await page.goto(URL_PAGE);
+    const tile = page.locator('.fa-tile[data-fa-tile^="beans"]').first();
+    await expect(tile.locator(".fa-tile-caption")).toHaveText("beans");
   });
 });
