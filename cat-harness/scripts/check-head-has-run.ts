@@ -52,6 +52,33 @@
  * either: telling somebody their commit is unverified when you simply could
  * not look would train them to ignore it, which costs more than the gap.
  *
+ * ## "No run" is not one situation — bean `sddf`
+ *
+ * Exit 1 is the same either way, because the operator's immediate position is
+ * the same: **nothing verified this head**. But WHY differs, and one of the
+ * reasons used to get advice that made things worse. So the no-run branch now
+ * asks {@link mergeStateForHead} and says which of these it is:
+ *
+ * | why | what it means | what to do |
+ * |---|---|---|
+ * | **conflicted** | the forge publishes no `refs/pull/N/merge`, and a `pull_request` run checks that ref out | merge the base in. **Never dispatch** |
+ * | mergeable | a run is owed and its absence is unexplained — this is `3pqn` | dispatching is safe here |
+ * | not a PR head | no open PR has this sha, so nothing was owed | open the PR, or ask about the right head |
+ * | unknown | the probe itself failed | check by hand; assume nothing |
+ *
+ * **The conflicted row is why this was a defect and not a wording nit.** The
+ * old message said *"this is bean `3pqn`: the event was dropped"* and told the
+ * reader to dispatch. A dispatch resolves `refs/heads/<branch>`, not the merge
+ * ref — so on a conflicted PR it is a green signal for a tree that will never
+ * exist, which is worse than the absence it replaces. `yv4z` established that
+ * and `prepare-merge` §Guardrails gained a step 0 for it; this script, the one
+ * an operator actually runs at that moment, did not get the memo.
+ *
+ * It also stated a cause as fact two sentences before admitting the evidence
+ * could not distinguish it — the `xom7` shape, inside the file written to
+ * prevent it, and the second time this file has done that (see the hazard
+ * section below).
+ *
  * A run for a DIFFERENT commit is not a run for this one, and that distinction
  * is the whole check: in both of the bean's cases the branch *did* have a
  * recent run — for the commit the previous PR had merged.
@@ -176,6 +203,96 @@ export function resolveCommit(repo: string, rev: string): string | undefined {
   }
 }
 
+/**
+ * Why a pushed commit might legitimately have no `pull_request` run.
+ *
+ * `not-a-pr-head` — no open PR has this sha as its head, so no `pull_request`
+ * event was ever owed. `conflicted` — a PR has it, and the forge is publishing
+ * no merge ref for that PR. `mergeable` — the merge ref is there, so a run is
+ * owed and its absence is unexplained. `unknown` — the probe itself failed.
+ */
+export type MergeState = "not-a-pr-head" | "conflicted" | "mergeable" | "unknown";
+
+/**
+ * Which open PR has `sha` as its head, asked of the forge with plain git.
+ *
+ * `refs/pull/*` is served to anyone who can clone, so this needs **no token** —
+ * which is the point. The runs query above needs `GITHUB_TOKEN` and degrades to
+ * `cannot-ask` without one, and that is precisely the situation in which an
+ * operator is left staring at an absence. This probe still answers there.
+ */
+export type GitRunner = (args: string[]) => string;
+
+/** The real one. Injected in tests, for the reason `runsForHead` gives for `fetchImpl`. */
+export const gitRunner =
+  (repo: string): GitRunner =>
+  (args) =>
+    execFileSync("git", ["-C", repo, ...args], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+
+export function prNumberForHead(
+  repo: string,
+  sha: string,
+  git: GitRunner = gitRunner(repo),
+): number | undefined {
+  try {
+    const out = git(["ls-remote", "origin", "refs/pull/*/head"]);
+    for (const line of out.split("\n")) {
+      const [got, ref] = line.split(/\s+/);
+      if (got === sha) {
+        const n = /refs\/pull\/(\d+)\/head/.exec(ref ?? "");
+        if (n) return Number(n[1]);
+      }
+    }
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Is a `pull_request` run OWED for this head, or is the PR unmergeable?
+ *
+ * **The merge ref is the discriminator; the clock is not.** Measured on PR
+ * #813, 2026-09-21, one PR with mergeability the only variable:
+ *
+ * | | conflicted | resolved |
+ * |---|---|---|
+ * | `refs/pull/N/merge` | absent for 433 s | present within 15 s |
+ * | `pull_request` runs | zero for 8+ minutes | five, 7 s after the push |
+ *
+ * Three simultaneous controls make the absence a measurement rather than a
+ * wait: a normal latency measured at 2 m 43 s on a sibling PR from the same
+ * base, twelve open mergeable PRs holding merge refs at that instant, and two
+ * PRs CREATED DURING the polling window receiving theirs. The forge was
+ * minting merge refs throughout the seven minutes it declined to mint this one.
+ *
+ * Bean `yv4z` proposes a `--wait` flag for this script. That is the wrong
+ * instrument: `pull_request` latency varied more than twenty-fold in one hour
+ * under normal operation (7 s against 2 m 43 s), which is why that bean's flat
+ * timing series across six observations predicted nothing. A clock cannot
+ * separate "will never run" from "has not run yet". This can.
+ */
+export function mergeStateForHead(
+  repo: string,
+  sha: string,
+  git: GitRunner = gitRunner(repo),
+): MergeState {
+  const n = prNumberForHead(repo, sha, git);
+  if (n === undefined) return "not-a-pr-head";
+  try {
+    const out = git(["ls-remote", "origin", `refs/pull/${n}/merge`]);
+    return out.trim() === "" ? "conflicted" : "mergeable";
+  } catch {
+    // The head lookup succeeded and this one did not, so the difference is the
+    // probe rather than the PR. Never `conflicted` on a failed read — that is
+    // the confident wrong answer this file exists to prevent.
+    return "unknown";
+  }
+}
+
 /** Is this commit on any remote-tracking ref — i.e. has it been pushed? */
 export function isPushed(repo: string, sha: string): boolean {
   try {
@@ -188,6 +305,66 @@ export function isPushed(repo: string, sha: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * What to tell somebody whose pushed head has no run — as a STRING, so the
+ * branch that used to give dangerous advice can be executed by a test.
+ *
+ * Extracted for the reason `reconcile()` was in `check-bean-front-matter`: a
+ * message only reachable by running the whole script against a live forge in a
+ * state you cannot conjure is a message nothing checks. The conflicted variant
+ * is the one that matters and the one that was wrong, and no test could reach
+ * it while it lived inline.
+ */
+export function noRunAdvice(merge: MergeState): string {
+  if (merge === "conflicted") {
+    // The one case with a KNOWN answer, and the one where the old advice was
+    // actively harmful. Measured on PR #813: a conflicted PR gets no merge ref
+    // and no `pull_request` run, and both return within seconds of resolution.
+    return (
+      "\n  Its pull request is UNMERGEABLE — the forge is publishing no\n" +
+      "  `refs/pull/N/merge` for it. A `pull_request` run checks that ref out,\n" +
+      "  so this head will NEVER get one until the conflict is resolved. This is\n" +
+      "  not a dropped event, and waiting will not help.\n" +
+      "\n  MERGE THE BASE BRANCH IN and push. Do NOT dispatch the workflow: a\n" +
+      "  dispatch resolves `refs/heads/<branch>`, so it would test the branch\n" +
+      "  rather than the merge result — a green signal for a tree that will never\n" +
+      "  exist, which is worse than the absence it replaces.\n" +
+      "  Beans `yv4z`, `sddf`; `prepare-merge` §Guardrails step 0."
+    );
+  }
+  const head =
+    "\n  Merging on \"nothing red\" here merges UNVERIFIED.\n" +
+    "\n  WHY it has no run is NOT established. A pull request carrying zero\n" +
+    "  checks looks exactly like one whose checks have not started, and this\n" +
+    "  script cannot tell those apart — so it does not pick one.";
+  if (merge === "mergeable") {
+    return (
+      head +
+      "\n\n  What IS established: its PR is mergeable, so a `pull_request` run is\n" +
+      "  owed and its absence is unexplained (bean `3pqn`). Latency is no guide —\n" +
+      "  measured 7s and 2m43s within one hour on this repository, so elapsed\n" +
+      "  time separates nothing. Re-pushing may not fix it either: on 2026-09-20\n" +
+      "  two consecutive pushes were both dropped, 26s apart. Dispatching against\n" +
+      "  this ref is safe HERE, because while the PR is mergeable the branch and\n" +
+      "  the merge result agree."
+    );
+  }
+  if (merge === "not-a-pr-head") {
+    return (
+      head +
+      "\n\n  No open pull request has this sha as its head, so no `pull_request`\n" +
+      "  event was ever owed for it. If you expected one, open the PR — or ask\n" +
+      "  again about the head that IS the PR's."
+    );
+  }
+  return (
+    head +
+    "\n\n  The mergeability probe itself failed, so even THAT is unknown here.\n" +
+    "  Check `mergeable_state` by hand before dispatching anything: on a\n" +
+    "  conflicted PR a dispatch tests a tree that will never exist."
+  );
 }
 
 if (import.meta.main) {
@@ -222,14 +399,10 @@ if (import.meta.main) {
       );
       process.exit(1);
     }
-    console.error(
-      "\n  It IS pushed, so this is bean `3pqn`: the event was dropped.\n" +
-        "\n  A pull request carrying zero checks looks exactly like one whose checks\n" +
-        "  have not started. Merging on \"nothing red\" here merges UNVERIFIED.\n" +
-        "\n  Re-pushing may not fix it — on 2026-09-20 two consecutive pushes were\n" +
-        "  both dropped, the second 26s after the first. Dispatch the workflow\n" +
-        "  against this ref instead, and read that run.",
-    );
+    // WHY is it not run? Asked rather than asserted, and the answer is a
+    // pure function so a test can execute every branch — including the one
+    // that used to say "the event was dropped" and tell you to dispatch.
+    console.error(noRunAdvice(mergeStateForHead(REPO, sha)));
     process.exit(1);
   }
   console.log(`✓ ${sha.slice(0, 10)} — ${verdict.runs.length} run(s):`);
