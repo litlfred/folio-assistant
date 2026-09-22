@@ -27,7 +27,14 @@ import {
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
 import { documentIndexOf } from "../lib/navbar.js";
-import { navbarGeometryCssPath, renderNavbarGeometryCss } from "../gen-navbar-geometry-css.js";
+import {
+  BEGIN,
+  END,
+  NAVBAR_GEOMETRY_MARKER_ERROR,
+  navbarGeometryCssPath,
+  renderNavbarGeometryCss,
+  withGeometry,
+} from "../gen-navbar-geometry-css.js";
 import { publishedUrlOf } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
@@ -383,9 +390,11 @@ describe("the geometry is stated ONCE — `sjic`", () => {
   // second answer to the question `siteDirFor` exists to answer, and it goes
   // on passing against a path nothing serves.
   const INSTANCE = instanceRootFor(import.meta.dir);
-  const CSS_DIR = join(INSTANCE, siteDirFor(INSTANCE), "assets", "css");
-  const geometryCss = readFileSync(join(INSTANCE, navbarGeometryCssPath(INSTANCE)), "utf8");
-  const uiCss = readFileSync(join(CSS_DIR, "docs-ui.css"), "utf8");
+  const uiCss = readFileSync(join(INSTANCE, navbarGeometryCssPath(INSTANCE)), "utf8");
+  // The generated REGION, sliced out of the authored stylesheet it now lives
+  // in. See the "self-sufficient" spec below for why it is a region rather
+  // than a second file.
+  const geometryCss = uiCss.slice(uiCss.indexOf(BEGIN), uiCss.indexOf(END) + END.length);
 
   it("the generated stylesheet carries the module's own numbers", () => {
     expect(geometryCss).toBe(renderNavbarGeometryCss());
@@ -404,12 +413,63 @@ describe("the geometry is stated ONCE — `sjic`", () => {
     expect(rem("mark")).toBe(NAV_GLYPH_PX);
   });
 
-  it("`docs-ui.css` DEFINES neither width — it only reads them", () => {
-    // A definition here is the duplication coming back. Uses are expected and
-    // are the point of generating the definitions.
-    expect(uiCss).not.toMatch(/--fa-nav-collapsed:\s*[0-9]/);
-    expect(uiCss).not.toMatch(/--fa-nav-open:\s*[0-9]/);
+  it("defines every width ONLY inside the generated region", () => {
+    // The duplication this bean exists to end, checked from the other side: a
+    // hand-authored definition anywhere outside the fences is the second copy
+    // coming back.
+    //
+    // NOT "exactly once" — the first draft asserted that and was wrong about
+    // the CSS rather than finding a bug in it. `--fa-nav-open` is defined
+    // TWICE on purpose, at `:root` and again inside the wide media query,
+    // because the theme widens its own sidebar there. The invariant is about
+    // WHERE a definition may appear, not how many there are.
+    const authored = uiCss.slice(0, uiCss.indexOf(BEGIN)) + uiCss.slice(uiCss.indexOf(END));
+    for (const prop of ["--fa-nav-collapsed", "--fa-nav-open", "--fa-nav-mark", "--fa-nav-pad"]) {
+      expect({ prop, definedOutsideTheRegion: new RegExp(`${prop}:\\s*[0-9]`).test(authored) }).toEqual({
+        prop,
+        definedOutsideTheRegion: false,
+      });
+      expect({ prop, definedInside: new RegExp(`${prop}:\\s*[0-9]`).test(geometryCss) }).toEqual({
+        prop,
+        definedInside: true,
+      });
+    }
     expect(uiCss).toContain("var(--fa-nav-collapsed)");
+  });
+
+  it("docs-ui.css is SELF-SUFFICIENT — the region travels with it", () => {
+    // WHY A REGION AND NOT A SECOND FILE, and it cost a debugging session.
+    //
+    // The first version generated `navbar-geometry.css` beside docs-ui.css and
+    // linked it from `head_custom.html`. That made docs-ui.css depend on a
+    // file 23 sources inline it WITHOUT — every e2e fixture that builds a page
+    // from `readFileSync(docs-ui.css)`. Those pages got
+    // `width: var(--fa-nav-collapsed)` with the property undefined, which is
+    // INVALID AT COMPUTED-VALUE TIME and therefore silent: the sidebar took
+    // `auto` width, `.side-bar + .main` lost its margin, the main column
+    // landed on top of the fixed sidebar, and a11y clicks timed out against a
+    // button that was visible, enabled and stable throughout.
+    //
+    // Patching 23 fixtures would have been 23 places to forget. One
+    // self-sufficient stylesheet is none.
+    expect(uiCss.indexOf(BEGIN)).toBeGreaterThanOrEqual(0);
+    expect(uiCss.indexOf(END)).toBeGreaterThan(uiCss.indexOf(BEGIN));
+    // Before every rule that reads it, or the cascade order stops being true.
+    expect(uiCss.indexOf(END)).toBeLessThan(uiCss.indexOf("var(--fa-nav-collapsed)"));
+  });
+
+  it("refuses an unterminated region rather than guessing where it ends", () => {
+    // A wrong guess eats authored CSS, which is the one outcome a generator
+    // over a hand-written file must never have.
+    expect(() => withGeometry(`${BEGIN}\n:root{}\n/* no end */`)).toThrow(
+      NAVBAR_GEOMETRY_MARKER_ERROR,
+    );
+  });
+
+  it("is idempotent — regenerating replaces the region, never stacks it", () => {
+    const once = withGeometry("body{}");
+    expect(withGeometry(once)).toBe(once);
+    expect([...withGeometry(once).matchAll(/navbar-geometry:begin/g)]).toHaveLength(1);
   });
 
   it("the strip is the mark and its two gutters, derived either way", () => {
