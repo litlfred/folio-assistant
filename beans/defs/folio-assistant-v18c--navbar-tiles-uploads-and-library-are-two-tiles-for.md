@@ -137,3 +137,38 @@ Still open on this bean: cat-harness's own `library/` renders 0 entries. And
 issue #836's other two deliverables — the librarian role and the filing skills
 (Dublin Core, web-page archiving at both fidelities, arXiv materialization) —
 are not started.
+
+
+## Round 2 — the librarian (issue #836, deliverables 2 and 3)
+
+A ROLE gap, not only a viewer gap. Of 43 declared roles the only
+ingestion-adjacent one was `ingestion-agent`, whose persona is *"turns an
+uploaded source into corpus"* — DERIVATION. Nothing in the model knew how to
+acquire or file. Dublin Core was analysed in a doc and used by
+`tabular-metadata`, but no role carried it; arXiv appeared only as citation
+metadata in `bib-qa`/`paper-importer`, with no acquisition path; web-page
+archiving was absent entirely.
+
+- `role:librarian` + `actor:librarian`, filed beside `ingestion-agent`. The
+  actor is `person` deliberately: the decisions it owns are the ones an
+  unattended engine must not make — may this be redistributed, does a
+  logged-in view count as the public document, is an approximate vocabulary
+  term worse than a local one.
+- `filing-dublin-core` — what `dcterms` carries and where it stops, under the
+  house rule *generalising is sound; inventing is not*. Carries the sidecar
+  rule this round's reader fix came from.
+- `archiving-web-pages` — PDF and tarball are evidence of DIFFERENT things
+  (appearance vs content) and neither substitutes. The queue proves it: two
+  vendor doc pages captured PDF-only, assets already gone.
+- `archiving-arxiv` — the version suffix is part of the identity, not
+  decoration. `2602.12670v4` is what was read; `2602.12670` is a question.
+
+WHAT THESE SKILLS DELIBERATELY DO NOT DO: state API endpoints, response field
+names or the arXiv id grammar. No network here, and the repo's own rule in
+`how-much-of-this-does-dublin-core-carry.md` is that such things are *settled
+against the published specifications rather than from memory*. Each page names
+what must be looked up instead of asserting it — a field name that is almost
+right parses to `undefined` and loses authors silently rather than erroring.
+
+`kg:audit` bound the role: `role-has-actor` fired on exactly one role, mine,
+which is how the missing actor was found.
