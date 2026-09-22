@@ -1,11 +1,11 @@
 ---
 # folio-assistant-10s1
 title: 'MATERIALIZED IS READ-ONLY: a copy of someone else''s artefact is not yours to edit — copy it into your own folio first, and that copy-out is step one of review'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:01:44Z
-updated_at: 2026-09-22T06:55:01Z
+updated_at: 2026-09-22T09:35:05Z
 parent: folio-assistant-p5wm
 ---
 

@@ -394,6 +394,10 @@
       }
     }
   ],
+  "_folioMount_comment": "R30, bean j2if. The library VIEW is a page a reader browses, so it carries the folio the same way a who-iris replica does \u2014 board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the generated viewer pages whose rows offer a pull-out; check:folio-mount fails the build for one that lost the mount. Written as docs/cat-harness/library/ rather than a pattern because that is where viewerPlacement actually puts them, and a declaration that guessed would be a second copy of the mount table.",
+  "folioMount": {
+    "roots": ["docs/cat-harness/library/"]
+  },
   "directories": [
     {
       "id": "tools",
@@ -922,6 +926,20 @@
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "skip",
+      "_visualiser_comment": "The docs-auto GLOSSARY INDEX, not `docs/glossary/index.html`. That was the declared value until 2026-09-22 and it was CIRCULAR: `docs/glossary/index.html` IS the state-visualiser's own page for this graph, so the page rendered \u201cThis graph is rendered elsewhere \u2026 the declaration names a visualiser for it: /glossary/\u201d \u2014 pointing at the page you were reading. It was declared to make `published-graphs.md` count the graph as published, which made the count look right and the page say something false. The docs-auto index is a real rendering: 44 terms, each with the definition joined from the role registry.",
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
+        "skill": "swimlane-glossary"
+      },
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived \u2014 that a concept was once minted \u2014 is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "graphKinds": [
+        "glossary"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

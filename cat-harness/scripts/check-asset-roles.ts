@@ -39,7 +39,6 @@ import {
   processMayWriteAsset,
   strayAssetRoleKeys,
 } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
 
 export interface AssetRoleReport {
   /** Roles every instance must declare that `ASSET_ROLES` does not govern. */

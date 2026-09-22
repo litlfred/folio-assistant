@@ -4371,4 +4371,18 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
 //
 // `@ts-expect-error` is not needed and no binding is taken: the import is for
 // its side effect, which is also why it must not be elided.
+//
+// WHAT THIS ONE IMPORT REPLACED, kept here because it was the evidence and
+// this is now its only home. Before the trigger moved here, every module that
+// resolved a declared directory had to carry its own copy. Measured
+// 2026-09-20 across the 20 modules that do: **10 of them threw** `unknown
+// graph kind "folio"` on a valid declaration — including `narratives.ts` and
+// the `translation` MCP tool — **while every gate and all 3298 tests
+// passed.** Nothing covered the path. That is the #464 class, and the reason
+// the fix had to be a precondition of loading a reader rather than a rule
+// each caller remembers.
+//
+// The 74 redundant copies were removed by bean `z9ax` once this made them
+// no-ops. Two were NOT removed and are the mechanism rather than instances of
+// the problem: this import, and `schemas/test-preload.ts`.
 import "./folio-graph-kind.js";

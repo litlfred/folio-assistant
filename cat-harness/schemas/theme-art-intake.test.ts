@@ -22,7 +22,6 @@ import {
 } from "./theme-art-intake.js";
 import { CatHarnessDeclarationSchema, declarationPathIn } from "./cat-harness.js";
 import { THEME_LAYOUTS, type ThemeLayout } from "./theme.js";
-import "./folio-graph-kind.js";
 
 const INSTANCE = join(import.meta.dir, "..");
 

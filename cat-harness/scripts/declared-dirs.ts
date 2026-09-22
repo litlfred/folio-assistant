@@ -34,9 +34,6 @@
 import { relative, sep } from "node:path";
 
 import { directoriesForGraph, instanceRootFor, repoRootFor } from "../schemas/cat-harness.js";
-// Registers the `folio` graph kind. Without it `readDeclaration` throws on
-// this repository's own declaration — which is the reason this script exists.
-import "../schemas/folio-graph-kind.js";
 
 if (import.meta.main) {
   const kinds = process.argv.slice(2).filter((a) => !a.startsWith("-"));

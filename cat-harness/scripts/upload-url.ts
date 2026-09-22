@@ -49,9 +49,6 @@ import {
   rootForScope,
   type ContentDirectory,
 } from "../schemas/cat-harness.js";
-// `folio` is registered by core on import and this instance declares a folio
-// graph; without it `readDeclaration` throws on a valid declaration.
-import "../schemas/folio-graph-kind.js";
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 
 /** The graph kind an acquisition queue declares. */

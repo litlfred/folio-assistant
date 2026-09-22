@@ -27,6 +27,19 @@ people stop reading them.
 
 ## 1. What counts as a surprise
 
+**Ask it as after-action review asks it**, which is the literature the owner
+settled on for this half (2026-09-22), and only for this half:
+
+> **What did you expect to happen, what actually happened, and why the
+> difference?**
+
+That framing earns its place for one reason: it makes the surprise
+articulable BEFORE you know whether it matters. "Something felt off" is not
+reviewable; "I expected the tracer to read the mask as ink and it read the
+ground" is. The filter in §2 then operates on a statement rather than on a
+feeling, which is the difference between a rule that can be applied
+consistently and one that reduces to mood.
+
 **LOGICAL surprise is where this starts, and statistical surprise is not yet
 available.** "Statistically unexpected" implies a base rate, and the corpus
 carries none — nothing here records how often a gate fires, how often a merge
@@ -83,6 +96,26 @@ was your own slip and the system behaved as documented; or the corpus already
 says it and you had not read that part. **The third is the common one**, and
 checking costs one `grep`.
 
+### The second one has a blameless reading, and it is the sharper one
+
+After-action review's central move is that a finding is about the SYSTEM
+rather than about the person, and applied here it does not widen the filter —
+it says more precisely what the filter was already testing. "My own slip"
+almost never fails on its own. It fails when the system behaved as
+documented AND nothing about the system made the slip easy. Where the system
+DID make it easy, the second half of the filter — *would the next agent hit
+it too* — is already true, and the candidate passes.
+
+The worked case is number 4 below. Reading it as "I mis-copied an id" makes
+it a slip and files nothing. Reading it blamelessly asks why a wrong id was
+easy to produce and easy to miss, and the answers are properties of the
+system: a truncated id is still a well-formed id, and a `| tail -1` hides a
+non-zero exit. Both are things the next agent meets unchanged.
+
+**This is a refinement of the wording, not a change to the rule.** Saying so
+matters: adopting a methodology and then claiming it altered more than it did
+is how a corpus acquires vocabulary without acquiring discipline.
+
 ## 3. PROMPT, never write
 
 **The agent proposes; a person decides.** This is
@@ -136,3 +169,24 @@ attention, or it does not and is worth a bean at most.
 **It does not automate the corpus change.** There is no tool here, on
 purpose: a mechanism that could write guidance would be used to write
 guidance, and clause three is the whole point.
+
+## Provenance — which methodology, and what it did NOT settle
+
+Owner, 2026-09-21: *"any lit we need on proven methdologies to help?"*, and
+2026-09-22: **after-action review, for part 1 only.**
+
+What it contributed: the expected/actual/why framing in §1, and the blameless
+reading of the slip exclusion in §2. What it did not contribute, deliberately:
+
+- **No incident severity scale.** AAR practice usually grades by impact, and
+  this skill still refuses to — see the closing section. Grading would invite
+  filing the low ones, which is the noise the recurrence filter exists to
+  prevent.
+- **No timeline reconstruction.** AAR for an outage rebuilds a sequence
+  because the sequence is contested. Here the agent was present for the whole
+  turn and the transcript is the timeline.
+- **Nothing for part 2.** The routing half, [`where-does-this-go`](where-does-this-go.md),
+  draws on no methodology. Information architecture was considered and
+  declined on scale: nine rules is below the point where faceted
+  classification earns its complexity, and what the corpus lacked was an
+  index rather than a taxonomy.

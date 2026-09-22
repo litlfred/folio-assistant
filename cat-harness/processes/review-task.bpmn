@@ -34,6 +34,11 @@
        ═══════════════════════════════════════════════════════════ -->
 
   <bpmn:process id="Process_Review" name="Review task" isExecutable="false">
+    <bpmn:documentation>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.
+
+You are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both goes through both.
+
+The accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes "who decided" answerable.</bpmn:documentation>
 
     <bpmn:laneSet id="LaneSet_Review">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">

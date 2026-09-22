@@ -86,6 +86,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/fsh-guts/index.md' | relative_url }})
 
+### `glossary`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- Bootstrap — *declared, not published*
+- [C@T Harness]({{ '/glossary/' | relative_url }})
+
 ### `health`
 
 1 of 1 published.
@@ -130,6 +138,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+
+### `models`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Bootstrap — *declared, not published*
 
 ### `processes`
 

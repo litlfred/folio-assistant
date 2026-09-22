@@ -19,7 +19,6 @@ import { join } from "node:path";
 import { itemState, viewerHtml } from "../gen-uploads-viz.ts";
 import { readLibraryGraph } from "../library-graph.ts";
 import { instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.js";
 import type { UploadItem } from "../library-graph.ts";
 
 const item = (over: Partial<UploadItem> = {}): UploadItem => ({

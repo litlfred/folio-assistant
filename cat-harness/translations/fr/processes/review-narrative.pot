@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-narrative\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.514Z\n"
+"POT-Creation-Date: 2026-09-22T08:18:10.081Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,29 +14,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/review-narrative.bpmn:70
+#: processes/review-narrative.bpmn:75
 #. Diagram element documentation
 msgid "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph."
 msgstr ""
 
-#: processes/review-narrative.bpmn:91
+#: processes/review-narrative.bpmn:96
 #. Diagram element documentation
 msgid "A reviewer cannot accept a change — that is the editor's lane — so the output is findings on the sidecar, not a commit."
 msgstr ""
 
-#: processes/review-narrative.bpmn:54
+#: processes/review-narrative.bpmn:59
 #. Diagram label
 msgid "Adjudicate the voice findings"
 msgstr ""
 
-#: processes/review-narrative.bpmn:80
+#: processes/review-narrative.bpmn:85
 #. Diagram element documentation
 msgid "Coverage, preserved terms and echoes are mechanical. A semantic round trip needs a back-translator that has not seen the original; where none has run, the criterion carries no verdict and that is the honest state."
 msgstr ""
 
-#: processes/review-narrative.bpmn:64
+#: processes/review-narrative.bpmn:69
 #. Diagram element documentation
 msgid "Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register. Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance's case and the default everywhere."
+msgstr ""
+
+#: processes/review-narrative.bpmn:27
+#. Diagram element documentation
+msgid "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does. You are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative. Everything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto."
 msgstr ""
 
 #: processes/review-narrative.bpmn:26
@@ -44,72 +49,72 @@ msgstr ""
 msgid "Narrative review"
 msgstr ""
 
-#: processes/review-narrative.bpmn:98
+#: processes/review-narrative.bpmn:103
 #. Diagram label
 msgid "Narrative reviewed"
 msgstr ""
 
-#: processes/review-narrative.bpmn:29
+#: processes/review-narrative.bpmn:34
 #. Diagram label
 msgid "Narrative reviewer"
 msgstr ""
 
-#: processes/review-narrative.bpmn:106
+#: processes/review-narrative.bpmn:111
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/review-narrative.bpmn:47
+#: processes/review-narrative.bpmn:52
 #. Diagram element documentation
 msgid "Open the block's `.qa.json`, not just the evidence line: register is a property of the passage, and the sidecar quotes one line of it."
 msgstr ""
 
-#: processes/review-narrative.bpmn:44
+#: processes/review-narrative.bpmn:49
 #. Diagram label
 msgid "Prose changed"
 msgstr ""
 
-#: processes/review-narrative.bpmn:46
+#: processes/review-narrative.bpmn:51
 #. Diagram label
 msgid "Read the sidecar findings"
 msgstr ""
 
-#: processes/review-narrative.bpmn:90
+#: processes/review-narrative.bpmn:95
 #. Diagram label
 msgid "Record findings as advice"
 msgstr ""
 
-#: processes/review-narrative.bpmn:69
+#: processes/review-narrative.bpmn:74
 #. Diagram label
 msgid "Review the editorial dependencies"
 msgstr ""
 
-#: processes/review-narrative.bpmn:79
+#: processes/review-narrative.bpmn:84
 #. Diagram label
 msgid "Review the translation"
 msgstr ""
 
-#: processes/review-narrative.bpmn:55
+#: processes/review-narrative.bpmn:60
 #. Diagram element documentation
 msgid "Three outcomes, all legitimate: the register is wrong for this genre; the criterion does not belong in this genre and should carry `profiles`; or the block is a stated exception and a reviewer entry records why."
 msgstr ""
 
-#: processes/review-narrative.bpmn:77
+#: processes/review-narrative.bpmn:82
 #. Diagram label
 msgid "Translated?"
 msgstr ""
 
-#: processes/review-narrative.bpmn:30
+#: processes/review-narrative.bpmn:35
 #. Diagram element documentation
 msgid "Turns mechanical matches into verdicts, not the other way round: `qa-checkers-voice.ts`, `qa-checkers-uses.ts` and `translation-block-qa.ts` produce candidates, and this lane is the only place a phrase-list hit becomes a wrong-register finding, an out-of-genre criterion, a stated exception, or nothing at all. House voice is adjudicated before any activated overlay is even reached, because an overlay adds to the house judgement rather than replacing it."
 msgstr ""
 
-#: processes/review-narrative.bpmn:63
+#: processes/review-narrative.bpmn:68
 #. Diagram label
 msgid "Voice overlay review"
 msgstr ""
 
-#: processes/review-narrative.bpmn:105
+#: processes/review-narrative.bpmn:110
 #. Diagram label
 msgid "yes"
 msgstr ""

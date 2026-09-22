@@ -80,7 +80,6 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");

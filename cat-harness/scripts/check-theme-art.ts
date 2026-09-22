@@ -41,10 +41,6 @@ import {
   readDeclaration,
   siteDirFor,
 } from "../schemas/cat-harness.js";
-// REQUIRED: this instance declares a `folio` graph, whose kind is registered by
-// a load-time side effect in core. Without it `readDeclaration` throws on the
-// declaration this script exists to read.
-import "../schemas/folio-graph-kind.js";
 import { THEME_LAYOUTS, type ThemeLayout } from "../schemas/theme.js";
 import {
   formatIntakeReport,

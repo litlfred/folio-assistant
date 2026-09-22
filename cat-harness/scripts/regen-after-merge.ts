@@ -75,7 +75,6 @@ import { join } from "node:path";
 
 import { loadGates, type Gate } from "./gates.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");

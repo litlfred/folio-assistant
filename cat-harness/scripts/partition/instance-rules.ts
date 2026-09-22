@@ -233,6 +233,7 @@ export const RULES: Rule[] = [
       // is a platform concept, and the diagrams it reads are the platform's
       // own processes. A folio that draws none still inherits the rule.
       "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
+      "scripts/check-process-documentation.ts", // ...and the process says what it is FOR
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
@@ -252,6 +253,9 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
+      "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`

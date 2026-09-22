@@ -530,18 +530,23 @@ test.describe("the unverified-translation notice", () => {
     const body = notice.locator(".fa-translation-warning__body");
 
     await expect(body).toBeHidden();
-    // NOT AT THE CENTRE, and the reason is a real overlap rather than a
-    // flaky selector. `funp` (R25's glass, stage 1) puts `.fa-glass-handle`
-    // on EVERY page — `position: fixed; top: 0; left: 50%`, measured
-    // 2026-09-22 at 71 x 44 px. The notice is inserted as the first child of
-    // `.main-content`, so its one-line summary sits at y 14.75 spanning the
-    // full column, and the two overlap at the column's centre — which is
-    // exactly the point Playwright clicks by default.
+    // NOT AT THE CENTRE, and this is the ACCEPTED design rather than a
+    // workaround waiting on a decision. `funp` (R25's glass, stage 1) puts
+    // `.fa-glass-handle` on EVERY page — `position: fixed; top: 0;
+    // left: 50%`, measured 2026-09-22 at 71 x 44 px. The notice is inserted
+    // as the first child of `.main-content`, so its one-line summary sits at
+    // y 14.75 spanning the full column, and the two overlap at the column's
+    // centre — exactly where Playwright clicks by default.
     //
-    // A reader is NOT blocked: 71 px of a full-width line is a dead spot,
-    // not a dead control, and the keyboard path has its own test below. So
-    // clicking off-centre is what a reader does, not a way around a defect.
-    // The assertion beneath is what keeps that true.
+    // Bean `tr1m` put three options to the owner — accept the overlap,
+    // reserve 44 px of top padding on every page, or move the tab out of the
+    // content column — and the owner chose ACCEPT (2026-09-22). A tab at the
+    // top edge is the pull-down metaphor, and 71 px of a full-width line is
+    // a dead spot rather than a dead control: a reader clicks anywhere else
+    // on the line, and the keyboard path has its own test below.
+    //
+    // So clicking off-centre is what a reader does. The test beneath is what
+    // keeps that sentence true as the glass changes.
     await summary.click({ position: { x: 24, y: 12 } });
     await expect(body).toBeVisible();
     await expect(body).toContainText("index.md");
@@ -549,10 +554,15 @@ test.describe("the unverified-translation notice", () => {
   });
 
   test("the glass handle takes a slice of the notice, never the line", async ({ page }) => {
-    // The guard for the click above. Moving that click off-centre is only
-    // honest while most of the control is still clickable — if the glass
-    // ever grows to cover the line, the test above would go on passing at
-    // x=24 while a reader met a control that did not respond.
+    // THE GUARD ON AN ACCEPTED OVERLAP, which is what makes accepting it
+    // safe. The owner's choice on `tr1m` was "accept", and that choice rests
+    // on a measurement — 5.7% of one line — rather than on the overlap being
+    // harmless in principle. A decision resting on a number needs the number
+    // checked, or it silently becomes a decision about something else.
+    //
+    // Concretely: if the glass ever grows to cover the line, the test above
+    // would go on passing at x=24 while a reader met a control that did not
+    // respond.
     await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
     const s = (await page.locator(".fa-translation-warning summary").boundingBox())!;
     const h = (await page.locator(".fa-glass-handle").boundingBox())!;

@@ -64,9 +64,6 @@ import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
-// The `folio` graph kind is registered by CORE on import; this module resolves
-// this instance's directories and the instance declares a folio graph.
-import "../schemas/folio-graph-kind.js";
 import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");

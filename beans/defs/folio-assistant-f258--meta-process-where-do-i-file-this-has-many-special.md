@@ -1,11 +1,11 @@
 ---
 # folio-assistant-f258
 title: 'META-PROCESS: ''where do I file this?'' has many specialised answers and no general one — plus the surprise-to-corpus loop'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T21:09:05Z
-updated_at: 2026-09-22T08:51:25Z
+updated_at: 2026-09-22T09:29:56Z
 parent: folio-assistant-ahvw
 ---
 
@@ -90,7 +90,7 @@ Candidates to CHECK, none endorsed here; the owner picks:
 - [x] a written rule for when a surprise becomes a corpus candidate, with the recurrence filter
 - [x] the prompt is a PROMPT — the agent never writes corpus guidance unasked
 - [x] a routing skill naming the filing questions and pointing at the skill that answers each
-- [ ] the owner has said which methodologies, if any, to draw on
+- [x] the owner has said which methodologies, if any, to draw on
 
 
 ## Progress, 2026-09-22 — three of four done-whens; the fourth is the owner's
@@ -165,3 +165,41 @@ Both skills audit clean: `kg:audit` reports zero findings on each.
 Four candidates were recorded when this bean was filed and NONE is endorsed
 here. Asked properly rather than decided quietly, because picking one would
 shape both skills and is the owner's call.
+
+
+## The fourth done-when, settled 2026-09-22 — after-action review, part 1 only
+
+The owner picked AFTER-ACTION REVIEW, and scoped it: part 1 only. Applied to
+`surprise-to-corpus` as two changes, both substantive:
+
+**The expected/actual/why framing opens §1.** It earns its place because it
+makes a surprise ARTICULABLE before anyone knows whether it matters.
+"Something felt off" is not reviewable; "I expected the tracer to read the
+mask as ink and it read the ground" is. The recurrence filter then operates
+on a statement rather than a feeling, which is the difference between a rule
+applied consistently and one that reduces to mood.
+
+**The blameless reading sharpens the slip exclusion**, and it did NOT widen
+the filter — it says more precisely what the filter was already testing. "My
+own slip" almost never fails on its own: it fails when the system behaved as
+documented AND nothing made the slip easy. Where the system DID make it
+easy, the filter's second half — would the next agent hit it too — is
+already satisfied.
+
+Surprise 4 is the worked case. Read as "I mis-copied an id" it is a slip and
+files nothing. Read blamelessly it asks why a wrong id was easy to produce
+and easy to miss, and both answers are system properties: a truncated id is
+still a well-formed id, and `| tail -1` hides a non-zero exit.
+
+**Saying what it did not change is part of the record.** No severity scale
+(AAR usually grades by impact; grading here would invite filing the low
+ones, which is the noise the filter exists to prevent), no timeline
+reconstruction (AAR rebuilds a contested sequence; the agent was present for
+the whole turn and the transcript IS the timeline), and nothing for part 2.
+Adopting a methodology and then claiming it altered more than it did is how
+a corpus acquires vocabulary without acquiring discipline.
+
+**Part 2 draws on nothing, and that was the owner's scoping.** Information
+architecture was the candidate and it was declined on SCALE: nine rules is
+below the point where faceted classification earns its complexity, and what
+the corpus lacked was an index rather than a taxonomy.
