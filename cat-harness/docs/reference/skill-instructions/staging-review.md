@@ -74,6 +74,84 @@ cannot find the thing reports it as missing. That failure is on the record: a
 contrast defect survived two days behind a tile nobody clicked (bean `rptk`),
 because the gate that swept the page never opened the view.
 
+### You can open it yourself — the publish ref is a git branch
+
+Everything above composes URLs **for a reader**. The agent writing them
+usually cannot open them, and that gap has a measured cost.
+
+Probed 2026-09-22 from inside a session container, all three routes:
+
+| route | result |
+|---|---|
+| `curl https://<owner>.github.io/…` | `403` — CONNECT tunnel failed (policy denial) |
+| `WebFetch` | `EGRESS_BLOCKED` |
+| Playwright / Chromium | `net::ERR_TUNNEL_CONNECTION_FAILED` |
+
+**A browser is not a way around it** — Chromium is proxy-configured too, so
+"use Playwright" fails identically. That is worth stating because it is the
+first thing anybody tries.
+
+WHAT IT COST: twelve navbar tiles shipped pointing at the ORIGIN rather than
+the site, because their href carried no `baseurl` (#801). Over a hundred green
+gates were fine with it, and the owner found it by clicking one — which is
+exactly `rptk`'s shape one layer out. Nothing in the repository could look at
+what deployed.
+
+**But the site is published to the `gh-pages` BRANCH, and git works.** So the
+deployed bytes are readable with `git show`, and a Playwright route handler can
+serve them at their real path:
+
+```ts
+const blob = (p: string) => {
+  try { return execFileSync("git", ["show", `origin/gh-pages:${ROOT}/${p}`], { maxBuffer: 1 << 28 }); }
+  catch { return undefined; }                 // absent is a FINDING, not a 200
+};
+await page.route(`${ORIGIN}/**`, (route) => {
+  const u = new URL(route.request().url());
+  let p = u.pathname.startsWith(BASE) ? u.pathname.slice(BASE.length) : u.pathname;
+  p = p.replace(/^\/+/, "");
+  if (p === "" || p.endsWith("/")) p += "index.html";
+  const b = blob(p) ?? blob(`${p}/index.html`);
+  return b ? route.fulfill({ contentType: typeFor(p), body: b })
+           : route.fulfill({ status: 404, body: "not in the publish ref" });
+});
+```
+
+`ROOT` is `""` for the canonical deploy and `STAGING/<slug>` for a preview, so
+the same handler gives you the **before/after pair this skill is about** — and
+a count, not an impression. Fetch the ref first (`git fetch --depth=1
+--filter=blob:none origin gh-pages`); blobs are then fetched on demand.
+
+**Serve it under the real `BASE`.** A page served at the origin root cannot
+reveal a missing `baseurl`, because *"composed against the base"* and *"not
+composed at all"* are the same string there. That is precisely how #801's e2e
+stayed green over the defect.
+
+#### What this does NOT verify, and it matters
+
+It serves the **bytes in the publish ref**. It is not the live host, so it
+cannot see:
+
+- redirects, headers, or anything else the host decides at request time
+- Pages' own 404 handling, or its directory-index rules where they differ
+  from the handler above
+- whether the deploy has actually *published* — a ref can hold bytes that
+  Pages has not served yet (§"Say how long")
+
+So a green result here means *"the published bytes are right"*, never *"the
+site works"*. Report it in those words. A stronger claim than the method
+supports is the thing this skill's third-state table exists to stop.
+
+#### When it stops applying
+
+The technique rests on one assumption: **publishing goes to a branch.** If this
+repository ever moves to the Pages artifact API, `git fetch origin gh-pages`
+fails and there is nothing to read.
+
+That failure must be reported as **could not determine**, never as a clean run
+— an empty ref and a correct deploy are opposite facts, and `dh4f` is this
+repository's name for the defect of scanning nothing and calling it clean.
+
 ### The third state, here as everywhere
 
 "Could not determine" is never rendered as clean — and a change with **no

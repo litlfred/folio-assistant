@@ -1789,3 +1789,48 @@ export function saveQaScriptSidecar(
   mkdirSync(dirname(p), { recursive: true });
   writeFileSync(p, JSON.stringify(sidecar, null, 2) + "\n");
 }
+
+/**
+ * The actor a SCRIPT sweep is acting as, resolved from the environment.
+ *
+ * Bean `a58y` measured that **0 of 5,896 QA verdicts resolved to a declared
+ * actor**: `QaReviewer.id` is a script path, an actor id is a persona, and the
+ * two sides never shared a vocabulary. So `qa-reporting` — the permission
+ * governing who may emit a QA report at all — was not *unmet* but
+ * **unevaluable**, for every verdict in the repository, while reading from the
+ * permission graph as a control.
+ *
+ * ## Why two actors and not one
+ *
+ * The owner's ruling, 2026-09-22: attribute by **where the sweep ran**, not by
+ * what it is. A single `qa-sweep` actor would have been simpler and would have
+ * said less — and the difference is not bookkeeping:
+ *
+ * > A CI verdict is reproducible from the `reviewed_sha` it records. A local
+ * > one may rest on an **uncommitted edit**, so the same sha addresses a tree
+ * > that produced something else.
+ *
+ * Recording which one ruled is what keeps `reviewed_sha` an address rather
+ * than a decoration. Both actors hold `qa-reporting`; neither holds
+ * `content-authoring`.
+ *
+ * ## Why there is no third state here
+ *
+ * Every other resolver in this file reports "could not determine" rather than
+ * guessing, and the absence of one here is deliberate rather than an omission.
+ * The environment is always readable and the partition is total: `CI` is set
+ * by every CI system and absent locally, so there is no case where the answer
+ * is unknown. Inventing an `unknown-sweep` actor would manufacture a state
+ * that cannot occur, and a state that cannot occur is one nobody maintains.
+ *
+ * `ci-pipeline` is declared generically — *"the build and validation system"* —
+ * so a non-GitHub CI resolving to it is correct rather than a near-miss.
+ */
+export const CI_SWEEP_ACTOR = "ci-pipeline";
+/** @see {@link sweepActor} */
+export const LOCAL_SWEEP_ACTOR = "local-sweep";
+
+/** Which of the two declared sweep actors is running. Takes `env` so it is testable. */
+export function sweepActor(env: Record<string, string | undefined> = process.env): string {
+  return env.CI === "true" || env.GITHUB_ACTIONS === "true" ? CI_SWEEP_ACTOR : LOCAL_SWEEP_ACTOR;
+}
