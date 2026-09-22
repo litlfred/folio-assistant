@@ -616,6 +616,261 @@ function classify(
   return { ...base, cwd: inv.cwd, verdict: Verdict.Missing };
 }
 
+/**
+ * A `working-directory` that is absent from the platform repository ON PURPOSE.
+ *
+ * Same contract as {@link FOLIO_PATHS} and for the same reason: `match` is the
+ * declared value, every entry carries a reason, and an entry matching nothing
+ * FAILS the run. An exemption that outlives its step reads as coverage.
+ */
+export interface FolioWorkDir {
+  match: string;
+  reason: string;
+}
+
+export const FOLIO_WORKDIRS: FolioWorkDir[] = [
+  {
+    match: "content",
+    reason:
+      "the folio tree. `qa-sweep` and `lean-build` are the two workflows " +
+      "`AGENTS.md` already names as failing by design here — the platform " +
+      "carries no folio. Matches `content/quantum-observable-universe/lean` " +
+      "too, which is the same absence one level down",
+  },
+  {
+    // declared-path-literal: a value this repo MATCHES against workflow text, not a path it reads. No declaration answers it — the workflows own the spelling.
+    match: "folio-assistant/computations",
+    reason:
+      "bean `u9r9`. NOT simply absent, and the distinction is the finding: " +
+      "`cat-harness/computations` EXISTS one directory over, so the prefix is " +
+      "stale from the split — but it holds one `.json` and ZERO `.py` while " +
+      "the step runs Python. Correcting the path would move the failure " +
+      "rather than fix it, so this stays an exemption until the computations " +
+      "themselves arrive",
+  },
+  {
+    // declared-path-literal: a value this repo MATCHES against workflow text, not a path it reads. No declaration answers it — the workflows own the spelling.
+    match: "folio-assistant/snappea-wasm",
+    reason:
+      "bean `u9r9`. Exists under NO prefix — unlike its neighbour above, " +
+      "there is nothing to point a corrected path at",
+  },
+  {
+    // declared-path-literal: a value this repo MATCHES against workflow text, not a path it reads. No declaration answers it — the workflows own the spelling.
+    match: "tools/hecke-engine",
+    reason:
+      "the Rust engine's own source. `tools/` exists here and holds " +
+      "`index.ts` alone, so this is absent content rather than a stale " +
+      "prefix. Matches `tools/hecke-engine-wasm` too",
+  },
+  {
+    // declared-path-literal: a value this repo MATCHES against workflow text, not a path it reads. No declaration answers it — the workflows own the spelling.
+    match: "tools/pyhecke",
+    reason: "the Python binding's own source; absent here for the same reason",
+  },
+];
+
+/**
+ * One `working-directory` declaration, and what became of it.
+ *
+ * ## Why this is a SEPARATE criterion from {@link Invocation}
+ *
+ * `invocationsFrom` reads `working-directory` to compute the frame a script
+ * path resolves against. It is INPUT there, and trusted — nothing asks
+ * whether the directory is there. Bean `ai9u`: eight declarations named
+ * absent directories across four workflows while this module printed
+ * `✓ every workflow script path resolves`.
+ *
+ * Two causes, and they compound. The value is never a subject; and a step
+ * running `npx typedoc` rather than a script path contributes NO invocation
+ * at all, so it is never examined however broken it is. A step whose
+ * `working-directory` is missing fails 100 % of the time whatever it runs —
+ * a stronger property than any path resolution here, and the one not checked.
+ *
+ * ## Why `cd` targets are NOT included
+ *
+ * GitHub evaluates `working-directory` **before** the script runs, so the
+ * directory must pre-exist. A `cd` inside a `run:` block need not: the same
+ * block may have just created it, and `publish.yml` does exactly that
+ * (`mkdir -p appendices/`, then works in it). Folding the two together would
+ * report a correct workflow as broken, which this module's own header calls
+ * worse than having no check — it teaches the reader to skim, and then the
+ * true positive goes by unread too.
+ */
+export interface WorkDir {
+  file: string;
+  job: string;
+  /** The step's name, or `(job defaults)` / `(workflow defaults)`. */
+  step: string;
+  /** The value exactly as the workflow spells it. */
+  dir: string;
+  verdict: Verdict;
+  note?: string;
+}
+
+/** A value GitHub computes at run time — nothing here can resolve it. */
+const COMPUTED = /[$*?`]/;
+
+function classifyWorkDir(
+  wd: { file: string; job: string; step: string; dir: string },
+  layout: CheckoutLayout,
+): WorkDir {
+  const base = { file: wd.file, job: wd.job, step: wd.step, dir: wd.dir };
+  if (COMPUTED.test(wd.dir)) {
+    return {
+      ...base,
+      verdict: Verdict.Undetermined,
+      note:
+        "the value is a matrix entry or expression, so which directory it " +
+        "names is not knowable from the file",
+    };
+  }
+  const dir = wd.dir.replace(/^\.\//, "").replace(/\/+$/, "");
+
+  // A checkout at another ref RESOLVES here, and that is a real difference
+  // from how {@link classify} treats the same prefix.
+  //
+  // For a script path the question is *what is in that tree*, which a working
+  // copy of HEAD cannot answer — hence `Undetermined` there. For a cwd the
+  // question is only *does the directory exist when the step starts*, and
+  // `actions/checkout` creates it. `feature-staging.yml` works in `pages/`
+  // holding `gh-pages`: its contents are unknowable from here and completely
+  // beside the point. Carrying the invocation rule across would have made a
+  // correct workflow an unfixable permanent unknown — an exemption nobody
+  // could ever retire, which is the shape this module refuses everywhere else.
+  const foreign = layout.otherRef.find((c) => dir === c.path || dir.startsWith(`${c.path}/`));
+  if (foreign && dir === foreign.path) return { ...base, verdict: Verdict.Resolves };
+  if (foreign) {
+    return {
+      ...base,
+      verdict: Verdict.Undetermined,
+      note:
+        `it is below \`${foreign.path}/\`, this repository at ` +
+        `\`${foreign.ref}\` — the checkout makes that root, but whether it ` +
+        `holds \`${dir}\` is a fact about a tree HEAD cannot read`,
+    };
+  }
+
+  // Under a checkout of THIS commit, so the run-time directory is the tree
+  // below that prefix. An empty remainder is the checkout root itself.
+  const inTree = stripCheckout(dir, layout.paths);
+  if (inTree === "") return { ...base, verdict: Verdict.Resolves };
+
+  // Checked out somewhere else entirely, and this value is not under it: the
+  // workspace root is empty at run time, so the step's cwd is a directory the
+  // job never materialised. Bean `7iog`, in the cwd rather than the path.
+  if (layout.any && !layout.atRoot && inTree === dir) {
+    return {
+      ...base,
+      verdict: Verdict.Missing,
+      note:
+        `this job checks the repository out to ` +
+        `${layout.paths.map((p) => `\`${p}/\``).join(", ")} and nothing to ` +
+        `the workspace root, so \`${dir}/\` is empty when the step starts`,
+    };
+  }
+
+  if (existsSync(resolve(ROOT, inTree))) return { ...base, verdict: Verdict.Resolves };
+
+  const folio = FOLIO_WORKDIRS.find((f) => dir.startsWith(f.match));
+  if (folio) return { ...base, verdict: Verdict.NeedsFolio, note: folio.reason };
+
+  return { ...base, verdict: Verdict.Missing };
+}
+
+/** The ratchet file, beside this module — see {@link workDirBaseline}. */
+const BASELINE_FILE = join(import.meta.dir, "workdir-baseline.json");
+
+/**
+ * Known-open `working-directory` declarations — a RATCHET, not an exemption.
+ *
+ * {@link FOLIO_WORKDIRS} says a directory is absent here on purpose and always
+ * will be. This file says the opposite: somebody still owes an answer, and
+ * until they give it the gate should not be red for everyone else. So it may
+ * only SHRINK — an entry that stops matching FAILS the run rather than being
+ * dropped, which is the same direction `gates.ts` and {@link FOLIO_PATHS}
+ * ratchet in, and for the same reason: a stale allowance reads as coverage.
+ *
+ * Keyed `<workflow>: <value>` rather than by line, so an unrelated step added
+ * above does not churn it. Each key carries its reasoning in `why`, checked
+ * against `known` on load — a baseline entry with no stated reason is how a
+ * temporary allowance becomes permanent.
+ */
+export function workDirBaseline(): Set<string> {
+  // `import.meta.dir`, not a spelled-out path, and the same way
+  // `check-lockfile-pinning.ts` reaches its own. The file sits BESIDE this
+  // module, so it travels with it; composing `cat-harness/scripts/` here
+  // would be a second place that knows where this script lives, and this
+  // repository's `check:declared-paths` gate catches exactly that — it
+  // caught this, at 0 → 2, before the change left the working tree.
+  if (!existsSync(BASELINE_FILE)) return new Set();
+  const raw = JSON.parse(readFileSync(BASELINE_FILE, "utf-8")) as {
+    known?: string[];
+    why?: Record<string, string>;
+  };
+  const known = raw.known ?? [];
+  const unexplained = known.filter((k) => !raw.why?.[k]?.trim());
+  if (unexplained.length > 0) {
+    throw new Error(
+      `workdir-baseline.json: ${unexplained.length} entr(ies) carry no reason ` +
+        `in \`why\` — ${unexplained.join(", ")}. An allowance with no stated ` +
+        `reason is one nobody can ever retire.`,
+    );
+  }
+  return new Set(known);
+}
+
+/** How a {@link WorkDir} is keyed in the baseline. */
+export const workDirKey = (w: WorkDir): string => `${w.file}: ${w.dir}`;
+
+/** Every `working-directory` in one workflow, at all three levels. */
+export function workDirsFrom(file: string, text: string): WorkDir[] {
+  const doc = parse(text) as WorkflowDoc;
+  const out: WorkDir[] = [];
+  const fileCwd = doc.defaults?.run?.["working-directory"];
+  /** Workflow-level verdicts, deduped — see the comment at its push site. */
+  const fileLevel = new Map<string, WorkDir>();
+  for (const [job, def] of Object.entries(doc.jobs ?? {})) {
+    const layout = checkoutLayout(def.steps);
+    const jobCwd = def.defaults?.run?.["working-directory"];
+    if (fileCwd !== undefined) {
+      // A workflow-level default is ONE declaration, however many jobs
+      // inherit it — `snappea_wasm.yml` sets one covering four. Emitting it
+      // per job would turn a single edit into four findings and make the
+      // count read as a severity. It is still CLASSIFIED per job, because
+      // each job has its own checkout layout and the same value can resolve
+      // in one and not another; a second verdict is therefore a real second
+      // finding, and only an identical repeat is folded away.
+      const wd = classifyWorkDir({ file, job, step: "(workflow defaults)", dir: fileCwd }, layout);
+      const seen = fileLevel.get(wd.verdict + (wd.note ?? ""));
+      if (seen) seen.job += `, ${job}`;
+      else fileLevel.set(wd.verdict + (wd.note ?? ""), wd);
+    }
+    if (jobCwd !== undefined) {
+      out.push(classifyWorkDir({ file, job, step: "(job defaults)", dir: jobCwd }, layout));
+    }
+    for (const step of def.steps ?? []) {
+      const own = step["working-directory"];
+      if (own === undefined) continue;
+      out.push(
+        classifyWorkDir({ file, job, step: step.name ?? "(unnamed step)", dir: own }, layout),
+      );
+    }
+  }
+  return [...fileLevel.values(), ...out];
+}
+
+/** Every `working-directory` in every workflow, in file order. */
+export function allWorkDirs(root = ROOT): WorkDir[] {
+  const dir = join(root, WORKFLOW_DIR);
+  const out: WorkDir[] = [];
+  if (!existsSync(dir)) throw new NoInvocationsFound();
+  for (const f of readdirSync(dir).filter((n) => /\.ya?ml$/.test(n)).sort()) {
+    out.push(...workDirsFrom(f, readFileSync(join(dir, f), "utf-8")));
+  }
+  return out;
+}
+
 /** Thrown when the reader finds nothing — never reported as a clean run. */
 export class NoInvocationsFound extends Error {
   constructor() {
@@ -643,11 +898,15 @@ export function allInvocations(root = ROOT): Invocation[] {
 function main(): number {
   const list = process.argv.includes("--list");
   const invocations = allInvocations();
+  const workDirs = allWorkDirs();
 
   if (list) {
     for (const i of invocations) {
       const where = i.cwd === "" ? "<root>" : i.cwd;
       console.log(`${i.verdict.padEnd(12)} ${i.path}  [${i.file} ${where}]`);
+    }
+    for (const w of workDirs) {
+      console.log(`${w.verdict.padEnd(12)} cwd ${w.dir}  [${w.file} ${w.job}]`);
     }
   }
 
@@ -690,9 +949,81 @@ function main(): number {
     );
   }
 
-  const bad = missing.length + undetermined.length + unused.length;
+  // ── The SECOND criterion: does the cwd itself exist? (bean `ai9u`) ──
+  const baseline = workDirBaseline();
+  const isKnown = (w: WorkDir): boolean => baseline.has(workDirKey(w));
+  const badDirs = workDirs.filter((w) => w.verdict === Verdict.Missing && !isKnown(w));
+  const openDirs = workDirs.filter((w) => w.verdict === Verdict.Undetermined && !isKnown(w));
+  const heldDirs = workDirs.filter(
+    (w) => w.verdict !== Verdict.Resolves && w.verdict !== Verdict.NeedsFolio && isKnown(w),
+  );
+  // Same direction as every other ratchet here: an allowance that no longer
+  // matches anything is a claim about the present that stopped being true.
+  const staleBaseline = [...baseline].filter(
+    (k) => !workDirs.some((w) => workDirKey(w) === k && w.verdict !== Verdict.Resolves),
+  );
+  const folioDirs = workDirs.filter((w) => w.verdict === Verdict.NeedsFolio);
+  const unusedDirs = FOLIO_WORKDIRS.filter(
+    (f) => !workDirs.some((w) => w.dir.startsWith(f.match)),
+  );
+
+  console.log(
+    `${workDirs.length} working-directory declaration(s): ` +
+      `${workDirs.length - badDirs.length - openDirs.length - folioDirs.length - heldDirs.length} resolve, ` +
+      `${folioDirs.length} need a folio, ${heldDirs.length} baselined, ` +
+      `${badDirs.length} missing, ${openDirs.length} undetermined`,
+  );
+
+  // Printed on a GREEN run too. A baselined defect that nobody is reminded of
+  // is one nobody retires, and this file exists to be emptied.
+  for (const w of heldDirs) {
+    console.log(
+      `· held  ${w.file} › ${w.job} › ${w.step}: \`${w.dir}\` (${w.verdict}) — ` +
+        `baselined, still owed`,
+    );
+  }
+  for (const k of staleBaseline) {
+    console.error(
+      `✗ workdir-baseline.json entry \`${k}\` matches nothing open — remove it. ` +
+        `A baseline may only shrink, and a stale one reads as coverage.`,
+    );
+  }
+
+  for (const w of badDirs) {
+    console.error(
+      w.note
+        ? `✗ ${w.file} › ${w.job} › ${w.step}: \`working-directory: ${w.dir}\` — ${w.note}.`
+        : `✗ ${w.file} › ${w.job} › ${w.step}: \`working-directory: ${w.dir}\` does ` +
+            `not exist. GitHub evaluates it BEFORE the step runs, so this step ` +
+            `fails every time regardless of what it does.`,
+    );
+  }
+  for (const w of openDirs) {
+    console.error(
+      `? ${w.file} › ${w.job} › ${w.step}: \`working-directory: ${w.dir}\` — ` +
+        `${w.note}. Not treated as a pass.`,
+    );
+  }
+  for (const f of unusedDirs) {
+    console.error(
+      `✗ FOLIO_WORKDIRS entry \`${f.match}\` matches no declaration — remove it. ` +
+        `An exemption outliving its step reads as coverage.`,
+    );
+  }
+
+  const bad =
+    missing.length +
+    undetermined.length +
+    unused.length +
+    badDirs.length +
+    openDirs.length +
+    unusedDirs.length +
+    staleBaseline.length;
   if (bad === 0) {
-    console.log("✓ every workflow script path resolves, or is declared folio-only with a reason.");
+    console.log(
+      "✓ every workflow script path resolves, and every `working-directory` " +
+        "exists — or is declared folio-only with a reason.",
+    );
     return 0;
   }
   return 1;
