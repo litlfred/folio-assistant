@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "methodologies/crdm/processes/crdm-requirements.bpmn"
+    "id": "Process_CRDM_Signoff",
+    "path": "processes/crdm-signoff.bpmn"
   },
-  "source_hash": "sha256:47da78023aece0dcbe2818d14412f5b4d679d2d5a082b4dbfd6c975b7ee32798",
+  "source_hash": "sha256:1f56cc1c6110e2550bc26174fa4c9966be5b2297f78053e57b45eb73393c58e2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,25 +52,34 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_OfferKg",
+          "detail": "needs skill \"kg-contribution-offer\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "BA_ChooseKg",
+          "detail": "needs skill \"kg-contribution-offer\", but its lane's role \"business-analyst\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 7,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

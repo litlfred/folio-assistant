@@ -1,0 +1,21 @@
+{
+  "name": "crdm",
+  "version": "0.1.0",
+  "description": "CRDM \u2014 the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its three skills; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it \u2014 and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": []
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": [
+    "plan",
+    "author",
+    "review"
+  ],
+  "skills": [
+    "crdm-data-model",
+    "crdm-detect",
+    "crdm-requirements-workflow"
+  ]
+}

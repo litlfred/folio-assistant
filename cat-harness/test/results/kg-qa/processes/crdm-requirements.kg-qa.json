@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM_Requirements",
-    "path": "methodologies/crdm/processes/crdm-requirements-definition.bpmn"
+    "id": "Process_CRDM",
+    "path": "processes/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:76a6160cf26faf969f689a11faa082e97fd3fefed0f3900046a28e3528b494b5",
+  "source_hash": "sha256:47da78023aece0dcbe2818d14412f5b4d679d2d5a082b4dbfd6c975b7ee32798",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,13 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_CompareOptions",
-          "detail": "needs skill \"decision-comparison\", but its lane's role \"authoring-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -69,14 +64,14 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 8,
+    "fail": 0,
+    "n/a": 7,
     "unknown": 0
   }
 }

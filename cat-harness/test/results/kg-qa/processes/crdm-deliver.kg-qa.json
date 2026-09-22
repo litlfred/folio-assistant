@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM_Issue",
-    "path": "methodologies/crdm/processes/crdm-issue-linking.bpmn"
+    "id": "Process_CRDM_Deliver",
+    "path": "processes/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:7fba27fdedf090b17607acb6bcc8c421613f0d03a2593763179da6199577f122",
+  "source_hash": "sha256:b3519ddbc9e1d93d7ff3d404620fe5e065975ca5b8fd7288e8bb5f7100837b22",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,14 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 8,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

@@ -50,6 +50,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
 
+## CRDM requirements methodology (skills/crdm)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
+| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
+| [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
+
 ## Platform core (folio-core)
 
 | Skill | Id | Schema | Summary |
@@ -256,6 +264,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 
+## RACI involvement model (skills/raci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [RACI](raci.html) | `raci` | — | **R is already declared.** A BPMN lane says who performs an activity; that |
+
 ## Declared but not implemented here (stubs)
 
 | Skill | Id | Schema | Summary |
@@ -298,20 +312,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Emitting bootstrap's own graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** bootstrap |
 | [Publishing bootstrap's graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
-
-## RACI involvement model (methodologies/raci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [RACI](raci.html) | `raci` | — | **R is already declared.** A BPMN lane says who performs an activity; that |
-
-## CRDM requirements methodology (methodologies/crdm)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
-| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
-| [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
 ## Knowledge-graph navigation (tooled)
 

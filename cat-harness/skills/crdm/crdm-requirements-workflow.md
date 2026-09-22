@@ -13,7 +13,7 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 ## BPMN reference
 
-[`methodologies/crdm/processes/crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn)
+[`processes/crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn)
 is the outer process — detection, the `Feature?` decision, then six phases, each
 a real subprocess in its own file:
 

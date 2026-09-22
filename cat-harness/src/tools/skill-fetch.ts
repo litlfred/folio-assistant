@@ -233,12 +233,12 @@ export function discoverLocalPackages(root: string): Record<string, string> {
  * 2. Otherwise, if it is the instance's **only** directly-held directory, it
  *    takes the instance's name, because there is nothing to disambiguate it
  *    from and the instance's name is the better one.
- * 3. Otherwise it takes its **basename** — `theming/`, `methodologies/crdm/`.
+ * 3. Otherwise it takes its **basename** — `theming/`, `skills/crdm/`.
  *
  * Rule 2 is the one that needs the set, and stating it as "unique" rather than
  * "first" is the whole point: FIRST-WINS was the defect. `cat-harness`
- * declares `src/skills/`, `theming/`, `methodologies/crdm/` and
- * `methodologies/raci/` — four directly-held directories, all resolving to the
+ * declares `src/skills/`, `theming/`, `skills/crdm/` and
+ * `skills/raci/` — four directly-held directories, all resolving to the
  * name `folio-assistant`, with the last assignment winning. Measured on
  * 2026-09-20 (bean `1hvo`): three packages were found and silently dropped,
  * `kg:audit` reported six `manifest-skill-exists` CRITICALs for theming alone,

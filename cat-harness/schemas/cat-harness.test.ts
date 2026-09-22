@@ -1139,9 +1139,19 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const repo = resolve(import.meta.dir, "..", "..");
     const decl = readDeclaration(join(repo, "cat-harness"));
     const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
-    expect(themed.map((d) => d.id).sort()).toEqual([
-      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
-    ]);
+    // TWO, not four, since 2026-09-22. `methodology-crdm` and
+    // `methodology-raci` were dropped when the owner's "dont bury sub-graph
+    // assets" moved their skills into `skills/` — a package subdirectory of
+    // the already declared `skills/` graph needs no entry of its own, and a
+    // second entry would declare one directory twice.
+    //
+    // The theme did not move with them, deliberately: `theme` is a property of
+    // a DIRECTORY in the declaration, and those two directories no longer
+    // exist as declared subjects. What remains themed is the graph that holds
+    // the methodology nodes, here and in `smart-kg` — which is the right
+    // grain anyway, since `analyst` describes the methodologies rather than
+    // the skills that apply them.
+    expect(themed.map((d) => d.id).sort()).toEqual(["methodologies", "smart-kg-methodologies"]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });
