@@ -19,7 +19,7 @@ import { describe, expect, it } from "bun:test";
 
 import { BitstreamSchema } from "./catalogue.js";
 
-const mat = { state: "referenced" as const, of: "local:x.pdf#page=1" };
+const mat = { state: "referenced" as const, provenance: { local: "x.pdf#page=1" } };
 /** A 300x212 raster — the real `wpr-rdo-2020-003-eng` cover's dimensions. */
 const base = { name: "c.png", bundle: "THUMBNAIL", pixelWidth: 300, pixelHeight: 212, materialization: mat };
 const region = { x0: 105, y0: 66, x1: 193, y1: 108, reason: "the WHO emblem" };

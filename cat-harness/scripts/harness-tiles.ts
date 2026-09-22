@@ -86,6 +86,23 @@ export type HarnessVisualisation = {
   kind: string;
   /** Site-root-relative, for `relative_url`. Absent when nothing is published. */
   path?: string;
+  /**
+   * The kind's content is materialized: openable, and not editable here.
+   *
+   * ## The two greys, at this level
+   *
+   * Absent {@link path} and `readOnly` both render inert and mean different
+   * things: the first has nothing to open, the second opens and refuses an
+   * edit. The second is the one that offers the copy-out, so collapsing them
+   * takes away the only route to working on frozen content.
+   *
+   * ABSENT IS THREE THINGS AT ONCE HERE, and all three are honestly absent:
+   * no directory declaring this kind has answered; or they disagree, which is
+   * reported as its own finding rather than resolved by a rule; or nothing
+   * here is materialized. None of them is "writable", so none of them earns a
+   * `false`.
+   */
+  readOnly?: boolean;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -336,6 +353,28 @@ function tileFor(
   // kind can be published at are considered, because the instance that owns
   // the site elides its own name and every other instance does not — two rules
   // that live in two generators, read here rather than restated.
+  /**
+   * THE READ-ONLY ANSWER FOR A KIND, resolved across the directories declaring
+   * it — and `undefined` when they do not agree.
+   *
+   * A kind can be declared by more than one directory, so it can be declared
+   * read-only by one and writable by another. `who-iris` is exactly that shape
+   * one field along: `catalogue/` is frozen and `uploads/` is the drop zone.
+   * Picking the first answer would make the listing depend on declaration
+   * order; picking `true` if any says so would freeze a kind on the strength of
+   * one directory. Disagreement is a THIRD state and it is reported as one —
+   * undefined here, and named in a finding below, rather than resolved by a
+   * rule nobody chose.
+   */
+  const readOnlyFor = (kind: string): boolean | undefined => {
+    const said = dirs
+      .filter((d) => (d.graphKinds ?? []).includes(kind))
+      .map((d) => d.readOnly)
+      .filter((v): v is boolean => v !== undefined);
+    if (said.length === 0) return undefined;
+    return said.every((v) => v === said[0]) ? said[0] : undefined;
+  };
+
   const visualisations: HarnessVisualisation[] = [];
   for (const kind of kinds) {
     const candidates = ownsSite
@@ -351,8 +390,17 @@ function tileFor(
     // convention leaves every existing link exactly where it was and fills
     // only the gaps, which is the whole of what this is for.
     const path = found ?? declared.get(kind);
-    if (path) visualisations.push({ kind, path });
-    else visualisations.push({ kind });
+    // READ-ONLY IS ORTHOGONAL TO WHETHER A VIEWER WAS FOUND, and keeping the
+    // two independent here is the whole of the two-greys distinction: `path`
+    // answers "is there anything to open", `readOnly` answers "may it be
+    // edited". Both branches carry it, so a kind never loses its read-only
+    // state by failing to resolve a page.
+    const ro = readOnlyFor(kind);
+    visualisations.push({
+      kind,
+      ...(path ? { path } : {}),
+      ...(ro === undefined ? {} : { readOnly: ro }),
+    });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
   //
@@ -456,6 +504,27 @@ function tileFor(
         `not at a conventional path, so no tile links it — ` +
         `${undiscovered.map((k) => `${k} (${declaredFor(k, false)})`).join(", ")}. ` +
         `Built and unreachable is a different gap from unbuilt.`,
+    );
+  }
+
+  // READ-ONLY IS STATED WHETHER OR NOT A VIEWER EXISTS, and that separation is
+  // the whole point of the two greys.
+  //
+  // Every read-only kind in this repository today ALSO lacks a viewer, so a
+  // mark that rode the viewer list would render zero times — which is exactly
+  // what happened on the first attempt: the mark shipped on the graph-tile
+  // surface, `readOnly` is never populated there, and reading the staging
+  // deploy found it on 0 of 3 pages. Live CSS, live JS, nothing to style.
+  //
+  // So the fact goes where it cannot be hidden by the gap. A reader told only
+  // "catalogue: no published viewer" learns that nothing opens, and not that
+  // what is behind it is frozen and needs a copy-out to work on.
+  const frozen = visualisations.filter((v) => v.readOnly === true).map((v) => v.kind);
+  if (frozen.length > 0) {
+    findings.push(
+      `${decl.name}: ${frozen.length} graph(s) hold materialized content and are READ-ONLY — ` +
+        `${frozen.join(", ")}. Readable, not editable here: copy one out to your own ` +
+        `folio/ to work on it. Separate from whether a viewer is published.`,
     );
   }
 

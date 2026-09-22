@@ -19,7 +19,9 @@
       "mediaType": "application/pdf",
       "materialization": {
         "state": "materialized",
-        "of": "https://iris.who.int/handle/10665/145714",
+        "provenance": {
+          "upstream": "https://iris.who.int/handle/10665/145714"
+        },
         "localPath": "uploads/9789241548960-eng/9789241548960_eng.pdf",
         "purpose": "both",
         "bytes": 2136157,
@@ -61,7 +63,9 @@
       "pixelHeight": 450,
       "materialization": {
         "state": "materialized",
-        "of": "local:who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf#page=1",
+        "provenance": {
+          "local": "who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf#page=1"
+        },
         "localPath": "library/9789241548960-eng-cover.png",
         "purpose": "working",
         "bytes": 14697,
@@ -108,7 +112,9 @@
   ],
   "materialization": {
     "state": "materialized",
-    "of": "local:9789241548960-eng",
+    "provenance": {
+      "local": "9789241548960-eng"
+    },
     "localPath": "library/9789241548960-eng",
     "purpose": "working",
     "note": "IDENTIFIERS UNKNOWN, as above. The slug is an ISBN, which is a real identifier but not IRIS's -- it names the publication, not the repository item, and the two are not interchangeable for resolution.",
