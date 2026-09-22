@@ -779,6 +779,13 @@ jobs:
           # one harness, so a single `harness.config.json` at the repo
           # root had become an answer to a question with two answers.
           bun run check:instance-config
+          # Every INSTANTIATED harness has a mark of its own. The kind axis is
+          # check-avatar-coverage; this is the instance axis, which nothing
+          # checked until 2026-09-22 — `harness-tiles.ts` claimed the generic
+          # fallback was "reported as a finding" while `genericAvatar` was
+          # computed and read by nobody, so `folio-assistant` rendered a
+          # question mark until the owner saw it. Bean `zc7m`.
+          bun run check:avatar-instances
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
