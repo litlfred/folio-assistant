@@ -152,6 +152,13 @@ export type HarnessTile = {
    * a deliberate one.
    */
   navbarIcons?: NavbarIcon[];
+  /**
+   * The mark the navbar renders: the theme avatar if there is one, else the
+   * instance's own icon, with its crop solved. Absent when neither exists —
+   * and the navbar then draws an INITIAL, which is a different answer from a
+   * broken image and from a placeholder glyph.
+   */
+  mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
   /** Hue angle from the avatar registry — the tile's theme. */
   tone: number;
   /** What the avatar reads as, for the accessible name. */
@@ -326,6 +333,17 @@ function tileFor(
   isRepoRoot: boolean,
   /** This instance's OWN directory, which is where its declared paths are relative to. */
   instanceDir: string,
+  /**
+   * The SITE-OWNING instance — its declaration and its directory.
+   *
+   * Needed because theme art is routinely declared by the harness that
+   * SUPPLIES it rather than by the instance it is about: `bootstrap` declares
+   * a sticky with `theme: bootstrap` and **no images at all**, while
+   * `cat-harness` declares the `landing-bootstrap` role's three layouts. That
+   * is the inversion `ThemeBackdropSchema` describes — a theme names a ROLE,
+   * and whoever holds images for that role supplies the art.
+   */
+  owner?: { decl: CatHarnessDeclaration; dir: string },
 ): HarnessTile {
   const dirs = decl.directories ?? [];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
@@ -684,14 +702,52 @@ function tileFor(
         `showing no theme avatar rather than a broken image.`,
     );
   }
-  const card = theme ? resolveThemeBackdrop(theme, decl.images).art.get("card") : undefined;
-  const cardSrc = card ? publishedIcon(instanceDir, card.src, folio) : undefined;
+  // OWN IMAGES FIRST, THE SITE OWNER'S SECOND — the overlay order this
+  // repository uses everywhere else, and the one the theme docs describe: *"an
+  // instance declaring its own `landing` images gets its own backdrop"*, with
+  // the supplier as the fallback rather than the only answer.
+  //
+  // MEASURED, and it is why `bootstrap` had no avatar until now: it declares a
+  // sticky naming `theme: bootstrap` and **zero images**, while `cat-harness`
+  // declares the `landing-bootstrap` role. Resolving against `decl.images`
+  // alone found nothing and reported a gap that was not one.
+  // `gen-landing-data.ts` has always resolved a contributed sticky's art
+  // against the site owner's images, so this is that join rather than a second
+  // one — widened by the own-first step, which changes no existing answer
+  // because no instance below the owner declares a landing role today.
+  const ownCard = theme ? resolveThemeBackdrop(theme, decl.images).art.get("card") : undefined;
+  const ownerCard =
+    theme && ownCard === undefined && owner
+      ? resolveThemeBackdrop(theme, owner.decl.images).art.get("card")
+      : undefined;
+  const card = ownCard ?? ownerCard;
+  // THE PATH FOLLOWS THE SOURCE. An image declared by the site owner is
+  // published under the SITE's own root, not under this instance's mount —
+  // composing it from `folio` would point at a path the instance does not
+  // serve, which is `68au` with the baseurl replaced by the wrong instance.
+  const cardSrc = card
+    ? ownCard !== undefined
+      ? publishedIcon(instanceDir, card.src, folio)
+      : publishedIcon(owner!.dir, card.src, "/")
+    : undefined;
   const themeAvatar =
     card && cardSrc !== undefined
       ? {
           src: cardSrc,
           title: theme!.name,
           ...(card.avatarRegion ? { region: card.avatarRegion } : {}),
+          // THE SAME CROP, SOLVED — for a consumer that cannot do arithmetic.
+          //
+          // `region` is the declaration and `navbar.ts`'s `mark()` solves it
+          // itself for a mounted page. The Liquid sidebar cannot: dividing two
+          // floats in a template is the kind of thing that silently yields an
+          // integer. So the four CSS values are computed here, exactly as
+          // `sync-docs-harness.ts` already does for the site title's avatar.
+          //
+          // Two fields from one declaration, both generated, neither authored
+          // — which is why this is not the duplication `sjic` is about. The
+          // sum has ONE home; only its output has two shapes.
+          ...(card.avatarRegion ? { crop: solveCrop(card.avatarRegion) } : {}),
         }
       : undefined;
   if (card && card.avatarRegion === undefined) {
@@ -703,6 +759,18 @@ function tileFor(
         `crop to show — the whole card in a 2rem frame is unreadable. Declare one.`,
     );
   }
+
+  // Resolved after both candidates exist. `icon` keeps its own field for
+  // `mount-instance-docs.ts`, which builds a NavItem rather than reading this.
+  const iconMark =
+    iconSrc === undefined
+      ? undefined
+      : {
+          src: iconSrc,
+          title: icon?.title ?? "",
+          ...(icon?.avatarRegion ? { crop: solveCrop(icon.avatarRegion) } : {}),
+        };
+  const navMark = themeAvatar ?? iconMark;
 
   const href = folio ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
@@ -756,6 +824,23 @@ function tileFor(
     // landscape layout would carry a box that is square in fractions and not
     // in pixels, which is exactly the stretch that refusal exists to stop.
     ...(themeAvatar ? { avatar: themeAvatar } : {}),
+    /**
+     * THE MARK THE NAVBAR SHOWS, resolved once here rather than branched on in
+     * a template.
+     *
+     * Theme avatar first, the instance's own `icon` second. The precedence is
+     * the owner's — *"use theme avatar not the purply thing"* — and it is
+     * decided HERE because the alternative is five branches of Liquid
+     * (`avatar` with a crop, `avatar` without, `icon` with a crop, `icon`
+     * without, initial) that would each have to agree about the order.
+     *
+     * The crop rides whichever source won, so an ICON may be cropped too:
+     * `who-iris` declares the WHO emblem-and-wordmark at 581x178 and an
+     * `avatarRegion` taking the leftmost square, which is the emblem. Before
+     * this, a region on an icon was carried in the data and rendered by
+     * nothing.
+     */
+    ...(navMark ? { mark: navMark } : {}),
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,
@@ -800,7 +885,8 @@ export function harnessTiles(
   // caller pointed at a tree that has no harness gets no tiles, which is a
   // real answer; an exception here would take down the whole docs sync over a
   // question that has one.
-  const handler = readDeclaration(harnessRoot)?.name;
+  const ownerDecl = readDeclaration(harnessRoot);
+  const handler = ownerDecl?.name;
   if (!handler) return [];
   const siteDir = join(harnessRoot, siteDirFor(harnessRoot));
 
@@ -832,6 +918,7 @@ export function harnessTiles(
       repoRoot,
       dir === repoRoot,
       dir,
+      ownerDecl ? { decl: ownerDecl, dir: harnessRoot } : undefined,
     );
     const icons = resolveNavbarIcons(decl.name, declaredIcons, needsOf, handler);
     // UNDETERMINED IS NOT EMPTY, and the field is omitted rather than set to
@@ -899,6 +986,31 @@ export function harnessTiles(
  * stale rule. The test pins the three cases above; a `permalink` added to
  * `_config.yml` should send somebody here.
  */
+/**
+ * A declared crop, solved into the four values CSS wants.
+ *
+ * The image is scaled by `1/w` and `1/h` and then offset by `-x` and `-y` OF
+ * THE SCALED image, which is why the offsets divide by the same fractions.
+ * `navbar.ts`'s `mark()` does the identical sum for a mounted page, and
+ * `sync-docs-harness.ts` for the site title.
+ *
+ * SOLVED IN TYPESCRIPT because the consumer is Liquid, which cannot be trusted
+ * to divide two floats without quietly producing an integer.
+ */
+function solveCrop(r: { x: number; y: number; w: number; h: number }): {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+} {
+  return {
+    width: +(100 / r.w).toFixed(4),
+    height: +(100 / r.h).toFixed(4),
+    left: +((-100 * r.x) / r.w).toFixed(4),
+    top: +((-100 * r.y) / r.h).toFixed(4),
+  };
+}
+
 export function publishedUrlOf(relPathUnderSite: string): string {
   const withoutIndex = relPathUnderSite.replace(/(^|\/)index\.(html|md)$/, "$1");
   // Only a LEAF page is rewritten. A path already ending in `/` is a

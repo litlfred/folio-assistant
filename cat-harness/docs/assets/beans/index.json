@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 550,
+      "count": 551,
       "unit": "beans"
     }
   },
@@ -4267,6 +4267,20 @@
       "updatedAt": "2026-09-21T21:40:00Z",
       "preview": "The markdown half of this is done (`vzur`, #769). This is the `.ts` half, and\nit is **not** simply the same sweep one file type over — the exemption that\ncovers it is sound for most of the corpus and wrong for a subset.\n\n**Measured 2026-09-21 on `main` @ `83cc04b`:** 344 mentions of `harness.json`\nor `harness.config.json` in `.ts` files under `cat-harness/`, excluding\n`RETIRED_DECLARATION`'s own d",
       "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
+    },
+    {
+      "id": "folio-assistant-ka1p",
+      "title": "HARNESS THEME AVATARS: an instance's mark is its theme art, cropped — and the supplier is not always the subject",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T22:30:48Z",
+      "updatedAt": "2026-09-22T22:30:48Z",
+      "preview": "Owner, 2026-09-22: \"bootstrap and who-iris need theme avatars, bootstrap = cowboy grump cat\", then the IRIS wordmark by screenshot.\n\n## What was wrong\n\n`tileFor` resolved an instance's theme backdrop against **its own** `decl.images`. `bootstrap` declares a sticky naming `theme: bootstrap` and **zero images** — `cat-harness` declares the `landing-bootstrap` role. So the resolver found nothing and ",
+      "file": "beans/defs/folio-assistant-ka1p--harness-theme-avatars-an-instances-mark-is-its-the.md"
     },
     {
       "id": "folio-assistant-ke0o",
