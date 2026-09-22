@@ -1,12 +1,12 @@
 ---
 # folio-assistant-jfr6
 title: 'SCHEMA + COMPILATION: what the two schema gates and tsc actually cover, and the generated-artefact class neither of them sees'
-status: in-progress
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T08:24:54Z
+parent: folio-assistant-3x2n
 ---
 
 ## What exists, measured 2026-09-21
@@ -88,3 +88,18 @@ genuinely covers), **37 awaiting assessment** — marked as such rather than
 described as fine.
 
 `bun run gates` — 109 of 109.
+
+## Summary of Changes
+
+`check:artefact-verification` derives the 42 generated-artefact checks from
+`package.json` and requires each to declare what verifies the artefact **for
+its consumer** — or that nothing does, **with a reason**. Undeclared is a
+finding.
+
+**The measurement:** all 42 ask about currency; 18 contain no parse call at
+all. The other 24 are `undetermined`, **not** validated — reporting them as
+validated would have been the over-claim this bean exists to find.
+
+**Second finding:** the #805 guard claimed *"every generated viewer"* while
+walking two hardcoded trees — 12 of 31 pages. Widened to derive them: **12 →
+31, 19 newly covered.** All parse; nothing had been looking.

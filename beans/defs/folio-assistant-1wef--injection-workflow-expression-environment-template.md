@@ -1,12 +1,12 @@
 ---
 # folio-assistant-1wef
 title: 'INJECTION: workflow expression, environment, template and prompt injection have no gate, in a repo whose generators write executable pages'
-status: in-progress
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T08:24:54Z
+parent: folio-assistant-3x2n
 ---
 
 ## Why this repository specifically
@@ -233,3 +233,23 @@ replays a previously-seen nonce still cannot close the current one.
 Falsified: restoring the fixed `"""` turns two tests red.
 
 `bun run gates` — 108 of 108.
+
+## Summary of Changes
+
+Three surfaces, three real defects, three guards — and the finding worth more
+than any one fix: **all three are one bug, content closing a delimiter it was
+meant to sit inside.**
+
+| surface | defect | delimiter | sink |
+|---|---|---|---|
+| 1 | a `workflow_dispatch` input interpolated into `sel='...'` | a shell quote | a `run:` block |
+| 2 | `words` summed without a type guard from an ingested corpus | (an unescaped numeric assumption) | `innerHTML` |
+| 3 | `blockMd` fenced with a fixed `"""` | a prompt fence | the system prompt |
+
+Each was **demonstrated, not asserted**, and each fix is falsified in both
+directions. `check:workflow-injection` gates surface 1;
+`generated-viewer-scripts.test.ts` and the `reduce` guard cover surface 2;
+`chat-prompt-injection.test.ts` covers surface 3.
+
+The boundary with `q2wm` is settled and recorded: `q2wm` owns **runtime**
+render safety, `1wef` owns **build-time** composition and interpolation.
