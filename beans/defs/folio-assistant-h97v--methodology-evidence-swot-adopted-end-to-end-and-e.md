@@ -3,8 +3,10 @@
 title: 'METHODOLOGY EVIDENCE: SWOT adopted end-to-end, and every methodology''s cited source ingested'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-22T19:34:26Z
-updated_at: 2026-09-22T19:34:26Z
+updated_at: 2026-09-22T19:49:46Z
+parent: folio-assistant-ahvw
 ---
 
 Owner, this session: add methodologies as subgraphs with doc ingest into the KG, full process/skills/roles; methodologies must have an evidence base with a QA report; lit search skill where evidence is missing; evidence analysis tied into an existing process.

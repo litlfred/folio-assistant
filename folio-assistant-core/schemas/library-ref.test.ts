@@ -7,7 +7,7 @@
  * text in another repo would cite evidence its own instance cannot resolve."*
  */
 import { describe, expect, it } from "bun:test";
-import { mkdirSync, mkdtempSync, readdirSync, rmSync } from "fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";
@@ -77,24 +77,46 @@ describe("library location is read from the declaration", () => {
     expect(libraryDirOf(WHO_IRIS)).toBe(resolve(WHO_IRIS, "library"));
   });
 
-  it("the PLATFORM declares a library and HOLDS NOTHING IN IT", () => {
+  it("the PLATFORM's library holds ONLY sources its methodologies cite", () => {
     // `cat-harness` held 1,431 files of somebody else's writing until bean
     // `frs5`. AGENTS.md states the rule — "folio-assistant is the platform,
     // not the content" — and until that move nothing checked it.
     //
-    // This asserted `toBeUndefined()` for a few hours, because `frs5` removed
-    // the declaration along with the content. The entry came back on the
-    // owner's 2026-09-20 ruling: `wwi6` pins that a DEPENDENT folio
-    // materialises its own `uploads/` and `library/`, and it inherits that
-    // convention from what the harness declares.
+    // This asserted `toBeUndefined()` for a few hours (`frs5` removed the
+    // declaration with the content), then `toEqual([])` on the owner's
+    // 2026-09-20 ruling, which kept the declaration so a DEPENDENT folio
+    // inherits the convention (`wwi6`).
     //
-    // So the rule is now checked one step along — the platform declares the
-    // CONVENTION and holds no CONTENT — which is a weaker check than the
-    // absence was, and the weakening is the cost of the ruling rather than an
-    // oversight.
+    // IT IS NOW NARROWED RATHER THAN DROPPED, on the owner's ruling of
+    // 2026-09-22: *"they should be under <stub>/library and appear in the
+    // library visualizer for the harness. dont bury sub-graph assets."*
+    // Methodology source literature is the harness's OWN grounding material,
+    // not a folio's subject matter — the same relation `agent-skills/library/`
+    // has to the agent-skills subgraph — so an empty-directory assertion would
+    // now forbid the thing the owner asked for.
+    //
+    // The teeth are kept by inverting the question. Instead of "is it empty",
+    // this asks "is every entry here cited by a methodology node" — which
+    // still fails the moment folio content appears, and fails for a reason
+    // that names the offending entry. An emptiness check could only ever say
+    // "something is here".
     const dir = libraryDirOf(PLATFORM);
     expect(dir).toBeDefined();
-    expect(readdirSync(dir!).filter((f) => !f.startsWith("."))).toEqual([]);
+
+    const entries = readdirSync(dir!).filter((f) => !f.startsWith("."));
+
+    // `evidence:` lines across the methodology graph, as bib-slugs.
+    const methodologies = resolve(PLATFORM, "methodologies");
+    const cited = new Set<string>();
+    for (const f of readdirSync(methodologies).filter((f) => f.endsWith(".md"))) {
+      const text = readFileSync(join(methodologies, f), "utf8");
+      for (const m of text.matchAll(/^evidence:\s*library\/(\S+)\s*$/gm)) {
+        cited.add(m[1]!);
+      }
+    }
+
+    const uncited = entries.filter((e) => !cited.has(e));
+    expect(uncited).toEqual([]);
   });
 
   it("returns undefined for an instance that declares no library graph", () => {

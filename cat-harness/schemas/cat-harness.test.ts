@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -590,14 +590,26 @@ describe("materialiseDirectories", () => {
     const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
     expect(libraries.length).toBeGreaterThan(1);
-    // The platform's own library EXISTS and is EMPTY. It was absent for a few
-    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
-    // reports a declared-but-missing directory, so re-declaring it required
-    // re-creating it. Emptiness is the assertion — existence is what the
-    // declaration demands, and holding nothing is what the platform rule does.
+    // The platform's own library EXISTS. It was absent for a few hours between
+    // `frs5` and the owner's 2026-09-20 ruling; `harness:dirs:check` reports a
+    // declared-but-missing directory, so re-declaring it required re-creating
+    // it.
+    //
+    // EMPTINESS WAS ALSO ASSERTED HERE UNTIL 2026-09-22, and is not any more.
+    // The owner's ruling that day — "they should be under <stub>/library and
+    // appear in the library visualizer for the harness. dont bury sub-graph
+    // assets" — puts the sources the harness's OWN methodologies cite in this
+    // directory, so an emptiness assertion would forbid what was asked for.
+    //
+    // The rule did not go away, it MOVED, and it moved rather than being
+    // copied: `folio-assistant-core/schemas/library-ref.test.ts` now asserts
+    // that every entry here is cited by a methodology node, which still fails
+    // the moment folio content appears and names the offending entry when it
+    // does. Restating it here would be the one-fact-in-two-places drift this
+    // schema's own comments keep paying for — and the weaker of the two copies
+    // would be this one.
     const own = libraries.find((d) => d.id === "library")!.absPath;
     expect(existsSync(own)).toBe(true);
-    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
