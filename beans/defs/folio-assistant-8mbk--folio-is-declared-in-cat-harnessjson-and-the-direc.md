@@ -1,11 +1,12 @@
 ---
 # folio-assistant-8mbk
 title: folio/ is declared in cat-harness.json and the directory does not exist — the dh4f shape, undocumented this time
-status: todo
+status: scrapped
 type: bug
-parent: folio-assistant-zzmr
+priority: normal
 created_at: 2026-09-22T08:21:16Z
-updated_at: 2026-09-22T08:21:16Z
+updated_at: 2026-09-22T10:48:40Z
+parent: folio-assistant-zzmr
 ---
 
 Measured 2026-09-22 while opening jpjt.
@@ -35,3 +36,46 @@ reason not to look.
 - [ ] if the declarations stay, they carry the `library` entry's reasoning
 - [ ] `j2if`'s stale sentence corrected
 - [ ] a check that a declared directory exists, or a recorded reason there is none
+
+## Reasons for scrapping
+
+**The premise is false. I measured from the wrong directory.**
+
+`cat-harness.json` declares paths **relative to its own instance**, so
+`folio/` means `cat-harness/folio/` and `translations/` means
+`cat-harness/translations/`. I tested them at the REPOSITORY ROOT and read
+three absences that are not absences:
+
+| declared | at repo root | at `cat-harness/` |
+|---|---|---|
+| `library/` | absent | **exists** |
+| `folio/` | absent | **exists** |
+| `translations/` | absent | **exists** |
+
+There is no `dh4f` defect here. `library/`'s own description argues a cost it
+is not paying, and the two sentences I wrote about `folio/` and `j2if` being
+wrong were themselves wrong.
+
+**Scrapped rather than deleted**, per `todo-manager`: a scrapped bean with
+its reasons stops the next agent re-entering the dead end, where a deleted
+one leaves a sibling unable to tell abandonment from accident. And this one
+is worth keeping visible precisely because the error is easy to repeat — an
+instance-relative path checked from the root reads as missing, and every
+consumer of that reading inherits the mistake.
+
+## What survives it, as a REAL finding
+
+The owner ruled 2026-09-22: *"folio must be in cat-harness and visualizer
+owned by it. transations too... there should be visualizer."*
+
+Measured against that ruling:
+
+- `folio/` — in cat-harness ✓, **no declared visualiser** ✗
+- `translations/` — in cat-harness ✓, visualiser declared AND present ✓
+  (`docs/translation-status/index.html`, from `gen-translation-status.ts`)
+- `library/` — in cat-harness ✓, visualiser declared and present ✓
+
+So exactly one gap, and it is the folio's own viewer. Carried into its own
+bean rather than resurrected here, because this bean's title asserts
+something untrue and a reader should not have to get to the bottom to learn
+that.
