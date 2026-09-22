@@ -522,6 +522,11 @@ export const VoiceProfileSchema = z.object({
    * ONE parent, not a list. A voice with two parents has no defined answer
    * when they disagree, and the whole point of an override is that there is
    * one thing being overridden.
+   *
+   * **Where such a voice LIVES** is the reserved {@link VOICE_VENDORS_DIR}
+   * sub-sub-graph, on the owner's ruling of 2026-09-22. This field stays the
+   * contract either way: the directory is where a person looks, and nothing
+   * infers the relation from a path.
    */
   extends: VoiceRefSchema.optional(),
   /**
@@ -608,9 +613,34 @@ function voicesFallbackDir(instanceRoot: string): string {
 }
 
 /**
+ * The reserved sub-sub-graph holding VENDOR OVERRIDES of a base voice.
+ *
+ * Owner, 2026-09-22: *"vendor overides go in sub-sub-grahiphs like
+ * voice/vendors or voices-vendors"*.
+ *
+ * Of the two spellings offered, the NESTED one is the shape this declaration
+ * model already has. `voices-vendors/` would need a SECOND declared graph for
+ * one concept, and a declaration inside a declaration is the defect #263's own
+ * comment names — so the vendors live inside the `voices` graph as a
+ * subdirectory, one declaration, and every consumer that already asks for
+ * `voices` gets them with no change.
+ *
+ * **The directory is where a person looks; the FILE is still the contract.** A
+ * vendor voice declares what it overrides through its own {@link
+ * VoiceProfileSchema} `extends` field — the field is `extends`, not
+ * `overrides`, and writing the latter is how this comment was wrong for one
+ * draft — exactly as one sitting flat would, so nothing downstream infers a
+ * relation from a path. That is this repository's standing rule — extension and
+ * location are coincidences, a declaration inside the file is the contract —
+ * and it is why this name is a convention for humans rather than a second
+ * source of truth.
+ */
+export const VOICE_VENDORS_DIR = "vendors";
+
+/**
  * Every voice file under one voices directory, whichever layout it uses.
  *
- * TWO shapes are read, because the migration is a fact about a corpus rather
+ * THREE shapes are read, because the migration is a fact about a corpus rather
  * than an instant:
  *
  *  - `skills/voices/<id>/voice.json` — a voice SKILL, rules beside the
@@ -618,17 +648,37 @@ function voicesFallbackDir(instanceRoot: string): string {
  *  - `skills/voices/<id>.json` — a bare profile, the shape before the move,
  *    still valid and still loaded so a downstream folio is not broken by an
  *    upgrade it did not ask for.
+ *  - `skills/voices/vendors/<id>/voice.json` (and `<id>.json`) — a vendor
+ *    override, in the reserved {@link VOICE_VENDORS_DIR} sub-sub-graph.
  *
- * Read both, prefer neither — they cannot collide, because a directory and a
- * file cannot share a name. The same read-both/write-new asymmetry `qa-paths.ts`
- * argues for, one graph over.
+ * Read all three, prefer none — the first two cannot collide, because a
+ * directory and a file cannot share a name, and the third is one reserved name
+ * deeper. The same read-both/write-new asymmetry `qa-paths.ts` argues for, one
+ * graph over.
+ *
+ * **Descending is not cosmetic, and the cost of not descending was measured
+ * before it was paid.** This scanned ONE level and treated a directory as a
+ * voice only where it held a `voice.json`. `vendors/` holds none — its children
+ * do — so on the owner's layout every vendor override would have been skipped
+ * in silence, and `loadVoices` would have reported a clean read over real
+ * content. That is `dh4f` exactly: a consumer scans nothing and calls it a
+ * clean run. Found by reading this function when the layout was chosen, not
+ * after shipping into it.
  */
 function voiceFilesIn(dir: string): { id: string; path: string }[] {
   const out: { id: string; path: string }[] = [];
   for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     if (e.isDirectory()) {
       const inner = join(dir, e.name, "voice.json");
-      if (existsSync(inner)) out.push({ id: e.name, path: inner });
+      if (existsSync(inner)) {
+        out.push({ id: e.name, path: inner });
+      } else if (e.name === VOICE_VENDORS_DIR) {
+        // ONE level, not arbitrary recursion. A reserved name is a convention
+        // a reader can state; "any directory, any depth" is a rule nobody can
+        // check, and it would make an unrelated nested directory into a silent
+        // part of the graph.
+        out.push(...voiceFilesIn(join(dir, e.name)));
+      }
     } else if (e.isFile() && e.name.endsWith(".json")) {
       out.push({ id: e.name.replace(/\.json$/, ""), path: join(dir, e.name) });
     }

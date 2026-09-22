@@ -9,6 +9,8 @@
  */
 
 import { describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "../voices-graph.ts";
@@ -200,5 +202,104 @@ describe("the provenance QA flag — a question for a person, not a gate", () =>
     expect(html).toContain("renderFlags");
     expect(html).toContain("provenance <b>");
     expect(html).toContain("pflag");
+  });
+});
+
+describe("vendor overrides live in a reserved sub-sub-graph", () => {
+  // Owner, 2026-09-22: "vendor overides go in sub-sub-grahiphs like
+  // voice/vendors or voices-vendors". The nested spelling was taken, because
+  // the flat one needs a SECOND declared graph for one concept.
+  //
+  // These run against a throwaway directory rather than the corpus, because
+  // this repository ships no vendor override yet — and a test that can only
+  // assert once content exists is a test that does not guard the layout the
+  // content is about to be written into.
+
+  const profile = (id: string, overrides?: string) =>
+    JSON.stringify({
+      $schema: "folio-voice/v1",
+      id,
+      title: `${id} — a fixture voice`,
+      description: `The ${id} voice, used only by this test.`,
+      provenance: "evidence",
+      sources: [{ title: "A fixture source" }],
+      ...(overrides === undefined ? {} : { extends: { voiceId: overrides } }),
+      rules: [
+        {
+          id: `${id}-one-rule`,
+          title: `${id} keeps at least one rule`,
+          description: "A voice with no rules does not parse, so the fixture carries one.",
+          category: "structure",
+          severity: "minor",
+          source: { kgRef: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
+        },
+      ],
+    });
+
+  function fixture(): string {
+    const root = mkdtempSync(join(tmpdir(), "voices-vendors-"));
+    const voices = join(root, "skills", "voices");
+    mkdirSync(join(voices, "base-voice"), { recursive: true });
+    writeFileSync(join(voices, "base-voice", "voice.json"), profile("base-voice"));
+    mkdirSync(join(voices, "vendors", "base-voice-acme"), { recursive: true });
+    writeFileSync(
+      join(voices, "vendors", "base-voice-acme", "voice.json"),
+      profile("base-voice-acme", "base-voice"),
+    );
+    return root;
+  }
+
+  test("a voice under `vendors/` is LOADED, not silently skipped", async () => {
+    // The defect this guards is `dh4f`: the reader scanned one level and took a
+    // directory for a voice only where it held a `voice.json`. `vendors/` holds
+    // none, so every override under it would have read as absent — a clean run
+    // over real content.
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    try {
+      const ids = loadVoices(root).map((v) => v.id).sort();
+      expect(ids).toEqual(["base-voice", "base-voice-acme"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("`vendors` itself is never loaded AS a voice", async () => {
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    try {
+      expect(loadVoices(root).map((v) => v.id)).not.toContain("vendors");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the FILE carries the relation, not the path", async () => {
+    // The directory is where a person looks. Nothing downstream may infer
+    // "this overrides that" from a path, which is the standing rule that a
+    // declaration inside the file is the contract.
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    try {
+      const vendor = loadVoices(root).find((v) => v.id === "base-voice-acme")!;
+      expect(vendor.extends?.voiceId).toBe("base-voice");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("recursion is ONE reserved name deep, not arbitrary", async () => {
+    // "Any directory, any depth" is a rule nobody can check, and it would make
+    // an unrelated nested directory a silent part of the graph.
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    const stray = join(root, "skills", "voices", "notes", "draft");
+    mkdirSync(stray, { recursive: true });
+    writeFileSync(join(stray, "voice.json"), profile("draft"));
+    try {
+      expect(loadVoices(root).map((v) => v.id)).not.toContain("draft");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });

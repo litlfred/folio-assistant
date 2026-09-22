@@ -1,11 +1,11 @@
 ---
 # folio-assistant-26tu
 title: 'DECLARED-BUT-ABSENT: agent-skills declares a voices graph at voices/ and ships none, now also on the old path'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T16:55:33Z
-updated_at: 2026-09-21T20:46:41Z
+updated_at: 2026-09-22T06:13:55Z
 parent: folio-assistant-vuip
 ---
 
