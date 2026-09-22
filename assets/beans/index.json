@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 488,
+      "count": 489,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-20T16:33:59Z",
       "preview": "## What\n\n`content/pipeline/validate.ts` contains **no reference to `simulator` or\n`.html`**. A `simulator` block declares `html: \"simulators/x.html\"`, and\nnothing anywhere in the pipeline asks whether that file is on disk.\n\n## How it was found\n\nMeasured 2026-09-19 while running `/prepare-merge` on qou#7444, which\nrepoints all 11 simulator paths out of the platform and into the folio.\n\nTwo of the e",
       "file": "beans/defs/folio-assistant-023p--a-simulator-blocks-html-path-is-never-checked-so-a.md"
+    },
+    {
+      "id": "folio-assistant-03t9",
+      "title": "PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:34:13Z",
+      "updatedAt": "2026-09-22T08:55:04Z",
+      "preview": "Issue #853 requirement 3, and the `a58y` shape in the component that requirement\nwould otherwise have been built on.\n\n## Measured before anything was written\n\n`<folio:precondition>` (bean `lv3j`) has been parsed, three-valued and tested\nsince it landed. Measured 2026-09-22:\n\n| | |\n|---|---|\n| processes declaring a precondition | 1 (`bootstrap/processes/initialize-harness.bpmn`) |\n| preconditions d",
+      "file": "beans/defs/folio-assistant-03t9--precondition-gate-had-no-consumer-evaluateprecondi.md"
     },
     {
       "id": "folio-assistant-04vl",
@@ -2895,14 +2909,14 @@
     {
       "id": "folio-assistant-f258",
       "title": "META-PROCESS: 'where do I file this?' has many specialised answers and no general one — plus the surprise-to-corpus loop",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:09:05Z",
-      "updatedAt": "2026-09-21T21:09:05Z",
+      "updatedAt": "2026-09-22T08:51:25Z",
       "preview": "Owner, 2026-09-21, two linked asks in one message:\n\n> also during such interactions/any task really, review the discussion/(input.output),\n> was there something unexpected that happened (stastically so, logically so)\n> then, if it is is happening during a defined process that is\n> happeneing/expecting to happen often, it may be worth a new\n> skill/guidance/tool refinment. if so prompt the user to ",
       "file": "beans/defs/folio-assistant-f258--meta-process-where-do-i-file-this-has-many-special.md"
     },
@@ -3231,14 +3245,14 @@
     {
       "id": "folio-assistant-ha78",
       "title": "BUILT AND UNREACHABLE: 6 instances have a declared viewer no tile links, and shipping a graph adds one",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:49:16Z",
-      "updatedAt": "2026-09-22T08:58:25Z",
+      "updatedAt": "2026-09-22T09:21:44Z",
       "preview": "Surfaced on 2026-09-22 by shipping `agent-skills`' voices (bean `26tu`). The\nmerge conflict in the generated `docs/_data/harness.json` was main adding this\nfinding for the new graph; regenerating kept it, because it is TRUE.\n\n`harnessTiles` reports, per instance:\n\n> N graph(s) have a declared viewer that exists but is not at a conventional\n> path, so no tile links it — … **Built and unreachable is",
       "file": "beans/defs/folio-assistant-ha78--built-and-unreachable-6-instances-have-a-declared.md"
     },

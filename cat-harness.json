@@ -260,13 +260,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:23:22.574Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2e64d0517af6ee10db504a985016707e2ee32eb7",
-  "sourceCommitSha": "2e64d0517af6ee10db504a985016707e2ee32eb7",
-  "sourceCommitAt": "2026-09-22T11:21:31+02:00",
+  "generatedAt": "2026-09-22T09:29:58.657Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
+  "sourceCommitSha": "a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
+  "sourceCommitAt": "2026-09-22T11:27:55+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 227,
+    "Skill": 229,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -1642,6 +1642,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "surprise-to-corpus",
+      "title": "Surprise to corpus — notice it, filter it, then ask",
+      "description": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/surprise-to-corpus.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-editorial-review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "voice-editorial-review",
@@ -2568,6 +2584,22 @@
       ],
       "instructionsPath": "skills/folio-core/symbiotic-interaction.md",
       "instructionLines": 190,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "where-does-this-go",
+      "title": "Where does this go? — the question, then the skill that answers it",
+      "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/where-does-this-go.md",
+      "instructionLines": 104,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5254,6 +5286,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/tabular-metadata",
@@ -5275,7 +5308,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-overlay-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
@@ -33094,8 +33128,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "2e64d0517af6ee10db504a985016707e2ee32eb7",
+    "sha": "a6722a15bf11c5250ff8cf51fd11d025a13ea21f",
     "pr": "main",
-    "run": "35709923860"
+    "run": "35710531420"
   }
 }
