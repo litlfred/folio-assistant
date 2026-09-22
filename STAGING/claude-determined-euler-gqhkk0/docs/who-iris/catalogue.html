@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>From this catalogue to somebody else's portal — ingested IRIS replica</title>
+<title>The catalogue, as a graph — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -356,270 +356,163 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">KG to portal</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">Catalogue</span></div></div>
 
 <main class="wrap">
+<div class="wrap">
+<h1>The catalogue, as a graph</h1>
 
-<h1>From this catalogue to somebody else&rsquo;s portal</h1>
+<p class="lede">The replica pages show what IRIS looks like. This one shows what this
+catalogue <em>knows</em> — and, more usefully, what it records that it does not know.</p>
 
-<p class="lede">This instance is a <strong>worked example</strong> of a general pattern: a knowledge
-graph reaching readers the repository never hears about. The pattern is the platform&rsquo;s —
-the skill is <code>kg-to-portal</code> and the process is
-<code>kg-to-portal.bpmn</code>. What is on this page is the part only who-iris can
-say: which stages are actually built here, with this instance&rsquo;s own numbers.</p>
-
-<figure class="arch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 524" width="1000" height="524"
-     role="img" aria-labelledby="kgp-title kgp-desc" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
-  <title id="kgp-title">Knowledge graph to public portal</title>
-  <desc id="kgp-desc">Six stages in three zones. The publisher's zone holds the knowledge graph, the
-  selected subgraph, the serialized JSON-LD, the package with its manifest of digests, and the
-  signature. The distribution zone holds the origin and, optionally, a cache in front of it. The
-  consumer's zone holds the portal, which verifies the package before serving it to readers. The
-  arrow from signature to origin is dashed and labelled "transport: undetermined".</desc>
-
-  <style>
-    :root, svg {
-      --kgp-ink: #1b2733;
-      --kgp-muted: #5b6b7a;
-      --kgp-edge: #c3ccd6;
-      --kgp-pub: #0a5c7a;
-      --kgp-pub-wash: #eaf3f7;
-      --kgp-dist: #7a4a10;
-      --kgp-dist-wash: #fdf4e8;
-      --kgp-cons: #1d5c1d;
-      --kgp-cons-wash: #f0f6e9;
-      --kgp-trust: #6b3fa0;
-      --kgp-paper: #ffffff;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root, svg {
-        --kgp-ink: #e6edf3; --kgp-muted: #9fb0c0; --kgp-edge: #3a4652;
-        --kgp-pub: #6fc4e4; --kgp-pub-wash: #10242e;
-        --kgp-dist: #e8ab63; --kgp-dist-wash: #2c2013;
-        --kgp-cons: #8fd08f; --kgp-cons-wash: #16240f;
-        --kgp-trust: #c2a3e8;
-        --kgp-paper: #0f1720;
-      }
-    }
-    .zone { fill: none; stroke-width: 1.5; rx: 10; }
-    .zone-label { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-    .box { fill: var(--kgp-paper); stroke: var(--kgp-edge); stroke-width: 1.5; rx: 6; }
-    .box-t { font-size: 13px; font-weight: 600; fill: var(--kgp-ink); }
-    .box-s { font-size: 11px; fill: var(--kgp-muted); }
-    .flow { stroke: var(--kgp-muted); stroke-width: 1.8; fill: none; marker-end: url(#kgp-arrow); }
-    .flow-dash { stroke-dasharray: 7 5; }
-    .flow-t { font-size: 11px; fill: var(--kgp-muted); }
-    .flow-t.hot { fill: var(--kgp-dist); font-weight: 600; }
-    .note { font-size: 11px; fill: var(--kgp-muted); font-style: italic; }
-  </style>
-
-  <defs>
-    <marker id="kgp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--kgp-muted)"/>
-    </marker>
-  </defs>
-
-  <rect x="0" y="0" width="1000" height="524" fill="var(--kgp-paper)"/>
-
-  <rect class="zone" x="16" y="44" width="516" height="270" stroke="var(--kgp-pub)" fill="var(--kgp-pub-wash)" fill-opacity="0.55"/>
-  <text class="zone-label" x="30" y="66" fill="var(--kgp-pub)">Publisher — owns the canonical URL</text>
-
-  <rect class="box" x="36" y="96" width="132" height="70"/>
-  <text class="box-t" x="102" y="122" text-anchor="middle">Knowledge graph</text>
-  <text class="box-s" x="102" y="140" text-anchor="middle">versioned store</text>
-  <text class="box-s" x="102" y="155" text-anchor="middle">(git, or equivalent)</text>
-
-  <rect class="box" x="204" y="96" width="120" height="70"/>
-  <text class="box-t" x="264" y="122" text-anchor="middle">Subgraph</text>
-  <text class="box-s" x="264" y="140" text-anchor="middle">what may leave</text>
-  <text class="box-s" x="264" y="155" text-anchor="middle">— editorial</text>
-
-  <rect class="box" x="360" y="96" width="150" height="70"/>
-  <text class="box-t" x="435" y="122" text-anchor="middle">JSON-LD</text>
-  <text class="box-s" x="435" y="140" text-anchor="middle">edges coerced @id,</text>
-  <text class="box-s" x="435" y="155" text-anchor="middle">node IRIs are fragments</text>
-
-  <rect class="box" x="204" y="212" width="150" height="76"/>
-  <text class="box-t" x="279" y="238" text-anchor="middle">Package</text>
-  <text class="box-s" x="279" y="256" text-anchor="middle">files + manifest</text>
-  <text class="box-s" x="279" y="271" text-anchor="middle">of digests and sizes</text>
-
-  <rect class="box" x="390" y="212" width="120" height="76"/>
-  <text class="box-t" x="450" y="238" text-anchor="middle">Signature</text>
-  <text class="box-s" x="450" y="256" text-anchor="middle">over the manifest,</text>
-  <text class="box-s" x="450" y="271" text-anchor="middle">per asset, or both</text>
-
-  <rect class="zone" x="556" y="44" width="196" height="270" stroke="var(--kgp-dist)" fill="var(--kgp-dist-wash)" fill-opacity="0.55"/>
-  <text class="zone-label" x="570" y="66" fill="var(--kgp-dist)">Distribution</text>
-
-  <rect class="box" x="580" y="96" width="148" height="70"/>
-  <text class="box-t" x="654" y="122" text-anchor="middle">Origin</text>
-  <text class="box-s" x="654" y="140" text-anchor="middle">publication.host</text>
-  <text class="box-s" x="654" y="155" text-anchor="middle">— a tool choice</text>
-
-  <rect class="box" x="580" y="212" width="148" height="76" stroke-dasharray="6 4"/>
-  <text class="box-t" x="654" y="238" text-anchor="middle">Cache / CDN</text>
-  <text class="box-s" x="654" y="256" text-anchor="middle">optional layer,</text>
-  <text class="box-s" x="654" y="271" text-anchor="middle">never the host</text>
-
-  <rect class="zone" x="776" y="44" width="208" height="270" stroke="var(--kgp-cons)" fill="var(--kgp-cons-wash)" fill-opacity="0.55"/>
-  <text class="zone-label" x="790" y="66" fill="var(--kgp-cons)">Consumer</text>
-
-  <rect class="box" x="800" y="96" width="160" height="70"/>
-  <text class="box-t" x="880" y="122" text-anchor="middle">Portal</text>
-  <text class="box-s" x="880" y="140" text-anchor="middle">Moodle, intranet,</text>
-  <text class="box-s" x="880" y="155" text-anchor="middle">department page</text>
-
-  <rect class="box" x="800" y="212" width="160" height="76"/>
-  <text class="box-t" x="880" y="238" text-anchor="middle">Verify</text>
-  <text class="box-s" x="880" y="256" text-anchor="middle">digests + signature;</text>
-  <text class="box-s" x="880" y="271" text-anchor="middle">cannot check → unknown</text>
-
-  <rect class="box" x="300" y="326" width="440" height="66" stroke="var(--kgp-trust)" stroke-width="2"/>
-  <text class="box-t" x="520" y="346" text-anchor="middle" fill="var(--kgp-trust)">GDHCN — DID trustlist (WHO SMART Trust)</text>
-  <text class="box-s" x="520" y="363" text-anchor="middle">static did.json on tng-cdn.who.int; the key is resolved from HERE,</text>
-  <text class="box-s" x="520" y="377" text-anchor="middle">not read out of the package</text>
-
-  <path class="flow" d="M 168 131 L 198 131"/>
-  <path class="flow" d="M 324 131 L 354 131"/>
-  <path class="flow" d="M 435 166 L 435 186 L 279 186 L 279 206"/>
-  <path class="flow" d="M 354 250 L 384 250"/>
-
-  <path class="flow flow-dash" d="M 510 250 L 545 250 L 545 131 L 574 131"/>
-  <text class="flow-t hot" x="528" y="196" text-anchor="middle">transport:</text>
-  <text class="flow-t hot" x="528" y="209" text-anchor="middle">undetermined</text>
-
-  <path class="flow" d="M 654 166 L 654 206"/>
-  <path class="flow" d="M 728 250 L 764 250 L 764 131 L 794 131"/>
-  <path class="flow" d="M 728 131 L 794 131"/>
-  <text class="flow-t" x="756" y="182" text-anchor="middle">either route,</text>
-  <text class="flow-t" x="756" y="195" text-anchor="middle">same bytes, and</text>
-  <text class="flow-t" x="756" y="208" text-anchor="middle">the same canonical URL</text>
-
-  <path class="flow" d="M 880 166 L 880 206"/>
-
-  <path class="flow flow-dash" d="M 450 288 L 450 320"/>
-  <path class="flow flow-dash" d="M 740 358 L 880 358 L 880 292"/>
-  <text class="flow-t" x="396" y="304" text-anchor="end">with a key the trustlist carries</text>
-  <text class="flow-t" x="812" y="350" text-anchor="middle">resolves the key</text>
-
-  <text class="note" x="30" y="416">The consumer owns nothing: the canonical URL is the origin's. A cache is a faster route to the same bytes; model it as the host and</text>
-  <text class="note" x="30" y="432">every citation breaks the day the cache changes.</text>
-  <text class="note" x="30" y="450">Money, traffic, graph size and latency decide the transport; each needs a denominator before it is an argument rather than a preference.</text>
-  <text class="note" x="30" y="466">A package that is signed and never verified is a package whose signature is decoration. A portal nobody asked is not a portal that checked.</text>
-  <text class="note" x="30" y="482">WHO's own trust network is this shape one layer down: static signed artefacts, served from a CDN, fetched a slice at a time.</text>
-  <text class="note" x="30" y="498">Stages: select · serialize · package · sign · distribute · verify.</text>
-</svg>
-<figcaption>Six stages in three zones. The publisher owns the canonical URL; the cache owns neither end. The dashed arrow is undetermined on purpose.</figcaption></figure>
-
-<h2>The one distinction the drawing exists for</h2>
-
-<div class="caveat">
-  <p><strong>A CDN is not a publication host. It is a layer in front of one.</strong>
-  <code>PUBLICATION_HOSTS</code> answers <em>what serves the rendering</em>; a cache
-  answers <em>what stands between the server and the reader</em>. Model the cache as the
-  host and the published URL becomes the cache&rsquo;s &mdash; then the day the cache changes,
-  every citation breaks and the old URL stays warm for as long as its TTL says.</p>
-  <p>This page is served from GitHub Pages and its assets are also reachable through
-  jsDelivr. <strong>Both are tool choices.</strong> The canonical answer is the one the
-  catalogue records; the CDN is an accelerated route to the same bytes.</p>
+<div class="note">
+<p><strong>The gap is the point, not a backlog.</strong> This instance models
+<strong>13</strong> node(s) against <strong>273,559</strong> items across <strong>1,057,223</strong> files upstream.
+Cataloguing by reference means recording that something exists without holding it,
+so a small number here is the design rather than a shortfall.</p>
 </div>
 
-<h2>Where this instance actually is</h2>
+<h2>What is held, and what is only named</h2>
 
-<table class="reqs">
-  <thead><tr><th>#</th><th>Stage</th><th>Here</th></tr></thead>
-  <tbody>
-<tr><th class="rid">1</th><td><strong>Select</strong><br><span class="why">Everything in this catalogue is publishable, so the editorial cut has never had to refuse anything. An untested filter is not a working one.</span></td><td><span class="state unknown">partial</span></td></tr>
-<tr><th class="rid">2</th><td><strong>Serialize</strong><br><span class="why"><code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is 13 nodes with 3 item(s).</span></td><td><span class="state materialized">built</span></td></tr>
-<tr><th class="rid">3</th><td><strong>Package</strong><br><span class="why">There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.</span></td><td><span class="state referenced">not built</span></td></tr>
-<tr><th class="rid">4</th><td><strong>Sign</strong><br><span class="why">Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>, via WHO SMART Trust; see below.</span></td><td><span class="state referenced">not built</span></td></tr>
-<tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">11 generated page(s) and 0 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
-<tr><th class="rid">6</th><td><strong>Verify</strong><br><span class="why">No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.</span></td><td><span class="state referenced">not built</span></td></tr>
-  </tbody>
+<table class="kg">
+<tr><th>state</th><th>nodes</th><th>what it means</th></tr>
+<tr><td><span class="state materialized">materialized</span></td><td>3</td><td>the bytes are in this repository</td></tr>
+<tr><td><span class="state referenced">referenced</span></td><td>10</td><td>upstream, not here — a fact, not a gap</td></tr>
+<tr><td><span class="state unknown">unknown</span></td><td>0</td><td>nobody has looked; never rendered as either of the above</td></tr>
 </table>
 
-<h2>The numbers a transport decision would be made with</h2>
+<h2>What the gates say about the 6 held bitstream(s)</h2>
 
-<p class="ordering">Constraints need denominators. These are this instance&rsquo;s, measured at
-generation time &mdash; not quoted, not remembered.</p>
+<p><strong>Not everything permitted is everything known.</strong> <code>restrictions</code> is unknown on 6, <code>sourceLoss</code> is unknown on 3, <code>copyright</code> is unknown on 6 of them. A gate that returned <em>unknown</em> is a question
+nobody has answered — which is a different state from a gate that was asked and
+said yes, and collapsing the two would turn an open question into a clearance.</p>
 
-<table class="reqs">
-  <tbody>
-    <tr><th class="rid">items</th><td>3 here, of <strong>273,559</strong> upstream</td><td class="why">the completeness denominator</td></tr>
-    <tr><th class="rid">files</th><td>1,057,223 upstream</td><td class="why">a different denominator; 3.86 files per item, so a fraction built from the wrong one is wrong by that factor</td></tr>
-    <tr><th class="rid">bytes</th><td><strong>7.86 MB</strong> held, of 361.55 GiB upstream</td><td class="why">the size-gate denominator, and the reason this catalogue is by reference</td></tr>
-    <tr><th class="rid">served</th><td>11 page(s), 0 cover(s)</td><td class="why">what a publication period would actually move</td></tr>
-    <tr><th class="rid">readers</th><td><span class="none">not measured</span></td><td class="why">traffic is bytes &times; requests, and nothing here counts requests. Unknown rather than assumed &mdash; an invented reader count would make every cost figure below it fiction</td></tr>
-  </tbody>
+<table class="kg">
+<tr><th>gate</th><th>verdicts</th></tr>
+<tr><td><code>copyright</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
+<tr><td><code>restrictions</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
+<tr><td><code>retention</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
+<tr><td><code>size</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
+<tr><td><code>sourceLoss</code></td><td><span class="state materialized">permitted</span> 3 <span class="state unknown">unknown</span> 3</td></tr>
 </table>
 
-<h2>Trust: GDHCN, via WHO SMART Trust</h2>
+<h2>Every node</h2>
 
-<p>Owner, 2026-09-20, in two messages: <code>propsal signing = GDHCN</code>, then
-<code>smart-trust</code> &mdash; which names where the first is specified. The
-<strong>WHO SMART Trust Implementation Guide</strong>
-(<a href="https://smart.who.int/trust"><code>smart.who.int.trust</code></a>, FHIR R5,
-v1.8.0 as read) publishes GDHCN key material as
-<a href="https://www.w3.org/TR/did-core/">W3C DID documents</a>.</p>
+<table class="kg">
+<tr><th>state</th><th>kind</th><th>node</th><th>held as</th><th>record</th><th>bitstreams</th></tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>collection</code></td>
+  <td>Publications<br><code class="dim">collection/hq-publications</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>collection</code></td>
+  <td>Information products<br><code class="dim">collection/wpro-information-products</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>3. Regional Office for the Americas<br><code class="dim">community/270bee8e-d535-4512-86a2-b01850407a23</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>8. WHO Framework Convention on Tobacco Control (FCTC)<br><code class="dim">community/28b22be0-5864-409c-9b83-0442e2a7ca0e</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>1. Headquarters<br><code class="dim">community/5bff2c18-6c2b-4658-9087-93811d2399c0</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>6. Regional Office for South-East Asia<br><code class="dim">community/8f327840-b0f3-4769-a1c2-270b2b5ce7da</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>2. Regional Office for Africa<br><code class="dim">community/e1b206b7-fd4c-4b93-972a-be07850a1cdd</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>7. Regional Office for the Western Pacific<br><code class="dim">community/ebd3b191-c322-4754-9415-469a1a0eb0c3</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>4. Regional Office for the Eastern Mediterranean<br><code class="dim">community/f005d7fc-da21-4f55-9e06-9f65c49b2184</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state referenced">referenced</span></td>
+  <td><code>community</code></td>
+  <td>5. Regional Office for Europe<br><code class="dim">community/fb66a624-a5dc-4576-8b6b-929639e552d8</code></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>Publication and information products style guide<br><code class="dim">item/18892cf3-5a4f-42a4-923c-a93f4a594dec</code></td>
+  <td><code>wpr-rdo-2020-003-eng</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>WHO handbook for guideline development<br><code class="dim">item/63e14c27-7448-41ec-be08-a96a25a47db6</code></td>
+  <td><code>9789241548960-eng</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td><span class="state materialized">materialized</span></td>
+  <td><code>item</code></td>
+  <td>WHO editorial style manual<br><code class="dim">item/b08c6c19-315a-41a4-a9cb-8edabdbc6791</code></td>
+  <td><code>who-pub-tps-931</code></td>
+  <td>yes</td>
+  <td>2</td>
+</tr>
+</table>
 
-<div class="caveat">
-  <p><strong>This corrected an earlier draft on this branch.</strong> It said the publisher
-  &ldquo;signs as a participant&rdquo;, which left the impression that GDHCN supplies the signing
-  envelope. It supplies the <strong>key distribution</strong>: a trustlist carries trust anchors
-  &mdash; which keys belong to which participant, for which domain and which usage &mdash; and says
-  nothing about what you wrap your bytes in. The health-certificate envelope is a separate
-  specification in the same IG, and <em>a document package is not a health certificate</em>.
-  What is settled is where a verifier <strong>gets the key</strong>.</p>
+<p class="caveat">Generated from <code>catalogue/</code> by
+<code>who-iris/scripts/gen-iris-pages.ts</code>. Every count above is derived from the
+nodes themselves; none is transcribed. <code>bun run check:catalogue</code> separately
+verifies that each node validates and that every <code>metadataRef</code>,
+<code>libraryId</code>, <code>localPath</code> and parent path resolves — so this page
+reports what the catalogue says, and that check reports whether it hangs together.</p>
 </div>
-
-<p>Three things from <code>concepts_did_gdhcn.md</code>, and the third is the one that matters
-for the drawing above:</p>
-
-<ul class="kids" style="margin-left:0">
-  <li><strong>Two variants.</strong> <em>Embedded</em> carries the keys inline and supports
-      immediate verification; <em>by reference</em> carries only DID ids to resolve, which keeps
-      the root document concise and supports dynamic discovery.</li>
-  <li><strong>The path is a hierarchical filter</strong> &mdash;
-      <code>/v2/trustlist/$domain/$participant/$usage/did.json</code>, the levels ANDed, with
-      <code>-</code> as a wildcard. A verifier fetches exactly the slice it needs.</li>
-  <li><strong>It is static JSON served from a CDN</strong>, on a host named
-      <code>tng-cdn.who.int</code>. So the pattern on this page is not an analogy to how GDHCN
-      works &mdash; it <em>is</em> how GDHCN works, one layer down.</li>
-</ul>
-
-<div class="caveat">
-  <p><strong>Read off the IG, not fetched.</strong> Those endpoints are transcribed from
-  <code>input/pagecontent/concepts_did_gdhcn.md</code> on <code>main</code>;
-  <code>tng-cdn.who.int</code> returns <code>000</code> from the container that generates this
-  page, the same block <code>iris.who.int</code> and <code>cdn.jsdelivr.net</code> return.</p>
-  <p><strong>Still open and unread:</strong> the key rotation and revocation model
-  (<code>concepts_certificate_governance.md</code>), and whether a document-package signature can
-  be expressed for a GDHCN-aware verifier at all &mdash; the envelope specified in that IG is for
-  health certificates, and nothing there covers arbitrary files.</p>
-</div>
-
-<h2>What is deliberately not decided</h2>
-
-<div class="caveat">
-  <p><strong>The ingestion method is undetermined</strong>, and the process diagram reaches a
-  gateway with no default branch rather than naming one. A pull from the portal, a push to an
-  object store, a git fetch, a signed tarball on a schedule &mdash; they differ in who initiates,
-  in what must be reachable from where, and in what happens when a publication is missed.
-  Drawing one as the obvious branch would record a decision nobody made.</p>
-  <p><strong>The store must be versioned; which store is a deployment choice.</strong> Hosted git
-  is one satisfaction of that requirement, not the requirement. A portal showing a graph needs to
-  be able to say <em>which</em> graph &mdash; an unversioned store cannot answer &ldquo;what did
-  this look like last term&rdquo;, and that is the question a reading list asks every year.</p>
-  <p><strong>Nothing here was measured against a live CDN.</strong>
-  <code>cdn.jsdelivr.net</code> is egress-blocked from the container that generates these pages,
-  so every CDN figure would be quoted rather than measured. The owner confirmed one link by hand
-  on 2026-09-20, and that is the whole of the evidence.</p>
-</div>
-
-<p><a href="ingestion-notes.html">What ingesting these documents cost</a> &mdash; the
-requirements this instance paid for, generated from the skill that records them.</p>
-
 </main>
 
 <footer class="mast"><div class="wrap">
