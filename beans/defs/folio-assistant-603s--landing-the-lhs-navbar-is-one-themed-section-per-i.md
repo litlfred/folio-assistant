@@ -264,3 +264,46 @@ The scanner is repointed rather than defended. **Not edited here**: this is a
 sibling's bean, the ruling is recorded on `b5f0` where it was asked, and this
 note exists so the next agent reading question 1 does not implement against a
 superseded answer. The measured cost and the ordering are on `b5f0`.
+
+---
+
+*2026-09-22, session_01V4NobpyNLPku8t7aM7DFqF — **a new owner requirement for
+this bean, with the accessor that already answers it.***
+
+Owner, 2026-09-22, in the same breath as two smaller asks (issue #851):
+
+> All of these style of sub-graph visualizera should all have common expanding
+> nav element ton the navbar to show which dependent harnesses have skills or
+> tools or docs content
+
+This is the part this bean does not already say. The bean has the per-instance
+section, the dependency ordering, and the collapsed/open pair. What is new:
+the expanding element is **common across every sub-graph viewer** rather than
+per-viewer chrome, and what it expands to show is **which DEPENDENT harnesses
+hold content of a given kind**.
+
+**The question it has to answer is already computable, and the accessor
+exists.** `graph-tiles.visualisationsOf(coverage, id)` returns an instance's
+declared viewers for a directory, and `undeclaredProjections` selects the
+opposite case — a published page nobody declared. Between them, "does harness
+X have skills / tools / docs content, and is it reachable" is a lookup rather
+than a new scan. Do not mint a second answer to it; `harness-tiles.ts` already
+reads the same accessor and a second reader is how the navbar and the tiles
+drift apart.
+
+**The per-instance split it needs now exists for `skills`.** As of #851, all
+seven `skills` directories declare a `coverage.visualiser` pointing at their
+own `docs-auto/index/skills/<id>/` page — `cat-harness`, `bootstrap-render`,
+`methodology-raci`, `methodology-crdm`, `kg-navigation`,
+`large-datasets-skills`, `who-iris-skills`. Before that they were rendered but
+undeclared, so every one of them read as "no published viewer" to exactly the
+accessor this element would consult. `schemas` and `library` were already
+split this way. So the data this element needs is per-dependency and present
+for three kinds; `docs` is the one the owner names that is not yet.
+
+**Not built, and deliberately.** The owner was given the collision and chose
+specification over implementation: `sjic`/`p5wm` own the navbar component and
+PR #842 is live on `claude/lhs-navbar-harness-folios-cqo9mu` right now. Two
+sessions designing one expanding element separately is the outcome
+`bean-coordination` exists to prevent. **Not edited above** — this is a
+sibling's bean and the sections it already carries are theirs.
