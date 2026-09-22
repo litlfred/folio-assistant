@@ -262,6 +262,12 @@ export const RULES: Rule[] = [
       "scripts/check-escaped-markup.ts",     // no page publishes a block tag as visible text
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
+      // Its merge-time sibling, and harness-level for the same reason: it
+      // resolves conflicts in the `qa` graph by re-running whichever writer
+      // the sidecars name. It reads the DECLARATION, `package.json` and git's
+      // index, and nothing in it is about any folio's subject matter — a folio
+      // could not make it resolve differently, only give it more files.
+      "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which

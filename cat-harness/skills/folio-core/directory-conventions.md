@@ -332,6 +332,45 @@ agentic-harness/          folio-assistant-core/
 `agentic-harness` declares `tools/`, `kg/` and `schemas/`.
 `folio-assist-core` declares **only** `folio/` and inherits the other three.
 
+### A sub-sub-graph — one RESERVED name inside a declared directory
+
+Owner, 2026-09-22, on where a vendor-specific override of a voice belongs:
+
+> vendor overides go in sub-sub-grahiphs like voice/vendors or voices-vendors
+
+Two spellings, and the **nested** one is the shape this model already has.
+`voices-vendors/` needs a SECOND declared graph for one concept, and a
+declaration inside a declaration is the defect #263's own comment names. So:
+
+> **A family within a graph is a RESERVED SUBDIRECTORY NAME inside the one
+> declared directory — never a second declaration, and never a rule about
+> arbitrary nesting.**
+
+Three properties, each load-bearing:
+
+1. **One declaration.** Every consumer that already asks for the graph gets the
+   family with no change, and there is one answer to "where does this live".
+2. **One level, under a name the reader states.** *"Any directory, any depth"*
+   is a rule nobody can check, and it would silently make an unrelated nested
+   directory — a `notes/`, a scratch draft — part of the graph.
+3. **The directory is where a PERSON looks; the file is still the contract.**
+   A vendor voice declares what it overrides in its own `extends` field
+   (`extends`, not `overrides` — the obvious name is the wrong one),
+   exactly as one sitting flat would. Nothing downstream may infer a relation
+   from a path — the same rule as everywhere else here: extension and location
+   are coincidences, a declaration inside the file is the contract.
+
+**Adding the name to the convention is not enough; the READER has to descend.**
+`voiceFilesIn` scanned one level and took a directory for a voice only where it
+held a `voice.json`. `vendors/` holds none — its children do — so every
+override under it would have been skipped in silence and `loadVoices` would
+have reported a clean read over real content. That is `dh4f` exactly. It was
+found by reading the reader when the layout was chosen rather than after
+shipping into it, and `voices-viz.test.ts` asserts both directions: a voice
+under `vendors/` loads, a voice under any other nested directory does not.
+
+`VOICE_VENDORS_DIR` in `schemas/voices.ts` is the one spelling of the name.
+
 ## Inheritance
 
 An instance inherits its dependencies' directories, walked depth-first through
