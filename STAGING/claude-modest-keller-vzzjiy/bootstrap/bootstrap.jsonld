@@ -270,10 +270,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-22T20:40:26.181Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cde71f8ff00446733444f5851aa62d5f23595f8",
-  "sourceCommitSha": "0cde71f8ff00446733444f5851aa62d5f23595f8",
-  "sourceCommitAt": "2026-09-22T20:38:01Z",
+  "generatedAt": "2026-09-22T20:54:26.588Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/97fde9a1cf38b7e8c40e99c5a3f75130c45e02dc",
+  "sourceCommitSha": "97fde9a1cf38b7e8c40e99c5a3f75130c45e02dc",
+  "sourceCommitAt": "2026-09-22T20:51:42Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -286,48 +286,6 @@
     "Asset": 2
   },
   "@graph": [
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/confirm-harness",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "confirm-harness",
-      "title": "Which harness, and where",
-      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
-      "instructionsPath": "skills/confirm-harness.md",
-      "instructionLines": 59,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-kg-navigation",
-      "title": "Reading a knowledge graph before you have anything",
-      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it.",
-      "instructionsPath": "skills/bootstrap-kg-navigation.md",
-      "instructionLines": 83,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/log-message",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "log-message",
-      "title": "Logging what you are doing",
-      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
-      "instructionsPath": "skills/log-message.md",
-      "instructionLines": 93,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
-    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/root-readme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
@@ -356,6 +314,48 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-kg-navigation",
+      "title": "Reading a knowledge graph before you have anything",
+      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it.",
+      "instructionsPath": "skills/bootstrap-kg-navigation.md",
+      "instructionLines": 83,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
+      "instructionsPath": "skills/confirm-harness.md",
+      "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/log-message",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "log-message",
+      "title": "Logging what you are doing",
+      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
+      "instructionsPath": "skills/log-message.md",
+      "instructionLines": 93,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-graph-emission",
@@ -382,303 +382,6 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
-      "name": "Determine the harness and repositories",
-      "enforcement": "strict",
-      "sourcePath": "processes/discussion.bpmn",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
-      ],
-      "nodeCount": 9,
-      "flowCount": 9,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "not yet — ask once more",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "declined",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Initiator",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Requestor",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Requestor",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "A fact is needed that no file holds",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Narrow the candidates from context",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Put the question, with its candidates named",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Answer, or decline",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Requestor",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Does the answer settle it?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Record the determination",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Record what is still open",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Harness and repositories determined",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Still open, and said so",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
@@ -843,6 +546,20 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Initiator",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Requestor",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
@@ -1167,6 +884,289 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Determine the harness and repositories",
+      "enforcement": "strict",
+      "sourcePath": "processes/discussion.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet — ask once more",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A fact is needed that no file holds",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Narrow the candidates from context",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Put the question, with its candidates named",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Answer, or decline",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Requestor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Does the answer settle it?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record the determination",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record what is still open",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Harness and repositories determined",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Still open, and said so",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
@@ -1609,8 +1609,8 @@
   ],
   "staging": {
     "branch": "claude/modest-keller-vzzjiy",
-    "sha": "d97403fdc35bd4b3b5c0d42d48f710b4313e97a0",
+    "sha": "1264a9defeaca823af1394a60b0034d4e0bf9664",
     "pr": "964/merge",
-    "run": "35781561593"
+    "run": "35783024650"
   }
 }

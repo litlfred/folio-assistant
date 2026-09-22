@@ -434,25 +434,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790109552">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790110399">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790109552">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790110399">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790109552">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790110399">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790109552">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790110399">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,10 +466,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790109552" defer></script>
+<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790110399" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -690,7 +690,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         style="--fa-tile-tone: 236; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/"
          data-fa-href-kind="folio"><span class="fa-harness-tab__label">Folio Assistant</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
         style="--fa-tile-tone: 268; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/"
-         data-fa-href-kind="folio"><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
+                title="declared, with no published viewer">code</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">external-schema</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/fsh-guts/index.md">fsh-guts</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/glossary/">glossary</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/health/">health</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">interaction</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/issue-marks/">issue-marks</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/library/cat-harness/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">memory</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
@@ -1482,7 +1483,8 @@ just not tied to the two moments named above.</p>
         style="--fa-tile-tone: 236; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/"
          data-fa-href-kind="folio"><span class="fa-harness-tab__label">Folio Assistant</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
         style="--fa-tile-tone: 268; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/"
-         data-fa-href-kind="folio"><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
+                title="declared, with no published viewer">code</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">external-schema</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/fsh-guts/index.md">fsh-guts</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/glossary/">glossary</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/health/">health</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">interaction</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/issue-marks/">issue-marks</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness/library/cat-harness/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
                 title="declared, with no published viewer">memory</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked"
