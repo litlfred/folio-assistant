@@ -52,7 +52,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "
 import { join, relative } from "node:path";
 
 import type { QaCriterionEntry, QaReviewer } from "../schemas/block-qa.ts";
-import { isCouldNotDispatch } from "../content/pipeline/untainted-verification.ts";
+import { isCheckerWitness, isCouldNotDispatch } from "../content/pipeline/untainted-verification.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ACTOR_DIR = join(ROOT, ".claude", "skills", "actors");
@@ -132,9 +132,24 @@ export function scan(resultsDir: string = RESULTS, actors = readActors()): Findi
     for (const [criterion, entries] of Object.entries(criteria)) {
       if (!Array.isArray(entries)) continue;
       for (const entry of entries) {
-        // The producer may write this one, and only this one. Identified
-        // structurally so the exemption cannot be claimed by asserting it.
-        if (isCouldNotDispatch(entry)) continue;
+        // Two exemptions, both identified STRUCTURALLY so neither can be
+        // claimed by asserting it.
+        //
+        // 1. A "could not dispatch" record — the producer may write this one,
+        //    and only this one. The owner's ruling of 2026-09-21.
+        // 2. A CHECKER's witness. `untainted-checker` deliberately holds no
+        //    `qa-reporting`, because it rules on nothing; its `n/a` carries
+        //    the intermediate a reader needs, not a finding. Without this the
+        //    honest half of the mechanism would fail the gate built to protect
+        //    it — while a checker entry carrying a REAL verdict still lands in
+        //    `forbidden`, which is the defect worth catching.
+        //
+        // Rejected: exempting every `n/a`. It is the tempting simplification
+        // and it is wrong — 3,173 of 5,896 entries are `n/a` (54%), and "this
+        // criterion does not apply here" is precisely the claim that produces
+        // a false pass when it is wrong. Exempting it would blind the gate to
+        // the `dh4f` shape this whole epic is about.
+        if (isCouldNotDispatch(entry) || isCheckerWitness(entry)) continue;
         const outcome = reviewerOutcome(entry.reviewer, actors);
         if (outcome === "permitted") continue;
         findings.push({

@@ -89,6 +89,14 @@ export interface UntaintedParty {
   tools_used?: string;
   /** ISO-8601; defaults to now. */
   date?: string;
+  /**
+   * The declared actor this party acted as.
+   *
+   * Defaults from the party's ROLE — {@link CHECKER_ACTOR} or
+   * {@link ADJUDICATOR_ACTOR} — so the separation the discipline rests on is
+   * not something a caller has to remember to get right.
+   */
+  actor?: string;
 }
 
 export interface UntaintedPayload {
@@ -130,6 +138,19 @@ export interface CouldNotDispatchPayload {
   reviewed_at?: string;
   reviewed_sha?: string;
 }
+
+/**
+ * The declared actors the two dispatched parties act as.
+ *
+ * Stamped as a DEFAULT rather than required on the payload, because the actor
+ * follows from the role and a caller that had to supply it could supply the
+ * wrong one — which is how the separation stops being structural.
+ * `UntaintedParty.actor` overrides it for a party that is genuinely something
+ * else.
+ */
+export const CHECKER_ACTOR = "untainted-checker";
+/** @see {@link CHECKER_ACTOR} — and note this one holds `qa-reporting` while the checker does not. */
+export const ADJUDICATOR_ACTOR = "untainted-adjudicator";
 
 function partyFields(p: UntaintedParty) {
   return {
@@ -173,7 +194,12 @@ export function untaintedEntries(
     result: payload.verdict,
     severity: payload.verdict === "pass" ? undefined : (payload.severity ?? "minor"),
     evidence: findings && findings.length > 0 ? findings.map((t) => ({ text: t })) : undefined,
-    reviewer: { kind: "agent", id: payload.adjudicator.id, ...partyFields(payload.adjudicator) },
+    reviewer: {
+      kind: "agent",
+      id: payload.adjudicator.id,
+      actor: payload.adjudicator.actor ?? ADJUDICATOR_ACTOR,
+      ...partyFields(payload.adjudicator),
+    },
     reviewed_at: at,
     reviewed_sha: sha,
     metrics: provenanceMetrics(payload.adjudicator, { role: "adjudicator" }),
@@ -185,7 +211,12 @@ export function untaintedEntries(
     // It ruled on nothing and must not read as a verdict. What it contributes
     // is the intermediate the adjudicator ruled on.
     result: "n/a",
-    reviewer: { kind: "agent", id: payload.checker.id, ...partyFields(payload.checker) },
+    reviewer: {
+      kind: "agent",
+      id: payload.checker.id,
+      actor: payload.checker.actor ?? CHECKER_ACTOR,
+      ...partyFields(payload.checker),
+    },
     reviewed_at: at,
     reviewed_sha: sha,
     metrics: provenanceMetrics(payload.checker, { role: "checker" }),
@@ -226,6 +257,23 @@ export function couldNotDispatchEntry(
     metrics: provenanceMetrics(payload.recorded_by, { dispatch: "unavailable" }),
     notes: `Could not dispatch: ${payload.reason.trim()}`,
   };
+}
+
+/**
+ * True when an entry is a CHECKER's witness — the intermediate, not a verdict.
+ *
+ * Identified by `metrics.role`, which {@link untaintedEntries} stamps, never by
+ * reviewer name: an exemption claimable by asserting it is not an exemption.
+ *
+ * It exists because `untainted-checker` deliberately does **not** hold
+ * `qa-reporting` — the checker rules on nothing, and a checker that emits a
+ * verdict is comparing a thing with its own paraphrase of itself. Without this
+ * predicate its legitimate `result: "n/a"` witness would read as a permission
+ * breach, and the honest half of the mechanism would fail the gate built to
+ * protect it.
+ */
+export function isCheckerWitness(entry: QaCriterionEntry): boolean {
+  return entry.result === "n/a" && entry.metrics?.role === "checker";
 }
 
 /** True when an entry is the record of a dispatch that never happened. */
