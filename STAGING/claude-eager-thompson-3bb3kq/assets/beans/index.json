@@ -1,5 +1,11 @@
 {
   "$schema": "folio-bean-index/v1",
+  "tile": {
+    "beans": {
+      "count": 480,
+      "unit": "beans"
+    }
+  },
   "repoWeb": "https://github.com/litlfred/folio-assistant",
   "items": [
     {
@@ -1129,14 +1135,14 @@
     {
       "id": "folio-assistant-5yrl",
       "title": "Declared image roles have no consumer check — dh4f applied to a role",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:08:05Z",
-      "updatedAt": "2026-09-22T06:08:05Z",
+      "updatedAt": "2026-09-22T07:16:07Z",
       "preview": "Split out of `blv9` on 2026-09-22, because the two are different questions\nover different corpora and folding them in would have made one gate answer\ntwo things.\n\n`blv9` asked whether a path **will resolve** — its subject is Liquid\ninterpolations in Jekyll templates, and its gate\n(`scripts/check-docs-templates.ts`, shipped 2026-09-22) judges literals and\nDECLINES variables. This bean asks whether ",
       "file": "beans/defs/folio-assistant-5yrl--declared-image-roles-have-no-consumer-check-dh4f-a.md"
     },
@@ -4027,14 +4033,14 @@
     {
       "id": "folio-assistant-m9zz",
       "title": "TRANSLATIONS: bootstrap/translations/ holds 15 .pot files no declaration mentions",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:25:32Z",
-      "updatedAt": "2026-09-21T23:25:32Z",
+      "updatedAt": "2026-09-22T07:24:28Z",
       "preview": "Found 2026-09-21 while merging `main` into the `lnur` branch. `j28g` moved the\nworkflow templates for diagrams cat-harness does not own out of\n`cat-harness/translations/` and into `bootstrap/translations/` — correctly, the\ntemplates now sit beside the instance that owns the diagrams. The half that did\nnot move is the DECLARATION.\n\n## The finding\n\n`bootstrap/bootstrap.json` declares four directorie",
       "file": "beans/defs/folio-assistant-m9zz--translations-bootstraptranslations-holds-15-pot-fi.md"
     },
@@ -4275,6 +4281,20 @@
       "updatedAt": "2026-09-18T15:00:27Z",
       "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**Blocked on bean `fsch`** — without a folio holding 0..n content instances\nthere is only ever one node to render.\n\nGate: a two-instance folio shows two sections; a zero-instance folio renders\nwithout error.\n\n---\n\n## ",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
+    },
+    {
+      "id": "folio-assistant-nwrm",
+      "title": "The @ logo could not theme: six baked colours, two files, and a tone it disagreed with",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:30:00Z",
+      "updatedAt": "2026-09-22T07:30:00Z",
+      "preview": "Owner: *\"The \\\"@\\\" logo\"*, correcting my aim after `sbfb` — which fixed the\ngeneric question-mark TILE, a real but different bug — and *\"I want theme like\nin avaatars\"*.\n\n## What was wrong, measured\n\n`cat-mark.svg` bakes six colour literals (`#6f8b66` sage, `#cfe0c2` pale-sage\nears, `#ffffff` face and whiskers) and is drawn with `<img>`, **which no page\nCSS can reach**. Three consequences, none of",
+      "file": "beans/defs/folio-assistant-nwrm--the-logo-could-not-theme-six-baked-colours-two-fil.md"
     },
     {
       "id": "folio-assistant-nytj",
@@ -5095,16 +5115,30 @@
     {
       "id": "folio-assistant-sbck",
       "title": "BOOTSTRAP OWES ITS JSON-LD: the renderExemption's substitute is unmet — zero .jsonld files exist",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:14:56Z",
-      "updatedAt": "2026-09-21T22:14:56Z",
+      "updatedAt": "2026-09-22T07:24:15Z",
       "preview": "Found while fixing 9poj, because the owner asked for a double-check and the\ndouble-check failed.\n\n## The standing ruling\n\n`bootstrap/bootstrap.json` carries a `renderExemption` whose `owes` clause is\nthe owner's, 2026-09-20:\n\n> it is exception to harness/layer not having visualtion/workflow visualizer.\n> but it must have its json/jsonld... that is its existence.\n\nThe schema comment on `RenderExemp",
       "file": "beans/defs/folio-assistant-sbck--bootstrap-owes-its-json-ld-the-renderexemptions-su.md"
+    },
+    {
+      "id": "folio-assistant-sbfb",
+      "title": "folio-assistant had no avatar, and the missing-avatar finding was never reported",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:45:00Z",
+      "updatedAt": "2026-09-22T06:45:00Z",
+      "preview": "Owner: *\"folio assistant icon is messed up still. I want theme like in\navaatars\"*, and separately *\"Not too subtle but pronounced\"* about the glass\nhandle.\n\n## Measured before changing anything\n\n| instance | own avatar? | tone |\n|---|---|---|\n| `bootstrap` | yes | 96 |\n| `cat-harness` | yes | 268 |\n| **`folio-assistant`** | **no** | **0 — the GENERIC question mark** |\n| `who-iris` | no | 0 |\n| `sm",
+      "file": "beans/defs/folio-assistant-sbfb--folio-assistant-had-no-avatar-and-the-missing-avat.md"
     },
     {
       "id": "folio-assistant-sd8x",
@@ -5165,14 +5199,14 @@
     {
       "id": "folio-assistant-sj6m",
       "title": "TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:48:03Z",
-      "updatedAt": "2026-09-22T06:48:27Z",
+      "updatedAt": "2026-09-22T07:17:42Z",
       "preview": "## The ask, owner 2026-09-22 — verbatim\n\nQuoted rather than paraphrased, because it carries four requirements in three\nsentences and a paraphrase would be a second answer free to drift:\n\n| Each tool node needs a QA check and all referenced assets.  Need to check\n| before execution if security gates passed.\n|\n| Note skill.update In general subprocess can be run w/ same agent or\n| dispatch one or mo",
       "file": "beans/defs/folio-assistant-sj6m--tool-nodes-are-unaudited-69-of-them-and-tool-is-no.md"
     },
@@ -5415,6 +5449,20 @@
       "updatedAt": "2026-09-20T08:52:21Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> want stickys to be if all harnesses fired and that is their sticky to get to\n> folio-assistnat. each has own avatar. make skills for avatar theme ingestion\n> (need 3 meeting certain formatting constraints), return sucches or explnation\n> of falire...\n\nand, minutes later:\n\n> avatar for testing, engineering, architecture\n> https://github.com/litlfred/folio-",
       "file": "beans/defs/folio-assistant-tfo1--ingestion-a-skill-that-takes-3-avatartheme-layouts.md"
+    },
+    {
+      "id": "folio-assistant-tis1",
+      "title": "TILE COUNT: an empty viewer's tile looks exactly like a populated one — badge the count, absent is a third state",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:52:31Z",
+      "updatedAt": "2026-09-22T06:52:49Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/856\n\nOwner ruling 2026-09-22, over greying an empty tile out and over \"an empty\nviewer is fine to open\". Their reason is the stronger argument: a badge also\nmakes a WRONG count visible, where a dimmed tile only ever answers\n\"empty or not\".\n\n## The defect\n\nA tile carries a glyph and a caption and nothing else. An empty viewer's tile\nis indis",
+      "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
     },
     {
       "id": "folio-assistant-tr1m",

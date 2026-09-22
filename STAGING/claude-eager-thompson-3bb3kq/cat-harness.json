@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T08:31:14.196Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c18683a38836482e162557803e654f7d2d6510b1",
-  "sourceCommitSha": "c18683a38836482e162557803e654f7d2d6510b1",
-  "sourceCommitAt": "2026-09-22T08:29:15Z",
+  "generatedAt": "2026-09-22T08:39:39.957Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/742a2c18901576f6d1046e4bad42e4bf103262f1",
+  "sourceCommitSha": "742a2c18901576f6d1046e4bad42e4bf103262f1",
+  "sourceCommitAt": "2026-09-22T08:33:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 227,
@@ -280,7 +280,7 @@
     "Role": 131,
     "ProcessNode": 705,
     "Tool": 69,
-    "Schema": 92,
+    "Schema": 93,
     "GraphKind": 26,
     "Directory": 34,
     "Asset": 3
@@ -33323,6 +33323,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/themes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#schema/tile-count",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "tile-count",
+      "title": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "module": "schemas/tile-count.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tile-count"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#schema/todo-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo-graph",
@@ -35228,8 +35237,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "681ed95f3a516f675b37bcbf2e5a2763b5c125bd",
+    "sha": "5a1d710f037dc4137bd1bf84a742b37c1552db59",
     "pr": "876/merge",
-    "run": "35705095231"
+    "run": "35705864749"
   }
 }
