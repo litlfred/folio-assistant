@@ -2320,7 +2320,7 @@
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
    *
    * Owner: *"confrim arctions [fishbones] on open content puts in fsh guts"*,
-   * and CRDM Q5: **delete becomes MOVE**. `skills/workflows/board-relocate.bpmn`
+   * and CRDM Q5: **delete becomes MOVE**. `processes/board-relocate.bpmn`
    * is the drawn process; this is its reader-facing half.
    *
    * ## THE CONFIRM IS THE REQUIREMENT, AND IT MUST NOT OVERSTATE EITHER WAY

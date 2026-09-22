@@ -414,25 +414,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790058011">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790058011">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790058011">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790058011">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,10 +446,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790057431" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790058011" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -800,7 +800,7 @@ workflow (BPA)</strong>, <code class="language-plaintext highlighter-rouge">Agen
 </blockquote>
 
 <p>Author BPMN 2.0 business process diagrams — both a DAK’s L2 business processes
-and this repository’s own <code class="language-plaintext highlighter-rouge">skills/workflows/*.bpmn</code>.</p>
+and this repository’s own <code class="language-plaintext highlighter-rouge">processes/*.bpmn</code>.</p>
 <h2 id="inputs-and-outputs">
   
   
@@ -847,7 +847,7 @@ done.</p>
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">skills/workflows/*.bpmn</code> are not pictures. <code class="language-plaintext highlighter-rouge">workflow_start</code> / <code class="language-plaintext highlighter-rouge">workflow_next</code>
+<p><code class="language-plaintext highlighter-rouge">processes/*.bpmn</code> are not pictures. <code class="language-plaintext highlighter-rouge">workflow_start</code> / <code class="language-plaintext highlighter-rouge">workflow_next</code>
 / <code class="language-plaintext highlighter-rouge">workflow_complete</code> run them, and <code class="language-plaintext highlighter-rouge">workflow_complete</code> <strong>refuses a step that
 is not enabled</strong>. That has consequences for how you author:</p>
 
@@ -858,7 +858,7 @@ plan. <code class="language-plaintext highlighter-rouge">bun run check:workflow-
 and <code class="language-plaintext highlighter-rouge">bun run kg:audit</code> additionally fails when the named skill exists but no
 package can <strong>serve</strong> it.</li>
   <li><strong>Every lane is a role.</strong> Bind it with <code class="language-plaintext highlighter-rouge">&lt;folio:role ref="…"/&gt;</code> against
-<code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code>. Lane names are free text and sixty of them once
+<code class="language-plaintext highlighter-rouge">scenarios/roles.json</code>. Lane names are free text and sixty of them once
 spelled two dozen positions; an explicit ref is the join that does not depend
 on spelling.</li>
   <li><strong>A gateway may be computed rather than chosen</strong> — see <code class="language-plaintext highlighter-rouge">dmn-authoring</code>.</li>
@@ -889,7 +889,7 @@ component maps, lattices, navigation graphs. The audit of which is which is in
 
 <p>This skill lived in <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> until 2026-09-20, and it
 never belonged there: its own first line says it covers <em>both</em> a DAK’s L2
-business processes <em>*and this repository’s own <code class="language-plaintext highlighter-rouge">skills/workflows/*.bpmn</code></em>, five
+business processes <em>*and this repository’s own <code class="language-plaintext highlighter-rouge">processes/*.bpmn</code></em>, five
 of its six sections are content-agnostic, and <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> — a
 PLATFORM process — names it from the <code class="language-plaintext highlighter-rouge">Agent</code> lane. A platform process
 depending on a content-type package is the boundary
@@ -1084,7 +1084,7 @@ them rather than describing them:</p>
   reached from `Process_Review`.</p>
         <p>## What is already true, so this is not started from nothing</p>
         <p>The two dispatch points are process events, so wherever they are performed they
-should be DRAWN in BPMN under `skills/workflows/`. The likely homes are
+should be DRAWN in BPMN under `processes/`. The likely homes are
 `draft-to-publication` for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>
@@ -1104,7 +1104,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35693562665"><code>c3d386d</code></a> &middot; 2026-09-22T06:10:28Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35694214485"><code>3978dc4</code></a> &middot; 2026-09-22T06:20:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -16,13 +16,18 @@
 <p><code>cat-harness</code> is here because a downstream declaration that has not migrated
 still spells a skill directory that way, and dropping it would make every
 unmigrated instance's skills unreachable rather than merely unclassified.</p>
-<p><code>workflows</code> and <code>scenarios</code> are NOT here, and that is the split doing its
-job: <code>skills/workflows/</code> holds 51 <code>.bpmn</code> files and <code>skills/roles/</code> holds one
-<code>roles.json</code>, so neither ever contributed a skill body — they were scanned
-only because they sat inside a directory that did.</p>
+<p><code>processes</code> and <code>scenarios</code> are NOT here, and that is the split doing its
+job: <code>processes/</code> holds only <code>.bpmn</code> and <code>scenarios/</code> only <code>roles.json</code>, so
+neither ever contributed a skill body — they were scanned only because they
+sat inside a directory that did.</p>
+<p>No count on purpose. This said &quot;51 <code>.bpmn</code> files&quot; and the directory holds
+50 — a number that was either wrong when written or true for an afternoon,
+and <a href="http://AGENTS.md">AGENTS.md</a>'s rule for exactly this is to count the directory rather than
+quote the paragraph. It also still said <code>workflows</code> after that kind was
+renamed to <code>processes</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c3d386d625fdf285aeb03e0af8ed60c4065ce32b/cat-harness/schemas/cat-harness.ts#L4518">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:4518</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3978dc45789b26ebc607694ef248acb66582ea2e/cat-harness/schemas/cat-harness.ts#L4556">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:4556</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

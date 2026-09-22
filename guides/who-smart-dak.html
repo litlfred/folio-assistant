@@ -414,25 +414,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790058011">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790058011">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790058011">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790057431">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790058011">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,10 +446,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790057431" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790058011" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -819,13 +819,13 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l2-dak-authoring.bpmn" class="fa-node-edit" title="Edit skills/workflows/l2-dak-authoring.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-l2-artifacts.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/assets/qa/guides-who-smart-dak/the-l2-artifacts.block.json" data-qa-index="/folio-assistant/assets/qa/guides-who-smart-dak/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-l2-artifacts.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/assets/qa/guides-who-smart-dak/the-l2-artifacts.kg.json" data-qa-index="/folio-assistant/assets/qa/guides-who-smart-dak/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/processes/l2-dak-authoring.bpmn" class="fa-node-edit" title="Edit processes/l2-dak-authoring.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-l2-artifacts.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/assets/qa/guides-who-smart-dak/the-l2-artifacts.block.json" data-qa-index="/folio-assistant/assets/qa/guides-who-smart-dak/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-l2-artifacts.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/assets/qa/guides-who-smart-dak/the-l2-artifacts.kg.json" data-qa-index="/folio-assistant/assets/qa/guides-who-smart-dak/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
 
 <div class="bpmn-figure" id="figure-the-l2-artifacts">
   <img src="../assets/img/workflows/l2-dak-authoring.svg" alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate." />
 </div>
 
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l2-dak-authoring.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/assets/img/workflows/l2-dak-authoring.svg">full-size SVG</a></p>
+<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/assets/img/workflows/l2-dak-authoring.svg">full-size SVG</a></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -1100,7 +1100,7 @@ them rather than describing them:</p>
   reached from `Process_Review`.</p>
         <p>## What is already true, so this is not started from nothing</p>
         <p>The two dispatch points are process events, so wherever they are performed they
-should be DRAWN in BPMN under `skills/workflows/`. The likely homes are
+should be DRAWN in BPMN under `processes/`. The likely homes are
 `draft-to-publication` for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>
@@ -1120,7 +1120,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35693562665"><code>c3d386d</code></a> &middot; 2026-09-22T06:10:28Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35694214485"><code>3978dc4</code></a> &middot; 2026-09-22T06:20:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
