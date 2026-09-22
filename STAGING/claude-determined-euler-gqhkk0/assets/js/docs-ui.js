@@ -1146,7 +1146,28 @@
     '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
     "</g></svg>";
 
-  var TILE_GLYPHS = { beans: BEANS_GLYPH };
+  /*
+   * A TRAY WITH SOMETHING DROPPING INTO IT — the intake queue, and
+   * deliberately not a folder or a book. `uploads` and `library` are two
+   * stages of one pipeline, so their tiles have to be told apart at a glance:
+   * the library's is the corpus, this one is the inbox. Both tiles opened the
+   * same page until 2026-09-21 and wore the same glyph, which is how a reader
+   * came to think there was one thing under two names.
+   *
+   * Drawn for 20px like BEANS_GLYPH, for the reason recorded there: the arrow
+   * is a single stroke and the tray a single closed path, because two nested
+   * outlines merge into a grey block at the size this is actually rendered.
+   */
+  var UPLOADS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.7" ' +
+    'stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3.6 14.8v2.9a1.9 1.9 0 0 0 1.9 1.9h13a1.9 1.9 0 0 0 1.9-1.9v-2.9h-4.9' +
+    'l-1.3 1.9h-3.4l-1.3-1.9z"/>' +
+    '<path d="M12 3.6v7.7"/><path d="M8.7 8.1 12 11.4l3.3-3.3"/>' +
+    "</g></svg>";
+
+  var TILE_GLYPHS = { beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH };
 
   function glyphFor(name) {
     if (typeof name !== "string") return NET_GLYPH;
