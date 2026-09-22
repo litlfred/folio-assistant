@@ -47,6 +47,10 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    **A conflict in a generated QA sidecar has a command** —
    `bun run qa:resolve-conflicts`. See §"Conflicts in `test/results/`" below
    before resolving one by hand.
+
+   **And after EVERY base merge, conflicted or not, run `bun run regen`.**
+   A clean merge is not evidence that the generated artefacts are right — see
+   §"A clean merge can produce a wrong artefact" below.
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
      fast-forward: git fast-forwards without running a merge, so conflicts are
@@ -142,6 +146,60 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    dispatch-only repo it is evidence of the opposite.
 8. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
    requested, see below.
+
+## A clean merge can produce a wrong artefact (STRICT)
+
+**`bun run regen` after every base merge.** Not only after a conflicted one —
+after every one.
+
+Measured on `main` at `3341108a`, 2026-09-22, bean `lxpq`. Two branches changed
+one committed generated file in NON-OVERLAPPING places:
+
+| side | change to `docs/assets/voices/index.json` |
+|---|---|
+| main | added `tile.voices.count` — a projection declares its own count |
+| the branch | added a sixth voice |
+
+One touched the header, the other the array. Git merged them with **no
+conflict** and produced a projection declaring `count: 5` while listing 6
+voices — an artefact **neither side would ever emit**. It reached `main`.
+
+> **A conflict is a question. A clean merge is an assertion that the result is
+> correct** — and for a generated file that assertion is worth nothing, because
+> git is merging text it has no way to evaluate.
+
+So the rule is not "resolve conflicts carefully". It is:
+
+> **After a merge, RE-RUN THE GENERATORS. Never read the diff to decide whether
+> you need to.** The merged file looks plausible from either side, which is
+> exactly what let this one through.
+
+`bun run regen` does it by asking each gate first, so its output is the set of
+artefacts the merge actually broke rather than a wholesale rewrite:
+
+```sh
+bun run regen             # repair what is stale in the fast gate set
+bun run regen --all       # ...including the browser workflows' gates
+bun run regen --dry-run   # report what is stale, change nothing
+```
+
+It reports four states, and **`unrepaired` is the one to read**: a check that
+still fails after its writer ran is a real defect, not staleness, and the
+command exits non-zero rather than claiming a repair it did not make. So is a
+check with **no writer**.
+
+**Why it is not `qa:resolve-conflicts`, and not bean `520m`.** That command
+only ever inspects UNMERGED paths, and here there were none; `520m` is about
+generated artefacts that *conflict*, which is noisy but git stops you. This is
+the inverse and worse, which is why it is a separate bean with a separate
+repair.
+
+**Why it asks the gates rather than regenerating everything.** A blanket
+regeneration needs a list, and `gates.ts` already settled where the authority
+lives — the workflow, not `package.json`, since 21 of this repository's
+`:check` scripts appear in no workflow at all. It also cannot tell repair from
+damage: rewriting artefacts that were already correct leaves a diff that says
+nothing about what the merge broke.
 
 ## Conflicts in `test/results/` — the command, and the 13 files it refuses
 

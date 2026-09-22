@@ -374,10 +374,55 @@ export function formatAge(minutes: number): string {
  * rather than a permanent verdict.
  *
  * So the number now answers a different question: *how many reviews can be
- * open at once before this is a problem?* At the measured ~38 MB per preview,
- * **500 MB is about thirteen** — above any concurrency this repository has
- * reached (eleven, on 2026-09-20, of which three were prunable) and half the
- * documented 1 GB Pages ceiling, leaving the main site the other half.
+ * open at once before this is a problem?* That was answered as **about
+ * thirteen**, from a measured ~38 MB per preview.
+ *
+ * ## The per-preview figure was stale by more than 2x — bean `tebu`
+ *
+ * **Re-measured 2026-09-22: a full preview is ~88 MiB.** So 500 MB is about
+ * **five or six** concurrent reviews, not thirteen — below the concurrency
+ * this repository reaches routinely, which is why an ordinary working day now
+ * trips `critical`, and a threshold that always fires has stopped
+ * discriminating.
+ *
+ * The 500 MB value is the owner's (*"set stagfing to 500mb"*) and is left
+ * alone. What is corrected is the arithmetic beneath it; whether the number
+ * still buys what they wanted is theirs to decide.
+ *
+ * ## Two budgets, and this threshold is about only one of them
+ *
+ * The paragraphs above give a DEDUPLICATION argument — zero HTML blobs shared,
+ * nine previews storing nine copies — as the reason to act on a threshold
+ * stated against *"the documented 1 GB Pages ceiling"*. Those are different
+ * budgets and the argument cannot move that limit:
+ *
+ * | budget | what it counts | does blob sharing help? |
+ * |---|---|---|
+ * | **1 GB Pages ceiling** | the PUBLISHED tree — each preview materialises its own copies | **no** |
+ * | `gh-pages` repository size | git objects, where identical content is stored once | yes |
+ *
+ * Measured 2026-09-22: **878.7 MiB summed, 616.7 MiB unique, 47.3 MiB shared.**
+ * So sharing now exists — `g196` made the banner a constant fragment, which is
+ * exactly source 1 below and why it is no longer "the most fundamental" — and
+ * it still cannot reduce what Pages counts.
+ *
+ * The four addressing sources remain correct and remain worth fixing. They are
+ * a REPOSITORY-growth remedy, and this threshold is not about that.
+ *
+ * ## Where the published bytes actually are
+ *
+ * Of 676 HTML pages in one preview, `reference/` is 257 of them and 35.8 MiB
+ * — **38 % of the pages, 66 % of the HTML**, at 143 KiB per page against
+ * 26 KiB for TypeDoc's. The inflation is just-the-docs inlining the whole
+ * navigation into every page, so the directory with the most pages and the
+ * least content each is the one that costs.
+ *
+ * `tebu` acted on that rather than on dedup: a preview omits `reference/` and
+ * `api/` unless its branch touches their sources. Measured on a real preview,
+ * **88.3 → 39.2 MiB, 55.6 %** — larger than the 43.2 MiB the directories alone
+ * predicted, because the nav shrinks on every remaining page too (mean page
+ * size 83 → 68 KiB). A projection could name that effect and not compute it,
+ * which is why the bean demanded a measurement.
  *
  * The floor argument above is unchanged and still governs: a preview whose
  * branch is live must not be removed, so pruning cannot be the action. What
@@ -460,16 +505,31 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
       "previews were retained on close AND on merge, so the total was monotonic: any threshold was " +
       "breached eventually and stayed breached, and \"over\" carried no information after the first " +
       "time. Now a merged pull request's preview is removed automatically, so the store DRAINS and " +
-      "what remains is bounded by concurrent reviews rather than by cumulative history. At the " +
-      "measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most " +
-      "this repository has reached (eleven on 2026-09-20, three of them prunable) and half the " +
-      "documented 1 GB Pages ceiling, leaving the main site the other half. " +
+      "what remains is bounded by concurrent reviews rather than by cumulative history. " +
+      "RE-MEASURED 2026-09-22 (bean `tebu`): a full preview is ~88 MiB, not the ~38 MB this " +
+      "basis reasoned from, so 500 MB is about FIVE OR SIX concurrent reviews rather than the " +
+      "thirteen once claimed — below concurrency this repository reaches routinely, which is why " +
+      "an ordinary day trips it. The 500 MB value is the owner's and is left alone; what is " +
+      "corrected here is the arithmetic under it, and whether the number still buys what they " +
+      "wanted is theirs to say. " +
       "THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be " +
-      "removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the " +
+      "removed, so N concurrent reviews floor the total at N x ~88 MiB. What changed is that the " +
       "floor now falls on its own as work merges. The action this finding names is therefore " +
-      "never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO " +
-      "blobs with any other, because the build timestamp and the slug appear on every page. See " +
-      "STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
+      "never \"prune more\" but preview SIZE. " +
+      "TWO BUDGETS, AND THIS THRESHOLD IS ABOUT ONE OF THEM. The 1 GB Pages ceiling governs the " +
+      "PUBLISHED TREE, where each preview materialises its own copies and blob sharing is " +
+      "irrelevant; git's deduplication governs REPOSITORY growth. This basis used to give a " +
+      "dedup argument (\"27.5 MB of each preview shares ZERO blobs\") as the reason to act on a " +
+      "published-size threshold, which cannot move it. Measured: 878.7 MiB summed against " +
+      "616.7 MiB unique, only 47.3 MiB shared — so sharing now exists (bean `g196` made the " +
+      "banner a constant fragment) and still cannot reduce what Pages counts. " +
+      "WHERE THE BYTES ARE, measured rather than estimated: of 676 HTML pages, `reference/` is " +
+      "257 of them and 35.8 MiB — 38% of the pages, 66% of the HTML, at 143 KiB per page against " +
+      "26 KiB for TypeDoc's. The inflation is just-the-docs inlining the whole navigation into " +
+      "every page. `tebu` acted on that: a preview omits `reference/` and `api/` unless its " +
+      "branch touches their sources, measured at 88.3 -> 39.2 MiB (55.6%) on a real preview. " +
+      "See STAGING_WARN_BYTES for the per-page addressing sources and bean `xxku` for the " +
+      "flushable-container framing.",
   },
   {
     metric: "staging-total-bytes",

@@ -47,6 +47,9 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { basename, dirname, join, relative, resolve, sep } from "path";
 
+import { readDeclaration, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
+import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
+import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
 import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
@@ -81,6 +84,74 @@ const NODES = join(INSTANCE, "catalogue", "nodes");
  */
 const LIB = join(INSTANCE, "library");
 const DOCS = join(INSTANCE, "docs");
+
+/**
+ * A THIRD SIDE: the kind viewer, published where the tile model already looks.
+ *
+ * `library/` and `docs/` above are who-iris's own tree, which the build MOUNTS.
+ * This one is not — it is written straight into the built site, because
+ * `harnessTiles` discovers a viewer by CONVENTION at `/<handler>/<kind>/<name>/`
+ * and links a declared ref only when that ref is under the published site
+ * directory, where the published path is the ref with the prefix stripped.
+ * A ref inside a mounted tree cannot be stripped, so `catalogue` was built,
+ * declared, resolving, and linked by nothing — bean `ha78`, issue #886.
+ *
+ * NOTHING HERE IS SPELLED. The handler is the harness's declared name, the
+ * site directory is asked for rather than composed, and the route comes from
+ * `subjectPage` itself — the same function `harnessTiles` discovers with, so
+ * the two cannot drift into disagreeing about where this page is. A literal
+ * would be a second answer to a question the platform already answers, which
+ * is the defect this repository keeps paying for one rename at a time.
+ */
+const HARNESS_ROOT = join(REPO_ROOT, "cat-harness");
+/**
+ * The instance's DIRECTORY name, read from its own declaration.
+ *
+ * `harnessTiles` builds its candidate paths from `decl.name`, so reading the
+ * same field is what makes this generator and that discovery agree by
+ * construction rather than by both being edited together.
+ */
+const declNameOf = (root: string, fallback: string): string =>
+  readDeclaration(root)?.name ?? fallback;
+const HANDLER = declNameOf(HARNESS_ROOT, "cat-harness");
+const SUBJECT = declNameOf(INSTANCE, "who-iris");
+/**
+ * The graph kind this viewer renders, taken from the declaration entry that
+ * declares it rather than written down again.
+ *
+ * `who-iris.json`'s `who-iris-catalogue` entry is the one place that says this
+ * directory holds a `catalogue` graph. Re-stating the string here would make
+ * a rename of the kind produce a viewer published at the OLD route and a tile
+ * looking at the new one — built and unreachable again, by exactly the
+ * mechanism this change exists to close.
+ */
+const CATALOGUE_KIND = ((): string => {
+  const dirs = readDeclaration(INSTANCE)?.directories ?? [];
+  const entry = dirs.find((d) => d.id === "who-iris-catalogue");
+  const kind = (entry?.graphKinds ?? [])[0];
+  if (kind === undefined) {
+    throw new Error(
+      "who-iris.json declares no graphKinds on `who-iris-catalogue`, so the catalogue " +
+        "viewer has no conventional route to be published at. Declare the kind, or " +
+        "this generator is publishing to a path no tile will look at (bean `ha78`).",
+    );
+  }
+  return kind;
+})();
+/** `<site>/<handler>/<kind>/<subject>/index.html`, absolute. */
+const CATALOGUE_VIEWER = join(
+  // `siteDirFor` answers with the site directory's name RELATIVE to the
+  // instance that declares it -- `docs`, not a path -- so the root goes in
+  // front of it. `join(ROOT, siteDirFor(ROOT), ...)` is the idiom every other
+  // caller here uses, and dropping the root silently produces a cwd-relative
+  // path: the first run of this wrote a stray `docs/cat-harness/` at the
+  // repository root and reported success, which is the whole argument for
+  // matching the established shape rather than inventing one.
+  HARNESS_ROOT,
+  siteDirFor(HARNESS_ROOT),
+  subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\//, ""),
+  "index.html",
+);
 
 // No `outDirFor(name)` helper: the map key carries the side, so nothing has to
 // infer it from a filename. An inference would have to be kept in step with
@@ -427,6 +498,59 @@ function banner(): string {
 }
 
 /**
+ * The pattern that finds the SITE ROOT from one of these pages' own URLs, and
+ * the folio mount built from it.
+ *
+ * F8/F9, bean `jpjt`. Owner: *"who-iris, smart-* etc are content libraries a
+ * user is browsing and their 'folio' from the cat-harness is consistent
+ * across them."* The reader carries their folio into the library; the library
+ * does not implement one. `board-windows` puts the test plainly — *"the test
+ * is not 'is this folio good' but 'is this the same folio'"* — so the page
+ * loads the platform's own stylesheet and script and there is no second
+ * implementation here to drift.
+ *
+ * **The pattern lives in this file and not in the platform**, because it is a
+ * statement about THIS instance's routes: `who-iris/library/` is served at
+ * `/who-iris/` and `who-iris/docs/` at `/docs/who-iris/`, exactly as the
+ * comment below records. A platform module that knew that would be the
+ * platform knowing about one library.
+ *
+ * Both mounts, and the two bases this site is actually served under:
+ *
+ * | URL | site root |
+ * |---|---|
+ * | `/who-iris/item-x.html` | `/` |
+ * | `/docs/who-iris/ingestion-notes.html` | `/` |
+ * | `/folio-assistant/who-iris/item-x.html` | `/folio-assistant/` |
+ * | `/STAGING/<branch>/who-iris/item-x.html` | `/STAGING/<branch>/` |
+ *
+ * That last row is why this is derived in the browser rather than written as
+ * an absolute URL: a baked site URL is correct on exactly one of those four.
+ */
+const FOLIO_ROUTE = /^(.*?)(?:docs\/)?who-iris\//;
+/**
+ * The folio mount, emitted on who-iris's OWN pages and withheld on the
+ * `harness` side. The withholding is measured, not stylistic.
+ *
+ * `FOLIO_ROUTE` is `^(.*?)(?:docs\/)?who-iris\/`, which MATCHES
+ * `/cat-harness/catalogue/who-iris/` — the route the catalogue viewer moved to
+ * for bean `ha78` — and derives the site root as `/cat-harness/catalogue/`.
+ * The mount would then request its two assets from a path that 404s. A script
+ * that matches the WRONG thing is worse than one that does not match at all:
+ * it runs, it fails, and it looks installed.
+ *
+ * Widening the pattern is not the repair either. The mount exists so a reader
+ * browsing WHO-IRIS carries their folio (#796, F8/F9); a kind viewer published
+ * under cat-harness's handler is on cat-harness's site, which has its own
+ * chrome. Matching it would put who-iris's furniture on a cat-harness route.
+ *
+ * #879's own gate agrees by construction: who-iris declares
+ * `folioMount.roots` as `["library/", "docs/"]`, and the viewer is under
+ * neither, so nothing asks that page for the marker.
+ */
+const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
+
+/**
  * One replica page.
  *
  * `side` is not decoration: the two sides are MOUNTED AT DIFFERENT ROUTES —
@@ -449,13 +573,35 @@ function page(
   title: string,
   crumbs: { label: string; href?: string }[],
   body: string,
-  side: "library" | "docs",
+  /**
+   * WHICH SITE THIS PAGE IS ON, which is now three answers rather than two.
+   *
+   * `library` and `docs` are who-iris's own tree, mounted under its routes.
+   * `harness` is a kind viewer published into cat-harness's site at
+   * `/<handler>/<kind>/<subject>/` — a different site, with its own chrome.
+   */
+  side: "library" | "docs" | "harness",
 ): string {
+  /* A CRUMB WITH NO HREF IS A LABEL, never `<a href="#">`.
+   *
+   * The fallback used to be `#`, which was harmless while every non-final
+   * crumb carried an href — and stopped being harmless the moment one did
+   * not. Moving the catalogue viewer to the conventional route (bean `ha78`)
+   * dropped its "Documentation" href, because the docs index is on a mount
+   * route and no relative path reaches it from here. The crumb then rendered
+   * as `<a href="#">who-iris</a>`: focusable, styled as a link, announced as
+   * a link, and doing nothing.
+   *
+   * That is the defect the href was dropped to AVOID, reintroduced by the
+   * template one layer down. Verified by rendering the page rather than by
+   * reading the call site, which is what `gjli` is about — the generator's
+   * input looked right and its output did not.
+   */
   const crumbHtml = crumbs
     .map((c, i) =>
-      i === crumbs.length - 1
+      i === crumbs.length - 1 || c.href === undefined
         ? `<span class="here">${esc(c.label)}</span>`
-        : `<a href="${esc(c.href ?? "#")}">${esc(c.label)}</a>`,
+        : `<a href="${esc(c.href)}">${esc(c.label)}</a>`,
     )
     .join('<span class="sep">•</span>');
 
@@ -785,7 +931,7 @@ ${body}
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
   This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
-
+${side === "harness" ? "" : FOLIO_MOUNT}
 </body>
 </html>
 `;
@@ -1888,6 +2034,15 @@ the library handler.</p>
 function main(): number {
   const all = nodes();
   const files = new Map<string, string>();
+  /**
+   * Pages written OUTSIDE who-iris, keyed by absolute path.
+   *
+   * A separate map rather than a third key prefix on `files`, for the reason
+   * the comment on `LIB`/`DOCS` already gives: the key carries the side, and
+   * nothing infers a destination from a filename. A prefix would be an
+   * inference, and one that has to be kept in step with the OWNED patterns.
+   */
+  const siteFiles = new Map<string, string>();
 
   // KEYED BY SIDE, not by name. Both sides need an `index.html` — the replica
   // needs one because it is a site, and the docs side needs one because
@@ -1923,13 +2078,30 @@ function main(): number {
     ),
   );
 
-  files.set(
-    "docs/catalogue.html",
+  /* THE CATALOGUE VIEWER IS NOT A DOCS PAGE, and moving it settles which.
+   *
+   * It was `docs/catalogue.html` until 2026-09-22 (bean `ha78`, issue #886):
+   * built, declared, resolving — and linked by nothing, because a ref inside a
+   * mounted tree is not one `harnessTiles` can strip a site prefix off. Its own
+   * declaration already argued it is "the KG view, NOT the replica", so the
+   * docs side was the wrong side for it on the declaration's own terms.
+   *
+   * THE BREADCRUMB LOSES ITS HREF, deliberately. It was
+   * `{ href: "index.html" }` — sibling-relative, which resolved to who-iris's
+   * docs index while the page sat beside it and resolves to THIS PAGE from the
+   * new route. There is no safe replacement: the docs index lives on a mount
+   * route, and a site-root-relative link is wrong under a baseurl and wrong
+   * again under `/STAGING/<branch>/`. Inventing one here would be guessing at
+   * the cross-route problem #879 is solving properly; a crumb that reads as a
+   * link and returns you to where you already are is worse than a plain label.
+   */
+  siteFiles.set(
+    CATALOGUE_VIEWER,
     page(
       "The catalogue, as a graph",
-      [{ label: "Documentation", href: "index.html" }, { label: "Catalogue" }],
+      [{ label: "who-iris" }, { label: "Catalogue" }],
       cataloguePage(all),
-      "docs",
+      "harness",
     ),
   );
 
@@ -1954,17 +2126,36 @@ function main(): number {
 
   const check = process.argv.includes("--check");
   let stale = 0;
-  for (const [key, html] of files) {
-    const p = join(INSTANCE, key);
-    const prev = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
+  /* ONE LOOP OVER BOTH MAPS, reported repo-relative.
+   *
+   * `--check` has to cover the site-side page exactly as it covers the two
+   * instance-side ones. A viewer that only the write path knows about is a
+   * viewer CI cannot tell is stale, which is the `voices` defect this
+   * repository spent 2026-09-22 on: a committed generated artefact nobody
+   * re-derived, asserting a number no generator would emit.
+   */
+  const targets: { abs: string; rel: string; html: string }[] = [
+    ...[...files].map(([key, html]) => ({
+      abs: join(INSTANCE, key),
+      rel: `who-iris/${key}`,
+      html,
+    })),
+    ...[...siteFiles].map(([abs, html]) => ({
+      abs,
+      rel: relative(REPO_ROOT, abs),
+      html,
+    })),
+  ];
+  for (const { abs, rel, html } of targets) {
+    const prev = existsSync(abs) ? readFileSync(abs, "utf-8") : undefined;
     if (prev === html) continue;
     if (check) {
-      console.error(`stale or missing: who-iris/${key}`);
+      console.error(`stale or missing: ${rel}`);
       stale++;
       continue;
     }
-    mkdirSync(dirname(p), { recursive: true });
-    writeFileSync(p, html);
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, html);
   }
 
   // ── ORPHANS ────────────────────────────────────────────────────────────
@@ -2030,7 +2221,11 @@ function main(): number {
       console.error(`\n${bits}. Run: bun run who-iris/scripts/gen-iris-pages.ts`);
       return 1;
     }
-    console.log(`gen-iris-pages --check: ${files.size} page(s) up to date, no orphans.`);
+    // `targets.length`, NOT `files.size` — the site-side viewer is checked and
+    // has to be counted, or a clean run reports 10 while 11 were verified. A
+    // summary that undercounts what it checked is the mirror of one that
+    // overcounts: both leave a reader unable to tell coverage from omission.
+    console.log(`gen-iris-pages --check: ${targets.length} page(s) up to date, no orphans.`);
     return 0;
   }
 

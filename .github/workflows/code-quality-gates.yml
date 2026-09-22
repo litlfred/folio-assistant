@@ -798,6 +798,7 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:artefact-verification
           bun run check:workflow-injection
           bun run check:secret-leaks
           bun run check:lockfile-pinning
@@ -829,6 +830,11 @@ jobs:
           # computed and read by nobody, so `folio-assistant` rendered a
           # question mark until the owner saw it. Bean `zc7m`.
           bun run check:avatar-instances
+          # A reader's folio must be the SAME folio in every library they
+          # browse (F8/F9). A page that forgets the mount is a folio that
+          # silently disappears when they follow a link — the page renders,
+          # the library works, and nothing else reports it. Bean `jpjt`.
+          bun run check:folio-mount
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
