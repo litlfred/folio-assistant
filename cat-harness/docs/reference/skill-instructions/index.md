@@ -158,6 +158,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
+| [Surprise to corpus](surprise-to-corpus.html) | `surprise-to-corpus` | — | > Skill id: `surprise-to-corpus` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Swimlane Glossary](swimlane-glossary.html) | `swimlane-glossary` | — |  |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
@@ -181,6 +182,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
+| [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
 
 ## Document adapter (folio-document-adapter)
 
