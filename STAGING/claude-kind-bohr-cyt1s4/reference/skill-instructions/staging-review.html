@@ -411,25 +411,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/docs-ui.css?v=1790059541">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/docs-ui.css?v=1790061113">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/work-plan.css?v=1790059541">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/work-plan.css?v=1790061113">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/themes.css?v=1790059541">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/themes.css?v=1790061113">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/avatars.css?v=1790059541">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/css/avatars.css?v=1790061113">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,7 +446,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/js/docs-ui.js?v=1790059541" defer></script>
+<script src="/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/assets/js/docs-ui.js?v=1790061113" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -975,6 +975,120 @@ disclosure, a mode a reader turns on — say WHICH interaction.</strong> A revie
 cannot find the thing reports it as missing. That failure is on the record: a
 contrast defect survived two days behind a tile nobody clicked (bean <code class="language-plaintext highlighter-rouge">rptk</code>),
 because the gate that swept the page never opened the view.</p>
+<h3 id="you-can-open-it-yourself--the-publish-ref-is-a-git-branch">
+  
+  
+    <a href="#you-can-open-it-yourself--the-publish-ref-is-a-git-branch" class="anchor-heading" aria-labelledby="you-can-open-it-yourself--the-publish-ref-is-a-git-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> You can open it yourself — the publish ref is a git branch
+  
+  
+</h3>
+    
+
+<p>Everything above composes URLs <strong>for a reader</strong>. The agent writing them
+usually cannot open them, and that gap has a measured cost.</p>
+
+<p>Probed 2026-09-22 from inside a session container, all three routes:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>route</th>
+      <th>result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">curl https://&lt;owner&gt;.github.io/…</code></td>
+      <td><code class="language-plaintext highlighter-rouge">403</code> — CONNECT tunnel failed (policy denial)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WebFetch</code></td>
+      <td><code class="language-plaintext highlighter-rouge">EGRESS_BLOCKED</code></td>
+    </tr>
+    <tr>
+      <td>Playwright / Chromium</td>
+      <td><code class="language-plaintext highlighter-rouge">net::ERR_TUNNEL_CONNECTION_FAILED</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>A browser is not a way around it</strong> — Chromium is proxy-configured too, so
+“use Playwright” fails identically. That is worth stating because it is the
+first thing anybody tries.</p>
+
+<p>WHAT IT COST: twelve navbar tiles shipped pointing at the ORIGIN rather than
+the site, because their href carried no <code class="language-plaintext highlighter-rouge">baseurl</code> (#801). Over a hundred green
+gates were fine with it, and the owner found it by clicking one — which is
+exactly <code class="language-plaintext highlighter-rouge">rptk</code>’s shape one layer out. Nothing in the repository could look at
+what deployed.</p>
+
+<p><strong>But the site is published to the <code class="language-plaintext highlighter-rouge">gh-pages</code> BRANCH, and git works.</strong> So the
+deployed bytes are readable with <code class="language-plaintext highlighter-rouge">git show</code>, and a Playwright route handler can
+serve them at their real path:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">blob</span> <span class="o">=</span> <span class="p">(</span><span class="nx">p</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">execFileSync</span><span class="p">(</span><span class="dl">"</span><span class="s2">git</span><span class="dl">"</span><span class="p">,</span> <span class="p">[</span><span class="dl">"</span><span class="s2">show</span><span class="dl">"</span><span class="p">,</span> <span class="s2">`origin/gh-pages:</span><span class="p">${</span><span class="nx">ROOT</span><span class="p">}</span><span class="s2">/</span><span class="p">${</span><span class="nx">p</span><span class="p">}</span><span class="s2">`</span><span class="p">],</span> <span class="p">{</span> <span class="na">maxBuffer</span><span class="p">:</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">28</span> <span class="p">});</span> <span class="p">}</span>
+  <span class="k">catch</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">undefined</span><span class="p">;</span> <span class="p">}</span>                 <span class="c1">// absent is a FINDING, not a 200</span>
+<span class="p">};</span>
+<span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">ORIGIN</span><span class="p">}</span><span class="s2">/**`</span><span class="p">,</span> <span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">u</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">request</span><span class="p">().</span><span class="nx">url</span><span class="p">());</span>
+  <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">BASE</span><span class="p">)</span> <span class="p">?</span> <span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">BASE</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">:</span> <span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="p">;</span>
+  <span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^</span><span class="se">\/</span><span class="sr">+/</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="dl">""</span> <span class="o">||</span> <span class="nx">p</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="p">))</span> <span class="nx">p</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">index.html</span><span class="dl">"</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">blob</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">??</span> <span class="nx">blob</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">p</span><span class="p">}</span><span class="s2">/index.html`</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">b</span> <span class="p">?</span> <span class="nx">route</span><span class="p">.</span><span class="nx">fulfill</span><span class="p">({</span> <span class="na">contentType</span><span class="p">:</span> <span class="nx">typeFor</span><span class="p">(</span><span class="nx">p</span><span class="p">),</span> <span class="na">body</span><span class="p">:</span> <span class="nx">b</span> <span class="p">})</span>
+           <span class="p">:</span> <span class="nx">route</span><span class="p">.</span><span class="nx">fulfill</span><span class="p">({</span> <span class="na">status</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="dl">"</span><span class="s2">not in the publish ref</span><span class="dl">"</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ROOT</code> is <code class="language-plaintext highlighter-rouge">""</code> for the canonical deploy and <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;</code> for a preview, so
+the same handler gives you the <strong>before/after pair this skill is about</strong> — and
+a count, not an impression. Fetch the ref first (<code class="language-plaintext highlighter-rouge">git fetch --depth=1
+--filter=blob:none origin gh-pages</code>); blobs are then fetched on demand.</p>
+
+<p><strong>Serve it under the real <code class="language-plaintext highlighter-rouge">BASE</code>.</strong> A page served at the origin root cannot
+reveal a missing <code class="language-plaintext highlighter-rouge">baseurl</code>, because <em>“composed against the base”</em> and <em>“not
+composed at all”</em> are the same string there. That is precisely how #801’s e2e
+stayed green over the defect.</p>
+<h4 id="what-this-does-not-verify-and-it-matters">
+  
+  
+    <a href="#what-this-does-not-verify-and-it-matters" class="anchor-heading" aria-labelledby="what-this-does-not-verify-and-it-matters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does NOT verify, and it matters
+  
+  
+</h4>
+    
+
+<p>It serves the <strong>bytes in the publish ref</strong>. It is not the live host, so it
+cannot see:</p>
+
+<ul>
+  <li>redirects, headers, or anything else the host decides at request time</li>
+  <li>Pages’ own 404 handling, or its directory-index rules where they differ
+from the handler above</li>
+  <li>whether the deploy has actually <em>published</em> — a ref can hold bytes that
+Pages has not served yet (§”Say how long”)</li>
+</ul>
+
+<p>So a green result here means <em>“the published bytes are right”</em>, never <em>“the
+site works”</em>. Report it in those words. A stronger claim than the method
+supports is the thing this skill’s third-state table exists to stop.</p>
+<h4 id="when-it-stops-applying">
+  
+  
+    <a href="#when-it-stops-applying" class="anchor-heading" aria-labelledby="when-it-stops-applying"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it stops applying
+  
+  
+</h4>
+    
+
+<p>The technique rests on one assumption: <strong>publishing goes to a branch.</strong> If this
+repository ever moves to the Pages artifact API, <code class="language-plaintext highlighter-rouge">git fetch origin gh-pages</code>
+fails and there is nothing to read.</p>
+
+<p>That failure must be reported as <strong>could not determine</strong>, never as a clean run
+— an empty ref and a correct deploy are opposite facts, and <code class="language-plaintext highlighter-rouge">dh4f</code> is this
+repository’s name for the defect of scanning nothing and calling it clean.</p>
 <h3 id="the-third-state-here-as-everywhere">
   
   

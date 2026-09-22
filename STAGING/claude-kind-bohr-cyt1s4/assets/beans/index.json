@@ -1521,6 +1521,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7s52",
+      "title": "staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:33:57Z",
+      "updatedAt": "2026-09-22T06:34:02Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/849\n\n`staging-review` already owns the publish ref, and already names the failure:\nbean `rptk`, a contrast defect that survived two days *\"because the gate that\nswept the page never opened the view\"*. It composes URLs for a reader and stops\nthere.\n\nTHE AGENT CANNOT OPEN THEM. Measured this session, all three routes:\n`curl` -> 403 CONNECT tu",
+      "file": "beans/defs/folio-assistant-7s52--staging-review-hands-a-reader-urls-the-agent-canno.md"
+    },
+    {
       "id": "folio-assistant-7sf1",
       "title": "Move MEMORY.md into the kg graph, with correct skill/task pairings",
       "status": "in-progress",
@@ -2941,6 +2955,20 @@
       "updatedAt": "2026-09-20T08:02:32Z",
       "preview": "Owner, 2026-09-20: two staged top-level dirs, and 'git mv all three now, re-wire consumers in the same PR'.\n\nTHE THREE ARE ALL IRIS ITEMS, which is what makes the catalogue the right home rather than a style-guide repo: `wpr-rdo-2020-003-eng`, `who-pub-tps-931`, `9789241548960-eng`. `milnorlink` is NOT, and does not move here — bean `r1lz` sends it to `folio-asst-sci` as the source text for the de",
       "file": "beans/defs/folio-assistant-frs5--who-iris-stage-the-catalogue-instance-and-git-mv-t.md"
+    },
+    {
+      "id": "folio-assistant-funp",
+      "title": "R25 glass stage 1: the folio layer exists on ANY page, pulled down and put away from the keyboard",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:10:00Z",
+      "updatedAt": "2026-09-22T06:10:00Z",
+      "preview": "R25: *\"the user in visualization should be able to pull down their folio\"*,\nand R30's glass — *\"pulling down folio panel = glass/window on which stikcy\nnotes/avatrs of materialized assets … are visualized.\"*\n\n## The defect was procedural, not structural\n\nThe layer already existed, already on `document.body`, already\n`position: fixed; inset: 0` — structurally a glass. It was **created inside\n`mount",
+      "file": "beans/defs/folio-assistant-funp--r25-glass-stage-1-the-folio-layer-exists-on-any-pa.md"
     },
     {
       "id": "folio-assistant-fuzm",
@@ -5345,6 +5373,20 @@
       "updatedAt": "2026-09-20T08:52:21Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> want stickys to be if all harnesses fired and that is their sticky to get to\n> folio-assistnat. each has own avatar. make skills for avatar theme ingestion\n> (need 3 meeting certain formatting constraints), return sucches or explnation\n> of falire...\n\nand, minutes later:\n\n> avatar for testing, engineering, architecture\n> https://github.com/litlfred/folio-",
       "file": "beans/defs/folio-assistant-tfo1--ingestion-a-skill-that-takes-3-avatartheme-layouts.md"
+    },
+    {
+      "id": "folio-assistant-tr1m",
+      "title": "GLASS HANDLE OVERLAPS CONTENT: a fixed 71x44 tab sits on the top of every page's content column",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:00:07Z",
+      "updatedAt": "2026-09-22T07:00:07Z",
+      "preview": "Found 2026-09-22 when CI went red on a test that had passed locally an hour\nearlier: `funp` landed while the branch was mid-merge, and the first thing\nthe glass met was the unverified-translation notice.\n\n## The measurement\n\n`.fa-glass-handle` is `position: fixed; top: 0; left: 50%;\ntransform: translateX(-50%)`, measured at **71 x 44 px** at the top centre of\nthe viewport. It is on EVERY page as o",
+      "file": "beans/defs/folio-assistant-tr1m--glass-handle-overlaps-content-a-fixed-71x44-tab-si.md"
     },
     {
       "id": "folio-assistant-tyyc",
