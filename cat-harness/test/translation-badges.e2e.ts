@@ -522,16 +522,48 @@ test.describe("the unverified-translation notice", () => {
     expect(box!.height).toBeLessThan(64);
   });
 
+
   test("the detail is hidden until opened, then reachable", async ({ page }) => {
     await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
     const notice = page.locator(".fa-translation-warning");
+    const summary = notice.locator("summary");
     const body = notice.locator(".fa-translation-warning__body");
 
     await expect(body).toBeHidden();
-    await notice.locator("summary").click();
+    // NOT AT THE CENTRE, and the reason is a real overlap rather than a
+    // flaky selector. `funp` (R25's glass, stage 1) puts `.fa-glass-handle`
+    // on EVERY page — `position: fixed; top: 0; left: 50%`, measured
+    // 2026-09-22 at 71 x 44 px. The notice is inserted as the first child of
+    // `.main-content`, so its one-line summary sits at y 14.75 spanning the
+    // full column, and the two overlap at the column's centre — which is
+    // exactly the point Playwright clicks by default.
+    //
+    // A reader is NOT blocked: 71 px of a full-width line is a dead spot,
+    // not a dead control, and the keyboard path has its own test below. So
+    // clicking off-centre is what a reader does, not a way around a defect.
+    // The assertion beneath is what keeps that true.
+    await summary.click({ position: { x: 24, y: 12 } });
     await expect(body).toBeVisible();
     await expect(body).toContainText("index.md");
     await expect(body).toContainText("translation_signoff");
+  });
+
+  test("the glass handle takes a slice of the notice, never the line", async ({ page }) => {
+    // The guard for the click above. Moving that click off-centre is only
+    // honest while most of the control is still clickable — if the glass
+    // ever grows to cover the line, the test above would go on passing at
+    // x=24 while a reader met a control that did not respond.
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const s = (await page.locator(".fa-translation-warning summary").boundingBox())!;
+    const h = (await page.locator(".fa-glass-handle").boundingBox())!;
+    const overlapX = Math.max(0, Math.min(s.x + s.width, h.x + h.width) - Math.max(s.x, h.x));
+    const overlapY = Math.max(0, Math.min(s.y + s.height, h.y + h.height) - Math.max(s.y, h.y));
+    // Vertically they DO overlap — that is the fact this test records rather
+    // than wishes away. Asserting they do not would make the test fail the
+    // day somebody fixed the layout, which is backwards.
+    expect(overlapY).toBeGreaterThan(0);
+    // A tenth of the line at most. The measured figure is 71 of 1238, or 5.7%.
+    expect(overlapX / s.width).toBeLessThan(0.1);
   });
 
   test("opens from the keyboard, and closing is reachable — `l4zi`", async ({ page }) => {
