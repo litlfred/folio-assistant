@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:34Z
-updated_at: 2026-09-22T00:16:37Z
+updated_at: 2026-09-22T01:16:15Z
 parent: folio-assistant-p5wm
 ---
 
@@ -314,3 +314,41 @@ use that graph's own terms (`defineTool`, `satisfies`) — which is honest about
 being an approximation and which DID fire when the original defect was planted
 back. "Is this page about this graph" is not mechanisable, and pretending
 otherwise produced the check above.
+
+
+
+---
+
+## A gap in the mounted rail, found while reading `jpjt` — recorded, not urgent
+
+`declaredGraphs()` in `mount-instance-docs.ts` builds the mounted navbar from an
+instance's declared `graphKinds` and **does not consult `publish`**. So a
+visualisation declared `publish: "staging-only"` would appear in the rail on
+every deploy, including the canonical one.
+
+**Not live today, and the reason matters more than the fact.** Two things keep
+it harmless:
+
+1. `fsh-guts` is a `cat-harness` graph and no instance declares it, so nothing
+   currently has a staging-only kind in a mounted rail.
+2. The href comes from `linked`, which holds MOUNTED routes only. A withheld
+   page is not mounted, so the entry renders as a **disabled label** rather than
+   a link to a 404. That is the third state the rail already has, arrived at by
+   accident rather than by design — but arrived at.
+
+So the worst case is a name with no link, not `pb04`. Worth fixing when an
+instance first declares a staging-only visualisation, and worth knowing before
+then, because "it happens to be safe" is a different claim from "it is
+handled" and only the first is true.
+
+Where it would go: `declaredGraphs` reads entries already; skipping a kind
+whose only visualisation is staging-only is a few lines. The question it has to
+answer first is whether the rail should hide it or show it disabled on
+canonical — and that is the same question `publish` vs `hidden` answers
+elsewhere, so it should be answered the same way rather than invented again.
+
+Found by reading `jpjt` (*"F8/F9 is structurally blocked on R25's glass"*),
+which is about a different surface entirely — who-iris replica pages carry no
+`head_custom.html` and therefore no `fa-staging` meta, which is what prompted
+checking whether the rail had its own version of the problem. It does, one
+degree weaker.
