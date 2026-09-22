@@ -34,7 +34,7 @@
 
 import { resolve } from "path";
 
-import type { PartitionSpec, Rule } from "./engine.js";
+import type { PartitionSpec, PermittedEdge, Rule } from "./engine.js";
 
 // ── The proposed repositories ───────────────────────────────────
 
@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS, by the same test as `check-ci-health` above: its subject is
+      // this repository's own Jekyll templates and the baseurl its site is
+      // served under, and it reads no folio content at all. It parses HTML
+      // with a regex and imports nothing but `fs` and `path`, so it cannot
+      // drag a folio in (bean `blv9`).
+      "scripts/check-docs-templates.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -733,6 +739,14 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
+      // The graph-kind registry, split out of the line above so core could
+      // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
+      // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus
+      // the registry mechanism, and imports only `namespaces.ts`. Core does
+      // not own it; core CONTRIBUTES `folio` to it, which is the whole
+      // distinction `folio-graph-kind.ts` argues. Left to triage it landed
+      // in core on a keyword, which had the ownership exactly backwards.
+      "schemas/graph-kind-registry.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.
@@ -1261,11 +1275,43 @@ export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */
+/**
+ * The one edge permitted despite the direction rule.
+ *
+ * `cat-harness.ts` imports core's `folio-graph-kind.ts` for its side effect,
+ * which is what makes the `folio` registration automatic instead of something
+ * 110 commands had to remember. Bean `q2wn`, and the header of
+ * `schemas/graph-kind-registry.ts` for why the alternatives were worse.
+ *
+ * ONE entry, naming BOTH endpoints. That is the difference between this and
+ * the blanket rule first tried here — "a bare side-effect import is exempt"
+ * would have let any harness module reach any core module silently, which is
+ * the blindness `q2wn` was opened about wearing a different hat. Any other
+ * edge across this boundary still fails.
+ *
+ * It is a debt and is recorded as one: it exists because the two layers live
+ * in one repository (#223). After the split, core is a dependency that
+ * registers its own kinds on load and this line goes away.
+ */
+const PERMITTED_EDGES: readonly PermittedEdge[] = [
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/folio-graph-kind.ts",
+    reason:
+      "The registration trigger. Core owns `folio`; this import is what makes it registered " +
+      "by the time any reader can be called, because a reader lives in `cat-harness.ts` and " +
+      "loading that module is therefore a precondition of calling one. Without it the kind is " +
+      "registered only if the process happened to import core first — an import-order property " +
+      "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+  },
+];
+
 export const SPEC: PartitionSpec = {
   root: ROOT,
   repos: REPOS,
   allowed: ALLOWED,
   rules: RULES,
   scanRoots: SCAN_ROOTS,
+  permittedEdges: PERMITTED_EDGES,
   skipDirs: SKIP_DIRS,
 };

@@ -661,6 +661,78 @@ describe("bean-store", () => {
     expect(r.measurements.find((x) => x.metric === "bean-thin-decision-records")?.value).toBe(0);
   });
 
+  describe("a claim its own criteria say is finished — `fkjo`", () => {
+    it("fires `minor` on an in-progress bean with every Done-when box ticked", () => {
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "done", status: "in-progress", doneWhen: { kind: "all-ticked", total: 4 } }),
+            bean({ id: "open", status: "in-progress", doneWhen: { kind: "open", ticked: 3, total: 4 } }),
+          ],
+        },
+      }));
+      expect(metrics(r)).toEqual(["bean-self-declared-done"]);
+      expect(r.findings[0]!.summary).toContain("all 4 of its Done-when boxes ticked");
+      // The action must not tell anybody to close it. `bean-coordination` closes
+      // on evidence re-derived, never on the bean's own claim about itself, and
+      // four of six such beans in the measurement had NOT all landed cleanly.
+      expect(r.findings[0]!.action).toContain("RE-DERIVE");
+    });
+
+    it("says nothing about a bean that is ticked but NOT claimed", () => {
+      // A completed bean has every box ticked by construction. The finding is
+      // about the disagreement between body and front matter, so with no claim
+      // there is nothing to disagree with.
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [bean({ id: "shut", status: "completed", doneWhen: { kind: "all-ticked", total: 2 } })],
+        },
+      }));
+      expect(metrics(r)).toEqual([]);
+    });
+
+    it("counts, and never reports, the two states it cannot judge", () => {
+      // The `dh4f` rule: a clean run over a corpus the tool could not read is
+      // worse than no run. `absent` and `unreadable` are measured so a person
+      // can see how much of the store this check is blind to, and neither is
+      // folded into the pass OR into the finding.
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "none", status: "in-progress", doneWhen: { kind: "absent" } }),
+            bean({ id: "prose", status: "in-progress", doneWhen: { kind: "unreadable" } }),
+          ],
+        },
+      }));
+      expect(metrics(r)).toEqual([]);
+      const m = (k: string) => r.measurements.find((x) => x.metric === k)?.value;
+      expect(m("bean-claimed-criteria-absent")).toBe(1);
+      expect(m("bean-claimed-criteria-unreadable")).toBe(1);
+      expect(m("bean-self-declared-done")).toBe(0);
+    });
+
+    it("reports the denominator, so a detector that stops matching is visible", () => {
+      // A heading respelled or the regex narrowed makes every bean `undefined`
+      // here. That must read as "this check saw nothing" rather than as a green
+      // tick — which it can only do if the subject count is on the record.
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "aaaa", status: "in-progress" }),
+            bean({ id: "bbbb", status: "in-progress" }),
+          ],
+        },
+      }));
+      expect(metrics(r)).toEqual([]);
+      expect(r.measurements.find((x) => x.metric === "bean-claimed-with-criteria")?.value).toBe(0);
+      expect(r.measurements.find((x) => x.metric === "bean-claimed")?.value).toBe(2);
+    });
+  });
+
   it("fires `minor` on a claim nobody has honoured for a fortnight", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {

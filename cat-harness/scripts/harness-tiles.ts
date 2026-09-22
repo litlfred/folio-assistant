@@ -64,13 +64,12 @@ import {
   siteDirFor,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
-// REQUIRED, for the side effect: `folio` is registered by core on import, and
-// this instance declares a folio graph. Without it `readDeclaration` throws on
-// a perfectly valid declaration — which is exactly how three inline evals in
-// two workflows failed (issue #464, and the comment on `scripts/print-stub.ts`
-// that records it). This module reads EVERY instance's declaration, so it is
-// more exposed to the omission than a script that reads one.
-import "../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it, and `check:composition-roots` refuses a
+// command that reads a declaration without it — bean `q2wn`, which is also
+// where the measurement lives.
 
 /** One number a tile shows as an icon with a badge. */
 export type HarnessStat = {

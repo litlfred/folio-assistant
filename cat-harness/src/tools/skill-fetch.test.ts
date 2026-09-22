@@ -279,9 +279,9 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // The subject was `src/skills/` until #760 removed it. A title naming the
     // expected STRING goes stale on a move that is not a behaviour change; one
     // naming the RULE does not — which is why only the subject moved here.
-    // `bootstrap/render/` is directly-held and not basenamed `skills`, so
+    // `bootstrap/tools/` is directly-held and not basenamed `skills`, so
     // it reaches the same answer by rule 2 rather than rule 1: the sole
     // directly-held directory takes its instance's name.
-    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/render");
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/tools");
   });
 });

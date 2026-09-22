@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { countConsideredOptions, frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+import { countConsideredOptions, doneWhenState, frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -421,5 +421,88 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     if (p.state !== "ok") return;
     const records = p.value.filter((b) => b.consideredOptions !== undefined);
     expect(records.length).toBeGreaterThan(0);
+  });
+});
+
+describe("doneWhenState — the four states `fkjo` needs kept apart", () => {
+  it("reads every Done-when spelling the store actually uses", () => {
+    // 25 distinct spellings across 457 beans, measured 2026-09-21. The
+    // qualifier after the two words is deliberately NOT parsed — treating
+    // "REPLACES the list above" as an instruction about which list counts
+    // would make this adjudicate supersession.
+    for (const h of [
+      "## Done when",
+      "### Done when",
+      "## Done when — revised",
+      "## Done when — REPLACES the list above",
+      "## DONE WHEN",
+    ]) {
+      expect(doneWhenState(`${h}\n\n- [x] a\n`)).toEqual({ kind: "all-ticked", total: 1 });
+    }
+  });
+
+  it("an unticked box is an open bean, and the partial count is kept", () => {
+    expect(doneWhenState("## Done when\n\n- [x] a\n- [ ] b\n")).toEqual({
+      kind: "open",
+      ticked: 1,
+      total: 2,
+    });
+  });
+
+  it("no Done-when section is `absent` — not an empty pass", () => {
+    expect(doneWhenState("# Work\n\nDid the thing.\n")).toEqual({ kind: "absent" });
+  });
+
+  it("a Done-when carrying no checkbox is `unreadable` — criteria this cannot judge", () => {
+    expect(doneWhenState("## Done when\n\n- a thing happens\n- another\n")).toEqual({
+      kind: "unreadable",
+    });
+  });
+
+  it("`unreadable` OUTRANKS a fully ticked sibling section — the `z4mq` shape", () => {
+    // Bean `z4mq` carries two matching headings: its real criteria are a bullet
+    // list under the first, and under `## Done when — item 3` sits a three-box
+    // SUB-CHECKLIST of one item, all ticked. A body-wide `[x]` count calls it
+    // finished and so does a count scoped to its Done-when sections; what
+    // separates it is that one section states criteria in a form this cannot
+    // read. Measured: this is the single bean between the crude sweep's 6 and
+    // this parse's 4, and it was the one that was not finished at all.
+    const z4mq = "## Done when\n\n\u2022 a\n\u2022 b\n\n## Done when — item 3\n\n- [x] x\n- [x] y\n- [x] z\n";
+    expect(doneWhenState(z4mq)).toEqual({ kind: "unreadable" });
+  });
+
+  it("a sibling h2 ends the section, so a `## Do not` list is not read as criteria", () => {
+    // Load-bearing: many beans carry a `## Do not` section written as dashes,
+    // and several of those items would never be ticked. Leaking them in would
+    // make every such bean permanently `open`.
+    expect(doneWhenState("## Done when\n\n- [x] a\n\n## Do not\n\n- [ ] never do this\n")).toEqual({
+      kind: "all-ticked",
+      total: 1,
+    });
+  });
+
+  it("a DEEPER heading does not end it — criteria may carry a note", () => {
+    expect(doneWhenState("## Done when\n\n- [x] a\n\n#### Note\n\n- [ ] b\n")).toEqual({
+      kind: "open",
+      ticked: 1,
+      total: 2,
+    });
+  });
+
+  it("a bare `[x]` with no list marker counts — the store writes both", () => {
+    expect(doneWhenState("## Done when\n\n[x] a\n[x] b\n")).toEqual({ kind: "all-ticked", total: 2 });
+  });
+
+  it("the real store yields all four states — not a parse that matches nothing", () => {
+    // Vacuity guard, and the reason it is here rather than in the check: a
+    // regex narrowed by a later edit would make every bean `absent`, and every
+    // assertion above is a literal that would keep passing.
+    const p = probeBeans(process.cwd());
+    if (p.state !== "ok") return;
+    const kinds = new Set(p.value.map((b) => b.doneWhen?.kind));
+    expect(kinds.has("all-ticked")).toBe(true);
+    expect(kinds.has("open")).toBe(true);
+    expect(kinds.has("absent")).toBe(true);
+    expect(kinds.has("unreadable")).toBe(true);
   });
 });
