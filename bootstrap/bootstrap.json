@@ -99,6 +99,24 @@
       ]
     },
     {
+      "id": "models",
+      "path": "models/",
+      "dependents": "skip",
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process \u2014 a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "graphKinds": [
+        "models"
+      ]
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "skip",
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived \u2014 that a concept was once minted \u2014 is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "graphKinds": [
+        "glossary"
+      ]
+    },
+    {
       "id": "bootstrap-translations",
       "path": "translations/",
       "dependents": "reproduce",

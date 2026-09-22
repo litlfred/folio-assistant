@@ -37,6 +37,11 @@
   </bpmn:collaboration>
 
   <bpmn:process id="Process_CodeChangeReview" name="Code change and review" isExecutable="false">
+    <bpmn:documentation>Getting a change to the PLATFORM from "this is needed" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding.
+
+You are in this process for a change to folio-assistant itself. `content-change-review` is the same shape for a folio's content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial.
+
+The loop back through "root-cause the failure" is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- STRICT, and declared rather than defaulted. `process-model.ts`
            treats an absent policy as strict, so 16 of the 33 diagrams here
