@@ -43,7 +43,11 @@ second bullet.
       subsumes the other
 - [x] **Surface 1 — workflow expression injection: enumerated, one real
       defect found and fixed, and gated.** `check:workflow-injection`
-- [ ] Surface 2 — template injection in generators: not started
+- [x] **Surface 2 — a real DOM XSS found and fixed, and the class gated.**
+      My own framing was wrong first: this is **not** template injection. The
+      foreign data is not baked into the page at build time — it is fetched at
+      runtime as `index.json` and built into the DOM client-side, so the vector
+      is **DOM XSS**, not template composition
 - [ ] Surface 3 — prompt injection: not started
 - [x] Falsified with a crafted input, not argued (below)
 
@@ -112,5 +116,59 @@ finding.
 Plus 10 unit tests, including that the same expression in `env:` or `with:` is
 **not** reported — flagging `env:` would push people back toward the very
 interpolation this gate exists to stop.
+
+`bun run gates` — 108 of 108.
+
+## Surface 2 — measured, and the framing corrected
+
+Seven generators write HTML or JS. Only **two** read foreign input:
+`gen-library-viz` (the IRIS catalogue, the 674 ingested smart-trust artefacts)
+and `gen-uploads-viz`.
+
+**Neither composes foreign text at build time.** The projection is fetched at
+runtime and rendered client-side, so surface 2 here is **DOM XSS**, not
+template injection. Recorded because the bean's own name for it was wrong, and
+a wrong name sends the next reader to the wrong place.
+
+### The defect
+
+`gen-library-viz` renders every string field through `esc()` — a correct
+entity escaper — with **two exceptions**, `words` and `bytes`, because both
+were assumed numeric.
+
+`words` was built in `library-graph.ts` as:
+
+    words: secs.reduce((n, s) => n + (s.n_words ?? 0), 0)
+
+over `structure.json`, which comes from an **ingested corpus this repository
+did not author**. `+` on a string is concatenation, so one string `n_words`
+makes `words` a string — and `toLocaleString()` hands it straight to
+`innerHTML`.
+
+**Demonstrated, not asserted.** With `n_words: '<img src=x onerror="alert(1)">'`:
+
+    typeof words : string
+    words        : "0<img src=x onerror=\"alert(1)\">"
+    rendered     : 0<img src=x onerror="alert(1)">
+
+### The detail that makes it an oversight rather than a decision
+
+**Four lines above, `pages` already guards this exact class:**
+
+    .filter((n): n is number => typeof n === "number")
+
+The guard existed in the same function. `words` and `chars` did not get it.
+
+### The fix
+
+`sumSections` keeps only finite numbers. Verified: the payload is dropped, the
+real count survives, and `NaN` no longer poisons the sum.
+
+### The gate
+
+`generated-viewer-scripts.test.ts` — a `reduce` in a graph builder that adds a
+value straight out of parsed JSON, with no `typeof` on the line, is the defect
+**whatever the field is called**. Falsified against the real file: restoring
+the original line turns it red and names `library-graph.ts:387`.
 
 `bun run gates` — 108 of 108.
