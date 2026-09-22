@@ -32,7 +32,8 @@ import { dirname, join, relative, resolve } from "node:path";
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 import { instanceDeclarationFilename, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
-import { graphTiles } from "./graph-tiles.js";
+import { graphTiles, withTileCounts } from "./graph-tiles.js";
+import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
 import { harnessTiles } from "./harness-tiles.js";
 import { siteLinks } from "./site-links.js";
 
@@ -145,6 +146,55 @@ if (!repoUrl && existsSync(OUT)) {
   }
 }
 
+/**
+ * Every declared tile count this site publishes, as `directory id → count`.
+ *
+ * ## Scanned, not mapped
+ *
+ * There is no table here saying which projection serves which directory, and
+ * there must not be. A projection NAMES the directories it counts for, so the
+ * scan reads whatever it finds and a map of guesses cannot go stale. That is
+ * what makes `assets/library/index.json` able to declare for both `library`
+ * and `uploads` — two tiles over one dataset, `flh4` — without this function
+ * knowing anything about either.
+ *
+ * ## Every failure is ABSENCE, never zero
+ *
+ * A missing `assets/`, an unreadable file, malformed JSON, a projection that
+ * declares nothing: all of them contribute no entry, so the tile renders with
+ * no badge. None of them contributes `0`, which would say the graph is empty
+ * — the opposite fact. `dh4f`.
+ *
+ * Unreadable is not reported as a finding HERE because this file's gate is a
+ * staleness gate: a projection that cannot be parsed is its own generator's
+ * failure and is already red there, and a second voice saying so would be a
+ * second answer to whose defect it is.
+ */
+function scanTileCounts(assetsDir: string): Map<string, TileCount> {
+  const out = new Map<string, TileCount>();
+  if (!existsSync(assetsDir)) return out;
+  for (const d of readdirSync(assetsDir, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const file = join(assetsDir, d.name, "index.json");
+    if (!existsSync(file)) continue;
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(readFileSync(file, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const [id, count] of readTileCounts(parsed)) {
+      // LAST writer would be arbitrary, so the FIRST is kept and the clash is
+      // simply not silent-overwritten. Two projections declaring one
+      // directory's count is a defect in the declarations, not something to
+      // resolve by directory-read order — which is what `readdirSync` would
+      // make it.
+      if (!out.has(id)) out.set(id, count);
+    }
+  }
+  return out;
+}
+
 const payload = {
   // The SOURCE is the declaration, not `_data/harness.json` -- which is
   // Jekyll's own file, keeps that name, and is what this writes.
@@ -191,7 +241,10 @@ const payload = {
    * second list. One array for BOTH surfaces — Q11: a tile is declared once
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
-  tiles: graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+  tiles: withTileCounts(
+    graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
+  ),
   harnesses: harnessTiles(
     REPO_ROOT,
     ROOT,

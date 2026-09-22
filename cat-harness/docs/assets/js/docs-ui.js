@@ -2089,6 +2089,35 @@
    * `1le7`'s `tileLink` — the template is not duplicated, and a tile with no
    * published href is not rendered as a link to nowhere (`pb04`).
    */
+  /**
+   * A tile's DECLARED count, or `null`.
+   *
+   * ## Absent is not zero, and this function is where that is enforced
+   *
+   * `schemas/tile-count.ts` carries the argument: a projection that declares
+   * no count, declares a malformed one, or could not be read is NOT a
+   * projection over an empty graph. They are opposite facts, and `dh4f` is
+   * this repository's name for scanning nothing and calling it clean.
+   *
+   * So every rejection below returns `null` and the tile renders with no
+   * badge. None of them falls back to `0`. The test that matters is the one
+   * that would FAIL if it did.
+   *
+   * `count` is checked with `isFinite` rather than `typeof === "number"`:
+   * `NaN` and `Infinity` are both numbers and both render as a badge that
+   * means nothing. `unit` must be present and non-blank -- a bare number is
+   * the ambiguity the unit exists to remove, so half a declaration is
+   * malformed rather than partly usable. The mirror of the same three checks
+   * in `readTileCounts`, deliberately: this reads a tile the generator
+   * already validated, and a reader that trusted its input would be a reader
+   * that cannot be tested against a hand-written meta tag.
+   */
+  function tileCountOf(t) {
+    if (!t || typeof t.count !== "number" || !isFinite(t.count)) return null;
+    if (typeof t.unit !== "string" || t.unit.trim() === "") return null;
+    return { count: t.count, unit: t.unit.trim() };
+  }
+
   function mountGraphTiles(surface, into, hiddenIds) {
     var meta = document.querySelector('meta[name="fa-tiles"]');
     var raw = meta && meta.getAttribute("content");
@@ -2110,8 +2139,38 @@
       // a page that exists: this one is about whether the page is there.
       // Conflating them would let "show hidden" resurrect a link to a 404.
       if (t.publish === "staging-only" && !isStagingPreview()) continue;
-      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
-                          "the declared visualisation of " + t.directory);
+      var hint = "the declared visualisation of " + t.directory;
+      // THE COUNT IS PART OF THE ACCESSIBLE NAME, not an ornament hung beside
+      // it. A badge a screen reader does not announce leaves exactly the
+      // reader who cannot glance at the tile unable to tell an empty viewer
+      // from a full one -- which is the whole defect, made worse.
+      var badge = tileCountOf(t);
+      if (badge) hint += ", " + badge.count + " " + badge.unit;
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint);
+      if (badge) {
+        // `aria-hidden` is belt and braces, not the mechanism: `tileLink` sets
+        // `aria-label` on the anchor, and a label REPLACES the subtree as the
+        // accessible name, so this span is already not announced. It is marked
+        // anyway so the badge stays decorative if that label is ever dropped
+        // -- the day it is, the count would otherwise be read twice.
+        //
+        // The count reaching the name at all is the part that matters, and it
+        // happens above, in `hint`.
+        var b = el("span", { class: "fa-tile-count", "aria-hidden": "true" },
+                   String(badge.count));
+        // ZERO is styled apart, because it is the state this whole feature
+        // exists to surface and it is the one a reader is least expecting.
+        // Distinct from NO badge, which is a projection that declared nothing.
+        //
+        // NOTE the opposite rule on `addTodoTile` below -- *"nothing
+        // outstanding is not a tile"*, which drops the tile entirely at zero.
+        // Not an inconsistency: that is an ACTION tile, and an action with
+        // nothing to act on is worth hiding. A graph tile is a place the
+        // reader navigates to, and hiding it at zero would take the answer
+        // away exactly when it is surprising.
+        if (badge.count === 0) b.setAttribute("data-fa-empty", "true");
+        tile.appendChild(b);
+      }
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
       if (t.theme) tile.setAttribute("data-fa-theme", t.theme);

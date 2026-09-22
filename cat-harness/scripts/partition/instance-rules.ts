@@ -274,6 +274,13 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
+      // twenty lines up, and it arrived the same way: classified core first
+      // because a badge is something a reader sees, and `check:partition`
+      // answered with a wrong-direction edge from `sync-docs-harness.ts`,
+      // which is harness and reads it. A tile is harness machinery whatever
+      // it looks like on the page.
+      "schemas/tile-count.ts",               // a projection's declared headline number
       // The skill-framework vocabulary — actors, capabilities, skills,
       // requirements, the package registry. It was the top 240 lines of
       // `constraints.ts` and 32 aliases in `types.ts`, which put it under the
