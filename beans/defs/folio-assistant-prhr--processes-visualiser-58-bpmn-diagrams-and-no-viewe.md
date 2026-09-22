@@ -278,3 +278,50 @@ The guard against it then tripped on the page's own explanation of the mistake,
 because that prose contains the phrase. It now asserts the CLAIM form —
 `present on **` must be followed by a digit — rather than forbidding the words,
 so the page can describe its own history without failing its own test.
+
+## VERIFIED — the rendered page, at last (2026-09-22 09:38 canonical deploy)
+
+Six commits carried the note *"the rendered page has not been inspected"*. It
+has been now, and the route is #874's: `git archive origin/gh-pages` into a temp
+dir, served statically, driven by a real Chromium at 1280x900 with **every
+external fetch blocked**.
+
+`/processes/index.html` landed on canonical at 09:38:50, in the deploy from
+`2cb60226bd` (my merge's own deploy was cancelled by the following push to
+main — concurrency working, not a fault).
+
+| property | measured |
+|---|---|
+| tables render as tables | **6**, rows 4 / 86 / 97 / 4 / 3 / 13 |
+| unrendered markdown (`^\|` rows) | **0** |
+| tables overflowing their column | **0** |
+| horizontal page scroll | none |
+| heading anchors | **8, all distinct** — no `gjli` duplicate |
+| failed requests | **0** |
+| reachable from a tile | **yes** — 49 tiles, one resolving to `/processes/` |
+
+The last row is the one that mattered most and could not be checked any other
+way: `prhr` exists so a person can FIND these diagrams, and a viewer nobody can
+reach is the gap the page itself reports about other graphs.
+
+### Two things measured and NOT reported as defects
+
+**Twelve 404s on the first run** — `/folio-assistant/assets/css/...` and friends.
+That was MY HARNESS: the site is served under a `/folio-assistant/` baseurl and
+I had served the tree at `/`. Re-served under the prefix: zero failures. #874's
+author hit the same class (*"blank artwork in my screenshots was my harness"*),
+which is why the check was to identify each URL rather than to count them.
+
+**The body background is identical in light and dark** — `rgb(39, 38, 43)` under
+both, with `prefers-color-scheme` correctly emulated and no `data-theme`
+attribute set. The control settles it: `/processes/`, the pre-existing `/tools/`
+and the site ROOT all behave the same, and `themes.css` carries **0**
+`prefers-color-scheme` blocks (`docs-ui.css` has 5, for specific components).
+Site-wide, pre-existing, untouched by this work, and almost certainly deliberate.
+Recorded as a measurement, not filed as a finding.
+
+### `readOnlyTiles: 0`, exactly as documented
+
+The graph-tile surface carries no `readOnly` in this repository — the same fact
+bean `10s1` records, now confirmed on a deployed page rather than in the data.
+The read-only state reaches a reader through the harness FINDING instead.
