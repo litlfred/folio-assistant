@@ -143,6 +143,12 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
+      // HARNESS, by the same test as `check-ci-health` above: its subject is
+      // this repository's own Jekyll templates and the baseurl its site is
+      // served under, and it reads no folio content at all. It parses HTML
+      // with a regex and imports nothing but `fs` and `path`, so it cannot
+      // drag a folio in (bean `blv9`).
+      "scripts/check-docs-templates.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
