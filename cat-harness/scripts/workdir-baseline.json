@@ -1,0 +1,13 @@
+{
+  "_comment": "`working-directory` declarations that are KNOWN-OPEN rather than accepted. Unlike FOLIO_WORKDIRS, which says a directory is absent here on purpose and always will be, every entry below is a defect or an unknown somebody still owes an answer for — so this file may only SHRINK, and an entry that stops matching fails the run rather than being dropped quietly. Keyed by `<workflow>: <value>` rather than by line, so an unrelated step added above does not churn it. Each entry names the bean that owns it.",
+  "known": [
+    "discoverability-docs.yml: folio-assistant",
+    "publish.yml: folio-assistant",
+    "lake-cache-refresh.yml: ${{ matrix.lake-root }}"
+  ],
+  "why": {
+    "discoverability-docs.yml: folio-assistant": "Bean `u9r9`. A stale prefix from the #223 split — the platform's own `schemas/` is at `cat-harness/schemas/`, so unlike the folio cases this one HAS a correct target and a one-line fix (measured: TypeDoc over those entry points exits 0). It is baselined rather than fixed because correcting it turns a dormant step live, and this workflow has never run once — `total_count: 0`. That behaviour change is the owner's to authorise, and `u9r9` says so.",
+    "publish.yml: folio-assistant": "Bean `u9r9`, same stale prefix. Additionally UNREACHABLE: this job carries `needs: content-pipeline`, whose preflight reads `content/schema/references.ts`, and `content/` does not exist here. The one run in this repository's history (2026-06-24, `28075159865`) died there in 23 s with this job recorded `skipped`. So a dispatch cannot observe this step's outcome, and `u9r9`'s first Done-when box is unachievable as written for this workflow.",
+    "lake-cache-refresh.yml: ${{ matrix.lake-root }}": "Undetermined, not missing — the value comes from `.github/lake-packages.json`, which that workflow's own header calls a SAMPLE roster whose \"lake-root paths resolve only in a content repo\". So it is folio-only in substance, but it cannot go in FOLIO_WORKDIRS: that table matches on a literal value, and reading this one means reading the matrix. Recorded here so it stays visible rather than being silently tolerated."
+  }
+}

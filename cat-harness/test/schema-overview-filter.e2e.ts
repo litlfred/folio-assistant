@@ -63,6 +63,29 @@ async function drawnCount(page: Page): Promise<number | null> {
   return m ? Number(m[1]) : null;
 }
 
+/**
+ * The drawn count, once the caption has SETTLED.
+ *
+ * `drawnCount` is a single read, and the two halves of a filter change do not
+ * land together: the list re-renders on the `input` event while the diagram is
+ * DEBOUNCED at 150ms, the same trade the resize handler makes. So between "the
+ * caption no longer says it refused" and "the caption reports a count" there is
+ * a window holding neither, and a one-shot read can sample it.
+ *
+ * This failed exactly once, in CI, on a commit whose diff was a bean markdown
+ * file and a base merge — and did NOT reproduce here over three repeats of the
+ * whole file. A test that passes twenty-one times locally and fails on a slower
+ * runner is not measuring the page; it is measuring the runner. Polling is the
+ * fix rather than a longer timeout, because the failure is a missed sample and
+ * not a slow one.
+ */
+async function drawnSettled(page: Page): Promise<number> {
+  await expect.poll(async () => await drawnCount(page), { timeout: 10_000 }).not.toBeNull();
+  const n = await drawnCount(page);
+  expect(n).not.toBeNull();
+  return n!;
+}
+
 test.describe("overview panel — the picture follows every filter", () => {
   test("a SEARCH narrows the diagram, not only the list", async ({ page }) => {
     await openPanel(page);
@@ -73,8 +96,7 @@ test.describe("overview panel — the picture follows every filter", () => {
     await page.locator("#q").fill("role");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
 
-    const drawn = await drawnCount(page);
-    expect(drawn).not.toBeNull();
+    const drawn = await drawnSettled(page);
 
     // The picture and the list are filtered through ONE predicate, so the
     // number the caption reports is the number the header reports. They
@@ -95,7 +117,7 @@ test.describe("overview panel — the picture follows every filter", () => {
 
     await page.locator("#q").fill("workflow");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
-    expect(await drawnCount(page)).toBeGreaterThan(0);
+    expect(await drawnSettled(page)).toBeGreaterThan(0);
 
     // ...and clearing it returns the reader to where they were. `whbf`
     // requires a way back to the static arrangement; this is that, for the
@@ -112,7 +134,7 @@ test.describe("overview panel — the picture follows every filter", () => {
 
     await page.locator("#kind").selectOption("zod-enum");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
-    expect(await drawnCount(page)).toBeGreaterThan(0);
+    expect(await drawnSettled(page)).toBeGreaterThan(0);
   });
 
   test("an empty result names the FILTER, never the scope", async ({ page }) => {
