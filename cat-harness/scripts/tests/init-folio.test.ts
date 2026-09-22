@@ -111,6 +111,17 @@ describe("required inputs", () => {
 });
 
 describe("what gets written", () => {
+  test("the staging caller is written OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
+    const d = tmp();
+    const r = initFolio(opts(d));
+    const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
+    expect(wf).toContain("uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main");
+    // No live pull_request trigger: every uncommented line naming it is absent.
+    expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
+    expect(wf).toContain("exit 1");
+    expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
+  });
+
   test("every file the layout needs, and no subject matter", () => {
     const d = tmp();
     const r = initFolio(opts(d));
@@ -129,6 +140,7 @@ describe("what gets written", () => {
       "AGENTS.md",
       "CLAUDE.md",
       "GEMINI.md",
+      ".github/workflows/staging.yml",
     ]) {
       expect(r.created).toContain(f);
       expect(existsSync(join(d, f))).toBe(true);
