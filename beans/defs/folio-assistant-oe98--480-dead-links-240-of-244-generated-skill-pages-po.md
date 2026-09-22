@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T12:09:09Z
-updated_at: 2026-09-22T13:55:22Z
+updated_at: 2026-09-22T14:07:16Z
 parent: folio-assistant-1swy
 ---
 
@@ -120,3 +120,16 @@ A bean with two checklists has two answers to "is this finished", and the one
 a tool reads is the first. That is the same defect this bean is about, one
 layer up: a generated view and its source disagreeing, with the view looking
 fine.
+
+
+_2026-09-22T14:10:00Z_ — **VERIFIED ON THE PUBLISHED PREVIEW, not just the working tree.** The staging deploy rebuilt with the fix, so the deployed HTML could be read through the publish ref — `git show origin/gh-pages:STAGING/<slug>/<page>`, the route `staging-review` establishes for exactly this.
+
+    245 published pages
+    2448 blob/edit links in the deployed HTML
+      10 NON-RESOLVING — all `..`, all `nsbk`'s five orphan pages × 2
+
+**Every link either generator writes now resolves in the served output.** That is a different claim from "the generator emits good links", and it is the one that matters: this repository's own `preview:site` note exists because *"a green gate set is not a rendered page"*, and 123 green gates were compatible with 568 dead links for as long as this defect stood.
+
+The 10 that remain are the same 5 pages, unchanged — no generator writes them, so nothing about this fix could have touched them. They are `nsbk`'s.
+
+Worth noting the link count: 2448 in the HTML against 576 in the markdown, because the rendered page carries nav and theme links the source does not. Only the `blob|edit` ones were counted on both sides, so the two measurements are of the same quantity; the difference is the denominator, not the finding.
