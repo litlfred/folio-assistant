@@ -1,0 +1,801 @@
+{
+  "$schema": "folio-voices-index/v1",
+  "tile": {
+    "voices": {
+      "count": 5,
+      "unit": "voices"
+    }
+  },
+  "directories": [
+    {
+      "instance": "agent-skills",
+      "dir": "agent-skills/skills/voices",
+      "present": false,
+      "voices": []
+    },
+    {
+      "instance": "folio-assistant-core",
+      "dir": "folio-assistant-core/skills/voices",
+      "present": true,
+      "voices": [
+        "technical-writer"
+      ]
+    },
+    {
+      "instance": "folio-assistant-sci",
+      "dir": "folio-assistant-sci/skills/voices",
+      "present": true,
+      "voices": [
+        "milnor"
+      ]
+    },
+    {
+      "instance": "who-style-guide",
+      "dir": "who-style-guide/skills/voices",
+      "present": true,
+      "voices": [
+        "who-editorial",
+        "who-guideline-development",
+        "who-publication-design"
+      ]
+    }
+  ],
+  "voices": [
+    {
+      "id": "milnor",
+      "title": "Milnor exposition standard",
+      "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/milnor",
+      "provenance": "house",
+      "overlaySeverity": "minor",
+      "criterion": "voice-overlay-milnor",
+      "sources": [
+        {
+          "title": "Link Groups (John Milnor, Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177-195)",
+          "year": 1954
+        }
+      ],
+      "hasInstructions": true,
+      "rules": [
+        {
+          "id": "milnor-h1-economy",
+          "title": "H1 — Economy: the opening is a Summary, not an Introduction",
+          "description": "Milnor's §1 is titled \"Summary\" and runs about 200 words. In them: what link homotopy is, the purpose of the paper, the tool, what the tool is, and all four results. No preamble, no literature survey, no statement of what the reader will find in section 3. 0 if a paragraph could be deleted with no loss. 1 if sentences restate their neighbours, or a closing line summarises what was just said. 2 when nothing can be removed without losing content.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "1. Summary — By a link homotopy is meant a deformation of one link onto another, during which each component of the link is allowed to cross itself, but such that no two components are allowed to intersect. The purpose of this paper is to study links under the relation of homotopy. The fundamental tool in this study will be the link group."
+        },
+        {
+          "id": "milnor-h2-concrete-first",
+          "title": "H2 — Concrete before abstract, at the scale of the PAPER not the section",
+          "description": "Read §2 alone and it opens on pure abstraction: \"Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle.\" A rubric applied per section would score that 0. It is a 2, because §1 has already given the concrete picture in words a reader can hold — a deformation in which each component may cross itself but no two components may meet. The informal instance precedes the formal definition by one section. So score H2 over the unit a reader actually reads through, and never on a definitions section in isolation.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "2. The basic theorems — Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle. By an n-link L will be meant an ordered collection (l1, …, ln) of maps li: C -> M, where the images l1(C), …, ln(C) are to be disjoint."
+        },
+        {
+          "id": "milnor-h3-why-before-what",
+          "title": "H3 — Name the tool's purpose before defining the tool",
+          "description": "\"The fundamental tool in this study will be the link group\" comes before \"The link group of a link is a factor group of the fundamental group of its complement\". The reader is told what the object is FOR in the sentence before they are told what it IS. 0 if a construction appears with no indication of what it is for; 1 if the motivation is present but buried after it; 2 when the purpose arrives first.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "The fundamental tool in this study will be the link group. The link group of a link is a factor group of the fundamental group of its complement, which is invariant under homotopy."
+        },
+        {
+          "id": "milnor-h4-uncluttered-notation",
+          "title": "H4 — A symbol is introduced where it is needed and then carries weight",
+          "description": "Milnor introduces G(L), Ai(L), [Ai] and the product E = [A1][A2]…[An] in four consecutive sentences, each at the moment it is needed and each used thereafter; and he gives the image of a link the short name |L| because it recurs constantly. Nothing is defined for symmetry. 0 for notation used once, for collisions, or for a decorated symbol where a word would do; 1 for more indices than the argument needs; 2 when every symbol earns its name. Fixing this is not local — notation is shared across a chapter, so check what else binds a symbol before renaming it.",
+          "category": "formatting",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "Denote the image l1(C) ∪ … ∪ ln(C) of a link L by |L|. For each proper link L let G(L) denote the fundamental group of the complement M - |L|. … Denote the kernel of this homomorphism by Ai(L), and denote the commutator subgroup of Ai by [Ai]. Since the [Ai] are normal subgroups of G(L), their product E = [A1][A2] … [An] is also a normal subgroup."
+        },
+        {
+          "id": "milnor-h5-linear-argument",
+          "title": "H5 — Routine verification is dispatched in a sentence, never promoted to a lemma",
+          "description": "\"Clearly the relation of homotopy is reflexive, symmetric and transitive.\" One sentence, no lemma, no proof. Promoting that to a numbered lemma would have cost the reader a context switch for nothing. 0 for a forward reference to a result not yet stated; 1 for an aside the reader must park and return to; 2 when it reads once, top to bottom. Score this on the FIRST reading: a second pass already knows the argument and cannot recover the property.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "Two links L and L' will be called homotopic if there exist homotopies hi between the maps li and the maps l'i so that the sets h1t(C), …, hnt(C) are disjoint for each value of t. Clearly the relation of homotopy is reflexive, symmetric and transitive."
+        },
+        {
+          "id": "milnor-h6-strategy-before-execution",
+          "title": "H6 — State the shape of the proof, then execute it",
+          "description": "The most transferable pattern in the paper. Lemma 3's proof opens by saying what will be built and why that finishes the job — \"A natural isomorphism … will be constructed for i = 0, 1. Since a homotopy … induces a homotopy equivalence …, this will complete the proof\" — and only then constructs it. The reader knows the destination before the first step, so no step is a surprise. 0 when the argument exists only in the displays and the prose says \"we compute\"; 1 when the prose narrates steps without saying why they follow; 2 when a reader who skipped every display would still follow the argument.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-179",
+          "pages": "179",
+          "quote": "The proof will be valid for any cohomology theory. Let Q0 and Q1 denote the mapping cylinders of h0 and h1. A natural isomorphism between Hr(Z, hi(Y)) and Hr(Qi, Y) will be constructed for i = 0, 1. Since a homotopy between h0 and h1 induces a homotopy equivalence between the pairs (Q0, Y) and (Q1, Y), this will complete the proof."
+        },
+        {
+          "id": "milnor-h7-right-tool-framing",
+          "title": "H7 — Say what the method requires, in one clause",
+          "description": "\"The proof will be valid for any cohomology theory.\" Seven words telling the reader the argument does not depend on a choice they might have worried about. Milnor also situates the work against the neighbouring literature in a footnote rather than a survey section — one sentence on K. Chen's factor groups, placed where a reader who wondered would look. 0 for a heavy method with no indication why; 1 for the right tool used without saying what the alternative would have cost; 2 when the reader can see why this tool and not the obvious other one.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-179",
+          "pages": "179",
+          "quote": "The proof will be valid for any cohomology theory."
+        },
+        {
+          "id": "milnor-h8-respect-for-the-reader",
+          "title": "H8 — Measured: no superlatives, one hedge, zero second person",
+          "description": "H8 is the hallmark that can be counted, and the counts are the standard. Over 8899 words: ZERO instances of surprisingly, remarkably, interestingly, beautiful or elegant; ONE hedge (\"a (possibly redundant) list\") and it qualifies a mathematical fact rather than the author's confidence; ten uses of \"may\", all permissive rather than epistemic; zero \"you\"; zero \"our\"; zero \"the author\". Milnor never tells the reader what is important. 0 when the text tells the reader what is beautiful, surprising or important; 1 when it hedges a claim it can support; 2 when it states what is true and lets the reader judge.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177-195",
+          "quote": "A study of this group therefore, not only gives a method for distinguishing between links which are not homotopic, but also gives a procedure for obtaining a (possibly redundant) list of all homotopy classes of links with a given number of components."
+        },
+        {
+          "id": "milnor-clearly-is-proof-economy",
+          "title": "\"Clearly\" is proof economy — 14 uses in the exemplar, and the checker now knows",
+          "description": "The judgement half of a criterion that has been narrowed because of it. `voice-editorializing` used to fail a block for `clearly`, and failed this very paper 26 times across 11 of its 20 pages — about twenty of them proof economy, four a term of art (`naturally isomorphic`), and exactly ONE a real finding (\"Unfortunately these invariants are not strong enough\", p194). Bean `2t41` narrowed the checker: the exemplar now scores that one finding and no others.\n\nThe rule stays because the mechanical half cannot make the distinction that matters. `clearly` before a verification the reader can perform is correct — it routes their effort away from something routine, which is the opposite of spending it on the author's opinion. `clearly` attached to a claim the reader CANNOT check in their head is the real defect: the author asserting where they should be proving. No phrase list separates those, and the checker's exemption is deliberately a construction test rather than a word test, which approximates it without deciding it. A reviewer deciding whether a given `clearly` earns its place is doing the part no regex can.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177, 179, 181, 184, 188, 190, 193",
+          "quote": "Clearly the relation of homotopy is reflexive, symmetric and transitive. … The inclusion map (Z, hi(Y)) -> (Qi, Pi) is clearly a homotopy equivalence. … The 2-link illustrated in Figure 3 is clearly trivial. … The single invariant μ(12) is clearly the linking number."
+        },
+        {
+          "id": "milnor-i-for-the-debt-we-for-the-mathematics",
+          "title": "\"I\" for the acknowledgement, \"we\" for the mathematics — and nothing else",
+          "description": "The second rule that corrects this platform's house voice. `one-voice-style-guide.md` says \"'we' for joint reasoning with the reader, never 'I'\". Milnor's split is sharper than the prohibition: exactly ONE first-person singular in the whole paper — \"I am indebted to R. H. Fox for assistance in the preparation of this paper\", placed at the end of §1 — against twenty uses of \"we\", every one of them joint reasoning (\"Thus we have obtained a complete set of homotopy invariants\"). Zero \"our\", zero \"the author\". So the rule is not \"never I\": it is that a personal debt is stated personally and in one sentence, and the mathematics is done together with the reader.",
+          "category": "person",
+          "severity": "minor",
+          "patterns": 1,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "milnorlink#page-177",
+          "pages": "177",
+          "quote": "I am indebted to R. H. Fox for assistance in the preparation of this paper."
+        },
+        {
+          "id": "milnor-sentence-length",
+          "title": "Median sentence 17 words; a 50-word sentence is the outlier, not the register",
+          "description": "Measured over the paper's 496 sentences: median 17 words, 90th percentile 29, longest 52. This is a diagnostic rather than a rule to enforce line by line — a block whose median runs to 30 is not automatically wrong, but it is not written in this voice either, and the usual cause is clauses doing the work that a full stop and a new subject would do better.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-190",
+          "pages": "190",
+          "quote": "Every link with two components is almost trivial. The single invariant μ(12) is clearly the linking number: hence the linking number is a complete homotopy invariant for 2-links. A link with three components is almost trivial if each pair of components has linking number zero."
+        },
+        {
+          "id": "milnor-brevity-no-repeats",
+          "title": "No content repeated within the block — and the resolve discipline is stricter",
+          "description": "Milnor does not restate: where a result is needed again he names it and points at it. The cited sentence is the sharpest instance — the assertion about meridian and parallel pairs could have been proved by reproducing the proof of Theorem 1 with the new pairs substituted in, and instead the reader is sent back through the existing proof. The paper does this throughout, invoking numbered results by number (\"by Lemma 7\", \"It follows from Lemma 4\", \"hence by Theorem 5\") rather than re-deriving them.\n\nSo: no content is repeated within a block. THE RESOLVE DISCIPLINE BELOW IS THIS PROJECT'S, NOT MILNOR'S, and is stated here rather than in the citation because it is about editing rather than about the paper — a repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths: a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "milnorlink#page-181",
+          "pages": "181",
+          "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1."
+        }
+      ]
+    },
+    {
+      "id": "technical-writer",
+      "title": "Technical Writer — SDO register with RFC 2119 requirement levels",
+      "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this instance's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/technical-writer",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-technical-writer",
+      "sources": [
+        {
+          "title": "RFC 2119 — Key words for use in RFCs to Indicate Requirement Levels (S. Bradner, Harvard University, BCP 14, March 1997)",
+          "year": 1997
+        },
+        {
+          "title": "RFC 8174 — Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words (B. Leiba, BCP 14, May 2017)",
+          "year": 2017
+        }
+      ],
+      "hasInstructions": false,
+      "rules": [
+        {
+          "id": "tw-rfc2119-absolute-requirement",
+          "title": "MUST, REQUIRED and SHALL mean an absolute requirement — nothing weaker",
+          "description": "Use MUST, REQUIRED or SHALL only where the requirement is absolute. They are interchangeable by the RFC's own definition, so choose one per document and keep to it rather than varying for rhythm. A MUST that a reader may reasonably decline is not a MUST; it is a SHOULD, and mislabelling it teaches readers to discount every other MUST in the document.",
+          "category": "terminology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc2119-key-words-requirement-levels#page-001",
+          "citesInstance": "agent-skills",
+          "pages": "1",
+          "quote": "1. MUST   This word, or the terms \"REQUIRED\" or \"SHALL\", mean that the definition is an absolute requirement of the specification."
+        },
+        {
+          "id": "tw-rfc2119-absolute-prohibition",
+          "title": "MUST NOT and SHALL NOT mean an absolute prohibition",
+          "description": "Reserve MUST NOT and SHALL NOT for absolute prohibitions. Do not soften a prohibition into 'should not' when it is absolute, and do not inflate a discouragement into MUST NOT because it feels important.",
+          "category": "terminology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc2119-key-words-requirement-levels#page-001",
+          "citesInstance": "agent-skills",
+          "pages": "1",
+          "quote": "2. MUST NOT   This phrase, or the phrase \"SHALL NOT\", mean that the definition is an absolute prohibition of the specification."
+        },
+        {
+          "id": "tw-rfc2119-should-carries-a-burden",
+          "title": "SHOULD and RECOMMENDED admit exceptions, and the writer owes the reader the implications",
+          "description": "SHOULD and RECOMMENDED mean valid reasons may exist to ignore the item — but the RFC puts a burden on the reader to understand and weigh the implications, which the writer can only discharge by stating them. A bare SHOULD with no account of what departing from it costs is an instruction the reader cannot act on.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc2119-key-words-requirement-levels#page-002",
+          "citesInstance": "agent-skills",
+          "pages": "2",
+          "quote": "3. SHOULD   This word, or the adjective \"RECOMMENDED\", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course."
+        },
+        {
+          "id": "tw-rfc2119-sparingly",
+          "title": "Imperatives are used sparingly, and only where interoperation or harm requires them",
+          "description": "The RFC constrains its own key words: they are for what is actually required for interoperation, or to limit behaviour that can cause harm. They are NOT for imposing a preferred method where the method is not required. A document in which every paragraph carries a MUST has not been made rigorous; it has made its genuine requirements unfindable.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc2119-key-words-requirement-levels#page-003",
+          "citesInstance": "agent-skills",
+          "pages": "3",
+          "quote": "Imperatives of the type defined in this memo must be used with care and sparingly.  In particular, they MUST only be used where it is actually required for interoperation or to limit behavior which has potential for causing harm (e.g., limiting retransmisssions)  For example, they must not be used to try to impose a particular method on implementors where the method is not required for interoperability."
+        },
+        {
+          "id": "tw-rfc8174-uppercase-only",
+          "title": "Only UPPERCASE key words carry the requirement meaning",
+          "description": "RFC 8174 updates RFC 2119: only all-capitals usage has the defined special meaning. So 'the parser must handle this' is ordinary prose and 'the parser MUST handle this' is a conformance requirement, and the difference is visible rather than inferred. A reviewer MUST read lowercase 'must' as narration, and a writer who meant a requirement MUST capitalise it.",
+          "category": "capitalization",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc8174-uppercase-vs-lowercase-2119-key-words#page-001",
+          "citesInstance": "agent-skills",
+          "pages": "1",
+          "quote": "This document updates RFC 2119 by clarifying that only UPPERCASE usage of the key words have the defined special meanings."
+        },
+        {
+          "id": "tw-elaborate-consequences",
+          "title": "State what not following a requirement costs",
+          "description": "RFC 2119 asks authors to elaborate the implications of not following a requirement, on the grounds that most implementors lack the experience and discussion that produced the specification. Generalised here beyond security: a requirement whose consequence is unstated is one a reader cannot weigh, and is the single most common reason a correct instruction is ignored.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "rfc2119-key-words-requirement-levels#page-003",
+          "citesInstance": "agent-skills",
+          "pages": "3",
+          "quote": "Document authors should take the time to elaborate the security implications of not following recommendations or requirements as most implementors will not have had the benefit of the experience and discussion that produced the specification."
+        },
+        {
+          "id": "tw-glossary-terms-capitalised",
+          "title": "Glossary Terms are Capitalized throughout",
+          "description": "A Term defined in the Glossary is Capitalized every time it is used, so a reader can tell a defined Term from the same word used loosely. Before introducing a term, ask whether it is defined; if not, whether it is defined later, whether it belongs in the Glossary, and whether it is used in several places or only here. A term used once and nowhere else does not earn a Glossary entry.",
+          "category": "capitalization",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "kg-node",
+          "cites": "skills/folio-core/technical-documentation.md",
+          "citesInstance": "cat-harness",
+          "quote": "Glossary Terms are Capitalized on every use, so a reader can tell a defined Term from the same word used loosely."
+        },
+        {
+          "id": "tw-no-repetition-logical-order",
+          "title": "After the first draft: repetition, order, defined terms",
+          "description": "Three questions the writer runs against their own draft before review. Have I repeated anything? If so, consolidate — the same fact in two places is free to drift, and the copy a reader finds first is the one with no test. Does the content flow in logical order? If not, apply the detangler rather than reordering by taste. Is each Term defined? This is a drafting rule, not a reviewer's courtesy: it is cheapest to fix while the draft is still the author's.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "skills/folio-core/technical-documentation.md",
+          "citesInstance": "cat-harness",
+          "quote": "Have I repeated anything? If so, consolidate. The same fact in two places is free to drift, and the copy a reader finds first is usually the one with no test behind it."
+        },
+        {
+          "id": "tw-link-schema-and-uml",
+          "title": "Link the schema source and its UML when the prose names a schema",
+          "description": "Naming a schema without linking it makes the reader guess which file is meant, and the guess fails precisely when the schema has moved. Link the source, and the UML documentation where one exists. This is the resolve-do-not-compose rule applied to prose: a written-out path is a composition nothing checks, a link is a reference a checker can falsify.",
+          "category": "citation",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "kg-node",
+          "cites": "skills/folio-core/technical-documentation.md",
+          "citesInstance": "cat-harness",
+          "quote": "When the prose names a schema, link to the schema source and to its UML documentation where one exists. A schema named but not linked forces the reader to guess which file, and the guess is wrong exactly when the schema has moved."
+        }
+      ]
+    },
+    {
+      "id": "who-editorial",
+      "title": "WHO editorial style",
+      "description": "The house editorial style of the World Health Organization: spelling, capitalization, eponym form, reference layout and non-discriminatory language, as set out in the WHO Editorial Style Manual. Derived rule by rule from the ingested manual; every rule cites the page it was read from.",
+      "instance": "who-style-guide",
+      "path": "who-style-guide/skills/voices/who-editorial",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-who-editorial",
+      "sources": [
+        {
+          "title": "WHO Editorial Style Manual",
+          "year": 1993
+        }
+      ],
+      "hasInstructions": true,
+      "rules": [
+        {
+          "id": "who-ed-ize-preferred",
+          "title": "-ize, not -ise",
+          "description": "Where a word may be spelled with -ize or -ise, use -ize: organize, not organise; organization, not organisation. The manual's stated ground is the Greek root and the first spelling in The concise Oxford dictionary. The exception is a word where -ise is not a suffix but part of the root — surprise, comprise, improvise — which keep -ise. This rule is the reason the voice had to be derived rather than assumed: it is commonly believed that WHO house style is -ise, and PR #210 asserted exactly that.",
+          "category": "spelling",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 8,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-014",
+          "pages": "14",
+          "quote": "Where there is a choice between using the suffix -ize or -ise (e.g. organize or organise), -ize, derived from the Greek \"-izo\", is preferred, consistent with the first spelling of such words given in The concise Oxford dictionary. For some words, such as surprise, comprise or improvise, where -ise is not a suffix but part of the root of the word, there is no choice."
+        },
+        {
+          "id": "who-ed-eponym-no-genitive",
+          "title": "Crohn disease, not Crohn's disease",
+          "description": "An eponymous name takes no Saxon genitive: Crohn disease, Down syndrome. The manual goes further and asks that eponyms be avoided altogether where a descriptive name exists, on the ground that an eponym carries no information about the disease and may name something different in another country — so a finding here is worth reading as two questions, not one.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 1,
+          "terminology": 4,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-009",
+          "pages": "9",
+          "quote": "Eponymous names give no information about the nature of the disease and different names may be used in different countries. They should be avoided whenever possible. The Saxon genitive ('s) is not necessary when using an eponymous name; e.g. Crohn disease, not Crohn's disease, and Down syndrome, not Down's syndrome."
+        },
+        {
+          "id": "who-ed-who-capitalization",
+          "title": "Member State, the Organization — and headquarters, primary health care",
+          "description": "The manual gives two explicit lists rather than a principle, and the two halves are easy to get backwards. Capitalised: Member State, Associate Member, the Organization (meaning WHO), the Constitution, Region in a specific reference, Regional Committee, Regional Director, World Health Assembly, General Programme of Work, Global Strategy for Health for All. Lower case: headquarters, primary health care, health for all, session, resolution, decision, strategy, specialized agency, representatives, committee and commission unless specifically identified, region used generically, and names of seasons. Note the pair the manual calls out itself: member (of a committee) but Member (State).",
+          "category": "capitalization",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 5,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-013",
+          "pages": "13-14",
+          "quote": "The following words and expressions used frequently within WHO normally require capitalization: Associate Member; Constitution (of WHO); (Eighth) General Programme of Work; Forty-… World Health Assembly; … Member (country); Member State; … the Organization (WHO); Region [of WHO] … / The following words and expressions do not normally require capitalization: commission, committee (unless specifically identified); … health for all; headquarters (WHO); member (of the committee, etc.), but Member (State); … primary health care; … specialized agency"
+        },
+        {
+          "id": "who-ed-capitals-sparingly",
+          "title": "Capitals break the eye; use them for names, not for importance",
+          "description": "Proper names, titles and institutions take capitals. Descriptive appellations — administrative posts and the like — do not, unless lower case would read oddly. A trade name takes an initial capital (Pyrex, Vaseline, with the generic preferred where one exists); a Linnaean genus takes one (Staphylococcus aureus, Trypanosoma) while the anglicised common form does not (trypanosome, schistosome). Article, book and journal titles in references are NOT capitalised except where they contain an organization's name.",
+          "category": "capitalization",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-013",
+          "pages": "13",
+          "quote": "Too many capital letters break the flow of the eye across a sentence and down a column of type. However, proper names, titles and institutions require capitals. Descriptive appellations, such as administrative posts, do not, unless the result would appear odd or confusing. … Generic terms in the Linnaean classification also take an initial capital letter, e.g. Staphylococcus aureus, Trypanosoma, Schistosoma, but trypanosome, schistosome, etc. Article, book and journal titles in references need not be capitalized, e.g. Social science and medicine, except when they contain the name of an association or organization"
+        },
+        {
+          "id": "who-ed-reference-authors",
+          "title": "All authors up to three; et al. from four",
+          "description": "List every author when there are three or fewer. From four, give the first author only and add et al. Author names are surname followed by initials with no periods and no comma between them — Cairns RB, DuPont B, Crompton DWT et al.",
+          "category": "citation",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-033",
+          "pages": "33",
+          "quote": "1. List all authors when three or fewer; when four or more, give only first author's name and add et al."
+        },
+        {
+          "id": "who-ed-journal-names-in-full",
+          "title": "Write journal names out in full",
+          "description": "No abbreviated journal titles. The manual's reason is worth keeping with the rule, because it decides the borderline cases: it is for readers whose first language is not English, who cannot expand an unfamiliar abbreviation. So 'Bulletin of the World Health Organization', never 'Bull World Health Organ'.",
+          "category": "citation",
+          "severity": "major",
+          "patterns": 1,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-033",
+          "pages": "33",
+          "quote": "2. Write out journal names in full. This is particularly helpful to readers whose mother tongue is not English."
+        },
+        {
+          "id": "who-ed-non-discriminatory-language",
+          "title": "Rewrite, do not decorate: the non-discriminatory pairs",
+          "description": "The manual's own table, which is prescriptive about the TECHNIQUE and not only the vocabulary. Its four general rules are: delete redundant possessive pronouns; rephrase; use the first person plural; and use neutral or equivalent job titles. Its worked substitutions include foreman/workman/office girl/policeman becoming supervisor/worker/secretary or receptionist or office assistant/police officer; 'Man, mankind' and 'the average man' rephrased; 'show the mother how to cook' becoming 'show members of the family', on the stated ground that women are not assumed to do the household chores; 'ask mothers to bring their children' becoming 'ask parents', because men have responsibility for children too; and 'Mrs John Smith' becoming 'Jane Smith'.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 7,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-070",
+          "pages": "70-72",
+          "quote": "Common discriminatory phrases / Useful solutions / Useful general rules … Delete redundant possessive pronouns … Use the first person plural … Foreman, workman, office girl, policeman → Supervisor, worker, secretary, receptionist, office assistant, police officer → Use neutral or equivalent job titles … Show the mother how to cook nutritious meals → Show members of the family how to cook nutritious meals → Do not assume that women always do the household chores … Ask mothers to bring their children to the clinic each month → Ask parents to bring their children to the clinic each month → Remember that men have responsibility for children too"
+        },
+        {
+          "id": "who-ed-rewriting-stays-concise",
+          "title": "The rewrite is not more cumbersome — that is the manual's own claim",
+          "description": "The manual anticipates the objection that non-discriminatory phrasing is clumsy and answers it with worked pairs of equal length, moving to the plural rather than to 'he or she': 'He may see himself as the pivot of all that happens … may comment on the patient or address him' becomes 'Patients may see themselves as the pivot of all that happens … may comment on or address patients'. So a reviewer should reject 'he or she' and 's/he' patches and ask for the plural or a rephrase. It also asks that research involving both sexes report both, and that gross figures in statistical reports be broken down by sex unless no significant difference has already been established.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 1,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-069",
+          "pages": "69",
+          "quote": "With care, the results of rewriting text to eliminate discriminatory language will be no less concise than the original — but will be unambiguous and will avoid causing offence. … In reporting research of any kind that involves both men and women and/or children of both sexes, both males and females should be mentioned in the results. In statistical reports, gross figures should be broken down by sex unless it has previously been established that there is no significant difference between the sexes."
+        },
+        {
+          "id": "who-ed-country-names-are-volatile",
+          "title": "Country names are checked, not remembered",
+          "description": "The manual is explicit that country names and their spellings change 'at an alarming rate' and names the office that holds the current list, with full, short and adjectival forms. The rule for an author or an agent is therefore procedural: do not spell a Member State's name from memory or from an older document in the same corpus. This is judgement-only by construction — no pattern can know which name was current when a passage was written.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-009",
+          "pages": "9",
+          "quote": "Webster's new geographical dictionary … can be used as a guide to the spelling of common geographical entities. However, country names and their spelling, in particular, can change at an alarming rate. The Computer-Assisted Translation and Terminology subunit (CTT), which coordinates with the Office of the Legal Counsel (LEG), can provide up-to-date information on the names of United Nations and WHO Member States, including their full, short and adjectival/attributive forms."
+        }
+      ]
+    },
+    {
+      "id": "who-guideline-development",
+      "title": "WHO guideline development",
+      "description": "How a WHO recommendation is worded and what must travel with it: strength, certainty, justification, remarks and a link to the evidence. Derived from the WHO handbook for guideline development, 2nd edition. This voice governs the language of normative statements, not the process that produces them — the process is the handbook's subject and belongs in a workflow, not a style rule.",
+      "instance": "who-style-guide",
+      "path": "who-style-guide/skills/voices/who-guideline-development",
+      "provenance": "assertion",
+      "overlaySeverity": "critical",
+      "criterion": "voice-overlay-who-guideline-development",
+      "sources": [
+        {
+          "title": "WHO handbook for guideline development, 2nd ed.",
+          "year": 2014
+        }
+      ],
+      "hasInstructions": true,
+      "rules": [
+        {
+          "id": "who-gdl-strength-verbs",
+          "title": "\"should\" is strong; \"suggest\" or \"consider\" is conditional",
+          "description": "GRADE's wording convention, adopted by the handbook: a strong recommendation uses \"should\" or \"strongly recommend\"; a conditional one uses \"suggest\" or \"consider\". The two vocabularies must not be mixed, because the verb is how a reader learns the strength — a conditional recommendation phrased with \"should\" reads as strong and will be implemented as one.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "GRADE recommends using terms or phrases such as \"should\" or \"strongly recommend\" for strong recommendations, and \"suggest\" or \"consider\" for conditional ones."
+        },
+        {
+          "id": "who-gdl-no-not-recommended",
+          "title": "Never \"not recommended\" — say \"we recommend against X\"",
+          "description": "The handbook singles this phrase out as ambiguous, and names both readings: it can mean that no recommendation either way was made, or that the intervention should not be implemented. Where the second is meant, the required wording is \"we recommend against intervention X…\". This is the one rule in the voice whose severity is about reader safety rather than register: the two readings lead to opposite clinical actions.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 1,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "The use of confusing or ambiguous phrases should be avoided. For example, the phrase \"not recommended\" could be interpreted to mean either that no recommendation for or against the intervention has been made, or that the intervention should not be implemented. In the latter instance, \"we recommend against intervention X…\" is the preferred wording."
+        },
+        {
+          "id": "who-gdl-active-voice",
+          "title": "Recommendations are written in the active voice, and worded consistently",
+          "description": "The handbook asks for the active voice and for consistency across every recommendation in one guideline. Consistency is the harder half and the one a per-block check cannot see: it is a property of the set, so a reviewer must read the recommendations together rather than one at a time.",
+          "category": "register",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "The language of each recommendation is critically important. Wherever possible, it should be consistent across all recommendations in a guideline, which should be written in the active voice."
+        },
+        {
+          "id": "who-gdl-no-outcomes-in-the-statement",
+          "title": "Keep outcomes out of the recommendation itself",
+          "description": "Naming an outcome in the recommendation implies that outcome was the only one considered. The handbook asks that outcomes generally stay out of the statement — they belong in the evidence summary and the remarks. A recommendation that reads \"…to reduce mortality\" is the shape to question.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "Outcomes should generally not be mentioned in the recommendation to avoid the impression that only single outcomes are relevant or were considered."
+        },
+        {
+          "id": "who-gdl-pico-and-actionable",
+          "title": "Clear, actionable, and in PICO shape",
+          "description": "A recommendation reflects the PICO format — population, intervention, comparator, outcome — and is actionable: a reader must be able to tell who it applies to and what to do. Combined with the rule above, the resolution is that P, I and C appear in the statement while O informs it without being named.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "Recommendations need to be clear and actionable, reflect the PICO format and contain an indication of their strength and of the quality of the evidence on which they are based."
+        },
+        {
+          "id": "who-gdl-certainty-four-levels",
+          "title": "State the certainty as high, moderate, low or very low",
+          "description": "Four levels, named exactly. A recommendation with no stated certainty is incomplete, and so is one that grades the evidence on some other scale — \"strong evidence\" is not a GRADE level and conflates certainty with strength, which the handbook keeps apart throughout.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131",
+          "quote": "The quality of the underlying body of evidence (high, moderate, low or very low) should be specified."
+        },
+        {
+          "id": "who-gdl-justification-and-remarks",
+          "title": "Every recommendation carries its justification, its remarks and a link to the evidence",
+          "description": "Four things travel with the statement: why it is strong or conditional, why it is for or against, remarks giving the conditions and context in which it applies and what to bear in mind when implementing it, and a link to the evidence — a systematic review, the GRADE evidence profiles and the evidence-to-decision tables. A block carrying the recommendation and none of these is not yet a recommendation; in a folio this is what `uses[]` and the evidence sidecar are for.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
+          "pages": "131-132",
+          "quote": "A recommendation should include a justification as to why it is strong or conditional and why it is for or against a given intervention. It should also contain a set of remarks explaining the conditions and context in which the recommendation applies and the points to bear in mind regarding implementation. … Each recommendation should be linked to a summary of the evidence (e.g. a published systematic review or the systematic review in an online annex), the GRADE evidence profiles and the evidence-to-decision tables."
+        },
+        {
+          "id": "who-gdl-conditional-states-its-conditions",
+          "title": "A conditional recommendation names the conditions",
+          "description": "The handbook's account of why a recommendation is conditional — the GDG being less certain about the balance of benefits against harms — carries a drafting consequence: a conditional recommendation generally includes a description of the conditions under which the end-user should or should not implement it. So \"we suggest X\" with no conditions attached has the form of a conditional recommendation and not the content.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "9789241548960-eng#sec-177-1042-conditional-or-weak-recommendations",
+          "pages": "129",
+          "quote": "Recommendations that are conditional or weak are made when a GDG is less certain about the balance between the benefits and harms or disadvantages of implementing a recommendation. Conditional recommendations generally include a description of the conditions under which the end-user should or should not implement the recommendation."
+        }
+      ]
+    },
+    {
+      "id": "who-publication-design",
+      "title": "WHO publication design (Western Pacific Region)",
+      "description": "The visual conventions around the prose rather than the prose itself: logo use, palette, typography, pagination and figure accessibility, as set out in the WHO Western Pacific Region publication and information products style guide. This is the one voice whose rules mostly do not touch a block's text, which is why it is a separate voice rather than more rules on who-editorial — a folio can want WHO's editorial register without WPRO's brand.",
+      "instance": "who-style-guide",
+      "path": "who-style-guide/skills/voices/who-publication-design",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-who-publication-design",
+      "sources": [
+        {
+          "title": "Publication and Information Products Style Guide",
+          "year": 2020
+        }
+      ],
+      "hasInstructions": true,
+      "rules": [
+        {
+          "id": "who-des-figure-colour-accessibility",
+          "title": "Never red with green, never blue with yellow",
+          "description": "The guide's one hard accessibility rule for figures, and the one that matters most for a generated chart: do not combine red and green, and do not combine blue and yellow. Both pairs are the classic confusion axes. It points onward to \"Accessible Publishing at WHO\" for the rest. Note this agrees with this repo's own `dataviz` skill and `docs/accessibility.md`, so a folio activating this voice is not taking on a conflicting rule.",
+          "category": "accessibility",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-020",
+          "pages": "18",
+          "quote": "• Recommended font size 10pts • Avoid combining red and green. Avoid combining blue and yellow. For further information please check \"Accessible Publishing at WHO\""
+        },
+        {
+          "id": "who-des-figure-font-size",
+          "title": "10pt in graphs, figures and tables",
+          "description": "The recommended font size inside a figure or a table is 10pt. Stated on both the figure page and the table page, so it is the guide's setting for data presentation generally rather than a one-off.",
+          "category": "formatting",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-020",
+          "pages": "18, 19",
+          "quote": "Graphs and figures sample • Recommended font size 10pts … Table sample • Recommended font size 10pts"
+        },
+        {
+          "id": "who-des-pagination-roman-then-arabic",
+          "title": "Roman numerals for the front matter, Arabic for the body",
+          "description": "Preliminary pages take lower-case Roman numerals and the body takes Arabic. The guide also fixes the order of the front matter: title page; copyright, disclaimer and cataloguing behind the title page; table of contents listing chapters, figures and tables; foreword or preface; acknowledgements; list of contributors; list of abbreviations; executive summary. Then the body: chapters, references or bibliography, annexes.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-023",
+          "pages": "21",
+          "quote": "PAGINATION Preliminary pages have lower-case Roman page numbers • Title page • Copyright + disclaimer + cataloging (behind title page) • Table of contents (list of chapters, figures and tables) • Foreword or Preface • Acknowledgments • List of contributors • List of abbreviations • Executive summary Main pages have Arabic page numbers • Chapters • References or bibliography • Annexes"
+        },
+        {
+          "id": "who-des-logo-integrity",
+          "title": "The logo is placed, never redrawn",
+          "description": "Do not alter, rotate or modify the logo, never recreate it, and do not obstruct it. Three versions exist — blue, black, and white on a dark background — and the logo may only appear on materials WPRO has endorsed. That last clause is a permission, not a style preference: a folio that is not a WPRO product must not carry it at all.",
+          "category": "visual-identity",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-006",
+          "pages": "4",
+          "quote": "The logo for the World Health Organization Regional Office for the Western Pacific (WPRO) should only be used on materials endorsed by WPRO. It should be presented as per guidelines here. This is essential to maintain a consistent presentation of our identity. Do not alter, rotate or modify the logo. It should never be recreated. Do not obstruct the logo. Three versions: The three versions of the WPRO logo are Blue, Black and White on a dark background"
+        },
+        {
+          "id": "who-des-logo-exclusion-zone",
+          "title": "1 cm of clear space, 3 cm minimum size",
+          "description": "Leave an exclusion zone of at least 1 cm on every side of the logo, equal on all sides, and never reproduce it below 3 cm — the guide's stated floor for legibility in print and on screen. Where it sits beside another logo the clear space is no less than a quarter of the logo's width.",
+          "category": "visual-identity",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-007",
+          "pages": "5-6",
+          "quote": "Leave \"exclusion zones\" around the logos (at least 1cm width distance) around the logos to ensure they maintain visual impact. Also the minimum logo size is 3cm (the smallest size at which the logo is still legible in print and on screen) For other sizes, no less than 1/4 width of logo. … Clear space should be equal on all sides."
+        },
+        {
+          "id": "who-des-brand-blue",
+          "title": "The regional blue is C95 M25 Y0 K0 / R0 G147 B213",
+          "description": "The primary logo blue, given in both CMYK and RGB. A folio reproducing the brand takes the values from the guide rather than sampling them from an image — a sampled colour is a colour that drifted.",
+          "category": "visual-identity",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-006",
+          "pages": "4",
+          "quote": "C: 95 M: 25 Y: 0 K:0 / R: 0 G: 147 B: 213 / C: 0 M: 0 Y: 0 K: 100"
+        },
+        {
+          "id": "who-des-typeface-family",
+          "title": "One of four typefaces, for brand recognition rather than taste",
+          "description": "News Gothic MT, DIN OT, PT Sans or Calibri, each with its stated weights; Times New Roman appears with a sample as well. The guide's reason is family resemblance across WHO products, which is why it is a rule rather than a suggestion, and why substituting a similar-looking font defeats it. Body samples are set at 10pt with leading of 12–13pt.",
+          "category": "formatting",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-014",
+          "pages": "12-13",
+          "quote": "Consistent fonts across our communications help brand recognition. This helps people recognize WHO publications and communications as part of the same family and gives our products a professional look and feel. News Gothic MT (bold, regular, italic) • DIN OT (bold, medium, regular, italic, condense, condense medium, light, light italic) PT Sans (bold, regular, italic, narrow, narrow regular) • Calibri (bold, regular, italic, light italic, light)"
+        },
+        {
+          "id": "who-des-photo-provenance",
+          "title": "Prefer WHO images, and credit them",
+          "description": "Photographs should come from the Regional Office or the WHO photo library where possible, and carry credits. A folio's figure with no credit line is the finding here — the same provenance discipline the rest of this platform applies to a measurement or a quotation.",
+          "category": "visual-identity",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "wpr-rdo-2020-003-eng#page-026",
+          "pages": "24",
+          "quote": "Photos and credits It is best to use WHO images from the Regional Office or WHO photo library"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "voices": 5,
+    "rules": 46,
+    "citingLibrary": 43,
+    "citingKgNode": 3,
+    "mechanical": 9
+  }
+}
