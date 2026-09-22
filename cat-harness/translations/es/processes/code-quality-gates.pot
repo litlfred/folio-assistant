@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.443Z\n"
+"POT-Creation-Date: 2026-09-22T09:17:22.081Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,17 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/code-quality-gates.bpmn:42
+#: processes/code-quality-gates.bpmn:43
 #. Diagram label
-msgid "All five,&#10;in parallel"
+msgid "All six,&#10;in parallel"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:98
+#: processes/code-quality-gates.bpmn:110
 #. Diagram label
 msgid "Any HARD&#10;gate red?"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:106
+#: processes/code-quality-gates.bpmn:93
+#. Diagram element documentation
+msgid "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule."
+msgstr ""
+
+#: processes/code-quality-gates.bpmn:118
 #. Diagram label
 msgid "Blocked"
 msgstr ""
@@ -34,49 +39,54 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:74
+#: processes/code-quality-gates.bpmn:92
+#. Diagram label
+msgid "Dependency advisories&#10;(WARN-ONLY)"
+msgstr ""
+
+#: processes/code-quality-gates.bpmn:76
 #. Diagram label
 msgid "End-to-end +&#10;accessibility (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:13
-#. Diagram element documentation
-msgid "FIVE INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`. The file is 686 lines and reads as a long sequence; it is not one. No job declares `needs:`, so all five start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking five `needs:` keys that are not there.&#10;&#10;THE ASYMMETRY IS THE OTHER HALF. Four jobs are HARD and one, `rust-wildcard`, carries `continue-on-error: true` &#8212; it reports and cannot block. Drawing them as five equal boxes would be a lie a reader would act on, so the warn-only job is labelled as such and the gateway after the join asks specifically about the HARD ones.&#10;&#10;`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: `python-imports` carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag survives on exactly one job, and anyone adding it to a second should read that history first.&#10;&#10;`TypeScript` IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES &#8212; workflow policy, AGENTS.md cross-references and claims, declared assets, workflow skill refs and BPMN coverage, the knowledge-graph audit, generated-docs currency, agent memory, and the ratchet that fails a check script no workflow runs. They are sequential only because one job runs them; each is independent, and `bun run gates` is the local runner derived from this job so a contributor can run the same set before pushing.&#10;&#10;Mechanical throughout. Nothing here waits on a person, which is what makes `build-pipeline` the right lane rather than a convenient one."
-msgstr ""
-
 #: processes/code-quality-gates.bpmn:25
 #. Diagram element documentation
-msgid "Joins all five jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — Rust's warn-only result reaches the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites."
+msgid "Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:50
+#: processes/code-quality-gates.bpmn:52
 #. Diagram label
 msgid "Lean: no bare&#10;`import Mathlib` (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:103
+#: processes/code-quality-gates.bpmn:115
 #. Diagram label
 msgid "Mergeable"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:121
+#: processes/code-quality-gates.bpmn:133
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:39
+#: processes/code-quality-gates.bpmn:40
 #. Diagram label
 msgid "Pull request, push to main,&#10;or dispatch"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:58
+#: processes/code-quality-gates.bpmn:60
 #. Diagram label
 msgid "Python: unused and&#10;wildcard imports (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:82
+#: processes/code-quality-gates.bpmn:84
 #. Diagram label
 msgid "Rust wildcard imports&#10;(WARN-ONLY)"
+msgstr ""
+
+#: processes/code-quality-gates.bpmn:13
+#. Diagram element documentation
+msgid "SIX INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`. The file reads as a long sequence; it is not one. No job declares `needs:`, so all six start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking five `needs:` keys that are not there.&#10;&#10;THE ASYMMETRY IS THE OTHER HALF. Four jobs are HARD and TWO report without blocking &#8212; `rust-wildcard` and `dependency-advisories`. Drawing them as six equal boxes would be a lie a reader would act on, so both warn-only jobs are labelled as such and the gateway after the join asks specifically about the HARD ones.&#10;&#10;THE TWO WARN-ONLY JOBS ARE WARN-ONLY BY DIFFERENT MECHANISMS, AND THE DIFFERENCE IS THE POINT. `rust-wildcard` carries `continue-on-error: true` &#8212; the RUNNER discards its result. `dependency-advisories` carries no such flag: its script exits 0 in every state and keeps the three states apart in its OUTPUT instead. That is deliberate, because a warn-only step whose exit code says nothing has only its output left to distinguish `found nothing` from `could not find out`, and `continue-on-error` would have thrown away the one signal that still worked.&#10;&#10;`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: `python-imports` carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag STILL survives on exactly one job &#8212; adding a second warn-only job did not add a second `continue-on-error`, which is the history being honoured rather than an oversight. Anyone reaching for the flag should read that paragraph first.&#10;&#10;`TypeScript` IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES &#8212; workflow policy, AGENTS.md cross-references and claims, declared assets, workflow skill refs and BPMN coverage, the knowledge-graph audit, generated-docs currency, agent memory, and the ratchet that fails a check script no workflow runs. They are sequential only because one job runs them; each is independent, and `bun run gates` is the local runner derived from this job so a contributor can run the same set before pushing.&#10;&#10;Mechanical throughout. Nothing here waits on a person, which is what makes `build-pipeline` the right lane rather than a convenient one."
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:10
@@ -84,12 +94,12 @@ msgstr ""
 msgid "The gates a change must pass before it can merge"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:66
+#: processes/code-quality-gates.bpmn:68
 #. Diagram label
 msgid "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:122
+#: processes/code-quality-gates.bpmn:134
 #. Diagram label
 msgid "yes"
 msgstr ""
