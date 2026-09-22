@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T20:09:00.017Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/16839c3563fbc8dc41bb263d652c3239fb4a689b",
-  "sourceCommitSha": "16839c3563fbc8dc41bb263d652c3239fb4a689b",
-  "sourceCommitAt": "2026-09-22T20:06:25Z",
+  "generatedAt": "2026-09-22T20:30:43.995Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f7025a351ad03e8e9fe4e1295c9662023e282feb",
+  "sourceCommitSha": "f7025a351ad03e8e9fe4e1295c9662023e282feb",
+  "sourceCommitAt": "2026-09-22T20:28:15Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 236,
@@ -280,7 +280,7 @@
     "Role": 140,
     "ProcessNode": 738,
     "Tool": 69,
-    "Schema": 93,
+    "Schema": 94,
     "GraphKind": 28,
     "Directory": 36,
     "Asset": 3
@@ -34351,6 +34351,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/methodology",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "methodology",
+      "title": "A methodology node's front matter — `folio-methodology/v1`.",
+      "module": "schemas/methodology.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/methodology"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/narrative",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "narrative",
@@ -36587,8 +36596,8 @@
   ],
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "93052eae6dd61b3fc2ce1c2022ab89784c435c9d",
+    "sha": "b607e1385c86afc2350d79ed2173373b7337dfe7",
     "pr": "966/merge",
-    "run": "35778126452"
+    "run": "35780526072"
   }
 }
