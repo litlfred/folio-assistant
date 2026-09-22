@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1xrg
-title: 'STATE DASHBOARDS: 4 of 7 render a shell — a declared page that displays nothing is dh4f with a URL'
-status: in-progress
+title: state:visualizer:check cannot fail on a declaration that points at its own page (the '4 of 7 render a shell' premise was a FALSE FINDING — retracted)
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T06:48:40Z
-updated_at: 2026-09-22T08:24:50Z
+updated_at: 2026-09-22T10:33:45Z
 parent: folio-assistant-zzmr
 ---
 
@@ -156,3 +156,28 @@ Retracted the central claim with evidence; fixed the one real defect it
 surfaced (a self-referential visualiser declaration I had introduced); and
 narrowed the remaining open item from "the check is green over empty pages" to
 "the check cannot catch a declaration that points at its own page".
+
+
+## Claim released, title corrected — 2026-09-22
+
+**Status back to `todo`, unclaimed.** It sat `in-progress` under my claim while
+I was not working it, which is an unhonoured claim — it tells a sibling session
+this is taken when it is not, and `bun run health` counts exactly that.
+
+**The title asserted a measurement I disproved.** "4 of 7 render a shell" was
+a FALSE FINDING, already retracted in this bean's body, and leaving it in the
+title meant the one line a future agent reads first was the wrong one — the
+"a stale gap notice is worse than none" failure `AGENTS.md` names. Corrected
+in place rather than deleted, per never-delete-a-bean.
+
+**What actually survives**, and it is narrow but real: `state:visualizer:check`
+compares committed bytes against what the generator would write, so it cannot
+fail on a declaration whose `coverage.visualiser` points at *its own* page.
+I introduced exactly that defect during #596 slice 2 — the `glossary` kind's
+visualiser pointed at the state-visualiser's own page for that graph, so the
+page said "rendered elsewhere" and linked itself — and the check was green
+across it. I found it by opening the page, not by running the gate.
+
+The three other Done-when items rest on the retracted premise and are left
+unticked rather than rewritten: whoever picks this up should re-derive what,
+if anything, they should say now.

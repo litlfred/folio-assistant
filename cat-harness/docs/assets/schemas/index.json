@@ -1,8 +1,24 @@
 {
   "$schema": "folio-schema-graph/v1",
   "tile": {
+    "bootstrap-tools-schemas": {
+      "count": 2,
+      "unit": "modules"
+    },
     "schemas": {
-      "count": 137,
+      "count": 122,
+      "unit": "modules"
+    },
+    "detangle-schemas": {
+      "count": 2,
+      "unit": "modules"
+    },
+    "folio-assist-core-schemas": {
+      "count": 11,
+      "unit": "modules"
+    },
+    "large-datasets-schemas": {
+      "count": 2,
       "unit": "modules"
     }
   },
@@ -342,6 +358,14 @@
       "name": "fsh-guts",
       "graphNode": "schema",
       "summary": "A node of the trashcan — what `fsh-guts/` holds, and what may leave it.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "instance": "cat-harness",
+      "name": "graph-kind-registry",
+      "graphNode": "schema",
+      "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
       "isTest": false
     },
     {
@@ -829,10 +853,18 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/tile-count.test.ts",
+      "instance": "cat-harness",
+      "name": "tile-count.test",
+      "graphNode": "undeclared",
+      "summary": "A tile's declared count, and the third state that is the whole point.",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/tile-count.ts",
       "instance": "cat-harness",
       "name": "tile-count",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
       "isTest": false
     },
@@ -5284,7 +5316,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#AssetDelivery",
-        "cat-harness/schemas/cat-harness.ts#GraphLayer"
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
       ],
       "unresolved": [],
       "external": [],
@@ -5684,7 +5716,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -5735,118 +5767,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphKind",
-      "name": "GraphKind",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "type-alias",
-      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphKindDef",
-      "name": "GraphKindDef",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "interface",
-      "doc": "What a declared directory's graph kind means.",
-      "fields": [
-        {
-          "name": "type",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The `@type` IRI this kind projects to."
-        },
-        {
-          "name": "renderable",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Is a graph of this kind expected to render as a website?"
-        },
-        {
-          "name": "recordsWork",
-          "type": "boolean",
-          "optional": true,
-          "array": false,
-          "doc": "Does a graph of this kind record WORK — something somebody is partway"
-        },
-        {
-          "name": "holds",
-          "type": "GraphLayer",
-          "optional": false,
-          "array": false,
-          "doc": "Does a graph of this kind say what the instance **IS**, or where something"
-        },
-        {
-          "name": "summary",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "skill",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The skill that says how to READ a graph of this kind, by name."
-        },
-        {
-          "name": "schema",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the shape of a node in this graph is defined — a repo-relative"
-        },
-        {
-          "name": "validator",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
-        },
-        {
-          "name": "declarationFile",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphLayer"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/cat-harness.ts#GraphLayer",
-      "name": "GraphLayer",
-      "module": "cat-harness/schemas/cat-harness.ts",
-      "kind": "type-alias",
-      "doc": "What a running process does with a graph of this kind.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "content",
-        "context",
-        "state",
-        "derived"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
       "name": "GraphNodeDirectory",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -5887,7 +5807,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#DeclarationScope",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
@@ -6127,7 +6047,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphKind",
+        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -6195,6 +6115,13 @@
           "optional": false,
           "array": false,
           "doc": "What it carries INSTEAD — the criterion it cannot fail quietly."
+        },
+        {
+          "name": "reachableAt",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the instance IS reachable, since it renders nothing of its own."
         }
       ],
       "extendsNames": [],
@@ -6228,6 +6155,12 @@
           "name": "owes",
           "type": "z.string().min(1)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "reachableAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -12611,6 +12544,118 @@
         "FSH_GUTS_SCHEMA_ID",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+      "name": "GraphKind",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "name": "GraphKindDef",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "interface",
+      "doc": "What a declared directory's graph kind means.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The `@type` IRI this kind projects to."
+        },
+        {
+          "name": "renderable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Is a graph of this kind expected to render as a website?"
+        },
+        {
+          "name": "recordsWork",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Does a graph of this kind record WORK — something somebody is partway"
+        },
+        {
+          "name": "holds",
+          "type": "GraphLayer",
+          "optional": false,
+          "array": false,
+          "doc": "Does a graph of this kind say what the instance **IS**, or where something"
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skill",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The skill that says how to READ a graph of this kind, by name."
+        },
+        {
+          "name": "schema",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the shape of a node in this graph is defined — a repo-relative"
+        },
+        {
+          "name": "validator",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
+        },
+        {
+          "name": "declarationFile",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "name": "GraphLayer",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "What a running process does with a graph of this kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "content",
+        "context",
+        "state",
+        "derived"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -22517,6 +22562,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "name": "TileCountsSchema",
+      "module": "cat-harness/schemas/tile-count.ts",
+      "kind": "zod-record",
+      "doc": "The field, for a projection schema that is `.strict()` — which every one of",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo-graph.ts#TodoGraph",
       "name": "TodoGraph",
       "module": "cat-harness/schemas/todo-graph.ts",
@@ -22758,6 +22817,13 @@
           "array": false
         },
         {
+          "name": "tile",
+          "type": "TileCountsSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The tile's declared headline number, keyed by directory — issue #856."
+        },
+        {
           "name": "repoWeb",
           "type": "z.string().min(1)",
           "optional": false,
@@ -22786,6 +22852,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/tile-count.ts#TileCountsSchema",
         "cat-harness/schemas/todo-index.ts#TodoIndexItemSchema"
       ],
       "unresolved": [],
@@ -27882,6 +27949,40 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/voices.ts#VoiceProvenanceFlag",
+      "name": "VoiceProvenanceFlag",
+      "module": "cat-harness/schemas/voices.ts",
+      "kind": "interface",
+      "doc": "Where a voice's DECLARED provenance sits oddly against what its rules cite.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "\"declared-outside-cites-inside\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ruleIds",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Rule ids that cite a node of this instance's own graph."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/voices.ts#VoiceRef",
       "name": "VoiceRef",
       "module": "cat-harness/schemas/voices.ts",
@@ -31896,7 +31997,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphLayer",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
       "via": "layer",
       "kind": "field",
       "optional": false,
@@ -32088,7 +32189,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -32103,16 +32204,8 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/cat-harness.ts#GraphKindDef",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphLayer",
-      "via": "holds",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -32152,7 +32245,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#RemoteGraph",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphKind",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
       "kind": "field",
       "optional": false,
@@ -33260,6 +33353,14 @@
       "via": "visibility",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "via": "holds",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -34644,6 +34745,14 @@
       "via": "target",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/todo-index.ts#TodoIndexSchema",
+      "to": "cat-harness/schemas/tile-count.ts#TileCountsSchema",
+      "via": "tile",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

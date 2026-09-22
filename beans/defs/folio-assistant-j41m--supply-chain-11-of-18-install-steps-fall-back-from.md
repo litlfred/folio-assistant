@@ -205,22 +205,50 @@ token** on every push. `check:workflow-injection` guards what the workflows
 themselves do with untrusted input; nothing guarded the actions they call. That
 was a supply chain with no eyes on it whatsoever.
 
+## Summary of Changes
+
+Merged as `011ea91` ([#893](https://github.com/litlfred/folio-assistant/pull/893)).
+
+**The lockfile half** (landed earlier): `check:lockfile-pinning` fails any pin
+that DEGRADES — `--frozen-lockfile || bun install` — always, never baselined,
+because the failure it swallows is the one it exists to raise. An install with
+no pin at all is baselined and a NEW one fails. Falsified against the real
+workflows: restoring one fallback turns it red and names file and line.
+
+**The audit half** (the owner's ruling, both options): `check:dependency-advisories`
+reports on every PR and blocks nothing; `.github/dependabot.yml` turns the same
+advisories into reviewable PRs. Neither gates a merge. The warn-only gate keeps
+three states apart in its OUTPUT — `clean`, `advisories`, `undetermined` —
+because a step that exits 0 in every state has no other channel, and this
+workflow already has a recorded case of a step reporting "a clean baseline it
+had never computed". Falsified: making `undetermined` render a tick turns the
+suite red on exactly that assertion.
+
+Confirmed externally rather than asserted: GitHub's own Dependabot API validated
+the config (its check run passed), and the advisory job ran green on a real
+runner. Left explicitly open, because this checkout cannot settle it: whether
+Dependabot regenerates a **bun** lockfile.
+
+**What this bean got wrong twice, both recorded above rather than quietly
+fixed.** Its title's "11 of 18" took the denominator from the numerator's shape
+and hid three install steps that never pinned at all. Its "1 of 28 at an exact
+version" was the ROOT manifest alone; across all five manifests carrying
+dependencies it is 40. A ratio picks its own denominator — `w4tq`'s lesson,
+twice in one bean.
+
 ---
 
-## RE-DERIVED 2026-09-22 — closed on evidence
+### Independently re-derived 2026-09-22, and it agreed
 
-The one of the five with real consequence if its boxes were lying, so it was
-checked hardest — registration in **both** places, which is the failure mode
-`tyyc` was closed for.
+A separate session reached this bean through `health`'s
+`bean-self-declared-done` finding and re-derived it from scratch, not knowing
+#893 had landed. Same verdict, by a different route: `check:lockfile-pinning`
+registered in `package.json:96` AND `code-quality-gates.yml:813`;
+`check:dependency-advisories` in `package.json:80` and at `:1155`/`:1184`;
+`.github/dependabot.yml` present. Registration was checked in **both** places
+deliberately — a gate in `package.json` alone is the failure `tyyc` was closed
+for.
 
-| claim | measurement |
-|---|---|
-| `check:lockfile-pinning` exists and is gated | `package.json:96`; `code-quality-gates.yml:813` |
-| `check:dependency-advisories` exists and is gated | `package.json:80`; `code-quality-gates.yml:1155` (job) and `:1184` (step) |
-| Dependabot turns advisories into reviewable PRs | `.github/dependabot.yml`, 4521 bytes |
-| neither gates a merge | the advisories job is its own job, separate from the gate set |
-
-The bean's own `## CORRECTION` — *"18 was the count of LINES carrying
-`--frozen-lockfile`, not of install steps"* — is the reason this one reads as
-trustworthy: it caught itself counting a SHAPE rather than a CONTRACT before
-anybody else did.
+Worth one line because the two passes were independent: this bean's own
+`## CORRECTION` is what made it read as trustworthy on the second pass, which
+is the argument for recording a correction rather than quietly fixing it.
