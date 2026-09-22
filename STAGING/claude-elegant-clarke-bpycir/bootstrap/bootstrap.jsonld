@@ -270,10 +270,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-21T23:50:37.085Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/151b8fed8a5056185d17058b9f76917633b4f3a4",
-  "sourceCommitSha": "151b8fed8a5056185d17058b9f76917633b4f3a4",
-  "sourceCommitAt": "2026-09-21T23:49:00Z",
+  "generatedAt": "2026-09-22T07:12:58.538Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/38ffcb34d28cb213d9cddc253ddae3486e9a396d",
+  "sourceCommitSha": "38ffcb34d28cb213d9cddc253ddae3486e9a396d",
+  "sourceCommitAt": "2026-09-22T07:11:04Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 7,
@@ -281,8 +281,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 3,
-    "Directory": 4,
+    "GraphKind": 4,
+    "Directory": 5,
     "Asset": 2
   },
   "@graph": [
@@ -388,13 +388,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Initialize a harness",
       "enforcement": "strict",
-      "sourcePath": "workflows/initialize-harness.bpmn",
+      "sourcePath": "processes/initialize-harness.bpmn",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
       ],
       "nodeCount": 15,
       "flowCount": 16,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
@@ -403,7 +403,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
     },
     {
@@ -412,7 +412,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
     },
     {
@@ -421,7 +421,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
     },
     {
@@ -430,7 +430,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
     },
     {
@@ -440,7 +440,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5"
     },
     {
@@ -450,7 +450,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
     },
     {
@@ -459,7 +459,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
     },
     {
@@ -469,7 +469,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14"
     },
     {
@@ -479,7 +479,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
     },
     {
@@ -488,7 +488,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
     },
     {
@@ -498,7 +498,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
     },
     {
@@ -508,7 +508,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
     },
     {
@@ -517,7 +517,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
     },
     {
@@ -526,7 +526,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
     },
     {
@@ -535,7 +535,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
     },
     {
@@ -544,7 +544,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
     },
     {
@@ -583,7 +583,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
     },
     {
@@ -605,7 +605,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
     },
     {
@@ -627,7 +627,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
     },
     {
@@ -649,7 +649,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
     },
     {
@@ -670,7 +670,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
     },
     {
@@ -692,7 +692,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
     },
     {
@@ -713,7 +713,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized"
     },
     {
@@ -735,7 +735,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
     },
     {
@@ -757,7 +757,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart"
     },
     {
@@ -778,7 +778,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
     },
     {
@@ -800,7 +800,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
     },
     {
@@ -822,7 +822,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
     },
     {
@@ -846,7 +846,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure"
     },
     {
@@ -864,7 +864,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
     },
     {
@@ -882,7 +882,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
     },
     {
@@ -890,13 +890,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Determine the harness and repositories",
       "enforcement": "strict",
-      "sourcePath": "workflows/discussion.bpmn",
+      "sourcePath": "processes/discussion.bpmn",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
       ],
       "nodeCount": 9,
       "flowCount": 9,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -905,7 +905,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
     },
     {
@@ -914,7 +914,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
     },
     {
@@ -923,7 +923,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
     },
     {
@@ -932,7 +932,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
     },
     {
@@ -942,7 +942,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
     },
     {
@@ -952,7 +952,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
     },
     {
@@ -962,7 +962,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
     },
     {
@@ -971,7 +971,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
     },
     {
@@ -980,7 +980,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
     },
     {
@@ -998,7 +998,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
     },
     {
@@ -1020,7 +1020,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
     },
     {
@@ -1043,7 +1043,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
     },
     {
@@ -1063,7 +1063,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
     },
     {
@@ -1085,7 +1085,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
     },
     {
@@ -1107,7 +1107,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
     },
     {
@@ -1129,7 +1129,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
     },
     {
@@ -1147,7 +1147,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
     },
     {
@@ -1165,7 +1165,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
     },
     {
@@ -1173,13 +1173,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Log a message",
       "enforcement": "strict",
-      "sourcePath": "workflows/log-message.bpmn",
+      "sourcePath": "processes/log-message.bpmn",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
       ],
       "nodeCount": 6,
       "flowCount": 5,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
     },
     {
@@ -1188,7 +1188,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
     },
     {
@@ -1197,7 +1197,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
     },
     {
@@ -1207,7 +1207,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
     },
     {
@@ -1217,7 +1217,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
     },
     {
@@ -1226,7 +1226,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
     },
     {
@@ -1258,7 +1258,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
     },
     {
@@ -1280,7 +1280,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose"
     },
     {
@@ -1301,7 +1301,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete"
     },
     {
@@ -1323,7 +1323,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
     },
     {
@@ -1341,7 +1341,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged"
     },
     {
@@ -1359,7 +1359,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged"
     },
     {
@@ -1371,10 +1371,10 @@
       "summary": "Skill packages — the authored instruction bodies an Actor performs a Task from."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "workflows",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#WorkflowGraph",
+      "name": "processes",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProcessGraph",
       "renderable": false,
       "summary": "Executable BPMN processes and the DMN tables their gateways compute from."
     },
@@ -1385,6 +1385,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ScenarioGraph",
       "renderable": false,
       "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "schemas",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SchemaGraph",
+      "renderable": false,
+      "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#role/initiator",
@@ -1471,28 +1479,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-roles",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/schemas",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-roles",
-      "path": "skills/roles/",
+      "name": "schemas",
+      "path": "schemas/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas"
+      ],
+      "description": "The two JSON Schema documents the discussion process is checked against — `discussion.input.schema.json` (what is known before asking) and `discussion.output.schema.json` (what the exchange determined). MOVED OUT OF `skills/` on 2026-09-21: a schema is not an instruction body, and while they sat among the `.md` a consumer asking this instance for its schemas was told it has none. This directory was deliberately NOT created when the rest of the layout was split, because declaring a directory that does not exist is the `dh4f` defect — the files had to move first. Their published `$id`s are UNCHANGED and still read `/bootstrap/skills/discussion/`: `gen-bootstrap-schemas.ts` calls that half of a contract cited from five languages' catalogues, and ids are stable across a relocation while paths are not. `graphKinds: [\"schemas\"]` alone, matching `bootstrap-tools`'s self-declaration of its own `schemas/`; the `[\"schemas\", \"cat-harness\"]` pairing is how the ROOT declares somebody else's.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "scenarios",
+      "path": "scenarios/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
       ],
-      "description": "CatBootstrap's three Roles — Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/skills/roles/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-roles",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-roles"
+      "description": "CatBootstrap's three Roles — Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/scenarios/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes. RENAMED from `bootstrap-roles` on 2026-09-21: `DEFAULT_DIRECTORIES` carries `scenarios` as the convention, and overrides match on ID, so a qualified id did not override the default — it ADDED a second entry at the same path and this directory resolved TWICE. The same defect was fixed in `cat-harness/cat-harness.json` and missed here. The id had to differ from `cat-harness`, which `skills/` holds; `scenarios` was always free.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-workflows",
-      "path": "workflows/",
+      "name": "processes",
+      "path": "processes/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflows"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
       ],
-      "description": "The bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-workflows"
+      "description": "The bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows. RENAMED from `bootstrap-processes` on 2026-09-21: `DEFAULT_DIRECTORIES` carries `processes` as the convention, and overrides match on ID, so a qualified id did not override the default — it ADDED a second entry at the same path and this directory resolved TWICE. The same defect was fixed in `cat-harness/cat-harness.json` and missed here. The id had to differ from `cat-harness`, which `skills/` holds; `processes` was always free.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/bootstrap/bootstrap.jsonld#directory/bootstrap-render",
@@ -1529,8 +1549,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-clarke-bpycir",
-    "sha": "2cb0198f28db4c5498964436d6c1b29ec791caf7",
+    "sha": "37765454942076faffe0c582f62158921fa01c4b",
     "pr": "731/merge",
-    "run": "35669269262"
+    "run": "35698342923"
   }
 }
