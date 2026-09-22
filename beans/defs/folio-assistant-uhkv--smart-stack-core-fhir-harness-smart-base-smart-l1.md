@@ -83,3 +83,43 @@ that only the three siblings use. If three siblings need one rule, it belongs in
 - [ ] gates green
 
 Issue: https://github.com/litlfred/folio-assistant/issues/963
+
+## Merged 2026-09-22 — and the epic is NOT done
+
+PRs #881 (`b65612e4`) and #964 (`95e63c12`) are on `main`; issue #963 closed on
+the owner's word. Merged `main` re-verified at 123/123 **after** the merge, not
+only on the branches — `main` had moved (#970) between this PR's base and its
+merge, and two independently-green PRs can be red together.
+
+Both merged with a **merge commit rather than a squash**, deliberately: #964
+merges #881's branch, so a squash of #881 would have landed the same files by a
+second route and left #964 conflicting with changes it already contained.
+Checked before merging, not after — `merge-base --is-ancestor` plus a dry run
+reporting 0 conflicts.
+
+### Children, honestly
+
+| bean | state | why |
+|---|---|---|
+| `aqb6` | **completed** | all 26 steps assigned, each written into the skill owning its phase |
+| `4yvj` | **completed** | both docs pages shipped and verified by building |
+| `nsbb` | in-progress | the layering is settled and written, but the base has NOT been shown running for a non-WHO IG, and `smart-trust`/`smart-immunizations` still carry their own declarations |
+| `wm63` | in-progress | same open criterion — the layer exists, nothing non-WHO has run through it |
+| `kn0t` | in-progress | five phases written, **none executed** |
+| `a9tx` | in-progress | requirements written, not approved, no fork |
+| `rjug` | in-progress | one of three ruled; metadata indexes and binary releases untouched |
+| `ylj7` | in-progress | cat-harness only, 15% → 73% |
+
+### The epic's own criteria, re-read rather than assumed
+
+**Three of the five layers do not exist.** `smart-l1`, `smart-dak` and
+`smart-ig` are named in the ruling and in the skill; no instance directory
+declares any of them. `fhir-harness` and `smart-base` are real.
+
+So the criterion *"the five layers exist as declared instances"* is **not met**,
+and neither is *"`smart-trust` and `smart-immunizations` read as instances of
+`smart-ig`"* — they still declare themselves. What IS met is the falsification
+test and the write-up-as-skills criterion.
+
+Saying so here rather than letting a merged PR read as a finished epic: a
+merge is evidence that code landed, never that a criterion was satisfied.
