@@ -3539,14 +3539,14 @@
     {
       "id": "folio-assistant-itka",
       "title": "check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:36Z",
-      "updatedAt": "2026-09-21T21:59:36Z",
+      "updatedAt": "2026-09-22T11:46:10Z",
       "preview": "Found 2026-09-21 by tripping it: a new epic was parented to another epic, and\n`check:bean-parents` printed *\"✓ every open bean is placed under an epic or a\nmilestone, **and no epic hangs from another**\"* over it.\n\n## Finding 1 — the epic-under-epic rule is structurally unreachable\n\nThe rule exists, at `check-bean-parents.ts`:\n\n```ts\n} else if (b.type === \"epic\" && p.type === \"epic\") {\n```\n\nThe set",
       "file": "beans/defs/folio-assistant-itka--checkbean-parents-asserts-two-rules-it-cannot-reac.md"
     },
