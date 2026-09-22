@@ -3718,88 +3718,6 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   --fa-th: var(--fa-th-card);
 }
 
-/* SQUARE IN THE DOCK, CONTENT-SHAPED ONLY ON THE GLASS. Bean `624f`.
- *
- * Owner, 2026-09-21: *"when sitckes are square, and they ahould always be in
- * the docker/panel ... they are only onsquare to fit contents when the pop to
- * the window/glass."*
- *
- * SHAPE IS NOW A FUNCTION OF WHERE THE STICKY IS. That is new: until now it
- * was a function of the declared crop alone. It does not reverse the
- * 2026-09-20 ruling that a sticky is a FIXED shape — it says which fixed
- * shape applies where.
- *
- * ## IT IS THE TODO STICKY, NOT THE LANDING STICKY, and the first draft of
- * ## this rule had it the wrong way round
- *
- * Measured rather than assumed, after writing it against
- * `.fa-landing-sticky--fixed` and finding the numbers did not support it:
- *
- *   landing sticky   declared crop (laptop above 48rem)   aspect-locked   NEVER floats
- *   todo sticky      `card` already                       not locked      floats to the glass
- *
- * `fa-sticky-floating` is added only by the todo board's `float()`, and
- * `fa-landing-sticky` appears nowhere in `docs-ui.js`. So a landing sticky has
- * no glass state at all, and locking it to the card aspect while `<picture>`
- * serves the laptop file above 48rem would letterboxed art with the CARD
- * crop's cloud coordinates — the exact failure the comment above records.
- *
- * The todo sticky is the one the requirement is about, and `buildBackdrop`
- * already picks `art.card || art.mobile || art.laptop`, so the square art is
- * served and only the lock was missing. Nearly free, as the bean suspected.
- *
- * ## The art and the words scroll as ONE SURFACE
- *
- * Owner: *"then you can scroll contents and background will scrll
- * accoringing"* — the words stay in the cloud rather than sliding off a
- * stationary picture.
- *
- * NOT `background-attachment: local`, which was the first instinct and is one
- * property. The art is deliberately a `<picture>`, and `landing.html` says
- * why: *"A background can only name one crop."* Trading that documented
- * decision for a cheap scroll is not a trade worth making.
- *
- * So the CARD is the scroll container and the `<picture>` is inside it,
- * positioned against it. Both translate together with nothing to synchronise
- * — the art cannot fall out of step with the text because nothing is
- * stepping. */
-.fa-sticky--backdrop:not(.fa-sticky-floating) {
-  /* BORDER-BOX, or the square is the wrong box.
-   *
-   * These cards are `content-box`, so `aspect-ratio` squares the CONTENT and
-   * the padding and borders are then added on top — and they are not
-   * symmetric, because the priority stripe is a 5px left border against 1px
-   * elsewhere. Measured: content 288.4x288.4 renders as a 320x313 card.
-   *
-   * Seven pixels is small enough to look like a rounding artefact and is not
-   * one; it is the stripe. The owner's "square" is the card a reader sees,
-   * so the ratio has to govern the border box. */
-  box-sizing: border-box;
-  aspect-ratio: 1 / 1;
-  /* `min-height: 0` IS WHAT MAKES THE RATIO HOLD.
-   *
-   * `aspect-ratio` is a PREFERRED size, not a cap: a block with auto height
-   * grows past it to fit its content, and the automatic minimum size is what
-   * lets it. Measured — with 60 paragraphs of text the card did not scroll at
-   * all; it simply got taller, and the "always square" spec passed only
-   * because the fixture's own sticky is two lines long.
-   *
-   * So the square and the scroll are ONE mechanism rather than two lines that
-   * happen to sit together: without this the ratio is advisory and
-   * `overflow: auto` never has anything to do. */
-  min-height: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-}
-
-/* ON THE GLASS it is shaped to its content, which is the state this rule
- * exists to leave alone. Stated rather than omitted: a reader of the rule
- * above should not have to work out that the absence of a lock is deliberate,
- * and `aspect-ratio: auto` says the shape is the content's. */
-.fa-sticky--backdrop.fa-sticky-floating {
-  aspect-ratio: auto;
-}
-
 /* THE WORDS, IN THE CLOUD.
  *
  * Fractions of the card, matching how `textRegion` is declared — "fractions
@@ -3856,6 +3774,67 @@ a.fa-tile[data-fa-readonly]:focus-visible {
     --fa-tw: var(--fa-tw-mobile);
     --fa-th: var(--fa-th-mobile);
   }
+}
+
+/* ── SHAPE IS A FUNCTION OF WHERE THE STICKY IS ──────────────────────
+ *
+ * Bean `624f`. Owner, 2026-09-21:
+ *
+ *   > when sitckes are square, and they ahould always be in the docker/panel
+ *   > […] they are only onsquare to fit contents when the pop to the
+ *   > window/glass
+ *
+ * Until now shape was a function of the sticky's declared crop and the
+ * viewport, and of nothing else. These two rules add the missing term: a
+ * DOCKED sticky is square whatever its crop says, and a FLOATING one is
+ * shaped to its content.
+ *
+ * ## Square by RULE, art from the card crop — and they are different things
+ *
+ * The obvious implementation is "docked stickies use the `card` aspect",
+ * and it would work today: the card crop is square on 3 of 3 stickies in
+ * `_data/stickies.json`. Three is the whole corpus, and `schemas/theme.ts`
+ * does not REQUIRE a card crop to be square — `ThemeGeometrySchema` takes
+ * whatever aspect a theme declares.
+ *
+ * So the shape is written here as `1` rather than read from
+ * `--fa-aspect-card`. A theme that declares a non-square card still docks
+ * square, with its card art contained inside — which is what "always
+ * square, full stop" means. Taking the aspect from the declaration would
+ * make the rule true only for the three themes somebody measured, which is
+ * `hfkl`.
+ *
+ * The TEXT REGION still comes from the card crop, because that region is a
+ * fraction of the card art and the art is unchanged. Only the box's ratio
+ * is overridden.
+ *
+ * ## `!important`-free, by specificity
+ *
+ * The breakpoint rules below alias `--fa-sticky-aspect` per viewport, and a
+ * docked sticky must ignore all of them. Rather than fight that cascade
+ * with `!important`, this sets `aspect-ratio` directly: the aliases only
+ * feed the custom property, so a direct value wins without touching them.
+ * A later reader changing the breakpoints cannot silently un-square the
+ * dock. */
+.fa-sticky-cell > .fa-landing-sticky--fixed,
+.fa-sticky-panel .fa-landing-sticky--fixed,
+.fa-sticky-board .fa-landing-sticky--fixed {
+  aspect-ratio: 1;
+}
+
+/* ON THE GLASS, shaped to its content — the other half of the same rule.
+ *
+ * `.fa-sticky-floating` is the class `placeFloating` adds when a card is
+ * pinned onto the glass, and it already carries its own geometry from
+ * `wireMove`. Clearing the ratio is what lets that geometry be the content's
+ * rather than the crop's.
+ *
+ * `auto` rather than dropping the declaration: `--fa-sticky-aspect` is still
+ * set by the aliases above, so an absent value here would inherit the crop's
+ * ratio and the card would stay letterboxed on the glass. */
+.fa-sticky-floating.fa-landing-sticky--fixed,
+.fa-sticky-floating .fa-landing-sticky--fixed {
+  aspect-ratio: auto;
 }
 
 /* A markdown body sets its own margins on the first and last child, which

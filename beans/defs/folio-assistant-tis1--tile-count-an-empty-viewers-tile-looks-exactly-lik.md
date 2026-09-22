@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tis1
 title: 'TILE COUNT: an empty viewer''s tile looks exactly like a populated one — badge the count, absent is a third state'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T06:52:31Z
-updated_at: 2026-09-22T06:52:49Z
+updated_at: 2026-09-22T11:45:32Z
 parent: folio-assistant-o3xy
 ---
 
@@ -63,3 +63,61 @@ distinct from a badge reading 0. Opposite facts. The count also reaches the
 Six projections against fourteen tiles, so most tiles carry no badge at
 first. That is the third state working; the PR names which have one rather
 than implying coverage.
+
+## Summary of Changes
+
+Shipped across three merged PRs, and the middle one is the part worth reading.
+
+**#862 — the mechanism.** A projection DECLARES its own count, keyed by
+directory id, because there is no uniform entry count to infer: `schemas` has
+four plausible answers, `library` three, and `uploads`' number is not an array
+length at all. Keyed rather than bare because `uploads` and `library` are two
+tiles over ONE dataset (`flh4`), so that file owes two different numbers.
+Absent is a third state at every layer -- no declaration, a malformed entry or
+an unreadable file yields NO badge, never `0`, and a malformed entry drops
+without dropping its siblings. The count reaches the accessible name.
+
+**#889 — and the mechanism caught its own author.** Extending to the scoped
+viewers exposed that #862's two badges disagreed with the pages they open:
+`schemas` read 137 over a page showing 122, and `library` read 8 over a page
+showing ZERO -- that directory's declaration says "THIS INSTANCE HOLDS NONE".
+So the first version of a feature built to surface empty viewers had hidden
+one behind a number. Fixed structurally rather than by correcting two figures:
+no whole-graph entry remains and every count is computed FOR the page a tile
+opens, which makes the class unreachable rather than merely fixed.
+
+Two mistakes made building that, both recorded at the point they happened: a
+page is NOT uniquely owned (the first lookup scanned every instance and
+returned ids that are not tiles here), and "1 entries", caught by RENDERING
+rather than by any gate.
+
+**#932 — the last tile the mechanism reached unchanged.**
+`translation-sources`, 5 locales.
+
+### What was verified, and how
+
+Falsified rather than merely green: injecting a `?? 0` into the reader turns
+10 of 26 unit tests red, and restoring #862's `library` count turns the
+invariant test red. That test asserts a SUM rather than a snapshot -- scoped
+tiles partition one graph so they can never exceed it -- and also asserts that
+more than one instance contributes, without which the sum could not fail.
+
+Verified on the DEPLOYED bytes, not only locally: 26 tiles, 0 assets absent,
+14 badged, 0 off-site hrefs, 14 counts in accessible names.
+
+### Left open, deliberately
+
+Twelve tiles carry no badge, and they are two different problems rather than
+one backlog -- issue #931. Nine `docs-auto` pages have no projection to put a
+count in, so badging them means minting a file that projects nothing, which is
+a decision and not an extension. Three authored `index.md` pages have no
+generator; two of them are over countable graphs and one may have no headline
+number at all, where "no badge" is the right final state.
+
+### Fallout worth knowing about
+
+The `tile` field created a clean-merge-wrong-result hazard: main and a sibling
+branch touched different parts of the voices projection, git merged them with
+no conflict, and produced `count: 5` beside six voices -- an artefact neither
+side would emit. A sibling session found it and built
+`scripts/regen-after-merge.ts` (bean `lxpq`) for the general class.

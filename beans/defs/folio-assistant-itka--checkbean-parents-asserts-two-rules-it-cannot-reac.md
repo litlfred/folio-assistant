@@ -61,9 +61,92 @@ it is the owner's call rather than a checker's.
 
 ## Done when
 
-- [ ] The root exclusion is narrowed to the has-a-parent rule; the
+- [x] The root exclusion is narrowed to the has-a-parent rule; the
       epic-under-epic branch is reachable
-- [ ] Falsified: an epic parented to an epic turns it red, and did not before
-- [ ] `d308` is reported as **outstanding** for its owner, not failed on
-- [ ] Finding 2 is put to the owner as a question and its answer recorded here
-      before `PARENT_TYPES` is touched
+- [x] Falsified: an epic parented to an epic turns it red, and did not before
+- [x] `d308` is reported as **outstanding** for its owner, not failed on
+- [x] Finding 2 is put to the owner as a question and its answer recorded here
+      before `PARENT_TYPES` is touched — **asked with the numbers, answered
+      2026-09-22: a feature IS a tier**. See the ruling below.
+
+---
+
+## Finding 1 shipped 2026-09-22 — #941, PR #942, merged `fc36f70429`
+
+The rule is reachable. The root exclusion now lives on the has-a-parent
+branch alone; `open` still counts what sits below the roots, so no historical
+reading of this report changes meaning. `d308 -> zzmr` is recorded in
+`cat-harness/scripts/bean-parents-baseline.json` — listed, never failed, and
+the file can only shrink because an entry nothing matches is reported stale
+and does fail.
+
+Falsified five ways, each restored. The one worth keeping: restoring the old
+filter with a live epic-under-epic present makes the check print
+*"✓ … and no epic hangs from another"* verbatim. Recorded honestly — that run
+also exits 1, but from the NEW stale-detection rather than from the rule, so
+the evidence is the line and not the status.
+
+**This bean's own count was stale**: it says 2 epics hang from an epic and the
+store holds 1. The other was re-homed as a root after this was written.
+
+## Finding 2 MEASURED 2026-09-22, and it is still the owner's call
+
+The question was *"is `feature` a tier that may hold tasks, or a label?"*
+Nobody had said what it would cost to answer either way. Measured across the
+whole store, all statuses:
+
+| | |
+|---|---|
+| beans typed `feature` | **51** (25 open) |
+| beans parented to a feature | **2**, and **0 of them open** |
+| open `feature` beans' own parents | 25 of 25 are epics |
+
+**So the check refuses nothing today.** `PARENT_TYPES` omitting `feature` has
+no live victim: not one open bean hangs from a feature, and every open feature
+hangs from an epic. The corpus behaves as three tiers
+(`milestone -> epic -> everything else`) while `beans prime` states four.
+
+That does not settle it — a rule with no current victim still decides what is
+allowed NEXT — but it removes the cost argument from both sides, which is what
+made this unanswerable before. Put to the owner with these numbers rather than
+as an abstract choice.
+
+## OWNER'S RULING, 2026-09-22 — `feature` is a real tier
+
+Asked with the measurement rather than as an abstract choice, and answered:
+**a feature may hold tasks.** `PARENT_TYPES` becomes
+`{milestone, epic, feature}`, matching the hierarchy `beans prime` has stated
+all along — so the check stops citing that sentence and contradicting it.
+
+Nothing needed re-parenting: the omission had no live victim. What it decided
+was what is allowed next, and the answer is the documented four tiers.
+
+### The ruling opened a hole, and it is closed in the same change
+
+Widening `PARENT_TYPES` makes `epic -> feature` pass the type check. The epic
+rule read `p.type === "epic"` — testing ONE forbidden parent out of the set
+rather than requiring the right one — so the two together would have allowed
+**a goal's child to hang off one of its own grandchildren**. The hierarchy
+inverted, by a one-word addition, with no test failing.
+
+Stated positively now: `p.type !== "milestone"`. A requirement cannot be
+holed by a later addition to a set the way a negation can.
+
+**Falsified, and the second case is the one worth keeping:**
+
+| injected | result |
+|---|---|
+| `PARENT_TYPES` reverted | 2 fail — the feature-tier tests |
+| epic rule reverted to the negation, `feature` KEPT | **1 fail — the inversion guard, by name** |
+| restored | 18 pass |
+
+### Two smaller things fixed while in there
+
+**The summary line named the wrong shape twice over.** It said *"every open
+bean is placed under an epic or a milestone, and no epic hangs from another"*
+— parents may be features now, and the epic rule requires a milestone rather
+than merely forbidding an epic. A summary describing a rule the code no longer
+has is this bean's own defect one layer up.
+
+**"is a epic".** The message built an article into a template. It reports
+`` has type `epic` `` instead, so there is no article to get wrong.

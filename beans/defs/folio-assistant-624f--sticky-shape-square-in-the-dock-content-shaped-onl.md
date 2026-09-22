@@ -1,11 +1,11 @@
 ---
 # folio-assistant-624f
 title: 'STICKY SHAPE: square in the dock, content-shaped only on the glass, and the backdrop scrolls with the overflow'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-21T19:23:39Z
-updated_at: 2026-09-22T11:51:20Z
+updated_at: 2026-09-21T19:23:39Z
 parent: folio-assistant-6lb8
 ---
 
@@ -59,94 +59,60 @@ over a stationary cat.
   docked sticky simply always the 'card' crop, which would make this almost
   free? Check schemas/theme.ts before designing anything new.
 
-## Round 1 — the SQUARE half is built; the SCROLL half is measured and is not
+## Progress, 2026-09-22 — two of the four halves, and a correction
 
-### Both "open before building" questions, answered by measurement
+Both SHAPE rules are in. The BACKDROP half is not, and the reason is a
+standing owner ruling this bean's "open before building" did not account
+for.
 
-**"Is the docked sticky simply always the `card` crop, which would make this
-almost free?"** — **Yes, and more so than asked.** `card` is declared
-1254x1254, exactly square, and `buildBackdrop` ALREADY picks
-`art.card || art.mobile || art.laptop`. The square art was being served the
-whole time; only the lock was missing.
+### 1 and 4 — shape is now a function of WHERE
 
-**"Does the background scroll with it, or is the art taller?"** — Neither, as
-posed. `background-attachment: local` was the obvious one-property answer and
-is not available: the art is deliberately a `<picture>` because *"a background
-can only name one crop"*. The intended shape is one scrolling surface with the
-`<picture>` inside it.
+`.fa-sticky-cell`, `.fa-sticky-panel` and `.fa-sticky-board` square a
+docked sticky; `.fa-sticky-floating` clears the ratio so a card on the
+glass is shaped to its content.
 
-### It is the TODO sticky, not the landing sticky
+**SQUARE BY RULE, art from the card crop, and they are different things.**
+This bean asks whether a docked sticky is "simply always the `card` crop,
+which would make this almost free". MEASURED: the card crop is square on
+3 of 3 stickies in `_data/stickies.json` — so it would work today. Three is
+the whole corpus, and `ThemeGeometrySchema` does not REQUIRE a card aspect
+of 1. So the shape is written as `1` rather than read from
+`--fa-aspect-card`: a theme declaring a non-square card still docks square.
+Reading the declaration would make the rule true only for the three themes
+somebody measured, which is `hfkl`.
 
-The first draft of the rule was aimed at `.fa-landing-sticky--fixed` — the
-object with the shape machinery — and was wrong:
+The TEXT REGION still comes from the card crop, because that region is a
+fraction of the art and the art is unchanged. Only the box's ratio is
+overridden, and by `aspect-ratio` directly rather than the custom property
+— so the two breakpoint aliases cannot quietly un-square the dock. That is
+asserted at 1280, 700 and 400px rather than argued.
 
-| | crop served | aspect-locked | floats to the glass |
-|---|---|---|---|
-| landing sticky | declared crop (laptop above 48rem) | yes | **never** |
-| todo sticky | `card` already | no | **yes** |
+**A tolerance that is the claim rather than slack in it.** `toBe(1)` failed
+at the two narrow widths with a measured 1.01 — a box like 396 x 392, which
+is `aspect-ratio: 1` honoured and then laid out on a device pixel grid.
+Square means square to within a pixel; 0.05 is two orders tighter than the
+1.7758 being overridden, so a crop leaking through still fails loudly.
 
-`fa-sticky-floating` is added only by the todo board's `float()`, and
-`fa-landing-sticky` appears nowhere in `docs-ui.js`. Locking the landing
-sticky to the card aspect while `<picture>` serves the laptop file would have
-letterboxed the art under the CARD crop's cloud coordinates — the failure the
-stylesheet's own comment records.
+### 2 and 3 — the backdrop, NOT built, and why
 
-### Two measurements the rule would have shipped wrong without
+This bean's open question offers two readings of *"background will scrll
+accoringing"*: the art translates with the text, or the art is taller and
+both scroll at one rate. I was about to take a third — the art as the
+scrolling surface's background at `background-size: cover` — and the corpus
+refused it.
 
-**`content-box` makes the square the wrong box.** `aspect-ratio` squares the
-CONTENT, then padding and the 5px priority stripe are added on top: content
-288.4x288.4 renders as a **320x313** card. Seven pixels looks like a rounding
-artefact and is the stripe. `box-sizing: border-box`, scoped to the rule.
+`docs-ui.css` carries an explicit ruling on this exact element:
 
-**`aspect-ratio` is a preferred size, not a cap.** With 60 paragraphs injected
-the card did not scroll — it simply grew, and the "always square" spec passed
-only because this file's sticky is two lines long. `min-height: 0` is what
-makes the ratio hold, so the square and the scroll are ONE mechanism rather
-than two lines that happen to sit together.
+> `contain`, so the WHOLE artwork is visible rather than a crop of it. This
+> was `cover` […] the owner, looking at it: "show full sticky image, not
+> cropped."
 
-## NOT BUILT: the art does not yet scroll with the words
+So `cover` is already tried and already rejected. And with `contain` both
+remaining readings have a cost the bean's gloss — *"so the words stay in
+the cloud as you scroll"* — cannot escape: an uncropped, unrepeated,
+undistorted artwork is a FIXED amount of picture, so words scrolled past it
+leave it. The gloss is the bean author's interpretation; the owner's words
+are only that the background scrolls accordingly.
 
-Measured on the themed fixture with the square lock in place:
-`clientHeight === scrollHeight === 318` with the card at 320. **The card does
-not scroll at all**, so there is nothing for the art to move with.
-
-The overflow is absorbed before it reaches the card. `.fa-sticky-body` carries
-no `overflow` rule, and the `qefk` drawer is about controls rather than text,
-so the remaining candidate is the text box being positioned against the art
-the way the landing sticky's is — which puts this in the `--fa-tx/ty/tw/th`
-text-region machinery rather than in a scroll property.
-
-**That is a bigger change than this bean's "almost free" framing and it is not
-started.** The spec for it was written and then REMOVED rather than left
-skipped: a `test.skip` that fires because the fixture never overflows reads as
-coverage and is not. Requirement 2 is outstanding with the measurement above
-to start from.
-
-## Done when
-
-- [x] a docked sticky with art is square, at every width
-- [x] a floating sticky is shaped to its content
-- [x] a sticky with no art is untouched
-- [x] the square rule does not let the backdrop escape the card
-- [ ] the art and the words scroll as one surface
-
-
-## One more risk in the shipped half, found by re-reading the rule it overrides
-
-The square rule sets `overflow: auto`, which **overrides `overflow: hidden` on
-`.fa-sticky--backdrop`** — a rule the stylesheet marks *"REQUIRED, not
-tidiness"*:
-
-> without it the art escapes the card's rounded corners; and if any rule above
-> ever fails to position it, an unclipped backdrop lays out at its INTRINSIC
-> size — 1672px wide — and covers the page. That is not hypothetical: it is
-> what this board did on its first render, and it was invisible in the HTML,
-> which was correct throughout.
-
-`auto` clips as `hidden` does, so the hazard is contained — measured, not
-assumed: art 314x318 inside a 320x320 card, no escape.
-
-Asserted rather than left to the reading. The next edit to this rule's
-`overflow` is one keystroke from reopening a defect whose symptom is a
-covered page and whose markup looks correct throughout, which is precisely
-the kind nobody finds by reading a diff.
+Left for the owner rather than decided, because every available answer
+trades against a ruling they have already made once.
