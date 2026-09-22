@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 496,
+      "count": 498,
       "unit": "beans"
     }
   },
@@ -1555,6 +1555,20 @@
       "file": "beans/defs/folio-assistant-7o7i--raci-declare-involvement-a-c-i-over-the-roles-and.md"
     },
     {
+      "id": "folio-assistant-7ofc",
+      "title": "folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T10:48:40Z",
+      "updatedAt": "2026-09-22T10:48:40Z",
+      "preview": "Owner, 2026-09-22: *\"folio must be in cat-harness and visualizer owned by it. transations too... there should be visualizer.\"*\n\nMeasured against that ruling — the three graphs the ruling names:\n\n| graph | in cat-harness | visualiser declared | present |\n|---|---|---|---|\n| `library/` | yes | `docs/cat-harness/library/cat-harness/index.html` | yes |\n| `translations/` | yes | `docs/translation-statu",
+      "file": "beans/defs/folio-assistant-7ofc--folio-is-the-only-cat-harness-graph-with-no-visual.md"
+    },
+    {
       "id": "folio-assistant-7pdi",
       "title": "ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for",
       "status": "completed",
@@ -2867,14 +2881,14 @@
     {
       "id": "folio-assistant-ebvl",
       "title": "mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:12:58Z",
-      "updatedAt": "2026-09-22T09:13:04Z",
+      "updatedAt": "2026-09-22T10:02:36Z",
       "preview": "Found 2026-09-22 while wiring gen-library-viz, immediately after #890 merged.\n\n`mountLibraryPullouts` does this per row:\n\n    document.addEventListener(\"fa:folio-changed\", paint);\n\nWith the 18 specs' static fixture rows that is correct and bounded. The real\nlibrary view renders rows client-side and REPLACES THEM WHOLESALE on every\nfilter keystroke and every sort:\n\n    $(\"listing\").innerHTML = h + ",
       "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
     },
@@ -3266,7 +3280,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T00:47:08Z",
-      "updatedAt": "2026-09-22T00:47:22Z",
+      "updatedAt": "2026-09-22T10:57:18Z",
       "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
       "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
     },
@@ -4187,14 +4201,14 @@
     {
       "id": "folio-assistant-m8gz",
       "title": "BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-09-20T07:35:41Z",
+      "updatedAt": "2026-09-22T10:57:22Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `fsh-guts/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wiring to ext",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -5626,7 +5640,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:03:07Z",
-      "updatedAt": "2026-09-22T09:03:43Z",
+      "updatedAt": "2026-09-22T10:51:00Z",
       "preview": "`health` reports `staging-preview-size` **critical**: 10 previews, **878.7 MiB**,\npast three-quarters of GitHub's 1 GB Pages limit, which the main site shares.\n\n## Pruning cannot fix it, and the check's own action says to prune\n\nEvery one of the ten belongs to an **open and active** pull request — oldest\nidle 12.9 h, six touched within six minutes of measuring. So the finding's\naction —\n\n> Ask whi",
       "file": "beans/defs/folio-assistant-tebu--staging-previews-are-at-8787-mib-of-a-1-gb-pages-l.md"
     },
@@ -6505,6 +6519,20 @@
       "updatedAt": "2026-09-21T15:29:13Z",
       "preview": "**BASELINE — measured 2026-09-18 on `main`, command `bun run eval:crdm-detect`.**\nDo not quote as a current answer; re-run it.\n\nAll 27 issues in the repo (whole population, not a sample):\nprecision **71%**, recall **63%**, F1 **67%**.\n\nThe failure pattern is worth more than the score:\n- 7 misses, including **#203 itself** — the issue that asked for the capability\n  — and #1, the framework design.\n",
       "file": "beans/defs/folio-assistant-xfoh--crdm-detect-add-missing-exclusions-and-re-measure.md"
+    },
+    {
+      "id": "folio-assistant-xfyk",
+      "title": "ci-health asserts a bean's status in printed output and it went stale — yzsj reads 'is not done' while completed",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:31:57Z",
+      "updatedAt": "2026-09-22T09:39:18Z",
+      "preview": "_2026-09-22T09:45:00Z_ — Found by being misled by it, ~10 minutes before fixing it. `bun run check:ci-health` printed:\n\n> Cancellations NOT listed here are several sessions racing for the publish ref (`yzsj`), **which is a different fix and is not done.**\n\n`yzsj` has been `completed` since 2026-09-21. I read that sentence, opened the bean, and read 200 lines of finished work — including its own cl",
+      "file": "beans/defs/folio-assistant-xfyk--ci-health-asserts-a-beans-status-in-printed-output.md"
     },
     {
       "id": "folio-assistant-xgd8",
