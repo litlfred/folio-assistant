@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:25:13.258Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6b56b37773dec62e6a00339e6451b38b02870337",
-  "sourceCommitSha": "6b56b37773dec62e6a00339e6451b38b02870337",
-  "sourceCommitAt": "2026-09-22T09:15:09Z",
+  "generatedAt": "2026-09-22T09:41:29.839Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/01b8267f2fc6a801f83cc6cf46b28d5cda004595",
+  "sourceCommitSha": "01b8267f2fc6a801f83cc6cf46b28d5cda004595",
+  "sourceCommitAt": "2026-09-22T09:39:51Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 227,
+    "Skill": 229,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -1730,6 +1730,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/surprise-to-corpus",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "surprise-to-corpus",
+      "title": "Surprise to corpus — notice it, filter it, then ask",
+      "description": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/surprise-to-corpus.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/voice-editorial-review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "voice-editorial-review",
@@ -2462,7 +2479,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 466,
+      "instructionLines": 508,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2719,6 +2736,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/symbiotic-interaction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/where-does-this-go",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "where-does-this-go",
+      "title": "Where does this go? — the question, then the skill that answers it",
+      "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/where-does-this-go.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/decision-comparison",
@@ -5561,6 +5595,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/tabular-metadata",
@@ -5582,7 +5617,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/voice-overlay-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#skill/where-does-this-go"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-turing-v49ph5/cat-harness.jsonld#capability/git-push",
@@ -35237,8 +35273,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-turing-v49ph5",
-    "sha": "55ad7dcca258c10b771ef8dc70b9233f225e9769",
+    "sha": "3a6d457a242d4ef136688079bb2b2c382d956445",
     "pr": "889/merge",
-    "run": "35710000596"
+    "run": "35711666997"
   }
 }
