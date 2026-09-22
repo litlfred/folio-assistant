@@ -1275,14 +1275,14 @@
     {
       "id": "folio-assistant-5xzc",
       "title": "QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:02:54Z",
+      "updatedAt": "2026-09-22T21:32:13Z",
       "preview": "Owner: *\"blocks are in the knoledge graph folio/. QA, to manage IDs\"*.\n\n**Why first.** Every other child keys on the block id. A diff matches blocks\nacross `main` and STAGING by id, a review comment anchors to an id, and a heat\nmap aggregates by id. If ids drift, the diff reads everything as removed and\nre-added, and every comment orphans. That is how this whole epic fails.\n\n**Measured 2026-09-22.",
       "file": "beans/defs/folio-assistant-5xzc--qa-block-ids-in-the-folio-graph-are-unique-and-sta.md"
     },
@@ -3686,7 +3686,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T10:02:53Z",
-      "updatedAt": "2026-09-20T12:09:49Z",
+      "updatedAt": "2026-09-22T18:18:42Z",
       "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
     },
@@ -4159,14 +4159,14 @@
     {
       "id": "folio-assistant-jwox",
       "title": "CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:03:10Z",
+      "updatedAt": "2026-09-22T21:51:43Z",
       "preview": "**What.** A `ChangeSet` node computed between two refs (`origin/main` and the\nbranch that STAGING rendered). For each block it records one of: added,\nremoved, modified (prose / structure / metadata), moved (new parent or order),\nor renamed (via `renamedFrom`, child 01). It is keyed on folio/ graph ids,\n**not** on file paths.\n\n**Why not reuse `diff`.** The `diff` skill is `git diff origin/main..HEA",
       "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
     },
@@ -5330,7 +5330,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:29Z",
-      "updatedAt": "2026-09-22T21:25:28Z",
+      "updatedAt": "2026-09-22T21:44:56Z",
       "preview": "## What this is\n\nOwner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), verbatim across four\nturns because each one moved the scope:\n\n> learn skills for document review for large things like a DAK or L1 digital\n> transofrmation hadbook. use it to develop tools in redendering/visauatlion as\n> part of docuemnt editiing and review process. will use feature branch\n> /staging for comparison against main",
       "file": "beans/defs/folio-assistant-q4jm--large-document-review-a-review-visualiser-for-a-fo.md"
     },
@@ -5892,7 +5892,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:26:39Z",
-      "updatedAt": "2026-09-21T21:26:39Z",
+      "updatedAt": "2026-09-22T21:28:43Z",
       "preview": "## What — the owner's spec, verbatim\n\n2026-09-21, with a screenshot of the who-iris rail open and working:\n\n> looks good.\n>\n> we should have same navbar across all folios though.  presented same way.\n> need to comine the two.\n>\n> * keep exploding menu from folio-assisnt\n> * keep [x] from who-iris, keep behavior of open/close, etc.\n> * keep consistent docs/ library/ etc. when content/subgraphs pres",
       "file": "beans/defs/folio-assistant-sjic--one-navbar-for-every-folio-combine-the-folio-assis.md"
     },
@@ -6398,7 +6398,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:08:55Z",
-      "updatedAt": "2026-09-22T18:08:55Z",
+      "updatedAt": "2026-09-22T18:37:50Z",
       "preview": "## What this is\n\nA **consolidation claim**, not new subject matter. The work plan stalled: between\n11:00Z and 15:19Z on 2026-09-22 seventeen PRs merged, and **nothing merged in the\n2h40m after**. CI is not the cause — `check:ci-health` reports all eight\nworkflows that ran in the window green, 48 Pages deploys succeeded and 0 failed.\nWhat stalled is that PRs went **conflicted** against a `main` mov",
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
@@ -6996,7 +6996,7 @@
     },
     {
       "id": "folio-assistant-x4a6",
-      "title": "Declare docs/ as the instance's renderable graph — blocked on core's folio registration reaching every declaration reader",
+      "title": "Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn",
       "status": "in-progress",
       "type": "task",
       "priority": "normal",
@@ -7006,7 +7006,7 @@
         "folio-assistant-cjtm"
       ],
       "createdAt": "2026-09-19T08:00:02Z",
-      "updatedAt": "2026-09-21T22:22:00Z",
+      "updatedAt": "2026-09-22T18:18:15Z",
       "preview": "Found and measured while doing bean `lgwe` (PR #351).\n\n## The gap\n\n`docs/` is this instance's Jekyll site — 150+ pages, `_config.yml`, the whole\npublished documentation — and **nothing declares it**. `cat-harness.json`\ndeclares `docs/assets/qa/` (the witnesses) and nothing else under it. So a\nconsumer asking \"which directories does this instance scan\" is not told about\nthe one a reader actually se",
       "file": "beans/defs/folio-assistant-x4a6--declare-docs-as-the-instances-renderable-graph-blo.md"
     },
@@ -7566,7 +7566,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T21:55:40Z",
-      "updatedAt": "2026-09-21T16:55:00Z",
+      "updatedAt": "2026-09-22T18:19:04Z",
       "preview": "## The measurement\n\n`bun run check:partition`. A wrong-direction edge is a lower layer importing\nfrom a higher one; after a cut each is a **circular dependency between\nrepositories**, so the number has to reach zero.\n\n| | edges | unassigned |\n|---|---|---|\n| start, 2026-09-18 | 51 | 4 |\n| after `lean-packages` | 44 | 4 |\n| after `markdown-ast` | 43 | 4 |\n| after judging the last six | 49 | 0 |\n| a",
       "file": "beans/defs/folio-assistant-zlmp--drain-the-wrong-direction-import-edges-so-the-repo.md"
     },

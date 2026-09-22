@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T22:01:51.533Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/232ad12b24bf22a05e0ee94adf6afaaab4081234",
-  "sourceCommitSha": "232ad12b24bf22a05e0ee94adf6afaaab4081234",
-  "sourceCommitAt": "2026-09-22T21:58:20Z",
+  "generatedAt": "2026-09-22T22:41:26.383Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dc3bdb3e4486787359a4fb406c384f948924f266",
+  "sourceCommitSha": "dc3bdb3e4486787359a4fb406c384f948924f266",
+  "sourceCommitAt": "2026-09-22T22:35:14Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 238,
+    "Skill": 239,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -280,7 +280,7 @@
     "Role": 139,
     "ProcessNode": 739,
     "Tool": 69,
-    "Schema": 94,
+    "Schema": 95,
     "GraphKind": 29,
     "Directory": 43,
     "Asset": 3
@@ -1256,6 +1256,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/rendered-verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "rendered-verification",
+      "title": "/rendered-verification — look at it, then send the picture",
+      "description": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, and the four defect classes that are invisible to a green gate set.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/rendered-verification.md",
+      "instructionLines": 172,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/swarm-management",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "swarm-management",
@@ -1976,7 +1993,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-tiles.md",
-      "instructionLines": 234,
+      "instructionLines": 309,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2128,7 +2145,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 407,
+      "instructionLines": 494,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5755,6 +5772,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/render-order",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#skill/role-model",
@@ -34852,6 +34870,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/catalogue"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#schema/changeset",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "changeset",
+      "title": "A ChangeSet: what changed in a folio between two git refs, block by block.",
+      "module": "../folio-assistant-core/schemas/changeset.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/changeset"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-u9r9-typedoc-path/cat-harness.jsonld#schema/dublin-core",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "dublin-core",
@@ -36779,8 +36806,8 @@
   ],
   "staging": {
     "branch": "claude/u9r9-typedoc-path",
-    "sha": "82152183b8eab4a1e5647dc4945c0287058afa53",
+    "sha": "9b0bc8f59a3e3d50f2bedd84fbed93b9e6bb7efe",
     "pr": "980/merge",
-    "run": "35789856491"
+    "run": "35793474135"
   }
 }
