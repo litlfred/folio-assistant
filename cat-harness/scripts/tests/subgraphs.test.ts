@@ -28,23 +28,27 @@ describe("subgraph containment is derived from declared paths", () => {
     expect(dirs.length, "no directories resolved").toBeGreaterThan(10);
   });
 
-  test("THIS INSTANCE NOW NESTS NOTHING — the goal state, asserted as one", () => {
-    // Until 2026-09-22 this read: `methodologies` contains `methodology-crdm`
-    // and `methodology-raci`. Both are gone. The owner's "dont bury sub-graph
-    // assets" moved CRDM's and RACI's skills into `skills/` and CRDM's
-    // diagrams into `processes/`, and the three separate declarations were
-    // dropped rather than repointed — a package subdirectory of the already
-    // declared `skills/` graph does not also need an entry of its own.
+  test("`methodologies/` nests nothing — the thing this branch actually achieved", () => {
+    // THIS ASSERTED A GLOBAL PROPERTY AND SHOULD NOT HAVE. Until 2026-09-22 it
+    // read `expect(subgraphTree(dirs)).toEqual([])` — "this instance nests
+    // nothing" — which was true the hour it was written and false by the next
+    // merge: `main` declared `test/` as a `code` graph (#963), so `test/` now
+    // contains the declared `test/results`, through no change of this branch's.
     //
-    // So `subgraphTree` over the real declaration is now EMPTY, and that is
-    // the owner's stated target ("subgraphs should be disconnected") reached
-    // for this instance rather than an absence of data.
-    //
-    // ASSERTED EXPLICITLY, because an empty tree is exactly what a broken
-    // derivation also returns — the failure this file's own docstring is
-    // about. The algorithm keeps its coverage in the fixture test below,
-    // which is the only reason it is safe to assert emptiness here.
-    expect(subgraphTree(dirs)).toEqual([]);
+    // An assertion any other branch can invalidate is not a regression guard,
+    // it is a tripwire on somebody else's work. The durable claim is the
+    // narrow one: the methodology subgraphs this branch un-buried stay
+    // un-buried. Corpus-wide nesting is `check:layout-norms`'s question, where
+    // it is a ratchet with a baseline rather than an absolute.
+    // Scoped to the id `methodologies` EXACTLY — this instance's own graph.
+    // A /methodolog/ substring also matches `smart-base-methodologies`, which
+    // `main` landed in #881 with a nested `smart-base-processes` inside it.
+    // That is a real finding, it is baselined in `check:layout-norms`, and it
+    // belongs to whoever owns smart-base — not to a test about this branch.
+    const nested = subgraphTree(dirs).flatMap((r) => [r.parent, ...r.children]);
+    expect(nested.filter((id) => id === "methodologies")).toEqual([]);
+    const methodologies = dirs.find((d) => d.id === "methodologies");
+    expect(methodologies, "the methodology graph did not resolve — the check above is vacuous").toBeDefined();
   });
 
   test("a repository-scoped directory is not a child of an instance-relative one", () => {
@@ -177,17 +181,17 @@ describe("repository-scoped directories are attributed", () => {
       expect(r.children).not.toContain("smart-kg-methodologies");
     }
     // The positive half USED to be `methodologies` → [methodology-crdm,
-    // methodology-raci]. Both declarations are gone since 2026-09-22, so the
-    // tree is empty and the loop above can no longer fail — it would pass
-    // over nothing.
+    // methodology-raci]. Both declarations went on 2026-09-22.
     //
-    // That makes the negative assertion vacuous, which is precisely the shape
-    // this file refuses elsewhere ("clean" and "not computed" must never be
-    // one passing test). So the guard is restated as the two facts that are
-    // still checkable: `smart-kg-methodologies` resolved at all, and it is
-    // nobody's child — the first is what makes the second mean something.
-    expect(report.tree).toEqual([]);
+    // The negative assertion above must not become vacuous, which it does the
+    // moment the tree is empty ("clean" and "not computed" must never be one
+    // passing test). So what is pinned is that the tree was COMPUTED and that
+    // the scoped entry RESOLVED — the two facts that make "it is nobody's
+    // child" mean something. The tree is non-empty again since `main`
+    // declared `test/` as a `code` graph, but this test does not depend on
+    // that either way.
     const scoped = dirs.find((d) => d.id === "smart-kg-methodologies");
     expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
+    expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
   });
 });

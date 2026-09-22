@@ -131,12 +131,31 @@ describe("the real corpus", () => {
     expect(r.unexpected).toEqual([]);
   });
 
-  it("CAT-HARNESS ITSELF IS AT ZERO, and the baseline holds none of its pairs", () => {
-    // The point of the 2026-09-22 move. Stated as its own assertion rather
-    // than left implicit in "no unexpected nesting", because a baseline entry
-    // for cat-harness would make that pass while the instance regressed.
-    expect(r.found.filter((p) => p.startsWith("cat-harness:"))).toEqual([]);
-    expect(readBaseline().filter((p) => p.startsWith("cat-harness:"))).toEqual([]);
+  it("NO METHODOLOGY ASSET IS BURIED — the point of the 2026-09-22 move", () => {
+    // This asserted `cat-harness` is at zero, full stop. That was true for
+    // about two hours: `main` declared `test/` as a `code` graph (#963), so
+    // `cat-harness: test contains test/results` is now a real pair, arriving
+    // from other work entirely.
+    //
+    // An assertion another branch can invalidate is a tripwire, not a guard.
+    // Narrowed to the claim this branch is actually responsible for and can
+    // actually keep: no methodology's skills, processes or library sit inside
+    // another declared graph. Corpus-wide nesting stays the baselined ratchet
+    // above, which is the mechanism built for exactly the case where somebody
+    // else's layout is outstanding work.
+    // SCOPED TO THIS INSTANCE'S OWN `methodologies/`, and the narrowing was
+    // forced twice in one sitting. First by `main` declaring `test/`; then by
+    // `main` again — #881 landed `smart-base`, whose `methodologies/` contains
+    // a declared `methodologies/processes/`, so a filter on /methodolog/
+    // matched somebody else's new nesting and failed on work this branch never
+    // touched. Those two pairs are baselined and are bean material for
+    // whoever owns smart-base, not this PR's to fix.
+    //
+    // What this branch is responsible for, and can keep: cat-harness's own
+    // methodology graph holds nodes and no nested declaration.
+    const ours = (p: string): boolean => p.startsWith("cat-harness: methodologies ");
+    expect(r.found.filter(ours)).toEqual([]);
+    expect(readBaseline().filter(ours)).toEqual([]);
   });
 
   it("the baseline names only pairs that are really there", () => {
@@ -145,9 +164,15 @@ describe("the real corpus", () => {
     expect(r.fixed, "baseline lists a pair that no longer exists — run --update").toEqual([]);
   });
 
-  it("the known pairs are the `skills/voices` ones, in instances that are not this one", () => {
-    expect(r.found.every((p) => p.endsWith("skills contains skills/voices"))).toBe(true);
+  it("every pair found is real and named, and there is at least one", () => {
+    // It said "the known pairs are the `skills/voices` ones" and listed a
+    // shape. `main` then added `methodologies/processes` nestings in
+    // `smart-base` and the `test/` ones above, so a shape assertion was a
+    // second copy of the baseline that drifted from it within hours. The
+    // baseline is the list; this pins only that the sweep found something to
+    // list, so an empty result cannot read as clean.
     expect(r.found.length).toBeGreaterThan(0);
+    expect(new Set(r.found).size).toBe(r.found.length);
   });
 
   it("each nesting is counted ONCE, however many ids resolve to it", () => {

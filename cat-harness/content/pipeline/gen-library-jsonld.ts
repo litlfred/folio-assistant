@@ -178,6 +178,27 @@ export function buildDocumentNodes(
 
   const sectionIris: string[] = [];
 
+  // A figure belongs to the FIRST section whose page range contains it.
+  //
+  // Section ranges OVERLAP -- a section's `page_end` is the start page of the
+  // next one, inclusive -- so without this a figure is emitted once per
+  // containing section, every emission writing the SAME path with a different
+  // `derivedFrom`. Measured 2026-09-22 on `smart-base/library/9789240093362-eng/`
+  // (bean `imen`): page 71 falls inside FOUR sections, page 68 inside three,
+  // page 30 inside two. Last write won, and `--check` then reported the losers
+  // stale forever, because re-running reproduced the same race.
+  //
+  // It needed both an embedded outline (so sections have real ranges rather
+  // than one page each) and placed raster figures, and no entry had both until
+  // the WHO digital-health corpus arrived. The comment below on `page_end`
+  // shows the single-page case WAS considered; the overlapping one was not.
+  //
+  // FIRST rather than last, on the owner's ruling of 2026-09-22 (issue #877):
+  // it matches reading order, so a figure introduced at the end of a section
+  // stays with the section that introduced it. Last is what the race happened
+  // to land on and is not a reason.
+  const figureOwned = new Set<string>();
+
   for (const sec of sections) {
     const key = sectionKey(sec.id);
     const contained: string[] = [];
@@ -235,6 +256,10 @@ export function buildDocumentNodes(
     if (from !== undefined && to !== undefined) {
       for (let pg = from; pg <= to; pg++) {
         for (const img of figuresByPage.get(pg) ?? []) {
+          // An earlier section already claimed it; `sections` is in document
+          // order, so "already claimed" IS "first containing section".
+          if (figureOwned.has(img.id)) continue;
+          figureOwned.add(img.id);
           const bid = `figure-${img.id}`;
           contained.push(docIri(docId, `blocks/${bid}`));
           out.push({

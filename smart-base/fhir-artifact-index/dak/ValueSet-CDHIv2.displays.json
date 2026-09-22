@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDHIv2.displays.json",
+  "title": "Classification of Digital Health Interventions v2 Display Values",
+  "description": "Display values for Classification of Digital Health Interventions v2 ValueSet codes. Generated from FHIR expansions.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "patternProperties": {
+        "^https?://.*": {
+          "type": "object",
+          "description": "Display values for a specific IRI-formatted code by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1": {
+      "en": "Persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.1": {
+      "en": "Targeted communication to Persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.1.1": {
+      "en": "Transmit health event alerts to specific population group(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.1.2": {
+      "en": "Transmit targeted health information to person(s) based on health status or demographics"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.1.3": {
+      "en": "Transmit targeted alerts and reminders to person(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.1.4": {
+      "en": "Transmit diagnostics result, or availability of result, to person(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.2": {
+      "en": "Untargeted communication to Persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.2.1": {
+      "en": "Transmit untargeted health information to an undefined population"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.2.2": {
+      "en": "Transmit untargeted health event alerts to undefined group"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.3": {
+      "en": "Person to Person communication"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.3.1": {
+      "en": "Peer group for individuals"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.4": {
+      "en": "Personal health tracking"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.4.1": {
+      "en": "Access by the individual to own medical or summary health records"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.4.2": {
+      "en": "Self monitoring of health or diagnostic data by the individual"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.4.3": {
+      "en": "Active data capture/documentation by an individual"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.4.4": {
+      "en": "Access by the individual to verifiable documentation of a health event or health status"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.5": {
+      "en": "Person based reporting"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.5.1": {
+      "en": "Reporting of health system feedback by persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.5.2": {
+      "en": "Reporting of public health events by persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.6": {
+      "en": "On demand communication with persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.6.1": {
+      "en": "Look-up of information on health and health services by individuals"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.6.2": {
+      "en": "Simulated human-like conversations with individual(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.7": {
+      "en": "Person-centred financial transactions"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.7.1": {
+      "en": "Transmit or manage out-of-pocket payments by individuals"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.7.2": {
+      "en": "Transmit or manage vouchers to individuals for health services"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.7.3": {
+      "en": "Transmit or manage incentives to individuals for health services"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.8": {
+      "en": "Person-centred consent management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#1.8.1": {
+      "en": "Manage provision and withdrawal of consent by individuals"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2": {
+      "en": "Healthcare providers"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.1": {
+      "en": "Identification and registration of persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.1.1": {
+      "en": "Verify a person's unique identity"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.1.2": {
+      "en": "Enrol person(s) for health services/clinical care plan"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.2": {
+      "en": "Person-centred health records"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.2.1": {
+      "en": "Longitudinal tracking of person's health status and services"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.2.2": {
+      "en": "Manage person-centred structured clinical records"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.2.3": {
+      "en": "Manage person-centred unstructured clinical records (e.g. notes, images, documents)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.2.4": {
+      "en": "Routine health indicator data collection and management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.3": {
+      "en": "Healthcare provider decision support"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.3.1": {
+      "en": "Provide prompts and alerts based according to protocol"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.3.2": {
+      "en": "Provide checklist according to protocol"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.3.3": {
+      "en": "Screen persons by risk or other health status"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.4": {
+      "en": "Telemedicine"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.4.1": {
+      "en": "Consultations between remote person and healthcare provider"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.4.2": {
+      "en": "Remote monitoring of person's health or diagnostic data by provider"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.4.3": {
+      "en": "Transmission of medical data (e.g. images, notes, and videos) to healthcare provider"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.4.4": {
+      "en": "Consultations for case management between healthcare providers"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5": {
+      "en": "Healthcare provider communication"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.1": {
+      "en": "Communication from healthcare provider to supervisor(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.2": {
+      "en": "Communication and performance feedback to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.3": {
+      "en": "Transmit routine news and workflow notifications to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.4": {
+      "en": "Transmit non-routine health event alerts to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.5": {
+      "en": "Peer group for healthcare providers"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.5.6": {
+      "en": "Generative AI for tailored content creation"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.6": {
+      "en": "Referral coordination"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.6.1": {
+      "en": "Coordinate emergency response and transport"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.6.2": {
+      "en": "Manage referrals between points of service within health sector"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.6.3": {
+      "en": "Manage referrals between health and other sectors (social services, police, justice, economic support schemes)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.7": {
+      "en": "Scheduling and activity planning for healthcare providers"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.7.1": {
+      "en": "Identify persons in need of services"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.7.2": {
+      "en": "Schedule healthcare provider's activities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.8": {
+      "en": "Healthcare provider training"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.8.1": {
+      "en": "Provide training content to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.8.2": {
+      "en": "Assess capacity of healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.9": {
+      "en": "Prescription and medication management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.9.1": {
+      "en": "Transmit or track prescription orders"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.9.2": {
+      "en": "Track individual's medication consumption"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.9.3": {
+      "en": "Report adverse drug effects"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.10": {
+      "en": "Laboratory and diagnostics imaging management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.10.1": {
+      "en": "Transmit person's diagnostic result to healthcare provider"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.10.2": {
+      "en": "Transmit and track diagnostic orders"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.10.3": {
+      "en": "Capture diagnostic results from digital devices"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.10.4": {
+      "en": "Track biological specimens"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.11": {
+      "en": "Healthcare provider financial transactions"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.11.1": {
+      "en": "Verify individual's health coverage and financing scheme membership"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#2.11.2": {
+      "en": "Receive payments from individuals"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3": {
+      "en": "Health management and support personnel"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1": {
+      "en": "Human resource management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1.1": {
+      "en": "List health workforce cadres and related identification information"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1.2": {
+      "en": "Monitor performance of healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1.3": {
+      "en": "Manage registration/certification of healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1.4": {
+      "en": "Record training credentials of healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.1.5": {
+      "en": "Manage health workforce activities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2": {
+      "en": "Supply chain management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.1": {
+      "en": "Manage inventory and distribution of health commodities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.2": {
+      "en": "Notify stock levels of health commodities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.3": {
+      "en": "Monitor cold-chain sensitive commodities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.4": {
+      "en": "Register licensed drugs and health commodities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.5": {
+      "en": "Manage procurement of commodities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.2.6": {
+      "en": "Report counterfeit or substandard drugs by persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.3": {
+      "en": "Public health event notification"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.3.1": {
+      "en": "Notification of public health events from point of diagnosis"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.4": {
+      "en": "Civil Registration and Vital Statistics (CRVS)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.4.1": {
+      "en": "Notify, register and certify birth event"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.4.2": {
+      "en": "Notify, register and certify death event"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5": {
+      "en": "Health system financial management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.1": {
+      "en": "Register and verify health coverage scheme membership of persons"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.2": {
+      "en": "Track and manage insurance billing and claims processes"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.3": {
+      "en": "Transmit and manage payments to health facilities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.4": {
+      "en": "Transmit and manage routine payroll payment to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.5": {
+      "en": "Transmit or manage financial incentives to healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.6": {
+      "en": "Manage and plan budget allocations, revenue and expenditures"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.7": {
+      "en": "Determine level of subsidies for health coverage schemes"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.5.8": {
+      "en": "Collect health insurance contributions"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.6": {
+      "en": "Equipment and asset management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.6.1": {
+      "en": "Monitor status and maintenance of health equipment"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.6.2": {
+      "en": "Track regulation and licensing of medical equipment"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.7": {
+      "en": "Facility management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.7.1": {
+      "en": "List health facilities and related information"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.7.2": {
+      "en": "Assess health facilities"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.8": {
+      "en": "Person-centred health certificate management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.8.1": {
+      "en": "Register and store current health certificate information"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.8.2": {
+      "en": "Retrieve and validate current health certificate information"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#3.8.3": {
+      "en": "Revoke and update health certificate"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4": {
+      "en": "Data services"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.1": {
+      "en": "Data Management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.1.1": {
+      "en": "Form creation for data acquisition"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.1.2": {
+      "en": "Data storage and aggregation"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.1.3": {
+      "en": "Data synthesis and visualizations"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.1.4": {
+      "en": "Automated analysis of data to generate new information or predictions on future events"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.2": {
+      "en": "Data coding"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.2.1": {
+      "en": "Parse unstructured data into structured data"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.2.2": {
+      "en": "Merge, de-duplicate and curate coded datasets or terminologies"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.2.3": {
+      "en": "Classify disease codes or cause of mortality"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3": {
+      "en": "Geospatial information management"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3.1": {
+      "en": "Map location of health facilities/structures and households"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3.2": {
+      "en": "Map location of health event"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3.3": {
+      "en": "Map location of persons and settlements"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3.4": {
+      "en": "Map location of healthcare provider(s)"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.3.5": {
+      "en": "Map health and health indicator data to geographic data"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.4": {
+      "en": "Data exchange and interoperability"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.4.1": {
+      "en": "Point-to-point data integration"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.4.2": {
+      "en": "Standards-compliant interoperability"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.4.3": {
+      "en": "Message routing"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.5": {
+      "en": "Data governance compliance"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.5.1": {
+      "en": "Authentication and authorisation"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.5.2": {
+      "en": "Data privacy protection"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.5.3": {
+      "en": "Data consent and provenance"
+    },
+    "http://smart.who.int/base/CodeSystem/CDHIv2#4.5.4": {
+      "en": "Trust architecture"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv2",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-08-26T08:29:22.803243"
+}

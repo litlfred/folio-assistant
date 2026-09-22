@@ -28,7 +28,7 @@
  * specification that is about to exist, which is the argument
  * `schemas/dak-blocks.ts` already makes about `ValueSet.compose.include`.
  *
- * **Anything else a real `dak.json` carries.** The schema is
+ * **Anything else a real `dak.config.json` carries.** The schema is
  * {@link DakDeclarationSchema | passthrough}: unknown keys survive a
  * parse-and-write round trip. A placeholder that silently dropped the fields it
  * had not learned about yet would be worse than no placeholder — it would
@@ -61,14 +61,37 @@ import { SMART_BASE_NS } from "./jsonld";
  * Fixed, not stub-named, for the same reason `harness.json` is: a consumer
  * bootstrapping into a repository it knows nothing about needs one filename to
  * open first. See `skills/folio-core/directory-conventions.md` §Naming.
+ *
+ * ## `dak.config.json` → `dak.config.json`, 2026-09-22
+ *
+ * The owner's ruling, for consistency with `<name>.config.json`: a DAK
+ * repository carries configuration, and this is that file, so it is spelled
+ * like every other config here rather than like a bare declaration.
+ *
+ * **It was renameable because the type is OURS** — bean `cz17` settled that,
+ * against an earlier note in `79t3` that listed it beside `sushi-config.yaml`
+ * as somebody else's file. `sushi-config.yaml` is still not ours; this is.
+ *
+ * ## The upstream gap, stated rather than discovered
+ *
+ * `WorldHealthOrganization/smart-base` writes and reads **`dak.config.json`**:
+ * `generate_dak_from_sushi.py` writes it, and `ghbuild.yml` gates the whole
+ * DAK phase on its presence. Nothing upstream has been renamed, deliberately —
+ * this is pre-work in `litlfred/*` only.
+ *
+ * So until upstream follows, {@link readDak} pointed at a real WHO DAK finds
+ * **nothing**. That is a known divergence, not a bug to work around by
+ * accepting both spellings: accepting both would make "this repo has migrated"
+ * and "this repo has not" indistinguishable, which is exactly the state the
+ * rename exists to end.
  */
-export const DAK_MARKER_FILENAME = "dak.json";
+export const DAK_MARKER_FILENAME = "dak.config.json";
 
 /** The `@type` a DAK declaration projects to — WHO's own logical model. */
 export const DAK_TYPE = `${SMART_BASE_NS}DAK`;
 
 /**
- * One component's contents, as read from a `dak.json`.
+ * One component's contents, as read from a `dak.config.json`.
  *
  * `unknown` because the element shape is pending upstream — see the module
  * note. The array itself is not in doubt: every component is `0..*`.
@@ -76,7 +99,7 @@ export const DAK_TYPE = `${SMART_BASE_NS}DAK`;
 export type DakComponentEntries = unknown[];
 
 /**
- * A `dak.json`, as much of it as is settled.
+ * A `dak.config.json`, as much of it as is settled.
  *
  * The nine component fields are reachable by their WHO names through
  * {@link DAK_COMPONENT_FIELDS}; {@link componentEntries} does that lookup so a
@@ -113,7 +136,7 @@ export const DakDeclarationSchema = z
     ...kgNodeLabelShape,
     ...componentShape,
   })
-  // Unknown keys survive. A real `dak.json` carries more than this module has
+  // Unknown keys survive. A real `dak.config.json` carries more than this module has
   // learned about, and a placeholder that dropped it would destroy data on the
   // first tool that read and rewrote one.
   .passthrough();
@@ -139,7 +162,7 @@ export function populatedComponents(declaration: DakDeclaration): DakComponent[]
 }
 
 /**
- * Read a repository's `dak.json`.
+ * Read a repository's `dak.config.json`.
  *
  * Absent → `undefined`: a repository that is not a DAK is not an error.
  * Present but malformed → **throws**: a marker nobody can read leaves every

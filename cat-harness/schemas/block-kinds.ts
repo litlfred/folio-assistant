@@ -525,7 +525,7 @@ export type DakComponent = (typeof DAK_COMPONENTS)[number];
  * From `smart-base` `input/fsh/models/DAK.fsh`, where every component is
  * declared `0..* <Name>Source`. Carrying the field names makes this table
  * checkable against WHO's model rather than merely parallel to it, and gives a
- * DAK read from `dak.json` somewhere to land.
+ * DAK read from `dak.config.json` somewhere to land.
  */
 export const DAK_COMPONENT_FIELDS: Record<DakComponent, string> = {
   "health-interventions-and-recommendations": "healthInterventions",

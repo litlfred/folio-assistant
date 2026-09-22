@@ -118,6 +118,26 @@ for (const [layout, img] of imagesForRole(decl.images, "landing")) {
           h: +(img.textRegion.h * 100).toFixed(3),
         }
       : null,
+    // THE AVATAR CROP, already solved into the four values CSS wants.
+    //
+    // Owner, 2026-09-22: *"use theme avatar not the purply thing"* — the mark
+    // in the sidebar header was the `@` glyph; the theme avatar is this art,
+    // clipped to the cat, which is what `603s` measured `avatarRegion` for.
+    //
+    // The arithmetic is done HERE for the same reason `region` above is:
+    // computing it in Liquid is worse than computing it in TypeScript. The
+    // image is scaled by `1/w` and `1/h` and then offset by `-x` and `-y` OF
+    // THE SCALED image, which is why the offsets divide by the same fractions.
+    // `navbar.ts`'s `mark()` does the identical sum for the rail — one crop,
+    // two renderers, and neither carries a second formula.
+    avatar: img.avatarRegion
+      ? {
+          width: +(100 / img.avatarRegion.w).toFixed(4),
+          height: +(100 / img.avatarRegion.h).toFixed(4),
+          left: +((-100 * img.avatarRegion.x) / img.avatarRegion.w).toFixed(4),
+          top: +((-100 * img.avatarRegion.y) / img.avatarRegion.h).toFixed(4),
+        }
+      : null,
     title: img.title ?? "",
     description: img.description ?? "",
   };
@@ -214,6 +234,69 @@ function scanTileCounts(assetsDir: string): Map<string, TileCount> {
   return out;
 }
 
+const links = siteLinks(decl, repoUrl);
+const allHarnesses = harnessTiles(
+  REPO_ROOT,
+  ROOT,
+  readdirSync(REPO_ROOT, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
+    .map((d) => d.name)
+    .sort(),
+);
+
+/**
+ * The row, resolved. Separate from the payload literal because it joins THREE
+ * sources -- the resolved icon list on this instance's own tile, that tile's
+ * declared visualisations, and `siteLinks` -- and a join inlined in an object
+ * literal is a join nobody can test.
+ */
+function navbarRow(
+  harnesses: readonly { name: string; navbarIcons?: string[]; visualisations?: { kind: string; path?: string | null }[] }[],
+  self: string | undefined,
+  siteLinkList: readonly { id: string; path?: string; url?: string }[],
+): { icons: string[]; hrefs: Record<string, string>; folders: { kind: string; path?: string }[] } | null {
+  const mine = harnesses.find((h) => h.name === self);
+  // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
+  // none" are different answers and the template must be able to tell them
+  // apart; `[]` here would report every un-migrated instance as deliberate.
+  if (!mine || mine.navbarIcons === undefined) return null;
+  const byKind = new Map((mine.visualisations ?? []).map((v) => [v.kind, v.path ?? undefined]));
+  const hrefs: Record<string, string> = {};
+  for (const icon of mine.navbarIcons) {
+    // `kg` is a SITE link rather than a graph of its own -- it is the viewer
+    // over the whole instance, which is why `siteLinks` owns it and the
+    // visualisation list does not carry it.
+    const at =
+      icon === "kg"
+        ? siteLinkList.find((l) => l.id === "kg")?.path
+        : byKind.get(icon);
+    // NO NORMALISATION HERE ANY MORE. This line used to rewrite `index.md`
+    // for this row alone, with a comment saying the tabs' version of the same
+    // defect was "wider ... and recorded rather than fixed". The owner asked
+    // for the wider one, so `publishedUrlOf` in `harness-tiles.ts` now mints
+    // the URL correctly for EVERY consumer and this row inherits it.
+    //
+    // Deleting the local fix is the point rather than tidiness: two places
+    // converting one path is two answers, and the one further from the source
+    // is the one that goes stale.
+    if (at) hrefs[icon] = at;
+  }
+  // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is
+  // is library docs/ and other controlled folders"*. Resolved here beside the
+  // icon row because they come from the same tile, and a client that joined
+  // the harnesses array itself would be a second answer to "which instance am
+  // I" — a question a staging preview's URL prefix already makes hard.
+  //
+  // A kind with NO path is kept, with no path. `pb04`: declared-and-unrendered
+  // is a finding, and dropping it answers "where is qa" with silence.
+  // Paths come through as `harness-tiles.ts` minted them -- see the note
+  // above on why this no longer rewrites anything.
+  const folders = (mine.visualisations ?? []).map((v) =>
+    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind },
+  );
+  return { icons: [...mine.navbarIcons], hrefs, folders };
+}
+
 const payload = {
   // The SOURCE is the declaration, not `_data/harness.json` -- which is
   // Jekyll's own file, keeps that name, and is what this writes.
@@ -246,7 +329,7 @@ const payload = {
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
   declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? []))].sort(),
-  links: siteLinks(decl, repoUrl),
+  links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //
   // Owner, 2026-09-20: *"I still want to see for every initiated harness a
@@ -270,14 +353,28 @@ const payload = {
     graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
-  harnesses: harnessTiles(
-    REPO_ROOT,
-    ROOT,
-    readdirSync(REPO_ROOT, { withFileTypes: true })
-      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-      .map((d) => d.name)
-      .sort(),
-  ),
+  harnesses: allHarnesses,
+  /**
+   * THE NAVBAR ICON ROW for THIS instance — which icons, and where each goes.
+   *
+   * Owner, 2026-09-22: *"max is 6 and one for todos one for beans one for
+   * processes viewer/ (the factory flow) one for KG viewer"*, and on where the
+   * list lives: *"should be in each harness config which are shown (so some
+   * could show none, but make this default in cat-harness that is
+   * inherited)."*
+   *
+   * THE LIST IS RESOLVED, the DESTINATIONS ARE LOOKED UP, and neither is
+   * written down here. `resolveNavbarIcons` walks `needs`; the hrefs come from
+   * the instance's own declared visualisations and from `siteLinks`. So an
+   * icon whose graph this instance does not publish gets NO href and the
+   * template renders it as a non-link rather than a dead one -- `pb04`, the
+   * same rule the harness tabs and the rail already follow.
+   *
+   * `close` and `launcher` carry no href ON PURPOSE: they drive controls on
+   * the page rather than going anywhere, and giving them one would make them
+   * look like navigation.
+   */
+  navbar: navbarRow(allHarnesses, decl?.name, links),
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";

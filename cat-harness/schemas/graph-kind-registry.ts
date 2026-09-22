@@ -629,6 +629,95 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // is what proves the path still resolves.
     validator: "schemas/health-report.ts#HealthReportSchema",
   },
+  // Source code. Registered 2026-09-22 (bean `ylj7`) after a measurement the
+  // owner asked for: of roughly 1,216 `.ts` files in this repository, about
+  // 180 sat inside a DECLARED directory. Roughly 85% of the code was in no
+  // declared directory at all -- `scripts/`, `content/`, `src/`, `test/` and
+  // `adapters/` among them.
+  //
+  // That is the `v8gh` property, which everything else here already relies on:
+  // AN UNDECLARED FILE IS ONE NO CHECKER HAS A REASON TO LOOK AT. A QA axis
+  // asking "is this code claimed by a Tool node?" was being asked over 15% of
+  // the code while reporting a clean run over the rest, which is `dh4f` in its
+  // most expensive form.
+  //
+  // THE OWNER'S FIRST PROPOSAL WAS A SINGLE `<stub>/src`, and the measurement
+  // is what argued against it as a DESTINATION while confirming it as a
+  // MECHANISM. Three of the four sources resist a move for different reasons:
+  // `schemas/` is already a declared graph (a schema IS a knowledge-graph
+  // node), `content/pipeline/` is core's subject so moving it under
+  // cat-harness crosses the boundary `repo-partition.ts` enforces, and
+  // `scripts/` are entry points named BY PATH in package.json and the CI
+  // workflows -- which `check:ci-invocations` and `check:command-paths` guard.
+  // So: declare them where they are, and keep `<stub>/src` as the convention
+  // for NEW instances.
+  //
+  // `content` by the one question: somebody authors it, with an intention, and
+  // you would re-author rather than regenerate it. It stands on its own -- a
+  // module still computes when detached from everything that calls it.
+  //
+  // NOT renderable, and that is the interesting call. Code is legible and this
+  // repository does publish views of it, but `renderable` asks whether the
+  // graph is wired to the SITE BUILD as pages, and it is not: the generated
+  // references are built from schemas and skills, not from the code graph.
+  // Saying `true` here would promise a page for every module.
+  //
+  // It does NOT answer "is this code claimed". That is a second, separate
+  // question -- declared but bound to no Tool node -- and beans `d308` and
+  // `ce65` own it. Reporting the two as one number is how the cheap one never
+  // gets done.
+  code: {
+    type: termIri("CodeGraph"),
+    renderable: false,
+    holds: "content",
+    summary:
+      "Source code -- the modules, scripts and entry points an instance holds. Declared so that " +
+      "code is scannable at all: an undeclared file is one no checker has a reason to look at. " +
+      "Being declared here says nothing about whether a Tool node claims it, which is a separate " +
+      "question and a separate axis.",
+    skill: "where-does-this-go",
+  },
+  // QA reports -- what a pipeline TOOL recorded about its own run. The FIFTH
+  // QA-shaped family here, and a separate kind for the same reason `health` is
+  // separate from `qa`, one step further out: a `qa` witness judges an
+  // ARTEFACT, a `health` report judges the REPOSITORY, and a `qa-report`
+  // records an EXECUTION. Folding it into `qa` would put "this script
+  // processed 198 files and expected 199" beside "this lane binds no role",
+  // and hand a consumer asking for verdicts about content a fact about a
+  // subprocess.
+  //
+  // Registered on the owner's ruling, 2026-09-22, and on evidence rather than
+  // design: every DAK pre/post script already writes exactly this document and
+  // the Publisher already writes `qa.json`, and NOTHING DOWNSTREAM READS
+  // EITHER. The shape is what they emit, down to upstream's snake_case field
+  // names -- `schemas/qa-report.ts` says why renaming them would be a place
+  // for producer and consumer to drift silently.
+  //
+  // `state` by the one question: a running process WRITES it. It is the same
+  // shape as `health` one level in -- where a RUN got to, rather than where
+  // the repository got to -- and `derived` was considered and rejected: a
+  // derived graph is regenerated from a source that still exists, while
+  // re-running a tool produces a DIFFERENT report rather than the same one
+  // again.
+  //
+  // `recordsWork: false` -- live state, but nothing anybody is partway
+  // through. A half-written report is not work in progress; it is a run that
+  // died, which `qaReportVerdict` reports as `unknown` rather than as clean.
+  "qa-report": {
+    type: termIri("QaReportGraph"),
+    renderable: false,
+    holds: "state",
+    recordsWork: false,
+    summary:
+      "QA reports -- one `qa-report/v1` document per tool run, carrying the tool's own " +
+      "successes, warnings and errors, the files it processed, the files it EXPECTED and " +
+      "the ones that were missing, plus the provenance and toolchain versions upstream " +
+      "records nowhere. Generated by the run; never hand-edited.",
+    skill: "dak-postprocessing",
+    schema: "schemas/qa-report.ts",
+    // declared-path-literal: this table IS the declaration, as for `health`.
+    validator: "schemas/qa-report.ts#QaReportSchema",
+  },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
   // and the #263 version it supersedes is preserved there too. PR #266 changed

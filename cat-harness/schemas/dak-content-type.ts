@@ -18,7 +18,7 @@
  *
  * The comment was right about where they belong and wrong that it could wait.
  * `smart-base` depends on core; core recognising a DAK means core importing
- * downstream, and it is not avoidable by intent — recognising `dak.json`
+ * downstream, and it is not avoidable by intent — recognising `dak.config.json`
  * requires `DAK_TYPE`, and reaching for it *is* the edge. A boundary argued in
  * prose is a boundary that does not hold; this one is held by the import graph.
  *

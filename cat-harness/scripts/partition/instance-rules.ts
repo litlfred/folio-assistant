@@ -220,6 +220,16 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // The geometry that navbar became a reader of, and the generator that
+      // renders it to CSS (bean `sjic`). HARNESS for the same reason as
+      // `navbar.ts` and one step more plainly: the numbers are the width of
+      // the PLATFORM's chrome on every instance's pages at once, so a folio
+      // owning them would set the navbar's width for every other folio. The
+      // generator writes into the site's own asset directory, deriving the
+      // path from `siteDirFor` rather than naming it, so it does not know
+      // which instance it is writing for either.
+      "scripts/lib/navbar-geometry.ts",
+      "scripts/gen-navbar-geometry-css.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -723,6 +733,10 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, plus one of its own: its `--github`
+      // half asks the forge which PRs are open, and a PR is a fact about
+      // this checkout and the forge, not about any folio's material.
+      "scripts/check-bean-rollup.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
