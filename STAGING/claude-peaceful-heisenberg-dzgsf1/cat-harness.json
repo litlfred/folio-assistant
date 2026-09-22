@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T09:49:37.171Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6167f59cc6efbaafe3dd60e427a0fa2972af20a8",
-  "sourceCommitSha": "6167f59cc6efbaafe3dd60e427a0fa2972af20a8",
-  "sourceCommitAt": "2026-09-22T09:47:55Z",
+  "generatedAt": "2026-09-22T10:08:13.618Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c073493c19a2e5fe4f279171903ccc52a513364c",
+  "sourceCommitSha": "c073493c19a2e5fe4f279171903ccc52a513364c",
+  "sourceCommitAt": "2026-09-22T10:02:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 230,
@@ -276,9 +276,9 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 59,
-    "SequenceFlow": 749,
+    "SequenceFlow": 751,
     "Role": 135,
-    "ProcessNode": 714,
+    "ProcessNode": 715,
     "Tool": 69,
     "Schema": 93,
     "GraphKind": 26,
@@ -14761,8 +14761,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -14895,6 +14895,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_13"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -14915,7 +14933,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All five,&#10;in parallel",
+      "name": "All six,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -14931,7 +14949,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -15047,6 +15066,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dependency advisories&#10;(WARN-ONLY)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -15062,7 +15103,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -35592,8 +35634,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "54bbad8e28981cf045a8cec0e077793865d8b992",
+    "sha": "f833fe90b948ec2fad1644890271fff67d353cec",
     "pr": "906/merge",
-    "run": "35712428079"
+    "run": "35714193857"
   }
 }
