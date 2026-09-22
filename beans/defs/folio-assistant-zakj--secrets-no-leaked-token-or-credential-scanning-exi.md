@@ -1,12 +1,12 @@
 ---
 # folio-assistant-zakj
 title: 'SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T10:58:19Z
+parent: folio-assistant-3x2n
 ---
 
 ## Measured 2026-09-21 — there is none
@@ -41,7 +41,7 @@ this repository's own history:
       of scope (below)
 - [x] The false-positive rate is measured on this corpus BEFORE gating, and
       the number decided the design (below)
-- [ ] A finding is dispatched and adjudicated per `0grh` — **not needed and
+- [x] A finding is dispatched and adjudicated per `0grh` — **not needed and
       deliberately not built.** A prefix-anchored match is deterministic: the
       string either is a `ghp_` token or it is not. Dispatching an adjudicator
       to confirm a regex would be ceremony, and `0grh` exists for judgements,
@@ -85,3 +85,35 @@ which it names and redacts, and removing it, which turns it green.
 **Git history.** A sweep of past objects is a different job with a different
 remedy — rotation, not deletion — and claiming it here would be the over-claim
 this gate exists to avoid. From here forward, and the docstring says so.
+
+## Summary of Changes — closed on EVIDENCE, 2026-09-22
+
+Closed by a session that did **not** write this work, per `bean-coordination`
+§"Closing a bean whose work has already landed": **evidence, not authorship.**
+Everything below was re-derived rather than taken from the bean's own prose.
+
+| claim | how it was re-derived |
+|---|---|
+| the scanner exists | `cat-harness/scripts/check-secret-leaks.ts`, with `scripts/tests/secret-leaks.test.ts` beside it |
+| it is a real gate, not just a script | `package.json:116` registers `check:secret-leaks`, and `.github/workflows/code-quality-gates.yml:812` runs it — so CI gates on it |
+| it runs clean | 3,928 text files across 5 declared roots, **0 findings**, exit 0 |
+| **it can actually fire** | planted a fake `ghp_` token in a scanned root: it reported `github-pat-classic`, **redacted the value** in its own output (`ghp_0123…wxyz`), and exited **1**. Removed; tree clean |
+
+The redaction is worth naming: a scanner that prints the credential it found has
+copied it into a CI log, which is a second leak. This one truncates.
+
+It also prints its own scope on **every clean run** — prefix-anchored by design,
+entropy measured unusable here, git history deliberately out of scope with
+rotation named as the remedy. That is the third-state discipline applied to a
+green result: the run says what it did *not* look at, so a pass cannot be read
+as more coverage than it is.
+
+### The last checkbox
+
+*"A finding is dispatched and adjudicated per `0grh`"* was the only unticked
+item, and its own text already resolved it: **not needed and deliberately not
+built**, because a prefix-anchored match is deterministic — the string either is
+a `ghp_` token or it is not, and dispatching an adjudicator to confirm a regex
+would be ceremony. Ticked as resolved rather than left hanging, with the
+condition that revives it recorded there: the day an entropy or heuristic
+detector is added.
