@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/skills/document-authoring/output.schema.json",
+  "title": "Document Authoring Output",
+  "type": "object",
+  "required": [
+    "label",
+    "filesWritten",
+    "listedInSection"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "filesWritten": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Repo-relative paths written (.ts and .md)."
+    },
+    "listedInSection": {
+      "type": "boolean",
+      "description": "Whether the block root was added to a section's blocks[]. False means the block renders nowhere — the most common way authored work disappears."
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        },
+        "profileViolations": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-bohr-cyt1s4",
+    "sha": "acca4e43126f6838d2c97bac040d4d7bb4eed3c8",
+    "pr": "934/merge",
+    "run": "35719532046"
+  }
+}

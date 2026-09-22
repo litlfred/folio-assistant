@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-bohr-cyt1s4/skills/l3-fhir-authoring/output.schema.json",
+  "title": "L3 FHIR Authoring Output",
+  "description": "Output schema for L3 FHIR IG authoring.",
+  "type": "object",
+  "required": [
+    "fshFiles",
+    "sushiResult"
+  ],
+  "properties": {
+    "fshFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "warnings",
+            "errors"
+          ]
+        },
+        "resourceCount": {
+          "type": "integer"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "generatedResources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-bohr-cyt1s4",
+    "sha": "acca4e43126f6838d2c97bac040d4d7bb4eed3c8",
+    "pr": "934/merge",
+    "run": "35719532046"
+  }
+}
