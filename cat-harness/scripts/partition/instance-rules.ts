@@ -653,6 +653,11 @@ export const RULES: Rule[] = [
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
+      // The composition-root gate: which COMMANDS may assemble layers, and
+      // which of them must carry core's `folio` registration. Harness by
+      // subject — it reasons about this repository's own module graph and
+      // layering rule, neither of which a folio authors. Bean `q2wn`.
+      "scripts/check-composition-roots.ts",
       // The external-specification registry — which edition of BPMN, DD or
       // DCMI Terms this repository conforms to, reconciled against the
       // namespaces its own diagrams and records actually bind. Harness by
