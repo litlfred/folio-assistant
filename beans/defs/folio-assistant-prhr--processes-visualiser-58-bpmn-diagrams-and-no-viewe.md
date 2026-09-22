@@ -1,12 +1,12 @@
 ---
 # folio-assistant-prhr
 title: 'PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology'
-status: todo
+status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-p5wm
 created_at: 2026-09-21T22:01:44Z
-updated_at: 2026-09-21T22:01:44Z
+updated_at: 2026-09-22T08:20:36Z
+parent: folio-assistant-p5wm
 ---
 
 ## What — owner, 2026-09-21
@@ -75,12 +75,87 @@ position would be a second store free to disagree with the first, which
 
 ## Done when
 
-- [ ] The count is re-measured from the directory, not taken from this bean or
+- [x] The count is re-measured from the directory, not taken from this bean or
       its title
-- [ ] A person can answer "what runs skill X" and "which processes have a
+- [x] A person can answer "what runs skill X" and "which processes have a
       Stakeholder lane" without opening a file
-- [ ] The viewer reads the committed instances for position and renders no
+- [x] The viewer reads the committed instances for position and renders no
       position of its own
-- [ ] A process with no rendered SVG is reported as such rather than omitted —
+- [x] A process with no rendered SVG is reported as such rather than omitted —
       third state, same as everywhere else
 
+## Built — `gen-processes-viz.ts`, and the count is 62
+
+**Re-measured from the directory, as the first done-when demands.** The bean's
+title said 58, its body said 61; both are wrong now and were wrong differently.
+This page carries no number in prose — every figure on it is counted at
+generation time, which is the only form of the rule that survives the corpus
+moving.
+
+| fact | bean | my first pass (regex) | parser |
+|---|---|---|---|
+| diagrams | 58 / 61 | 62 | **62** |
+| distinct lanes | 89 | 93 | **96** |
+| distinct skill refs | 84 | 85 | **85** |
+| bean ops | 49 | **30** | **49** |
+
+### Three defects, all mine, all during construction
+
+**1. It swept nothing and called that success.** `workflowFiles` takes an
+INSTANCE root; handed the repository root it returns `[]`. The first run printed
+*"Wrote processes-index.md — 0 diagram(s)"* and exited 0, over a corpus of 62.
+The `dh4f` shape, produced by the generator written to report it. Fixed at the
+cause (iterate every instance declaration) **and** at the symptom (a vacuity
+guard that refuses to write an index over nothing).
+
+**2. It claimed a gap that was not there.** The SVG path was composed from each
+`.bpmn`'s own location instead of the docs layer `render:bpmn` writes to, so it
+reported **11 of 62** diagrams as unrendered — all 8 CRDM, all 3 bootstrap.
+Every one of those SVGs exists, and `render:bpmn:check` was green throughout.
+**A finding that contradicts a passing gate is a finding to verify, not to
+publish**, and this repository paid for the same mistake in
+`viewer-undiscovered.test.ts` the same week.
+
+**3. It measured with a regex.** 30 bean ops found, 49 present. Two legal
+markup variants missed: a `store=` attribute before `op=`, and attributes
+wrapped onto the next line. `check:workflow-refs` already says *"the real parser
+is the oracle for the generator's regex"* — measured again, on the generator
+written to index the corpus that sentence is about. It now consumes
+`loadProcessModel`, the same bpmn-moddle parse the engine runs.
+
+### A third state the bean did not know about
+
+**24 of 62 processes declare no `folio:policy`.** `loadProcessModel` reads an
+undeclared policy as `strict`, which is right for the ENGINE and its comment
+says why — *"a process that forgot to say is governed, not exempt"*. It is not
+right for a reader: *somebody chose strict* and *nobody said, so the engine
+assumed strict* are different facts. The page asks the FILE whether a policy is
+declared — a presence check, not a second reading of its meaning — and reports
+`declared` and `defaulted` in separate columns. The engine keeps one answer; the
+reader gets its provenance.
+
+### The finding the page surfaces that nothing else did
+
+**31 activities across 19 diagrams carry no `<folio:skill ref>`.**
+`bpmn-processes` requires one on every activity: without it an agent reaching
+the step is told what it is called and not what to run. Not fixed here — 19
+diagrams is its own change — but it is now visible instead of being a thing
+nobody counted.
+
+### Where the done-whens are answered
+
+The checklist above is ticked in place rather than restated here.
+`check:bean-bodies` calls a second `Done when` a **shadow-checklist**, and it is
+right: two of them are two answers to "is this done", and the one a reader finds
+first is not the one the bean has always carried. I appended one anyway, and the
+gate caught it.
+
+- **count re-measured** — the table at the top of this section; the page carries
+  no number in prose.
+- **"what runs skill X"** — the reverse `folio:skill` join, 85 skills.
+  **"which processes have lane Y"** — the lane table, 96 distinct names.
+- **renders no position of its own** — the index consumes generated SVGs and
+  reads nothing from `beans/workflows/`; workflow state stays the one store.
+- **no rendered SVG reported, not omitted** — and the **zero** case is stated
+  too, because "all rendered" and "the check did not run" are different facts an
+  absent section cannot tell apart.

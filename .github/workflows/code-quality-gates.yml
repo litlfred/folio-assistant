@@ -737,6 +737,7 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          bun run processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact
           # against its recorded digest: an edit in place fails here. A

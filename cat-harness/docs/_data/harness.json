@@ -284,6 +284,18 @@
       "theme": "analyst"
     },
     {
+      "id": "processes",
+      "directory": "processes",
+      "title": "processes",
+      "ref": "cat-harness/docs/processes-index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/processes-index.md",
+      "hidden": false
+    },
+    {
       "id": "schemas",
       "directory": "schemas",
       "title": "schemas",
@@ -970,7 +982,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 13
+          "value": 14
         }
       ],
       "visualisations": [
@@ -1014,7 +1026,8 @@
           "kind": "methodology"
         },
         {
-          "kind": "processes"
+          "kind": "processes",
+          "path": "/processes-index.md"
         },
         {
           "kind": "qa",
@@ -1052,7 +1065,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 7 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
