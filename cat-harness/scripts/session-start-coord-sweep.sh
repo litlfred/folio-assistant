@@ -398,6 +398,56 @@ else
 fi
 echo
 
+# ── 3d. Sibling sessions waiting on a person ────────────────────────────────
+# Bean `rq8s`. Four sessions were stopped holding a question in the owner's own
+# terms, and the only reason anybody learned that was an agent querying the
+# session API by hand. The signal is not missing -- `session_status` carries
+# `REQUIRES_ACTION` and `task_summary` carries the question verbatim -- so the
+# defect is that NOTHING AGES OR AGGREGATES IT.
+#
+# `check:session-staleness` does both, and this sweep cannot run it, which is
+# the finding rather than an omission. Probed 2026-09-21 from inside a session
+# container: no session credential in the environment,
+# `api.anthropic.com/v1/sessions` -> 401, `claude.ai/api/code/sessions` -> 403.
+# `list_sessions` is an MCP tool the AGENT holds, not an endpoint a shell can
+# call. Wiring a fetch in here would produce a check that examines nothing and
+# reports a clean run over everything -- the `dh4f` defect, in the tool written
+# to stop one.
+#
+# So the input is asked for by NAME, and NOT asking is `unknown` rather than
+# "no sessions are waiting". Same shape as `## Running processes` above: the
+# sweep cannot decide it, so it makes sure the question is put.
+echo "## Sibling sessions waiting on a person"
+echo
+cat <<'SESSIONS'
+**Not checked by this script, and that is not "none".** The listing comes from
+an MCP tool only an agent holds (`list_sessions`), so a shell cannot fetch it:
+probed 2026-09-21, `api.anthropic.com/v1/sessions` → 401 and
+`claude.ai/api/code/sessions` → 403. A fetch wired in here would examine
+nothing and report every session clean.
+
+**Run it yourself, once, early in the turn:**
+
+1. Call `list_sessions` (`mine: true`, `limit: 50` or more).
+2. Save the payload and pipe it in — the reader takes either a `{"ccr":{"data":[…]}}`
+   envelope or a bare array:
+
+   ```sh
+   bun run check:session-staleness <listing.json>
+   ```
+
+3. **Report what it says, including the `task_summary` it prints.** A count
+   cannot be acted on; these questions are usually answerable in a sentence.
+   If you could not obtain the listing, say `unknown` — never "none waiting".
+
+Three classes, each with its threshold's basis, in `src/sessions/staleness.ts`:
+a session in `REQUIRES_ACTION` past 72 h; a `FAILED` session carrying `unread`
+past 24 h; and one whose bucket says `BLOCKED` while its status says `IDLE`,
+which is NAMED separately because waiting and abandoned cannot be told apart
+from the listing.
+SESSIONS
+echo
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**
@@ -414,4 +464,9 @@ cat <<'EOF'
 3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.
+4. **Run the session-staleness check** described above — `list_sessions`, then
+   `bun run check:session-staleness`. It is the only step here whose input this
+   script cannot produce, so it is the only one that silently reports nothing
+   when skipped. A session that has held a question for days is the cheapest
+   thing in this sweep to fix and the only one nobody else will notice.
 EOF
