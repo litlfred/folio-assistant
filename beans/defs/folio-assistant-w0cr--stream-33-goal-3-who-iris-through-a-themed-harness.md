@@ -22,17 +22,30 @@ single pull request in the repository.
 
 **Beans** — `yg29` (15 open), including the `kupb` IRIS-catalogue epic.
 
-`yg29` states its shortest path:
+**`yg29`'s stated shortest path is STALE, and this claim carries the
+re-measurement rather than reproducing it.** Measured 2026-09-22T18:15Z.
 
-1. Close the three beans that are **built but still read open** — `z7ev`
-   (cross-instance library reference), `lzbw` (the IRIS/DSpace skill), `huiu`
-   (Dublin Core records) — verifying `check:voices` is green across the
-   who-style-guide → who-iris boundary, which is `kupb`'s own falsifier.
-2. `j66n`'s two themes. `iris-web`'s source is already on disk in the IRIS
-   capture; `who-wpro-publication`'s source is the style guide's own rules.
-3. The rendering: `jbx2` (`library/` per slug, ingestion as three states) and
-   `809i` (the just-the-docs rendering distinguishes the three visually).
-4. `kupb` closes.
+`yg29` states four steps. **Step 1 is entirely finished.** It says to close the
+three beans that are *"built but still read open"* — `z7ev`, `lzbw`, `huiu` —
+and all three are **`completed`** in the store: somebody closed them and the
+milestone was never updated. `jbx2`, half of step 3, is **`completed`** too.
+
+What actually remains:
+
+| bean | status | |
+|---|---|---|
+| `j66n` | in-progress | the two themes — `iris-web`'s source is already on disk in the IRIS capture; `who-wpro-publication`'s is the style guide's own rules |
+| `809i` | todo | catalogue by reference; the rendering distinguishes the three states visually |
+| `kupb` | in-progress | the IRIS-catalogue epic; closes last |
+
+**What step 1 was FOR still needs doing, even though its beans are closed.** Its
+stated purpose was verifying `check:voices` is green across the who-style-guide
+-> who-iris boundary, which is `kupb`'s own falsifier. Closing three beans did
+not run that check. Run it.
+
+Do not repair `yg29` itself — `check:stale-paths` lists it as **outstanding**,
+and an outstanding entry is repaired by the bean's OWNER. Put the correction to
+the owner.
 
 **Pull request on this surface:**
 
@@ -52,10 +65,10 @@ closed by a rebase:
 
 ## First three moves
 
-1. **Re-verify the shortest path before acting on it.** Bean `k59d` records that
-   `yg29` advertises blockers that are already complete — and this bean's own
-   step 1 is three beans that are *built but read open*, which is that same
-   defect. Confirm which of the three are actually done.
+1. **Run `check:voices` across the who-style-guide → who-iris boundary.** This
+   is what `yg29`'s step 1 was *for*; its three beans are already closed, but
+   closing them did not run the check, and it is `kupb`'s own falsifier. The
+   path above is re-measured, so start here rather than re-deriving it.
 2. **Resolve #881's conflict by merging `main` in, never by rebasing.** Its
    history records that every prior conflict was in a **generated** file and none
    was resolved by hand — `main`'s copy taken, then the repo's own generators
@@ -83,8 +96,9 @@ delivery mechanism, not separate work. Coordinate; do not re-decide `o7eq` here.
 
 ## Done when
 
-- [ ] `yg29`'s shortest path re-verified; `z7ev`, `lzbw`, `huiu` confirmed built
-      and closed on evidence, or corrected
+- [x] `yg29`'s shortest path re-verified (2026-09-22T18:15Z: step 1 entirely
+      complete — `z7ev`, `lzbw`, `huiu` all closed — and `jbx2` too)
+- [ ] The correction put to the owner — `yg29` itself is repaired by its owner
 - [ ] `check:voices` green across the who-style-guide → who-iris boundary
 - [ ] #881 conflict-free and green, with `m4xy` and `cpmo` still open rather than
       absorbed

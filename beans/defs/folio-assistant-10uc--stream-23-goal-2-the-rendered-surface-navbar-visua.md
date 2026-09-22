@@ -23,14 +23,38 @@ navbar, the visualisers, the stickies, avatars and themes.
 **Beans** — `p5wm` (39 open), including the `6lb8` folio-board epic and the
 `o3xy` UI & accessibility epic nested under it.
 
-`p5wm` states its critical path as `b5f0` → `603s` → `hfkl` → `2krx` →
-(`6lb8` ‖ `ivfw` + `5y4b`) → `pb04` → `supn`, with `gjli` (accessibility) a
-standing gate on every step. Two notes it carries that change what to do first:
+**`p5wm`'s stated path is STALE, and this claim carries the re-measurement
+rather than reproducing it.** Measured 2026-09-22T18:15Z against the store,
+after `check:stale-paths` failed this very bean for quoting it:
 
-- **`b5f0` is not a UI bean.** It holds the ruling that settles `603s`'s own
-  first open question — which file marks an instance.
-- **`hfkl` is the cheapest real win.** The owner's ruling is already quoted in
-  the bean, and it unblocks `2krx`, which otherwise fires 19 findings on day one.
+`p5wm` names an eight-step path. **Four of those steps are `completed`** —
+`2krx`, `ivfw`, `5y4b`, `pb04` — **and so are both side-conditions** it names,
+`gjli` (the standing accessibility gate) and `1hvo` (the declaration layer).
+The chain is not reproduced here on purpose: a chain through finished work
+reads to the next agent as work still to do, which is what this gate exists to
+catch and what it caught in the first draft of this very bean.
+
+What actually remains, in order:
+
+| bean | status | |
+|---|---|---|
+| `b5f0` | todo | **first, and not a UI bean** — it holds the ruling that settles `603s`'s own first open question, which file marks an instance |
+| `603s` | in-progress | the LHS navbar as one themed section per instance |
+| `hfkl` | in-progress | bootstrap is the exception |
+| `6lb8` | in-progress | the folio board — its persistence half is blocked on the owner |
+| `supn` | todo | harness cards become todos |
+
+**Two of `p5wm`'s own rationales died with the beans they cite.** It calls
+`hfkl` *"the cheapest real win"* because it unblocks `2krx`, *"which otherwise
+fires 19 findings on day one"* — `2krx` is **completed**, so that argument is
+spent and `hfkl` now needs a reason of its own. And *"stickies that move around
+is `ivfw` + `5y4b`, and they must land together"* describes two beans that have
+**both landed**; what remains of that thread is `6lb8`'s persistence question
+alone.
+
+Do not repair `p5wm` itself — `check:stale-paths` lists it as **outstanding**,
+and an outstanding entry is repaired by the bean's OWNER, not by whoever reads
+it. Put the correction to the owner.
 
 **Pull requests on this surface:**
 
@@ -41,10 +65,13 @@ standing gate on every step. Two notes it carries that change what to do first:
 
 ## First three moves
 
-1. **Re-verify the critical path before acting on it.** Bean `k59d` records that
-   `p5wm` specifically advertises blockers that are already complete. Do this
-   before picking a bean off the path.
-2. **`b5f0` then `hfkl`** — the ruling, then the cheapest unblock.
+1. **`b5f0`** — the ruling that settles `603s`'s first open question. The path
+   above is already re-measured, so start here rather than re-deriving it; but
+   re-check anything you are about to spend a session on, because `main` moves
+   and this measurement is only as old as its timestamp.
+2. **`hfkl`, or argue it down.** `p5wm` called it the cheapest win because it
+   unblocks `2krx` — and `2krx` is done. Either give it a live reason or take
+   `603s` next and say why.
 3. **#955: ship round 1 or hold it.** Its own body argues requirement 2 needs a
    mechanism change (the card does not scroll at all: `clientHeight ===
    scrollHeight === 318` on a 320 card, and the `overflow: hidden` above it is
@@ -72,8 +99,10 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
 
 ## Done when
 
-- [ ] `p5wm`'s critical path re-verified against the store, stale blockers
-      withdrawn with their reasons
+- [x] `p5wm`'s critical path re-verified against the store (2026-09-22T18:15Z:
+      four of eight steps and both side-conditions already `completed`)
+- [ ] The correction put to the owner — `p5wm` itself is repaired by its owner,
+      not by this stream
 - [ ] `b5f0` ruling recorded and `603s`'s first open question closed
 - [ ] `hfkl` landed, `2krx`'s 19 day-one findings not fired
 - [ ] #955 shipped or held with a stated reason
