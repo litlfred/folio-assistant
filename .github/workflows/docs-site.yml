@@ -157,6 +157,21 @@ jobs:
       - name: Regenerate the library projection and viewer
         run: bun run library:viz
 
+      # THE INTAKE QUEUE, as its own harness. Split from the library viewer
+      # 2026-09-21: both directories declared the same `coverage.visualiser`,
+      # so the uploads tile opened the corpus browser and rendered the
+      # library's entry count -- 0 on this instance, while 27 sources waited
+      # in the queue beside it.
+      #
+      # It runs HERE rather than being gated by `code-quality-gates`, for the
+      # reason stated against `library:viz:check` in that file: it derives from
+      # the whole repository, so a branch alive for a few minutes finds it
+      # stale against the merge ref and a red would mean "somebody else
+      # merged". Nothing published goes stale, because this step regenerates
+      # it from the tree being deployed.
+      - name: Regenerate the uploads projection and viewer
+        run: bun run uploads:viz
+
       # Every voice its instance declares, with the passage each rule was read
       # from. Same contract as the two viewers above: the committed copy is
       # browsable on GitHub and the published one must never be its stale half.
