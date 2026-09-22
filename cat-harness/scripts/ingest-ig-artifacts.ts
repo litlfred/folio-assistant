@@ -36,6 +36,7 @@
  * actually had — an IG missing one of them yields a thinner index, not a
  * guessed one.
  */
+import { createHash } from "node:crypto";
 import { readFileSync, existsSync, mkdirSync, writeFileSync, copyFileSync, statSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { gunzipSync } from "node:zlib";
@@ -296,6 +297,8 @@ function main(): void {
   const materialized: Array<[string, string]> = [];
   const unbound: UnboundSidecar[] = [];
   const materializedStems = new Map<string, string>();
+  /** `dak/<basename>` → the source file it was copied from, for fixity. */
+  const materializedFrom = new Map<string, string>();
 
   const byCanonical = new Map<string, FhirArtifact>();
   const byStem = new Map<string, FhirArtifact>();
@@ -323,7 +326,13 @@ function main(): void {
       if (!r) continue;
       a.dak = a.dak ?? {};
       (a.dak as Record<string, unknown>)[slot] = r;
-      if (materializeDak) materialized.push([file, basename(file)]);
+      if (materializeDak) {
+        materialized.push([file, basename(file)]);
+        // The copy into `dak/` happens at the end of the run, long after the
+        // materialization records are built — so fixity is taken from the
+        // SOURCE, and this is what maps a recorded `localPath` back to it.
+        materializedFrom.set(basename(file), file);
+      }
       dakFiles += 1;
       dakByteTotal += r.bytes ?? statSync(join(source, file)).size;
       any = true;
@@ -380,11 +389,51 @@ function main(): void {
     for (const [key, stem] of materializedStems) {
       const a = byKey.get(key);
       if (!a) continue;
+      // LOCALPATH MUST NAME A SIDECAR THAT ACTUALLY LANDED.
+      //
+      // It was hardcoded to `${stem}.schema.json`, while `materializedStems`
+      // is set when ANY of the four sidecars lands. An artefact publishing
+      // only a `.jsonld` therefore got a materialization pointing at a schema
+      // file that was never written — a record asserting bytes that are not
+      // there, which `check-materialized-fixity` reports as `absent`.
+      //
+      // Measured 2026-09-22 on smart-immunizations: `IMMZ.D.DE19` and
+      // `IMMZ.Z.VS`, both `dak: { jsonld }` only, both declaring a
+      // `.schema.json` that does not exist and never did. 198 schema files on
+      // disk against 200 materialized claims.
+      //
+      // Preference order matches what a consumer wants first — the schema is
+      // the richest sidecar — but the path is now READ from what attached
+      // rather than composed from a stem and a hope.
+      const landed = ["schema", "displays", "openapi", "jsonld"]
+        .map((slot) => (a.dak as Record<string, { localPath?: string }> | undefined)?.[slot]?.localPath)
+        .find((p): p is string => typeof p === "string");
+      if (landed === undefined) {
+        // Nothing materialised after all. Leaving the node `referenced` is the
+        // true answer; claiming `materialized` with no path would be the same
+        // defect one step along.
+        continue;
+      }
       a.materialization = {
         state: "materialized",
         of: a.materialization.of,
-        localPath: join("fhir-artifact-index", "dak", `${stem}.schema.json`),
+        localPath: landed,
         purpose: "working",
+        // FIXITY AT MATERIALISE TIME, which is the only moment it can be
+        // recorded as a fact rather than observed later as a baseline.
+        // `materialization.ts` already said "the fixity data already exists …
+        // nothing reads them as fixity today"; nothing WROTE them here either,
+        // which is why 217 artefacts needed backfilling.
+        ...(() => {
+          const from = materializedFrom.get(basename(landed));
+          if (from === undefined) return {};
+          return {
+            fixity: {
+              algorithm: "sha256" as const,
+              digest: createHash("sha256").update(readFileSync(join(source, from))).digest("hex"),
+            },
+          };
+        })(),
         gates,
       };
     }
