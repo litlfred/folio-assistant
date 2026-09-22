@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T08:07:30.026Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2ffb807101f1aa496bca6b1f1a222cb0fbc20386",
-  "sourceCommitSha": "2ffb807101f1aa496bca6b1f1a222cb0fbc20386",
-  "sourceCommitAt": "2026-09-22T08:05:38Z",
+  "generatedAt": "2026-09-22T08:16:07.137Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0c6c547c67bb1e9cc6b6a74c6e039eccd7d473da",
+  "sourceCommitSha": "0c6c547c67bb1e9cc6b6a74c6e039eccd7d473da",
+  "sourceCommitAt": "2026-09-22T08:14:04Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 228,
@@ -1637,7 +1637,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-review.md",
-      "instructionLines": 201,
+      "instructionLines": 235,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4116,7 +4116,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#package/large-datasets"
       ],
       "instructionsPath": "../large-datasets/skills/copy-out-materialized.md",
-      "instructionLines": 99,
+      "instructionLines": 128,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -10560,7 +10560,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Re-materialize, re-asking the five gates",
+      "name": "Re-materialize, re-asking the five gates — and record the new fixity",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/cat-harness.jsonld#process/Process_RefreshMaterialized",
@@ -35547,8 +35547,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "701b3c51ca7e41fcfcfe03226b76dd8e87bb64c4",
+    "sha": "07f879adfa74c9d7abf1546eef5c5a58a861c1bb",
     "pr": "858/merge",
-    "run": "35702951236"
+    "run": "35703710355"
   }
 }

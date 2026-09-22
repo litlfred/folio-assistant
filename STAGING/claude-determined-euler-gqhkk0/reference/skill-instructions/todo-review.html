@@ -411,25 +411,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/docs-ui.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/docs-ui.css?v=1790064911">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/work-plan.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/work-plan.css?v=1790064911">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/themes.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/themes.css?v=1790064911">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/avatars.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/avatars.css?v=1790064911">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,7 +446,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/docs-ui.js?v=1790064400" defer></script>
+<script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/docs-ui.js?v=1790064911" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -855,6 +855,50 @@ sessions; surfaced via <code class="language-plaintext highlighter-rouge">/todos
 (<code class="language-plaintext highlighter-rouge">todo-manager</code>) may include “process N feedback items via
 <code class="language-plaintext highlighter-rouge">todo-review</code>” as a single task.</p>
 </blockquote>
+<h2 id="where-the-feedback-came-from--this-skill-starts-mid-air-without-it">
+  
+  
+    <a href="#where-the-feedback-came-from--this-skill-starts-mid-air-without-it" class="anchor-heading" aria-labelledby="where-the-feedback-came-from--this-skill-starts-mid-air-without-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the feedback came FROM — this skill starts mid-air without it
+  
+  
+</h2>
+    
+
+<p>Triage assumes somebody already had an editable copy to leave feedback <strong>on</strong>,
+and until 2026-09-22 nothing said how they got one. For content this repository
+holds by reference or has materialized from somewhere else, the answer is not
+“they opened it”: materialized content is <strong>read-only</strong>, and browsing to it
+gives a reader nothing to annotate.</p>
+
+<p>The missing first step is
+<a href="../../../large-datasets/skills/copy-out-materialized.md"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a>
+(diagram:
+<a href="../../processes/copy-out-materialized.bpmn"><code class="language-plaintext highlighter-rouge">copy-out-materialized.bpmn</code></a>).
+The owner’s framing, 2026-09-21:</p>
+
+<blockquote>
+  <p><em>“this is first/early step of review process, checking out local copy to edit,
+make comments/todos/stickies, etc on it. these feed into the comment review
+pipeline.”</em></p>
+</blockquote>
+
+<p>So the sequence is: a reviewer browses a materialized sub-graph (read-only) →
+copies it into their <strong>own</strong> <code class="language-plaintext highlighter-rouge">folio/</code>, carrying <code class="language-plaintext highlighter-rouge">provenance.local</code> back to the
+original → annotates <strong>the copy</strong> → and those annotations arrive here.</p>
+
+<p><strong>This is not a second pipeline, and nothing below changes.</strong> It is why the one
+below has somewhere to start. Two consequences worth holding on to while
+triaging:</p>
+
+<ul>
+  <li><strong>Feedback is on the COPY, not on the original.</strong> Resolving an item edits the
+copy. The original still hashes to its recorded digest, and
+<code class="language-plaintext highlighter-rouge">check:materialized-fixity</code> says so — if it does not, somebody annotated held
+content in place, which is the defect the copy-out exists to prevent.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">provenance.local</code> is what makes a resolved item traceable</strong> to the thing it
+was really about. Without it the copy is indistinguishable from original work
+one rename later, and a reviewer’s comment loses its subject.</li>
+</ul>
 <h2 id="role">
   
   

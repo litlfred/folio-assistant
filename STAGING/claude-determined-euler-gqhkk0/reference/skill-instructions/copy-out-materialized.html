@@ -411,25 +411,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/docs-ui.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/docs-ui.css?v=1790064911">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/work-plan.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/work-plan.css?v=1790064911">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/themes.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/themes.css?v=1790064911">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/avatars.css?v=1790064400">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/css/avatars.css?v=1790064911">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,7 +446,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/docs-ui.js?v=1790064400" defer></script>
+<script src="/folio-assistant/STAGING/claude-determined-euler-gqhkk0/assets/js/docs-ui.js?v=1790064911" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -961,19 +961,62 @@ is <code class="language-plaintext highlighter-rouge">false</code>.</p>
 
 <p>If it were frozen too, the copy-out would achieve nothing, and the next person
 would need a copy of the copy.</p>
-<h2 id="the-publication-exception">
+<h2 id="the-exception-is-say-what-you-did-not-a-list-of-who-may-skip">
   
   
-    <a href="#the-publication-exception" class="anchor-heading" aria-labelledby="the-publication-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The publication exception
+    <a href="#the-exception-is-say-what-you-did-not-a-list-of-who-may-skip" class="anchor-heading" aria-labelledby="the-exception-is-say-what-you-did-not-a-list-of-who-may-skip"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The exception is “say what you did”, not a list of who may skip
   
   
 </h2>
     
 
-<p>Publication may write to materialized content — deriving a rendition, stamping
-a manifest — and that is a NAMED step in a declared process, never a carve-out
-in prose. It is not a licence to edit: what it may do is add derived artefacts
-beside the original, and the original’s digest must still verify afterwards.</p>
+<p>The owner’s exception is <em>“expect for publication worfklow purposes or so”</em>.
+Written as an allowlist it would be a list that goes stale the first time
+somebody adds a sixth writer, and it would need every writer to announce itself
+— passing silently for anyone who forgot.</p>
+
+<p>Written as a rule it is checkable and cannot go stale:</p>
+
+<blockquote>
+  <p><strong>A step that rewrites a materialized artefact records the new fixity in the
+same change.</strong></p>
+</blockquote>
+
+<p>Then <code class="language-plaintext highlighter-rouge">check:materialized-fixity</code> passes and the record describes what is
+actually there. A step that rewrites without updating fixity fails, correctly,
+because it has forked upstream without saying so — which is exactly what the
+rule exists to prevent. The check asks a question about BYTES and never about
+who wrote them, so it needs no attribution of a commit to a process step.</p>
+<h3 id="where-this-bites-measured">
+  
+  
+    <a href="#where-this-bites-measured" class="anchor-heading" aria-labelledby="where-this-bites-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this bites, measured
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code>’s <code class="language-plaintext highlighter-rouge">Task_Apply</code></strong> — the one step in the declared
+corpus that rewrites bytes a materialization record describes. Until 2026-09-22
+it named no fixity write at all, so a <strong>correct</strong> run of that process would have
+failed the gate as a mismatch: <em>“somebody edited held content without saying
+so”</em>, said about the one process whose job is to replace it.</p>
+<h3 id="and-where-it-does-not-bite-also-measured">
+  
+  
+    <a href="#and-where-it-does-not-bite-also-measured" class="anchor-heading" aria-labelledby="and-where-it-does-not-bite-also-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And where it does NOT bite, also measured
+  
+  
+</h3>
+    
+
+<p><strong>No publication process in this repository writes to materialized content.</strong>
+<code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code>’s <code class="language-plaintext highlighter-rouge">S_Sign</code> signs a subgraph cut from the KG — derived
+content, not held upstream bytes — and nothing else comes close. So the
+publication case is a rule with no instance yet, which is why it is stated here
+as a rule rather than drawn as a step in a diagram that does not do it. A
+declared-but-absent step is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect: a consumer scans it and reports a
+clean run over nothing.</p>
 <h2 id="what-to-check-afterwards">
   
   
