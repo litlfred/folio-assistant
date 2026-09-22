@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-22T18:17:50Z
+updated_at: 2026-09-22T21:28:43Z
 parent: folio-assistant-p5wm
 ---
 
@@ -260,3 +260,35 @@ scrolls inside its own cap.
 assignment nobody has made** — the card names are roles and topics (engineer,
 analyst, architecture), not instances. The crop mechanism is built and tested;
 choosing the mapping is the owner's, not mine.
+
+
+## DONE-WHEN, checked honestly — 2026-09-22, PR #959
+
+I set this bean `completed` and put it straight back to `in-progress`. Five of
+the six criteria are met; **the first is not**, and it is the one the bean is
+named after.
+
+- [ ] **One renderer for a Jekyll page and a mounted page, the difference
+      DECLARED rather than branched on.** NOT met. `navbar.ts` renders the
+      mounted page. The Jekyll sidebar was brought to the same GEOMETRY (one
+      generated region, gated) and the same BEHAVIOUR, but it is still Liquid
+      plus CSS and does not call the renderer. That is a smaller gap than the
+      one this bean opened against — the numbers can no longer disagree — but
+      "cannot disagree about widths" is not "one renderer", and recording it
+      as met would retire the bean on the strength of its easiest half.
+- [x] The three regions are structural, not a styling convention
+- [x] An instance's graphs appear from its DECLARATION
+- [x] An open document's index appears in the fixed top, and disappears with it
+- [x] Harness avatars come from the theme, not from a list in the renderer
+- [x] The rail and the sidebar no longer state any number twice
+
+**What the remaining half needs**, so the next agent does not re-derive it: the
+Jekyll side would have to render `NavbarModel` — which means either a build
+step emitting the sidebar's markup into `_includes/generated/`, or overriding
+the theme's `sidebar.html`. This file already refuses the second for a
+*placement*; for the whole sidebar it is a different trade and is the owner's
+to make. Both are bigger than anything in #959 and neither is blocked.
+
+**Everything the owner asked for on 2026-09-21 and 2026-09-22 is built and
+green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
+"the same navbar" and "one navbar", and it is stated rather than closed.
