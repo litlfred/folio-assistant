@@ -115,6 +115,15 @@
       "graphKinds": [
         "glossary"
       ]
+    },
+    {
+      "id": "bootstrap-translations",
+      "path": "translations/",
+      "dependents": "reproduce",
+      "description": "The gettext templates for THIS instance's workflow diagrams \u2014 one directory per target locale, holding the `.pot` extracted from each `.bpmn` here. Undeclared until 2026-09-22, and that was the `dh4f` defect: `j28g` moved these out of `cat-harness/translations/` correctly, because the templates belong beside the instance that owns the diagrams, and the declaration did not follow. Fifteen committed files a consumer scanning the declared set would report a clean run over. A SEPARATE id from cat-harness's `translation-sources`: overrides match on id, so reusing it would REPLACE that graph with this one rather than add to it. `reproduce` for the reason cat-harness's entry gives \u2014 a downstream instance translating this diagram set needs catalogues of its own, not a pointer to these. Bean `m9zz`.",
+      "graphKinds": [
+        "translation-sources"
+      ]
     }
   ],
   "renderExemption": {

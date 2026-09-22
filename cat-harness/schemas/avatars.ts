@@ -125,6 +125,29 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "two figures — the Actors and the Roles they take on",
   },
+  // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
+  //
+  // Owner, reporting it: *"folio assistant icon is messed up still. I want
+  // theme like in avaatars"*. It was the GENERIC question mark, which is what
+  // `avatarFor` returns for a name nothing declares, and the table's own
+  // header has carried the instruction the whole time: *"bootstrap has
+  // avatar, so does cat-harness, folio-asst"*. Two of those three were here.
+  //
+  // TONE 236, between `folio` (224) and `tools` (250), and deliberately near
+  // `folio-assistant-core`'s 212 — the same reasoning the three kinds below
+  // `cat-harness` are given: these are parts of one graph and a reader
+  // scanning a legend should see them as a family. Far enough to tell apart,
+  // close enough that neither reads as belonging somewhere else.
+  //
+  // THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of
+  // paper; the root instance is what holds one, so this is that leaf inside a
+  // frame rather than a second unrelated mark. An instance and its core
+  // drawn as two unrelated things would be the same drift the tones avoid.
+  "folio-assistant": {
+    glyph: "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
+    tone: 236,
+    reads: "a leaf of paper held in a frame — the folio, and the instance that holds it",
+  },
   // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
   // and name both spelled in full, per the owner's ruling of 2026-09-20 and
   // as `folio-assistant-core/harness.json` records against itself.

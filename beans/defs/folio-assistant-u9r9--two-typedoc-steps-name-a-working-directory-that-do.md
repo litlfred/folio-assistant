@@ -64,3 +64,56 @@ this is resolved the entries go stale and the gate says so.
       same change, and their baseline entries removed
 - [ ] If it succeeds: this bean is marked wrong, with what the checkout
       actually produces written down so the next reader does not re-derive it
+
+## 2026-09-22, another session — the count is 8, not 2, and SIX OF THEM ARE A DIFFERENT CASE
+
+Measured while picking this up, then **not acted on**, because settling it
+needs a `publish.yml` dispatch that is the owner's to authorise. Adding the
+measurement rather than the fix, and separating two things this bean currently
+reads as one.
+
+### Every `working-directory: folio-assistant*` in the tree
+
+    discoverability-docs.yml:208   folio-assistant                    <- this bean
+    publish.yml:568                folio-assistant                    <- this bean
+    hecke-engine-wasm.yml:95,98    folio-assistant/computations
+    snappea_wasm.yml:21,69,96,132  folio-assistant/snappea-wasm
+
+Plus many more path references, not `working-directory`, in
+`publish.yml` (lines 192-195, 274, 301-313) and `witness-refresh.yml`
+(4, 92, 113-116). `folio-assistant/` still does not exist, and none of the
+`actions/checkout@v4` steps in either workflow carries a `path:`.
+
+### The six extra ones are NOT this bean's defect, and that matters
+
+They point at **folio content**, and a path correction alone would not make
+them run:
+
+- `computations/` DOES exist — at **`cat-harness/computations`**, one
+  directory over. So the path is stale from the rename, exactly as this bean
+  describes. **But** that directory holds **one** file,
+  `wall-violations.witness.json`, and **zero `.py`**. The workflows `cd` there
+  and run Python. Correcting the path would move the failure, not remove it.
+- `snappea-wasm/` exists **nowhere** in the checkout.
+
+So `AGENTS.md`'s *"`witness-refresh` fails by design … the platform carries no
+folio"* **stands**. I went looking to correct it — `computations/` existing
+looked like it falsified the stated reason — and the content measurement says
+otherwise. Recorded because the near-miss is the useful part: the directory
+existing is not the same as the directory being usable, and a reader who
+greps for the name and stops will conclude the opposite.
+
+### What that leaves as this bean's actual subject
+
+The two TypeDoc steps, and they are the ones worth a dispatch, because
+**TypeDoc over the platform's own source needs no folio at all**. If they fail
+on `working-directory`, a one-line path fix genuinely makes them run — which
+is precisely the behaviour change this bean is right to want observed first.
+
+`snappea_wasm.yml` is `workflow_dispatch`-only, so its four occurrences never
+fire on their own and are unjudged for a second, independent reason.
+
+### Not done here
+
+No dispatch, no path edited, no baseline entry touched. The `## Done when`
+below is unchanged and still needs the owner's go-ahead for the dispatch.

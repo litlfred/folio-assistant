@@ -67,6 +67,7 @@ import { readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
 // The `folio` graph kind is registered by CORE on import; this module resolves
 // this instance's directories and the instance declares a folio graph.
 import "../schemas/folio-graph-kind.js";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -84,6 +85,14 @@ const DOC_MAX = 400;
 function projection(g: SchemaGraph): unknown {
   return {
     $schema: "folio-schema-graph/v1",
+    // `modules`, of four plausible answers — roots 5, modules 121, decls 842,
+    // edges 525 on 2026-09-22. It is the first number the run's own summary
+    // prints ("N module(s), N declaration(s), N edge(s)"), so the tile and the
+    // console agree. `decls` is the largest and would look like the headline;
+    // it is a number PER module, and a tile reading 842 over a page listing
+    // 121 rows is the kind of disagreement a badge exists to surface, not to
+    // create.
+    ...tileCounts({ schemas: [g.modules.length, "modules"] }),
     roots: g.roots,
     modules: g.modules.map((m) => ({
       module: m.module,
