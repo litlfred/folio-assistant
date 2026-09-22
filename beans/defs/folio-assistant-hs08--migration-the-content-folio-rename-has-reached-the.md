@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-09-20T12:09:49Z
+updated_at: 2026-09-22T18:18:42Z
 parent: folio-assistant-zzmr
 ---
 
@@ -82,12 +82,18 @@ the platform can absorb.
 
 ## Done when
 
-- [ ] the 86 non-test sites renamed, platform module paths untouched
-- [ ] the 25 test fixtures renamed with them, or they fail
-- [ ] `init-folio` scaffolds `folio/<slug>/` and `folio/schema/`
-- [ ] the eight workflows' `cd content` -> `cd folio`. They are **vendored by
-      folios** (`code-quality-gates.yml` says so outright), so a folio that
-      vendors them needs the rename too
+- [ ] the **4** renameable non-test sites renamed, and the **2** that name a
+      platform module left alone — re-measured 2026-09-22, see below; the 86
+      this line carried counted the `holds: content` graph-layer axis and skill
+      `tags:` alongside the folio roots, and was never 86 of this thing
+- [ ] the **11** test fixture sites renamed with them, or they fail
+- [x] `init-folio` scaffolds `folio/<slug>/` and `folio/schema/` — **done**,
+      `cat-harness/scripts/init-folio.ts:639-651`
+- [ ] the **6** workflow files' `cd content` / `working-directory: content` ->
+      `folio`. They are **vendored by folios** (`code-quality-gates.yml` says so
+      outright), so a folio that vendors them needs the rename too
+- [ ] `cat-harness/content/docs/` — 14 live subgraphs — moved AND declared;
+      the old framing left this out entirely
 - [ ] a ratchet so `content/` as a folio root cannot come back — the literal
       count goes to zero and stays there
 - [ ] `qou` renamed in coordination, since nothing catches it here
@@ -184,3 +190,83 @@ cross-reference in the corpus. The declaration is four lines.
 - [x] 27 identifiers renamed off `CONTENT_*`
 - [x] qou declares its folio at `content/` (litlfred/qou#7445, OPEN)
 - [ ] the eight vendored workflows' `cd content` — after the folios move
+
+
+## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — every count in this bean is stale, and one is off by 20×
+
+_Stream 1/3 (`upgd`)._ The table above was measured 2026-09-20 on `0392892c`.
+Two days and roughly 250 commits later, **none of its four numbers holds**, and
+one box is already done. Recorded as a re-measurement rather than an edit,
+because the next reader should see which way the work actually moved.
+
+| | 2026-09-20 (`0392892c`) | 2026-09-22 (`b7f8945b`) |
+|---|---|---|
+| non-test reader sites | **86** across 55 files | **6**, of which 2 must NOT be renamed → **4 real** |
+| test fixtures | 25 files | **11** sites |
+| workflows with `cd content` | 8 | **6 files** |
+| `init-folio` scaffolds | `content/<slug>/`, `content/schema/` | **`folio/<slug>/`, `folio/schema/` — DONE** |
+
+### `init-folio` is done, and that box can be ticked
+
+`cat-harness/scripts/init-folio.ts` writes `folio/schema/builders.ts`,
+`folio/schema/types.ts` and `folio/<slug>/…` (lines 639–651), declares
+`path: "folio/"` with `graphKinds: ["folio"]` (178–184), and its reserved-slug
+error says `folio/${slug}/ has a platform meaning`. Nothing in it scaffolds
+`content/`.
+
+### The 86 was never 86 of the thing this bean is about
+
+The old figure counted the literal `"content"` wherever it appeared. Most
+occurrences are **the `holds: content | context | state` graph-layer axis** —
+`graph-kind-registry.ts` alone has 14 — plus skill `tags:` and the
+`provides?: Array<"skills" | "content" | "translations">` union. None of those
+is a folio content root and none was ever in scope. Applying **this bean's own
+discriminator** (what the value is FOR, not how it is spelled) to
+`(join|resolve)(…, "content", …)` gives six non-test sites:
+
+| site | verdict |
+|---|---|
+| `cat-harness/content/pipeline/gen-site-jsonld.ts:55` | rename — `join(REPO_ROOT, "content", "docs")` |
+| `cat-harness/scripts/gen-docs-pages.ts:88` | rename — same shape |
+| `cat-harness/scripts/gen-docs-pages.ts:623` | rename — same shape |
+| `cat-harness/content/pipeline/translation-block-qa.ts:850` | rename — `join(INSTANCE_ROOT, arg("root", join("content", "docs")))` |
+| `cat-harness/adapters/document/tools/render.ts:156` | **LEAVE** — names `content/pipeline/generate-block-tex.ts`, a platform module |
+| `cat-harness/adapters/document/tools/_pipeline.ts:40` | **LEAVE** — resolves `content/pipeline`, a platform module |
+
+That is exactly the trap §"THE ONE THING THAT DOES NOT FOLLOW MECHANICALLY"
+names: two of six sites look identical to a `sed` and must not move.
+
+### A finding this bean does not have, and it changes what the rename IS
+
+All four renameable sites build the same path: **`cat-harness/content/docs/`**.
+That directory exists and holds **14 documentation subgraphs**
+(`agentic-harness`, `crdm-methodology`, `kgraph`, `publication-workflow`, …).
+`REPO_ROOT` in both generators resolves to `cat-harness/`, so these are **live
+paths, not stale ones** — the generators read real content today.
+
+And **`cat-harness/content/docs/` is declared nowhere.** `cat-harness.json`
+carries no `content` entry at all — which §"Where the rename HAS landed"
+records as the rename having *landed*. Meanwhile the declared `folio/` →
+`cat-harness/folio/` holds **three JSON files**.
+
+So the state is sharper than "the rename reached the declaration and nothing
+that reads it". It is: **the declaration was emptied of `content/` before the
+directory holding the content was moved into `folio/`**, leaving 14 subgraphs
+that the docs-site generators read and that no declaration mentions. That is
+the `dh4f` shape pointed the other way — not a declared-but-absent directory,
+but a present-but-undeclared one, which no consumer scanning the declaration
+can see.
+
+### What this does NOT change
+
+The owner's ruling stands unqualified: *"no content/ fallback. excise!!!!!"*
+And §"Fallout that is NOT this repo's to fix" still holds — `litlfred/qou`
+carries `content/` and breaks when this lands.
+
+### Where this lands in the canonical checklist
+
+The `## Done when` section above now carries these numbers; it is the section a
+reader and every tool consult, so it is the one that was corrected. Restating
+the list down here produced a **shadow checklist** — `check:bean-bodies` caught
+it, correctly: a ticked item down here beside an unticked canonical one is two
+answers to one question.
