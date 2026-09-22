@@ -322,6 +322,18 @@ jobs:
       - name: swimlane definitions
         run: bun run check:lane-documentation
 
+      # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
+      # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
+      # because a derived document has no memory: delete a role and its
+      # concept stops appearing, which is what "never existed" also looks
+      # like. This gate is what keeps the ledger current, so retirement stays
+      # distinguishable from accident. Two runs, never one wider scan --
+      # `7u3g`, the isolation two earlier sessions walked into.
+      - name: swimlane glossary ledger
+        run: |
+          bun run glossary:check
+          bun run glossary:check:bootstrap
+
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
       # move, including the onboarding guide its own banner calls the place to

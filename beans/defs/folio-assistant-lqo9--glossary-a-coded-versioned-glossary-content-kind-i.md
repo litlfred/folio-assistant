@@ -256,7 +256,7 @@ one quarter of it. Recorded there.
 - [ ] `glossary` exists as a content kind in core with optional `notation` and scheme-level version fields, validated by schema — **named something other than `GlossaryEntry`**, which is taken twice
 - [ ] The docs/ rendering carries a defined-terms index built from KG assets, with extracted-vs-authored distinguished
 - [ ] Labels and definitions are extracted to `.pot` like BPMN labels and render per locale
-- [ ] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits
+- [x] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits (SKOS adopted; slice 1 took it 0 → 135, slice 2 adds 48 more concepts)
 
 Related: `0lmb` (content model), `zzmr` (KG structure and publication), `bzyu` (translation pipeline), the who-iris catalogue work on PR #477, the existing `glossary-build` skill (folio-core) — check what it already does before adding a second mechanism.
 
@@ -344,7 +344,115 @@ A term whose defining lane is gone becomes `deprecated`, **reported and never
 deleted** — `deletion-requires-confirmation`, and the same reason a scrapped
 bean is not a deleted one: retirement and accident must not look alike.
 
-### Not started
+### SHIPPED 2026-09-21 — and measuring first corrected the mapping above
 
-Implementation waits on `ug4r` merging, so PR #800 stays one reviewable
-subject. Nothing here is built.
+`scripts/glossary-export.ts`, run once per instance (`--instance <root>`, the
+shape `kg-export` and `translate-bpmn` already use — never one wider scan,
+which is `7u3g`). cat-harness: **43 concepts, 150 usages**. bootstrap: **5
+concepts, 7 usages**.
+
+**A concept is a ROLE, not a lane name, and the table above is wrong.** That
+table is mine, not the owner's ruling — the ruling was "its own document", and
+it stands untouched. Measured before writing:
+
+| | |
+|---|---|
+| task-containing lanes | 157 |
+| distinct lane names | 85 |
+| distinct roles those names resolve to | **36** |
+| roles reached by more than one distinct lane name | 17 |
+
+`build-pipeline` is named **ten** ways across the corpus — *"CI/CD Pipeline"*,
+*"Build pipeline — validate · render · publish"*, *"Scheduled log sweep"*,
+*"Graph audit (system)"* and six more. `reviewer` is named nine. A concept per
+lane name mints 85 terms for 36 meanings and copies one authored definition
+onto ten of them — the exact duplication of `roles.json` this bean set out to
+avoid, avoided per lane OCCURRENCE (157 → 85) and **not** per lane NAME. The
+ten names are `skos:altLabel`, which is what `altLabel` is for and what makes
+*"Reviewer / SME"* findable as *"Reviewer"* instead of a rival entry.
+
+Both halves of the owner's *"name, documentation → glossary"* still land:
+`name` as `prefLabel`/`altLabel`, `documentation` as `scopeNote`.
+
+### `scopeNote` sits on the USAGE, never on the concept
+
+Measured: of the **26** lane names appearing in more than one diagram, **26 of
+26** carry different `<bpmn:documentation>` per occurrence — zero
+counter-examples. A scope note answers *"what is this lane accountable for IN
+THIS PROCESS"*, which is a fact about the appearance. Ten unattributed notes on
+one concept would read as ten contradictions.
+
+So each appearance is a `LaneUsage` node: the process, the label that process
+gave the lane, and the note **verbatim**. Verbatim is not a style preference —
+the lane documentation is a `.pot` msgid, so a note stored exactly as the
+diagram wrote it has a translation waiting in all five locales. Wrapping it
+(`In "<process>": <note>`) reads well in English and produces a string no
+catalogue contains, breaking `jmpb` before it is built.
+
+### No second name for one thing
+
+A concept's `@id` is the IRI `kg-export` ALREADY mints —
+`makeIri(docIri, "role", id)`, imported rather than re-spelled. `kg-export` has
+emitted registry-derived `Role` nodes since 2026-09-19, and `performedBy` links
+point at exactly those IRIs; a parallel `cat:reviewer` would be two names for
+one resource and would leave the glossary unjoinable with the graph. Checked
+rather than assumed: **0 of 47 role ids collide with any of the 111 vocabulary
+term names**, exactly and case/hyphen-insensitively.
+
+### Retirement needed a LEDGER, which the design above had not accounted for
+
+A derived document has no memory. Delete a role and its concept stops
+appearing — which is what *"never existed"* also looks like, so "reported and
+never deleted" is unimplementable without storing the one non-derivable fact:
+that a term was once minted.
+
+`glossary/glossary-ledger.json`, declared as graph kind `glossary`
+(`holds: "state"`) in both instances. Keyed on the IRI's **local part**, never
+the absolute IRI: the publication base is a deploy-time variable, and a stored
+absolute IRI would rot the day it moved and take every retirement record with
+it. `glossary:check` in the gate set is what keeps it current.
+
+**Usages are not ledgered**, deliberately: a usage is an occurrence,
+regenerated wholesale, while a concept is a term somebody may have cited.
+Ledgering 157 occurrences would bury the 36 records that matter.
+
+### `laneBinding` used as the only route from a lane to a concept
+
+So `variable` cannot be read as `unbound` by accident. bootstrap's one varying
+lane emits `bs:…#lane/Actor` with a usage and **no** `definition` — an
+assertion, not a gap.
+
+### Reported, never gated
+
+- **11 declared roles no swimlane draws.** They are still concepts (omitting
+  them would be `dh4f`) and are named in the report. 8 declare no `lanes[]` at
+  all — agent personas nothing draws, by design.
+- **1 dangling lane binding**: `translation-adjudicator` binds
+  *"Human reviewer / adjudicator"*, which no diagram contains — `fd6i`.
+  Distinguished from `log` and `session-record`, whose lanes exist but hold no
+  task, which is not a defect: an `actedUpon` lane holds none by construction.
+
+### Falsified by mutation, six ways
+
+| mutation | tests red |
+|---|---|
+| drop the deprecated node | 1 |
+| re-stamp `retiredOn` every run | 1 |
+| key the ledger on the absolute IRI | 4 |
+| read `variable` as `unbound` | 3 |
+| move `scopeNote` onto the concept | 1 |
+| drop `altLabel` | 1 |
+
+Every count is asserted against **zero first** — a suite checking "every
+concept has a definition" passes perfectly over a document with no concepts,
+which is `6tkl`.
+
+### Not done, and named
+
+- The **docs/ rendering** (piece 1) is not built. It is one `docs-auto`
+  auto-doc-type, per the owner's framing above, and reads this document.
+- The **content kind in core** (piece 2) is untouched: this is the harness's
+  KG glossary, not a paper's.
+- **Per-locale rendering** is `jmpb`. This document is English-only today, and
+  the verbatim scope notes are what make it translatable without a re-extract.
+- Ruling 2 — does `build-glossary.ts` converge? — still open, still untouched.

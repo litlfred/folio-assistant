@@ -223,6 +223,7 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`

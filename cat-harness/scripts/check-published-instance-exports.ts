@@ -23,8 +23,15 @@
  * publish", free to disagree with the first the moment somebody edits the
  * YAML — and the disagreement would present as this gate passing while a
  * deploy breaks, which is that failure with an extra step. So the invocations
- * are read out of the workflow files themselves: add an `--instance` line to
- * any of them and it is covered here with no edit to this file.
+ * are read out of the workflow files themselves: add a `kg-export --instance`
+ * line to any of them and it is covered here with no edit to this file.
+ *
+ * **`kg-export`'s, not every `--instance`** — see `INVOCATION` below for why
+ * the anchor is deliberate. This sentence said "an `--instance` line to any of
+ * them" until 2026-09-21, which was true while `kg-export` was the only script
+ * taking the flag and stopped being true the moment `glossary-export.ts` took
+ * it too. A second instance-scoped publisher is covered by its OWN gate
+ * (`glossary:check:bootstrap`, which runs the same build), not by this one.
  *
  * **Every workflow, not a named pair.** The first version of this gate read
  * `docs-site.yml` alone, and `3jhq` measured what that missed:

@@ -217,6 +217,17 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
   },
+  // An OPEN BOOK, and the choice is between two readings of "glossary". A tag
+  // or a label would draw the `notation` — the code a term carries — which is
+  // one field of a concept and not the thing itself. A book draws what a
+  // reader does with it: looks a word up. `tone: 84` is unused and sits
+  // between `qa`'s green verdict and `library`'s, which is right for a
+  // reference rather than a judgement.
+  glossary: {
+    glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
+    tone: 84,
+    reads: "an open book — terms somebody looks up, not terms a machine mints",
+  },
   health: {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",
     tone: 4,

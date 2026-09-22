@@ -659,7 +659,7 @@ function keywordAliases(): Set<string> {
  * 404s. An `@id` that looks dereferenceable and is not is worse than one that
  * is obviously local.
  */
-function makeIri(docIri: string, kind: string, id: string): string {
+export function makeIri(docIri: string, kind: string, id: string): string {
   // `/` is legal in a fragment and is the separator this scheme uses, so it is
   // deliberately NOT escaped — `encodeURIComponent` would turn every process
   // node into `…#process/P%2Fnode%2FT`, which is both unreadable and a

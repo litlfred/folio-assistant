@@ -60,6 +60,7 @@
     "docs",
     "folio",
     "fsh-guts",
+    "glossary",
     "health",
     "interaction",
     "issue-marks",
@@ -165,6 +166,18 @@
         "board"
       ],
       "href": "/cat-harness/library/folio-assistant-sci/",
+      "hidden": false
+    },
+    {
+      "id": "glossary",
+      "directory": "glossary",
+      "title": "glossary",
+      "ref": "cat-harness/docs/glossary/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/glossary/",
       "hidden": false
     },
     {
@@ -820,17 +833,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 35
+          "value": 36
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 21
+          "value": 22
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 8
+          "value": 9
         }
       ],
       "visualisations": [
@@ -849,6 +862,10 @@
         },
         {
           "kind": "fsh-guts"
+        },
+        {
+          "kind": "glossary",
+          "path": "/glossary/"
         },
         {
           "kind": "health",
@@ -927,12 +944,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -941,6 +958,9 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "glossary"
+        },
         {
           "kind": "scenarios"
         },
@@ -952,7 +972,7 @@
         }
       ],
       "findings": [
-        "bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
+        "bootstrap: declares 4 graph(s) with no published viewer — glossary, scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link."
       ]
     }
   ]

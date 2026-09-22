@@ -859,6 +859,28 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // + `process-state` in #266; the rationale is in this map's doc comment above,
   // and the #263 version it supersedes is preserved there too. PR #266 changed
   // the map and left that comment describing the old five-kind design.
+  glossary: {
+    type: termIri("GlossaryGraph"),
+    renderable: false,
+    // `state`, and the whole kind exists for one fact a process WRITES: that a
+    // term was once minted. The glossary DOCUMENT is derived from the corpus
+    // and rebuilt every run, so it carries no memory — delete a role from
+    // `roles.json` and its concept stops appearing, which is what "never
+    // existed" also looks like. Retirement has to be distinguishable from
+    // accident (`deletion-requires-confirmation`), so the ledger is committed
+    // and the document is built from the corpus UNION it.
+    holds: "state",
+    // NOT work. A bean is something somebody is partway through; this is a
+    // record that a term exists, which is true whether or not anybody is
+    // doing anything. `check:graph-kind-work` refuses a `state` kind that has
+    // not decided, and it was right to: "state" alone does not say whether a
+    // reader is looking at a queue or at a fact.
+    recordsWork: false,
+    summary:
+      "The swimlane glossary's retirement ledger — every concept this instance has ever minted, " +
+      "with the date it was first seen and the date it stopped being derivable. Written by " +
+      "scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+  },
   beans: {
     type: termIri("BeanGraph"),
     renderable: false,

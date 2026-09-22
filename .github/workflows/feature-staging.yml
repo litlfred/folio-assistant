@@ -613,6 +613,18 @@ jobs:
           BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
           bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
+
+          # The swimlane glossaries, on the preview too -- `check:invocation-parity`
+          # refused this change until they were here, which is the gate doing
+          # exactly its job. Each concept's `inScheme` names the glossary
+          # document's own URL, so a preview that published the graph and not
+          # the glossary would serve a scheme IRI that 404s on every concept --
+          # `3jhq` again, one document over. `--base-url` so the preview's
+          # copies point at the preview rather than at production.
+          bun run cat-harness/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
+          bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

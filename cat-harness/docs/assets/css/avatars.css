@@ -171,6 +171,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="glossary"] {
+  /* an open book — terms somebody looks up, not terms a machine mints */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="health"] {
   /* a trace — the repository's own vital signs, over time */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 13h4l2-5 3 10 2-6 2 3h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -304,6 +311,7 @@
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
@@ -343,6 +351,7 @@
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
@@ -383,6 +392,7 @@
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
@@ -422,6 +432,7 @@
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
@@ -464,6 +475,7 @@
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
@@ -502,6 +514,7 @@
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
@@ -540,6 +553,7 @@
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
@@ -578,6 +592,7 @@
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }

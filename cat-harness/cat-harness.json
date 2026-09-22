@@ -810,6 +810,19 @@
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "skip",
+      "coverage": {
+        "visualiser": "cat-harness/docs/glossary/index.html",
+        "skill": "swimlane-glossary"
+      },
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived \u2014 that a concept was once minted \u2014 is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "graphKinds": [
+        "glossary"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

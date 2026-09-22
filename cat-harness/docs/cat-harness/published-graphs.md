@@ -86,6 +86,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - folio-assistant (cat-harness) — *declared, not published*
 
+### `glossary`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- bootstrap — *declared, not published*
+- [folio-assistant (cat-harness)]({{ '/glossary/' | relative_url }})
+
 ### `health`
 
 1 of 1 published.
