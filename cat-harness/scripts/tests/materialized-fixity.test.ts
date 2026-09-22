@@ -36,6 +36,7 @@ import { join, resolve } from "node:path";
 
 import { collect, materializationsIn, run, verify } from "../check-materialized-fixity.js";
 import { applyTo, backfillable } from "../backfill-materialized-fixity.js";
+import { FixitySchema } from "../../../folio-assistant-core/schemas/materialization.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -189,7 +190,7 @@ describe("the backfill records a baseline, and says so", () => {
     }
   });
 
-  it("writes a digest and a note that does not overclaim", () => {
+  it("writes a digest, and dates it with the field the schema already has", () => {
     const doc: Record<string, unknown> = {
       materialization: { state: "materialized", localPath: "sub/a.txt" },
     };
@@ -198,13 +199,29 @@ describe("the backfill records a baseline, and says so", () => {
     const fx = (doc.materialization as Record<string, unknown>).fixity as Record<string, string>;
     expect(fx.digest).toBe(HELLO);
     expect(fx.algorithm).toBe("sha256");
-    // THE CAVEAT IS PART OF THE DATA. A digest observed at backfill proves the
-    // bytes are unchanged from now on; it cannot prove they were ever pristine.
-    // Recording that only in a commit message would put it where it is read
-    // once, rather than where it is read every time somebody asks what the
-    // digest means.
-    expect(fx.note).toContain("baseline");
-    expect(fx.note).toContain("does NOT");
+    // `verifiedAt` carries the load-bearing half of the caveat: it is *when the
+    // digest was last re-computed against the bytes*, so a record whose
+    // ingestion never wrote a digest, dated at the backfill, IS the statement
+    // that this digest was OBSERVED rather than original.
+    expect(fx.verifiedAt).toBeDefined();
+    expect(() => new Date(fx.verifiedAt!).toISOString()).not.toThrow();
+  });
+
+  it("writes NOTHING the schema does not permit", () => {
+    // The defect this replaced. The first backfill put a prose `note` inside
+    // `fixity` to carry the caveat; `FixitySchema` is `.strict()` and permits
+    // `algorithm`, `digest` and `verifiedAt` only, so 219 records were written
+    // that failed `folio-fhir-artifact-index/v1` on both indexes.
+    //
+    // Asserted against the SCHEMA rather than against a hardcoded list of three
+    // names: a list here would go stale the moment the schema gains a field,
+    // and would then fail on a legitimate addition.
+    const doc: Record<string, unknown> = {
+      materialization: { state: "materialized", localPath: "sub/a.txt" },
+    };
+    applyTo(doc, new Map([["sub/a.txt", HELLO]]));
+    const fx = (doc.materialization as Record<string, unknown>).fixity;
+    expect(FixitySchema.safeParse(fx).success).toBe(true);
   });
 
   it("never overwrites a digest that is already there", () => {

@@ -17,8 +17,9 @@
  *
  * ## WHAT A BACKFILLED DIGEST DOES AND DOES NOT PROVE
  *
- * This is the part that must not be lost, and it is why every record this
- * writes says so in its own `note`.
+ * This is the part that must not be lost. It is carried by `verifiedAt` on
+ * each record — see the note on `VERIFIED_AT` for why that field rather than
+ * prose — and stated in full here, in the commit, the PR and bean `10s1`.
  *
  * A digest computed today hashes **what is on disk today**. It establishes a
  * baseline from this moment forward: from here, an edit in place is caught.
@@ -31,7 +32,7 @@
  * run with network access could verify against `materialization.of` and
  * upgrade the claim from *observed* to *confirmed*.
  *
- * Recording the caveat in the data rather than only in a commit message is
+ * A machine-readable marker in the data rather than only a commit message is
  * deliberate: a commit message is read once, by whoever reviews it, and the
  * record is read every time somebody asks what the digest means.
  *
@@ -56,11 +57,29 @@ import { collect, type MaterializedRecord } from "./check-materialized-fixity.js
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
-const NOTE =
-  "Digest observed at backfill on 2026-09-22, not recorded at ingestion. " +
-  "It is a baseline: from this point an edit in place is detectable. It does NOT " +
-  "prove the bytes are pristine — anything altered before this run is blessed by it. " +
-  "Egress was blocked, so upstream could not be re-fetched to confirm.";
+/**
+ * THE CAVEAT LIVES IN `verifiedAt`, NOT IN A PROSE FIELD — and that is a
+ * correction, not the original design.
+ *
+ * The first version wrote a `note` onto each `fixity` explaining that a
+ * backfilled digest is a baseline rather than proof. `FixitySchema` is
+ * `.strict()` and permits `algorithm`, `digest` and `verifiedAt` only, so that
+ * broke validation on both artefact indexes — caught by `bun run gates`, which
+ * was still running when the change was pushed.
+ *
+ * The field that already exists says the load-bearing part precisely:
+ * `verifiedAt` is *"when the digest was last RE-COMPUTED against the bytes,
+ * not when it was recorded"*. A record whose ingestion never wrote a digest,
+ * carrying a `verifiedAt` of the backfill date, IS the statement that this
+ * digest was observed rather than original.
+ *
+ * The prose caveat is not repeated onto 217 records, where it would be 217
+ * copies of one sentence. It lives in this module's header, the commit, the
+ * PR and bean `10s1`. The owner chose a plain backfill over the option that
+ * carried a distinguishing schema flag, so adding one here would be taking
+ * back a decision rather than implementing it.
+ */
+const VERIFIED_AT = new Date().toISOString();
 
 /** A file that can be hashed, and currently carries no digest. */
 export function backfillable(records: readonly MaterializedRecord[]): MaterializedRecord[] {
@@ -95,7 +114,7 @@ export function applyTo(doc: unknown, digests: ReadonlyMap<string, string>): num
     if (m && m.state === "materialized" && typeof m.localPath === "string" && m.fixity === undefined) {
       const d = digests.get(m.localPath);
       if (d !== undefined) {
-        m.fixity = { algorithm: "sha256", digest: d, note: NOTE };
+        m.fixity = { algorithm: "sha256", digest: d, verifiedAt: VERIFIED_AT };
         changed++;
       }
     }

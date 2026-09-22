@@ -386,7 +386,9 @@ function main(): void {
     }
     // One measurement, taken once, applied to every materialised node.
     const gates = dakGates();
-    for (const [key, stem] of materializedStems) {
+    // Keys only: the stem used to compose `localPath` and no longer does —
+    // the path is read from the sidecar that actually attached.
+    for (const key of materializedStems.keys()) {
       const a = byKey.get(key);
       if (!a) continue;
       // LOCALPATH MUST NAME A SIDECAR THAT ACTUALLY LANDED.

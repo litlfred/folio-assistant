@@ -185,3 +185,50 @@ provenance?" question, answered: not `of`.
 
 NOT designed here. Recorded so the copy-out is built against this model rather
 than against the flag, and so #858's fixity work is read as the floor it is.
+
+## The backfill's caveat lives in `verifiedAt`, and that is a correction
+
+The first backfill wrote a prose `note` onto each `fixity` explaining that a
+digest computed today is a **baseline, not proof of pristineness**.
+`FixitySchema` is `.strict()` — `algorithm`, `digest`, `verifiedAt` only — so
+219 records were written that failed `folio-fhir-artifact-index/v1` on **both**
+artefact indexes.
+
+CI was still reporting only a lint error when `bun run gates` caught this, which
+is the argument for the local sweep in one line. It is also the third push this
+session that went out before the sweep finished.
+
+The fix is not a new schema field. `verifiedAt` already means *"when the digest
+was last RE-COMPUTED against the bytes, not when it was recorded"*, so a record
+whose ingestion never wrote a digest, dated at the backfill, **is** the
+statement that this digest was observed rather than original. Adding a
+distinguishing flag would also have taken back the owner's choice of a plain
+backfill over the flagged option.
+
+The prose caveat is not copied onto 219 records. It is in the backfill module's
+header, this bean, the commit and the PR.
+
+### What the digests do and do not prove
+
+They establish a baseline **from now on**: an edit in place is caught from here.
+They do not prove the bytes are pristine — an artefact already edited before the
+backfill ran is now blessed, and nothing here can tell. Egress is blocked in
+this environment, so re-fetching upstream to compare was not available; a later
+run with network access could verify against `materialization.of` and upgrade
+the claim from *observed* to *confirmed*.
+
+### Two guards, replacing one
+
+`materialized-fixity.test.ts` asserted the `note`'s wording; it now asserts
+`verifiedAt` parses as a date, and — separately — that what the backfill writes
+**validates against `FixitySchema` itself**. The second is the one that would
+have caught this. Asserted against the schema rather than a hardcoded list of
+three field names, because a list here goes stale the moment the schema gains a
+field and then fails on a legitimate addition.
+
+### Root cause, not just the data
+
+`ingest-ig-artifacts.ts` never wrote fixity at all, so every future ingest would
+re-open the gap the backfill just closed. It now hashes the source bytes at
+ingestion, which is the point where *original* is still true — a digest recorded
+there proves what a backfilled one cannot.

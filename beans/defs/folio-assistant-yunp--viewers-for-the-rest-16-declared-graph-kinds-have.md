@@ -352,3 +352,48 @@ which is about a different surface entirely — who-iris replica pages carry no
 `head_custom.html` and therefore no `fa-staging` meta, which is what prompted
 checking whether the rail had its own version of the problem. It does, one
 degree weaker.
+
+## The canonical withholding is VERIFIED ON THE DEPLOYED BRANCH (2026-09-22)
+
+Not "should be withheld" — measured, on `origin/gh-pages` at `23138c649e`,
+with `git ls-tree`. The branch is readable from a checkout, so this needed no
+proxy and no live fetch; I twice claimed this "cannot be verified from here"
+and was twice wrong.
+
+**Absence alone proves nothing**, which is why all four legs are recorded:
+
+| leg | measurement | result |
+|---|---|---|
+| the deploy INCLUDED the change | `git merge-base --is-ancestor c3d386d625 3a9cf020d1` | yes |
+| there was material TO publish | source tree of `3a9cf020d1` under `fsh-guts/` | 29 files |
+| canonical withholds it | `git ls-tree origin/gh-pages -- fsh-guts/` | **empty** |
+| the build ran normally | `tools/index.html`, `beans/index.html`, `tool-graph.html` | all present |
+
+Without the first two rows an empty listing is equally consistent with "the
+canonical job never ran", which is the `dh4f` shape — a probe that sweeps
+nothing and reports clean.
+
+Staging is the other direction and also holds: **21** paths under
+`STAGING/*/fsh-guts*`, including this branch's own
+`STAGING/claude-determined-euler-gqhkk0/fsh-guts/index.html`. So the page is
+*rendered and reviewable* and *not canonical*, which is exactly the owner's
+"render it, exclude from canonical".
+
+### What is still canonical, and why that is not a leak
+
+`fsh-guts.json` (185 KB) and `fsh-guts.jsonld` ARE at the canonical root, and
+the JSON carries **19 full proposal bodies** — 23 KB of prose in
+`deployment-topologies.md` alone. That looked like withholding the front door
+while leaving the side door open, so it was checked rather than assumed.
+
+It is the owner's own prior decision, 2026-09-19: *"jsonld accessible via
+`<base-url>/fsh-guts.jsonld`"*. `fsh-guts-unpublished.test.ts` states the
+invariant the two decisions share — **a consumer may go there deliberately and
+must never arrive by following an edge**. Withholding the viewer removed an
+edge; it was never meant to remove the document.
+
+So the invariant, not the absence, is the thing to check. Scanned every
+canonical `.html` for an `href` into `fsh-guts/`: **none**. The generated
+skill-instruction page `reference/skill-instructions/fsh-guts.html` stays
+canonical — it is the *skill body* (how to author an fsh-guts node), not the
+proposals, and it names one proposal file without linking it.
