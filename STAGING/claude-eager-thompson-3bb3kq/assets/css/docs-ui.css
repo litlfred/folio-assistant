@@ -2070,6 +2070,52 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 .fa-tile svg { width: 1.25rem; height: 1.25rem; fill: currentColor; flex: 0 0 auto; }
 
+/* ── The two greys ──────────────────────────────────────────────────────
+ *
+ * A graph with no viewer and a graph that is read-only both read as inert,
+ * and they are different facts. The first is not here at all: `docs-ui.js`
+ * skips a tile with no `href`, so it never reaches this stylesheet. The
+ * second opens perfectly and refuses an EDIT.
+ *
+ * So the read-only tile is NOT greyed down, and that is the point. Dimming it
+ * would spell it the same way as "nothing to open" — the collapse this exists
+ * to prevent — and it would also read as "less important", which materialized
+ * content emphatically is not. It gets a DIFFERENT mark instead: a dashed
+ * border, the established convention for a boundary you may look across and
+ * not cross.
+ *
+ * The state also reaches a screen reader through the tile's `aria-label`
+ * (`docs-ui.js`), never through colour alone, and the dashed border survives
+ * forced-colours mode where a background tint would not. */
+a.fa-tile[data-fa-readonly] {
+  border-style: dashed;
+}
+
+/* The same state on the harness viewer list, where it actually occurs today.
+ *
+ * A link cannot carry a dashed BORDER legibly — it has none — so the mark is a
+ * dashed underline plus a word. The word is there because this list is dense
+ * and a reader scanning it should not have to notice a line style; the dash
+ * carries it for anyone who reads the link itself. Neither is colour. */
+a[data-fa-readonly] {
+  text-decoration-style: dashed;
+}
+
+.fa-readonly-note {
+  margin-left: 0.4em;
+  font-size: 0.78em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+a.fa-tile[data-fa-readonly]:hover,
+a.fa-tile[data-fa-readonly]:focus-visible {
+  /* Hover keeps the dash: the tile is still read-only while you point at it,
+     and a mark that vanishes on interaction is a mark that is absent exactly
+     when somebody is about to act. */
+  border-style: dashed;
+}
+
 /* Hover and focus are given the SAME treatment deliberately: a reader driving
    this from the keyboard should see exactly what a reader with a mouse sees,
    and the border alone is not enough of a change to notice. */
@@ -2572,6 +2618,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   object-position: center top;
 }
 
+/* A SCRIM, NOT IMAGE OPACITY — and the difference is why this needs one value
+ * where the approach it replaced needed two.
+ *
+ * `opacity` on the `<img>` does not tint toward a fixed colour: it blends the
+ * art with whatever renders BEHIND it, which is the page background. The
+ * landing panel this supersedes carried `opacity: 0.9` by default and `0.8`
+ * under the light override for exactly that reason — its ink is a fixed dark
+ * green sized against the cream cloud in the artwork, so fading toward WHITE
+ * brightens that cloud and widens the contrast margin while fading toward
+ * BLACK by the same amount narrows it. Enough fade in dark mode read as the
+ * ink sinking into a dimmed cloud rather than standing out from one, so the
+ * two schemes could not share a number.
+ *
+ * A scrim is a layer of a KNOWN colour between art and ink, so the contrast it
+ * buys does not depend on what is behind the card. One value, both schemes,
+ * and a theme can set it. The rules that carried the 0.9/0.8 pair were removed
+ * from `_includes/head_custom.html` once measured dead — `folio-landing__art`
+ * was emitted by nothing, so they shipped inlined on 331 pages and matched
+ * none of them (bean `alox`, issue #873). This note is where that reasoning
+ * lives now; it is recorded because the blend-direction argument is not
+ * obvious and would otherwise be re-derived the next time somebody reaches
+ * for `opacity` here. */
 .fa-sticky--backdrop::before {
   content: "";
   position: absolute;

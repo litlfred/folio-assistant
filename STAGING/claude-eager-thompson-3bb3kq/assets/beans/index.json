@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 482,
+      "count": 490,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-20T16:33:59Z",
       "preview": "## What\n\n`content/pipeline/validate.ts` contains **no reference to `simulator` or\n`.html`**. A `simulator` block declares `html: \"simulators/x.html\"`, and\nnothing anywhere in the pipeline asks whether that file is on disk.\n\n## How it was found\n\nMeasured 2026-09-19 while running `/prepare-merge` on qou#7444, which\nrepoints all 11 simulator paths out of the platform and into the folio.\n\nTwo of the e",
       "file": "beans/defs/folio-assistant-023p--a-simulator-blocks-html-path-is-never-checked-so-a.md"
+    },
+    {
+      "id": "folio-assistant-03t9",
+      "title": "PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:34:13Z",
+      "updatedAt": "2026-09-22T08:55:04Z",
+      "preview": "Issue #853 requirement 3, and the `a58y` shape in the component that requirement\nwould otherwise have been built on.\n\n## Measured before anything was written\n\n`<folio:precondition>` (bean `lv3j`) has been parsed, three-valued and tested\nsince it landed. Measured 2026-09-22:\n\n| | |\n|---|---|\n| processes declaring a precondition | 1 (`bootstrap/processes/initialize-harness.bpmn`) |\n| preconditions d",
+      "file": "beans/defs/folio-assistant-03t9--precondition-gate-had-no-consumer-evaluateprecondi.md"
     },
     {
       "id": "folio-assistant-04vl",
@@ -216,7 +230,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-21T22:01:44Z",
+      "updatedAt": "2026-09-22T06:55:01Z",
       "preview": "## What — owner, 2026-09-21, verbatim\n\n> note:  if we have a mateiralized <stub>/<sub-graph>, the contents of it\n> should be immutable (expect for publication worfklow purposes or so)... so if\n> you browsw to it through whatever interface, it is functionally\n> diabled/read only/greyed out.   you would need to copy/mateiralize it to\n> your own folio/ in order to mess around with it.   docuemnt the ",
       "file": "beans/defs/folio-assistant-10s1--materialized-is-read-only-a-copy-of-someone-elses.md"
     },
@@ -1807,6 +1821,20 @@
       "file": "beans/defs/folio-assistant-8ka1--coordination-two-files-moved-under-sibling-prs-fee.md"
     },
     {
+      "id": "folio-assistant-8mbk",
+      "title": "folio/ is declared in cat-harness.json and the directory does not exist — the dh4f shape, undocumented this time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:21:16Z",
+      "updatedAt": "2026-09-22T08:21:16Z",
+      "preview": "Measured 2026-09-22 while opening jpjt.\n\n`cat-harness.json` declares 34 directories. Three of them are not on disk:\n\n| id | path | documented? |\n|---|---|---|\n| `library` | `library/` | YES — the description argues the cost at length (`wwi6`, `a02m`) and says outright \"IT IS THE dh4f SHAPE AND THAT IS KNOWN, NOT OVERLOOKED\" |\n| `translation-sources` | `translations/` | not checked yet |\n| `folio` ",
+      "file": "beans/defs/folio-assistant-8mbk--folio-is-declared-in-cat-harnessjson-and-the-direc.md"
+    },
+    {
       "id": "folio-assistant-8nzu",
       "title": "GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep's headline",
       "status": "completed",
@@ -2101,16 +2129,30 @@
       "file": "beans/defs/folio-assistant-ahvw--process-how-an-agent-decides-what-it-is-doing-and.md"
     },
     {
+      "id": "folio-assistant-ai9u",
+      "title": "check-workflow-paths trusts working-directory as input and never checks it exists — green over 8 dead ones",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:29:05Z",
+      "updatedAt": "2026-09-22T08:48:12Z",
+      "preview": "_2026-09-22T08:35:00Z_ — Found while working `u9r9` on `claude/peaceful-heisenberg-dzgsf1`. `u9r9` is about two stale paths; **this is about the gate that should have caught them and reports clean.**\n\n## The gate exists, and it is green over the whole defect\n\n`cat-harness/scripts/check-workflow-paths.ts` — 701 lines, written for bean `52dz`, whose stated subject is *\"every script path a workflow i",
+      "file": "beans/defs/folio-assistant-ai9u--check-workflow-paths-trusts-working-directory-as-i.md"
+    },
+    {
       "id": "folio-assistant-alox",
       "title": "The landing panel and its onboarding block — what shipped, and what is still judgement",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T07:27:54Z",
-      "updatedAt": "2026-09-19T07:28:25Z",
+      "updatedAt": "2026-09-22T08:17:09Z",
       "preview": "_2026-09-19T07:28:25Z_ — WHY THIS BEAN EXISTS: the owner asked, 2026-09-19, that the landing work be 'implemented as a todo' rather than carried ad-hoc through a chat. This is that record. WHAT SHIPPED, all on branch claude/festive-galileo-s7ibx0 / PR #345, all verified by a local jekyll build rather than by reading the template. (1) THE BACKDROP 404. docs/_includes/landing.html interpolated card.",
       "file": "beans/defs/folio-assistant-alox--the-landing-panel-and-its-onboarding-block-what-sh.md"
     },
@@ -2867,14 +2909,14 @@
     {
       "id": "folio-assistant-f258",
       "title": "META-PROCESS: 'where do I file this?' has many specialised answers and no general one — plus the surprise-to-corpus loop",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:09:05Z",
-      "updatedAt": "2026-09-21T21:09:05Z",
+      "updatedAt": "2026-09-22T08:51:25Z",
       "preview": "Owner, 2026-09-21, two linked asks in one message:\n\n> also during such interactions/any task really, review the discussion/(input.output),\n> was there something unexpected that happened (stastically so, logically so)\n> then, if it is is happening during a defined process that is\n> happeneing/expecting to happen often, it may be worth a new\n> skill/guidance/tool refinment. if so prompt the user to ",
       "file": "beans/defs/folio-assistant-f258--meta-process-where-do-i-file-this-has-many-special.md"
     },
@@ -3091,14 +3133,14 @@
     {
       "id": "folio-assistant-gjli",
       "title": "ALL UI must follow accessibility guidelines — standing rule, and the KG viewer has known gaps",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:23:00Z",
-      "updatedAt": "2026-09-19T00:53:03Z",
+      "updatedAt": "2026-09-22T06:54:25Z",
       "preview": "_2026-09-19T00:23:16Z_ — OWNER, 2026-09-19, verbatim: 'ALL UI MUST FOLLOW ACCESSIBATILITY GUIDELIENS'. Stated in caps, so a STANDING RULE rather than one task. It binds the KG viewer, the action-icon tiles (bean 1le7), the docs site and anything future. AGENTS.md says the discipline lives in skills/, so this needs a skill — provisionally folio-core/ui-accessibility — not just a bean, and the skill",
       "file": "beans/defs/folio-assistant-gjli--all-ui-must-follow-accessibility-guidelines-standi.md"
     },
@@ -3159,6 +3201,20 @@
       "file": "beans/defs/folio-assistant-gr5h--declared-directory-resolves-has-been-over-buns-def.md"
     },
     {
+      "id": "folio-assistant-h2s9",
+      "title": "The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T00:47:08Z",
+      "updatedAt": "2026-09-22T00:47:22Z",
+      "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
+      "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
+    },
+    {
       "id": "folio-assistant-h32d",
       "title": "Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio",
       "status": "in-progress",
@@ -3189,14 +3245,14 @@
     {
       "id": "folio-assistant-ha78",
       "title": "BUILT AND UNREACHABLE: 6 instances have a declared viewer no tile links, and shipping a graph adds one",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T06:49:16Z",
-      "updatedAt": "2026-09-22T06:49:17Z",
+      "updatedAt": "2026-09-22T09:21:44Z",
       "preview": "Surfaced on 2026-09-22 by shipping `agent-skills`' voices (bean `26tu`). The\nmerge conflict in the generated `docs/_data/harness.json` was main adding this\nfinding for the new graph; regenerating kept it, because it is TRUE.\n\n`harnessTiles` reports, per instance:\n\n> N graph(s) have a declared viewer that exists but is not at a conventional\n> path, so no tile links it — … **Built and unreachable is",
       "file": "beans/defs/folio-assistant-ha78--built-and-unreachable-6-instances-have-a-declared.md"
     },
@@ -3369,6 +3425,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i9xp",
+      "title": "beans update --body-file REPLACES the body silently; the skill named only the inline --body-append",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:53:49Z",
+      "updatedAt": "2026-09-22T06:54:12Z",
+      "preview": "_2026-09-22T07:00:00Z_ — FOUND BY BREAKING IT, 2026-09-22, while closing bean `gjli`. A four-paragraph closing note was too long to pass as an inline string, so I reached for `beans update <id> --body-file <f>`. It **replaced** the body: the owner's 2026-09-19 verbatim note ('ALL UI MUST FOLLOW ACCESSIBATILITY GUIDELIENS', stated in caps and load-bearing — it is what makes the rule STANDING rather",
+      "file": "beans/defs/folio-assistant-i9xp--beans-update-body-file-replaces-the-body-silently.md"
+    },
+    {
       "id": "folio-assistant-ie9l",
       "title": "READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness's by accident",
       "status": "completed",
@@ -3504,7 +3574,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:40:00Z",
-      "updatedAt": "2026-09-21T21:40:00Z",
+      "updatedAt": "2026-09-22T08:55:33Z",
       "preview": "Owner, 2026-09-21, in one message plus three follow-ups. The verbatim text and\nthe full R18-R32 table are in the design record\n(`cat-harness/docs/architecture/folio-board-requirements.md`, \"Round three\");\nthis bean carries only what is to be built and what would falsify it.\n\n## Why this is a round and not an amendment\n\nTwo of these requirements **reverse work that had not yet merged**. `v0jv`\nbuil",
       "file": "beans/defs/folio-assistant-j2if--folio-visualisation-r18-r32-square-strip-on-top-co.md"
     },
@@ -3697,14 +3767,14 @@
     {
       "id": "folio-assistant-jpjt",
       "title": "F8/F9 is structurally blocked on R25's glass: every folio surface today needs just-the-docs furniture",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T23:20:00Z",
-      "updatedAt": "2026-09-21T23:20:00Z",
+      "updatedAt": "2026-09-22T08:54:18Z",
       "preview": "F8/F9: *\"the folio visualisation … should by convention be available on any\nharness for consistent feel. who-iris, smart-\\*, etc are content libraries a\nuser is browsing and their 'folio' from the cat-harness is consistent across\nthem.\"*\n\n## The mechanism is decided. The owner chose it 2026-09-21\n\nThree ways to reach a downstream harness were tabled; the owner chose\n**an exported mount fragment pl",
       "file": "beans/defs/folio-assistant-jpjt--f8f9-is-structurally-blocked-on-r25s-glass-every-f.md"
     },
@@ -4031,6 +4101,20 @@
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
     },
     {
+      "id": "folio-assistant-lxpq",
+      "title": "CLEAN MERGE, WRONG ARTEFACT: a generated file neither side would emit, and no conflict to flag it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:41:04Z",
+      "updatedAt": "2026-09-22T08:58:35Z",
+      "preview": "Measured on `main` at `3341108a`, 2026-09-22, minutes after it landed.\n\n## What happened\n\nTwo branches changed the SAME generated artefact in ways git merged cleanly:\n\n| side | change to `docs/assets/voices/index.json` |\n|---|---|\n| main (`tis1`) | added `tile.voices.count` — a projection declares its own count |\n| #827 (`26tu`) | added a sixth voice, `agent-skill-authoring` |\n\nGit had no textual ",
+      "file": "beans/defs/folio-assistant-lxpq--clean-merge-wrong-artefact-a-generated-file-neithe.md"
+    },
+    {
       "id": "folio-assistant-lzbw",
       "title": "IRIS/DSPACE skill: how IRIS uses DSpace and Dublin Core, and what later tools need from it",
       "status": "completed",
@@ -4353,6 +4437,20 @@
       "file": "beans/defs/folio-assistant-o3xy--ui-accessibility-the-rendered-site-is-the-artefact.md"
     },
     {
+      "id": "folio-assistant-o6vj",
+      "title": "OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T09:27:56Z",
+      "updatedAt": "2026-09-22T09:28:13Z",
+      "preview": "Issue #895. Found during #886/#888 (bean `ha78`) and deliberately not fixed\nthere — moving a viewer and reworking a generator's ownership model are\ndifferent changes.\n\n## The defect\n\n`gen-iris-pages.ts` prunes its own orphans against two regexes.\n`catalogue.html` was written to `docs/` and named in NEITHER, so the sweep that\nexists to reclaim stale output could never have reclaimed it.\n\nThat sweep",
+      "file": "beans/defs/folio-assistant-o6vj--owned-patterns-six-enumerations-of-one-fact-and-th.md"
+    },
+    {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
       "status": "todo",
@@ -4651,14 +4749,14 @@
     {
       "id": "folio-assistant-prhr",
       "title": "PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:01:44Z",
-      "updatedAt": "2026-09-21T22:01:44Z",
+      "updatedAt": "2026-09-22T08:20:36Z",
       "preview": "## What — owner, 2026-09-21\n\n> bean, we also need a processes/ visualization as it is controlled.... its\n> basically a bpmn searcher tool or so. with various filters.\n\n## THE TITLE SAYS 58 AND THE NUMBER IS 61\n\nNot a typo worth quietly fixing — it is this repository's own rule catching\nits author mid-sentence. `bpmn-processes` says *\"Count the directory rather\nthan quoting a number from this parag",
       "file": "beans/defs/folio-assistant-prhr--processes-visualiser-58-bpmn-diagrams-and-no-viewe.md"
     },
@@ -5463,6 +5561,20 @@
       "file": "beans/defs/folio-assistant-tdu3--the-module-scope-gate-covers-foliodir-only-and-wal.md"
     },
     {
+      "id": "folio-assistant-tebu",
+      "title": "Staging previews are at 878.7 MiB of a 1 GB Pages limit, nothing is prunable, and the check's remedy addresses a different budget",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:03:07Z",
+      "updatedAt": "2026-09-22T09:03:43Z",
+      "preview": "`health` reports `staging-preview-size` **critical**: 10 previews, **878.7 MiB**,\npast three-quarters of GitHub's 1 GB Pages limit, which the main site shares.\n\n## Pruning cannot fix it, and the check's own action says to prune\n\nEvery one of the ten belongs to an **open and active** pull request — oldest\nidle 12.9 h, six touched within six minutes of measuring. So the finding's\naction —\n\n> Ask whi",
+      "file": "beans/defs/folio-assistant-tebu--staging-previews-are-at-8787-mib-of-a-1-gb-pages-l.md"
+    },
+    {
       "id": "folio-assistant-tfo1",
       "title": "INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused",
       "status": "in-progress",
@@ -5565,14 +5677,14 @@
     {
       "id": "folio-assistant-u9r9",
       "title": "TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T05:57:48Z",
+      "updatedAt": "2026-09-22T07:19:07Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
