@@ -2605,14 +2605,14 @@
     {
       "id": "folio-assistant-cpmo",
       "title": "SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:06:44Z",
-      "updatedAt": "2026-09-22T09:06:44Z",
+      "updatedAt": "2026-09-22T10:02:52Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"* — pointing at `WorldHealthOrganization/smart-base` as the implementation authority for the classification and for the crosswalk between editions 1 and 2.\n\nSurveyed against the checkout (read-only). Every claim below carries a path; counts were re-derived with `grep -c` rather than read off prose",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
     },
@@ -4097,14 +4097,14 @@
     {
       "id": "folio-assistant-m4xy",
       "title": "INGEST ARM: pdf-images recovers the raster layer, and WHO's real figures are vector",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:48:53Z",
-      "updatedAt": "2026-09-22T08:51:51Z",
+      "updatedAt": "2026-09-22T10:02:52Z",
       "preview": "Measured 2026-09-22 while describing the figures of the WHO digital-health corpus (issue #877, bean `3gef`).\n\n## The finding\n\n`pdf-images.py` recovers the **raster** layer of a PDF. In WHO typesetting the conceptual figures — frameworks, maturity models, taxonomies, process flows — are drawn as **vector** text and shapes, so they are not extracted at all. What IS extracted is furniture, and on one",
       "file": "beans/defs/folio-assistant-m4xy--ingest-arm-pdf-images-recovers-the-raster-layer-an.md"
     },
@@ -4897,15 +4897,15 @@
     {
       "id": "folio-assistant-qnvy",
       "title": "smart-base: the digital-transformation processes as executable BPMN",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:35:28Z",
-      "updatedAt": "2026-09-22T08:35:28Z",
-      "preview": "Issue #877. The owner asked for *\"methodlolgies subgraphs for project management, digital trasnform processes\"* — the prose half is the methodology node, this is the executable half.\n\nPer `bpmn-processes`: every activity carries `<folio:skill ref>` and `<folio:bean>`, both required. Bean `u4hs` carries the open design question for the methodology subprocess generally — **what triggers it** — and i",
+      "updatedAt": "2026-09-22T09:54:44Z",
+      "preview": "Issue #877. The owner asked for *\"methodlolgies subgraphs for project management, digital trasnform processes\"* — the prose half is the methodology node `diig.md`, this is the executable half.\n\n## Summary of Changes\n\n`smart-base/methodologies/processes/diig-investment-path.bpmn` — DIIG's own nine chapters as a process. Chapter 1 is the start event's documentation rather than an activity, because n",
       "file": "beans/defs/folio-assistant-qnvy--smart-base-the-digital-transformation-processes-as.md"
     },
     {

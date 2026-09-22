@@ -5,51 +5,48 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T09:06:44Z
-updated_at: 2026-09-22T09:06:44Z
+updated_at: 2026-09-22T10:11:53Z
 parent: folio-assistant-2yyh
 ---
 
-The owner, 2026-09-22: *"See smart-base for more info on classications and mappings better 1 and 2..."* — pointing at `WorldHealthOrganization/smart-base` as the implementation authority for the classification and for the crosswalk between editions 1 and 2.
+The owner, 2026-09-22: *"See smart-base for more info on classications and mappings better 1 and 2..."*, then chose to have the crosswalks ingested.
 
-Surveyed against the checkout (read-only). Every claim below carries a path; counts were re-derived with `grep -c` rather than read off prose.
+## Summary of Changes
 
-## What is there
+`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.
 
-| artefact | path | rows |
-|---|---|---|
-| v1→v2 intervention crosswalk | `input/fsh/conceptmaps/CDHIv1toCDHIv2.fsh` | 120 |
-| v1→v2 system-category crosswalk | `input/fsh/conceptmaps/CDSCv1toCDSCv2.fsh` | 25 |
-| edition-2 code system | `input/fsh/codesystems/CDHIv2.fsh` | 138 codes |
-| edition-1 code system | (CDHIv1) | 119 codes |
+**225 artefacts known, 47 materialized.** The materialized set is the DAK API surface — 47 JSON Schemas, 47 OpenAPI, 22 displays, 22 JSON-LD — on the same reasoning as `smart-trust`: those have no other home, and the resource JSON does.
 
-**Both ConceptMaps are real and both are `status: #draft`, `experimental: true`.** They carry `equivalent` / `wider` / `inexact` equivalence codes with human-readable rationale comments — which is more than a bare code pairing and is the part worth reading.
+`ingest:ig:check:smart-base` added to `package.json`, mirroring the `smart-trust` entry, so the index is a REGENERABLE graph rather than a snapshot nobody can re-derive. Nothing under it is authored; a hand-edit is a defect the next check overwrites or reports.
 
-`CDHIv1toCDHIv2.fsh` is **incomplete against its own stated scope**: it stops mid-group-4 and never emits the unmatched rows for the v2-only codes its own description promises (1.4.4, 1.6.2, 1.8, 2.5.6, 2.11, 3.1.5, 3.5.7, 3.5.8, 3.8, 4.3.5, 4.5). `CDSCv1toCDSCv2.fsh` is complete on the source side, one row per v1 letter A–Y.
+## Four crosswalks, not two
 
-Code shape: CDHI is dotted hierarchical numeric — v1 carries a `.0` group suffix (`1.0`, `1.1`, `1.1.1`) and v2 drops it (`1`, `1.1`, `1.1.1`). CDSC is single letters A–Y in v1 and letter+digit A1–E2 in v2, across five architecture groups.
+The survey found two. The published IG has **four** ConceptMaps, all now indexed:
 
-## What it already changed
+| id | what it is |
+|---|---|
+| `CDHIv1toCDHIv2` | the intervention crosswalk between editions |
+| `CDSCv1toCDSCv2` | the system-category crosswalk |
+| `CDHIv1Hierarchy` | edition 1's parent-child structure |
+| `CDHIv2Hierarchy` | edition 2's parent-child structure |
 
-The voice rule asserting the current abbreviation was **wrong and is corrected** (issue #877, bean `7mi0`). smart-base uses **CDISAH**, with the leading C, in 17 places across its FSH; the bare form appears in no FSH or prose there. Checking that against the ingested publication showed the publication itself carries both — `CDISAH` on page 7 and in its own short link `bit.ly/CDISAH`, and a one-off bare `DISAH` on page 9.
+The two hierarchy maps were not in the FSH survey's scope and are the more reusable half: a hierarchy expressed as a ConceptMap is what lets a code be rolled up to its parent without re-deriving the tree from dotted notation.
 
-So the survey did not merely add information, it caught a rule that would have taught the wrong term. The rule now records both forms and names which artefact uses which.
+## They are `referenced`, and that is the right state rather than a shortfall
 
-## One claim that did NOT survive
+The index says where each crosswalk is and holds **none of its rows**. Materializing one is not a flag on this script — it is `materialize-remote.bpmn`: a purpose (`working` or `archival`), then the five gates, then the fetch. `library-ingestion` places that on `folio-assist-core` deliberately, because what materialization adds is everything that happens *before* there is a file: may we hold it, what does holding it cost, for what purpose, and what happens when the source goes away.
 
-The "nine categories of health system challenge" is **not** in smart-base. The only resource titled for health system challenges (`input/fsh/valuesets/CDSCv1.fsh`) is a relabelled wrapper around the 25-code A–Y system-categories ValueSet. The nine categories ARE in the ingested publication (`library/9789240081949-eng/sections/page-010.md`, which lists information, availability, quality, acceptability, utilization, efficiency, cost, accountability, equity), so the fact stands on the publication — but **the implementation does not encode it**, and that gap is itself worth knowing before anyone builds against it.
+It also matches what this bean asked for in the first place. Both crosswalks are `status: #draft`, `experimental: true`, and `CDHIv1toCDHIv2.fsh` is incomplete against its own stated scope. **Modelling their state is the point; treating them as settled by copying the rows in would assert a stability the publisher does not claim.**
 
-## Personas
-
-No coded link between `GenericPersona` / `ActorDefinition` and CDHI codes: `GenericPersona.fsh`'s only bound vocabulary is ISCO-08. The link to CDISAH v2 is narrative only, in the free-text `description` of `input/fsh/actors/DAK.Persona.DataManager.fsh`, which names v2 codes and cites the publication by ISBN.
-
-## What this bean is for
-
-Not the survey — that is done. The open questions it raises:
-
-- Should the two ConceptMaps be ingested as a graph here, so a v1 citation can be resolved to its v2 code mechanically rather than by hand? They are `draft`/`experimental`, which is a reason to model their STATE rather than to treat them as settled.
-- Should the incompleteness of `CDHIv1toCDHIv2.fsh` be reported upstream? It is a finding about someone else's repository and is not ours to fix.
-- The nine-category gap between publication and implementation: worth a note to whoever owns the FSH.
+So a v1 code does not yet resolve to v2 mechanically from inside this repository. What exists now is the precondition: every crosswalk is a known node with a resolvable location and a recorded state, which is what `materialize-remote.bpmn` needs as input.
 
 ## Done when
-- [ ] the owner has said whether the crosswalks are ingested here or merely cited
+- [x] the crosswalks are known to the graph, by reference, with their state
+- [ ] the owner has said whether to run `materialize-remote.bpmn` over them, and for what purpose
 - [ ] the upstream findings are either reported or deliberately not
+
+## Still open, and not ours to fix
+
+`CDHIv1toCDHIv2.fsh` stops mid-group-4 and never emits the unmatched rows for the v2-only codes its own description promises. That is a finding about someone else's repository. Reporting it upstream is a decision, not a task.
+
+The nine categories of health system challenge remain in the publication (`library/9789240081949-eng/sections/page-010.md`) and **not** in smart-base, where the only resource titled for them wraps the 25-code A–Y system-categories ValueSet. Worth a note to whoever owns the FSH.

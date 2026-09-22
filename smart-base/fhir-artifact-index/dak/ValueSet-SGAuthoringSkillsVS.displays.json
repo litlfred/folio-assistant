@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.displays.json",
+  "title": "SMART Guidelines Authoring Skills ValueSet Display Values",
+  "description": "Display values for SMART Guidelines Authoring Skills ValueSet ValueSet codes. Generated from FHIR expansions.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "patternProperties": {
+        "^https?://.*": {
+          "type": "object",
+          "description": "Display values for a specific IRI-formatted code by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-review-l1-guidelines": {
+      "en": "Can review L1 guidelines"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-interpret-clinical-recommendations": {
+      "en": "Can interpret clinical recommendations"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-identify-health-interventions": {
+      "en": "Can identify health interventions"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-personas": {
+      "en": "Can author personas"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-user-scenarios": {
+      "en": "Can author user scenarios"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-business-processes": {
+      "en": "Can author business processes"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-data-dictionary": {
+      "en": "Can author data dictionary"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-decision-logic": {
+      "en": "Can author decision-support logic"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-scheduling-logic": {
+      "en": "Can author scheduling logic"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-indicators": {
+      "en": "Can author indicators"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-functional-requirements": {
+      "en": "Can author functional requirements"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-validate-dak-content": {
+      "en": "Can validate DAK content"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-logical-models": {
+      "en": "Can author logical models"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-fhir-profiles": {
+      "en": "Can author FHIR profiles"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-questionnaires": {
+      "en": "Can author questionnaires"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-cql": {
+      "en": "Can author CQL"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-structure-maps": {
+      "en": "Can author structure maps"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-plan-definitions": {
+      "en": "Can author plan definitions"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-actor-definitions": {
+      "en": "Can author actor definitions"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-example-scenarios": {
+      "en": "Can author example scenarios"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-measures": {
+      "en": "Can author measures"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-fhir-requirements": {
+      "en": "Can author FHIR requirements"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-test-cases": {
+      "en": "Can author test cases"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-review-terminology": {
+      "en": "Can review terminology"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-map-concepts": {
+      "en": "Can map concepts"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-code-systems": {
+      "en": "Can author code systems"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-value-sets": {
+      "en": "Can author value sets"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-author-concept-maps": {
+      "en": "Can author concept maps"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-run-qa-checks": {
+      "en": "Can run QA checks"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-review-checklist": {
+      "en": "Can review checklist"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-validate-artifact-conformance": {
+      "en": "Can validate artifact conformance"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-validate-l3-functionality": {
+      "en": "Can validate L3 functionality"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-configure-ig": {
+      "en": "Can configure IG"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-build-ig": {
+      "en": "Can build IG"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-manage-releases": {
+      "en": "Can manage releases"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-manage-governance": {
+      "en": "Can manage governance"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-translate-content": {
+      "en": "Can translate content"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-review-translations": {
+      "en": "Can review translations"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-review-and-approve-content": {
+      "en": "Can review and approve content"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-scope-dak": {
+      "en": "Can scope DAK"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-manage-stakeholders": {
+      "en": "Can manage stakeholders"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringSkills#can-plan-iterations": {
+      "en": "Can plan iterations"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/SGAuthoringSkillsVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-08-26T08:29:22.804878"
+}

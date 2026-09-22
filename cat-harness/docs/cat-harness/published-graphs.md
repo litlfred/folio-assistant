@@ -65,9 +65,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `fhir-artifact-index`
 
-0 of 2 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
+- SMART Base — *declared, not published*
 - smart-immunizations — *declared, not published*
 - smart-trust — *declared, not published*
 

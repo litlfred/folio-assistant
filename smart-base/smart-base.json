@@ -52,9 +52,21 @@
       "coverage": {
         "skill": "bpmn-processes"
       }
+    },
+    {
+      "id": "smart-base-artifact-index",
+      "path": "fhir-artifact-index/",
+      "dependents": "skip",
+      "description": "The published IG's artefact index, reconstructed by `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1). 225 artefacts known, 47 materialized -- the DAK API surface, whose JSON Schemas and OpenAPI have no other home, against resource JSON that does. `dak/` sits INSIDE this directory rather than beside it, so one entry covers both the index and the bytes it points at; a sibling would be an undeclared directory holding the very bytes the index claims to have, which is the `dh4f` shape. NOTHING HERE IS AUTHORED: `ingest:ig:check` re-derives it and a hand-edit is a defect the next check either overwrites or reports. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`.",
+      "graphKinds": [
+        "fhir-artifact-index"
+      ],
+      "coverage": {
+        "skill": "ig-artifact-ingestion"
+      }
     }
   ],
-  "_directories_comment": "FOUR entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
+  "_directories_comment": "FIVE entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
   "assets": [
     {
       "id": "agent-instructions",
