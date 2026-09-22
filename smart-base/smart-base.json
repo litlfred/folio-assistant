@@ -28,9 +28,21 @@
       "coverage": {
         "skill": "methodology-adoption"
       }
+    },
+    {
+      "id": "voices",
+      "path": "skills/voices/",
+      "dependents": "reproduce",
+      "description": "Editorial voice profiles derived from this layer's own `library/` -- `who-digital-health` is the first. Every rule cites `{ libraryId, sectionId, pages, quote }` resolving into `library/`, and `check:voices` refuses one whose citation does not resolve, which is what makes a voice auditable rather than asserted. The id is `voices`, the CONVENTIONAL one, so this overrides the default rather than joining it. Declared in the commit that created its content. Issue #877, bean `7mi0`.",
+      "graphKinds": [
+        "voices"
+      ],
+      "coverage": {
+        "skill": "voice-editorial-review"
+      }
     }
   ],
-  "_directories_comment": "TWO entries now. `skills/voices/` and `scenarios/` remain undeclared until they hold content, for the reason the `methodologies/` description gives: a declared-but-absent directory is the `dh4f` defect, and who-iris held its own `library` entry back on the same ground -- the absence did work, because `resolveLibraryRef` answered `no-library-graph`, a different and more actionable finding than \"that section is missing\".",
+  "_directories_comment": "THREE entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it, and who-iris held its own `library` entry back on the same ground.",
   "assets": [
     {
       "id": "agent-instructions",

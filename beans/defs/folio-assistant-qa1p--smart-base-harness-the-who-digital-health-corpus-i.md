@@ -2,10 +2,11 @@
 # folio-assistant-qa1p
 title: 'SMART-BASE HARNESS: the WHO digital-health corpus, its methodologies and its voices'
 status: scrapped
-type: feature
+type: task
 priority: high
 created_at: 2026-09-22T08:34:56Z
-updated_at: 2026-09-22T08:38:53Z
+updated_at: 2026-09-22T08:58:46Z
+parent: folio-assistant-2yyh
 ---
 
 Duplicate of `folio-assistant-2yyh`, which carries the same title and body and is the one the child beans (`ve07`, `3gef`, `wkt1`, `qnvy`, `7mi0`, `fgkb`) are parented to.

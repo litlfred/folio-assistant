@@ -2,10 +2,11 @@
 # folio-assistant-2yyh
 title: 'SMART-BASE HARNESS: the WHO digital-health corpus, its methodologies and its voices'
 status: in-progress
-type: feature
+type: epic
 priority: high
 created_at: 2026-09-22T08:35:00Z
-updated_at: 2026-09-22T08:35:00Z
+updated_at: 2026-09-22T08:58:46Z
+parent: folio-assistant-vuip
 ---
 
 Issue #877 https://github.com/litlfred/folio-assistant/issues/877

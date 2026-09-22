@@ -837,6 +837,57 @@
       ]
     },
     {
+      "name": "smart-base",
+      "title": "SMART Base",
+      "label": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/voices/smart-base/",
+      "hrefKind": "viewer",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 3
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 3
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "library"
+        },
+        {
+          "kind": "methodology"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/smart-base/"
+        }
+      ],
+      "findings": [
+        "smart-base: declares 2 graph(s) with no published viewer — library, methodology. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: no avatar declared for this instance — showing the generic mark.",
+        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/smart-base/) rather than the instance's own themed root."
+      ]
+    },
+    {
       "name": "folio-assistant",
       "title": "Folio Assistant",
       "label": "Folio Assistant",
@@ -957,7 +1008,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 35
+          "value": 37
         },
         {
           "id": "kinds",
