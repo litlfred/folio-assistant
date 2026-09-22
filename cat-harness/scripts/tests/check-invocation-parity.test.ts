@@ -22,11 +22,11 @@ describe("invocations", () => {
     // instance. Collapsing the two is what let that pass unnoticed.
     const yml = [
       "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld",
-      "          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out b.jsonld",
+      "          bun run cat-harness/scripts/kg-export.ts --instance ./no-such-instance --out b.jsonld",
     ].join("\n");
     const got = invocations(yml);
     expect(got).toHaveLength(2);
-    expect(got.map((i) => i.instance)).toEqual([undefined, "./bootstrap"]);
+    expect(got.map((i) => i.instance)).toEqual([undefined, "./no-such-instance"]);
   });
 
   test("a repeated invocation is counted once", () => {
@@ -52,24 +52,19 @@ describe("invocations", () => {
     // change. Both were green on their own head and main went red on the
     // merge -- which is this witness doing precisely its job.
     //
-    // THE FIXTURES ABOVE ALSO SAY `./bootstrap`, AND THAT IS A COINCIDENCE.
-    // They are synthetic YAML testing that the parser returns WHATEVER
-    // instance string it is handed, so the name there is arbitrary and no
-    // directory has to exist for it. They would pass just as well spelled
-    // anything else; they happen to match this line because a rename swept
-    // them along, not because they are required to agree with it.
+    // THIS LINE IS THE ONLY ONE THAT READS THE REAL FILE. The fixtures above
+    // are synthetic YAML testing that the parser returns WHATEVER instance
+    // string it is given, so their name is arbitrary and no directory has to
+    // exist for it -- and a fixture naming a directory that does NOT exist is
+    // the stronger test, because it cannot pass by the name happening to
+    // resolve.
     //
-    // So do not "fix" a fixture to match this line, and do not read a fixture
-    // as evidence about the real workflow. This line is the only one that
-    // reads the real file.
-    //
-    // This note said the opposite until #854 -- it claimed the fixtures still
-    // read `cat-bootstrap`, ten lines below fixtures that did not. #807 had
-    // warned in advance that they "must not be swept up in a find-and-replace";
-    // they were, and the comment defending them was not updated. Recorded
-    // because a note whose example is wrong is worse than no note: it is the
-    // same drift, one layer up, as the `--layer` message that listed an
-    // allow-list it no longer matched.
+    // They said `cat-bootstrap`, and the same blanket rename took them along
+    // with this assertion, quietly weakening them to name a real directory
+    // while this comment went on claiming they did not (bean `u2gv`). They now
+    // say `./no-such-instance`: a name no rename will ever match, which is the
+    // property that was actually wanted. Naming a real-looking directory in a
+    // fixture is what made it renameable in the first place.
     const got = invocations(wf("docs-site.yml"));
     expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
@@ -133,10 +128,10 @@ describe("formatReport", () => {
   test("a missing invocation names the instance argument, not just the script", () => {
     const out = formatReport({
       deploy: "docs-site.yml",
-      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./bootstrap" }] }],
+      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./no-such-instance" }] }],
       staleExemptions: [],
     });
-    expect(out).toContain("kg-export --instance ./bootstrap");
+    expect(out).toContain("kg-export --instance ./no-such-instance");
   });
 
   test("a clean run prints the exemptions with their reasons", () => {
