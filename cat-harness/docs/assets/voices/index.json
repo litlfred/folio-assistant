@@ -388,7 +388,7 @@
     {
       "id": "who-digital-health",
       "title": "WHO digital health terminology",
-      "description": "The controlled vocabulary WHO uses to describe digital health implementations: what a digital health intervention is against the software that delivers it, what separates a bottleneck from a health system challenge, and which terms the second edition of the classification renamed. Derived rule by rule from the ingested publications; every rule cites the section it was read from.",
+      "description": "The controlled vocabulary WHO uses to describe digital health implementations: what a digital health intervention is against the software that delivers it, what separates a bottleneck from a health system challenge, and how the two editions of the classification name themselves — including the first edition's title, which WHO says was wrong. Derived rule by rule from the ingested publications; every rule cites the section it was read from.",
       "instance": "smart-base",
       "path": "smart-base/skills/voices/who-digital-health",
       "provenance": "assertion",
@@ -411,19 +411,19 @@
       "hasInstructions": true,
       "rules": [
         {
-          "id": "disah-is-the-current-name",
-          "title": "The second edition is DISAH, not CDHI",
-          "description": "The first edition (2018) is the *Classification of Digital Health Interventions*, abbreviated CDHI. The second edition renames it the *Classification of Digital Interventions, Services and Applications in Health*, abbreviated DISAH, because the scope widened from interventions alone to interventions, services and application types. Use DISAH when writing about the current classification, and CDHI only when referring specifically to the first edition. This rule is counterintuitive because CDHI is the abbreviation in wide circulation and in most secondary literature, so the familiar term is the wrong one.",
+          "id": "cdisah-is-the-current-abbreviation",
+          "title": "The current abbreviation is CDISAH",
+          "description": "The second edition is the *Classification of Digital Interventions, Services and Applications in Health*, and the abbreviation it introduces itself with is **CDISAH**, with the leading C. Use CDISAH for the current classification and CDHI only when referring specifically to the 2018 first edition. Two things make this counterintuitive. CDHI is the abbreviation in wide circulation and in most secondary literature, so the familiar term is the wrong one. And the publication is not internally consistent: page 9 writes the bare form 'DISAH' once, while page 7 and the classification's own short link (bit.ly/CDISAH) use CDISAH. WHO's implementation authority settles it — `WorldHealthOrganization/smart-base` uses CDISAH throughout its FHIR artefacts (`input/fsh/codesystems/CDHIv2.fsh`, `input/fsh/conceptmaps/CDHIv1toCDHIv2.fsh`) and the bare form appears in no FSH or prose there. That divergence inside one publication is the plainest argument for this voice existing at all.",
           "category": "terminology",
           "severity": "major",
           "patterns": 0,
           "terminology": 1,
           "judgementOnly": false,
           "citation": "library",
-          "cites": "9789240081949-eng#page-009",
+          "cites": "9789240081949-eng#page-007",
           "citesInstance": "smart-base",
-          "pages": "9",
-          "quote": "The classification of Digital Interventions, Services and Applications in Health (DISAH) categorizes the different ways in which digital and mobile technologies are being used to support individuals and health system needs."
+          "pages": "7",
+          "quote": "The updated Classification of Digital Interventions, Services and Applications in Health (CDISAH) is a set of categorizations that links how digital health interventions"
         },
         {
           "id": "intervention-is-a-capability-not-software",
@@ -514,6 +514,21 @@
           "citesInstance": "smart-base",
           "pages": "24 (printed 12)",
           "quote": "accompanied by a governance framework, operational plan, human resources and related activities for its successful execution"
+        },
+        {
+          "id": "first-edition-title-was-wrong-and-is-reissued",
+          "title": "The first edition's title was incorrect and is being reissued",
+          "description": "WHO states that the first edition was published under the wrong title. It went out as *Classification of digital health interventions v1.0* under reference WHO/RHR/18.06 — the document ingested here as `who-rhr-1806-eng` — and is being reissued under the correct title, *Classification of digital interventions, services and applications in health*. So the two editions do not differ only by content: the earlier NAME is disowned by the publisher. When citing the first edition, cite it by its reference number and say which title you are using, because a reader who looks it up may find either. Do not silently modernise a v1 citation to the new title, and do not treat the v1 title as merely superseded — WHO calls it incorrect.",
+          "category": "citation",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240081949-eng#page-004",
+          "citesInstance": "smart-base",
+          "pages": "4",
+          "quote": "The first edition of this publication was published under the following title “Classification of digital health interventions v1.0: a shared language to describe the uses of digital technology for health” with a WHO reference number - WHO/RHR/18.06. The first edition is being reissued under the correct title"
         }
       ]
     },
@@ -927,8 +942,8 @@
   ],
   "totals": {
     "voices": 6,
-    "rules": 53,
-    "citingLibrary": 50,
+    "rules": 54,
+    "citingLibrary": 51,
     "citingKgNode": 3,
     "mechanical": 12
   }

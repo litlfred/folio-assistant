@@ -1,7 +1,7 @@
 ---
 name: voice-who-digital-health
 description: >
-  Write and review digital health implementation prose in WHO's own vocabulary — 7 rules, each citing the publication it was read from.
+  Write and review digital health implementation prose in WHO's own vocabulary — 8 rules, each citing the publication it was read from.
 allowed-tools: Read Grep Glob
 ---
 
@@ -9,10 +9,11 @@ allowed-tools: Read Grep Glob
 
 The controlled vocabulary WHO uses to describe digital health implementations:
 what a digital health intervention is against the software that delivers it,
-what separates a bottleneck from a health system challenge, and which terms the
-second edition of the classification renamed. Derived rule by rule from the
-ingested publications in `smart-base/library/`; every rule cites the section it
-was read from.
+what separates a bottleneck from a health system challenge, and how the two
+editions of the classification name themselves — including the first edition's
+title, which WHO says was wrong. Derived rule by rule from the ingested
+publications in `smart-base/library/`; every rule cites the section it was read
+from.
 
 ## What this file is, against the rules beside it
 
@@ -36,15 +37,18 @@ aspiration in a foreword and becomes something a reviewer can uphold.
 
 ## Authoring
 
-**Read the three `counterintuitive` rules before you draft, not at review.**
-They are where the instinct is wrong, and each carries a `commonError` naming
-the wrong instinct:
+**Read the `counterintuitive` rules before you draft, not at review.** They are
+where the instinct is wrong, and each carries a `commonError` naming the wrong
+instinct:
 
-- the classification's current abbreviation is not the one in wide circulation
+- the classification's current abbreviation is not the one in wide circulation,
+  and the publication itself uses two forms of it
 - an intervention is a capability, and naming a product there collapses the
   distinction the classification rests on
 - *bottleneck* and *health system challenge* are not synonyms, and DIIG Chapter
   3 is the step that maps one onto the other
+- the first edition's title is not merely out of date; WHO calls it incorrect
+  and is reissuing under another
 
 A terminology rule is the cheapest to honour and the most tedious to retrofit:
 a word changed late ripples into every sentence built around it, and here it
@@ -77,4 +81,6 @@ a controlled vocabulary becomes a shibboleth.
 **It does not adjudicate between the two editions.** Both are in the library
 and both are cited. Where they differ the rule says which edition says what,
 and the writer chooses knowingly — a voice that silently preferred one would
-hide the very change it exists to record.
+hide the very change it exists to record. The same restraint applies where a
+publication disagrees with WHO's own implementation artefacts: the rule records
+both and names which is which, rather than quietly picking the tidier one.
