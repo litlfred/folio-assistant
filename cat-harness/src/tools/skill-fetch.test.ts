@@ -198,8 +198,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // does not reach: it has one directly-held directory per instance, so
     // "named by its instance" and "named by first-wins" agree there.
     //
-    // `cat-harness` really declares four — `src/skills/`, `methodologies/crdm/`
-    // and `methodologies/raci/` — and until bean `1hvo`
+    // `cat-harness` really declares four — `src/skills/`, `skills/crdm/`
+    // and `skills/raci/` — and until bean `1hvo`
     // all four resolved to the name `folio-assistant` with the last winning.
     // Three packages were found and silently dropped: `kg:audit` reported six
     // `manifest-skill-exists` CRITICALs for theming and 27 MAJORs for CRDM

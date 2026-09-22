@@ -257,8 +257,16 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // it twice. The subdirectory won on evidence — bean `lps0` measured that
   // `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so the top-level
   // placement silently dropped its skills out of skill QA.
-  "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
-  "methodology-raci": "RACI involvement model (methodologies/raci)",
+  // KEYED BY BASENAME SINCE 2026-09-22, not by declaration id. These two
+  // were `methodology-crdm` and `methodology-raci` while they were
+  // top-level declared directories under `methodologies/`; the owner's
+  // "dont bury sub-graph assets" moved them into `skills/`, where they are
+  // package subdirectories and `discoverGroups` takes the basename branch
+  // instead. The old keys would not have failed loudly — they would simply
+  // never match, and the generator throws naming the id it wanted, which is
+  // how this was caught rather than shipped as two uncategorised packages.
+  crdm: "CRDM requirements methodology (skills/crdm)",
+  raci: "RACI involvement model (skills/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the

@@ -214,7 +214,7 @@ owner's standing rule: **a downstream consumer must never have to
 string-manipulate or infer a rule to follow a link.** A rule a consumer has to
 know is a rule a consumer can get wrong, and the cost is paid by someone who
 cannot see the code that made the assumption look reasonable. See
-[`crdm-requirements-workflow`](../../methodologies/crdm/crdm-requirements-workflow.md) §"Consumer burden
+[`crdm-requirements-workflow`](../crdm/crdm-requirements-workflow.md) §"Consumer burden
 is a requirement".
 
 **Vocabulary nodes get no `alternateOf`.** Graph kinds are minted under the

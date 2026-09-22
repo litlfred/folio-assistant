@@ -382,6 +382,77 @@ under `vendors/` loads, a voice under any other nested directory does not.
 
 `VOICE_VENDORS_DIR` in `schemas/voices.ts` is the one spelling of the name.
 
+## Assets sit at `<stub>/<asset>` — no declaration reaches down (ENFORCED)
+
+**A declared directory never sits inside another declared directory.** An
+instance's assets hang directly off its stub — `cat-harness/skills/`,
+`who-iris/library/`, `smart-kg/methodologies/` — and a package inside one of
+those is a package, not a second graph.
+
+The owner, 2026-09-22: *"dont bury sub-graph assets. same for `<stub>/skills`,
+etc."* and *"follow established norms on layout. qa to enforce."*
+
+> **Read with §"Nesting is declared FROM WITHIN" below, which is the newer
+> ruling and the one that governs.** This section was titled *"nothing nests"*
+> until the two were merged, and that was too absolute: nesting is permitted,
+> **described by a node in the first subdirectory**. What is forbidden either
+> way — and what `check:layout-norms` actually measures — is a ROOT
+> DECLARATION enumerating a path it cannot verify, which is one of the two
+> things #980 rules out explicitly.
+>
+> So the two agree on every case in the corpus today, and the relocation this
+> section describes is *more* correct under the newer ruling than under the
+> one it was made for: `methodology-crdm` at `methodologies/crdm/` was a root
+> declaration reaching down a multi-level path, and removing it rather than
+> repointing it is what #980 requires.
+>
+> **The check will need to learn the from-within node when it exists.** Its
+> kind and name are open and are the owner's (#980), so nothing declares
+> nesting from within today and every pair the check finds is still a root
+> declaration reaching down. The day that node lands, a nesting it describes
+> is legitimate and `check:layout-norms` must stop reporting it — recorded
+> here so the next session reads the constraint instead of filing a false
+> finding against a sanctioned structure.
+
+**Depth is not the test, and reaching for it produces false findings
+immediately.** `who-iris/library/` is two segments from the repository root and
+is exactly right. `test/results/` is two segments from its instance root and is
+also right, because `test/` is not a graph. What is wrong is *containment*: a
+declared directory inside another declared directory, which forces a consumer
+scanning the outer one to decide whether the inner one's nodes are also its own
+— bean `x4v4`'s question, and every count computed from that sweep depends on
+the answer.
+
+### The part that is easy to get wrong
+
+When you relocate a buried asset, **remove its declaration rather than
+repointing it.** A package subdirectory of an already-declared graph needs no
+entry of its own, and adding one declares the same directory twice — the same
+defect, one level down from where it was.
+
+That is not a judgement call made in prose: on 2026-09-22 CRDM's skills were
+repointed from `methodologies/crdm/` to `skills/crdm/` with the entry kept, and
+`gen-skill-docs` immediately demanded a category under **both** the basename
+and the declaration id, because both discovery branches found the one
+directory. The three entries were dropped and `methodologies/` now holds its
+four nodes and no subgraph.
+
+### How it is enforced
+
+`bun run check:layout-norms`, a **ratchet** rather than a corpus-wide gate. The
+nestings that exist today are baselined in
+`scripts/layout-norms-baseline.json`; **a pair not in the baseline fails.**
+`cat-harness` reached zero and has no baseline entry, so it cannot regress,
+while the instances with outstanding work do not turn CI red — the
+`known-skills.ts` wolf-crying rule applied to somebody else's layout.
+
+Removing a nesting prints as `FIXED` and never fails: a guard that punished the
+fix it exists to encourage is the inversion bean `rl3h` produced elsewhere.
+`--update` shrinks the baseline, so the diff a reviewer sees is the progress.
+
+**Ask the baseline for the list, never this page.** It said "three instances"
+while the check found four.
+
 ## Inheritance
 
 An instance inherits its dependencies' directories, walked depth-first through

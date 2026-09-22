@@ -125,7 +125,7 @@ apply reads from the outside exactly like a rule being followed.
 (`mggs`). One direction is not enough: a reader arriving at either object has
 to be able to reach the other, and a check reports the ones that cannot.
 
-When to open an issue at all is [`crdm-detect`](../../methodologies/crdm/crdm-detect.md)
+When to open an issue at all is [`crdm-detect`](../crdm/crdm-detect.md)
 §"Issue association" — **scan before creating one, and never create one without
 permission**. This section is about what is owed once the work exists, not
 about manufacturing an issue for every bean.

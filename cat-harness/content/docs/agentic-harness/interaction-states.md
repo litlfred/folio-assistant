@@ -21,7 +21,7 @@ Active workflows in this platform:
 | **Content lifecycle** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Content moves through validate → render → publish |
 | **Document ingestion** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | User drops a file in `uploads/` |
 | **Draft to publication** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn) | Agent detects a feature request |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | Agent detects a feature request |
 | **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
