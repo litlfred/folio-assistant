@@ -434,25 +434,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790109552">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790109552">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790109552">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790109552">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -469,7 +469,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790106929" defer></script>
+<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790109552" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1002,9 +1002,18 @@ scripts and emits a phase report: <code class="language-plaintext highlighter-ro
 and a completion timestamp. <code class="language-plaintext highlighter-rouge">qa.json</code> from the Publisher run is uploaded as a
 workflow artifact.</p>
 
-<p><strong>Both are produced and neither is read downstream.</strong> That is the evidence bean
-<code class="language-plaintext highlighter-rouge">rjug</code> proposes a <code class="language-plaintext highlighter-rouge">qa-report</code> graph kind from — the shape is what these scripts
-already emit, not a design.</p>
+<p><strong>Both are produced and neither was read downstream.</strong> That is the evidence the
+<code class="language-plaintext highlighter-rouge">qa-report</code> graph kind was registered from on 2026-09-22 —
+<code class="language-plaintext highlighter-rouge">schemas/qa-report.ts</code>. The shape is what these scripts already emit, not a
+design.</p>
+
+<p>Three rules are enforced structurally rather than left to a checker, each one a
+discipline this repository has already paid for in prose: a summary may not
+disagree with the details it counts; <code class="language-plaintext highlighter-rouge">files_missing</code> must be a subset of
+<code class="language-plaintext highlighter-rouge">files_expected</code>, which is what keeps a determined empty distinguishable from a
+not-found; and <code class="language-plaintext highlighter-rouge">running</code> is never a pass — a script that died before writing
+anything has zero errors, and <code class="language-plaintext highlighter-rouge">qaReportVerdict</code> returns <code class="language-plaintext highlighter-rouge">unknown</code> for it rather
+than <code class="language-plaintext highlighter-rouge">ok</code>.</p>
 <h2 id="where-the-counterparts-are">
   
   

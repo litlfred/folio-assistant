@@ -434,25 +434,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/docs-ui.css?v=1790109552">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/work-plan.css?v=1790109552">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/themes.css?v=1790109552">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790106929">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/css/avatars.css?v=1790109552">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -469,7 +469,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790106929" defer></script>
+<script src="/folio-assistant/STAGING/claude-modest-keller-vzzjiy/assets/js/docs-ui.js?v=1790109552" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -973,9 +973,13 @@ double run when lifting this step.</p>
 — <code class="language-plaintext highlighter-rouge">successes</code>, <code class="language-plaintext highlighter-rouge">warnings</code>, <code class="language-plaintext highlighter-rouge">errors</code>, <code class="language-plaintext highlighter-rouge">files_processed</code>, <code class="language-plaintext highlighter-rouge">files_expected</code>,
 <code class="language-plaintext highlighter-rouge">files_missing</code>, plus a summary with counts and a completion timestamp. <strong>The
 data for the QA-report graph kind already exists and is thrown away</strong>, because
-nothing downstream reads it. That is the input to bean <code class="language-plaintext highlighter-rouge">rjug</code>’s schema proposal,
-and it is evidence rather than a design: the shape is whatever these scripts
-already emit.</p>
+nothing downstream read it.</p>
+
+<p><strong>It has somewhere to go now.</strong> The owner ruled for the evidence-led option on
+2026-09-22 and <code class="language-plaintext highlighter-rouge">qa-report/v1</code> is registered — <code class="language-plaintext highlighter-rouge">schemas/qa-report.ts</code>, graph kind
+<code class="language-plaintext highlighter-rouge">qa-report</code>, <code class="language-plaintext highlighter-rouge">holds: "state"</code>. The shape is whatever these scripts already emit,
+down to upstream’s snake_case field names, because renaming them would insert a
+translation step between a producer we do not control and a consumer we do.</p>
 <h2 id="where-the-counterpart-is">
   
   
