@@ -22,6 +22,7 @@ import {
   appliesTo,
   checkAll,
   checkEntry,
+  declaredFigureLabels,
   entryKind,
   expiredExceptions,
   sidecarDocument,
@@ -794,5 +795,90 @@ describe("the L1 gate stopped assuming every document is a PDF", () => {
     // PRESENCE, which is the opposite of what it means.
     for (const [kind] of KIND_SIDECAR) expect(kind).not.toBe("undetermined");
     expect(KIND_SIDECAR.length).toBeGreaterThan(1);
+  });
+});
+
+
+describe("a document's figures can be VECTOR, and the gate no longer passes over them — bean `m4xy`", () => {
+  // `pdf-images.py` recovers the RASTER layer. WHO's frameworks, maturity
+  // models and process flows are drawn in vector, so they are never placed —
+  // and `image-descriptions` reported `met` over a document whose every figure
+  // was missing. Measured on `smart-base/library/9789240120747-eng`: SIX
+  // captioned figures declared, ZERO images placed, and the verdict read "0
+  // image(s), 0 describable and all described".
+  const base = { $schema: "folio-document-images/v1", doc_id: "doc" };
+
+  /** A fixture whose first section carries `body`. */
+  const withSection = (body: string, images: unknown): { state: string; detail: string } => {
+    const dir = entry({ images });
+    writeFileSync(join(dir, "sections", "s0.md"), body);
+    const r = checkEntry(dir).requirements.find((q) => q.name === "image-descriptions");
+    return { state: r?.state ?? "(absent)", detail: r?.detail ?? "" };
+  };
+
+  test("a caption is counted at the start of a line; a cross-reference is not", () => {
+    // "see Fig. 3.1" runs mid-sentence and is the same label as its caption,
+    // so counting both would double it. Matching at line start is why the
+    // figure is a LOWER BOUND rather than a measurement.
+    const dir = entry({});
+    writeFileSync(
+      join(dir, "sections", "s0.md"),
+      "Fig. 1. The first one\nsome prose referring to see Fig. 1 and see Fig. 9 inline\nFigure 2.3. Another\n",
+    );
+    writeFileSync(join(dir, "sections", "s1.md"), "Fig. 1. repeated in a list of figures\n");
+    const labels = declaredFigureLabels(join(dir, "sections"));
+    expect([...labels].sort()).toEqual(["1", "2.3"]);
+  });
+
+  test("ZERO images placed while the text declares figures is NOT-DERIVABLE", () => {
+    // The case this state exists for. Nothing could correspond, so no arm
+    // described them and none could. `met` here is the silence `m4xy` measured.
+    const r = withSection("Fig. 3. DIIG digital health enterprise architecture framework\n", {
+      ...base,
+      images: [],
+    });
+    expect(r.state).toBe("not-derivable");
+    expect(r.detail).toContain("no raster image was placed");
+    expect(r.detail).toContain("m4xy");
+  });
+
+  test("...and NOT `unmet`, because that would be a permanent blocker", () => {
+    // `pn6j`'s failure, which this must not repeat: a requirement no amount of
+    // work can satisfy blocks promotion forever. `not-derivable` is reported
+    // and does not block, which is what makes it safe to be honest.
+    const r = withSection("Fig. 3. A vector diagram\n", { ...base, images: [] });
+    expect(r.state).not.toBe("unmet");
+  });
+
+  test("zero images and NO declared figures stays `met` — a determined empty", () => {
+    // `who-rhr-1806-eng` genuinely places none and declares none. The new
+    // state must not fire on it, or every image-free document reads as gapped.
+    const r = withSection("Prose with no figures at all.\n", { ...base, images: [] });
+    expect(r.state).toBe("met");
+  });
+
+  test("described images still pass, but the detail refuses to claim coverage", () => {
+    // DIIG places 17 and declares 42; the 17 are logos, a photograph and a
+    // barcode. Counts are NOT compared — the MAPS Toolkit declares 4 and
+    // places 162, so `placed >= declared` would read as covered and be wrong.
+    const r = withSection("Fig. 5.6.2. How mHero integrates digital health interventions\n", {
+      ...base,
+      images: [
+        {
+          id: "i1",
+          file: "images/i1.png",
+          role: "figure",
+          basis: { method: "geometry", coverage: 0.4, imagesOnPage: 1, page: 1 },
+          narrative: {
+            text: "A logo.",
+            state: "draft",
+            drafted_by: { kind: "agent", id: "a", model: "m" },
+          },
+        },
+      ],
+    });
+    expect(r.state).toBe("met");
+    expect(r.detail).toContain("declares at least 1 captioned figure");
+    expect(r.detail).toContain("NOT established");
   });
 });

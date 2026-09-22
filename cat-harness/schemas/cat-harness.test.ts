@@ -1044,6 +1044,15 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
       // collapse into a `smart-base` instance. It is listed because it EXISTS
       // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877). This is the `smart-base` instance that
+      // `nsbb` called for, and its arrival is the FIRST half of what the note
+      // above predicted: the per-IG harnesses are expected to collapse into it.
+      // They have NOT collapsed yet and both are still listed, because this
+      // assertion is about what EXISTS today and nothing else. It holds the
+      // ingested WHO digital-health corpus, the DIIG methodology read out of
+      // it, and the voice derived from it -- KG assets, not the IG pipeline,
+      // which stays `nsbb`'s question.
+      "smart-base",
       "smart-immunizations",
       "smart-trust",
       "who-iris",

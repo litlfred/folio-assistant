@@ -174,6 +174,12 @@ describe("this repository's own instances", () => {
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
       // collapse into a `smart-base` instance. It is listed because it EXISTS
       // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877) -- `smart-base`, the instance `nsbb`
+      // called for. Listed here as well as in `schemas/cat-harness.test.ts`
+      // because the two assert different things: that discovery FINDS it,
+      // and that it RENDERS. The duplication is the deliberate cost noted
+      // above.
+      "smart-base",
       "smart-immunizations",
       "smart-trust",
       "who-iris",
