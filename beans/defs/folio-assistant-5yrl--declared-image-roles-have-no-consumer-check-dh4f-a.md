@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5yrl
 title: Declared image roles have no consumer check — dh4f applied to a role
-status: todo
+status: in-progress
 type: task
-created_at: 2026-09-22T06:08:05Z
-updated_at: 2026-09-22T06:08:05Z
 priority: normal
+created_at: 2026-09-22T06:08:05Z
+updated_at: 2026-09-22T07:16:07Z
 parent: folio-assistant-o3xy
 ---
 
