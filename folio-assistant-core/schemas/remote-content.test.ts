@@ -110,18 +110,18 @@ describe("Dublin Core — the three things a naive model loses", () => {
 
 describe("materialization — the states and the gates", () => {
   it("refuses `materialized` with no gates recorded", () => {
-    const r = MaterializationSchema.safeParse({ state: "materialized", of: "https://x", localPath: "library/x" });
+    const r = MaterializationSchema.safeParse({ state: "materialized", provenance: { upstream: "https://x" }, localPath: "library/x" });
     expect(r.success).toBe(false);
   });
 
   it("refuses `materialized` with no local path", () => {
-    const r = MaterializationSchema.safeParse({ state: "materialized", of: "https://x", gates: GATES_OK });
+    const r = MaterializationSchema.safeParse({ state: "materialized", provenance: { upstream: "https://x" }, gates: GATES_OK });
     expect(r.success).toBe(false);
   });
 
   it("refuses gates on a node that was never materialized", () => {
     // A gate verdict on a `referenced` node claims a decision nobody had to make.
-    const r = MaterializationSchema.safeParse({ state: "referenced", of: "https://x", gates: GATES_OK });
+    const r = MaterializationSchema.safeParse({ state: "referenced", provenance: { upstream: "https://x" }, gates: GATES_OK });
     expect(r.success).toBe(false);
   });
 
@@ -133,8 +133,8 @@ describe("materialization — the states and the gates", () => {
   });
 
   it("reports four freshness verdicts, not a boolean", () => {
-    const base = { of: "https://x", localPath: "library/x", gates: GATES_OK, purpose: "working" as const };
-    expect(freshness(MaterializationSchema.parse({ state: "referenced", of: "https://x" }))).toBe("not-materialized");
+    const base = { provenance: { upstream: "https://x" }, localPath: "library/x", gates: GATES_OK, purpose: "working" as const };
+    expect(freshness(MaterializationSchema.parse({ state: "referenced", provenance: { upstream: "https://x" } }))).toBe("not-materialized");
     expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base, purpose: "working" }))).toBe("no-expiry");
     expect(
       freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2020-01-01" })),
@@ -145,12 +145,12 @@ describe("materialization — the states and the gates", () => {
   });
 
   it("has no default state — a node that does not say is invalid", () => {
-    expect(MaterializationSchema.safeParse({ of: "https://x" }).success).toBe(false);
+    expect(MaterializationSchema.safeParse({ provenance: { upstream: "https://x" } }).success).toBe(false);
   });
 
   it("refuses a materialized copy that has not said WHY it was taken", () => {
     const r = MaterializationSchema.safeParse({
-      state: "materialized", of: "https://x", localPath: "library/x", gates: GATES_OK,
+      state: "materialized", provenance: { upstream: "https://x" }, localPath: "library/x", gates: GATES_OK,
     });
     expect(r.success).toBe(false);
   });
@@ -160,7 +160,7 @@ describe("materialization — the states and the gates", () => {
     // cannot be re-fetched to check — the thing it would be re-fetched from is
     // what it exists to survive.
     const r = MaterializationSchema.safeParse({
-      state: "materialized", of: "https://x", localPath: "u/x.pdf",
+      state: "materialized", provenance: { upstream: "https://x" }, localPath: "u/x.pdf",
       gates: GATES_OK, purpose: "archival",
     });
     expect(r.success).toBe(false);
@@ -169,7 +169,7 @@ describe("materialization — the states and the gates", () => {
   it("refuses a WORKING copy that claims to have discharged sourceLoss", () => {
     // The derived sections are not the publication.
     const r = MaterializationSchema.safeParse({
-      state: "materialized", of: "https://x", localPath: "library/x", purpose: "working",
+      state: "materialized", provenance: { upstream: "https://x" }, localPath: "library/x", purpose: "working",
       gates: { ...GATES_OK, sourceLoss: { verdict: "permitted", basis: "we have the sections" } },
     });
     expect(r.success).toBe(false);
@@ -183,7 +183,7 @@ describe("materialization — the states and the gates", () => {
       freshness(
         MaterializationSchema.parse({
           state: "materialized",
-          of: "https://x",
+          provenance: { upstream: "https://x" },
           localPath: "u/x.pdf",
           purpose: "archival",
           fixity: FIXITY,
@@ -194,7 +194,7 @@ describe("materialization — the states and the gates", () => {
     expect(
       freshness(
         MaterializationSchema.parse({
-          state: "materialized", of: "https://x", localPath: "library/x",
+          state: "materialized", provenance: { upstream: "https://x" }, localPath: "library/x",
           purpose: "working", gates: GATES_OK,
         }),
       ),
@@ -215,7 +215,7 @@ describe("catalogue — the model must not disagree with the corpus", () => {
     // A slug under library/ IS the bytes being here. Declaring otherwise makes
     // corpus-grep and the catalogue disagree about what exists.
     const r = CatalogueNodeSchema.safeParse(
-      node({ libraryId: "wpr-rdo-2020-003-eng", materialization: { state: "referenced", of: "https://x" } }),
+      node({ libraryId: "wpr-rdo-2020-003-eng", materialization: { state: "referenced", provenance: { upstream: "https://x" } } }),
     );
     expect(r.success).toBe(false);
   });
@@ -224,8 +224,8 @@ describe("catalogue — the model must not disagree with the corpus", () => {
     const r = CatalogueNodeSchema.safeParse(
       node({
         kind: "container",
-        materialization: { state: "referenced", of: "https://x" },
-        bitstreams: [{ name: "a.pdf", materialization: { state: "referenced", of: "https://y" } }],
+        materialization: { state: "referenced", provenance: { upstream: "https://x" } },
+        bitstreams: [{ name: "a.pdf", materialization: { state: "referenced", provenance: { upstream: "https://y" } } }],
       }),
     );
     expect(r.success).toBe(false);
@@ -233,8 +233,8 @@ describe("catalogue — the model must not disagree with the corpus", () => {
 
   it("counts the three states separately and never as a percentage", () => {
     const nodes = [
-      CatalogueNodeSchema.parse(node({ id: "a", materialization: { state: "referenced", of: "https://a" } })),
-      CatalogueNodeSchema.parse(node({ id: "b", materialization: { state: "unknown", of: "https://b" } })),
+      CatalogueNodeSchema.parse(node({ id: "a", materialization: { state: "referenced", provenance: { upstream: "https://a" } } })),
+      CatalogueNodeSchema.parse(node({ id: "b", materialization: { state: "unknown", provenance: { upstream: "https://b" } } })),
     ];
     expect(materializationCensus(nodes)).toEqual({ unknown: 1, referenced: 1, materialized: 0 });
   });

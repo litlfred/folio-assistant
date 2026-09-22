@@ -164,6 +164,14 @@ export const RULES: Rule[] = [
       // re-run to prove the registration still resolves without it rather
       // than assumed to.
       "scripts/check-image-roles.ts",
+      // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
+      // LEAF so `state-visualizer.ts` can be a call site without importing
+      // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
+      // template literal. Same move #840 made for the graph-kind registry.
+      // It imports `node:fs` and `node:path` and nothing else, so it cannot
+      // drag a layer in behind it; its subject is which pages a generator in
+      // this repository wrote, not any folio's content.
+      "scripts/orphan-pages.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -523,6 +531,10 @@ export const RULES: Rule[] = [
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
+      "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
+      "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
+      "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
