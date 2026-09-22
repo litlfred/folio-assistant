@@ -478,11 +478,41 @@ The states now have a name and a schema — `referenced` / `materialized` /
 `unknown` — so the question is no longer *is there a distinction* but *does
 the reader's view render it*. Nothing yet says.
 
-**F8/F9 is not built, and the gap is measured rather than asserted.** On the
-deployed preview, `who-iris/index.html` loads `docs-ui.js` **0** times and
-carries **0** boards and **0** tiles, against 9 / 1 / 28 on the
-folio-assistant landing page. A reader browsing that library has **no folio at
-all** — not a degraded one.
+**F8/F9 is blocked on R25, structurally rather than by scheduling** — bean
+`jpjt`, settled 2026-09-21.
+
+The gap is measured: on the deployed preview `who-iris/index.html` loads
+`docs-ui.js` **0** times and carries **0** boards and **0** tiles, against
+9 / 1 / 28 on the folio-assistant landing page. A reader browsing that library
+has **no folio at all**, not a degraded one.
+
+**The delivery mechanism is decided** — three ways were tabled and the owner
+chose an **exported mount fragment plus a gate**, the shape
+`staging-banner.ts` already proves, reusing `bodyInsertionPoint()` so that
+`ur84` cannot recur.
+
+**What blocks it is that nothing would mount.** `who-iris` pages are complete
+standalone HTML from their own generator — their own `<style>` built from the
+captured IRIS theme, no Jekyll, no `head_custom.html` — because the page is a
+**faithful replica** and the *"ingested copy — not WHO, not live"* banner is
+its requirement 1. Loading `docs-ui.js` there is safe (all seven mounts guard
+themselves and return without their markers), and that is the whole problem:
+
+| surface | requires | on a replica page |
+|---|---|---|
+| launcher | a **sidebar header** | absent |
+| board | `#main-content` / `.main-content` / `<main>`, inserted at the **top** | absent, and the top is the IRIS content |
+| language bar | `.main-content` | absent |
+
+**Every visible folio surface today is bound to just-the-docs page
+furniture**, and giving a library page that furniture means making it look
+like folio-assistant — the one thing who-iris exists not to do.
+
+**R25 is therefore the unblock rather than the next item.** A pull-down glass
+comes down OVER what is being browsed, so it is the only folio surface that
+does not require the host page to look like the harness. Shipping the mount
+fragment before it would create a gate for a thing with no consumer — R17's
+lesson, a third time.
 
 Both tracked on
 [issue #796](https://github.com/litlfred/folio-assistant/issues/796).
