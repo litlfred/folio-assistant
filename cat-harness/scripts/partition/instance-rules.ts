@@ -828,6 +828,12 @@ export const RULES: Rule[] = [
       // fact about the checkout's build wiring, not about any folio's
       // material — node builtins only.
       "scripts/check-workflow-injection.ts",
+      // The artefact-verification gate. Harness by the same argument as its
+      // neighbours: it derives its inventory from THIS repository's own
+      // package.json and grades whether a generated artefact has any
+      // consumer-level verification. A fact about the checkout's build
+      // wiring — node builtins only.
+      "scripts/check-artefact-verification.ts",
       // The credential gate. Harness by SUBJECT rather than by import: it
       // walks this checkout's declared roots and grades the bytes committed
       // there. It reads a folio's files where one is present, but what it
