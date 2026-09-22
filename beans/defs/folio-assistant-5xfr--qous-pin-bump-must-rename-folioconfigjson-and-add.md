@@ -305,3 +305,43 @@ One key in one file:
 `litlfred/qou` is a mathematics repository, where the owner's standing rule is
 to ask before opening a PR and to make no speculative change without explicit
 consent. So this is reported, not done.
+
+## 2026-09-22 — the remaining half is in a PR, and the count was wrong here too
+
+Owner said open it. `litlfred/qou` issue #7447, draft PR #7448, commit
+`c44aed2a`: one key, `"qaAxes": ["archimedean-wall"]`, with the rationale
+comment this file's house style asks for.
+
+**Correction to the entry above.** It said the axis gates `framework` (1) and
+`wall` (4). It gates **six** criteria, not five — `detangler-archimedean-wall`
+is fenced on the SAME axis, deliberately, so a folio "cannot end up
+half-fenced". Read off the five gate expressions in `qa-criteria-registry.ts`:
+
+| domain | criteria |
+|---|---|
+| `framework` | `framework-canonical` |
+| `wall` | `wall-side-correct`, `wall-side-statement`, `wall-side-proof`, `wall-base-ring-minimal` |
+| `detangler` | `detangler-archimedean-wall` |
+
+plus `DEVILS_ADVOCATE` and `DETANGLER_WATCHER_CRITERIA`, gated on the same axis
+so a bucket cannot name a criterion the registry never registered.
+
+The earlier entry's "`wall` survives" also needs narrowing: the COMPUTATION
+survives where `q-usage-audit.ts` calls `checkWallSide` and
+`checkBaseRingMinimal` directly, but the REGISTERED CRITERIA do not, so there
+are no QA sidecar verdicts for any of the six.
+
+### `q-usage` is a second absent axis, and NOT in the PR
+
+Seven more criteria behind a separate `qaAxes` value. Equally absent, same
+cause. Left out deliberately and raised in #7447 as its own decision — turning
+on seven mathematics criteria nobody asked for is the speculative change this
+owner's rules forbid.
+
+### Method, stated
+
+A STATIC read of the gate expressions, not a runtime before/after count:
+`folioOptionalAxes()` resolves the folio from the working directory, so a
+runtime flip needs a synthetic folio tree. The gates are exact and directly
+readable, so the static read is the better evidence here — but it is a
+different kind of evidence and the PR says so.
