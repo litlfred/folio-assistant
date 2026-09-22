@@ -647,13 +647,30 @@ describe("the baseline is a RATCHET", () => {
     expect(workDirKey(wd!)).toBe("publish.yml: folio-assistant");
   });
 
-  test("MUTATION: the live tree goes red if the baseline is emptied", () => {
+  test("MUTATION: a missing working-directory is actually detected", () => {
     // `t6s7` — the reconciliation that held by construction, where mutating
     // the derivation left every test green. The criterion is only worth
-    // having if removing its allowance actually produces findings, so this
-    // asserts the finding EXISTS rather than asserting the run is clean.
+    // having if a missing directory actually produces a finding.
+    //
+    // Asserted on a FIXTURE rather than on the live tree, and the reason is
+    // the whole point of this test: on 2026-09-22 the two real findings this
+    // criterion had — `discoverability-docs.yml` and `publish.yml`, both
+    // naming the stale `folio-assistant` prefix from the #223 split — were
+    // REPAIRED on the owner's ruling. The live tree then held zero `Missing`
+    // work-dirs, and a non-vacuity test reading the live corpus asserted
+    // `length > 0` and went red **because the defect it was watching had been
+    // fixed**. A test that fails when the repository improves is testing the
+    // repository, not the checker.
+    expect(verdictOf(wfCwd("folio-assistant"))).toBe(Verdict.Missing);
+    expect(verdictOf(wfCwd("cat-harness"))).toBe(Verdict.Resolves);
+  });
+
+  test("RATCHET: every live Missing work-dir is baselined", () => {
+    // The ratchet half, still read from the live tree, because that is the
+    // property it exists to hold. Zero findings satisfies it vacuously and
+    // that is CORRECT here — the test above is what keeps the criterion from
+    // being vacuous, so this one does not also have to.
     const live = allWorkDirs().filter((w) => w.verdict === Verdict.Missing);
-    expect(live.length).toBeGreaterThan(0);
     expect(live.every((w) => workDirBaseline().has(workDirKey(w)))).toBe(true);
   });
 });
