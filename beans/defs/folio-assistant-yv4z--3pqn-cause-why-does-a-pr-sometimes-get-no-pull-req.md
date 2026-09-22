@@ -474,3 +474,79 @@ and for `1a0a39df`. Worth noting for anyone reading the runs later: a
 dispatched run is attributed to the branch rather than to the PR, so the PR's
 own check list still shows only the `push`-triggered job. Reading the PR page
 alone would say this head was never gated.
+
+---
+
+## Observation FIFTEEN, 2026-09-22 — the `synchronize` half, with mergeability measured
+
+session_01V4NobpyNLPku8t7aM7DFqF, branch `claude/amazing-ptolemy-2ceyvg`,
+PR #888 open throughout.
+
+**This is the case observations EIGHT to FOURTEEN left open.** That series
+established the drop happens on `synchronize` for an already-open PR, and
+explicitly did not record mergeability — so the settled mechanism, which was
+measured on `opened` (#797 / #806), did not reach it. Here mergeability was
+measured and the conflict window is bounded at both ends.
+
+| | UTC |
+|---|---|
+| conflicting commit reaches `main` — `bb172ac073`, touching `gen-iris-pages.ts` | **09:03:31** |
+| `35b6059dbf` pushed | 09:04:44 → **no `pull_request` run** |
+| `8fd3ffb665` pushed | 09:07:37 → **no `pull_request` run** |
+| `mergeable_state: "dirty"` read from the API | 09:11 |
+| `461b84058b` merges `main` and resolves it | 09:14:18 |
+| `pull_request` run 2587 created on that head | **09:14:29 — 11 s later** |
+| `e2f266de35`, `56fbc1a2da`, `42cb69992f`, `4141804205`, `ed722131ae`, `2ec54c11b2` | all fired |
+
+Read from `list_workflow_runs` filtered to the branch with
+`event=pull_request`, not reconstructed: exactly two of ten heads on this
+branch carry no run, and they are the two inside the conflict window.
+
+### What it adds
+
+**The mechanism now covers `synchronize`, not only `opened`.** Ten heads, one
+PR, one branch, one session, one token — the only variable that moves with the
+outcome is mergeability. `57a10d1f5d` fired BEFORE the conflict existed and
+the six after resolution all fired, so this is a within-PR control rather
+than a comparison across occurrences.
+
+**The 11-second return matches** the "both return within seconds of the
+conflict being resolved" already measured on the `opened` side. Two
+independent routes to the same latency.
+
+**It is not lag.** The seventh observation measured lag at 1-2 minutes. These
+two heads carried no `pull_request` run when checked at 09:11 — roughly 6 and
+3.5 minutes after their pushes — and still none now, hours later.
+
+### What it does NOT add
+
+`mergeable_state` was read ONCE, at 09:11 on `8fd3ffb665`. It was not read on
+`35b6059dbf`. That head is placed inside the window by the base commit's
+timestamp rather than by a direct reading, and GitHub does not retain
+historical mergeability, so it cannot be recovered.
+
+Nothing here touches the **direction** of causation, which this bean already
+records as not needing resolution.
+
+### A near-miss worth recording, because it is this bean's own trap
+
+Before this series, a merge-ref census across the fifteen then-open PRs found
+**#899 with no `refs/pull/N/merge`** and it was nearly reported as a live
+conflicted case — the one the bean says was never available. #899 had
+**merged at 10:04:35Z, between the listing and the probe.** Merge refs are
+reaped on close, so a merged PR reads exactly like an open conflicted one,
+which is `h2s9`'s finding from #839 arriving from a second direction. **A
+merge-ref probe means nothing unless the PR's state is confirmed OPEN in the
+same breath.**
+
+### Where this leaves the Done-when
+
+Observations 8-14 were the last set the settled mechanism did not reach, and
+they are reached now. The cause is established as far as this bean asks —
+its Done-when wants the cause **or** an honest "not determinable", and the
+unresolved remainder (which of event and merge-ref is cause, which
+consequence) is already recorded as not needing resolution.
+
+**Not ticked here.** The bean is `in-progress` under another session and the
+owner acknowledged it as filed; this is evidence added to an open record, not
+a claim on it. Recommending closure rather than performing it.
