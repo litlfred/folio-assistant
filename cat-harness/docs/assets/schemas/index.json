@@ -27949,6 +27949,40 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/voices.ts#VoiceProvenanceFlag",
+      "name": "VoiceProvenanceFlag",
+      "module": "cat-harness/schemas/voices.ts",
+      "kind": "interface",
+      "doc": "Where a voice's DECLARED provenance sits oddly against what its rules cite.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "\"declared-outside-cites-inside\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ruleIds",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Rule ids that cite a node of this instance's own graph."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/voices.ts#VoiceRef",
       "name": "VoiceRef",
       "module": "cat-harness/schemas/voices.ts",
