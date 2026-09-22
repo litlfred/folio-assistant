@@ -50,6 +50,12 @@ and has never named** — `who-iris` taking three items out of 361.55 GB, and
 `bootstrap` fetching a harness and landing it locally. `upstream-pins.json` is
 half of that second one's refresh.
 
+Outside that chain, and answering a different question:
+
+| node | question it answers |
+|---|---|
+| [`schemas/changeset.ts`](schemas/changeset.ts) | what changed in a folio between two refs, **block by block**: added, removed, renamed, reworded or moved? Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard. Read by the review page (epic `q4jm`). |
+
 ## Three states, and there is no default
 
 `referenced` (we know it exists and where; we hold no bytes) · `materialized`
