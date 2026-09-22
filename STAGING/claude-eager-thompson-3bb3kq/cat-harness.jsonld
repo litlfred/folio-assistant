@@ -264,14 +264,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T06:41:51.576Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e0252ceaec322b9e91f1a28d395b873b3e51b049",
-  "sourceCommitSha": "e0252ceaec322b9e91f1a28d395b873b3e51b049",
-  "sourceCommitAt": "2026-09-22T06:39:44Z",
+  "generatedAt": "2026-09-22T07:03:04.662Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b07f5bd151e12f36d1141fc5013b8897a7a58733",
+  "sourceCommitSha": "b07f5bd151e12f36d1141fc5013b8897a7a58733",
+  "sourceCommitAt": "2026-09-22T07:01:13Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 227,
-    "Actor": 30,
+    "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
@@ -4255,6 +4255,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/translator"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#actor/untainted-checker",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "untainted-checker",
+      "actorKind": "agent",
+      "title": "Untainted checker",
+      "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
+      "hasCapability": [],
+      "roleName": [
+        "qc-reviewer"
+      ],
+      "permissionName": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-checker"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#actor/attestation-service",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
       "localId": "attestation-service",
@@ -4743,6 +4757,22 @@
       "hasCapability": [],
       "roleName": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#actor/untainted-adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "untainted-adjudicator",
+      "actorKind": "agent",
+      "title": "Untainted adjudicator",
+      "description": "The dispatched party that rules — given the original intent and the checker's output, and never the artefact itself. It names each drift against the criterion's declared `drift` statement and returns pass / warn / fail. It holds `qa-reporting` and its witness leads the criterion, because the first entry per criterion is the operative one. It does NOT hold `content-authoring`: the party that produced the artefact does not write the verdict on it, which is the whole discipline in one line.",
+      "hasCapability": [],
+      "roleName": [
+        "qc-reviewer"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-adjudicator"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/cat-harness.jsonld#actor/clinical-sme",
@@ -35188,8 +35218,8 @@
   ],
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "fb64072e5d97ab1ab8acf579595ecb06df43d5fd",
+    "sha": "be4152d1ebeec03ea29562969645bc4f22be9add",
     "pr": "848/merge",
-    "run": "35695875916"
+    "run": "35697530874"
   }
 }

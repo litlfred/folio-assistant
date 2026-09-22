@@ -3041,6 +3041,20 @@
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
     },
     {
+      "id": "folio-assistant-gr5h",
+      "title": "declared-directory-resolves has been over bun's default 5s timeout the whole time — 9.3s measured, passing only on a fast enough machine",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:55:59Z",
+      "updatedAt": "2026-09-22T06:55:59Z",
+      "preview": "Found 2026-09-22 while driving `a58y` to green. **Pre-existing on `main`, not\nintroduced by the branch that found it** — measured both sides: 55 modules\ncall a directory accessor on `main` and 55 on the branch, so the workload is\nidentical.\n\n## What it actually was\n\nNot a flake, and not an assertion failure:\n\n    (fail) each one resolves `library` in a FRESH process [5038.08ms]\n      ^ this test t",
+      "file": "beans/defs/folio-assistant-gr5h--declared-directory-resolves-has-been-over-buns-def.md"
+    },
+    {
       "id": "folio-assistant-h32d",
       "title": "Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio",
       "status": "in-progress",
