@@ -411,25 +411,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/docs-ui.css?v=1790066418">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/docs-ui.css?v=1790066794">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/work-plan.css?v=1790066418">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/work-plan.css?v=1790066794">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/themes.css?v=1790066418">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/themes.css?v=1790066794">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/avatars.css?v=1790066418">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/css/avatars.css?v=1790066794">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -446,7 +446,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js?v=1790066418" defer></script>
+<script src="/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/assets/js/docs-ui.js?v=1790066794" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1395,6 +1395,57 @@ a person looks for first were the two hardest to find.</p>
 
 <p><code class="language-plaintext highlighter-rouge">agentic-harness</code> declares <code class="language-plaintext highlighter-rouge">tools/</code>, <code class="language-plaintext highlighter-rouge">kg/</code> and <code class="language-plaintext highlighter-rouge">schemas/</code>.
 <code class="language-plaintext highlighter-rouge">folio-assist-core</code> declares <strong>only</strong> <code class="language-plaintext highlighter-rouge">folio/</code> and inherits the other three.</p>
+<h3 id="a-sub-sub-graph--one-reserved-name-inside-a-declared-directory">
+  
+  
+    <a href="#a-sub-sub-graph--one-reserved-name-inside-a-declared-directory" class="anchor-heading" aria-labelledby="a-sub-sub-graph--one-reserved-name-inside-a-declared-directory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sub-sub-graph — one RESERVED name inside a declared directory
+  
+  
+</h3>
+    
+
+<p>Owner, 2026-09-22, on where a vendor-specific override of a voice belongs:</p>
+
+<blockquote>
+  <p>vendor overides go in sub-sub-grahiphs like voice/vendors or voices-vendors</p>
+</blockquote>
+
+<p>Two spellings, and the <strong>nested</strong> one is the shape this model already has.
+<code class="language-plaintext highlighter-rouge">voices-vendors/</code> needs a SECOND declared graph for one concept, and a
+declaration inside a declaration is the defect #263’s own comment names. So:</p>
+
+<blockquote>
+  <p><strong>A family within a graph is a RESERVED SUBDIRECTORY NAME inside the one
+declared directory — never a second declaration, and never a rule about
+arbitrary nesting.</strong></p>
+</blockquote>
+
+<p>Three properties, each load-bearing:</p>
+
+<ol>
+  <li><strong>One declaration.</strong> Every consumer that already asks for the graph gets the
+family with no change, and there is one answer to “where does this live”.</li>
+  <li><strong>One level, under a name the reader states.</strong> <em>“Any directory, any depth”</em>
+is a rule nobody can check, and it would silently make an unrelated nested
+directory — a <code class="language-plaintext highlighter-rouge">notes/</code>, a scratch draft — part of the graph.</li>
+  <li><strong>The directory is where a PERSON looks; the file is still the contract.</strong>
+A vendor voice declares what it overrides in its own <code class="language-plaintext highlighter-rouge">extends</code> field
+(<code class="language-plaintext highlighter-rouge">extends</code>, not <code class="language-plaintext highlighter-rouge">overrides</code> — the obvious name is the wrong one),
+exactly as one sitting flat would. Nothing downstream may infer a relation
+from a path — the same rule as everywhere else here: extension and location
+are coincidences, a declaration inside the file is the contract.</li>
+</ol>
+
+<p><strong>Adding the name to the convention is not enough; the READER has to descend.</strong>
+<code class="language-plaintext highlighter-rouge">voiceFilesIn</code> scanned one level and took a directory for a voice only where it
+held a <code class="language-plaintext highlighter-rouge">voice.json</code>. <code class="language-plaintext highlighter-rouge">vendors/</code> holds none — its children do — so every
+override under it would have been skipped in silence and <code class="language-plaintext highlighter-rouge">loadVoices</code> would
+have reported a clean read over real content. That is <code class="language-plaintext highlighter-rouge">dh4f</code> exactly. It was
+found by reading the reader when the layout was chosen rather than after
+shipping into it, and <code class="language-plaintext highlighter-rouge">voices-viz.test.ts</code> asserts both directions: a voice
+under <code class="language-plaintext highlighter-rouge">vendors/</code> loads, a voice under any other nested directory does not.</p>
+
+<p><code class="language-plaintext highlighter-rouge">VOICE_VENDORS_DIR</code> in <code class="language-plaintext highlighter-rouge">schemas/voices.ts</code> is the one spelling of the name.</p>
 <h2 id="inheritance">
   
   

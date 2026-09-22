@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T08:41:06.294Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c3682f0a4aeb1dcb30da36aa700d18e2b863265",
-  "sourceCommitSha": "4c3682f0a4aeb1dcb30da36aa700d18e2b863265",
-  "sourceCommitAt": "2026-09-22T08:39:08Z",
+  "generatedAt": "2026-09-22T08:47:25.496Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3275ecbd78b3b0f34b9a40c43e49edfa491912c7",
+  "sourceCommitSha": "3275ecbd78b3b0f34b9a40c43e49edfa491912c7",
+  "sourceCommitAt": "2026-09-22T08:44:38Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 227,
@@ -1840,7 +1840,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 760,
+      "instructionLines": 799,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2009,7 +2009,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 394,
+      "instructionLines": 407,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2579,7 +2579,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-contribution-offer.md",
-      "instructionLines": 224,
+      "instructionLines": 238,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2679,7 +2679,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 414,
+      "instructionLines": 438,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2708,12 +2708,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "symbiotic-interaction",
       "title": "symbiotic-interaction — the three registers of author input",
-      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Generic folio-assistant platform skill.",
+      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/symbiotic-interaction.md",
-      "instructionLines": 80,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2847,7 +2847,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-amazing-ptolemy-2ceyvg/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 246,
+      "instructionLines": 295,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -35237,8 +35237,8 @@
   ],
   "staging": {
     "branch": "claude/amazing-ptolemy-2ceyvg",
-    "sha": "bd981f5f9bc033907bff6bae271dcb0b43910bc7",
+    "sha": "00bcda5ed5bfdd8c7efdf6ca62265882b0967925",
     "pr": "880/merge",
-    "run": "35705992167"
+    "run": "35706554205"
   }
 }

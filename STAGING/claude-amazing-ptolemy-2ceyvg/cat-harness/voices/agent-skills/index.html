@@ -160,14 +160,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </main>
 <footer id="foot"></footer>
 <script>
-var SCOPE = "";
+var SCOPE = "agent-skills";
 var DATA = null;
 var esc = function (s) {
   return String(s === undefined || s === null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 };
 
-fetch("../../assets/voices/index.json").then(function (r) { return r.json(); }).then(function (d) {
+fetch("../../../assets/voices/index.json").then(function (r) { return r.json(); }).then(function (d) {
   DATA = d;
   var insts = [];
   d.voices.forEach(function (v) { if (insts.indexOf(v.instance) < 0) insts.push(v.instance); });
