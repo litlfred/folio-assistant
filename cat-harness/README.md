@@ -20,7 +20,7 @@ reader looks for them by name:
 | | |
 |---|---|
 | [`skills/`](skills/) | the instruction bodies — ask for one with `skill_list` / `skill_fetch` rather than opening a path |
-| [`skills/workflows/`](skills/workflows/) | the BPMN processes; the diagrams are executable, not illustrations |
+| [`processes/`](processes/) | the BPMN processes; the diagrams are executable, not illustrations |
 | [`schemas/`](schemas/) | the Zod declarations every checker reads, `cat-harness.ts` first |
 | [`docs/`](docs/) | the Jekyll site, published at <https://litlfred.github.io/folio-assistant/> |
 

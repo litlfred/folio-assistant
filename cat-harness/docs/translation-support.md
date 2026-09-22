@@ -357,7 +357,7 @@ Semantic verification is per BLOCK, not per page, and it is not a script's to as
 
 The human translator workflow is a dedicated path for professional translation,
 distinct from the agentic/machine path. See BPMN:
-`skills/workflows/human-translation-workflow.bpmn`.
+`processes/human-translation-workflow.bpmn`.
 
 ### Steps
 
@@ -666,7 +666,7 @@ all content types — documents, papers, and DAK folios alike.
 The translation workflow integrates with the existing content lifecycle:
 
 ```
-See: skills/workflows/translation-workflow.bpmn
+See: processes/translation-workflow.bpmn
 ```
 
 ### Stages
@@ -713,7 +713,7 @@ code, labels) uniformly.
 ## Work plan
 
 See the beans created for this work and the
-[BPMN workflow diagram](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/translation-workflow.bpmn).
+[BPMN workflow diagram](https://github.com/litlfred/folio-assistant/blob/main/processes/translation-workflow.bpmn).
 
 | Phase | Bean | Description | Status |
 |---|---|---|---|

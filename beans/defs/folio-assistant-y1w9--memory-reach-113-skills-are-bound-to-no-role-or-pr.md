@@ -37,7 +37,7 @@ The knowledge is not only in memory — there is a **skill**,
 `skills/folio-core/github-state-inspection.md`, 6 KB, covering exactly
 these traps. Measured today:
 
-    grep -rl 'github-state-inspection' skills/workflows/ skills/roles/
+    grep -rl 'github-state-inspection' processes/ scenarios/
     → nothing
 
 **Bound by no diagram and no role.** So no process step hands it to
@@ -328,7 +328,7 @@ matches `"true"` exactly and `yes` would read as absent.
 
 I reported this field earlier as **"51 of 54 values dangling (94 %)"**. The
 arithmetic is right and **the diagnosis is wrong**: that number comes from
-resolving every value against `skills/roles/roles.json`, and 51 of them were
+resolving every value against `scenarios/roles.json`, and 51 of them were
 never role-graph references. Measuring against the wrong registry made a
 vocabulary collision look like a pile of broken links.
 

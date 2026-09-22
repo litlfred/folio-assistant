@@ -32,7 +32,7 @@ Both are symptoms of the same asymmetry.
 
 ## Worked around, not fixed
 
-`lanes` was omitted from `bootstrap/skills/roles/roles.json` to keep the graph
+`lanes` was omitted from `bootstrap/scenarios/roles.json` to keep the graph
 honest without widening the dangling-link allowance — which would have recorded
 new debt as progress. Bootstrap's own graph binds correctly either way (0
 dangling), because it carries both halves.
@@ -214,7 +214,7 @@ lines) so the next session starts from working code rather than this prose.
 | consumer | what the ruling does to it | status |
 |---|---|---|
 | `cat-harness/harness.json` | drop the `bootstrap` entry | **done** — one line, as advertised |
-| `bootstrap/skills/roles/roles.json` | `lanes` restorable at last | **done** — all four roles |
+| `bootstrap/scenarios/roles.json` | `lanes` restorable at last | **done** — all four roles |
 | `check-tools.ts` | 2 `satisfies` resolve to nothing | **done** — see below |
 | `tools.test.ts:177` | asserts bootstrap's 2 skills ARE this instance's | **done** — inverted, not deleted |
 | `kg-export` + its 3 package tests | **blocked** — needs a design ruling | **NOT done** |

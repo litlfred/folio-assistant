@@ -246,17 +246,22 @@ export const TYPES: AutoDocType[] = [
   {
     id: "index/processes",
     title: "Processes",
-    graph: "workflows",
+    graph: "processes",
     extracts: "every BPMN process, with its own documentation, its lanes, and the skills its activities name",
     collect(): AutoDocItem[] {
       const items: AutoDocItem[] = [];
-      // BOTH the split kind and the umbrella it came out of. `workflows` is
+      // BOTH the split kind and the umbrella it came out of. `processes` is
       // where an in-tree diagram lives after 2026-09-21; `cat-harness` is
       // where a downstream instance's still is, and dropping it would make
       // this index silently empty for them — which is worse than useless,
       // because an empty index reads as "this instance has no processes".
+      //
+      // This comment said `workflows` until the kind was renamed later the
+      // same day, while the call below already read `processes` — a comment
+      // naming a kind the code does not use is the one kind of staleness a
+      // type checker cannot catch.
       const seen = new Set<string>();
-      for (const d of [...declaredDirectories("workflows"), ...declaredDirectories("cat-harness")]) {
+      for (const d of [...declaredDirectories("processes"), ...declaredDirectories("cat-harness")]) {
         if (seen.has(d.absPath)) continue;
         seen.add(d.absPath);
         for (const f of walk(d.absPath, (n) => n.endsWith(".bpmn"))) {
@@ -293,7 +298,7 @@ function decodeEntities(s: string): string {
  * One item per path.
  *
  * Declared directories NEST — `cat-harness/skills/` contains
- * `cat-harness/skills/workflows/`, and both are declared — so a naive walk
+ * `cat-harness/processes/`, and both are declared — so a naive walk
  * lists the inner files twice. Deduplicating by path keeps the count honest;
  * the SUB-GRAPH a file is attributed to is decided separately, by
  * {@link owningDirectory}, which picks the most specific declaration.
@@ -307,7 +312,7 @@ function dedupeByPath(items: AutoDocItem[]): AutoDocItem[] {
 /**
  * Which declared directory an item belongs to — the MOST SPECIFIC one.
  *
- * `cat-harness/skills/workflows/x.bpmn` is inside both `cat-harness` (id
+ * `cat-harness/processes/x.bpmn` is inside both `cat-harness` (id
  * `cat-harness`, path `cat-harness/skills/`) and the workflow directory. The
  * longest matching declared path wins, because that is the sub-graph that
  * actually describes it; attributing it to the outer one would make the inner

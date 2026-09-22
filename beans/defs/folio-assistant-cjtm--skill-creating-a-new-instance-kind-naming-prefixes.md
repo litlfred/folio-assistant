@@ -137,7 +137,7 @@ pass, 79 gates green.
 repo. What `bootstrap/README.md` actually does is resolve **13 links into
 `../cat-harness/`** across **6 distinct files** — `dak-blocks.ts` ×5,
 `role-graph.ts` ×3, `cat-harness.ts` ×2, `skill-package.ts`, `tool.ts`,
-`skills/workflows`. Every one is a TERM DEFINITION. The owner's point holds
+`processes`. Every one is a TERM DEFINITION. The owner's point holds
 exactly as stated; the artefact is a link family rather than one filename, so
 the instruction written into
 `cat-harness/docs/bootstrap/initialization.md` is to repoint the family and

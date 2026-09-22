@@ -373,5 +373,5 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
 - [`directory-conventions`](directory-conventions.md) — the graph kinds and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
-- `skills/workflows/document-ingestion.bpmn` — the process this sits inside
+- `processes/document-ingestion.bpmn` — the process this sits inside
 {% endraw %}

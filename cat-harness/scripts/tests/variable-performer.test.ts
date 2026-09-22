@@ -6,7 +6,7 @@
  * Bean `ug4r`. `log-message.bpmn`'s `Actor` lane binds no role on purpose —
  * the actor is whoever called the sub-process — but until 2026-09-21 that
  * decision lived only in a prose `_comment` inside
- * `bootstrap/skills/roles/roles.json`. No tool read it, so "deliberately
+ * `bootstrap/scenarios/roles.json`. No tool read it, so "deliberately
  * unbound" and "nobody got round to it" were the same fact to every consumer,
  * and `lane-binds-role` (severity `major`) would report a correct modelling
  * decision as a defect for ever.
@@ -25,7 +25,7 @@ import { laneBinding, type RoleGraph } from "../../schemas/role-graph.ts";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
-const LOG_MESSAGE = join(REPO, "bootstrap", "workflows", "log-message.bpmn");
+const LOG_MESSAGE = join(REPO, "bootstrap", "processes", "log-message.bpmn");
 
 /** `loadProcessModel` takes a path, so a mutated diagram needs a file. */
 async function modelOf(xml: string) {

@@ -21,8 +21,8 @@ ordering:
 
 | Diagram | What it is |
 |---|---|
-| [`upstream-pin-watch.bpmn`](../workflows/upstream-pin-watch.bpmn) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
-| [`upstream-version-adoption.bpmn`](../workflows/upstream-version-adoption.bpmn) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
+| [`upstream-pin-watch.bpmn`](../../processes/upstream-pin-watch.bpmn) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
+| [`upstream-version-adoption.bpmn`](../../processes/upstream-version-adoption.bpmn) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
 
 The second is called, not copied: `calledElement="Process_UpstreamAdoption"`.
 Any pinned upstream dependency enters it the same way, and a new tenant is a

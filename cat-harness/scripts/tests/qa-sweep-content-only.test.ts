@@ -175,7 +175,7 @@ describe("`derived` — the fourth layer, and why `library/` is on it (bean `hqk
     // would have made a declared process a defect by the axis's own rule.
     // This is the elimination, asserted against the actual diagram.
     const bpmn = readFileSync(
-      join(repoRootFor(resolve(import.meta.dir, "..", "..")), "cat-harness", "skills", "workflows", "document-ingestion.bpmn"),
+      join(repoRootFor(resolve(import.meta.dir, "..", "..")), "cat-harness", "processes", "document-ingestion.bpmn"),
       "utf-8",
     );
     expect(bpmn).toContain("library");

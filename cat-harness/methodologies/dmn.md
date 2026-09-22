@@ -12,7 +12,7 @@ applies-when: >
 # DMN — the computable case
 
 **Present in this repository since before this adoption, and never written down as
-a methodology.** Five `.dmn` tables exist under `skills/workflows/decisions/`, the
+a methodology.** Five `.dmn` tables exist under `processes/decisions/`, the
 BPMN engine evaluates them, and `dmn-authoring` sits on the `business-analyst`
 role. What was missing is the statement of *when a decision should be a table at
 all* — which is what made it possible to reach for DMN by habit, or to miss it.

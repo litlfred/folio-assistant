@@ -109,7 +109,7 @@ export const ActorDefinitionSchema = z.object({
   kind: ActorKindSchema,
   description: z.string(),
   // DEPRECATED. An actor does not inherit — a ROLE does, and the lattice that
-  // used to live here now lives in `skills/roles/roles.json`. Kept optional so
+  // used to live here now lives in `scenarios/roles.json`. Kept optional so
   // an unmigrated registry still validates; `kg:audit` reports any entry that
   // still carries it (`actor-is-not-a-role`).
   inherits: z.array(z.string()).optional().default([]),

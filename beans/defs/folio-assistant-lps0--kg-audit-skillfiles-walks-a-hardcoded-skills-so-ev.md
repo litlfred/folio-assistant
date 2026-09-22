@@ -28,7 +28,7 @@ DIRECTLY, and none of their skills is audited:
 | `theming/` (new, bean `1hvo`) | 6 | **0** |
 | `bootstrap/skills/`, `bootstrap/render/` | 6 | **0** (a different instance; see below) |
 
-`methodologies/crdm/workflows/` DOES have sidecars, so the gap is specific to
+`methodologies/crdm/processes/` DOES have sidecars, so the gap is specific to
 the SKILL walk rather than to the directory being unreachable — the process
 audit already resolves declared directories correctly.
 

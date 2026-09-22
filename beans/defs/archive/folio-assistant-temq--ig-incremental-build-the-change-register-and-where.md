@@ -30,7 +30,7 @@ head; `/validate` and `/deploy` dispatch the same `ghbuild.yml`; publish is push
 **Plan and gate.** Write `docs/proposals/ig-incremental-build-overview.md`: the change
 register (what / why / where / owner / phase / how you know), the stage-by-stage map for
 both paths, the BPMN activity mapping, and one worked run. If the process picture earns
-its place, author it as BPMN under `skills/workflows/` (this repo's rule), generate the
+its place, author it as BPMN under `processes/` (this repo's rule), generate the
 SVG with `bun run render:bpmn`, and add it to the workflow index. Gate: `render:bpmn:check`,
 generated-docs checks, `bun test`. Falsifier: if a change cannot be pinned to a stage,
 it is not a pipeline change and gets moved to "open decisions" instead of the map.
@@ -44,7 +44,7 @@ it is not a pipeline change and gets moved to "open decisions" instead of the ma
   register (what · why · where · owner · phase), the review-path and publish-path maps,
   the activity-by-activity table, one worked run with exit codes, roll-out by phase,
   six decisions for the author.
-- `skills/workflows/ig-incremental-build.bpmn` (+ generated SVG): the incremental build
+- `processes/ig-incremental-build.bpmn` (+ generated SVG): the incremental build
   as a BPMN process, six lanes, 27 nodes; loads in the workflow interpreter as advisory.
   Indexed on the publication-workflow page and shown in the WHO SMART IG guide under
   "Making the build incremental" (site-content section + regenerated pages).
@@ -56,7 +56,7 @@ it is not a pipeline change and gets moved to "open decisions" instead of the ma
 - `docs/proposals/ig-incremental-build-overview.md` — the change register (R1–R11),
   the review-path and publish-path maps, the activity-by-activity table, one worked
   run with exit codes, roll-out by phase, six decisions for the author.
-- `skills/workflows/ig-incremental-build.bpmn` + generated SVG — the incremental build as
+- `processes/ig-incremental-build.bpmn` + generated SVG — the incremental build as
   a BPMN process (six lanes, 27 nodes, advisory), generated layout; loads in the
   workflow interpreter; indexed on the publication-workflow page and shown in the WHO
   SMART IG guide ("Making the build incremental").

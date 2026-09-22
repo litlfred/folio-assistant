@@ -115,11 +115,11 @@ export function xmlSourcesUnder(dir: string): string[] {
 if (import.meta.main) {
   const root = resolve(import.meta.dir, "..");
   // Every directory the instance DECLARES as holding processes, not the
-  // literal `skills/workflows`. A topical layout puts them in several.
+  // literal `processes`. A topical layout puts them in several.
   const dirs = workflowDirs(root);
   const files = dirs.flatMap((d) => xmlSourcesUnder(d));
 
-  // An empty corpus is not a pass. Renaming `skills/workflows/` would
+  // An empty corpus is not a pass. Renaming `processes/` would
   // otherwise turn this gate into a silent success over nothing, which is the
   // same "reported clean over what it never read" defect it exists to catch.
   if (files.length === 0) {

@@ -3,7 +3,7 @@ fix rather than an evasion.**
 
 The sentence that used to open here carried a count, and it was wrong five
 times in a row — "six", then "nineteen", then "thirty", then "thirty-two, all
-under `skills/workflows/`", then "thirty-nine" — each for long enough to be
+under `processes/`", then "thirty-nine" — each for long enough to be
 wrong, and each time discovered by somebody who happened to run `ls`. The last
 of those was wrong by **sixteen** when it was finally checked: it claimed
 thirty-nine against fifty-five.
@@ -256,7 +256,7 @@ is gone" has never had an answer a reader could look up:
 | `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
 
 > **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
-> fails when a `.bpmn` under `skills/workflows/` is absent from this page. It was
+> fails when a `.bpmn` under `processes/` is absent from this page. It was
 > added because the page opened by counting nineteen files and then listed
 > eight — the eleven above were present in the repository and invisible here,
 > which is the same defect as a table of contents that stops halfway.

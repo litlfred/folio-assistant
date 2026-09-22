@@ -62,7 +62,7 @@ carries.
 
 ## Referenced from
 
-`skills/workflows/code-change-review.bpmn`, whose "Run the platform's own
+`processes/code-change-review.bpmn`, whose "Run the platform's own
 gates" activity carries `<folio:no-skill>` naming this bean. When the skill
 exists, that exemption becomes a `<folio:skill ref>`.
 

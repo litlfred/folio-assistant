@@ -17,7 +17,7 @@
  *      a changed skill reaches a set of lanes across the process corpus —
  *      "editors and authoring agents", "publication manager", "clinical SMEs".
  *   2. Each reached lane RESOLVES to a declared role, through
- *      `roleForLane` against `skills/roles/roles.json` — the lane's own
+ *      `roleForLane` against `scenarios/roles.json` — the lane's own
  *      `<folio:role ref>` where it has one, the lane-name table otherwise.
  *
  * ## The source this used to read, and why it went
@@ -140,7 +140,7 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
   const changedSkills = new Set(skills.map((s) => s.name));
   const lanes: LaneImpact[] = [];
   // Every declared knowledge-graph directory, not the literal
-  // `skills/workflows/`. An impact report that misses a diagram reports NO
+  // `processes/`. An impact report that misses a diagram reports NO
   // lane affected, which is indistinguishable from a change that affects
   // nobody — the one wrong answer this analysis must not give.
   const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));

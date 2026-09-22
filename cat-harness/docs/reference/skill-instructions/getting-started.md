@@ -12,8 +12,8 @@ parent: Skill instructions
 {% raw %}
 # /getting-started — what did they actually ask for?
 
-Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn).
-Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/folio-intent.dmn).
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn).
+Decision table: [`decisions/folio-intent.dmn`](../../processes/decisions/folio-intent.dmn).
 
 ## The landing page is the instance's own description
 
