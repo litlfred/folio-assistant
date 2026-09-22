@@ -1213,7 +1213,28 @@
     '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
     "</g></svg>";
 
-  var TILE_GLYPHS = { beans: BEANS_GLYPH };
+  /*
+   * A TRAY WITH SOMETHING DROPPING INTO IT — the intake queue, and
+   * deliberately not a folder or a book. `uploads` and `library` are two
+   * stages of one pipeline, so their tiles have to be told apart at a glance:
+   * the library's is the corpus, this one is the inbox. Both tiles opened the
+   * same page until 2026-09-21 and wore the same glyph, which is how a reader
+   * came to think there was one thing under two names.
+   *
+   * Drawn for 20px like BEANS_GLYPH, for the reason recorded there: the arrow
+   * is a single stroke and the tray a single closed path, because two nested
+   * outlines merge into a grey block at the size this is actually rendered.
+   */
+  var UPLOADS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.7" ' +
+    'stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3.6 14.8v2.9a1.9 1.9 0 0 0 1.9 1.9h13a1.9 1.9 0 0 0 1.9-1.9v-2.9h-4.9' +
+    'l-1.3 1.9h-3.4l-1.3-1.9z"/>' +
+    '<path d="M12 3.6v7.7"/><path d="M8.7 8.1 12 11.4l3.3-3.3"/>' +
+    "</g></svg>";
+
+  var TILE_GLYPHS = { beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH };
 
   function glyphFor(name) {
     if (typeof name !== "string") return NET_GLYPH;
@@ -2278,6 +2299,25 @@
     return v ? v.replace(/\/+$/, "") : baseurlFromTodoSrc();
   }
 
+  /* ── Is this a STAGING preview? ──────────────────────────────────────
+   *
+   * Non-empty `fa-staging` means a `STAGING/<slug>/` preview; empty means the
+   * canonical deploy, a local build, or a page whose `_data/build.yml` was
+   * never written. All three of those are treated as canonical, which is the
+   * SAFE direction: a build that cannot say it is a preview hides the tile
+   * rather than advertising a page that may not be deployed.
+   *
+   * That matches `compose-docs.ts`, which withholds a staging-only page unless
+   * positively told `--staging`. One direction in both places, so the page and
+   * its tile cannot end up disagreeing about which deploy they are on — and if
+   * they ever did, the failure would be a tile linking to a 404, which is the
+   * thing this exists to prevent.
+   */
+  function isStagingPreview() {
+    var meta = document.querySelector('meta[name="fa-staging"]');
+    return !!(meta && (meta.getAttribute("content") || "").trim());
+  }
+
   /**
    * A site-root path, composed against this deploy's base.
    *
@@ -2323,6 +2363,11 @@
       // another surface.
       if (t.hidden && hiddenIds.indexOf(t.id) === -1) continue;
       if (!t.hidden && hiddenIds.indexOf(t.id) !== -1) continue;
+      // A tile whose PAGE is withheld from this deploy is not rendered at all.
+      // Distinct from `hidden` above, which is a reader's own preference about
+      // a page that exists: this one is about whether the page is there.
+      // Conflating them would let "show hidden" resurrect a link to a 404.
+      if (t.publish === "staging-only" && !isStagingPreview()) continue;
       var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href),
                           "the declared visualisation of " + t.directory);
       tile.setAttribute("data-fa-tile", t.id);
@@ -2533,7 +2578,7 @@
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
    *
    * Owner: *"confrim arctions [fishbones] on open content puts in fsh guts"*,
-   * and CRDM Q5: **delete becomes MOVE**. `skills/workflows/board-relocate.bpmn`
+   * and CRDM Q5: **delete becomes MOVE**. `processes/board-relocate.bpmn`
    * is the drawn process; this is its reader-facing half.
    *
    * ## THE CONFIRM IS THE REQUIREMENT, AND IT MUST NOT OVERSTATE EITHER WAY

@@ -100,6 +100,13 @@
   .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
   .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
   .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  /* The KG view's tables. Deliberately plainer than the replica's furniture:
+     this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
+     it as IRIS would invite a reader to take its counts for IRIS's. */
+  .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th { font-weight: 600; white-space: nowrap; }
+  .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
