@@ -1440,6 +1440,34 @@ test("on the glass it is NOT square — shaped to its content", async ({ page })
   await expect(floating).toHaveCSS("aspect-ratio", "auto");
 });
 
+test("the square rule does not let the backdrop escape the card", async ({ page }) => {
+  // `624f`'s rule OVERRIDES `overflow: hidden` on `.fa-sticky--backdrop`, and
+  // the stylesheet marks that "REQUIRED, not tidiness": without it an
+  // unclipped backdrop lays out at its INTRINSIC size — 1672px — and covers
+  // the page, "which is what this board did on its first render, and it was
+  // invisible in the HTML, which was correct throughout."
+  //
+  // `auto` clips as `hidden` does, so the hazard is contained. Asserted
+  // rather than assumed, because the next edit to this rule's `overflow` is
+  // one keystroke from reopening a defect whose symptom is a covered page and
+  // whose markup looks right.
+  await openThemedBoard(page);
+  const card = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(card).toBeVisible();
+  const r = await card.evaluate((el) => {
+    const art = el.querySelector(".fa-sticky-art")!;
+    const c = el.getBoundingClientRect();
+    const a = art.getBoundingClientRect();
+    return { cw: c.width, ch: c.height, aw: a.width, ah: a.height };
+  });
+  expect(r.aw, `art is ${Math.round(r.aw)} wide in a ${Math.round(r.cw)} card`)
+    .toBeLessThanOrEqual(r.cw + 2);
+  expect(r.ah, `art is ${Math.round(r.ah)} tall in a ${Math.round(r.ch)} card`)
+    .toBeLessThanOrEqual(r.ch + 2);
+  // The premise: there IS art, so the comparison is not vacuous.
+  expect(r.aw).toBeGreaterThan(0);
+});
+
 test("a sticky with NO art is untouched — the third state", async ({ page }) => {
   // `.fa-sticky--backdrop` scopes the rule. An unthemed sticky keeps the old
   // flow behaviour, and saying so stops the next reader assuming every sticky

@@ -127,4 +127,26 @@ to start from.
 - [x] a docked sticky with art is square, at every width
 - [x] a floating sticky is shaped to its content
 - [x] a sticky with no art is untouched
+- [x] the square rule does not let the backdrop escape the card
 - [ ] the art and the words scroll as one surface
+
+
+## One more risk in the shipped half, found by re-reading the rule it overrides
+
+The square rule sets `overflow: auto`, which **overrides `overflow: hidden` on
+`.fa-sticky--backdrop`** — a rule the stylesheet marks *"REQUIRED, not
+tidiness"*:
+
+> without it the art escapes the card's rounded corners; and if any rule above
+> ever fails to position it, an unclipped backdrop lays out at its INTRINSIC
+> size — 1672px wide — and covers the page. That is not hypothetical: it is
+> what this board did on its first render, and it was invisible in the HTML,
+> which was correct throughout.
+
+`auto` clips as `hidden` does, so the hazard is contained — measured, not
+assumed: art 314x318 inside a 320x320 card, no escape.
+
+Asserted rather than left to the reading. The next edit to this rule's
+`overflow` is one keystroke from reopening a defect whose symptom is a
+covered page and whose markup looks correct throughout, which is precisely
+the kind nobody finds by reading a diff.
