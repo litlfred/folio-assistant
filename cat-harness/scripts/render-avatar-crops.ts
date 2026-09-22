@@ -30,9 +30,6 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-// `folio` is contributed by folio-assist-core through a load-time side effect;
-// without this `readDeclaration` throws on a valid declaration.
-import "../schemas/folio-graph-kind.js";
 import type { ImageRegion } from "../schemas/kg-node.js";
 
 export const MEDIA: Readonly<Record<string, string>> = {

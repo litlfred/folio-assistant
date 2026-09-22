@@ -18,7 +18,6 @@ import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
 import { owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.ts";
 import { scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");

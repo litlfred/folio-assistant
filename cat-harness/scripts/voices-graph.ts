@@ -53,7 +53,6 @@ import {
   type VoiceProvenanceFlag,
   type VoiceRule,
 } from "../schemas/voices.ts";
-import "../schemas/folio-graph-kind.js";
 
 /** How a rule's citation resolves — the reader's verdict, never the file's claim. */
 export type CitationKind = "library" | "kg-node" | "none";

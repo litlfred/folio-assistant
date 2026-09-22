@@ -94,7 +94,6 @@ import {
   siteDirFor,
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO = join(ROOT, "..");
