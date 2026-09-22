@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sj6m
 title: 'TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T06:48:03Z
-updated_at: 2026-09-22T07:17:42Z
+updated_at: 2026-09-22T10:46:09Z
 parent: folio-assistant-vke6
 ---
 
@@ -306,3 +306,22 @@ but because it can only ever be `unknown` here, `unknown` counts toward
 
 Verified `kg:audit:check` still exits 0, and that `kg:audit:strict` already
 exited 1 before this change, so no green gate was taken away.
+
+---
+
+## RE-DERIVED 2026-09-22 — closed on evidence
+
+Reported by `bean-self-declared-done` and re-derived rather than closed on its
+boxes, per `fkjo`'s **Do not**.
+
+| claim | measurement |
+|---|---|
+| `tool` is a QA subject kind | `schemas/kg-qa.ts:308` — `KG_SUBJECT_KINDS` includes `"tool"` |
+| with 7 criteria | 7 entries carry `applies: ["tool"]` |
+| nodes reported | **72** sidecars under `test/results/kg-qa/tools/` — the bean said 69, so the corpus GREW; not a discrepancy |
+| `skill.update` filed separately | #875 is open and its body is the disambiguation this box describes, down to "a Tool that should exist and does not" |
+| the pre-execution gate has a consumer | `03t9`, re-derived in the same sweep — `preflight()` at `src/tools/workflow.ts:163` |
+
+The count moving 69 → 72 is the one thing worth carrying forward: this bean
+quoted a number in prose and the directory has since moved, which is the
+`bpmn-processes` rule landing on a bean instead of a doc page.

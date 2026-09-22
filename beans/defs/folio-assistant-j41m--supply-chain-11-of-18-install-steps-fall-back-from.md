@@ -1,12 +1,12 @@
 ---
 # folio-assistant-j41m
 title: 'SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-22T09:05:00Z
+updated_at: 2026-09-22T10:46:09Z
+parent: folio-assistant-3x2n
 ---
 
 ## Measured 2026-09-21
@@ -204,3 +204,23 @@ It is not hygiene. An action is code this repository executes **with its own
 token** on every push. `check:workflow-injection` guards what the workflows
 themselves do with untrusted input; nothing guarded the actions they call. That
 was a supply chain with no eyes on it whatsoever.
+
+---
+
+## RE-DERIVED 2026-09-22 — closed on evidence
+
+The one of the five with real consequence if its boxes were lying, so it was
+checked hardest — registration in **both** places, which is the failure mode
+`tyyc` was closed for.
+
+| claim | measurement |
+|---|---|
+| `check:lockfile-pinning` exists and is gated | `package.json:96`; `code-quality-gates.yml:813` |
+| `check:dependency-advisories` exists and is gated | `package.json:80`; `code-quality-gates.yml:1155` (job) and `:1184` (step) |
+| Dependabot turns advisories into reviewable PRs | `.github/dependabot.yml`, 4521 bytes |
+| neither gates a merge | the advisories job is its own job, separate from the gate set |
+
+The bean's own `## CORRECTION` — *"18 was the count of LINES carrying
+`--frozen-lockfile`, not of install steps"* — is the reason this one reads as
+trustworthy: it caught itself counting a SHAPE rather than a CONTRACT before
+anybody else did.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bx6q
 title: 'A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:48:55Z
-updated_at: 2026-09-21T22:54:21Z
+updated_at: 2026-09-22T10:46:09Z
 parent: folio-assistant-ahvw
 ---
 
@@ -42,3 +42,23 @@ It had been followed ad-hoc all session and written nowhere:
       *"harness handler wins."* now sits in `schema-management.md` beside the
       two path rules it arbitrates, not only on `gen-handler-index.ts` and in
       bean `8h42`.
+
+---
+
+## RE-DERIVED 2026-09-22 — closed on evidence
+
+All six boxes checked against the files rather than taken on trust:
+
+| claim | measurement |
+|---|---|
+| §2 carries the STRICT rule | `symbiotic-interaction.md:48` — *"A steer that corrects a RULE lands in the SKILL — same turn (STRICT)"* |
+| the three questions | same file, `:69` — *"Is this steer rule-level? Three questions"* |
+| two anti-patterns | §4 items **5** and **6** — artefact-only application, and filing the steer as a bean |
+| front matter names the rule | the `description` block carries it, so `skill_list` surfaces it without reading the body |
+| `kg-contribution-offer` states the boundary | `:49` — *"A ruling on something already in the graph is an edit and needs no offer"* |
+| `interaction-modality` §4.3 closes the loop | `:298` — *"a ruling is a skill edit, not just an applied answer"* |
+| the gap found on first application | `schema-management.md:230` — *"harness handler wins."* |
+
+The bean writes the anti-patterns as "§4.5, §4.6"; they are items 5 and 6 of
+§4, not subsections. Noted because a grep for `§4.5` finds nothing and could
+be misread as a missing deliverable.
