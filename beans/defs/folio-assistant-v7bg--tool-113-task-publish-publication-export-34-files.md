@@ -210,7 +210,7 @@ over.
 
 ### Reading 1 is EVIDENCED, not a choice — `content-publish` is folio-side
 
-`cat-harness/skills/workflows/draft-to-publication.bpmn` carries three tasks
+`cat-harness/processes/draft-to-publication.bpmn` carries three tasks
 reffing `content-publish`, and the third is exactly the flow the skill's prose
 describes:
 

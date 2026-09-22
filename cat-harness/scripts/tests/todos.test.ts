@@ -132,7 +132,7 @@ describe("the published process hierarchy", () => {
 
   test("the key order is the diagrams' sorted FILENAMES, not the directory's own order", async () => {
     // Reproducibility, and it is not theoretical. `processHierarchy` builds
-    // this object by walking `skills/workflows/`, and `readdirSync` under Bun
+    // this object by walking `processes/`, and `readdirSync` under Bun
     // returns RAW directory order — on ext4, a hash of each filename against
     // the directory's own seed. `JSON.stringify` preserves insertion order, so
     // the published index came out byte-different on every checkout, and
@@ -143,10 +143,10 @@ describe("the published process hierarchy", () => {
     // PR that un-folded it. Asserting the ORDER rather than merely the set is
     // the point — a set assertion passes under either enumeration.
     // EVERY declared knowledge-graph root, via the same helper the generator
-    // uses — not the literal `skills/workflows`.
+    // uses — not the literal `processes`.
     //
     // This hardcoded that path and broke the moment a second root existed:
-    // `bootstrap/workflows/bootstrap.bpmn` is in the published hierarchy and
+    // `bootstrap/processes/bootstrap.bpmn` is in the published hierarchy and
     // was not in this expectation, so the test called the GENERATOR wrong for
     // correctly reading the declaration. A test that pins an order must derive
     // it from the same source as the thing it pins, or it pins the past.

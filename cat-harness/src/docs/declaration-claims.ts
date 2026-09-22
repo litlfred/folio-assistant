@@ -90,7 +90,7 @@ export function declaredGraphs(repoRoot: string): GraphSources {
  *
  * **A table ROW is its own block.** Without that, `AGENTS.md`'s actor/role
  * table pairs the `` `cat-harness` graph `` in the **Skill** row with
- * `skills/roles/roles.json` in the **Role** row and reports a contradiction
+ * `scenarios/roles.json` in the **Role** row and reports a contradiction
  * between two facts that were never a claim. Measured: it was the first thing
  * this check found after the real defect was fixed, and it was wrong. The same
  * shape as `k59d`'s *"an arrow is not always a dependency"* guard.

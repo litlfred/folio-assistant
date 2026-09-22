@@ -101,7 +101,7 @@ This is the one that decides sequencing, and it is measured, not argued.
 
 `bootstrap/workflows/initialize-harness.bpmn` exists and is declared the single
 entry point. It is also invisible to the engine — bean **`7u3g`**: `workflowDirs`
-composes `<kgdir>/workflows`, i.e. `bootstrap/skills/workflows/`, which does not
+composes `<kgdir>/workflows`, i.e. `bootstrap/processes/`, which does not
 exist; the diagrams sit at `bootstrap/workflows/`, a **sibling**. So
 `workflow_list` and `workflow_start` cannot see it, and `kg:audit` has never
 written a sidecar for it.

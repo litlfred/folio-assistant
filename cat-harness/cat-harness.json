@@ -432,8 +432,8 @@
       ]
     },
     {
-      "id": "cat-harness-roles",
-      "path": "skills/roles/",
+      "id": "scenarios",
+      "path": "scenarios/",
       "dependents": "skip",
       "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
       "graphKinds": [
@@ -441,12 +441,12 @@
       ]
     },
     {
-      "id": "cat-harness-workflows",
-      "path": "skills/workflows/",
+      "id": "processes",
+      "path": "processes/",
       "dependents": "skip",
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here \u2014 that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs.",
       "graphKinds": [
-        "workflows"
+        "processes"
       ]
     },
     {
@@ -468,18 +468,18 @@
       "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
-      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
+      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in processes/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
       "graphKinds": [
         "skills"
       ]
     },
     {
-      "id": "methodology-crdm-workflows",
-      "path": "methodologies/crdm/workflows/",
+      "id": "methodology-crdm-processes",
+      "path": "methodologies/crdm/processes/",
       "dependents": "skip",
-      "description": "CRDM's own executable processes \u2014 the eight BPMN diagrams that RUN the requirements methodology rather than describe it. Declared as `workflows` on 2026-09-21 for the same reason `skills/workflows/` is: before the split these sat inside a `cat-harness` directory and were reached by convention, and the moment the parent became `skills` the processes index pruned them as an orphan. A diagram's kind follows what the FILE is, not which methodology owns the directory above it.",
+      "description": "CRDM's own executable processes \u2014 the eight BPMN diagrams that RUN the requirements methodology rather than describe it. Declared as `workflows` on 2026-09-21 for the same reason `processes/` is: before the split these sat inside a `cat-harness` directory and were reached by convention, and the moment the parent became `skills` the processes index pruned them as an orphan. A diagram's kind follows what the FILE is, not which methodology owns the directory above it.",
       "graphKinds": [
-        "workflows"
+        "processes"
       ]
     },
     {
@@ -759,7 +759,7 @@
       "path": "large-datasets/skills/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/skills/workflows/ -- a skill ref resolves across the declared graphs, not within one directory.",
+      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/processes/ -- a skill ref resolves across the declared graphs, not within one directory.",
       "graphKinds": [
         "skills"
       ]

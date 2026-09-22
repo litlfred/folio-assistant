@@ -25,7 +25,7 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 ## BPMN reference
 
-[`methodologies/crdm/workflows/crdm-requirements.bpmn`](../../methodologies/crdm/workflows/crdm-requirements.bpmn)
+[`methodologies/crdm/processes/crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn)
 is the outer process — detection, the `Feature?` decision, then six phases, each
 a real subprocess in its own file:
 
@@ -113,7 +113,7 @@ comments up is the same defect wearing a different hat.
 
 **Input:** approved needs statement
 
-1. **Find the current workflow** — check `skills/workflows/*.bpmn` for existing
+1. **Find the current workflow** — check `processes/*.bpmn` for existing
    process diagrams that cover the affected area
 2. **Map the gap** — where in the current workflow does the need appear?
    Identify the specific activity or decision point

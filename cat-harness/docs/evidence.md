@@ -57,7 +57,7 @@ skipped there rather than satisfied vacuously.
 ## The subprocess
 {: #the-subprocess data-fa-label="sec:evidence-the-subprocess" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn){: .fa-node-edit title="Edit skills/workflows/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/evidence/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/evidence-retrieval.bpmn){: .fa-node-edit title="Edit processes/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/evidence/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 Four lanes, because four different kinds of actor are involved and conflating
 them is how accountability gets lost:
@@ -78,7 +78,7 @@ lane inside the system boundary would make "authoritative" a self-assessment.
        alt="BPMN swimlane diagram across four lanes. The author reviews the guidance already in their content, then frames the question as PICO. A parallel gateway fans out to three retrieval tasks run by the evidence agent: trusted L1 sources under library/, trusted L2 DAK and L3 IG content, and data repositories and statistical datasets. The candidates join, and the trusted-registries lane verifies each one's authority against the publishing body's API; an exclusive gateway routes an unconfirmed citation to a bean on the work plan before rejoining. The author then appraises and grades the body of evidence, and a second exclusive gateway asks whether it is sufficient for a recommendation: if not, the gap is recorded as a bean and the process ends without one; if so, the evidence is attached to the recommendation.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/evidence-retrieval.bpmn) · [full-size SVG](assets/img/workflows/evidence-retrieval.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG](assets/img/workflows/evidence-retrieval.svg)
 {: .bpmn-source }
 
 ## Step one looks inward

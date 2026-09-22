@@ -47,7 +47,7 @@ export function loadSpecs(dir = REGISTRY): ExternalSchema[] {
 /** XML namespaces the corpus declares, read from the files that declare them. */
 export function namespacesInUse(root = ROOT): string[] {
   const out: string[] = [];
-  const dir = join(root, "skills", "workflows");
+  const dir = join(root, "processes");
   if (!existsSync(dir)) return out;
   for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
     const src = readFileSync(join(dir, f), "utf-8");
@@ -64,7 +64,7 @@ export function namespacesInUse(root = ROOT): string[] {
  * thirteenth, and goes stale silently.
  */
 export function bpmnTermsInUse(root = ROOT): string[] {
-  const dir = join(root, "skills", "workflows");
+  const dir = join(root, "processes");
   if (!existsSync(dir)) return [];
   const out = new Set<string>();
   for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {

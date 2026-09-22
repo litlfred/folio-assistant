@@ -37,7 +37,7 @@ const root = resolve(import.meta.dir, "../..");
 
 describe("BPMN translation templates", () => {
   test("at least one locale gates — otherwise this proves nothing", () => {
-    // Without this, deleting `translations/fr/workflows/` makes the checker
+    // Without this, deleting `translations/fr/processes/` makes the checker
     // report every locale as "not a target" and exit 0, which is a vacuous
     // pass over the exact defect being guarded against.
     // RESOLVED from the declaration, not composed. This read
@@ -52,7 +52,7 @@ describe("BPMN translation templates", () => {
     const dir = directoryForGraph(root, "translation-sources") ?? join(root, "translations");
     const gating = existsSync(dir)
       ? readdirSync(dir, { withFileTypes: true }).filter(
-          (e) => e.isDirectory() && existsSync(join(dir, e.name, "workflows")),
+          (e) => e.isDirectory() && existsSync(join(dir, e.name, "processes")),
         )
       : [];
     expect(gating.map((e) => e.name)).toContain("fr");

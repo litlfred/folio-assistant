@@ -68,7 +68,7 @@ independently rather than trusting the boxes:
 
 | item | measured |
 |---|---|
-| `logger` role | `bootstrap/skills/roles/roles.json` — `actorKinds: ["system"]`, `skills: []`, `actedUpon` in its description |
+| `logger` role | `bootstrap/scenarios/roles.json` — `actorKinds: ["system"]`, `skills: []`, `actedUpon` in its description |
 | the sub-process | `bootstrap/workflows/log-message.bpmn` — `Lane_Actor`, `Lane_Logger`, `GW_Complete`, `End_NotLogged` |
 | the skill | `bootstrap/skills/log-message.md` |
 | one Tool, manual | `cat-harness/tools/index.ts:1093` — `invoke: { manual: true }`, `install: { none: true }`, five required fields + optional `body: Markdown`, `satisfies: ["log-message"]` |

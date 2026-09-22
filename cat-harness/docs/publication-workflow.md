@@ -40,7 +40,7 @@ fix rather than an evasion.**
 
 The sentence that used to open here carried a count, and it was wrong five
 times in a row — "six", then "nineteen", then "thirty", then "thirty-two, all
-under `skills/workflows/`", then "thirty-nine" — each for long enough to be
+under `processes/`", then "thirty-nine" — each for long enough to be
 wrong, and each time discovered by somebody who happened to run `ls`. The last
 of those was wrong by **sixteen** when it was finally checked: it claimed
 thirty-nine against fifty-five.
@@ -293,7 +293,7 @@ is gone" has never had an answer a reader could look up:
 | `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
 
 > **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
-> fails when a `.bpmn` under `skills/workflows/` is absent from this page. It was
+> fails when a `.bpmn` under `processes/` is absent from this page. It was
 > added because the page opened by counting nineteen files and then listed
 > eight — the eleven above were present in the repository and invisible here,
 > which is the same defect as a table of contents that stops halfway.
@@ -326,7 +326,7 @@ same kind of question. `Accept, revise or discard?` is the editor's call.
 
 A gateway carrying `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` has its
 outcome computed from a **DMN decision table** under
-[`skills/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows/decisions).
+[`processes/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/processes/decisions).
 The agent supplies facts — `{ failCritical: 0, failMajor: 2 }` — and the table
 returns the branch; `workflow_complete` refuses a hand-supplied outcome there,
 and records which rule fired.
@@ -397,7 +397,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ## Editing and the HCI validation gate
 {: #editing-and-the-hci-validation-gate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="editing-and-the-hci-validation-gate.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/editing-hci-validation.bpmn){: .fa-node-edit title="Edit processes/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="editing-and-the-hci-validation-gate.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
@@ -407,7 +407,7 @@ content block**.
        alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/editing-hci-validation.bpmn){: .btn .btn-outline }
 
 ### The one rule this diagram exists to state
 {: #the-one-rule-this-diagram-exists-to-state data-fa-label="sec:publication-workflow-the-one-rule-this-diagram-exists-to-state" }
@@ -478,7 +478,7 @@ content type:
 ## From corpus to published folio
 {: #from-corpus-to-published-folio data-fa-label="sec:publication-workflow-from-corpus-to-published-folio" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="from-corpus-to-published-folio.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="from-corpus-to-published-folio.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/draft-to-publication.bpmn){: .fa-node-edit title="Edit processes/draft-to-publication.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="from-corpus-to-published-folio.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="from-corpus-to-published-folio.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
@@ -488,7 +488,7 @@ whole by the review team, and only then released.
        alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/draft-to-publication.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/draft-to-publication.bpmn){: .btn .btn-outline }
 
 Three things to note:
 
@@ -529,7 +529,7 @@ This diagram implements the `req:content-lifecycle` phase gates —
 ## Content lifecycle overview
 {: #content-lifecycle-overview data-fa-label="sec:publication-workflow-content-lifecycle-overview" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="content-lifecycle-overview.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="content-lifecycle-overview.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/content-lifecycle.bpmn){: .fa-node-edit title="Edit processes/content-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="content-lifecycle-overview.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="content-lifecycle-overview.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.
@@ -539,7 +539,7 @@ activities.
        alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/content-lifecycle.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn){: .btn .btn-outline }
 
 This is the same lifecycle as the linear
 [plan → author → validate → review → test → publish → feedback → retire](content-types.html#the-content-lifecycle)
@@ -645,7 +645,7 @@ see [Skills & roles](skills.html#roles-actors).
 The `.bpmn` files are the source of truth.
 
 ```sh
-# 1. edit skills/workflows/<diagram>.bpmn — in a modeler, or by hand
+# 1. edit processes/<diagram>.bpmn — in a modeler, or by hand
 # 2. regenerate the SVGs
 bun run render:bpmn
 # 3. or, in CI, just check they are not stale
@@ -682,7 +682,7 @@ implies actors performing activities over time, which none of these have:
 | [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 
 If you add a diagram that *does* have actors, activities and a control flow,
-it belongs in `skills/workflows/` as BPMN, not in a Mermaid fence.
+it belongs in `processes/` as BPMN, not in a Mermaid fence.
 
 ---
 

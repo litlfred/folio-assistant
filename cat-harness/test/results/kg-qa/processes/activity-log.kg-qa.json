@@ -1,0 +1,106 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ActivityLog",
+    "path": "processes/activity-log.bpmn"
+  },
+  "source_hash": "sha256:c429c5e8ef7ef0f7caa7a17180b47dab4d786d37e0b71ce5d7f26c0e6520c594",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_LogStart",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_LogMessage",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_LogEnd",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_PersistLog",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_ReportCaptureState",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_EmptyOne",
+          "detail": "needs skill \"activity-log\", but its lane's role \"user\" does not carry it."
+        },
+        {
+          "where": "A_EmptyAll",
+          "detail": "needs skill \"activity-log\", but its lane's role \"user\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 1,
+    "n/a": 8,
+    "unknown": 0
+  }
+}

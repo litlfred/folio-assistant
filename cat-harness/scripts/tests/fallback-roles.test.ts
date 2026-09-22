@@ -36,7 +36,7 @@ describe("the registries it resolves against", () => {
   });
 
   test("roles are read through the declaration, so relocating the kg graph cannot blind it", () => {
-    // `check:declared-paths` refused a hardcoded `skills/roles/roles.json`
+    // `check:declared-paths` refused a hardcoded `scenarios/roles.json`
     // in the first draft. Asserting a known id is present is what makes the
     // declaration-reading path testable at all.
     expect(declaredRoles(ROOT).has("publication-manager")).toBe(true);

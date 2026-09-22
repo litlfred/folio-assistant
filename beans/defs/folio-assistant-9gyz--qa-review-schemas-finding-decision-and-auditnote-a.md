@@ -29,7 +29,7 @@ as `resolved`. 19 tests, each perturbing a clean baseline by exactly one thing.
 `reviewer`, `programme-manager`, `publication-manager`, `authoring-agent`; NOT
 by `editor` / `qc-reviewer` / `translation-adjudicator`, which inherit it.
 
-**`skills/workflows/editing-hci-validation.bpmn`** — `Task_RecordDecision`
+**`processes/editing-hci-validation.bpmn`** — `Task_RecordDecision`
 between `Task_ReviewFindings` and `Gateway_EditorDecision`, editor lane,
 `relaxable="false"`. One step rather than one per branch: the discard branch is
 exactly where "why" most needs recording. DI shifted +220 right of x=2290, pool

@@ -55,7 +55,7 @@
  * nobody asked for, and misreporting how far those locales have actually
  * got.
  *
- * So a locale with a `workflows/` tree GATES, and one without is reported as
+ * So a locale with a `processes/` tree GATES, and one without is reported as
  * NOT A TARGET with its count. That is the same shape as `kg-audit`'s
  * coverage criteria: legitimate instances exist, so it must not gate — and it
  * must not be silent either, because a locale scanned and found empty,
@@ -67,7 +67,7 @@
  *   bun run translate-bpmn --check   [--locale fr]
  *   bun run translate-bpmn --inject --locale fr
  *
- * Injection writes `translations/<locale>/workflows/<name>.bpmn`. Rendering it
+ * Injection writes `translations/<locale>/processes/<name>.bpmn`. Rendering it
  * is `bun run render:bpmn` territory and is deliberately a separate step: the
  * renderer drives headless Chromium, and an extract/inject run should not.
  */
@@ -156,6 +156,22 @@ function translationsRoot(): string {
 const TRANSLATIONS = translationsRoot();
 
 /**
+ * The per-locale subdirectory holding a diagram's `.pot`/`.po`/injected `.bpmn`.
+ *
+ * declared-path-literal: NOT the declared `processes/` graph — this is a
+ * sibling INSIDE `translations/<locale>/`, named after the kind whose
+ * diagrams it carries so that a translator opening the tree sees the same
+ * word the corpus uses. It was `workflows/` until 2026-09-21 and was renamed
+ * with the kind; the scanner cannot tell the two apart from the literal
+ * alone, which is why the reason is here rather than repeated five times.
+ *
+ * One constant rather than five joins for the reason `potPathFor`'s own
+ * docstring gives about its sibling: two copies of a path is how a check
+ * passes over a file the extractor never wrote.
+ */
+const DIAGRAM_SUBDIR = "processes";
+
+/**
  * Where a diagram's template lives — ONE answer, for the writer and the
  * checker alike.
  *
@@ -164,7 +180,7 @@ const TRANSLATIONS = translationsRoot();
  * close.
  */
 function potPathFor(file: string, loc: string): string {
-  return join(TRANSLATIONS, loc, "workflows", `${basename(file, ".bpmn")}.pot`);
+  return join(TRANSLATIONS, loc, DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
 }
 
 /**
@@ -200,7 +216,7 @@ if (wantCheck) {
   // that it is reported, not demanded. `--locale` is an explicit request, so
   // naming one opts it in.
   const gating = new Set(
-    targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, "workflows"))),
+    targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR))),
   );
 
   const missing: string[] = [];
@@ -252,7 +268,7 @@ if (wantCheck) {
   const owned = new Set(diagrams.map((f) => basename(f, ".bpmn")));
   const orphaned: string[] = [];
   for (const loc of [...gating].sort()) {
-    const dir = join(TRANSLATIONS, loc, "workflows");
+    const dir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
     let names: string[];
     try {
       names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
@@ -260,7 +276,7 @@ if (wantCheck) {
       continue;
     }
     for (const n of names.sort()) {
-      if (!owned.has(basename(n, ".pot"))) orphaned.push(`translations/${loc}/workflows/${n}`);
+      if (!owned.has(basename(n, ".pot"))) orphaned.push(`translations/${loc}/${DIAGRAM_SUBDIR}/${n}`);
     }
   }
 
@@ -339,8 +355,8 @@ if (wantExtract) {
 
 if (wantInject) {
   const loc = locale!;
-  const poDir = join(TRANSLATIONS, loc, "workflows");
-  const outDir = join(TRANSLATIONS, loc, "workflows");
+  const poDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
+  const outDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
   let injected = 0;
   const skipped: string[] = [];
 
@@ -367,7 +383,7 @@ if (wantInject) {
     console.log(`  ${skipped.join(", ")}`);
   }
   console.log(
-    `\n${injected} diagram(s) written to translations/${loc}/workflows/.` +
+    `\n${injected} diagram(s) written to translations/${loc}/${DIAGRAM_SUBDIR}/.` +
       (injected ? "\nRender them with `bun run render:bpmn` once the output path is wired." : ""),
   );
 }

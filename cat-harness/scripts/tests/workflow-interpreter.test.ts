@@ -24,7 +24,7 @@ import { instanceId, loadInstance, saveInstance } from "../../src/workflow/store
  * repo keeps finding.
  */
 
-const WORKFLOW_DIR = resolve(import.meta.dir, "../../skills/workflows");
+const WORKFLOW_DIR = resolve(import.meta.dir, "../../processes");
 const bpmn = (stem: string): string => join(WORKFLOW_DIR, `${stem}.bpmn`);
 
 const names = (model: ProcessModel, ids: string[]): string[] =>

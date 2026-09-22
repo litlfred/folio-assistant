@@ -1,0 +1,118 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_KgToPortal",
+    "path": "processes/kg-to-portal.bpmn"
+  },
+  "source_hash": "sha256:5612fb216f41543661101807d785544830a0819925dcdc82f2bd12989d6432ea",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publication-manager\" does not carry it."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "A_Select",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Serialize",
+          "detail": "needs skill \"kg-export\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Package",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"attestation-service\" does not carry it."
+        },
+        {
+          "where": "E_HumanEyes",
+          "detail": "needs skill \"continual-progress\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "D_Undetermined",
+          "detail": "needs skill \"bean-blocking\", but its lane's role \"publication-manager\" does not carry it."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publish-target\" does not carry it."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"external-registry\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 7,
+    "fail": 1,
+    "n/a": 7,
+    "unknown": 0
+  }
+}

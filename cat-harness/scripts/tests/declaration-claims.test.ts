@@ -53,11 +53,11 @@ describe("GUARD: two facts standing near each other are not a claim", () => {
   test("adjacent TABLE ROWS are not paired", () => {
     // Measured on AGENTS.md, and it was the first thing this check found after
     // the real defect was fixed: the actor/role table puts the `cat-harness`
-    // graph in the Skill row and `skills/roles/roles.json` in the Role row.
+    // graph in the Skill row and `scenarios/roles.json` in the Role row.
     // Different objects, one flattening apart.
     const md = [
       "| **Skill** | the instruction body | the `cat-harness` graph — here, `skills/` |",
-      "| **Role** | the BPMN swimlane | `skills/roles/roles.json` |",
+      "| **Role** | the BPMN swimlane | `scenarios/roles.json` |",
     ].join("\n");
     expect(claims(md)).toEqual([]);
   });

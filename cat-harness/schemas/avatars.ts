@@ -112,7 +112,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 256,
     reads: "an open book — the instruction an Actor performs a Task from",
   },
-  workflows: {
+  processes: {
     // Two nodes and a gateway between them: the smallest honest BPMN.
     glyph: "M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z",
     tone: 280,

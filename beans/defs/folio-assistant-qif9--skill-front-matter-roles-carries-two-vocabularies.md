@@ -39,7 +39,7 @@ of the declared role registry**, and nothing validates either.
 `AGENTS.md` names three distinct declared objects, and this field collides
 with two of them:
 
-- **Role** — the BPMN swimlane, declared in `skills/roles/roles.json` (31).
+- **Role** — the BPMN swimlane, declared in `scenarios/roles.json` (31).
 - **Permission** — what an actor may DO, declared in
   `skills/permissions/permissions.json` (13: `content-authoring`,
   `approval-authority`, `release-management`, …).

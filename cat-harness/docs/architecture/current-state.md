@@ -267,7 +267,7 @@ Reading the taxonomy against the measurements:
   pipeline, the adapters, the build/QA/render scripts. This is the bulk.
 - **Content** — the content-object model (`schemas/types.ts`,
   `constraints.ts`, `builders.ts`), the block kinds, the 9 skill packages, and
-  the BPMN processes under `skills/workflows/`. These are schemas and Skill
+  the BPMN processes under `processes/`. These are schemas and Skill
   definitions: Content-repo material by the taxonomy, even though no subject
   matter lives here.
 - **Test** — no Test repo exists. Fixtures are distributed: `test/`,

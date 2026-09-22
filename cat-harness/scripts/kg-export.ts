@@ -133,7 +133,7 @@ const SKILL_IO_DIR = "schemas/skills";
  * Directories holding BPMN processes, DISCOVERED.
  *
  * This was the literal `docs/workflows`, and a sibling PR moved the diagrams
- * to `skills/workflows/` while this branch was open. A hardcoded path does not
+ * to `processes/` while this branch was open. A hardcoded path does not
  * fail when its target moves — it finds nothing and reports a clean run over
  * zero processes, which is bean `dh4f` exactly. That is the FOURTH hardcoded
  * path in this module to be wrong; the pattern is now a rule: this exporter
@@ -435,7 +435,7 @@ export function buildContext(): Record<string, unknown> {
     // wrong coercion this bean warns about, not an edge.
     hasCapability: { "@id": termIri("hasCapability"), ...link },
     // Roles and permissions stay LITERALS, deliberately and provisionally. The
-    // role registry (`skills/roles/roles.json`) and the permission vocabulary
+    // role registry (`scenarios/roles.json`) and the permission vocabulary
     // (`skills/permissions/permissions.json`) are NOT exported, so this graph
     // holds no node for any of them -- the Role nodes it does hold are BPMN
     // LANES, a different identity scheme with different names. Coercing would
@@ -923,7 +923,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
  *   rather than minting a second name for one relation. Note a TOOL's
  *   `requires` is a different relation entirely -- see `collectTools`.
  * - **`roles` and `permissions` -> `roleName`/`permissionName`, LITERALS.**
- *   Neither registry is in this graph: `skills/roles/roles.json` and
+ *   Neither registry is in this graph: `scenarios/roles.json` and
  *   `skills/permissions/permissions.json` are never collected, and the Role
  *   nodes that do exist are BPMN lanes under different names. All 44 role and
  *   21 permission references would dangle. A name is what these are until the
@@ -1161,7 +1161,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
  *
  * ## Longest prefix wins, and that is load-bearing
  *
- * `src/skills/` sits inside `src/`, and `skills/workflows/` inside `skills/`.
+ * `src/skills/` sits inside `src/`, and `processes/` inside `skills/`.
  * Matching the first declaration that fits would file a workflow under the
  * skills graph. Sorting by descending path length makes the most specific
  * declaration win, which is the same rule a router uses and the same one
@@ -1177,12 +1177,12 @@ function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT):
   //
   // It read `ROOT` on both lines until 2026-09-21, so exporting ANOTHER
   // instance stamped its nodes with THIS instance's directory ids wherever the
-  // two share a relative path. `bootstrap/skills/roles/` and
-  // `cat-harness/skills/roles/` are both `skills/roles`, so bootstrap's
+  // two share a relative path. `bootstrap/scenarios/` and
+  // `cat-harness/scenarios/` are both `scenarios`, so bootstrap's
   // own directory node came out carrying `inSubgraph ->
   // bootstrap.jsonld#directory/cat-harness-roles` — an id from the other
   // instance, in a document that does not define it, which the dangling-link
-  // check caught as soon as the second `skills/roles/` was declared.
+  // check caught as soon as the second `scenarios/` was declared.
   //
   // One instance's graph must not carry another's nodes
   // (`instance-graph-isolation.test.ts`, guarding a live leak of 88
@@ -1637,7 +1637,7 @@ function collectSchemas(doc: string, base: string): Node[] {
 }
 
 /**
- * The DECLARED roles, from `skills/roles/roles.json`.
+ * The DECLARED roles, from `scenarios/roles.json`.
  *
  * **Role nodes used to come only from BPMN lane names**, and that left the
  * role model itself out of the graph. Measured 2026-09-19: 65 of 66 Role

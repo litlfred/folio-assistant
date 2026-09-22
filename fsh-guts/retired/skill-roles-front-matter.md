@@ -98,7 +98,7 @@ those actor files exist for other reasons.
 ### 3. The second vocabulary is a later collision
 
 `Role` was subsequently given to the **BPMN swimlane**
-(`skills/roles/roles.json`). Authors reading the field by its new name began
+(`scenarios/roles.json`). Authors reading the field by its new name began
 writing swimlane roles into it — `code-reviewer`, `validation-pipeline`. So one
 field came to hold two vocabularies with no way to tell which a value belonged
 to except by looking each up.
@@ -121,7 +121,7 @@ things were wrong with that, beyond the field itself:
   was worse than the corpus it read.
 
 It now derives roles from the **lanes** it already computes, resolved through
-`roleForLane` against `skills/roles/roles.json`. Every value in
+`roleForLane` against `scenarios/roles.json`. Every value in
 `Roles reached:` resolves, and a lane binding no declared role is reported
 under `notDetermined` — *"unknown impact rather than absent impact"* — where
 before it contributed nothing and read as nobody being affected. That change
@@ -183,7 +183,7 @@ Two questions stay open, and neither is answered by the removal:
 Every file removed from, with every value it carried, at the commit before
 removal.
 
-Legend: `` `role` `` resolves in `skills/roles/roles.json` · _actor_ resolves
+Legend: `` `role` `` resolves in `scenarios/roles.json` · _actor_ resolves
 in `.claude/skills/actors/` · **permission** resolves in
 `skills/permissions/permissions.json` · ~~struck~~ resolves nowhere.
 
