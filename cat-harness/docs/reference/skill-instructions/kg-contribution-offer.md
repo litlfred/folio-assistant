@@ -38,10 +38,23 @@ It is **not** general guidance on asking questions. That is
 restate it — it **obeys** it, and adds the one thing §4.1 cannot supply: what
 the options actually are here.
 
+It is **not** what to do when the author CORRECTS a rule. That is
+[`symbiotic-interaction`](symbiotic-interaction.md) §2, and it runs the other
+way: the node already exists, the author has just said it is wrong, and the
+correction is written into it **in the same turn without an offer**. Offering
+there asks the author to repeat a correction they have already made, which is
+§2's opening failure.
+
+The line between the two is one question: **does the rule already have a home?**
+A ruling on something already in the graph is an edit and needs no offer; a
+ruling that implies a node which does not exist is this skill's case, unless the
+author named the destination themselves.
+
 The division in one line:
 
-> **This skill decides what to offer. `placement` decides where the answer
-> lands. `interaction-modality` decides the shape of the asking.**
+> **This skill decides what to offer. `symbiotic-interaction` §2 decides what
+> needs no offering. `placement` decides where the answer lands.
+> `interaction-modality` decides the shape of the asking.**
 
 ## The rule with teeth
 
@@ -217,6 +230,7 @@ indistinguishable from never having asked.
 | | |
 |---|---|
 | the shape of the asking | [`interaction-modality`](interaction-modality.md) §4.1 |
+| a correction to a rule that already exists — no offer | [`symbiotic-interaction`](symbiotic-interaction.md) §2 |
 | where the answer lands | [`placement`](placement.md) |
 | the process step | [`crdm-signoff.bpmn`](../../methodologies/crdm/processes/crdm-signoff.bpmn) |
 | the round summary that records it | [`issue-working`](issue-working.md) |

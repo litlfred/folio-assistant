@@ -672,3 +672,64 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     expect(who.findings.join(" ")).toContain("no published viewer — uploads");
   });
 });
+
+describe("a render-exempt instance is not missing what it was excused from", () => {
+  /* Bean `sbck`, third done-when. bootstrap declares
+   * `renderExemption.of: ["visualiser", …]` and the tile went on reporting
+   * its graphs as "no published viewer" — a gap raised against a layer
+   * excused from exactly that, which is the noise the bean names. */
+  const exempt = (extra: Record<string, unknown> = {}) => ({
+    name: "floor",
+    directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"], dependents: "skip" }],
+    renderExemption: {
+      of: ["visualiser"],
+      reason: "the bottom of the stack renders nothing",
+      owes: "its own graph as .jsonld",
+      ...extra,
+    },
+  });
+
+  test("its unrendered kinds are named as EXEMPT, not as a gap", () => {
+    const f = fixture({ host: host(), floor: exempt() });
+    const floor = tilesOf(f).find((t) => t.name === "floor")!;
+    const all = floor.findings.join(" ");
+    expect(all).toContain("render no viewer");
+    expect(all).toContain("under a declared `renderExemption`");
+    // The assertion that would have failed before: the gap wording is gone.
+    expect(all).not.toContain("no published viewer");
+  });
+
+  test("the kinds are still NAMED, and so is what the layer owes", () => {
+    // `2krx`: an opt-out without a reason per entry becomes a silence list.
+    // Dropping the finding would make "excused" and "nobody looked"
+    // indistinguishable, so the exemption is stated with its substitute —
+    // what is unrendered AND what is carried instead, which is the bargain
+    // the exemption struck.
+    const f = fixture({ host: host(), floor: exempt() });
+    const floor = tilesOf(f).find((t) => t.name === "floor")!;
+    const f0 = floor.findings.find((x) => x.includes("render no viewer"))!;
+    expect(f0).toContain("skills");
+    expect(f0).toContain("its own graph as .jsonld");
+  });
+
+  test("an instance exempt from something ELSE still gets the gap finding", () => {
+    // The control. `isExemptFrom` takes the obligation, and an exemption
+    // from `own-docs` says nothing about viewers — without this a rule that
+    // read "has any exemption" would pass.
+    const f = fixture({
+      host: host(),
+      floor: exempt({ of: ["own-docs"], owes: "its README on the forge" }),
+    });
+    const floor = tilesOf(f).find((t) => t.name === "floor")!;
+    expect(floor.findings.join(" ")).toContain("no published viewer");
+  });
+
+  test("an instance with NO exemption is unaffected", () => {
+    const f = fixture({
+      host: host(),
+      who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
+    });
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.findings.join(" ")).toContain("no published viewer");
+  });
+});

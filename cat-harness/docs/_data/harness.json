@@ -8,6 +8,11 @@
     "title": "c@t",
     "description": "An at-sign whose inner a is a cat: the a's bowl is the head, its counter is the face, the ears grow out of the top of the bowl and cross the ring, and the whiskers are cut in white across the sage. The ring keeps its gap and its tail, so it still reads as an @."
   },
+  "iconMask": {
+    "src": "/assets/img/icons/cat-mark-mask.svg",
+    "title": "c@t mark, as a mask",
+    "description": "The same at-sign expressed as ALPHA rather than as colour: opaque where the mark takes the instance's declared tone, transparent where it cuts out — the face and the whiskers, both of which are already cut-outs in the coloured mark."
+  },
   "iconDark": {
     "src": "/assets/img/icons/cat-mark-dark.svg",
     "title": "c@t (dark scheme)",
@@ -122,7 +127,9 @@
       ],
       "href": "/beans/",
       "hidden": false,
-      "icon": "beans"
+      "icon": "beans",
+      "count": 482,
+      "unit": "beans"
     },
     {
       "id": "bootstrap-render",
@@ -170,6 +177,18 @@
         "board"
       ],
       "href": "/cat-harness/schemas/detangle/",
+      "hidden": false
+    },
+    {
+      "id": "docs",
+      "directory": "docs",
+      "title": "Docs — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/docs/",
       "hidden": false
     },
     {
@@ -255,7 +274,9 @@
         "board"
       ],
       "href": "/cat-harness/library/cat-harness/",
-      "hidden": false
+      "hidden": false,
+      "count": 8,
+      "unit": "entries"
     },
     {
       "id": "methodology-crdm",
@@ -305,7 +326,9 @@
         "board"
       ],
       "href": "/cat-harness/schemas/cat-harness/",
-      "hidden": false
+      "hidden": false,
+      "count": 137,
+      "unit": "modules"
     },
     {
       "id": "todos",
@@ -317,7 +340,9 @@
         "board"
       ],
       "href": "/todos/",
-      "hidden": false
+      "hidden": false,
+      "count": 3,
+      "unit": "todos"
     },
     {
       "id": "tools",
@@ -354,7 +379,9 @@
       ],
       "href": "/cat-harness/uploads/",
       "hidden": false,
-      "icon": "uploads"
+      "icon": "uploads",
+      "count": 20,
+      "unit": "waiting"
     },
     {
       "id": "who-iris-library",
@@ -467,7 +494,7 @@
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/"
+          "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
@@ -860,9 +887,9 @@
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "tone": 236,
+      "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
+      "genericAvatar": false,
       "instantiated": true,
       "href": "/",
       "hrefKind": "folio",
@@ -890,8 +917,7 @@
         }
       ],
       "findings": [
-        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark."
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ]
     },
     {
@@ -982,7 +1008,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 14
+          "value": 15
         }
       ],
       "visualisations": [
@@ -995,7 +1021,8 @@
           "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "docs"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/docs/"
         },
         {
           "kind": "folio"
@@ -1065,7 +1092,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — folio, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
@@ -1086,12 +1113,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -1111,10 +1138,13 @@
         },
         {
           "kind": "skills"
+        },
+        {
+          "kind": "translation-sources"
         }
       ],
       "findings": [
-        "bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap: 5 graph(s) render no viewer — processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` — the exact path its `@id` names. Governed by `tools/bootstrap-graph-emission.md` and `tools/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ]
     }

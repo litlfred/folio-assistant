@@ -71,6 +71,25 @@ function modulesResolvingADirectory(): string[] {
   return out.sort();
 }
 
+/**
+ * Per-module spawn budget, shared by BOTH tests below that spawn one
+ * subprocess per discovered module.
+ *
+ * Hoisted out of the `library` test on 2026-09-22, when this branch and main
+ * fixed the same timeout independently. Main's reasoning is the one kept —
+ * *"a number is what went stale"*, so the budget is DERIVED from the module
+ * count — and this branch's contribution is noticing it was applied to only
+ * one of the two tests that pay this cost. "IMPORTING one writes nothing"
+ * spawns per module too; its spawn is cheaper (a bare import, no probe) but it
+ * sits on the same curve and was still on bun's 5 s default.
+ *
+ * Measured 2026-09-22: 55 modules, 9.3 s for the probe loop (169 ms/spawn,
+ * three runs within 170 ms of each other). 600 ms/module is ~3.5x that, and
+ * the cheaper loop gets the same headroom rather than a second number nobody
+ * would re-measure.
+ */
+const SPAWN_BUDGET_MS = 600;
+
 describe("a module that resolves a declared directory can resolve one", () => {
   const modules = modulesResolvingADirectory();
 
@@ -102,7 +121,7 @@ describe("a module that resolves a declared directory can resolve one", () => {
     const before = status();
     for (const m of modules) Bun.spawnSync(["bun", "-e", `import "./${m}";`], { cwd: ROOT });
     expect(status()).toBe(before);
-  });
+  }, modules.length * SPAWN_BUDGET_MS);
 
   // A fresh subprocess per module is the point, and it is also the cost:
   // measured 2026-09-22, 55 modules take **9.3 s** (169 ms/spawn, three runs
@@ -116,7 +135,6 @@ describe("a module that resolves a declared directory can resolve one", () => {
   // number, because a number is what went stale: the corpus grows, the spawn
   // count grows with it, and a fixed timeout silently tightens every time
   // somebody adds a module. 600 ms/module is ~3.5x the measured cost.
-  const SPAWN_BUDGET_MS = 600;
   test(
     "each one resolves `library` in a FRESH process, without throwing",
       () => {

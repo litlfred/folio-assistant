@@ -22,11 +22,11 @@ describe("invocations", () => {
     // instance. Collapsing the two is what let that pass unnoticed.
     const yml = [
       "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld",
-      "          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out b.jsonld",
+      "          bun run cat-harness/scripts/kg-export.ts --instance ./no-such-instance --out b.jsonld",
     ].join("\n");
     const got = invocations(yml);
     expect(got).toHaveLength(2);
-    expect(got.map((i) => i.instance)).toEqual([undefined, "./bootstrap"]);
+    expect(got.map((i) => i.instance)).toEqual([undefined, "./no-such-instance"]);
   });
 
   test("a repeated invocation is counted once", () => {
@@ -50,11 +50,21 @@ describe("invocations", () => {
     // `./bootstrap`, not `./cat-bootstrap`: #771 renamed the directory an hour
     // after #790 added this assertion, and neither branch carried the other's
     // change. Both were green on their own head and main went red on the
-    // merge -- which is this witness doing precisely its job. The fixtures
-    // above keep saying `cat-bootstrap` on purpose: they are synthetic YAML
-    // testing that the parser returns WHATEVER instance string it is given,
-    // so the name there is arbitrary and no directory has to exist for it.
-    // This line is the only one that reads the real file.
+    // merge -- which is this witness doing precisely its job.
+    //
+    // THIS LINE IS THE ONLY ONE THAT READS THE REAL FILE. The fixtures above
+    // are synthetic YAML testing that the parser returns WHATEVER instance
+    // string it is given, so their name is arbitrary and no directory has to
+    // exist for it -- and a fixture naming a directory that does NOT exist is
+    // the stronger test, because it cannot pass by the name happening to
+    // resolve.
+    //
+    // They said `cat-bootstrap`, and the same blanket rename took them along
+    // with this assertion, quietly weakening them to name a real directory
+    // while this comment went on claiming they did not (bean `u2gv`). They now
+    // say `./no-such-instance`: a name no rename will ever match, which is the
+    // property that was actually wanted. Naming a real-looking directory in a
+    // fixture is what made it renameable in the first place.
     const got = invocations(wf("docs-site.yml"));
     expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
   });
@@ -118,10 +128,10 @@ describe("formatReport", () => {
   test("a missing invocation names the instance argument, not just the script", () => {
     const out = formatReport({
       deploy: "docs-site.yml",
-      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./bootstrap" }] }],
+      peers: [{ workflow: "feature-staging.yml", missing: [{ script: "kg-export", instance: "./no-such-instance" }] }],
       staleExemptions: [],
     });
-    expect(out).toContain("kg-export --instance ./bootstrap");
+    expect(out).toContain("kg-export --instance ./no-such-instance");
   });
 
   test("a clean run prints the exemptions with their reasons", () => {

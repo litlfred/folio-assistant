@@ -46,7 +46,13 @@ import {
   readDeclaration,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
-import { loadVoices, type VoiceProfile, type VoiceRule } from "../schemas/voices.ts";
+import {
+  loadVoices,
+  voiceProvenanceFlags,
+  type VoiceProfile,
+  type VoiceProvenanceFlag,
+  type VoiceRule,
+} from "../schemas/voices.ts";
 import "../schemas/folio-graph-kind.js";
 
 /** How a rule's citation resolves — the reader's verdict, never the file's claim. */
@@ -111,6 +117,14 @@ export interface VoiceView {
   sources: { title: string; year?: number }[];
   /** Whether a `SKILL.md` sits beside the rules — the skill half of a voice skill. */
   hasInstructions: boolean;
+  /**
+   * Where the declared `provenance` sits oddly against what the rules cite.
+   *
+   * A QUESTION FOR A PERSON, not a defect — the owner's 2026-09-21 ruling, and
+   * `voiceProvenanceFlags` carries why. Empty is the common case, and it is
+   * empty for four of the five voices here.
+   */
+  provenanceFlags: VoiceProvenanceFlag[];
   rules: VoiceRuleView[];
 }
 
@@ -285,6 +299,7 @@ export function readVoicesGraph(roots: string[], repoRootIn?: string): VoicesGra
         criterion: `voice-overlay-${v.id}`,
         sources: (v.sources ?? []).map((s) => ({ title: s.title, year: s.year })),
         hasInstructions: hasInstructions(dir, v.id),
+        provenanceFlags: voiceProvenanceFlags(v.provenance, v.rules),
         rules: v.rules.map(ruleView),
       });
     }

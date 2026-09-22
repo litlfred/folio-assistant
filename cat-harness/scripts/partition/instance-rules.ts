@@ -149,6 +149,21 @@ export const RULES: Rule[] = [
       // with a regex and imports nothing but `fs` and `path`, so it cannot
       // drag a folio in (bean `blv9`).
       "scripts/check-docs-templates.ts",
+      // HARNESS: its subject is the INSTANCE DECLARATION's `images[]` and the
+      // harness code that consumes a role, not a folio's content. It reads
+      // declarations through `cat-harness.ts` and walks `.ts` sources with a
+      // regex; no folio content is opened (bean `5yrl`).
+      //
+      // IT CARRIED a bare `import "../schemas/folio-graph-kind.js"` until
+      // #840 merged, because `readDeclaration` threw on this repo's own
+      // declaration without it — one of the 25 harness -> core registration
+      // edges bean `q2wn` measured. #840 moved the graph-kind registry to a
+      // leaf and put the trigger at `cat-harness.ts`'s foot, so the import
+      // became unnecessary AND became an edge the fixed regex can see. It was
+      // REMOVED here in the same merge that brought #840 in, and the gate was
+      // re-run to prove the registration still resolves without it rather
+      // than assumed to.
+      "scripts/check-image-roles.ts",
       // HARNESS for the same reason as `check-ci-health` above: its subject
       // is this repository's own deploy workflow — which commands it runs
       // and whether they succeed — and it reads no folio content at all.
@@ -243,6 +258,12 @@ export const RULES: Rule[] = [
       "scripts/check-escaped-markup.ts",     // no page publishes a block tag as visible text
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
+      // Its merge-time sibling, and harness-level for the same reason: it
+      // resolves conflicts in the `qa` graph by re-running whichever writer
+      // the sidecars name. It reads the DECLARATION, `package.json` and git's
+      // index, and nothing in it is about any folio's subject matter — a folio
+      // could not make it resolve differently, only give it more files.
+      "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -280,6 +301,13 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
+      // twenty lines up, and it arrived the same way: classified core first
+      // because a badge is something a reader sees, and `check:partition`
+      // answered with a wrong-direction edge from `sync-docs-harness.ts`,
+      // which is harness and reads it. A tile is harness machinery whatever
+      // it looks like on the page.
+      "schemas/tile-count.ts",               // a projection's declared headline number
       // The skill-framework vocabulary — actors, capabilities, skills,
       // requirements, the package registry. It was the top 240 lines of
       // `constraints.ts` and 32 aliases in `types.ts`, which put it under the
@@ -934,6 +962,7 @@ export const RULES: Rule[] = [
       //    folio's content model.
       "scripts/check-actor-reach.ts",       // reads role-graph
       "scripts/check-avatar-coverage.ts",   // avatars belong to roles
+      "scripts/check-avatar-instances.ts",  // the same, on the INSTANCE axis
       "scripts/check-declared-assets.ts",   // the instance declaration
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
