@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 466,
+      "count": 486,
       "unit": "beans"
     }
   },
@@ -55,14 +55,14 @@
     {
       "id": "folio-assistant-06kg",
       "title": "RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:00:45Z",
-      "updatedAt": "2026-09-20T17:09:26Z",
+      "updatedAt": "2026-09-22T07:23:02Z",
       "preview": "Found 2026-09-20 by reading the OTHER open PRs on this repository before\npicking up new work — the owner's standing instruction to watch them for\nincoming insights. It came out of PR #565, which is not merged and whose own\nfate is a separate question (below).\n\n## The rule\n\n`cat-harness/skills/folio-core/retry-backoff.md`, quoting the owner on\n2026-09-20:\n\n> **\"as rule, use logarithmic fall-off on ",
       "file": "beans/defs/folio-assistant-06kg--retry-retry-backoffmd-is-an-owner-rule-with-a-ts-i.md"
     },
@@ -125,14 +125,14 @@
     {
       "id": "folio-assistant-0grh",
       "title": "SPINE: the untainted-dispatch skill — controlled context extracted from the KG, parameterized prompt, producer never writes the verdict",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "The spine of `3x2n`. Everything else here is an instance of this.\n\n## What generalises, taken from the one place it exists\n\n`translation-manager.md` §\"The agentic round trip\" states it in translation\nvocabulary. Stripped of that vocabulary it is three rules and a table:\n\n| party | is given | produces |\n|---|---|---|\n| **producer** | the task | the artefact |\n| **checker** | the artefact, and nothi",
       "file": "beans/defs/folio-assistant-0grh--spine-the-untainted-dispatch-skill-controlled-cont.md"
     },
@@ -393,7 +393,7 @@
     {
       "id": "folio-assistant-1wef",
       "title": "INJECTION: workflow expression, environment, template and prompt injection have no gate, in a repo whose generators write executable pages",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3x2n",
@@ -417,6 +417,20 @@
       "updatedAt": "2026-09-19T11:58:51Z",
       "preview": "A gate that does not fire is indistinguishable from one that passed.\n\nThat is `xom7`'s lesson one layer up, and every item here is an instance:\n`3pqn` (a PR that opens with zero checks looks exactly like one whose checks\nare green), `dzl3` (playwright fails before any test body runs), `t373`\n(`readme:audit` is in no workflow at all, and `main` carried eight dead links),\n`bgle` (a guard that enumer",
       "file": "beans/defs/folio-assistant-1xhc--ci-reliability-a-gate-that-does-not-fire-is-indist.md"
+    },
+    {
+      "id": "folio-assistant-1xrg",
+      "title": "STATE DASHBOARDS: 4 of 7 render a shell — a declared page that displays nothing is dh4f with a URL",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:48:40Z",
+      "updatedAt": "2026-09-22T08:24:50Z",
+      "preview": "Found 2026-09-22 by LOOKING at a page rather than at the generator that wrote\nit. `lqo9` slice 2 added the `glossary` state graph, `state:visualizer`\ngenerated `docs/glossary/index.html` for it, every gate went green, and the\npage displays **nothing about the glossary**.\n\nIt is not a defect that slice introduced. Measured across all seven state\ngraphs the visualizer writes a page for:\n\n| graph | p",
+      "file": "beans/defs/folio-assistant-1xrg--state-dashboards-4-of-7-render-a-shell-a-declared.md"
     },
     {
       "id": "folio-assistant-23bc",
@@ -449,14 +463,14 @@
     {
       "id": "folio-assistant-26tu",
       "title": "DECLARED-BUT-ABSENT: agent-skills declares a voices graph at voices/ and ships none, now also on the old path",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:55:33Z",
-      "updatedAt": "2026-09-21T20:46:41Z",
+      "updatedAt": "2026-09-22T06:37:51Z",
       "preview": "Pre-existing, surfaced while migrating voices to <stub>/skills/voices (bean btuv).\n\nagent-skills/agent-skills.config.json declares id=voices path=voices/ and agent-skills/voices/ does not exist. That is the dh4f defect: a consumer scans nothing and reports a clean run over it.\n\nLeft ALONE deliberately rather than removed. The entry's description states real intent — 'a shared base plus one overrid",
       "file": "beans/defs/folio-assistant-26tu--declared-but-absent-agent-skills-declares-a-voices.md"
     },
@@ -729,14 +743,14 @@
     {
       "id": "folio-assistant-3vc6",
       "title": "TRANSLATION AS AN INSTANCE: re-express the round trip against the spine and lose the duplicated half",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "Once `0grh` exists, `translation-manager.md` §\"The agentic round trip\" holds two\nthings that should be separated:\n\n**Generic, and belongs in the spine** — the producer/checker/adjudicator table,\nthe three rules, the no-tools declaration, the witness-ordering convention\n(adjudicator first, back-translator behind it with `result: \"n/a\"` and the\nintermediate text in `notes`), the `model` + `modelSour",
       "file": "beans/defs/folio-assistant-3vc6--translation-as-an-instance-re-express-the-round-tr.md"
     },
@@ -813,14 +827,14 @@
     {
       "id": "folio-assistant-46uh",
       "title": "An agent's opening steps must DETERMINE the language it communicates in, rather than defaulting to the one the tooling happens to be written in",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:04:33Z",
-      "updatedAt": "2026-09-21T22:04:53Z",
+      "updatedAt": "2026-09-22T06:58:36Z",
       "preview": "Owner, 2026-09-21:\n\n> part of agent first task is to determine appropriate lanaguge when\n> speaking/communicating regrafless of context\n\n## What is missing\n\nThis repository has a great deal about the language its **content** is in —\n`translation-manager` carries `available_locales`, the source-language rule,\ncoverage badges, the per-locale `.po` resolution. Searching the skills for a\nrule about th",
       "file": "beans/defs/folio-assistant-46uh--an-agents-opening-steps-must-determine-the-languag.md"
     },
@@ -967,14 +981,14 @@
     {
       "id": "folio-assistant-520m",
       "title": "MERGE FRICTION: committed generated QA sidecars conflict on every base merge — 3 of 3 in one session",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:08:34Z",
-      "updatedAt": "2026-09-21T20:08:34Z",
+      "updatedAt": "2026-09-22T05:55:13Z",
       "preview": "Measured on PR #773, 2026-09-21, across one working session.\n\n`main` moved three times while the branch was alive — 109, 38 and 20 commits —\nand **every one of the three merges conflicted, and every conflict was in a\ncommitted generated QA sidecar.** Not once in authored code.\n\n| merge | main moved | conflicts | all generated? |\n|---|---|---|---|\n| 1 | 109 commits | `qa-sweep.ts`, `folio-assistant",
       "file": "beans/defs/folio-assistant-520m--merge-friction-committed-generated-qa-sidecars-con.md"
     },
@@ -1065,15 +1079,15 @@
     {
       "id": "folio-assistant-5r57",
       "title": "THE MARK: cat-mark.svg is a solid silhouette where the supplied art is line art, in one scheme and one colour",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:38Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
-      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 7. Owner: 'the icon to left of text folio-assistant is wrong ... make light, dark sage themeed versions. also need browswer tab icon to match. add to avatar/theme skills.'",
+      "updatedAt": "2026-09-21T20:50:46Z",
+      "preview": "Issue https://github.com/litlfred/folio-assistant/issues/756 item 7. Owner: 'the icon to left of text folio-assistant is wrong ... make light, dark sage themeed versions. also need browswer tab icon to match. add to avatar/theme skills.'\n\n\n\n## Summary of Changes\n\nThe supplied art TRACED rather than approximated. potrace over the owner's\nimage, cropped square about its own bounding box with 12% air",
       "file": "beans/defs/folio-assistant-5r57--the-mark-cat-marksvg-is-a-solid-silhouette-where-t.md"
     },
     {
@@ -1133,6 +1147,20 @@
       "file": "beans/defs/folio-assistant-5y4b--todo-stickies-carry-theme-art-chosen-by-judgement.md"
     },
     {
+      "id": "folio-assistant-5yrl",
+      "title": "Declared image roles have no consumer check — dh4f applied to a role",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:08:05Z",
+      "updatedAt": "2026-09-22T07:16:07Z",
+      "preview": "Split out of `blv9` on 2026-09-22, because the two are different questions\nover different corpora and folding them in would have made one gate answer\ntwo things.\n\n`blv9` asked whether a path **will resolve** — its subject is Liquid\ninterpolations in Jekyll templates, and its gate\n(`scripts/check-docs-templates.ts`, shipped 2026-09-22) judges literals and\nDECLINES variables. This bean asks whether ",
+      "file": "beans/defs/folio-assistant-5yrl--declared-image-roles-have-no-consumer-check-dh4f-a.md"
+    },
+    {
       "id": "folio-assistant-603s",
       "title": "LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order",
       "status": "in-progress",
@@ -1175,6 +1203,20 @@
       "file": "beans/defs/folio-assistant-623b--page-harness-how-it-bootstraps-and-how-the-depende.md"
     },
     {
+      "id": "folio-assistant-624f",
+      "title": "STICKY SHAPE: square in the dock, content-shaped only on the glass, and the backdrop scrolls with the overflow",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:23:39Z",
+      "updatedAt": "2026-09-21T19:23:39Z",
+      "preview": "Owner, 2026-09-21, verbatim:\n\n> when sitckes are square, and they ahould always be in the docker/panel, then\n> if the content shape is not square and overruns, then you can scroll contents\n> and background will scrll accoringing with mobile or laptop layout (dependeing\n> on content layout/shape).\n>\n> they are only onsquare to fit contents when the pop to the window/glass\n\n## What it says\n\n1. IN TH",
+      "file": "beans/defs/folio-assistant-624f--sticky-shape-square-in-the-dock-content-shaped-onl.md"
+    },
+    {
       "id": "folio-assistant-6366",
       "title": "GATE: collapse the 10 gate scripts behind one Tool bound to Task_RunGates",
       "status": "completed",
@@ -1198,7 +1240,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:47:15Z",
-      "updatedAt": "2026-09-21T22:58:51Z",
+      "updatedAt": "2026-09-21T23:03:58Z",
       "preview": "Issue #801. `graph-tiles.ts` stores a site-root-relative href (`/beans/`), which is right as data. `docs-ui.js`'s `tileLink` writes it into an anchor with no `site.baseurl`, so under `baseurl: /folio-assistant` every one of the 12 tiles resolves against the ORIGIN and 404s. The owner found it from the other end: looking for the beans board and landing on https://litlfred.github.io/beans/ — which i",
       "file": "beans/defs/folio-assistant-68au--every-graph-tile-in-the-navbar-404s-the-href-never.md"
     },
@@ -1471,6 +1513,20 @@
       "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
     },
     {
+      "id": "folio-assistant-7m6g",
+      "title": "VISUALISER FILTER: by document, library, graph — and one per thing in the folio working space",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:02:31Z",
+      "updatedAt": "2026-09-21T21:02:31Z",
+      "preview": "Owner, 2026-09-21: \"visualizer filter by document, library, graph, and one each thing in folio (working space. see beans/siblings)\"\n\n## What is asked\n\nThe visualiser gains a filter with at least these axes:\n\n- **document** — the authored content object\n- **library** — the STATIC graph (issue #764 section 3 F2: a folio's subjects are\n  the library and the working documents/assets/artefacts)\n- **gra",
+      "file": "beans/defs/folio-assistant-7m6g--visualiser-filter-by-document-library-graph-and-on.md"
+    },
+    {
       "id": "folio-assistant-7o7i",
       "title": "RACI: declare involvement (A, C, I) over the roles and activities that already exist",
       "status": "completed",
@@ -1485,6 +1541,20 @@
       "file": "beans/defs/folio-assistant-7o7i--raci-declare-involvement-a-c-i-over-the-roles-and.md"
     },
     {
+      "id": "folio-assistant-7pdi",
+      "title": "ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T23:27:42Z",
+      "updatedAt": "2026-09-22T09:22:33Z",
+      "preview": "Owner, 2026-09-21 (session_017PqeiS4JYySSWGAYLedmus), queued as an aside —\nverbatim, because the ask ties five things together and a paraphrase would\ndrop one:\n\n> aside, find bean on code review: need to see if semantic/narrative assertion\n> matches code written. similar skills for lean already. generalize process,\n> and provde high levels skills + specific lean things in own subgraph.\n> probably ",
+      "file": "beans/defs/folio-assistant-7pdi--adjudication-a-first-class-process-for-when-review.md"
+    },
+    {
       "id": "folio-assistant-7po1",
       "title": "WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos",
       "status": "todo",
@@ -1497,6 +1567,20 @@
       "updatedAt": "2026-09-20T16:14:51Z",
       "preview": "Owner, 2026-09-20, verbatim — three separate instructions in one message:\n\n> workflows/ is declared under the id cat-harness-workflows, content should be\n> at graph cat-harness/workflows except the bare minimum declarations (what is\n> bpmn, how use) under bootstrap/,\n> cat-harness/workflows is for more elboration on use of bpmn and such\n> cat-harness/workflows/state should describe beans and todos",
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-7rna",
+      "title": "PROCESS DEFINITIONS: 16 of 61 diagrams have no process-level <documentation>, and sqtq made that visible",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:23:40Z",
+      "updatedAt": "2026-09-22T08:18:50Z",
+      "preview": "Found 2026-09-22 while adding the `glossary` auto-doc type. Not a new defect —\na pre-existing authoring gap that became **visible and then actively harmful**\ntwo days ago.\n\n## The mechanism\n\n`gen-docs-auto.ts`'s `index/processes` took the first `<documentation>` after\nthe `<process>` open tag as the process's summary. For a process carrying its\nown documentation that is right. For one that does no",
+      "file": "beans/defs/folio-assistant-7rna--process-definitions-16-of-61-diagrams-have-no-proc.md"
     },
     {
       "id": "folio-assistant-7s52",
@@ -1781,14 +1865,14 @@
     {
       "id": "folio-assistant-8rwa",
       "title": "LIT REVIEW: evidence-based literature review as a dispatched, untainted step in guideline development — WHO living guidelines",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "Owner, 2026-09-21: *\"need lit review, put this also as part of workflow for\nevidenced based literature review as part of guideline development process (see\nwho living guidelines).\"*\n\n## Why it is the same mechanism\n\nA **living guideline** is continuously updated as evidence appears, rather than\nrevised on a multi-year cycle. That makes evidence surveillance a *recurring\ndispatched step* rather tha",
       "file": "beans/defs/folio-assistant-8rwa--lit-review-evidence-based-literature-review-as-a-d.md"
     },
@@ -1921,14 +2005,14 @@
     {
       "id": "folio-assistant-9poj",
       "title": "bootstrap is greyed out because it has no href, not because it is a dependency",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:40Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-21T22:23:06Z",
       "preview": "Owner, 2026-09-21: \"Boostrap should be clicable. even though it doesnt render itself, cat-bootrap does take over (double ccheck) render responsibles of bootrstraps json(ld) and documentation (bootrsap does not have docs/ b/c that a cat-harness concept)\" and \"i dont know why the dependecioes are gerey-ed out.\"\n\nCORPUS CHECK — the premise is wrong in the reader's favour, and the real cause is worse.",
       "file": "beans/defs/folio-assistant-9poj--bootstrap-is-greyed-out-because-it-has-no-href.md"
     },
@@ -1977,14 +2061,14 @@
     {
       "id": "folio-assistant-a58y",
       "title": "ENFORCE: qa-reporting gains its first consumer — a QA verdict whose reviewer cannot emit one is refused",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:55:16Z",
-      "updatedAt": "2026-09-21T21:55:16Z",
+      "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "The declared permission `qa-reporting` — *\"Emit QA reports\"* — has **zero\nnon-test consumers**. Measured 2026-09-21: one comment in `role-graph.ts`, one\ntest asserting more than one role holds it, and nothing anywhere that consults\nit when a verdict is written.\n\nFive actors hold it (`ci-health-watcher`, `ci-pipeline`,\n`ig-publisher-service`, `platform-boundary-guard`, `qc-reviewer`); **none** also",
       "file": "beans/defs/folio-assistant-a58y--enforce-qa-reporting-gains-its-first-consumer-a-qa.md"
     },
@@ -2215,14 +2299,14 @@
     {
       "id": "folio-assistant-blv9",
       "title": "Jekyll templates emit link-shaped asset paths nothing checks resolve",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T07:06:43Z",
-      "updatedAt": "2026-09-19T07:19:54Z",
+      "updatedAt": "2026-09-22T06:30:00Z",
       "preview": "_2026-09-19T07:07:04Z_ — FOURTH instance of the same defect class in this repo: a link-shaped value\nthat does not dereference, found each time by a human or an agent asking\nwhether a self-URL resolves rather than by a test. The prior three: the\n`/kg/` literal in `toolTypeIri` (would have 404'd 95 published refs), the\n`instructions` field on a Skill node (repo-relative path, not in `@context`),\nand",
       "file": "beans/defs/folio-assistant-blv9--jekyll-templates-emit-link-shaped-asset-paths-noth.md"
     },
@@ -2351,6 +2435,20 @@
       "updatedAt": "2026-09-20T09:36:20Z",
       "preview": "Owner queued this as item 3 on 2026-09-20: *\"07xs fallout — sweep for other\nconsumers still expecting `skills/memory/`\"*. Prompted by my own\n`check-retired-front-matter` going blind on exactly that, hours after the\nmove, in PR #479.\n\n## Result: one real finding, and that is the honest headline\n\n`07xs` was done properly. Every consumer resolves the directory from the\nDECLARATION — `agent-memory.ts`",
       "file": "beans/defs/folio-assistant-bweb--memory-move-fallout-sweep-consumers-after-07xs-mov.md"
+    },
+    {
+      "id": "folio-assistant-bx6q",
+      "title": "A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T22:48:55Z",
+      "updatedAt": "2026-09-21T22:54:21Z",
+      "preview": "The owner, 2026-09-21: *\"give structed Q&A w/ context. update skills in fedback\nlike this.\"*\n\nThe second clause is a rule and had no home. `symbiotic-interaction` §1 already\nsaid a steer means *\"do not require the author to repeat the correction\"*, but\napplied to the artefact alone that clause only holds inside one session: the\nproposal is fixed, the rule that produced it is not, and a fresh conte",
+      "file": "beans/defs/folio-assistant-bx6q--a-steer-that-corrects-a-rule-must-land-in-the-skil.md"
     },
     {
       "id": "folio-assistant-bzyu",
@@ -2809,6 +2907,20 @@
       "file": "beans/defs/folio-assistant-eu38--tool-213-task-formalize-lean-formalisation-33-file.md"
     },
     {
+      "id": "folio-assistant-f258",
+      "title": "META-PROCESS: 'where do I file this?' has many specialised answers and no general one — plus the surprise-to-corpus loop",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:09:05Z",
+      "updatedAt": "2026-09-21T21:09:05Z",
+      "preview": "Owner, 2026-09-21, two linked asks in one message:\n\n> also during such interactions/any task really, review the discussion/(input.output),\n> was there something unexpected that happened (stastically so, logically so)\n> then, if it is is happening during a defined process that is\n> happeneing/expecting to happen often, it may be worth a new\n> skill/guidance/tool refinment. if so prompt the user to ",
+      "file": "beans/defs/folio-assistant-f258--meta-process-where-do-i-file-this-has-many-special.md"
+    },
+    {
       "id": "folio-assistant-f76l",
       "title": "TODO INDEX: define folio-todo-index/v1 as published, and emit target{page,node,label}",
       "status": "completed",
@@ -2825,14 +2937,14 @@
     {
       "id": "folio-assistant-fd6i",
       "title": "CONTEXT, THE OTHER DIRECTION: `skos:` is bound in the published @context and emitted by ZERO nodes — and prose claims the graph speaks it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:55:26Z",
-      "updatedAt": "2026-09-20T19:55:26Z",
+      "updatedAt": "2026-09-22T07:23:02Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while holding the `lqo9`\nglossary roast, which asked which standards fit a knowledge graph. Answering it\nrequired checking what this graph already speaks — and one of the answers was\nwrong.\n\n## The measurement\n\n`SKOS_NS` is declared at `schemas/jsonld.ts:90` and bound as `skos:` in the\npublished context at `schemas/jsonld.ts:551` **and** in the s",
       "file": "beans/defs/folio-assistant-fd6i--context-the-other-direction-skos-is-bound-in-the-p.md"
     },
@@ -3075,6 +3187,20 @@
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
     },
     {
+      "id": "folio-assistant-gr5h",
+      "title": "declared-directory-resolves has been over bun's default 5s timeout the whole time — 9.3s measured, passing only on a fast enough machine",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:55:59Z",
+      "updatedAt": "2026-09-22T07:22:05Z",
+      "preview": "Found 2026-09-22 while driving `a58y` to green. **Pre-existing on `main`, not\nintroduced by the branch that found it** — measured both sides: 55 modules\ncall a directory accessor on `main` and 55 on the branch, so the workload is\nidentical.\n\n## What it actually was\n\nNot a flake, and not an assertion failure:\n\n    (fail) each one resolves `library` in a FRESH process [5038.08ms]\n      ^ this test t",
+      "file": "beans/defs/folio-assistant-gr5h--declared-directory-resolves-has-been-over-buns-def.md"
+    },
+    {
       "id": "folio-assistant-h32d",
       "title": "Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio",
       "status": "in-progress",
@@ -3101,6 +3227,20 @@
       "updatedAt": "2026-09-20T11:24:04Z",
       "preview": "Group 12 of 13 in `d308`. **3 files, 0 entry points** — `fsh-cone`, `dak-pdf`,\n`qa-checkers-dak`.\n\n**BPMN:** `l3-fhir-pipeline · Task_Sushi · Task_Validate · Task_IgPublisher`, and\n`ig-incremental-build · Task_Cone` — which names `fsh-cone --changed` directly in\nits task label, so the binding is not inferred.\n\n**Target repo (#223):** `smart-base`.\n\n**Why it is `low` and not `normal`:** three files",
       "file": "beans/defs/folio-assistant-h588--tool-1213-l3-fhir-pipeline-ig-incremental-build-fh.md"
+    },
+    {
+      "id": "folio-assistant-ha78",
+      "title": "BUILT AND UNREACHABLE: 6 instances have a declared viewer no tile links, and shipping a graph adds one",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:49:16Z",
+      "updatedAt": "2026-09-22T06:49:17Z",
+      "preview": "Surfaced on 2026-09-22 by shipping `agent-skills`' voices (bean `26tu`). The\nmerge conflict in the generated `docs/_data/harness.json` was main adding this\nfinding for the new graph; regenerating kept it, because it is TRUE.\n\n`harnessTiles` reports, per instance:\n\n> N graph(s) have a declared viewer that exists but is not at a conventional\n> path, so no tile links it — … **Built and unreachable is",
+      "file": "beans/defs/folio-assistant-ha78--built-and-unreachable-6-instances-have-a-declared.md"
     },
     {
       "id": "folio-assistant-hajp",
@@ -3343,14 +3483,14 @@
     {
       "id": "folio-assistant-iy1n",
       "title": "The milnor voice declares provenance 'house', and all 12 rules now cite an ingested document",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:49:56Z",
-      "updatedAt": "2026-09-21T20:49:56Z",
+      "updatedAt": "2026-09-21T23:09:34Z",
       "preview": "Surfaced by closing `w0hi` on 2026-09-21, and it is the schema's own worked\nexample that has gone wrong.\n\n`schemas/voices.ts` defines the vocabulary:\n\n  • `assertion` — a publisher describing its own product or house style.\n  • `evidence`  — a measurement somebody else can repeat.\n  • `house`     — a standard this project set for itself, CITING THE NODE THAT\n                  STATES IT RATHER THAN",
       "file": "beans/defs/folio-assistant-iy1n--the-milnor-voice-declares-provenance-house-and-all.md"
     },
@@ -3571,28 +3711,28 @@
     {
       "id": "folio-assistant-jijc",
       "title": "DECLARATION_FILENAME exists and 21 non-test call sites bypass it, so the REPLACE ruling is a 121-file sweep instead of one constant",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T07:14:08Z",
-      "updatedAt": "2026-09-21T07:14:08Z",
+      "updatedAt": "2026-09-22T07:23:02Z",
       "preview": "Opened 2026-09-21 by session_01AYHimvYMmf8h8e9fFN6dW5, as the separable half of\nthe owner's REPLACE ruling on `b5f0` — the half that is **correct under either\nfilename**, so it cannot be wasted by a later change of mind and needs no\nfurther decision.\n\n## Measured before starting, 2026-09-21\n\n| | |\n|---|---|\n| declarations on disk | 12 (a 13th, `cat-harness/docs/_data/harness.json`, is generated Je",
       "file": "beans/defs/folio-assistant-jijc--declaration-filename-exists-and-21-non-test-call-s.md"
     },
     {
       "id": "folio-assistant-jmpb",
       "title": "The exported graph is English-only: no .jsonld is built per locale, so translated labels reach no consumer of the data",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T22:03:22Z",
-      "updatedAt": "2026-09-21T22:03:40Z",
+      "updatedAt": "2026-09-22T06:14:38Z",
       "preview": "Owner, 2026-09-21, while `j28g` was being worked:\n\n> but we should also build the json/jsonld for the rendered result of the\n> translations. no reason that is english only\n\n## The gap, measured\n\n`kg-export.ts` contains **one** occurrence of the string `locale`. The graph\nit writes carries labels and documentation in whatever language the source\nasset was authored in — English throughout this corpu",
       "file": "beans/defs/folio-assistant-jmpb--the-exported-graph-is-english-only-no-jsonld-is-bu.md"
     },
@@ -3835,6 +3975,20 @@
       "file": "beans/defs/folio-assistant-lnpe--both-memory-agents-are-back-at-the-200-line-inject.md"
     },
     {
+      "id": "folio-assistant-lnur",
+      "title": "TRANSLATION STATUS VISUALISATION: translations/ is declared but owes a visualiser and a published projection",
+      "status": "completed",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T21:02:57Z",
+      "updatedAt": "2026-09-21T23:07:59Z",
+      "preview": "Owner, 2026-09-21: \"bean up new epic: need translation status visualtion page, translations/ needs to be a declared sub-graph/dir of cat-harness and is missing its visualtion, json(ld) and such\"\n\n## Filed as a FEATURE under the TRANSLATION epic, not as a new epic\n\nTwo reasons, and the second is the real one. The store refuses an epic whose\nparent is an epic (milestone -> epic -> feature -> task). ",
+      "file": "beans/defs/folio-assistant-lnur--translation-status-visualisation-translations-is-d.md"
+    },
+    {
       "id": "folio-assistant-lps0",
       "title": "KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited",
       "status": "completed",
@@ -3945,6 +4099,20 @@
       "updatedAt": "2026-09-20T07:35:41Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `fsh-guts/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wiring to ext",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
+    },
+    {
+      "id": "folio-assistant-m9zz",
+      "title": "TRANSLATIONS: bootstrap/translations/ holds 15 .pot files no declaration mentions",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T23:25:32Z",
+      "updatedAt": "2026-09-22T07:24:28Z",
+      "preview": "Found 2026-09-21 while merging `main` into the `lnur` branch. `j28g` moved the\nworkflow templates for diagrams cat-harness does not own out of\n`cat-harness/translations/` and into `bootstrap/translations/` — correctly, the\ntemplates now sit beside the instance that owns the diagrams. The half that did\nnot move is the DECLARATION.\n\n## The finding\n\n`bootstrap/bootstrap.json` declares four directorie",
+      "file": "beans/defs/folio-assistant-m9zz--translations-bootstraptranslations-holds-15-pot-fi.md"
     },
     {
       "id": "folio-assistant-mgdg",
@@ -4183,6 +4351,20 @@
       "updatedAt": "2026-09-18T15:00:27Z",
       "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**Blocked on bean `fsch`** — without a folio holding 0..n content instances\nthere is only ever one node to render.\n\nGate: a two-instance folio shows two sections; a zero-instance folio renders\nwithout error.\n\n---\n\n## ",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
+    },
+    {
+      "id": "folio-assistant-nwrm",
+      "title": "The @ logo could not theme: six baked colours, two files, and a tone it disagreed with",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:30:00Z",
+      "updatedAt": "2026-09-22T07:30:00Z",
+      "preview": "Owner: *\"The \\\"@\\\" logo\"*, correcting my aim after `sbfb` — which fixed the\ngeneric question-mark TILE, a real but different bug — and *\"I want theme like\nin avaatars\"*.\n\n## What was wrong, measured\n\n`cat-mark.svg` bakes six colour literals (`#6f8b66` sage, `#cfe0c2` pale-sage\nears, `#ffffff` face and whiskers) and is drawn with `<img>`, **which no page\nCSS can reach**. Three consequences, none of",
+      "file": "beans/defs/folio-assistant-nwrm--the-logo-could-not-theme-six-baked-colours-two-fil.md"
     },
     {
       "id": "folio-assistant-nytj",
@@ -4931,6 +5113,20 @@
       "file": "beans/defs/folio-assistant-ru6i--tool-blocked-render-logts-takes-free-prose-as-argv.md"
     },
     {
+      "id": "folio-assistant-rx6k",
+      "title": "SEARCH HOME: back in the top display navbar, slidable to the upper-right corner as an icon",
+      "status": "completed",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T19:49:34Z",
+      "updatedAt": "2026-09-21T19:49:34Z",
+      "preview": "Owner, 2026-09-21: \"also i want the search restored back to the top display navbar, with option to slide out to the UR corner as an icon.\"\n\n## Summary of Changes\n\nREVERSES the 2026-09-19 decision recorded in docs-ui.js, where search was adopted OUT of the main panel into a Settings tile on the owner's earlier \"keep main display panel uncluttered\", and where a comment refused a header magnifier out",
+      "file": "beans/defs/folio-assistant-rx6k--search-home-back-in-the-top-display-navbar-slidabl.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -4987,6 +5183,34 @@
       "file": "beans/defs/folio-assistant-sb6z--nothing-runs-kg-detangle-the-arrow-direction-model.md"
     },
     {
+      "id": "folio-assistant-sbck",
+      "title": "BOOTSTRAP OWES ITS JSON-LD: the renderExemption's substitute is unmet — zero .jsonld files exist",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T22:14:56Z",
+      "updatedAt": "2026-09-22T07:24:15Z",
+      "preview": "Found while fixing 9poj, because the owner asked for a double-check and the\ndouble-check failed.\n\n## The standing ruling\n\n`bootstrap/bootstrap.json` carries a `renderExemption` whose `owes` clause is\nthe owner's, 2026-09-20:\n\n> it is exception to harness/layer not having visualtion/workflow visualizer.\n> but it must have its json/jsonld... that is its existence.\n\nThe schema comment on `RenderExemp",
+      "file": "beans/defs/folio-assistant-sbck--bootstrap-owes-its-json-ld-the-renderexemptions-su.md"
+    },
+    {
+      "id": "folio-assistant-sbfb",
+      "title": "folio-assistant had no avatar, and the missing-avatar finding was never reported",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:45:00Z",
+      "updatedAt": "2026-09-22T06:45:00Z",
+      "preview": "Owner: *\"folio assistant icon is messed up still. I want theme like in\navaatars\"*, and separately *\"Not too subtle but pronounced\"* about the glass\nhandle.\n\n## Measured before changing anything\n\n| instance | own avatar? | tone |\n|---|---|---|\n| `bootstrap` | yes | 96 |\n| `cat-harness` | yes | 268 |\n| **`folio-assistant`** | **no** | **0 — the GENERIC question mark** |\n| `who-iris` | no | 0 |\n| `sm",
+      "file": "beans/defs/folio-assistant-sbfb--folio-assistant-had-no-avatar-and-the-missing-avat.md"
+    },
+    {
       "id": "folio-assistant-sd8x",
       "title": "BOARD SKILLS + BPMN: author the disciplines as skills and the processes as executable diagrams",
       "status": "completed",
@@ -5041,6 +5265,20 @@
       "updatedAt": "2026-09-20T16:25:01Z",
       "preview": "Group 3 of 13 in `d308`. **20 files, 11 entry points.**\n\n`kg-audit`, `check-tools`, `tool-coverage`, `capture-mcp-tools`, `validate-skills`,\n`known-skills`, `bpmn-render`, `render-bpmn`, `check-workflow-refs`,\n`check-workflow-policy`, `check-mirror-drift`, `check-duplicate-decls`,\n`stakeholder-map`, `repo-partition`, `repo-files`, `script-sweep`, `script-walker`,\n`refactor-strategy`, `eval-crdm-de",
       "file": "beans/defs/folio-assistant-shzs--tool-313-task-runnodeaudits-kg-audit-rendering-20.md"
+    },
+    {
+      "id": "folio-assistant-sj6m",
+      "title": "TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:48:03Z",
+      "updatedAt": "2026-09-22T07:17:42Z",
+      "preview": "## The ask, owner 2026-09-22 — verbatim\n\nQuoted rather than paraphrased, because it carries four requirements in three\nsentences and a paraphrase would be a second answer free to drift:\n\n| Each tool node needs a QA check and all referenced assets.  Need to check\n| before execution if security gates passed.\n|\n| Note skill.update In general subprocess can be run w/ same agent or\n| dispatch one or mo",
+      "file": "beans/defs/folio-assistant-sj6m--tool-nodes-are-unaudited-69-of-them-and-tool-is-no.md"
     },
     {
       "id": "folio-assistant-sjic",
@@ -5157,14 +5395,14 @@
     {
       "id": "folio-assistant-t3n8",
       "title": "HARNESS DISPLAY NAMES: every instance declares a human title, and the schema should say so",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:40Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-21T22:08:02Z",
       "preview": "Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\"\n\nCORPUS CHECK, from docs/_data/harness.json — every instance's title is currently just its directory name, with one exception that is wrong: cat-harness declares 'title: folio-assistant', which collides with the roo",
       "file": "beans/defs/folio-assistant-t3n8--harness-display-names-every-instance-declares-a-hu.md"
     },
@@ -5297,6 +5535,20 @@
       "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
     },
     {
+      "id": "folio-assistant-tr1m",
+      "title": "GLASS HANDLE OVERLAPS CONTENT: a fixed 71x44 tab sits on the top of every page's content column",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T07:00:07Z",
+      "updatedAt": "2026-09-22T07:00:07Z",
+      "preview": "Found 2026-09-22 when CI went red on a test that had passed locally an hour\nearlier: `funp` landed while the branch was mid-merge, and the first thing\nthe glass met was the unverified-translation notice.\n\n## The measurement\n\n`.fa-glass-handle` is `position: fixed; top: 0; left: 50%;\ntransform: translateX(-50%)`, measured at **71 x 44 px** at the top centre of\nthe viewport. It is on EVERY page as o",
+      "file": "beans/defs/folio-assistant-tr1m--glass-handle-overlaps-content-a-fixed-71x44-tab-si.md"
+    },
+    {
       "id": "folio-assistant-tyyc",
       "title": "docs-site's paths filter misses 11 of the 22 scripts it runs, so a fix to the publisher never rebuilds the site",
       "status": "completed",
@@ -5327,14 +5579,14 @@
     {
       "id": "folio-assistant-u2gv",
       "title": "check-invocation-parity: the comment says the fixtures keep saying cat-bootstrap, and they do not",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:51:02Z",
-      "updatedAt": "2026-09-21T21:51:02Z",
+      "updatedAt": "2026-09-21T23:17:21Z",
       "preview": "Found while merging `main` into `claude/bean-8h42-layout`, 2026-09-21. Tiny,\nand recorded rather than fixed because it is another branch's file and fixing\nit would widen an unrelated PR.\n\n`cat-harness/scripts/tests/check-invocation-parity.test.ts` carries, on the\nassertion that reads the real `docs-site.yml`:\n\n> The fixtures above keep saying `cat-bootstrap` on purpose: they are\n> synthetic YAML t",
       "file": "beans/defs/folio-assistant-u2gv--check-invocation-parity-the-comment-says-the-fixtu.md"
     },
@@ -5621,6 +5873,20 @@
       "file": "beans/defs/folio-assistant-vhmz--r27-settled-the-folio-is-the-readers-repository-li.md"
     },
     {
+      "id": "folio-assistant-vigi",
+      "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T08:50:21Z",
+      "updatedAt": "2026-09-22T08:50:42Z",
+      "preview": "Found 2026-09-22 while answering ruling 2 on #596 — the owner asked what is\nJSON-LD-centric in this ecosystem and what has pre-existing wrappers. The\nanswer to the second is **nothing**, and that turns out to matter beyond the\nquestion that produced it.\n\n## Measured\n\n**28 dependencies, and not one is an RDF, JSON-LD, SPARQL or FHIR library.**\n\nEvery JSON-LD document this repository publishes — the",
+      "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
+    },
+    {
       "id": "folio-assistant-vjbl",
       "title": "Second annotator for the crdm-detect eval corpus",
       "status": "todo",
@@ -5695,14 +5961,14 @@
     {
       "id": "folio-assistant-vo9d",
       "title": "ORPHANED MECHANISM: translation-roundtrip and check-l1-complete have entry points and no callers, while the BPMN asserts the step runs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T11:31:09Z",
-      "updatedAt": "2026-09-20T14:23:53Z",
+      "updatedAt": "2026-09-22T07:23:02Z",
       "preview": "Found 2026-09-20 while measuring `pha7`, whose corrected form asked which of its\n24 files the five existing translation Tool nodes actually reach. **Two of\ntwenty-four.** Two others are reached by nothing at all.\n\n## The finding\n\n| file | entry point | callers |\n|---|---|---|\n| `content/pipeline/translation-roundtrip.ts` | `import.meta.main` | **none** |\n| `scripts/check-l1-complete.ts` | `import.",
       "file": "beans/defs/folio-assistant-vo9d--orphaned-mechanism-translation-roundtrip-and-check.md"
     },
@@ -5835,14 +6101,14 @@
     {
       "id": "folio-assistant-whbf",
       "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:10:28Z",
-      "updatedAt": "2026-09-20T21:10:28Z",
+      "updatedAt": "2026-09-22T06:40:21Z",
       "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
       "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
     },
@@ -6306,7 +6572,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:33:37Z",
-      "updatedAt": "2026-09-21T14:06:54Z",
+      "updatedAt": "2026-09-22T06:11:40Z",
       "preview": "Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on\nits Done-when 2 and 3 — the **damage** is stopped, because\n[`prepare-merge`](../../cat-harness/skills/folio-core/prepare-merge.md)\n§Guardrails now says *\"NO CHECKS IS NOT GREEN\"* and gives the procedure. This\nbean carries the remaining **why**, at low priority, with the evidence\nattached so nobody re-derives it.\n\n## The o",
       "file": "beans/defs/folio-assistant-yv4z--3pqn-cause-why-does-a-pr-sometimes-get-no-pull-req.md"
     },
@@ -6327,14 +6593,14 @@
     {
       "id": "folio-assistant-z1ug",
       "title": "STICKY PANEL: the landing stickies and the todos share one panel, minimised to a tile at start",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:37Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-21T18:46:42Z",
       "preview": "Tracked as https://github.com/litlfred/folio-assistant/issues/756 items 1, 2 and 4.\n\nOwner, 2026-09-21: \"i dont want fa-sticky-board fa-landing-board to have inside it: fa-sticky fa-landing-sticky ... i want them in the sticky panel instead\", \"i thought the sticky panel had some todos, but they seem gone. they should be closed/tiled to start\", \"the todo panel should start minimized with an icon to",
       "file": "beans/defs/folio-assistant-z1ug--sticky-panel-the-landing-stickies-and-the-todos-sh.md"
     },
@@ -6381,6 +6647,20 @@
       "file": "beans/defs/folio-assistant-z7ev--cross-instance-library-reference-a-voice-in-who-st.md"
     },
     {
+      "id": "folio-assistant-z9ax",
+      "title": "69 modules carry a folio registration import that is now a no-op",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:29:45Z",
+      "updatedAt": "2026-09-22T06:30:00Z",
+      "preview": "Left behind by `q2wn`, deliberately and with the attempt recorded.\n\n## What is true now\n\n`schemas/cat-harness.ts` imports `schemas/folio-graph-kind.js` at its foot, so\nthe `folio` kind is registered by the time any reader can be called — a reader\nlives in that module, so loading it is a precondition of calling one. Proved\nin a fresh process importing only `readDeclaration`.\n\nThat makes every OTHER",
+      "file": "beans/defs/folio-assistant-z9ax--69-modules-carry-a-folio-registration-import-that.md"
+    },
+    {
       "id": "folio-assistant-z9eb",
       "title": "session-intent names STATUS.md and docs/coordination/<goal>.md; neither exists in this instance",
       "status": "completed",
@@ -6425,14 +6705,14 @@
     {
       "id": "folio-assistant-zj6c",
       "title": "who-iris is a harness but has no who-iris.config.json, so it reads as a dependency",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:40Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-21T22:08:02Z",
       "preview": "Owner, 2026-09-21: \"who-iris is supposed to be a harness becuase it serves up a new landing page (the iris home page), and has its own docs. it should have who-iris.config.json\"\n\nCORPUS CHECK, from the generated docs/_data/harness.json. who-iris is 'instantiated: false' but ALREADY resolves 'href: /who-iris/' with hrefKind 'folio' — it has its own docs/, so the tile would open its own themed root ",
       "file": "beans/defs/folio-assistant-zj6c--who-iris-is-a-harness-but-has-no-who-irisconfigjso.md"
     },

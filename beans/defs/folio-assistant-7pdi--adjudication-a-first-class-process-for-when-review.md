@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7pdi
 title: 'ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T23:27:42Z
-updated_at: 2026-09-22T08:48:05Z
+updated_at: 2026-09-22T09:22:33Z
 parent: folio-assistant-1swy
 ---
 
@@ -296,3 +296,56 @@ second decision and a larger one.
 Related: `nrv8` (proof-narrative-lean-equiv never ran), `qusg` (q-usage
 narrative-chapter mismatch), `code-node-review` skill, `todo-review` skill,
 issue #198 (Lean tooling roadmap), `sb6z` (nothing runs kg-detangle).
+
+
+## Built — 2026-09-22
+
+**The roast's own claim was wrong and the corrected measurement is better.** It
+said the shape was implemented *three times* and *named nowhere*. Re-measured
+over `processes/*.bpmn` and `src/`:
+
+- **Seven implementations**, not three. Five adjudicate activities —
+  `translation-workflow` · `Task_Adjudicate`, `ingest-l1-completeness-gate` ·
+  `Task_FlagDrift`, `refresh-materialized` · `Task_Adjudicate`,
+  `review-narrative` · `Task_AdjudicateVoice`, `voice-review` ·
+  `Task_Adjudicate` — plus `/api/relevance/adjudicate` and
+  `bib-verification.ts`, which share no code with the diagrams and reached the
+  diagrams' "keep both entries" rule anyway. The first two are the same
+  sentence twice, written by different hands about different subjects.
+- **Named once, not nowhere.** `translation-workflow.bpmn`'s `Lane_Reviewer`
+  documentation already states the entry condition, the accountability and the
+  dispensation rule together: *"a reviewer reports, an adjudicator settles …
+  somebody has to choose between them WITH a reason. That reason is the record,
+  not the choice."* The gap was never vocabulary — it was that nothing
+  generalised the one statement of it.
+- Two senses of the word are in the corpus. `evidence-retrieval` and
+  `ingest-extract-structure` use *adjudicated* as an adjective meaning
+  **settled**; grep finds them and neither is this process.
+
+### What shipped
+
+- `skills/folio-core/adjudication.md` — the discipline, with
+  `untainted-verification` owning the parties rather than restating them.
+- `processes/adjudication.bpmn` — two lanes, advisory at the process level
+  because a judgement cannot be gated, with `A_RecordEntry` and
+  `A_Dispensation` marked `relaxable="false"`: the judgement is free and the
+  record is not.
+- `adjudicator` and `feedback-provider` roles; `translation-adjudicator`
+  re-pointed to inherit `adjudicator`.
+- `adjudication` **permission** — the split the repo already made and tested.
+  The skill spreads (four roles now carry it, because four different lanes
+  adjudicate); the entitlement does not, and lives on the actor beside
+  `review-comments` (report) and `approval-authority` (accept). It is neither.
+- All five existing activities now name the skill; the duplicated
+  `translation-manager` ref on `translation-workflow` · `Task_Adjudicate` is
+  gone.
+
+`GW_Outcome` carries `folio:judgement`. `GW_Adjudicable` deliberately carries
+neither marker: it is **computable** from `block-qa/v1` and nothing computes it
+yet, so it belongs in `q0tc`'s DMN column rather than being mislabelled a
+judgement to look declared.
+
+### Not done, and stated in the skill
+
+The narrative-asserts-code axis. The owner called it a separate, larger
+decision and it is.

@@ -16,6 +16,7 @@
         "Human actor"
       ],
       "skills": [
+        "adjudication",
         "dispatch-agent",
         "getting-started",
         "interaction-modality",
@@ -107,18 +108,19 @@
         "Non-mechanical validation (review agent or SME)"
       ],
       "skills": [
+        "adjudication",
+        "content-block-review",
         "content-feedback",
         "content-review",
+        "content-validation",
         "decision-audit",
         "document-intake",
         "milnor-exposition-standard",
+        "rendering-auditor",
         "semantic-review-scoping",
         "staging-review",
         "translation-manager",
-        "voice-overlay-review",
-        "content-block-review",
-        "content-validation",
-        "rendering-auditor"
+        "voice-overlay-review"
       ],
       "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why.",
       "voice": "Evidence first. State the finding, then the reasoning. Never make them reconstruct an argument to reach a verdict.",
@@ -139,6 +141,7 @@
         "Narrative reviewer"
       ],
       "skills": [
+        "adjudication",
         "content-feedback",
         "content-review",
         "milnor-exposition-standard",
@@ -427,7 +430,7 @@
     {
       "id": "translation-adjudicator",
       "title": "Translation adjudicator",
-      "description": "Reviewer who settles a disagreement between machine and human translation.",
+      "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "actorKinds": [
         "person"
       ],
@@ -435,7 +438,7 @@
         "Human reviewer / adjudicator"
       ],
       "inherits": [
-        "reviewer"
+        "adjudicator"
       ],
       "skills": [
         "translation-manager"
@@ -446,6 +449,57 @@
         "Choose between two defensible translations",
         "Understand why a translator departed from the source",
         "Record the decision so it is not re-litigated"
+      ]
+    },
+    {
+      "id": "adjudicator",
+      "title": "Adjudicator",
+      "description": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "lanes": [
+        "Adjudicator"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "adjudication",
+        "decision-audit",
+        "untainted-verification"
+      ],
+      "persona": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else.",
+      "voice": "States the outcome, then the reason, then what the reason is scoped to. Never \"this is fine\": a dispensation with no stated reason is an override nobody can review afterwards.",
+      "useCases": [
+        "Choose between a checker's finding and a reviewer's rebuttal, with a reason",
+        "Grant a dispensation scoped to the version it was granted against",
+        "Record the disagreement so re-running the check next month finds it rather than a clean pass"
+      ]
+    },
+    {
+      "id": "feedback-provider",
+      "title": "Feedback provider",
+      "description": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "lanes": [
+        "Feedback provider"
+      ],
+      "skills": [
+        "content-feedback",
+        "todo-review"
+      ],
+      "persona": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below.",
+      "voice": "The finding, then the evidence it rests on. A finding that does not show what it read is an opinion, and the author is entitled to disagree with it on those terms.",
+      "useCases": [
+        "State a finding against a named criterion so it can be adjudicated rather than argued",
+        "Say what was read, so an adjudicator can tell a real disagreement from two parties reading different things",
+        "Offer feedback as a reader without holding any entitlement to settle it"
       ]
     },
     {
