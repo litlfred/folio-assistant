@@ -183,7 +183,15 @@ export function publishedHref(siteDirFromRepoRoot: string, ref: string): string 
   // link being worse than no link. Every visualisation was `.html` until
   // `fsh-guts` was authored as markdown (2026-09-21), which is why this went
   // unnoticed: the bug needed a markdown viewer to exist before it could fire.
-  return `/${rest.replace(/(^|\/)index\.(html|md)$/, "$1")}`;
+  //
+  // A NAMED markdown page is the same 404 and the fix above did not cover it.
+  // `processes-index.md` (2026-09-22) is not `index.md`, so the directory
+  // rewrite left the extension alone and the tile pointed at a source file.
+  // The argument in the paragraph above applies verbatim — Jekyll serves no
+  // `.md` — so the extension is mapped rather than stripped, which is what
+  // Jekyll actually does to a page that is not a directory index.
+  const route = rest.replace(/(^|\/)index\.(html|md)$/, "$1").replace(/\.md$/, ".html");
+  return `/${route}`;
 }
 
 export function graphTiles(

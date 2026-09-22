@@ -137,7 +137,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/processes-index.md' | relative_url }})
+- [C@T Harness]({{ '/processes/index.md' | relative_url }})
 
 ### `qa`
 

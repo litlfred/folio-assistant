@@ -159,3 +159,37 @@ gate caught it.
 - **no rendered SVG reported, not omitted** — and the **zero** case is stated
   too, because "all rendered" and "the check did not run" are different facts an
   absent section cannot tell apart.
+
+## The tile pointed at the SOURCE file — `publishedHref`, second half
+
+Checked on the deploy rather than assumed, which is the habit `10s1` bought
+three pushes earlier by shipping a mark with nothing to style.
+
+`harness.json` carried `href: "/processes-index.md"`. **Jekyll serves no `.md`**,
+so that tile was a guaranteed 404 — `pb04`, a dead link being worse than no
+link.
+
+`publishedHref` already knew this. Its comment, written 2026-09-21 when
+`fsh-guts` became the first markdown viewer, says: *"a tile pointing at
+`/x/index.md` is a guaranteed 404 … the bug needed a markdown viewer to exist
+before it could fire."* The fix then covered `index.md` — the DIRECTORY form —
+and a viewer named anything else kept its extension. So the first markdown
+viewer found half the bug, and the second one found the rest.
+
+Two fixes, because either alone leaves a trap:
+
+- **the function** now maps a named `.md` to `.html`, so the next page authored
+  as `foo.md` cannot repeat this. Mapped rather than stripped, because that is
+  what Jekyll does to a page which is not a directory index;
+- **the page** moved to `cat-harness/docs/processes/index.md`, matching `tools/`
+  and `fsh-guts/` exactly, so it serves at `/processes/`.
+
+Pinned in `graph-tiles.test.ts`, including the direction that must NOT change:
+`index.md` still reaches `/x/` rather than `/x/index.html`, because two
+spellings of one page are two entries in a reader's history.
+
+### Still unverified
+
+The staging deploy in hand predates this push, so the rendered page has not been
+inspected — only the href the data now carries and the route it composes to.
+`bun run preview:site` finds no working Jekyll in this container.
