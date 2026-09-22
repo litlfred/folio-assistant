@@ -48,23 +48,28 @@
  *   bun run library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-
 import { fragment as folioMountFragment } from "./folio-mount.ts";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
 import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
 
 const ROOT = join(import.meta.dir, "..");
+const REPO_ROOT = repoRootFor(ROOT);
 const check = process.argv.includes("--check");
 
 /** The projection. Everything the reader found; it is already small. */
-function projection(g: LibraryGraph): unknown {
+function projection(
+  g: LibraryGraph,
+  /** Per-page counts, `directory id -> [count, unit]`. Empty is normal. */
+  scoped: Readonly<Record<string, readonly [number, string]>>,
+): unknown {
   return {
     $schema: "folio-library-index/v1",
     // TWO tiles, ONE dataset — the case `schemas/tile-count.ts` is keyed by
@@ -82,9 +87,23 @@ function projection(g: LibraryGraph): unknown {
     //
     // `itemState` rather than a second `ingestedBy` test: one definition of
     // waiting, and it is the viewer's own.
+    //
+    // `uploads` is keyed directly because its page is UNSCOPED — the queue
+    // view shows every waiting unit — so a total is the count of the page that
+    // tile opens. Everything else comes through `scoped`, computed per page.
+    //
+    // THE LIBRARY ENTRY USED TO BE KEYED HERE TOO, AS `g.entries.length`, AND
+    // IT WAS WRONG. The `library` directory declares its visualiser as
+    // `.../library/cat-harness/index.html` — the cat-harness-SCOPED page — and
+    // cat-harness holds no entries at all (its own declaration says "THIS
+    // INSTANCE HOLDS NONE"; bean `frs5` moved all four out). So the badge read
+    // 8 over a page showing 0: not merely imprecise, but the single most
+    // misleading number that tile could carry, and precisely the
+    // empty-viewer case bean `v18c` observed and this whole feature exists to
+    // surface. Shipped that way in #862 and corrected in #863.
     ...tileCounts({
-      library: [g.entries.length, "entries"],
       uploads: [g.uploads.filter((u) => itemState(u) === "waiting").length, "waiting"],
+      ...scoped,
     }),
     ...g,
   };
@@ -588,11 +607,16 @@ if (import.meta.main) {
   // `viewerPlacement` was handed. Correct under the bare site, under the
   // project baseurl, and under `/STAGING/<branch>/` — the four bases an
   // absolute URL would be right about once.
+  //
+  // DEFINED HERE, EMITTED BELOW. `main` emitted both artefacts on the next two
+  // lines; this branch emits them after computing the per-page tile counts
+  // (#863), so the definition stays where `main` put it and the emit stays
+  // where the counts are. Keeping `main`'s emit as well would have written
+  // each file twice, the second time without the counts — a clean-looking
+  // resolution that silently drops this PR's whole subject.
   const folioMount = folioMountFragment(
     new RegExp(`^(.*?)${handler}\\/${seg}\\/`),
   );
-  emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
 
   // One page per SUBJECT — the instances whose assets this handler renders.
   // Read from the entries and the queues rather than from the directory list,
@@ -601,6 +625,57 @@ if (import.meta.main) {
     ...g.entries.map((e) => e.instance),
     ...g.queues.map((q) => q.instance),
   ])].sort();
+
+  /**
+   * Each page's tile count, keyed by the DECLARED directory id — #863.
+   *
+   * Matched on the page rather than composed from the subject name. The
+   * declaration already names the exact page each directory is visualised by,
+   * and this run already knows the exact page it is about to write, so the
+   * match is an identity rather than a heuristic. `directoryByVisualisationRef`
+   * carries the corpus that rules composition out.
+   *
+   * Counted FOR THE PAGE, which is the whole correction: the `library`
+   * directory's page is the cat-harness-scoped one, so its count is
+   * cat-harness's entries — zero — and not the eight entries the graph holds
+   * across every instance.
+   */
+  // THIS INSTANCE'S declaration only, because that is the one that produces
+  // tiles: `sync-docs-harness.ts` calls `graphTiles(readDeclaration(ROOT)
+  // .directories)`. Scanning every instance was the first draft and it was
+  // wrong in a way worth recording, because it looked more thorough:
+  //
+  // a page is NOT uniquely owned by one directory id. The page at
+  // `.../library/agent-skills/` is `agent-skills-library` to this instance and
+  // plain `library` to the agent-skills instance, which declares its own view
+  // of it. Scanning both meant the first-wins rule picked an id that is not a
+  // tile here, so `agent-skills-library` silently lost its badge while
+  // `uploads` gained a count over the wrong page entirely.
+  //
+  // The rule that falls out: look the ref up in the SAME list the tiles came
+  // from, or the ids do not correspond to tiles at all.
+  const byRef = directoryByVisualisationRef(readDeclaration(ROOT)?.directories ?? []);
+  const refOf = (dirPath: string): string =>
+    relative(REPO_ROOT, join(viewerPlacement(site, dirPath, seg).pageDir, "index.html"))
+      .split(sep)
+      .join("/");
+  const scoped: Record<string, readonly [number, string]> = {};
+  // The unit is pluralised HERE because `tile-count.ts` puts pluralisation on
+  // the declarer: only it knows whether its unit pluralises regularly, and
+  // `entry`/`entries` does not. A tile reading "1 entries" is a small thing
+  // that makes a careful reader trust the number less.
+  const entries = (n: number): readonly [number, string] =>
+    [n, n === 1 ? "entry" : "entries"];
+  const wholeId = byRef.get(refOf(`${handler}/${seg}`));
+  if (wholeId !== undefined) scoped[wholeId] = entries(g.entries.length);
+  for (const subject of subjects) {
+    const id = byRef.get(refOf(`${handler}/${seg}/${subject}`));
+    if (id === undefined) continue;
+    scoped[id] = entries(g.entries.filter((e) => e.instance === subject).length);
+  }
+
+  emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
+  emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));

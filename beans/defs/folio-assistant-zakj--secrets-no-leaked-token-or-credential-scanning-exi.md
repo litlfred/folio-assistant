@@ -1,12 +1,12 @@
 ---
 # folio-assistant-zakj
 title: 'SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package'
-status: in-progress
+status: completed
 type: task
 priority: high
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T10:44:42Z
+parent: folio-assistant-3x2n
 ---
 
 ## Measured 2026-09-21 — there is none
@@ -41,8 +41,8 @@ this repository's own history:
       of scope (below)
 - [x] The false-positive rate is measured on this corpus BEFORE gating, and
       the number decided the design (below)
-- [ ] A finding is dispatched and adjudicated per `0grh` — **not needed and
-      deliberately not built.** A prefix-anchored match is deterministic: the
+- [x] A finding is dispatched and adjudicated per `0grh` — **considered, put
+      to the owner, and declined 2026-09-22: not applicable, reason recorded.** A prefix-anchored match is deterministic: the
       string either is a `ghp_` token or it is not. Dispatching an adjudicator
       to confirm a regex would be ceremony, and `0grh` exists for judgements,
       not for greps. This becomes live the day an entropy or heuristic
@@ -85,3 +85,37 @@ which it names and redacts, and removing it, which turns it green.
 **Git history.** A sweep of past objects is a different job with a different
 remedy — rotation, not deletion — and claiming it here would be the over-claim
 this gate exists to avoid. From here forward, and the docstring says so.
+
+## The ruling, 2026-09-22 — not applicable, and the reason is the record
+
+Put to the owner with both sides rather than as a recommendation dressed as a
+question. **Answer: tick as not-applicable, reason recorded.**
+
+The argument for declining: `check:secret-leaks` matches **prefix-anchored**
+regexes against committed bytes. The string either is a `ghp_` token or it is
+not — same input, same output, every run, on any machine, with no judgement
+anywhere in it. `0grh`'s separation exists because a producer's judgement about
+its own work is not trustworthy; **a regex has no judgement to distrust.**
+Dispatching an adjudicator to confirm that a grep grepped correctly costs a
+model call and yields a verdict *less* reliable than the grep.
+
+The argument against, which was put alongside it and is not dismissed: the
+value of a rule is partly that it has no exceptions, and *"this one is
+obviously fine"* is how every exception starts.
+
+**What settles it is the axis, not the convenience.** `0grh` is for checks that
+carry judgement. The line is not "is this check important" — a leaked
+credential is about as important as findings get — but **"is there a judgement
+here that a second party could disagree with?"** For a prefix-anchored match
+there is not.
+
+**This becomes live the day an entropy or heuristic detector is added**, and
+that day is foreseeable: an entropy threshold IS a judgement, a high-entropy
+string is a *candidate* rather than a finding, and the producer of a threshold
+is exactly the party who should not adjudicate what it catches. The item is
+ticked for today's checker, not for the class.
+
+**Recorded rather than silently skipped** because a declined rule with no
+reasoning is indistinguishable from a forgotten one, and the next agent
+touching this gate would have to re-derive the whole argument — or, worse,
+build the ceremony.

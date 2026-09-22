@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ug4r
 title: A lane deliberately bound to NO role is indistinguishable from one nobody got round to
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T19:17:46Z
-updated_at: 2026-09-21T20:41:59Z
+updated_at: 2026-09-22T10:33:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -81,7 +81,7 @@ Binding `Actor` to a role. That is the wrong fix and the file says why.
 - [x] `lane-binds-role` treats a declared-variable lane as answered, and
       still fails on an undeclared one — falsified, 4 failures on the mutation
       that suppresses every unbound lane
-- [ ] the glossary extractor can tell "no definition, by design" from "no
+- [x] the glossary extractor can tell "no definition, by design" from "no
       definition, nobody wrote one" — #596 slice 2, which consumes
       `laneBinding`; not this bean
 - [x] `log-message.bpmn#Lane_Actor` carries the declaration, and the prose in
@@ -207,3 +207,22 @@ the canonical one with its own ticks. `check:bean-bodies` failed the push for
 it — correctly: a second checklist is free to disagree with the first, and the
 one a tool reads was still saying "not done". The lesson is the check's own:
 tick the canonical boxes, never shadow them.
+
+
+## Closed on evidence — 2026-09-22
+
+The last unticked item was **already satisfied** by #596 slice 2, which the
+item itself names as its dependency ("not this bean"). Landed in PR #841
+(`f4de6c1e20`); verified by reading the shipped code rather than by
+authorship:
+
+- `glossary-export.ts:236` reads the declaration —
+  `performerVaries: /<folio:role[^>]*\bvariable="true"/.test(body)`
+- `:373` carries it onto the usage node, so a consumer sees it
+- `glossary-export.test.ts:169` — *"the lane whose performer varies has a
+  usage and NO definition"*
+
+So the glossary CAN now tell "no definition, by design" from "no definition,
+nobody wrote one", which is exactly what the item asked for. The tick was
+owed from the moment slice 2 merged; the bean stayed `in-progress` only
+because nobody went back for it.

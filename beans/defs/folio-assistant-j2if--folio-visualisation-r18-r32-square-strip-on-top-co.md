@@ -85,11 +85,21 @@ requirement is worse than no spec.
 
 ## Not done, and why
 
-**R24-R29 are declarations this repository cannot make yet.** `folio/` is
-deliberately absent from `cat-harness.json` — this repo is pre-split (#223) and
-the declaration comment states the rule outright: a directory declared but
-absent is worse than one missing, because every consumer then scans nothing and
-reports a clean run over it. So `folio/` as the reader's content directory
+**R24-R29 are declarations this repository cannot make yet.**
+
+> **Corrected 2026-09-22 (bean `8mbk`).** This paragraph said `folio/` was
+> *"deliberately absent from `cat-harness.json`"*. That was true when written
+> and is **false now**: `folio/` is declared, and the directory exists. A bean
+> asserting the opposite of the declaration is worse than one that says
+> nothing, because the next agent reads it as the reason not to look. The rule
+> it cited is still right and now has a checker — `check:declared-dirs`, which
+> fails on a declared directory that is not on disk unless the declaration
+> records `absent: { reason }`, and fails the other way on an exemption that
+> outlived its cause.
+
+This repo is pre-split (#223) and the declaration comment states the rule
+outright: a directory declared but absent is worse than one missing, because
+every consumer then scans nothing and reports a clean run over it. So `folio/` as the reader's content directory
 (R26), materialised assets living in it (R27), created-or-linked documents
 (R28) and cross-library references (R29) are recorded as requirements and wait
 on the split. Declaring them now would be the `dh4f` defect on purpose.
