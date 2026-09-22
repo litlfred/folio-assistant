@@ -12,6 +12,8 @@
  * sidebar, after #791 lands) has to be able to satisfy.
  */
 import { describe, expect, it } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import {
   NAV_COLLAPSED_PX,
@@ -24,6 +26,9 @@ import {
   type NavbarModel,
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
+import { documentIndexOf } from "../lib/navbar.js";
+import { navbarGeometryCssPath, renderNavbarGeometryCss } from "../gen-navbar-geometry-css.js";
+import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const model: NavbarModel = {
@@ -364,5 +369,166 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `kg:schema:check`'s finding, not this script's; here it is an empty
     // middle, and the caller still renders the root and the harnesses.
     expect(declaredGraphs("does-not-exist", new Map())).toEqual([]);
+  });
+});
+
+describe("the geometry is stated ONCE — `sjic`", () => {
+  // The defect this guards was invisible to a suite that had a test on each
+  // side: `navbar.ts` asserted its own numbers and `sidebar-strip.test.ts`
+  // asserted `docs-ui.css`'s, and they were 40px against 56px at rest.
+  // DERIVED, not spelled out. `site-dir-single-answer` refuses a literal site
+  // root anywhere in source, including here — and it caught this file's first
+  // draft, which is the gate working: a test that hardcodes `docs/` is a
+  // second answer to the question `siteDirFor` exists to answer, and it goes
+  // on passing against a path nothing serves.
+  const INSTANCE = instanceRootFor(import.meta.dir);
+  const CSS_DIR = join(INSTANCE, siteDirFor(INSTANCE), "assets", "css");
+  const geometryCss = readFileSync(join(INSTANCE, navbarGeometryCssPath(INSTANCE)), "utf8");
+  const uiCss = readFileSync(join(CSS_DIR, "docs-ui.css"), "utf8");
+
+  it("the generated stylesheet carries the module's own numbers", () => {
+    expect(geometryCss).toBe(renderNavbarGeometryCss());
+  });
+
+  it("the rail's px and the sidebar's rem are THE SAME LENGTH", () => {
+    // The whole bean in one assertion. Read the rem out of the generated file
+    // rather than restating it, or this test becomes a third copy.
+    const rem = (name: string): number => {
+      const m = new RegExp(`--fa-nav-${name}:\\s*([0-9.]+)rem`).exec(geometryCss);
+      expect({ name, found: m !== null }).toEqual({ name, found: true });
+      return Number(m![1]) * 16;
+    };
+    expect(rem("collapsed")).toBe(NAV_COLLAPSED_PX);
+    expect(rem("open")).toBe(NAV_OPEN_PX);
+    expect(rem("mark")).toBe(NAV_GLYPH_PX);
+  });
+
+  it("`docs-ui.css` DEFINES neither width — it only reads them", () => {
+    // A definition here is the duplication coming back. Uses are expected and
+    // are the point of generating the definitions.
+    expect(uiCss).not.toMatch(/--fa-nav-collapsed:\s*[0-9]/);
+    expect(uiCss).not.toMatch(/--fa-nav-open:\s*[0-9]/);
+    expect(uiCss).toContain("var(--fa-nav-collapsed)");
+  });
+
+  it("the strip is the mark and its two gutters, derived either way", () => {
+    expect(NAV_COLLAPSED_PX).toBe(NAV_PAD_PX * 2 + NAV_GLYPH_PX);
+  });
+});
+
+describe("the document index — `documentIndexOf`", () => {
+  const page = (body: string) => `<html><body>${body}</body></html>`;
+
+  it("takes h2 and h3 that carry an id, nesting the h3s", () => {
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
+    );
+    expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
+      ["#a", "Alpha", 0],
+      ["#b", "Beta", 1],
+      ["#c", "Gamma", 0],
+    ]);
+  });
+
+  it("SKIPS a heading with no id — it is not a destination", () => {
+    // `pb04` one layer in: a fragment link to a heading with no id goes
+    // nowhere, and a dead row invites a click and then reads as broken.
+    const g = documentIndexOf(page(`<h2 id="a">Alpha</h2><h2>Nowhere</h2><h2 id="c">Gamma</h2>`));
+    expect(g?.items.map((i) => i.label)).toEqual(["Alpha", "Gamma"]);
+  });
+
+  it("ignores h1 and h4 — the title, and past where an index helps", () => {
+    const g = documentIndexOf(
+      page(`<h1 id="t">Title</h1><h2 id="a">A</h2><h4 id="d">D</h4><h2 id="b">B</h2>`),
+    );
+    expect(g?.items.map((i) => i.label)).toEqual(["A", "B"]);
+  });
+
+  it("strips markup and entities out of a heading's text", () => {
+    const g = documentIndexOf(page(`<h2 id="a">A <code>b&amp;c</code></h2><h2 id="z">Z</h2>`));
+    expect(g?.items[0]!.label).toBe("A b&c");
+  });
+
+  it("is ABSENT below two rows, never an empty or one-row menu", () => {
+    // Same rule as the harnesses region: an empty disclosure invites a click
+    // that does nothing, and a "Contents" holding the one section the reader
+    // is looking at is that defect with a row in it.
+    expect(documentIndexOf(page(`<p>no headings</p>`))).toBeUndefined();
+    expect(documentIndexOf(page(`<h2 id="a">Only</h2>`))).toBeUndefined();
+  });
+
+  it("`injectRail` reads it off the page it is given", () => {
+    // Not passed in: the mount loops over hundreds of files, and the other
+    // shape invites the right nav carrying the previous page's contents.
+    const html = injectRail(page(`<h2 id="a">Alpha</h2><h2 id="b">Beta</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(html).toContain("Alpha");
+    expect(html).toContain('href="#b"');
+  });
+
+  it("a page with nothing to index gets NO index region", () => {
+    const html = injectRail(page(`<p>flat</p>`), { instance: "who-iris", toRoot: "..", links: [] })!;
+    // Asserted on the FIXED TOP, not on the page: `fa-nav-group` is also the
+    // graphs group's class and that region always renders. The first draft of
+    // this test checked the whole document and failed for that reason — which
+    // is the assertion being wrong, not the code.
+    expect(region(html, "fa-nav-top")).not.toContain("fa-nav-group");
+    expect(html).toContain("fa-nav-graphs");
+  });
+
+  it("sits in the FIXED top, with the instance", () => {
+    const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(region(html!, "fa-nav-top")).toContain('href="#a"');
+    expect(region(html!, "fa-nav-graphs")).not.toContain('href="#a"');
+  });
+});
+
+describe("a declared avatar region crops the mark — `603s`", () => {
+  const withRegion = (region?: { x: number; y: number; w: number; h: number }) =>
+    navbarHtml({
+      instance: "i",
+      graphs: { label: "Graphs", items: [] },
+      harnesses: {
+        label: "Harnesses",
+        items: [{ href: "/x", label: "X", avatar: { src: "/a.png", ...(region ? { region } : {}) } }],
+      },
+    });
+
+  it("an avatar with NO region is the plain image it always was", () => {
+    const h = withRegion();
+    expect(h).toContain('<img src="/a.png"');
+    expect(h).not.toContain("fa-nav-crop");
+  });
+
+  it("scales by 1/w and 1/h and offsets by -x and -y of the SCALED image", () => {
+    // `603s`'s arithmetic. A half-width, half-height box at (0, 0.46) — the
+    // measured `landing-card` crop — doubles the image and lifts it 92%.
+    const h = withRegion({ x: 0, y: 0.46, w: 0.5, h: 0.5 });
+    expect(h).toContain("width:200%");
+    expect(h).toContain("height:200%");
+    expect(h).toContain("left:0%");
+    expect(h).toContain("top:-92%");
+  });
+
+  it("clips, and the frame is a positioning context", () => {
+    const css = navbarCss();
+    expect(css).toContain(".fa-nav-crop{position:relative;overflow:hidden");
+    // Without these the `img` rule's fixed width and height fight the inline
+    // percentages and the crop silently does nothing.
+    expect(css).toContain(".fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}");
+  });
+
+  it("the region is stated in PERCENTAGES, so it survives a mark resize", () => {
+    const h = withRegion({ x: 0.25, y: 0.25, w: 0.25, h: 0.25 });
+    expect(h).not.toContain("px;");
+    expect(h).toContain("width:400%");
+    expect(h).toContain("left:-100%");
   });
 });

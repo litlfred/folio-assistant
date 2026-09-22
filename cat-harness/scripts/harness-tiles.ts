@@ -682,7 +682,28 @@ function tileFor(
     description: decl.description ?? "",
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
-    icon: iconSrc === undefined ? null : { src: iconSrc, title: icon?.title ?? "" },
+    // `avatarRegion` RIDES THE ICON, when the icon image declares one.
+    //
+    // `603s` slice 1 measured and declared seven crops and shipped them with
+    // nothing reading them — *"nothing consumes it yet: the navbar does not
+    // exist"*. The navbar exists now, so this is the consumer.
+    //
+    // IT HAS NO SUBJECT TODAY, and that is reported rather than papered over:
+    // the seven declared regions are on `landing-*-card` art, while every
+    // instance's `icon` is a separate image (`cat-harness` declares `mark`).
+    // Which card belongs to which harness is an assignment NOBODY HAS MADE --
+    // the card names are roles and topics (engineer, analyst, architecture),
+    // not instances -- so inventing one here would be choosing the owner's
+    // branding by guess. The mechanism is live and takes a region the moment
+    // an icon image declares one.
+    icon:
+      iconSrc === undefined
+        ? null
+        : {
+            src: iconSrc,
+            title: icon?.title ?? "",
+            ...(icon?.avatarRegion ? { region: icon.avatarRegion } : {}),
+          },
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,

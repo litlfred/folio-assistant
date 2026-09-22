@@ -31,12 +31,22 @@
  * Exit codes: 0 written or up to date · 1 stale under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 
+import { instanceRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { NAV_GEOMETRY, rem } from "./lib/navbar-geometry.js";
 
-/** Repo-relative, because this stylesheet belongs to the `cat-harness` site. */
-export const NAVBAR_GEOMETRY_CSS = "cat-harness/docs/assets/css/navbar-geometry.css";
+/**
+ * Where the stylesheet goes. Derived from `siteDirFor`, never written down —
+ * the same contract as `avatarsCssPath`, and `site-dir-single-answer` is the
+ * gate that enforces it. My first draft spelled the path out and that gate
+ * caught it: a literal site root is a second answer to a question the
+ * declaration already answers, and it writes the file where nothing serves it
+ * the moment an instance is laid out differently.
+ */
+export function navbarGeometryCssPath(root: string): string {
+  return join(siteDirFor(root), "assets", "css", "navbar-geometry.css");
+}
 
 export function renderNavbarGeometryCss(): string {
   const g = NAV_GEOMETRY;
@@ -72,8 +82,12 @@ export function renderNavbarGeometryCss(): string {
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const repo = resolve(import.meta.dir, "..", "..");
-  const path = join(repo, NAVBAR_GEOMETRY_CSS);
+  // THE INSTANCE this script belongs to — the one it lives in — not whatever
+  // directory the gate was invoked from, for the reason `gen-avatars-css.ts`
+  // states: `siteDirFor(cwd)` throws on a `harness.json` one directory down.
+  const root = instanceRootFor(import.meta.dir);
+  const rel = navbarGeometryCssPath(root);
+  const path = join(root, rel);
   const next = renderNavbarGeometryCss();
   const current = existsSync(path) ? readFileSync(path, "utf8") : undefined;
 
@@ -88,5 +102,5 @@ if (import.meta.main) {
 
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, next);
-  console.log(`wrote ${NAVBAR_GEOMETRY_CSS} (strip ${NAV_GEOMETRY.collapsedPx}px, open ${NAV_GEOMETRY.openPx}px)`);
+  console.log(`wrote ${rel} (strip ${NAV_GEOMETRY.collapsedPx}px, open ${NAV_GEOMETRY.openPx}px)`);
 }

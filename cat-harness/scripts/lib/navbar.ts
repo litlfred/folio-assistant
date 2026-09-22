@@ -69,8 +69,15 @@ export interface NavItem {
   label: string;
   /** A single character or short glyph, shown while the navbar rests. */
   icon?: string;
-  /** An image to use instead of `icon` — the harness's avatar, when it has one. */
-  avatar?: { src: string; title?: string };
+  /**
+   * An image to use instead of `icon` — the harness's avatar, when it has one.
+   *
+   * `region` is the image's declared `avatarRegion` (`603s`), as fractions of
+   * the image: the part of the art that IS the avatar. Optional, because most
+   * marks are already a mark — an icon that fills its own frame needs no crop,
+   * and cropping one would be inventing a box nobody measured.
+   */
+  avatar?: { src: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
   /** A hue for the item's mark, 0–360. `603s`'s `tone`. */
   tone?: number;
   /** True for the route the current page belongs to. */
@@ -215,6 +222,11 @@ export function navbarCss(): string {
     `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
     `.fa-nav-glyph{flex:0 0 ${NAV_GLYPH_PX}px;text-align:center;font-size:16px}`,
     `.fa-nav-glyph img{width:${NAV_GLYPH_PX}px;height:${NAV_GLYPH_PX}px;display:block}`,
+    // A CROPPED mark: the frame clips and the image is positioned inside it.
+    // The `img` rule above sizes an UNCROPPED avatar; a cropped one carries
+    // its own width/height inline, so this resets the two that would fight it.
+    `.fa-nav-crop{position:relative;overflow:hidden;height:${NAV_GLYPH_PX}px}`,
+    `.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}`,
     `.fa-nav-name{font-weight:600}`,
     `.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
     `color:#e6edf3;text-decoration:none;white-space:nowrap}`,
@@ -257,9 +269,30 @@ export function navbarCss(): string {
 function mark(i: NavItem): string {
   const tone = i.tone ? ` style="background:hsl(${i.tone} 45% 28%)"` : "";
   if (i.avatar) {
+    const t = i.avatar.title ? ` title="${esc(i.avatar.title)}"` : "";
+    const r = i.avatar.region;
+    if (!r) {
+      return (
+        `<span class="fa-nav-glyph fa-nav-tone"${tone}>` +
+        `<img src="${esc(i.avatar.src)}" alt=""${t}></span>`
+      );
+    }
+    // THE CROP, and the arithmetic is `603s`'s. The frame shows `r` scaled to
+    // fill it, so the IMAGE is scaled by `1/w` and `1/h` and then offset by
+    // `-x` and `-y` OF THE SCALED image — which is why the offsets divide by
+    // the same fractions. Percentages rather than pixels so the mark resizes
+    // with `NAV_GLYPH_PX` and this never has to agree with a number again.
+    //
+    // `1/w` and `1/h` are applied SEPARATELY, which is exactly why
+    // `KgImageSchema` refuses a non-square box in PIXELS: on a landscape image
+    // equal fractions are not a square region, and the two scales then stretch
+    // the art by `w/h`. The schema is the guard; this is the code it guards.
+    const pct = (n: number) => `${+(n * 100).toFixed(4)}%`;
     return (
-      `<span class="fa-nav-glyph fa-nav-tone"${tone}>` +
-      `<img src="${esc(i.avatar.src)}" alt=""${i.avatar.title ? ` title="${esc(i.avatar.title)}"` : ""}></span>`
+      `<span class="fa-nav-glyph fa-nav-tone fa-nav-crop"${tone}>` +
+      `<img src="${esc(i.avatar.src)}" alt=""${t} style="` +
+      `width:${pct(1 / r.w)};height:${pct(1 / r.h)};` +
+      `left:${pct(-r.x / r.w)};top:${pct(-r.y / r.h)}"></span>`
     );
   }
   // An initial, not a question mark. `603s` reports "no avatar declared" as a
