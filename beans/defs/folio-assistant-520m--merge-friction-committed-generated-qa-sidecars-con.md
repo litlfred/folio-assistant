@@ -1,11 +1,11 @@
 ---
 # folio-assistant-520m
 title: 'MERGE FRICTION: committed generated QA sidecars conflict on every base merge — 3 of 3 in one session'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T20:08:34Z
-updated_at: 2026-09-21T20:08:34Z
+updated_at: 2026-09-22T05:55:13Z
 parent: folio-assistant-1xhc
 ---
 
@@ -100,3 +100,56 @@ them in `translation-qa`, the family that churns most. The guard is not a
 judgement call, though: a non-script entry is self-identifying
 (`reviewer.kind !== "script"`), so any strategy can refuse exactly the files
 that carry one.
+
+## Settled — owner, 2026-09-21: a resolve SCRIPT, not a merge driver
+
+Asked as four options with the measurements above. The owner chose the script.
+The argument that decided it: a git merge driver needs a `git config` step in
+every clone and CI runner, and the people hitting these conflicts are mostly
+agents in fresh containers — where a setup step nobody ran is a driver that is
+not there, failing open and silently.
+
+### Delivered
+
+- `cat-harness/scripts/qa-resolve-conflicts.ts`, as `bun run qa:resolve-conflicts`
+  (`--dry-run`, `--explain`).
+- The guard, applied **twice**: refuse any file where either side carries a
+  non-script `reviewer.kind`, and verify after regenerating that every such
+  entry survived. A fast path that is the only protection becomes the
+  protection the day its assumption breaks.
+- Conflicts outside the declared `qa` graph are left untouched and unstaged.
+- The generator to re-run is read from the sidecars' own `reviewer.id` and
+  matched against `package.json`; a family whose writer cannot be identified is
+  reported and left conflicted.
+- `skills/folio-core/prepare-merge.md` §"Conflicts in `test/results/`" carries
+  the reason where the next agent resolving one will find it — this bean's
+  third Done-when.
+- 11 tests, built on REAL git conflicts in throwaway repositories rather than
+  hand-built objects, asserting both directions: an agent-carrying file is
+  refused, the same file without it is resolved.
+
+### Two constraints found by resolving a real conflict rather than imagining one
+
+- **A conflicted file is not valid JSON.** The guard reads git's stages
+  (`git show :2:<path>`), never the working tree. Reading the working tree
+  would throw on every input, and a caught throw is indistinguishable from a
+  clean scan — the false-clean this repository keeps paying for. There is a
+  test for it.
+- **Not every family has a `reviewer` at all.** `kg-qa/v1` records
+  `criteria[id].result` with none; it is wholly derived. The guard passes those
+  correctly, and `--explain` distinguishes "found none" from "the shape has
+  none".
+
+### The fourth data point
+
+The merge that produced this session's fourth conflict —
+`kg-qa/skills/folio-core/interaction-modality.kg-qa.json`, main moved 33
+commits — was resolved by hand using exactly the procedure the script
+implements, before the script existed. That is where both constraints above
+came from.
+
+## Done when
+
+- [x] the owner has settled whether this friction is worth machinery
+- [x] a strategy that cannot silently drop a REAL sidecar change
+- [x] the reason is written where the next agent resolving one will find it

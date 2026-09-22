@@ -5,7 +5,7 @@
     "id": "interaction-modality",
     "path": "skills/folio-core/interaction-modality.md"
   },
-  "source_hash": "944a498cc4b9",
+  "source_hash": "f9116f9f136b",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -16,13 +16,18 @@
       "findings": [
         {
           "where": "skills/folio-core/interaction-modality.md",
-          "detail": "397 lines; p75 of the skill corpus is 279."
+          "detail": "407 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/interaction-modality.md",
+          "detail": "407 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -30,8 +35,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 1,
+    "pass": 2,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }
