@@ -92,12 +92,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><a href="../glossary/">glossary</a> <span class="p">cat-harness/glossary</span> <span class="n">44</span></li>
+<li><a href="../glossary/">glossary</a> <span class="p">cat-harness/glossary</span> <span class="n">46</span></li>
 </ul>
 
 <table>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/adjudicator"><code>Adjudicator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/adjudicator</span></td>
+  <td>Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.<div class="f"><span class="k">notation</span> role/adjudicator</div><div class="f"><span class="k">first seen</span> 2026-09-22</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/administrator"><code>Administrator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/administrator</span></td>
   <td>Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.<div class="f"><span class="k">notation</span> role/administrator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
@@ -161,6 +165,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/external-registry"><code>External registry</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/external-registry</span></td>
   <td>Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.<div class="f"><span class="k">notation</span> role/external-registry</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/feedback-provider"><code>Feedback provider</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/feedback-provider</span></td>
+  <td>Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.<div class="f"><span class="k">notation</span> role/feedback-provider</div><div class="f"><span class="k">first seen</span> 2026-09-22</div><div class="f"><span class="k">status</span> current</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/fhir-modeller"><code>FHIR modeller</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/fhir-modeller</span></td>
@@ -252,7 +260,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/translation-adjudicator"><code>Translation adjudicator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/translation-adjudicator</span></td>
-  <td>Reviewer who settles a disagreement between machine and human translation.<div class="f"><span class="k">notation</span> role/translation-adjudicator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+  <td>Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where &quot;a reviewer reports, an adjudicator settles&quot; was written down.<div class="f"><span class="k">notation</span> role/translation-adjudicator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/translation-coordinator"><code>Translation coordinator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/translation-coordinator</span></td>

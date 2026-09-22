@@ -93,7 +93,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <ul class="subs">
 <li><a href="../methodology-crdm-processes/">methodology-crdm-processes</a> <span class="p">cat-harness/methodologies/crdm/processes</span> <span class="n">8</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">50</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">52</span></li>
 </ul>
 
 <table>
@@ -138,6 +138,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>Actor and role administration</code></a><br><span class="p">cat-harness/processes/actor-role-administration.bpmn</span></td>
   <td>Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Administrator · Graph audit (system)</div><div class="f"><span class="k">skills</span> continual-progress, deletion-requires-confirmation, prepare-merge, role-model</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>Adjudication</code></a><br><span class="p">cat-harness/processes/adjudication.bpmn</span></td>
+  <td>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Feedback provider · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, untainted-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">cat-harness/processes/atomic-mass-drift-check.bpmn</span></td>
@@ -190,6 +194,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">cat-harness/processes/content-lifecycle.bpmn</span></td>
   <td>folio-assistant — the content lifecycle end to end, one cycle of a folio.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Programme manager · Work plan — beans (shared by humans and agents) · Editors + authoring agents · Validation and QA (mechanical + agents) · Review team and SMEs · Publication manager</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-plan, content-publish, content-retire, content-review, content-test, content-validate, todo-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>Copy out materialized content — to work on somebody else's bytes</code></a><br><span class="p">cat-harness/processes/copy-out-materialized.bpmn</span></td>
+  <td>Materialized content is read-only.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reader (any actor) · Source graph — read-only · Copier's own folio/ · Verification</div><div class="f"><span class="k">skills</span> copy-out-materialized</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>Publishing the docs site, and keeping the previews alive</code></a><br><span class="p">cat-harness/processes/docs-site-publish.bpmn</span></td>
@@ -245,7 +253,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-l1-completeness-gate.bpmn"><code>Ingestion subprocess — the L1 completeness gate</code></a><br><span class="p">cat-harness/processes/ingest-l1-completeness-gate.bpmn</span></td>
-  <td>folio-assistant — Ingestion subprocess — the L1 completeness gate.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Reviewer (SME or editor)</div><div class="f"><span class="k">skills</span> document-intake</div></td>
+  <td>folio-assistant — Ingestion subprocess — the L1 completeness gate.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Reviewer (SME or editor)</div><div class="f"><span class="k">skills</span> adjudication, document-intake</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>Ingestion subprocess — ingest a theme</code></a><br><span class="p">cat-harness/processes/ingest-theme.bpmn</span></td>
@@ -285,7 +293,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>Refresh materialized remote content</code></a><br><span class="p">cat-harness/processes/refresh-materialized.bpmn</span></td>
-  <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
+  <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
@@ -297,7 +305,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-narrative.bpmn"><code>Narrative review</code></a><br><span class="p">cat-harness/processes/review-narrative.bpmn</span></td>
-  <td>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translatio…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> content-feedback, content-review, translation-manager, uses-editorial-review, voice-editorial-review, voice-overlay-review</div></td>
+  <td>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translatio…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, content-review, translation-manager, uses-editorial-review, voice-editorial-review, voice-overlay-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>Review task</code></a><br><span class="p">cat-harness/processes/review-task.bpmn</span></td>
@@ -317,7 +325,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/translation-workflow.bpmn"><code>Translation Workflow</code></a><br><span class="p">cat-harness/processes/translation-workflow.bpmn</span></td>
-  <td>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (source content) · Agent / platform (automated) · Human reviewer / adjudicator</div><div class="f"><span class="k">skills</span> translation-manager</div></td>
+  <td>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (source content) · Agent / platform (automated) · Human reviewer / adjudicator</div><div class="f"><span class="k">skills</span> adjudication, translation-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-pin-watch.bpmn"><code>Watching a pinned upstream dependency</code></a><br><span class="p">cat-harness/processes/upstream-pin-watch.bpmn</span></td>
@@ -329,7 +337,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>Voice overlay review</code></a><br><span class="p">cat-harness/processes/voice-review.bpmn</span></td>
-  <td>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> voice-overlay-review</div></td>
+  <td>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, voice-overlay-review</div></td>
 </tr>
 </tbody>
 </table>

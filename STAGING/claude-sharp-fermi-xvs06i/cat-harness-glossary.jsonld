@@ -52,6 +52,7 @@
         "Contributor (human or agent)",
         "Human actor",
         "Log operator (human)",
+        "Reader (any actor)",
         "User (person)"
       ],
       "notation": "user",
@@ -59,6 +60,7 @@
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_GettingStarted/Lane_User",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
@@ -83,6 +85,15 @@
       "label": "Contributor",
       "scopeNote": "Both of this lane's tasks are optional by design, not merely possible: P_Respond's 'or neither' is a real, accepted outcome rather than a stall, and A_Ask already states what happens if nothing comes back — so this lane can contribute nothing at all and the process still proceeds, which is not true of the sign-off lanes elsewhere in this corpus.",
       "source": "cat-harness/processes/content-acquisition.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "label": "Reader (any actor)",
+      "scopeNote": "ANY reader, and that is a ruling rather than an oversight — the owner, 2026-09-22, chose it over restricting the copy-out to an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.",
+      "source": "cat-harness/processes/copy-out-materialized.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
@@ -138,6 +149,7 @@
         "Author (person)",
         "Author / guideline developer (person)",
         "Content Author",
+        "Copier's own folio/",
         "Editor / author (person)"
       ],
       "notation": "author",
@@ -147,6 +159,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_PaperAuthoring/Lane_Author",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_BoardPlaceNote/Lane_Author",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_ContentChangeReview/Lane_Author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Editor",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_EvidenceRetrieval/Lane_Author"
       ]
@@ -186,6 +199,15 @@
       "label": "Content Author",
       "scopeNote": "Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.",
       "source": "cat-harness/processes/content-change-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/author",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "label": "Copier's own folio/",
+      "scopeNote": "Where the copy lands, chosen by the owner 2026-09-22 over a scratch area. A scratch area lost because it makes the copy publishable by accident: a directory nobody declared is a directory nobody gates. The two writes here are ordered and both required — Task_Land puts the bytes somewhere, Task_RecordProvenance says what they are a copy OF, and a process that stopped after the first would produce a file indistinguishable from original work one rename later.",
+      "source": "cat-harness/processes/copy-out-materialized.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Editor",
@@ -868,7 +890,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/translation-adjudicator",
       "@type": "skos:Concept",
       "prefLabel": "Translation adjudicator",
-      "definition": "Reviewer who settles a disagreement between machine and human translation.",
+      "definition": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "altLabel": [
         "Human reviewer / adjudicator"
       ],
@@ -886,6 +908,46 @@
       "label": "Human reviewer / adjudicator",
       "scopeNote": "The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.\n\nAdjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.",
       "source": "cat-harness/processes/translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/adjudicator",
+      "@type": "skos:Concept",
+      "prefLabel": "Adjudicator",
+      "definition": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "notation": "adjudicator",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_Adjudication",
+      "label": "Adjudicator",
+      "scopeNote": "Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, \"a human or agentic decision, never a merge rule\" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.\n\nA_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.",
+      "source": "cat-harness/processes/adjudication.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/feedback-provider",
+      "@type": "skos:Concept",
+      "prefLabel": "Feedback provider",
+      "definition": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "notation": "feedback-provider",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/feedback-provider",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_Adjudication",
+      "label": "Feedback provider",
+      "scopeNote": "Drawn once for any number of providers — the owner's \"Judgment of &gt;= 1 Feedback Provider's feedback\" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.\n\nThis lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.",
+      "source": "cat-harness/processes/adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/stakeholder",
@@ -1628,12 +1690,14 @@
       "altLabel": [
         "HCI validation pipeline (system)",
         "Mechanical validation (system)",
-        "Validation and QA (mechanical + agents)"
+        "Validation and QA (mechanical + agents)",
+        "Verification"
       ],
       "notation": "validation-pipeline",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Lifecycle/Lane_Qa",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Mechanical",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa"
@@ -1647,6 +1711,15 @@
       "label": "Validation and QA (mechanical + agents)",
       "scopeNote": "The corpus-wide check no single block's HCI validation gate can perform — cross-references, whole-folio build status, proof status and QA axes — sitting between the editor's accept and the publication manager's release, so a change that passed block-level review still has to clear folio-level checks before CallActivity_Publication ever runs.",
       "source": "cat-harness/processes/content-lifecycle.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/validation-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "label": "Verification",
+      "scopeNote": "Asks the question the whole process exists to keep answerable: does the SOURCE still hash to its recorded digest? A copy-out that disturbed the original is not a copy-out, and this lane is the only thing that can tell the difference after the fact — the bytes look the same either way.",
+      "source": "cat-harness/processes/copy-out-materialized.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Pipeline",
@@ -1922,13 +1995,15 @@
       "altLabel": [
         "Corpus (versioned store)",
         "Corpus — L1 source knowledge graph",
-        "Layout layer"
+        "Layout layer",
+        "Source graph — read-only"
       ],
       "notation": "corpus",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_BoardPlaceNote/Lane_Layer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_1",
@@ -1944,6 +2019,15 @@
       "label": "Layout layer",
       "scopeNote": "Every placement writes here, and nothing that decides anything reads it back — losing this graph loses WHERE a note sits, never WHAT it says. That asymmetry is why A_SweepOrphans cleans stray positions from this lane's own file rather than touching the note itself: the easy direction is removing a position whose note is gone, never removing a note because its position is.",
       "source": "cat-harness/processes/board-place-note.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#role/corpus",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#process/Process_CopyOutMaterialized",
+      "label": "Source graph — read-only",
+      "scopeNote": "This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.",
+      "source": "cat-harness/processes/copy-out-materialized.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-fermi-xvs06i/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_3",
