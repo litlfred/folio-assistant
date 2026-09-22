@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-npm_and_yarn-cat-harness-schemas-block-qa-schema-typescript-7.0.2/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "dependabot/npm_and_yarn/cat-harness/schemas/block-qa-schema/typescript-7.0.2",
+    "sha": "b346a34b0f3f5e1f4ce6691dee1559858fcd2028",
+    "pr": "914/merge",
+    "run": "35712758251"
+  }
+}

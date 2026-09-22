@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-npm_and_yarn-cat-harness-schemas-block-qa-schema-typescript-7.0.2/skills/quality-control/input.schema.json",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "staging": {
+    "branch": "dependabot/npm_and_yarn/cat-harness/schemas/block-qa-schema/typescript-7.0.2",
+    "sha": "b346a34b0f3f5e1f4ce6691dee1559858fcd2028",
+    "pr": "914/merge",
+    "run": "35712758251"
+  }
+}
