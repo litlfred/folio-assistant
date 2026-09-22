@@ -1,11 +1,11 @@
 ---
 # folio-assistant-eof6
 title: 'SEARCH INDEX AS A RELEASE ARTIFACT: build it on release, never on staging refresh'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T09:02:08Z
-updated_at: 2026-09-20T09:02:08Z
+updated_at: 2026-09-22T11:45:48Z
 parent: folio-assistant-kupb
 ---
 
@@ -171,3 +171,74 @@ the ruling's justification remains correctness rather than size.
       `litlfred.github.io` is denied by proxy policy (403 on CONNECT). This is
       the one real blocker left, and it is environmental, not a sibling's.
 - [ ] The budget is declared with its BASIS.
+
+## Staging half DELIVERED 2026-09-22 — on the ruling, with the warning
+
+Built after two "go" turns left the question unanswered. The instance's
+declared interaction profile (low-dexterity) requires every question to carry
+**a stated default the work proceeds on if no answer comes**, and mine had
+carried none — so re-asking a third time was itself the defect. Proceeding was
+the correct reading.
+
+### What was wrong with my own blocker
+
+I had said the warning "cannot be tested". It cannot be tested **locally** —
+there is no working Jekyll here and egress to the published site is
+proxy-denied. But this repository runs Playwright against a built site in CI,
+and more to the point the design below moves the DECISION out of the browser
+entirely, so almost all of it is testable in `bun test`.
+
+### The shape
+
+**Fetched before the build, not after.** The stamp is what the page reads to
+draw its warning, so the stamp has to know whether the fetch actually worked.
+A stamp written before the attempt would be a claim rather than a record, and
+a preview would promise a published index while serving its own.
+
+| stamp | index served | notice |
+|---|---|---|
+| `published` | the last published one | results are about the main site, not this branch |
+| `unavailable` | **empty** | search does not work here, and why |
+| *(absent)* | the site's own | none — this is the canonical deploy |
+
+**`unavailable` never falls back to the branch's own index.** That is exactly
+the unmarked staleness this bean was right to refuse: a preview's own index
+looks published and is not, and nothing on the page would say otherwise.
+
+**The notice is on the SEARCH SURFACE, not only the staging banner.** They are
+different claims — the banner is about the preview, this is about the index —
+and somebody who types into the box has not necessarily read the banner. It
+carries `role="status"` for the declared assistive profile.
+
+### A mistake worth keeping
+
+The first CSS draft used `--fa-accent`, `--fa-surface-2` and `--fa-ink-dim`.
+**None of the three exists.** The existing token tests passed, and could not
+have failed: they forbid a raw hex rather than requiring a *defined* name, and
+an undefined custom property is not a CSS error — the rule simply renders
+unstyled. Caught by checking each token against the stylesheet rather than
+trusting the green. The notice now uses the `--fa-search-*` family the field
+itself uses, and a test asserts every `var()` it references is declared.
+
+### Falsified
+
+| break | result |
+|---|---|
+| an invented token re-introduced | **1 fail** |
+| a notice drawn for an unrecognised stamp | **2 fail** |
+| restored | **8 pass** |
+
+`bun run gates` — 123 of 123.
+
+## Done when — updated
+
+- [x] Staging uses the last published index, with a warning on the search
+      surface itself
+- [ ] The index is built in the RELEASE path and published as a release asset
+      — **not done**, and unchanged by this: staging now consumes the
+      published index, but that index is still built into the site tree rather
+      than published as a release asset
+- [ ] Sharding decided on MEASUREMENT — still unavailable from a sandboxed
+      session, and now ALSO true of CI unless something measures and records
+      the index size
+- [ ] The budget is declared with its BASIS
