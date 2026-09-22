@@ -208,10 +208,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `voices`
 
-3 of 4 published.
+4 of 4 published.
 {: .fa-hx-dim }
 
-- agent-skills — *declared, not published*
+- [agent-skills]({{ '/cat-harness/voices/agent-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
 - [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})

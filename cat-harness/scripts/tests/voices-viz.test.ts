@@ -17,8 +17,11 @@ import { readVoicesGraph, type VoicesGraph } from "../voices-graph.ts";
 import { viewerHtml } from "../gen-voices-viz.ts";
 import { shippedVoices, overlaySeverityOf } from "../../content/pipeline/voice-criteria.ts";
 import { overlayCriterionId } from "../../content/pipeline/voice-criteria.ts";
+import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
 
 const INSTANCE = join(import.meta.dir, "..", "..");
+/** The repository root — `repoRootFor` takes an INSTANCE root and is `dirname`. */
+const REPO = repoRootFor(INSTANCE);
 
 /** Read once — the reader touches the filesystem across every instance. */
 const G: VoicesGraph = (() => {
@@ -53,15 +56,60 @@ describe("the reader finds what the declarations say is there", () => {
 });
 
 describe("a declared directory that is not there is a ROW, not a silence", () => {
-  test("the directories list carries `present`, and at least one is false today", () => {
-    // `agent-skills` declares a `voices` graph and ships none (bean `26tu`).
-    // If this ever stops holding because the gap was CLOSED, the assertion
-    // below is the thing to change — but a reader dropping absent directories
-    // would also make it pass, and that is the `dh4f` defect. So the count of
-    // directories is checked against the declarations rather than the disk.
-    const absent = G.directories.filter((d) => !d.present);
-    expect(absent.length).toBeGreaterThan(0);
-    for (const d of absent) expect(d.voices).toEqual([]);
+  test("a declared-but-absent directory IS reported, on a fixture that cannot be closed", () => {
+    // This asserted "at least one is false today", and its own comment named
+    // the hazard: closing the gap and a reader that DROPS absent directories
+    // make the corpus look identical. The gap was then closed — `agent-skills`
+    // shipped its voices on 2026-09-22, bean `26tu` — and the assertion went
+    // red for the good reason.
+    //
+    // A test whose subject is a defect expires when the defect is fixed, so
+    // the subject is now a fixture: an instance declaring a `voices` directory
+    // that is not there. It asserts the READER's behaviour, which is the thing
+    // that must never regress, and no amount of tidying the corpus can make it
+    // vacuous.
+    const root = mkdtempSync(join(tmpdir(), "voices-absent-"));
+    const inst = join(root, "myinst");
+    mkdirSync(inst, { recursive: true });
+    writeFileSync(
+      join(inst, "myinst.json"),
+      JSON.stringify({
+        name: "myinst",
+        directories: [
+          {
+            id: "voices",
+            path: "skills/voices/",
+            graphKinds: ["voices"],
+            dependents: "skip",
+            description: "declared and deliberately absent — the fixture for this test",
+          },
+        ],
+      }),
+    );
+    try {
+      const g = readVoicesGraph([inst], root)!;
+      expect(g).not.toBeNull();
+      const absent = g.directories.filter((d) => !d.present);
+      expect(absent.length).toBe(1);
+      expect(absent[0]!.voices).toEqual([]);
+      expect(absent[0]!.dir).toContain("skills/voices");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("...and the corpus's directories are all ACCOUNTED FOR, present or not", () => {
+    // The other half, and the one the old assertion was really protecting: a
+    // reader that silently dropped an absent directory would pass the fixture
+    // above only if it dropped it there too — but a reader that drops them
+    // only when SOME are present would not. So every declared voices directory
+    // must appear in the graph, whatever its state on disk.
+    const declared = instanceRootsIn(REPO).flatMap((r) => directoriesForGraph(r, "voices"));
+    expect(G.directories.length).toBe(declared.length);
+    for (const d of G.directories) {
+      expect(typeof d.present).toBe("boolean");
+      if (!d.present) expect(d.voices).toEqual([]);
+    }
   });
 
   test("an absent directory still reports its declared path", () => {
