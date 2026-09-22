@@ -1,11 +1,11 @@
 ---
 # folio-assistant-itka
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:36Z
-updated_at: 2026-09-22T11:46:10Z
+updated_at: 2026-09-22T15:18:50Z
 parent: folio-assistant-1xhc
 ---
 
@@ -150,3 +150,48 @@ has is this bean's own defect one layer up.
 
 **"is a epic".** The message built an article into a template. It reports
 `` has type `epic` `` instead, so there is no article to get wrong.
+
+## Summary of Changes — closed 2026-09-22
+
+Both findings shipped. `check:bean-parents` now runs the rules it prints, and
+prints the rules it runs.
+
+| | |
+|---|---|
+| finding 1 — the epic rule was unreachable | #941, PR #942, `fc36f70429` |
+| finding 2 — `feature` is a tier | PR #953, `fb08109b77` |
+
+**Finding 1.** `ROOT_TYPES` was filtered out of the set before the loop, so no
+`b` was ever an epic and the epic branch could not be taken — while the
+summary asserted it as checked. The exclusion's intent was right and applied
+one scope too wide; it now sits on the has-a-parent branch alone. `d308 ->
+zzmr` is baselined in `bean-parents-baseline.json`: listed, never failed, and
+the file can only shrink because an entry matching nothing is reported stale
+and does fail.
+
+**Finding 2.** Put to the owner WITH the numbers rather than as an abstract
+choice — 51 beans typed `feature`, 2 hanging from one and neither open, 25 of
+25 open features under an epic — so the answer cost nothing either way and
+decided only what is allowed next. Ruled: a feature is a real tier.
+
+**The ruling's own hole, closed in the same change.** Widening `PARENT_TYPES`
+made `epic -> feature` legal, because the epic rule forbade ONE wrong parent
+instead of requiring the right one. That inverts the hierarchy with no test
+failing. Restated as `p.type !== "milestone"`.
+
+### What this bean leaves behind
+
+- **A rule stated as a negation can be holed by a later addition to the set it
+  negates over.** Requiring the right value cannot be. That is the general
+  form, and it is why the fix is not "add `feature` and move on".
+- **A test asserting the old negation would have passed over the hole.** One
+  existing assertion had to change; asserting the requirement is what makes it
+  bite.
+- **A check's summary is a claim.** This one named the wrong shape twice after
+  the rules changed — the same defect as finding 1, one layer up.
+- Its own count was stale (2 epics under an epic; the store held 1), which is
+  why every claim here was re-measured rather than quoted.
+
+Closed on evidence: the rules are reachable, falsified five ways for finding 1
+and three for finding 2, and `d308` remains recorded for its owner rather than
+repaired by the checker's author.
