@@ -1,11 +1,11 @@
 ---
 # folio-assistant-03t9
 title: 'PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T08:34:13Z
-updated_at: 2026-09-22T08:55:04Z
+updated_at: 2026-09-22T10:46:09Z
 parent: folio-assistant-ahvw
 ---
 
@@ -91,3 +91,17 @@ opposite of the property. The assertion now matches the refusal's own wording.
       here rather than left as an unexplained absence: a precondition is what
       must hold before the start event, and re-asking mid-run answers a
       different question
+
+---
+
+## RE-DERIVED 2026-09-22 — closed on evidence
+
+| claim | measurement |
+|---|---|
+| a non-test caller | `src/workflow/preflight.ts:83` calls `evaluatePreconditions(model, root)` |
+| reached from `workflow_start` | `src/tools/workflow.ts:163` calls `preflight(model, root)`, then `preflightRefusal(gate)` |
+| a test driving the registered handler, not the function | `scripts/tests/precondition-consumer.test.ts` — a separate suite from `precondition.test.ts`, which is the distinction the box asks for |
+| `workflow_gate` / `workflow_complete` deliberately NOT gated | recorded on the bean; a precondition is what must hold before the start event |
+
+The fourth box is the valuable one: it records a deliberate ABSENCE. Without
+it, a later agent finds two ungated tools and reads it as an oversight.
