@@ -779,6 +779,7 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:workflow-injection
           bun run check:secret-leaks
           bun run check:lockfile-pinning
           bun run check:qa-reviewer-permission
