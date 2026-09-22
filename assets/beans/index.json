@@ -1493,6 +1493,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7s52",
+      "title": "staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T06:33:57Z",
+      "updatedAt": "2026-09-22T06:34:02Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/849\n\n`staging-review` already owns the publish ref, and already names the failure:\nbean `rptk`, a contrast defect that survived two days *\"because the gate that\nswept the page never opened the view\"*. It composes URLs for a reader and stops\nthere.\n\nTHE AGENT CANNOT OPEN THEM. Measured this session, all three routes:\n`curl` -> 403 CONNECT tu",
+      "file": "beans/defs/folio-assistant-7s52--staging-review-hands-a-reader-urls-the-agent-canno.md"
+    },
+    {
       "id": "folio-assistant-7sf1",
       "title": "Move MEMORY.md into the kg graph, with correct skill/task pairings",
       "status": "in-progress",
