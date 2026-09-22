@@ -454,25 +454,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790119164">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790119541">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790119164">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790119541">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790119164">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790119541">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790119164">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790119541">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -489,7 +489,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790119164" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790119541" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1033,7 +1033,7 @@ decides it.</p>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">fsh-guts</code></td>
       <td><strong>harness</strong></td>
-      <td>deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted.</td>
+      <td>Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. <strong>AND, IN FACT, THE HOME OF LIVE GOVERNING PROPOSALS — which this row said nothing about until 2026-09-22, at a measured cost.</strong> <code class="language-plaintext highlighter-rouge">fsh-guts/proposals/</code> holds <code class="language-plaintext highlighter-rouge">instance-versioning.md</code>, <code class="language-plaintext highlighter-rouge">deployment-topologies.md</code>, <code class="language-plaintext highlighter-rouge">workflow-state-in-beans.md</code> and others, and they are cited AS THE SCHEME by seven skills and four code modules: <code class="language-plaintext highlighter-rouge">harness-config.ts</code> calls one <em>“the full scheme”</em>, <code class="language-plaintext highlighter-rouge">check-published-refs.ts</code> calls itself <em>“its §3.3 gate”</em>, and §”Pinning a reference” below points at the same file. So an agent that reads this table, learns the kind is throwaway and skips it has skipped the governing design corpus — which is exactly what happened on 2026-09-22 (bean <code class="language-plaintext highlighter-rouge">5kn6</code>): a session proposed three options for a question <code class="language-plaintext highlighter-rouge">instance-versioning.md</code> §3.3 and an owner ruling of 2026-09-20 had already settled, and mis-cited an unrelated skill as the authority for not deciding. <strong>Read <code class="language-plaintext highlighter-rouge">fsh-guts/proposals/index.md</code> before proposing a scheme.</strong> Whether live proposals should live under a kind named for throwaway is bean <code class="language-plaintext highlighter-rouge">5kn6</code>’s question, not this row’s — the row’s job is to stop the name being read as permission to skip it.</td>
       <td><strong>no, on purpose</strong></td>
     </tr>
     <tr>
@@ -2387,7 +2387,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35796779933"><code>0a01632</code></a> &middot; 2026-09-22T23:19:21Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35797285791"><code>75c60b9</code></a> &middot; 2026-09-22T23:25:37Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -12901,6 +12901,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#ExactVersionSchema",
+      "name": "ExactVersionSchema",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-scalar",
+      "doc": "An EXACT semver version. Ranges are refused.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency",
       "name": "FolioAssistantDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -12913,6 +12927,27 @@
           "optional": false,
           "array": false,
           "doc": "Display name of the dependency (e.g. \"smart-base\", \"qou-platform\")."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Reverse-DNS package identity, stable forever. See the schema."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT is depended on — an exact version. See the schema; ranges are refused."
+        },
+        {
+          "name": "derivedFromNeeds",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Was this dependency DERIVED from the declaration's `needs` rather than"
         },
         {
           "name": "path",
@@ -12963,6 +12998,20 @@
           "array": false
         },
         {
+          "name": "id",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity — reverse-DNS, stable forever, never reused."
+        },
+        {
+          "name": "version",
+          "type": "ExactVersionSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT IS DEPENDED ON — the exact version, for computing the overlay."
+        },
+        {
           "name": "path",
           "type": "z.string().optional()",
           "optional": true,
@@ -12978,7 +13027,8 @@
           "name": "ref",
           "type": "z.string().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "HOW TO FETCH WHILE STAGING, and the provenance of the bytes — not what is"
         },
         {
           "name": "provides",
@@ -12989,7 +13039,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/harness-config.ts#ExactVersionSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -34551,6 +34603,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#FolioAssistantDependencySchema",
+      "to": "cat-harness/schemas/harness-config.ts#ExactVersionSchema",
+      "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",

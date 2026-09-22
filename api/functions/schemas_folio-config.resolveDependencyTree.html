@@ -16,24 +16,14 @@
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="resolvedependencytree"><span class="tsd-kind-call-signature">resolveDependencyTree</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">folioRoot</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">seen</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span><a href="#resolvedependencytree" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Resolve the full dependency tree depth-first.</p>
-<p>Walks <code>harness.config.json</code> dependencies in listed order, resolving
-each to a path and recursing into its own dependencies. Cycle
-detection prevents infinite loops.</p>
-</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
-<li><span><span class="tsd-kind-parameter">folioRoot</span>: <span class="tsd-signature-type">string</span></span>
-<div class="tsd-comment tsd-typography"><p>Absolute path to the folio root.</p>
-</div></li>
-<li><span><span class="tsd-kind-parameter">seen</span>: <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></span>
-<div class="tsd-comment tsd-typography"><p>Set of already-visited roots (for cycle detection).</p>
-</div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span></h4><p>Array of resolved dependencies in depth-first order.</p>
-<aside class="tsd-sources">
+<li><span><span class="tsd-kind-parameter">folioRoot</span>: <span class="tsd-signature-type">string</span></span></li>
+<li><span><span class="tsd-kind-parameter">seen</span>: <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0a016325f15c5535a42f6e094d722f90d3ce5c1f/cat-harness/schemas/harness-config.ts#L542">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:542</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/75c60b922dfc7a35a85fb4e70c7d62c4c0144de7/cat-harness/schemas/harness-config.ts#L713">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:713</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
