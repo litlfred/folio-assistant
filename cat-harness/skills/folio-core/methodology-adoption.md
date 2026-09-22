@@ -60,6 +60,39 @@ edit, which would make the independence fake.
 So the declared set is **the contents of the `methodology` graph**, read from the
 instance's declaration. Ask for it; do not remember it.
 
+## Node, skill, or both? — the question RACI made somebody ask
+
+An adopted methodology can produce up to two artefacts, and which ones is not
+obvious. Settled by the owner 2026-09-22 (bean `2xfl`), after `raci` spent
+months as a skill with no node and the methodology graph could not see the one
+methodology this repository uses on every diagram.
+
+| you are writing | it is a **node** in the `methodology` graph | it is a **skill** |
+|---|---|---|
+| what the method IS — its vocabulary, its constraints, what it refuses | ✅ | ❌ |
+| how to PERFORM it here — the extension element, the gate, the procedure | ❌ | ✅ |
+| a house process with no external origin | ❌ | ✅ — and do not dress it as an adoption |
+
+**Most adoptions produce both, and the split is the same every time:** the node
+is the method, the skill is this platform's application of it. The skill names
+the node and does not restate it, because two files carrying one definition is
+two copies free to drift.
+
+Three worked cases, each a different answer:
+
+- **`raci`** — both. The four letters and the one-Accountable rule are the
+  method (node); reading R from the BPMN lane, the `folio:raci` element and
+  `check:raci` are this platform's application (skill).
+- **`crdm`** — skill only, and correctly so. It is a house method with no
+  external origin, and §"Adopting a new one" step 1 says such a thing is a
+  skill. A node for it would be the dressing that rule forbids.
+- **`swot`** — both, written that way from the start.
+
+**A methodology in use with no node is invisible to the graph**, which is what
+`2xfl` recorded: `check:methodology-evidence` counted the nodes and RACI was
+not among them, so a reader asking "what methodologies does this repository
+adopt?" got an answer that omitted one they had just used.
+
 ## Adopting a new one — the ingestion process
 
 1. **Establish it is external and named.** A methodology has an origin: authors,
