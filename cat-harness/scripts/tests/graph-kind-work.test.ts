@@ -12,7 +12,6 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { defaultGraphKinds, isActiveKg, undecidedWorkKinds, workPlanGraphsIn } from "../../schemas/cat-harness";
-import "../../schemas/folio-graph-kind";
 import { formatReport } from "../check-graph-kind-work";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";

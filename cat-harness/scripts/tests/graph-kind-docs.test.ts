@@ -42,10 +42,6 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../../schemas/cat-harness.js";
-// Side effect: registers `folio`, which the layer ABOVE the harness declares.
-// Without this the registry omits it and the table would read as over-documented
-// — a false finding that would have made this test's first run a puzzle.
-import "../../schemas/folio-graph-kind.js";
 
 const ROOT = join(import.meta.dir, "../..");
 const DOC = "skills/folio-core/directory-conventions.md";

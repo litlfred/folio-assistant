@@ -21,7 +21,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { AGENT_INSTRUCTIONS_ROLE, ASSET_ROLES, INSTANCE_README_ROLE, REQUIRED_ASSET_ROLES, ROLE_OWNED_ASSET_KEYS, assetRoleDelivery, assetRoleLayer, assetRolePurpose, declaredAssetPath, graphLayer, layerIsWritable, processMayWrite, processMayWriteAsset, strayAssetRoleKeys } from "../../schemas/cat-harness.js";
-import "../../schemas/folio-graph-kind.js";
 import { collect, formatReport, isClean } from "../check-asset-roles.js";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";

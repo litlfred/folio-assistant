@@ -52,9 +52,6 @@ import { isExemptFrom, readDeclaration } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
 import { TODO_ROOT } from "./todos.js";
-// REQUIRED for the side effect: `folio` is registered by core on import and
-// this instance declares a folio graph. See `scripts/print-stub.ts`.
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");

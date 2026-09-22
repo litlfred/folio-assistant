@@ -82,9 +82,6 @@ import { createHash } from "node:crypto";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
-// The `folio` graph kind is registered by CORE on import; this module resolves
-// this instance's directories and the instance declares a folio graph.
-import "../schemas/folio-graph-kind.js";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is

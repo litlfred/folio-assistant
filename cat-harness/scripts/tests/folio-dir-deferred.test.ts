@@ -17,7 +17,6 @@ import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
 import { folioDir, folioDirDeferred } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 /** A root whose declaration will not parse, so `folioDir` throws on it. */
 function unreadableRoot(): string {

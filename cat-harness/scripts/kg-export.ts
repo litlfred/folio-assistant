@@ -72,7 +72,6 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
-import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";

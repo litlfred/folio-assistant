@@ -38,14 +38,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-// `folio` is registered by IMPORT SIDE EFFECT, and this file reaches
-// `instanceRootsIn`, which resolves declared directories. Without it a fresh
-// process importing this module alone throws "unknown graph kind" —
-// `declared-directory-resolves.test.ts` spawns exactly that process per module
-// for this reason, because in one shared process the first module to reach
-// core registers the kind for everybody and the test becomes incapable of
-// failing.
-import "../schemas/folio-graph-kind.js";
 import { instanceRootsIn } from "../schemas/cat-harness.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
