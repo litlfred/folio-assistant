@@ -85,7 +85,7 @@
       <bpmn:documentation>The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="claim" />
+        <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>G01</bpmn:incoming>
       <bpmn:outgoing>G02</bpmn:outgoing>
@@ -175,7 +175,7 @@
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:skill ref="content-feedback" />
-        <folio:bean store="beans/" op="note" />
+        <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>G15</bpmn:incoming>
       <bpmn:outgoing>G17</bpmn:outgoing>
@@ -204,7 +204,7 @@
       <bpmn:documentation>What shipped is resolved; what slipped stays open and carries into the next cycle.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store="beans/" op="resolve" />
+        <folio:bean op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>G19</bpmn:incoming>
       <bpmn:outgoing>G20</bpmn:outgoing>
