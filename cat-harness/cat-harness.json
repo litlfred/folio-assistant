@@ -2,8 +2,8 @@
   "_comment": "THE AGENTIC HARNESS layer. Owner, 2026-09-20: \"cat-harness, folio-assistant-core, folio-assistant are distinct instances/schemas\" \u2014 so this declares itself `cat-harness` rather than `folio-assistant`. It carried the latter until the repository root gained a harness.json of its own, at which point TWO instances declared one name and `instanceRoots` \u2014 keyed on the declared name \u2014 could only hold one of them. The one it held was the root, so `folio-assistant` resolved to the checkout and the harness layer became unreachable by name. `stub` is UNCHANGED and stays `folio-assistant`: the stub names the PUBLISHED artefact (docs/folio-assistant/, _kg/folio-assistant.jsonld, the Pages path) and the name names the instance, which is the entire reason a declaration carries both. The CatHarness declaration for THIS instance \u2014 what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs \u2014 the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split \u2014 `defs` for work items, `workflows` for running BPMN state \u2014 is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
   "_title": "No `title`, deliberately: `displayTitle` is title || name || id, so the sidebar and the landing page fall back to `name` \u2014 which the schema already requires to be the instance's identifier, the one artefacts are stub-named after. A title here said `c@t-harness` and overrode that, labelling THIS repository with the brand of the harness layer that is still to be split out of it. Setting the title to `folio-assistant` instead would be the same fact in two fields, free to drift. The c@t-harness derivation stays in the description, where it is a tagline rather than an identity.",
   "name": "cat-harness",
-  "_title_comment": "THE PUBLISHED SITE'S TITLE, stated rather than inherited. `sync-docs-harness` renders `title ?? name` into `docs/_data/harness.json`, which just-the-docs draws at the top of every page's sidebar \u2014 so while this instance was NAMED `folio-assistant` the fallback happened to give the right answer. Renaming it to `cat-harness` on the owner's 2026-09-20 ruling retitled the whole published site, which is a user-visible change nobody asked for and which no test would have caught. The site's title is its PUBLISHED identity, the same fact `stub` carries; the name is the instance's.",
-  "title": "folio-assistant",
+  "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. THIS ONE WAS WRONG RATHER THAN ABSENT: it declared `title: \"folio-assistant\"`, the ROOT instance's name, so two instances carried one title and `disambiguate()` correctly qualified this tab to \"folio-assistant (cat-harness)\" \u2014 the label the owner reported. The disambiguator behaved as designed; the declaration was the defect.",
+  "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n\u00a0c@t-harness",
   "icon": "mark",
   "images": [
@@ -20,6 +20,13 @@
       "role": "mark",
       "title": "c@t",
       "description": "An at-sign whose inner a is a cat: the a's bowl is the head, its counter is the face, the ears grow out of the top of the bowl and cross the ring, and the whiskers are cut in white across the sage. The ring keeps its gap and its tail, so it still reads as an @."
+    },
+    {
+      "_comment": "THE DARK-SCHEME MARK, and it exists for a MEASUREMENT rather than for taste. The light ink (#596a5b, taken from the art the owner supplied) is only 2.60:1 on the dark sidebar #27262b \u2014 under the 3:1 bar for meaningful non-text content. #9db89f is the same hue lifted: 7.00:1 there, 8.82:1 on near-black. Same geometry, one fill attribute apart, both generated from one trace so they cannot drift. Bean 5r57.",
+      "id": "mark-dark",
+      "src": "docs/assets/img/icons/cat-mark-dark.svg",
+      "role": "mark-dark",
+      "title": "c@t (dark scheme)"
     },
     {
       "id": "landing-laptop",
@@ -689,7 +696,9 @@
       "id": "translation-sources",
       "coverage": {
         "docs": "cat-harness/docs/translation-support.md",
-        "skill": "translation-manager"
+        "skill": "translation-manager",
+        "visualiser": "cat-harness/docs/translation-status/index.html",
+        "_visualiser_comment": "Bean lnur. This graph owed a visualiser and kg:audit said so \u2014 cat-harness declares several graphs with no published viewer and this was one. Generated by scripts/gen-translation-status.ts, which measures the .pot/.po files on each run. NOT a state-visualizer dashboard: that generator draws only STATE graphs, and translation-sources is the INPUT to injection rather than something a process writes as it runs, so it is correctly skipped there and always will be."
       },
       "path": "translations/",
       "dependents": "reproduce",

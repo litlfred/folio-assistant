@@ -46,6 +46,8 @@ const BASE_DOCS = docsLayers(REPO).layers.find((l) => !l.repositoryScoped)!.dir;
 const HARNESS = join(BASE_DOCS, "_data", "harness.json");
 
 interface Harness {
+  /** The instance's DIRECTORY name — stable. See the lookup below. */
+  name?: string;
   title?: string;
   findings?: string[];
   visualisations?: { kind: string; path?: string }[];
@@ -123,7 +125,19 @@ describe("the harness report distinguishes unbuilt from undiscovered", () => {
 });
 
 describe("who-iris/catalogue — the case that exposed it", () => {
-  const iris = harnesses.find((h) => h.title === "who-iris");
+  /* FOUND BY `name`, NOT BY `title`, and the difference cost a red gate.
+   *
+   * This looked up `title === "who-iris"` and stopped matching on 2026-09-22,
+   * when bean `t3n8` gave every instance a declared DISPLAY title and
+   * who-iris became "WHO IRIS". `find` returned undefined, and all three
+   * assertions below failed on a repository where nothing about viewers had
+   * changed.
+   *
+   * `title` is a display string the owner may rewrite at any time; `name` is
+   * the instance's directory and is what every other consumer joins on. A
+   * test keyed to a label is a test that fails when somebody renames a tab.
+   */
+  const iris = harnesses.find((h) => h.name === "who-iris");
 
   it("who-iris is in the report", () => {
     expect(iris).toBeDefined();
