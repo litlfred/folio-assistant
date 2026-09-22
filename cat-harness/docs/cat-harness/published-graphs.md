@@ -72,9 +72,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `fhir-artifact-index`
 
-0 of 2 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
+- SMART Base — *declared, not published*
 - smart-immunizations — *declared, not published*
 - smart-trust — *declared, not published*
 
@@ -124,12 +125,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-4 of 4 published.
+4 of 5 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
+- SMART Base — *declared, not published*
 - [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
 
 ### `memory`
@@ -141,10 +143,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-0 of 1 published.
+0 of 2 published.
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+- SMART Base — *declared, not published*
 
 ### `models`
 
@@ -155,11 +158,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-1 of 2 published.
+1 of 3 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/processes/index.md' | relative_url }})
+- SMART Base — *declared, not published*
 
 ### `qa`
 
@@ -240,12 +244,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `voices`
 
-4 of 4 published.
+5 of 5 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/voices/agent-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
+- [SMART Base]({{ '/cat-harness/voices/smart-base/' | relative_url }})
 - [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
 
 ### `waiver`

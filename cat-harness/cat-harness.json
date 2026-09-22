@@ -758,6 +758,19 @@
       }
     },
     {
+      "id": "smart-base-library",
+      "path": "smart-base/library/",
+      "scope": "repository",
+      "dependents": "reproduce",
+      "description": "The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "skill": "library-ingestion"
+      }
+    },
+    {
       "id": "translation-sources",
       "coverage": {
         "docs": "cat-harness/docs/translation-support.md",
@@ -797,6 +810,32 @@
         "methodology"
       ],
       "scope": "repository"
+    },
+    {
+      "id": "smart-base-methodologies",
+      "path": "smart-base/methodologies/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
+      "id": "smart-base-processes",
+      "path": "smart-base/methodologies/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The BPMN `smart-base` derives from its own corpus -- DIIG's nine chapters as an executable process. Declared SEPARATELY from `smart-base-methodologies` for the reason `methodology-crdm-processes` is declared separately from `methodologies/`: `workflowDirs` resolves diagrams from a declared directory, so a nested one that is not itself declared leaves every diagram undiscovered (bean `g43o`). Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
     },
     {
       "id": "docs",

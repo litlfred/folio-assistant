@@ -343,3 +343,68 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     rmSync(dir, { recursive: true, force: true });
   });
 });
+
+describe("a figure on a section boundary — bean `imen`", () => {
+  // Section page ranges OVERLAP: a section's `page_end` is the start page of
+  // the next one, inclusive. The fixture above already has that shape —
+  // `sec-000` is pages 1–3 and `sec-001` is pages 3–8, so page 3 is in both.
+  //
+  // Before the fix, the generator emitted one node PER containing section, all
+  // to the same `blocks/figure-<id>.jsonld` path with a different `derivedFrom`
+  // each. Last write won, so `--check` reported the losers stale forever:
+  // re-running reproduced exactly the same race. Measured on the WHO PHC
+  // digital transformation handbook, where page 71 falls inside FOUR sections.
+  //
+  // It took an embedded outline AND placed raster figures to surface, and no
+  // library entry had both until 2026-09-22.
+  const images = {
+    doc_id: "0110001v3",
+    images: [
+      // Page 3 — the boundary. In BOTH sections.
+      { id: "img-p003-1", file: "images/img-p003-1.png", role: "figure", basis: { method: "geometry", coverage: 0.4, imagesOnPage: 1, page: 3 } },
+      // Page 5 — interior to `sec-001` only, the uncontested control.
+      { id: "img-p005-1", file: "images/img-p005-1.png", role: "figure", basis: { method: "geometry", coverage: 0.4, imagesOnPage: 1, page: 5 } },
+    ],
+  };
+  let out: Array<{ path: string; content: string }>;
+  beforeAll(() => {
+    out = buildDocumentNodes("0110001v3", structure, candidates, () => true, images as never);
+  });
+
+  test("is written ONCE, not once per containing section", () => {
+    const paths = out.map((f) => f.path).filter((p) => p === "blocks/figure-img-p003-1.jsonld");
+    expect(paths).toHaveLength(1);
+  });
+
+  test("belongs to the FIRST containing section, which is reading order", () => {
+    // The owner's ruling, 2026-09-22 (issue #877): first rather than last, so a
+    // figure introduced at the end of a section stays with the section that
+    // introduced it. Last is what the race happened to land on, not a reason.
+    const n = JSON.parse(out.find((f) => f.path === "blocks/figure-img-p003-1.jsonld")!.content) as Record<string, unknown>;
+    expect(n.derivedFrom).toBe(`library/0110001v3/sections/${sectionKey("sec-000-1-introduction")}`);
+  });
+
+  test("an uncontested figure is unaffected", () => {
+    const n = JSON.parse(out.find((f) => f.path === "blocks/figure-img-p005-1.jsonld")!.content) as Record<string, unknown>;
+    expect(n.derivedFrom).toBe(`library/0110001v3/sections/${sectionKey("sec-001-2-the-formula")}`);
+  });
+
+  test("ONE section lists it — ownership is single, not split", () => {
+    // A consequence of the owner's ruling, and worth stating because it goes a
+    // step past the question as asked. `contains` is a section's manifest of
+    // its blocks, so listing a boundary figure in BOTH sections while deriving
+    // it from one would be internally inconsistent: a consumer walking
+    // `contains` across sections would meet the same block id twice and have
+    // no way to tell a shared figure from a double count.
+    //
+    // So the first containing section owns it in both places. The later
+    // section does not list it. The alternative considered and rejected was
+    // listing it everywhere and deriving from one, which asserts two owners.
+    const contains = (sid: string) =>
+      (JSON.parse(out.find((f) => f.path === `sections/${sectionKey(sid)}.jsonld`)!.content) as { contains?: string[] })
+        .contains ?? [];
+    expect(contains("sec-000-1-introduction")).toContain("library/0110001v3/blocks/figure-img-p003-1");
+    expect(contains("sec-001-2-the-formula")).not.toContain("library/0110001v3/blocks/figure-img-p003-1");
+    expect(contains("sec-001-2-the-formula")).toContain("library/0110001v3/blocks/figure-img-p005-1");
+  });
+});
