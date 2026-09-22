@@ -2,18 +2,22 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-l1-complete.ts",
-    "script_hash": "5883843df521"
+    "script_hash": "ab09dc3a738a"
   },
   "subject": {
     "kind": "library-document",
     "id": "library/9789240120747-eng"
   },
-  "updated_at": "2026-09-22T10:20:15.950Z",
+  "updated_at": "2026-09-22T11:50:48.288Z",
   "families": {
     "notDerivable": {
       "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
-      "count": 1,
+      "count": 2,
       "entries": [
+        {
+          "requirement": "image-descriptions",
+          "detail": "no raster image was placed, and the text declares at least 6 captioned figure(s) — they are drawn in vector and no arm reads them (bean m4xy)"
+        },
         {
           "requirement": "audio-transcripts",
           "detail": "no arm builds this yet — bean 1r0p"
@@ -26,5 +30,5 @@
       "entries": []
     }
   },
-  "total": 1
+  "total": 2
 }

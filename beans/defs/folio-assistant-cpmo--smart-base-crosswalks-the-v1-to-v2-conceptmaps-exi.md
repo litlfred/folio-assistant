@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T09:06:44Z
-updated_at: 2026-09-22T10:11:53Z
+updated_at: 2026-09-22T11:55:46Z
 parent: folio-assistant-2yyh
 ---
 
