@@ -71,6 +71,21 @@ function modulesResolvingADirectory(): string[] {
   return out.sort();
 }
 
+/**
+ * Budget for the two tests that spawn ONE SUBPROCESS PER DISCOVERED MODULE.
+ *
+ * Their cost grows with a population this file goes and finds, so bun's 5 s
+ * default is a time bomb: it fires on whoever adds the module that tips the
+ * total over, and a timeout is indistinguishable from the defect this file
+ * exists to catch — a module that cannot resolve a declared directory.
+ *
+ * It fired on 2026-09-22, at **38 modules and 4 695 ms**, on a change that
+ * added one unrelated script. Measured rather than guessed, and set an order
+ * of magnitude above the measurement because the number that matters is the
+ * one a slower CI runner sees, not the one this machine did.
+ */
+const SUBPROCESS_PER_MODULE_TIMEOUT_MS = 60_000;
+
 describe("a module that resolves a declared directory can resolve one", () => {
   const modules = modulesResolvingADirectory();
 
@@ -102,7 +117,7 @@ describe("a module that resolves a declared directory can resolve one", () => {
     const before = status();
     for (const m of modules) Bun.spawnSync(["bun", "-e", `import "./${m}";`], { cwd: ROOT });
     expect(status()).toBe(before);
-  });
+  }, SUBPROCESS_PER_MODULE_TIMEOUT_MS);
 
   test("each one resolves `library` in a FRESH process, without throwing", () => {
     // Fresh process per module is the whole point. In one process the first
@@ -131,5 +146,5 @@ describe("a module that resolves a declared directory can resolve one", () => {
       if (err.includes("unknown graph kind")) broken.push(m);
     }
     expect(broken).toEqual([]);
-  });
+  }, SUBPROCESS_PER_MODULE_TIMEOUT_MS);
 });
