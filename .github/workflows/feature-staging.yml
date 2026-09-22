@@ -296,8 +296,20 @@ jobs:
       # tree by `compose-docs.test.ts` rather than asserted here. So this is a
       # no-op until somebody deliberately authors a page under `docs/`, and the
       # risk is bounded to that moment instead of to this commit.
+      # `--staging` IS THE POINT OF THIS LINE, and it is the only place in the
+      # repository that passes it. A visualisation declared
+      # `publish: "staging-only"` is withheld by default, so the canonical
+      # publisher (`docs-site.yml`) needs no flag and cannot leak one by
+      # forgetting it; this preview positively asserts that it is not the
+      # canonical deploy, and gets those pages.
+      #
+      # `fsh-guts` is the worked case: the owner asked to see a graph whose own
+      # declaration keeps it off the published site, and this is where the two
+      # are reconciled. Drop the flag and the preview simply loses the page —
+      # visible to whoever is looking at the preview, which is the recoverable
+      # direction and the reason the default sits the other way round.
       - name: Compose the docs layers
-        run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
+        run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1

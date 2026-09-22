@@ -382,8 +382,12 @@
   "directories": [
     {
       "id": "tools",
+      "_coverage_comment": "`docs` pointed at `cat-harness/docs/skills.md` until 2026-09-22 — a page titled \"Skills & roles\" whose headings are Skills, Roles and Capabilities, with no tools section in it. The tools graph had no documentation of its own and named a page about something else. That is worse than an absent ref, because an absent one is a legible gap while a ref that RESOLVES reports coverage: the check in force asks only whether the path exists, it did, and nothing ever flagged it. Found by applying the owner's instruction of 2026-09-21, \"keep tools and skills separate!\". `tool-graph.md` is the prose; `tools/index.md` is the generated view, and the two are different objects rather than two names for one.",
       "coverage": {
-        "docs": "cat-harness/docs/skills.md",
+        "docs": "cat-harness/docs/tool-graph.md",
+        "visualiser": [
+          { "ref": "cat-harness/docs/tools/index.md", "title": "Tools" }
+        ],
         "skill": "skills-and-tools"
       },
       "path": "tools/",
@@ -499,6 +503,12 @@
     },
     {
       "id": "fsh-guts",
+      "_coverage_comment": "THE OWNER RULED, 2026-09-21: render it, keep it off the canonical deploy. They asked to see this graph (\"i eant to see beans/ todos/ fsh-guts/\") and the description below says it is DELIBERATELY unrendered so something can be kept without being published. Both were wanted, so `publish: \"staging-only\"` is the third answer: `compose-docs.ts` withholds the page unless told `--staging`, which a local build and a STAGING preview pass and the canonical deploy does not. The default is the restrictive one because the two failure directions are not symmetric -- a forgotten flag loses a page from a preview, where whoever is looking at the preview sees it missing, while the opposite default publishes withheld content with nothing to show for it. The page INDEXES rather than republishes: each entry links to the file, so the graph stays the one copy.",
+      "coverage": {
+        "visualiser": [
+          { "ref": "cat-harness/docs/fsh-guts/index.md", "title": "fsh-guts", "publish": "staging-only" }
+        ]
+      },
       "path": "fsh-guts/",
       "dependents": "skip",
       "scope": "repository",
@@ -595,7 +605,8 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
+        "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count \u2014 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library \u2014 which the library viewer cannot do by construction.",
+        "visualiser": [{ "ref": "cat-harness/docs/cat-harness/uploads/index.html", "icon": "uploads" }]
       },
       "description": "The incoming queue of the document-ingestion pipeline \u2014 raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphKinds": [

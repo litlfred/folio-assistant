@@ -61,6 +61,13 @@ const DIRS: TiledDirectory[] = [
   // function to `innerHTML`; this pins the `hasOwnProperty` guard.
   { id: "navbar-only", coverage: { visualiser: [{ ref: "cat-harness/docs/n.html", surfaces: ["navbar"], icon: "constructor" }] } },
   { id: "starts-hidden", coverage: { visualiser: [{ ref: "cat-harness/docs/h.html", hidden: true }] } },
+  // A page withheld from the canonical deploy. Its tile must vanish with it:
+  // a tile pointing at a page that was not deployed is a link to a 404, and
+  // it advertises content the declaration deliberately does not publish.
+  {
+    id: "staging-only",
+    coverage: { visualiser: [{ ref: "cat-harness/docs/s.html", publish: "staging-only" }] },
+  },
   // Declares nothing: it must get no tile, however much a viewer exists.
   { id: "undeclared" },
   // Declared OUTSIDE the published site: a tile, but not a link (`pb04`).
@@ -89,6 +96,8 @@ const BASE = "/folio-assistant";
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 <meta name="fa-baseurl" content="${BASE}">
+<!-- No fa-staging meta: this fixture is the CANONICAL deploy, which is the
+     default and the case a staging-only tile must not appear in. -->
 <meta name="fa-tiles" content='${JSON.stringify(TILES).replace(/'/g, "&#39;")}'>
 <style>${CSS}</style></head><body>
 <div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
@@ -516,5 +525,88 @@ test.describe("the glyph a tile wears is DECLARED, by name", () => {
     for (const n of onBoth) {
       expect(board.find((b) => b.id === n.id)!.glyph).toBe(n.glyph);
     }
+  });
+});
+
+test.describe("a staging-only tile appears only on a preview", () => {
+  /**
+   * The companion to `compose-docs.ts` withholding the PAGE. Both halves have
+   * to agree or the reader gets the worst outcome of the two: a tile in the
+   * navbar linking to a page that deploy does not carry.
+   *
+   * Asserted on both sides of the switch, and the canonical case first —
+   * that is the default, the one `docs-site.yml` produces, and the one where
+   * being wrong publishes a dead link to everybody.
+   */
+  test("it is absent when the page carries no fa-staging", async ({ page }) => {
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const ids = (await tilesOnPage(page, "navbar")).map((t) => t.id);
+    expect(ids.length).toBeGreaterThan(0);
+    expect(ids).not.toContain("staging-only");
+  });
+
+  test("it appears when fa-staging names a slug", async ({ page }) => {
+    await page.route("http://staging.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({
+          contentType: "text/html",
+          body: PAGE.replace(
+            `<meta name="fa-baseurl" content="${BASE}">`,
+            `<meta name="fa-baseurl" content="${BASE}">\n<meta name="fa-staging" content="my-branch">`,
+          ),
+        });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ $schema: "folio-todo-index/v1", items: ITEMS }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+    await page.goto("http://staging.test/page.html");
+    await ready(page);
+    expect((await tilesOnPage(page, "navbar")).map((t) => t.id)).toContain("staging-only");
+  });
+
+  test("an EMPTY fa-staging is canonical, not a preview", async ({ page }) => {
+    // The value `{{ site.data.build.staging_slug }}` renders to when the key
+    // is absent — which is every canonical build. Treating empty as "present"
+    // would publish the tile on the real site while the page is withheld,
+    // which is the exact failure this pair exists to prevent.
+    await page.route("http://empty.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({
+          contentType: "text/html",
+          body: PAGE.replace(
+            `<meta name="fa-baseurl" content="${BASE}">`,
+            `<meta name="fa-baseurl" content="${BASE}">\n<meta name="fa-staging" content="">`,
+          ),
+        });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ $schema: "folio-todo-index/v1", items: ITEMS }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+    await page.goto("http://empty.test/page.html");
+    await ready(page);
+    expect((await tilesOnPage(page, "navbar")).map((t) => t.id)).not.toContain("staging-only");
+  });
+
+  test("showing hidden tiles does not resurrect it", async ({ page }) => {
+    // `hidden` and `publish` are different axes: one is a reader's preference
+    // about a page that exists, the other is whether the page is there at all.
+    // Conflating them would let "show hidden" produce a link to a 404.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    const board = (await tilesOnPage(page, "board")).map((t) => t.id);
+    expect(board).not.toContain("staging-only");
   });
 });

@@ -581,6 +581,34 @@
       ]
     },
     {
+      "id": "librarian",
+      "title": "Librarian",
+      "description": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "lanes": [
+        "Contributor",
+        "Agent"
+      ],
+      "skills": [
+        "filing-dublin-core",
+        "archiving-web-pages",
+        "archiving-arxiv",
+        "document-intake",
+        "library-ingestion"
+      ],
+      "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first.",
+      "voice": "Exact about what is claimed versus what is ours. An identifier is the publisher's; a slug is this corpus's. A capture is evidence of one thing and not of another, and says which.",
+      "useCases": [
+        "Capture a web page so it can be cited after the site changes",
+        "Materialize a paper from arXiv at a named version",
+        "Catalogue an arriving source in `dcterms`, and say where `dcterms` runs out",
+        "Decide whether a source may be redistributed, or record that a person must"
+      ]
+    },
+    {
       "id": "evidence-agent",
       "title": "Evidence agent",
       "description": "Retrieves and appraises external evidence for a guideline claim.",

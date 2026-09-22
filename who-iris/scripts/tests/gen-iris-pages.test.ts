@@ -117,7 +117,21 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", "kg-to-portal.html", ...items, ...colls]);
+    // A SECOND LIST BESIDE `OWNED`, and it went stale the first time a page
+    // was added — `catalogue.html` (2026-09-22) was written, pruned-checked
+    // and gated, and this set still did not know it existed. Kept as a list
+    // rather than derived from `OWNED` because that is a regex and cannot
+    // enumerate; the cost is that adding a page means editing here too, which
+    // the next person discovers exactly the way this was discovered.
+    const wanted = new Set([
+      "index.html",
+      "community-list.html",
+      "ingestion-notes.html",
+      "kg-to-portal.html",
+      "catalogue.html",
+      ...items,
+      ...colls,
+    ]);
     expect(html.filter((f) => !wanted.has(f))).toEqual([]);
     expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
   });

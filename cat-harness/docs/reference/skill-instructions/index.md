@@ -56,6 +56,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
 | [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
+| [Materializing from arXiv](archiving-arxiv.html) | `archiving-arxiv` | — | arXiv is the easiest case to get *nearly* right, which is why it is worth its |
+| [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
 | [Asset extraction](asset-extraction.html) | `asset-extraction` | — | A container arrives in `uploads/`: a zip of a saved web page, a PDF, a |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
@@ -96,6 +98,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Evidence review](evidence-review.html) | `evidence-review` | — | > Skill id: `evidence-review` · Capability: `quality-assurance` · Package: `folio-core` |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
+| [Filing a source: what Dublin Core carries, and what it does not](filing-dublin-core.html) | `filing-dublin-core` | — | This is the **librarian's** half of intake, not the ingestion engine's. A file |
 | [Flushable containers](flushable-containers.html) | `flushable-containers` | — | **A flushable container is a named store whose whole point is that it keeps |
 | [`fsh-guts/`](fsh-guts.html) | `fsh-guts` | — | **Delete means relocate.** Nothing in this repository is removed with `rm` |
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn). |
