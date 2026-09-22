@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T06:03:07Z
-updated_at: 2026-09-22T09:03:43Z
+updated_at: 2026-09-22T10:44:19Z
 parent: folio-assistant-1xhc
 ---
 
@@ -279,3 +279,52 @@ The PR body says *"the true saving is probably larger, which is exactly why a pr
 - [x] A real preview measured after the change is live — done on the PR's own staging, no merge required
 - [x] The measured figure reported rather than the projection
 - [ ] The share of branches that touch none of the five carry paths — the number that decides whether `reference/`'s 38.7 MiB is reachable in practice. NOT measurable from nine previews
+
+
+_2026-09-22T10:50:00Z_ — **THE OPEN BOX IS MEASURED: 32 %, and the answer is that this change is not sufficient.**
+
+The box asked what share of branches touch none of the five carry paths. I said nine previews could not answer it — true, and the wrong place to look. **Git history can**, and the carry rule is a pure function of a branch's changed files, so it can be evaluated retrospectively against merges that predate it.
+
+## Method
+
+120 merge commits into `origin/main`, newest first. For each, `git diff --name-only <merge>^1 <merge>` gives exactly what that merge brought, and the two patterns are read **off `feature-staging.yml` on main** rather than from memory:
+
+    reference/   ^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness/scripts/gen-(schema|skill|docs)-
+    api/         ^cat-harness/schemas/
+
+| class | n | share | sheds |
+|---|---|---|---|
+| touches **neither** | 38 | **32 %** | `reference/` + `api/` = **46.0 MiB** |
+| touches ref, not api | 22 | 18 % | `api/` alone = **7.3 MiB** |
+| touches both | 60 | 50 % | nothing |
+
+`api ⊆ ref` exactly — 82 = 60 + 22 — which is a structural check on the measurement rather than a coincidence: `^cat-harness/schemas/` is a subset of the `reference/` alternation, so any branch carrying `api/` must carry `reference/`. The three classes being disjoint and summing to 120 is the second.
+
+## The number
+
+    EXPECTED saving per preview    15.9 MiB of 92.5  =  17 %
+    measured on THIS branch         7.3 MiB of 92.5  =   8 %   (a skills-touching branch)
+    projected in the PR body       43.2 MiB of 88.3  =  49 %
+
+So the projection was wrong by ~3× against a realistic branch mix, and by ~6× against the branch I happened to measure on. **8 % was not unrepresentative — it was the second-most-likely case**, and the single most likely case (50 %) saves nothing at all.
+
+## What it means for the 1 GB cap, which is the question behind the question
+
+A ten-preview tree at today's composition: **925 MiB → 766 MiB**. That is 90 % → **75 % of the 1024 MiB limit** — still past the three-quarters threshold `staging-preview-size` fires on, which is why `bun run health` still reports it **critical** after this shipped.
+
+This change buys roughly **two** extra concurrent reviews rather than the halving the PR body implies. It is worth having — it is the only lever that does not delete somebody's open preview — and it is **not sufficient on its own.**
+
+## One reason the 32 % case may be better than 46.0 MiB
+
+`reference/` carries the just-the-docs nav and `api/` does not; that is why dropping `api/` saved exactly its own weight (measured) while dropping `reference/` should also shrink **every remaining page**. **No preview has yet dropped `reference/`**, so 46.0 MiB is a floor for that class, not an estimate. If the nav effect is as large for it as the 143 KiB/page figure suggests, the 32 % class could shed materially more — and the honest way to find out is to wait for a preview on a branch that touches none of the five paths, then measure it.
+
+## Caveat on the sample
+
+Merge commits into `main` are a **proxy** for "branches that had a preview": some are dependabot bumps, some are bean-only closures. Both are exactly the kind of branch that touches none of the five paths, so the 32 % may be **optimistic** for human feature branches specifically. Splitting the sample by author is the refinement if anyone wants a tighter number; 120 is enough to rule out the 49 % projection, which is what the box was for.
+
+## Done when
+
+- [x] A real preview measured after the change is live
+- [x] The measured figure reported rather than the projection
+- [x] The share of branches touching none of the five carry paths — **32 % of 120 merges**, giving a 17 % expected saving and 75 % of the cap
+- [ ] **NEW, and the box this one opens:** 17 % does not clear the threshold. The next lever needs choosing — and it is the owner's call, not an agent's, because every candidate either deletes somebody's artefact or changes what a reviewer can see
