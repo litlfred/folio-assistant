@@ -152,6 +152,13 @@ export type HarnessTile = {
    * a deliberate one.
    */
   navbarIcons?: NavbarIcon[];
+  /**
+   * The mark the navbar renders: the theme avatar if there is one, else the
+   * instance's own icon, with its crop solved. Absent when neither exists —
+   * and the navbar then draws an INITIAL, which is a different answer from a
+   * broken image and from a placeholder glyph.
+   */
+  mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
   /** Hue angle from the avatar registry — the tile's theme. */
   tone: number;
   /** What the avatar reads as, for the accessible name. */
@@ -740,16 +747,7 @@ function tileFor(
           // Two fields from one declaration, both generated, neither authored
           // — which is why this is not the duplication `sjic` is about. The
           // sum has ONE home; only its output has two shapes.
-          ...(card.avatarRegion
-            ? {
-                crop: {
-                  width: +(100 / card.avatarRegion.w).toFixed(4),
-                  height: +(100 / card.avatarRegion.h).toFixed(4),
-                  left: +((-100 * card.avatarRegion.x) / card.avatarRegion.w).toFixed(4),
-                  top: +((-100 * card.avatarRegion.y) / card.avatarRegion.h).toFixed(4),
-                },
-              }
-            : {}),
+          ...(card.avatarRegion ? { crop: solveCrop(card.avatarRegion) } : {}),
         }
       : undefined;
   if (card && card.avatarRegion === undefined) {
@@ -761,6 +759,18 @@ function tileFor(
         `crop to show — the whole card in a 2rem frame is unreadable. Declare one.`,
     );
   }
+
+  // Resolved after both candidates exist. `icon` keeps its own field for
+  // `mount-instance-docs.ts`, which builds a NavItem rather than reading this.
+  const iconMark =
+    iconSrc === undefined
+      ? undefined
+      : {
+          src: iconSrc,
+          title: icon?.title ?? "",
+          ...(icon?.avatarRegion ? { crop: solveCrop(icon.avatarRegion) } : {}),
+        };
+  const navMark = themeAvatar ?? iconMark;
 
   const href = folio ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
@@ -814,6 +824,23 @@ function tileFor(
     // landscape layout would carry a box that is square in fractions and not
     // in pixels, which is exactly the stretch that refusal exists to stop.
     ...(themeAvatar ? { avatar: themeAvatar } : {}),
+    /**
+     * THE MARK THE NAVBAR SHOWS, resolved once here rather than branched on in
+     * a template.
+     *
+     * Theme avatar first, the instance's own `icon` second. The precedence is
+     * the owner's — *"use theme avatar not the purply thing"* — and it is
+     * decided HERE because the alternative is five branches of Liquid
+     * (`avatar` with a crop, `avatar` without, `icon` with a crop, `icon`
+     * without, initial) that would each have to agree about the order.
+     *
+     * The crop rides whichever source won, so an ICON may be cropped too:
+     * `who-iris` declares the WHO emblem-and-wordmark at 581x178 and an
+     * `avatarRegion` taking the leftmost square, which is the emblem. Before
+     * this, a region on an icon was carried in the data and rendered by
+     * nothing.
+     */
+    ...(navMark ? { mark: navMark } : {}),
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,
@@ -959,6 +986,31 @@ export function harnessTiles(
  * stale rule. The test pins the three cases above; a `permalink` added to
  * `_config.yml` should send somebody here.
  */
+/**
+ * A declared crop, solved into the four values CSS wants.
+ *
+ * The image is scaled by `1/w` and `1/h` and then offset by `-x` and `-y` OF
+ * THE SCALED image, which is why the offsets divide by the same fractions.
+ * `navbar.ts`'s `mark()` does the identical sum for a mounted page, and
+ * `sync-docs-harness.ts` for the site title.
+ *
+ * SOLVED IN TYPESCRIPT because the consumer is Liquid, which cannot be trusted
+ * to divide two floats without quietly producing an integer.
+ */
+function solveCrop(r: { x: number; y: number; w: number; h: number }): {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+} {
+  return {
+    width: +(100 / r.w).toFixed(4),
+    height: +(100 / r.h).toFixed(4),
+    left: +((-100 * r.x) / r.w).toFixed(4),
+    top: +((-100 * r.y) / r.h).toFixed(4),
+  };
+}
+
 export function publishedUrlOf(relPathUnderSite: string): string {
   const withoutIndex = relPathUnderSite.replace(/(^|\/)index\.(html|md)$/, "$1");
   // Only a LEAF page is rewritten. A path already ending in `/` is a

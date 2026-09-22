@@ -167,38 +167,40 @@
           this element already carried for its stripe.
         {%- endcomment -%}
         {%- comment -%}
-          THE THEME AVATAR FIRST — owner, 2026-09-22: *"bootstrap and who-iris
-          need theme avatars"*.
+          THE MARK — resolved in `harness-tiles.ts`, not chosen here.
 
-          An instance's theme art, clipped to the cat, beats its `icon`. The
-          chain is instance -> its sticky -> the sticky's `theme` -> the
-          theme's `imageRole` -> the images carrying that role -> the `card`
-          layout -> its `avatarRegion`. Every link already existed;
-          `harness-tiles.ts` walks it and solves the crop.
+          Owner, 2026-09-22: *"use theme avatar not the purply thing"* and
+          *"bootstrap and who-iris need theme avatars"*. `t.mark` is the theme
+          avatar when the instance has one and its own `icon` otherwise, with
+          the crop already solved. ONE branch here rather than five, because
+          the precedence is a fact about the data and five Liquid branches
+          would each have to agree about it.
 
           THE SUPPLIER MAY NOT BE THE SUBJECT. `bootstrap` declares a sticky
-          naming `theme: bootstrap` and **zero images**; `cat-harness` declares
-          the `landing-bootstrap` role. That is the inversion a theme's
-          `imageRole` exists for, and it is why resolution falls back to the
-          site owner's image set.
+          naming `theme: bootstrap` and ZERO images; `cat-harness` declares the
+          `landing-bootstrap` role. That is what a theme's `imageRole` is for,
+          and why resolution falls back to the site owner's image set.
 
-          `relative_url`, like the icon below. `src` is composed against
-          whichever instance supplies the art, but it is SITE-ROOT relative and
-          carries no baseurl — the first version of this block said otherwise
-          and omitted the filter, and the mark rendered as nothing: the site is
+          AN INITIAL WHEN THERE IS NEITHER — `navbar.ts`'s own rule, and the
+          common case: most instances declare no mark at all. A gap is reported
+          elsewhere as a finding; a navbar is not the place to draw one as a
+          `?`.
+
+          `relative_url` because `src` is site-root relative and carries no
+          baseurl. Omitting it rendered the mark as NOTHING — the site is
           served from `/folio-assistant/`, so `/assets/...` is a 404. Measured
-          (404 bare, 200 with the prefix), not reasoned. `68au` is this same
-          defect on the graph tiles, which is why it has a bean.
+          (404 bare, 200 prefixed), and `68au` is the same defect on the graph
+          tiles.
         {%- endcomment -%}
-        {%- if t.avatar.crop -%}
+        {%- if t.mark.crop -%}
         <span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
-          <img src="{{ t.avatar.src | relative_url }}" alt=""
-               style="width: {{ t.avatar.crop.width }}%; height: {{ t.avatar.crop.height }}%;
-                      left: {{ t.avatar.crop.left }}%; top: {{ t.avatar.crop.top }}%">
+          <img src="{{ t.mark.src | relative_url }}" alt=""
+               style="width: {{ t.mark.crop.width }}%; height: {{ t.mark.crop.height }}%;
+                      left: {{ t.mark.crop.left }}%; top: {{ t.mark.crop.top }}%">
         </span>
-        {%- elsif t.icon.src -%}
-        <img class="fa-harness-tab__mark" src="{{ t.icon.src | relative_url }}"
-             alt=""{% if t.icon.title %} title="{{ t.icon.title }}"{% endif %}>
+        {%- elsif t.mark.src -%}
+        <img class="fa-harness-tab__mark" src="{{ t.mark.src | relative_url }}"
+             alt=""{% if t.mark.title %} title="{{ t.mark.title }}"{% endif %}>
         {%- else -%}
         <span class="fa-harness-tab__mark fa-harness-tab__mark--initial"
               aria-hidden="true">{{ t.label | default: t.title | slice: 0, 1 | upcase }}</span>
