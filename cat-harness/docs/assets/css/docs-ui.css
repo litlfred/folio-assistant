@@ -634,6 +634,28 @@
 @media (min-width: 50rem) {
   .side-bar {
     width: var(--fa-nav-collapsed);
+    /* MIN-WIDTH BEATS WIDTH, and the theme sets one this never answered.
+     *
+     * `layout.scss` carries `.side-bar { min-width: 16.5rem }` inside its own
+     * `mq(lg)` (66.5rem). Overriding `width` alone therefore collapsed the
+     * sidebar at 820-1063px and did NOTHING at 1064px and up, where the
+     * cascade is irrelevant because a `min-width` floor is not something a
+     * later `width` can cross.
+     *
+     * MEASURED 2026-09-22, by rendering the built site at six viewports
+     * rather than by reading this file:
+     *
+     *   viewport 1063 -> width 56px,  min-width 0px     collapsed
+     *   viewport 1064 -> width 264px, min-width 264px   NOT collapsed
+     *
+     * And it was worse than a control that did not work, because
+     * `.side-bar + .main` still reserves `--fa-nav-collapsed`: the sidebar
+     * sat 264px wide over content that began at 56px, so its own
+     * `border-right` was painted ACROSS the page. The owner reported that as
+     * "there is stray border when collasped" — the border is the theme's and
+     * is correct; what was wrong is that the sidebar was over the page.
+     */
+    min-width: 0;
     align-items: flex-start;
     overflow-y: auto;
     overflow-x: hidden;
