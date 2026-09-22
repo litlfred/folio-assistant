@@ -1,12 +1,12 @@
 ---
 # folio-assistant-fd6i
 title: 'CONTEXT, THE OTHER DIRECTION: `skos:` is bound in the published @context and emitted by ZERO nodes — and prose claims the graph speaks it'
-status: todo
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-zzmr
 created_at: 2026-09-20T19:55:26Z
-updated_at: 2026-09-20T19:55:26Z
+updated_at: 2026-09-22T07:23:02Z
+parent: folio-assistant-zzmr
 ---
 
 Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while holding the `lqo9`
@@ -226,3 +226,13 @@ always true; what was false was the claim about emission.
 Related: `ovkk` (the other direction, in-progress, PR #330), `lqo9` (the glossary
 roast that surfaced this), `zzmr` (KG structure and publication), `ulqj`/`eief`
 (the CSVW work whose prose carries the claim).
+
+## Closed on re-derived evidence, 2026-09-22
+
+Every `## Done when` item was ticked while the bean stayed open. Re-derived
+against `main` at `2ce66fc`: **`check:context-emission` is declared in
+`package.json` and wired into `code-quality-gates.yml`**, which is the gate
+this bean's first and second items call for.
+
+Closed by **evidence, not authorship** — `bean-coordination` §"Closing a bean
+whose work has already landed".

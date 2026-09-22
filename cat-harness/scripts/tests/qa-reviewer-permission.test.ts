@@ -141,3 +141,91 @@ describe("report — what is baselined and what never is", () => {
     expect(report([], new Set(["unresolved:gone.ts"])).stale).toEqual(["unresolved:gone.ts"]);
   });
 });
+
+describe("the checker/adjudicator split enforces itself", () => {
+  // The owner's ruling, 2026-09-22: two new actors, and the CHECKER holds no
+  // `qa-reporting` on purpose. That absence is what turns "a checker must not
+  // rule" from a sentence in a skill into something the gate refuses.
+  const actors = readActors();
+
+  test("the adjudicator may rule; the checker may not", () => {
+    expect(reviewerOutcome({ kind: "agent", id: "a", actor: "untainted-adjudicator" }, actors)).toBe("permitted");
+    expect(reviewerOutcome({ kind: "agent", id: "c", actor: "untainted-checker" }, actors)).toBe("forbidden");
+  });
+
+  test("NEITHER holds content-authoring — the producer never writes the verdict", () => {
+    for (const id of ["untainted-adjudicator", "untainted-checker"]) {
+      expect(actors.get(id)?.has("content-authoring") ?? false).toBe(false);
+    }
+  });
+
+  test("a checker's `n/a` witness is exempt — the honest half must not fail the gate", () => {
+    const { results, actors: dir } = fixture();
+    writeFileSync(
+      join(results, "ok.json"),
+      JSON.stringify({
+        criteria: {
+          c: [
+            {
+              field_hash: HASH,
+              result: "n/a",
+              metrics: { role: "checker" },
+              reviewer: { kind: "agent", id: "checker", actor: "untainted-checker" },
+              reviewed_at: T,
+            },
+          ],
+        },
+      }),
+    );
+    expect(scan(results, readActors(dir))).toEqual([]);
+  });
+
+  test("a checker emitting a REAL verdict is forbidden — the defect worth catching", () => {
+    const { results, actors: dir } = fixture();
+    writeFileSync(
+      join(results, "bad.json"),
+      JSON.stringify({
+        criteria: {
+          c: [
+            {
+              field_hash: HASH,
+              // It ruled. That is the thing it may not do.
+              result: "pass",
+              metrics: { role: "checker" },
+              reviewer: { kind: "agent", id: "checker", actor: "untainted-checker" },
+              reviewed_at: T,
+            },
+          ],
+        },
+      }),
+    );
+    const a = readActors(dir);
+    // The fixture's own actor dir has no untainted-* actors, so use the real
+    // registry: this asserts the SHIPPED declarations, not a stand-in.
+    expect(reviewerOutcome({ kind: "agent", id: "c", actor: "untainted-checker" }, actors)).toBe("forbidden");
+    expect(scan(results, a).map((f) => f.outcome)).toEqual(["unresolved"]);
+  });
+
+  test("the exemption cannot be claimed without the structural marker", () => {
+    // Same `n/a`, no `metrics.role` — so it is not a checker witness and the
+    // permission question still applies.
+    const { results, actors: dir } = fixture();
+    writeFileSync(
+      join(results, "sneaky.json"),
+      JSON.stringify({
+        criteria: {
+          c: [
+            {
+              field_hash: HASH,
+              result: "n/a",
+              notes: "checker witness, honest",
+              reviewer: { kind: "agent", id: "x", actor: "author" },
+              reviewed_at: T,
+            },
+          ],
+        },
+      }),
+    );
+    expect(scan(results, readActors(dir)).map((f) => f.outcome)).toEqual(["forbidden"]);
+  });
+});

@@ -127,6 +127,12 @@ export interface RepoSizeEvidence {
   packBytes: number;
 }
 
+export type DoneWhenState =
+  | { kind: "absent" }
+  | { kind: "unreadable" }
+  | { kind: "open"; ticked: number; total: number }
+  | { kind: "all-ticked"; total: number };
+
 export interface BeanEvidence {
   id: string;
   title: string;
@@ -150,6 +156,17 @@ export interface BeanEvidence {
   consideredOptions?: number;
   /** Carries a decision rendered through `renderDecision` — see `hasRenderedDecision`. */
   renderedDecision?: boolean;
+  /**
+   * What the bean's own `## Done when` criteria say about it — see
+   * `doneWhenState`, which carries the four states and why `unreadable`
+   * outranks `all-ticked`.
+   *
+   * `undefined` here means the probe that built this evidence predates the
+   * field, NOT that the bean has no criteria — `{ kind: "absent" }` says that.
+   * The check must treat the two apart for the reason `consideredOptions`
+   * above does: a missing measurement is not a measured zero.
+   */
+  doneWhen?: DoneWhenState;
 }
 
 export interface TodoEvidence {
@@ -1006,6 +1023,22 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "store already has rather than demanding work.",
   },
   {
+    metric: "bean-self-declared-done",
+    value: 0,
+    unit: "count",
+    severity: "minor",
+    basis:
+      "NO EXTERNAL STANDARD; calibrated here, and zero because the condition has no tolerant form. " +
+      "`bean-coordination` makes `in-progress` a CLAIM a sibling is expected to honour, so a bean whose " +
+      "every Done-when box is ticked while its front matter still says claimed is two answers to one " +
+      "question — and the one a sibling reads first is the wrong one. Measured 2026-09-21 and the cost " +
+      "is not hypothetical: `tyyc` was picked up as fresh work and turned out to have landed, gate " +
+      "registered in CI and passing, costing a session's opening to re-derive. MINOR because the " +
+      "remedy is a person re-deriving and closing, not a broken consumer. Of 96 claimed beans that day, " +
+      "4 met this and 6 had met a cruder body-wide version — the difference is `z4mq` and the reason " +
+      "`doneWhenState` has an `unreadable` state.",
+  },
+  {
     metric: "bean-stale-in-progress",
     value: BEAN_STALE_DAYS,
     unit: "days",
@@ -1104,8 +1137,24 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         x.hours !== undefined && x.hours > BEAN_QUIET_HOURS && !stale.some((s) => s.bean.id === x.bean.id),
     );
 
+  // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
+  //
+  // Read from the BODY's Done-when section, so the denominators below carry a
+  // different `command` from the front-matter ones for the reason the options
+  // measurements already do.
+  //
+  // The three populations are reported side by side deliberately. `absent` and
+  // `unreadable` are the beans this cannot judge, and folding either into the
+  // pass is the `dh4f` defect — a clean run reported over a corpus the tool
+  // could not read. They are counted and left alone.
+  const withDoneWhen = claimed.filter((b) => b.doneWhen !== undefined);
+  const criteriaAbsent = withDoneWhen.filter((b) => b.doneWhen!.kind === "absent");
+  const criteriaUnreadable = withDoneWhen.filter((b) => b.doneWhen!.kind === "unreadable");
+  const selfDeclaredDone = withDoneWhen.filter((b) => b.doneWhen!.kind === "all-ticked");
+
   const cmd = "beans/defs/*.md front matter";
   const bodyCmd = "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading";
+  const doneWhenCmd = "beans/defs/*.md — task-list items under every `## Done when` heading";
   const measurements: HealthMeasurement[] = [
     { metric: "bean-total", value: beans.length, unit: "count", command: cmd },
     { metric: "bean-open", value: open.length, unit: "count", command: cmd },
@@ -1135,6 +1184,30 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       command: "beans/defs/*.md — the five-row table `renderDecision` emits",
     },
     { metric: "bean-thin-decision-records", value: thin.length, unit: "count", command: bodyCmd },
+    // THE THREE POPULATIONS `fkjo` NEEDS KEPT APART, and the two that are not
+    // findings are reported for the same reason `bean-decision-records` is: the
+    // finding can only fire on a bean `bean-claimed-with-criteria` includes, so
+    // a heading respelled or a regex narrowed shows up here as a denominator
+    // that fell rather than as a green tick over a walk that matched nothing.
+    {
+      metric: "bean-claimed-with-criteria",
+      value: withDoneWhen.length,
+      unit: "count",
+      command: doneWhenCmd,
+    },
+    {
+      metric: "bean-claimed-criteria-absent",
+      value: criteriaAbsent.length,
+      unit: "count",
+      command: doneWhenCmd,
+    },
+    {
+      metric: "bean-claimed-criteria-unreadable",
+      value: criteriaUnreadable.length,
+      unit: "count",
+      command: doneWhenCmd,
+    },
+    { metric: "bean-self-declared-done", value: selfDeclaredDone.length, unit: "count", command: doneWhenCmd },
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
@@ -1164,6 +1237,21 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
             "was only one, say WHY NO ALTERNATIVE EXISTED and make that the record: per `madr.md` that " +
             "is a finding about the constraint, not a decision. Never invent a straw option to reach " +
             "two — the methodology refuses that more firmly than it refuses a short list.",
+    });
+  }
+  for (const b of selfDeclaredDone) {
+    const n = b.doneWhen!.kind === "all-ticked" ? b.doneWhen!.total : 0;
+    findings.push({
+      metric: "bean-self-declared-done",
+      severity: "minor",
+      summary:
+        `\`${b.id}\` is \`in-progress\` with all ${n} of its Done-when boxes ticked ("${b.title}").`,
+      action:
+        "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. " +
+        "The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had " +
+        "genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it " +
+        "while its last box says that work was migrated), and `z4mq` was not finished at all. If it has " +
+        "landed, close it with the evidence you re-derived; if it has not, untick what is not done.",
     });
   }
   for (const s of stale) {

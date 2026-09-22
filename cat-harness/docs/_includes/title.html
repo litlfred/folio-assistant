@@ -29,8 +29,63 @@
   `h.icon` is the instance's declared mark, so an instance that declares a
   different one gets its own here with no template change.
 {%- endcomment -%}
+{%- comment -%}
+  TWO MARKS WHEN THE INSTANCE DECLARES ONE, and the stylesheet shows whichever
+  matches the page's scheme.
+
+  The reason is a measurement, not taste: the light ink (#596a5b, taken from
+  the art the owner supplied) is 2.60:1 on the dark sidebar — under the 3:1
+  bar for meaningful non-text content. The dark variant is the same hue
+  lifted, at 7.00:1.
+
+  BOTH ARE IN THE DOCUMENT and CSS picks one, rather than Liquid choosing.
+  Liquid cannot: the scheme is `data-fa-scheme` on `<html>`, set by
+  `docs-ui.js` from the reader's stored choice, which the server does not
+  know. A server-side choice would be right for exactly the readers who never
+  changed it.
+
+  The cost is one extra request, and it is paid once: both files are ~3 KB,
+  the second is fetched lazily by the browser only if its rule matches, and
+  the alternative — a CSS filter lightening the light mark — is a GUESS about
+  the resulting colour, which is the one thing this change exists to stop
+  guessing.
+
+  ABSENT IS A REAL STATE. An instance that declares no `mark-dark` renders
+  one `<img>` with no scheme class, shown in both — which is what every
+  instance did before this existed.
+{%- endcomment -%}
+{%- comment -%}
+  ONE MASKED ELEMENT WHEN THE INSTANCE DECLARES A MASK, and it replaces the
+  light/dark PAIR below rather than joining it.
+
+  Owner, 2026-09-22: *"I want theme like in avaatars"*. An avatar is a mask
+  plus a `background-color` derived from one declared hue, so both schemes
+  come from one number. The pair below is the thing that mechanism exists to
+  replace: `gen-avatars-css` says it outright about not shipping assets per
+  scheme — *"as files they would drift, and the one that fell behind would be
+  invisible until somebody opened the site in the other mode"* — and the mark
+  had already shipped exactly that risk, two files that must agree.
+
+  A `<span>`, not an `<img>`: the colour is painted through the glyph's shape
+  by `background-color`, which an `<img>`'s own pixels would sit on top of.
+  `aria-hidden` and the empty name are unchanged — the title beside it names
+  the site, and a mark that repeated it would be read twice.
+
+  ABSENT IS A REAL STATE, the same rule `mark-dark` follows: an instance that
+  declares no mask falls through to the pair, and nothing changes for it.
+{%- endcomment -%}
 {%- if h.icon.src -%}
+  {%- if h.iconMask.src -%}
+  <span class="fa-site-mark fa-site-mark--masked" aria-hidden="true"
+        style="--fa-site-mark-src: url('{{ h.iconMask.src | relative_url }}')"></span>
+  {%- elsif h.iconDark.src -%}
+  <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark fa-site-mark--light" width="32" height="32" />
+  <img src="{{ h.iconDark.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark fa-site-mark--dark" width="32" height="32" />
+  {%- else -%}
   <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
        class="fa-site-mark" width="32" height="32" />
+  {%- endif -%}
 {%- endif -%}
 <span class="fa-site-title">{{ h.title | default: site.title }}</span>

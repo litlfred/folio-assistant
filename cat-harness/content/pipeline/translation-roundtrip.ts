@@ -58,6 +58,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { gitHeadSha, hashFile } from "./qa-utils.ts";
+import { ADJUDICATOR_ACTOR, CHECKER_ACTOR } from "./untainted-verification.ts";
 import type {
   TranslationBlockQaReport,
   TranslationFieldHash,
@@ -164,10 +165,15 @@ export function roundTripEntries(
     result: payload.verdict,
     severity: payload.verdict === "pass" ? undefined : (payload.severity ?? "minor"),
     evidence: findings && findings.length > 0 ? findings.map((t) => ({ text: t })) : undefined,
-    reviewer: { kind: "agent", id: payload.adjudicator.id, ...agentFields(payload.adjudicator) },
+    reviewer: {
+      kind: "agent",
+      id: payload.adjudicator.id,
+      actor: ADJUDICATOR_ACTOR,
+      ...agentFields(payload.adjudicator),
+    },
     reviewed_at: at,
     reviewed_sha: sha,
-    metrics: provenanceMetrics(payload.adjudicator),
+    metrics: provenanceMetrics(payload.adjudicator, { role: "adjudicator" }),
     notes: payload.reasoning,
   };
 
@@ -176,10 +182,19 @@ export function roundTripEntries(
     // It measured nothing and must not read as a verdict. What it contributes
     // is the intermediate text the adjudicator ruled on.
     result: "n/a",
-    reviewer: { kind: "agent", id: payload.backTranslator.id, ...agentFields(payload.backTranslator) },
+    reviewer: {
+      kind: "agent",
+      id: payload.backTranslator.id,
+      actor: CHECKER_ACTOR,
+      ...agentFields(payload.backTranslator),
+    },
     reviewed_at: at,
     reviewed_sha: sha,
     metrics: provenanceMetrics(payload.backTranslator, {
+      // `role` is what `isCheckerWitness` reads. Without it this entry — which
+      // rules on nothing — reads as `untainted-checker` emitting a verdict and
+      // fails the permission gate built to protect exactly this separation.
+      role: "checker",
       method: "independent agentic back-translation",
     }),
     notes:

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-3vc6
 title: 'TRANSLATION AS AN INSTANCE: re-express the round trip against the spine and lose the duplicated half'
-status: in-progress
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-3x2n
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-21T21:55:16Z
+updated_at: 2026-09-22T07:22:05Z
+parent: folio-assistant-3x2n
 ---
 
 Once `0grh` exists, `translation-manager.md` §"The agentic round trip" holds two
@@ -87,3 +87,18 @@ turns red when the back-translator is handed the source: the vacuous pass
 `translation-manager` used to warn about in prose is now caught.
 
 `bun run gates` — 99 of 99.
+
+## Summary of Changes
+
+`ROUNDTRIP_DISPATCH` in `translation-block-qa.ts` declares the round trip
+against the spine; `translation-manager.md` now points at
+`untainted-verification` rather than restating it, keeping only what
+translation adds.
+
+**Instantiating it found the spine too narrow** — `UntaintedDispatch` was typed
+over `CompanionRole` and the round trip's central artefact is the `.po`, which
+deliberately is not one. Widened to
+`UntaintedDispatch<A extends string = CompanionRole>` rather than bending the
+case.
+
+Verified on `main` at `2ce66fc`. Merged in #829.
