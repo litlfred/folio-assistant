@@ -264,13 +264,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-22T21:58:08.681Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c07ca3956f8a881328fe181193dba7715e69493c",
-  "sourceCommitSha": "c07ca3956f8a881328fe181193dba7715e69493c",
-  "sourceCommitAt": "2026-09-22T21:55:13Z",
+  "generatedAt": "2026-09-22T22:39:36.465Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ce6acece7cadab2f56cda181edd8faa8a22ca016",
+  "sourceCommitSha": "ce6acece7cadab2f56cda181edd8faa8a22ca016",
+  "sourceCommitAt": "2026-09-22T22:36:29Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 238,
+    "Skill": 239,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -1256,6 +1256,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/rendered-verification",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "rendered-verification",
+      "title": "/rendered-verification — look at it, then send the picture",
+      "description": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, and the four defect classes that are invisible to a green gate set.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/rendered-verification.md",
+      "instructionLines": 172,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/swarm-management",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "swarm-management",
@@ -1976,7 +1993,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-tiles.md",
-      "instructionLines": 234,
+      "instructionLines": 309,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5755,6 +5772,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/render-order",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-modest-keller-vzzjiy/cat-harness.jsonld#skill/role-model",
@@ -36779,8 +36797,8 @@
   ],
   "staging": {
     "branch": "claude/modest-keller-vzzjiy",
-    "sha": "34b815bcb37a2f1bf49772179a7b002985c5d12f",
+    "sha": "f9ba451958dd841125005f714a0458f20757e7a6",
     "pr": "977/merge",
-    "run": "35789490076"
+    "run": "35793288816"
   }
 }
