@@ -11,6 +11,8 @@ import {
   tileFindings,
   tilesOn,
   undeclaredProjections,
+  withTileCounts,
+  type GraphTile,
   type TiledDirectory,
 } from "../graph-tiles.js";
 import { SubgraphCoverageSchema, visualisationsOf } from "../../schemas/cat-harness.js";
@@ -211,5 +213,85 @@ describe("a declared path is NOT a published URL — `prc5` one layer down", () 
     expect(tiles.length).toBe(1);
     expect(tiles[0]?.href).toBeUndefined();
     expect(tiles[0]?.ref).toBe("elsewhere/v.html");
+  });
+});
+
+
+/**
+ * Issue #856, bean `tis1`. The owner ruled for a badge over greying an empty
+ * tile out, because a badge also makes a WRONG count visible where a dimmed
+ * tile only answers "empty or not".
+ *
+ * These assert the SPLIT and the THIRD STATE, not the arithmetic. A test over
+ * the numbers would pass just as happily on the day a tile started inventing
+ * one.
+ */
+describe("a tile's count is attached, never derived", () => {
+  const tiles = (): GraphTile[] =>
+    graphTiles(
+      [dir("beans", { visualiser: "docs/beans/index.html" }),
+       dir("fsh-guts", { visualiser: "docs/fsh-guts/index.html" })],
+      "docs",
+    );
+
+  test("a declared count reaches the tile with its unit", () => {
+    const got = withTileCounts(tiles(), new Map([["beans", { count: 466, unit: "beans" }]]));
+    const beans = got.find((t) => t.directory === "beans")!;
+    expect(beans.count).toBe(466);
+    expect(beans.unit).toBe("beans");
+  });
+
+  test("a directory nobody counted has NO count field — not a zero", () => {
+    // The third state, at the layer that emits the JSON the browser reads.
+    // `dh4f`: an absent count and an empty graph are opposite facts, and a
+    // `0` here would publish the wrong one of them to every reader.
+    const got = withTileCounts(tiles(), new Map([["beans", { count: 466, unit: "beans" }]]));
+    const other = got.find((t) => t.directory === "fsh-guts")!;
+    expect("count" in other).toBe(false);
+    expect("unit" in other).toBe(false);
+  });
+
+  test("ZERO is carried, because zero is the answer worth showing", () => {
+    const got = withTileCounts(tiles(), new Map([["beans", { count: 0, unit: "beans" }]]));
+    expect(got.find((t) => t.directory === "beans")!.count).toBe(0);
+  });
+
+  test("an empty map changes nothing at all", () => {
+    // The state of a site whose projections have not been generated yet. It
+    // must publish tiles with no badges, not fourteen tiles reading zero.
+    const before = tiles();
+    const after = withTileCounts(before, new Map());
+    expect(after).toEqual(before);
+    expect(after.every((t) => !("count" in t))).toBe(true);
+  });
+
+  test("a count for a directory with no TILE is simply not a tile", () => {
+    // `undeclaredProjections`' rule, restated from the other side: a live
+    // projection with no declared visualiser is a FINDING, and attaching a
+    // count must not conjure the tile that finding says is missing.
+    const got = withTileCounts(tiles(), new Map([["voices", { count: 5, unit: "voices" }]]));
+    expect(got.map((t) => t.directory).includes("voices")).toBe(false);
+    expect(got).toHaveLength(2);
+  });
+
+  test("the pass does not MUTATE the tiles it was given", () => {
+    const before = tiles();
+    withTileCounts(before, new Map([["beans", { count: 466, unit: "beans" }]]));
+    expect(before.every((t) => !("count" in t))).toBe(true);
+  });
+
+  test("keyed by DIRECTORY, so two views of one graph share its number", () => {
+    // A directory declaring several visualisations mints `beans`, `beans/2`,
+    // and every one of them is a view of the same graph. Keying on `id` would
+    // badge the first and leave the rest looking uncounted.
+    const many = graphTiles(
+      [dir("beans", {
+        visualiser: [{ ref: "docs/beans/index.html" }, { ref: "docs/beans/alt.html" }],
+      })],
+      "docs",
+    );
+    expect(many.length).toBeGreaterThan(1);
+    const got = withTileCounts(many, new Map([["beans", { count: 466, unit: "beans" }]]));
+    expect(got.every((t) => t.count === 466)).toBe(true);
   });
 });

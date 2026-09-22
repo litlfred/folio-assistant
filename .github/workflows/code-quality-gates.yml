@@ -676,6 +676,15 @@ jobs:
           # variable is DECLINED and listed, because `viewHref`/`editHref`
           # hold absolute forge URLs that the filter would break.
           bun run check:docs-templates
+          # Every declared image `role` is read by something that can actually
+          # REACH it (bean `5yrl`, split out of `blv9`). Scans
+          # declaration -> consumer, the direction `themes.test.ts` cannot:
+          # that walks theme -> role, so a role NO theme names is outside its
+          # domain by construction, which is how `landing-architecture` sat
+          # declared and unnamed. Half two is the half that matters -- the
+          # favicon shape, where a caller EXISTS and cannot match, because
+          # `imagesForRole` is layout-keyed and a mark declares no layout.
+          bun run check:image-roles
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
@@ -771,6 +780,13 @@ jobs:
           # one harness, so a single `harness.config.json` at the repo
           # root had become an answer to a question with two answers.
           bun run check:instance-config
+          # Every INSTANTIATED harness has a mark of its own. The kind axis is
+          # check-avatar-coverage; this is the instance axis, which nothing
+          # checked until 2026-09-22 — `harness-tiles.ts` claimed the generic
+          # fallback was "reported as a finding" while `genericAvatar` was
+          # computed and read by nobody, so `folio-assistant` rendered a
+          # question mark until the owner saw it. Bean `zc7m`.
+          bun run check:avatar-instances
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render

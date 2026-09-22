@@ -54,8 +54,31 @@
   one `<img>` with no scheme class, shown in both — which is what every
   instance did before this existed.
 {%- endcomment -%}
+{%- comment -%}
+  ONE MASKED ELEMENT WHEN THE INSTANCE DECLARES A MASK, and it replaces the
+  light/dark PAIR below rather than joining it.
+
+  Owner, 2026-09-22: *"I want theme like in avaatars"*. An avatar is a mask
+  plus a `background-color` derived from one declared hue, so both schemes
+  come from one number. The pair below is the thing that mechanism exists to
+  replace: `gen-avatars-css` says it outright about not shipping assets per
+  scheme — *"as files they would drift, and the one that fell behind would be
+  invisible until somebody opened the site in the other mode"* — and the mark
+  had already shipped exactly that risk, two files that must agree.
+
+  A `<span>`, not an `<img>`: the colour is painted through the glyph's shape
+  by `background-color`, which an `<img>`'s own pixels would sit on top of.
+  `aria-hidden` and the empty name are unchanged — the title beside it names
+  the site, and a mark that repeated it would be read twice.
+
+  ABSENT IS A REAL STATE, the same rule `mark-dark` follows: an instance that
+  declares no mask falls through to the pair, and nothing changes for it.
+{%- endcomment -%}
 {%- if h.icon.src -%}
-  {%- if h.iconDark.src -%}
+  {%- if h.iconMask.src -%}
+  <span class="fa-site-mark fa-site-mark--masked" aria-hidden="true"
+        style="--fa-site-mark-src: url('{{ h.iconMask.src | relative_url }}')"></span>
+  {%- elsif h.iconDark.src -%}
   <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
        class="fa-site-mark fa-site-mark--light" width="32" height="32" />
   <img src="{{ h.iconDark.src | relative_url }}" alt="" aria-hidden="true"
