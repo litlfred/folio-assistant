@@ -411,25 +411,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/docs-ui.css?v=1790058697">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/docs-ui.css?v=1790058919">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/work-plan.css?v=1790058697">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/work-plan.css?v=1790058919">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/themes.css?v=1790058697">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/themes.css?v=1790058919">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/avatars.css?v=1790058697">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/css/avatars.css?v=1790058919">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -443,10 +443,10 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
-<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver","workflows"]</script>
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","docs","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/js/docs-ui.js?v=1790058697" defer></script>
+<script src="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/assets/js/docs-ui.js?v=1790058919" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1015,7 +1015,7 @@ ca&amp;at-harness
         <dd>8</dd>
       </div></dl><ul class="fa-harness-section__viewers"><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/beans/">beans</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/health/">health</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/issue-marks/">issue-marks</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/library/cat-harness/">library</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/qa/">qa</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/cat-harness/schemas/cat-harness/">schemas</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/todos/">todos</a></li><li><a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/uploads/">uploads</a></li></ul><details class="fa-harness-section__findings">
       <summary>Gaps in this instance's declaration (4)</summary>
-      <ul><li>cat-harness: 1 graph(s) declare a staging-only viewer, deliberately not linked on the canonical deploy — fsh-guts. Not a gap.</li><li>cat-harness: declares 10 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, scenarios, skills, translation-sources, waiver, workflows. Declared and not rendered is a gap, not a dead link.</li><li>cat-harness: 2 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/cat-harness/index.html), tools (cat-harness/docs/tools/index.md). Built and unreachable is a different gap from unbuilt.</li><li>cat-harness: its title "folio-assistant" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label.</li></ul>
+      <ul><li>cat-harness: 1 graph(s) declare a staging-only viewer, deliberately not linked on the canonical deploy — fsh-guts. Not a gap.</li><li>cat-harness: declares 10 graph(s) with no published viewer — docs, folio, interaction, memory, methodology, processes, scenarios, skills, translation-sources, waiver. Declared and not rendered is a gap, not a dead link.</li><li>cat-harness: 2 graph(s) have a declared viewer that exists but is not at a conventional path, so no tile links it — cat-harness (cat-harness/docs/cat-harness/schemas/cat-harness/index.html), tools (cat-harness/docs/tools/index.md). Built and unreachable is a different gap from unbuilt.</li><li>cat-harness: its title "folio-assistant" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label.</li></ul>
     </details></section><section class="fa-harness-section" id="harness-bootstrap" style="--fa-tile-tone: 96">
 <h3 class="fa-harness-section__title" id="harness-bootstrap-heading">
   
@@ -1026,16 +1026,16 @@ ca&amp;at-harness
 </h3>
     <p class="fa-harness-section__description">The graph an agent reads before it knows what this repository is.</p><dl class="fa-harness-section__stats"><div class="fa-harness-section__stat" data-fa-stat="directories">
         <dt>declared directories</dt>
-        <dd>4</dd>
+        <dd>5</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="kinds">
         <dt>declared graph kinds</dt>
-        <dd>3</dd>
+        <dd>4</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="views">
         <dt>visualisations you can open</dt>
         <dd>0</dd>
       </div></dl><p class="fa-harness-section__gap">Nothing published to open yet.</p><details class="fa-harness-section__findings">
       <summary>Gaps in this instance's declaration (1)</summary>
-      <ul><li>bootstrap: declares 3 graph(s) with no published viewer — scenarios, skills, workflows. Declared and not rendered is a gap, not a dead link.</li></ul>
+      <ul><li>bootstrap: declares 4 graph(s) with no published viewer — processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.</li></ul>
     </details></section></section><hr />
 <h2 id="four-things-in-order">
   
@@ -1410,7 +1410,7 @@ them rather than describing them:</p>
   reached from `Process_Review`.</p>
         <p>## What is already true, so this is not started from nothing</p>
         <p>The two dispatch points are process events, so wherever they are performed they
-should be DRAWN in BPMN under `skills/workflows/`. The likely homes are
+should be DRAWN in BPMN under `processes/`. The likely homes are
 `draft-to-publication` for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>

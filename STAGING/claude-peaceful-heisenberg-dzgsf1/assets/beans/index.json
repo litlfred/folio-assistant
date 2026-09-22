@@ -353,7 +353,7 @@
       ],
       "createdAt": "2026-09-16T06:43:50Z",
       "updatedAt": "2026-09-20T04:16:04Z",
-      "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `skills/workflows/ingest-",
+      "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
     {
@@ -577,7 +577,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-19T15:56:22Z",
       "updatedAt": "2026-09-20T14:26:05Z",
-      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`skills/workflows/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' skills/workflows/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = ",
+      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`processes/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' processes/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = declared === \"",
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
@@ -723,7 +723,7 @@
     {
       "id": "folio-assistant-3vc6",
       "title": "TRANSLATION AS AN INSTANCE: re-express the round trip against the spine and lose the duplicated half",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3x2n",
@@ -1433,7 +1433,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T15:25:27Z",
       "updatedAt": "2026-09-20T15:25:27Z",
-      "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/skills/workflows/document-ingestion.bpmn\n      \"Document ingestion — ",
+      "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/processes/document-ingestion.bpmn\n      \"Document ingestion — uploads",
       "file": "beans/defs/folio-assistant-7bg9--ingestion-a-licence-check-subprocess-and-the-marke.md"
     },
     {
@@ -1545,7 +1545,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T14:47:57Z",
       "updatedAt": "2026-09-20T15:26:13Z",
-      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`bootstrap/skills/workflows/`**, which does not\nexist. The diagrams are at **`b",
+      "preview": "Found 2026-09-20 while sampling the unbound skills for bean `y1w9`. Not what\nthat sample went looking for, which is the point of sampling.\n\n## The gap\n\n`bootstrap/skills/` is a declared `cat-harness` graph, so `kgRoots` returns it\nand the audit reads its skills. `workflowDirs` then composes\n`<kgdir>/workflows` — i.e. **`bootstrap/processes/`**, which does not\nexist. The diagrams are at **`bootstra",
       "file": "beans/defs/folio-assistant-7u3g--bootstrapworkflows-is-scanned-by-nothing-workflowd.md"
     },
     {
@@ -1587,7 +1587,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T06:52:21Z",
       "updatedAt": "2026-09-20T13:16:18Z",
-      "preview": "Owner, 2026-09-20: *\"make sure all workflows documented as bpmn\"*. Queued rather than started — raised mid-turn while bean `6pfo`'s staging-record wiring was in flight, and the standing instruction is to queue rather than pivot.\n\n## What this is NOT\n\nThere are already ten BPMN beans, and none of them is this one. `skills/workflows/*.bpmn` documents **agent processes** — how an agent decides what t",
+      "preview": "Owner, 2026-09-20: *\"make sure all workflows documented as bpmn\"*. Queued rather than started — raised mid-turn while bean `6pfo`'s staging-record wiring was in flight, and the standing instruction is to queue rather than pivot.\n\n## What this is NOT\n\nThere are already ten BPMN beans, and none of them is this one. `processes/*.bpmn` documents **agent processes** — how an agent decides what to do, t",
       "file": "beans/defs/folio-assistant-7yvd--every-github-actions-workflow-should-be-documented.md"
     },
     {
@@ -1761,7 +1761,7 @@
     {
       "id": "folio-assistant-8rwa",
       "title": "LIT REVIEW: evidence-based literature review as a dispatched, untainted step in guideline development — WHO living guidelines",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
@@ -1783,7 +1783,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T06:57:38Z",
       "updatedAt": "2026-09-20T06:57:38Z",
-      "preview": "Owner, 2026-09-20: *\"update CRDM process that when a user is done with requirements on some workflow ask if/how to add into knowledge graph(s), give options. (document this in bpmn and add as a specialized user/agent interaction skill)\"*\n\nQueued rather than started — raised mid-turn while the render logger was in flight, and the standing instruction is to queue rather than pivot.\n\n## The gap\n\n`ski",
+      "preview": "Owner, 2026-09-20: *\"update CRDM process that when a user is done with requirements on some workflow ask if/how to add into knowledge graph(s), give options. (document this in bpmn and add as a specialized user/agent interaction skill)\"*\n\nQueued rather than started — raised mid-turn while the render logger was in flight, and the standing instruction is to queue rather than pivot.\n\n## The gap\n\n`pro",
       "file": "beans/defs/folio-assistant-8x9b--crdm-has-no-step-that-asks-how-finished-requiremen.md"
     },
     {
@@ -1811,7 +1811,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T15:07:07Z",
       "updatedAt": "2026-09-19T00:41:33Z",
-      "preview": "The \"next\" recorded on bean `t8g3`. Re-render BPMN diagrams so translated\nlabels appear, handling text overflow.\n\n**Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`\nlisted `skills/workflows/publication-workflow.bpmn` in the `dak` entry's\n`bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`\nis a PAGE embedding three diagrams. An u",
+      "preview": "The \"next\" recorded on bean `t8g3`. Re-render BPMN diagrams so translated\nlabels appear, handling text overflow.\n\n**Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`\nlisted `processes/publication-workflow.bpmn` in the `dak` entry's\n`bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`\nis a PAGE embedding three diagrams. An unresolv",
       "file": "beans/defs/folio-assistant-8xx6--bpmn-re-render-for-translated-labels.md"
     },
     {
@@ -1957,7 +1957,7 @@
     {
       "id": "folio-assistant-a58y",
       "title": "ENFORCE: qa-reporting gains its first consumer — a QA verdict whose reviewer cannot emit one is refused",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
@@ -2645,7 +2645,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T12:08:49Z",
       "updatedAt": "2026-09-20T13:28:04Z",
-      "preview": "Found 2026-09-20 while moving CRDM into its own subgraph (bean `g43o`):\n**two tests broke on hardcoded paths**, which is precisely the defect\n`check:declared-paths` exists to prevent.\n\n- `scripts/tests/log-writer.test.ts` composed\n  `../../skills/workflows/crdm-requirements.bpmn`. Worse than a plain\n  break: it went ENOENT and the test reported *\"the process does not\n  declare folio:log\"* — a fals",
+      "preview": "Found 2026-09-20 while moving CRDM into its own subgraph (bean `g43o`):\n**two tests broke on hardcoded paths**, which is precisely the defect\n`check:declared-paths` exists to prevent.\n\n- `scripts/tests/log-writer.test.ts` composed\n  `../../processes/crdm-requirements.bpmn`. Worse than a plain\n  break: it went ENOENT and the test reported *\"the process does not\n  declare folio:log\"* — a false findi",
       "file": "beans/defs/folio-assistant-dhol--checkdeclared-paths-skips-testts-implicated-three.md"
     },
     {
@@ -3407,7 +3407,7 @@
     {
       "id": "folio-assistant-j41m",
       "title": "SUPPLY CHAIN: 11 of 18 install steps fall back from --frozen-lockfile to an unpinned resolve, and there is no audit or dependabot",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",
@@ -4893,7 +4893,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T14:56:52Z",
       "updatedAt": "2026-09-20T14:57:07Z",
-      "preview": "Split out of `0d99` when that one was fixed, and **measured, not assumed** —\n`grep -rho 'targetNamespace=\"[^\"]*\"'` over `skills/workflows/`, 2026-09-20:\n\n| targetNamespace | diagrams |\n|---|---|\n| `https://litlfred.github.io/folio-assistant/workflows` | 30 |\n| `https://folio-assistant.dev/workflows` | 4 |\n| `http://folio-assistant.dev/bpmn/<diagram-name>` | 8 |\n\nThree shapes, two of them on a doma",
+      "preview": "Split out of `0d99` when that one was fixed, and **measured, not assumed** —\n`grep -rho 'targetNamespace=\"[^\"]*\"'` over `processes/`, 2026-09-20:\n\n| targetNamespace | diagrams |\n|---|---|\n| `https://litlfred.github.io/folio-assistant/workflows` | 30 |\n| `https://folio-assistant.dev/workflows` | 4 |\n| `http://folio-assistant.dev/bpmn/<diagram-name>` | 8 |\n\nThree shapes, two of them on a domain this",
       "file": "beans/defs/folio-assistant-rtrg--bpmn-targetnamespace-drifted-three-ways-across-the.md"
     },
     {
@@ -5333,6 +5333,20 @@
       "file": "beans/defs/folio-assistant-u4hs--methodology-the-bpmn-half-an-executable-options-an.md"
     },
     {
+      "id": "folio-assistant-u9r9",
+      "title": "TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T05:57:48Z",
+      "updatedAt": "2026-09-22T05:57:48Z",
+      "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
+      "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
+    },
+    {
       "id": "folio-assistant-uadc",
       "title": "GOAL 2 — the LHS navbar with folios and moving stickies (PARAPHRASE, awaiting the owner's words)",
       "status": "scrapped",
@@ -5489,14 +5503,14 @@
     {
       "id": "folio-assistant-v18c",
       "title": "Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness's library is empty",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:09:01Z",
-      "updatedAt": "2026-09-21T23:17:17Z",
+      "updatedAt": "2026-09-22T06:03:28Z",
       "preview": "Found 2026-09-21 while fixing the library viewers' parse error (the owner:\n*\"way too many tiles (non functional) on LHS explode menu\"*). **The parse error\nis fixed and shipped separately**; this is what is left after it.\n\n## Measured in a browser, after the fix — 12 navbar tiles\n\n| tile | renders |\n|---|---|\n| `schemas` (cat-harness) | 773 declarations |\n| `detangle-schemas` / `large-datasets-sche",
       "file": "beans/defs/folio-assistant-v18c--navbar-tiles-uploads-and-library-are-two-tiles-for.md"
     },
@@ -6363,7 +6377,7 @@
     {
       "id": "folio-assistant-zakj",
       "title": "SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3x2n",

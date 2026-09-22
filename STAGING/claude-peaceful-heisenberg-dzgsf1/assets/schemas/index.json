@@ -4938,7 +4938,7 @@
           "type": "z.array(z.string()).default([])",
           "optional": true,
           "array": true,
-          "doc": "Role ids — the swimlane this sits in. `skills/roles/roles.json`."
+          "doc": "Role ids — the swimlane this sits in. `scenarios/roles.json`."
         },
         {
           "name": "processes",
@@ -26301,7 +26301,7 @@
           "type": "z.array(z.string().min(1)).min(1).optional()",
           "optional": true,
           "array": true,
-          "doc": "Declared role ids from `skills/roles/roles.json` — the SWIMLANE, which"
+          "doc": "Declared role ids from `scenarios/roles.json` — the SWIMLANE, which"
         },
         {
           "name": "scenarios",
