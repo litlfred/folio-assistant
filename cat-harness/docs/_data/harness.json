@@ -68,6 +68,7 @@
     "beans",
     "cat-harness",
     "docs",
+    "external-schema",
     "folio",
     "fsh-guts",
     "glossary",
@@ -1041,12 +1042,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 36
+          "value": 37
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 23
         },
         {
           "id": "views",
@@ -1066,6 +1067,9 @@
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/docs/"
+        },
+        {
+          "kind": "external-schema"
         },
         {
           "kind": "folio",
@@ -1140,7 +1144,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ]
     },
     {
