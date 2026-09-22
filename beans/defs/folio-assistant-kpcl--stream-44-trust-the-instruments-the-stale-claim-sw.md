@@ -177,3 +177,53 @@ reproducing the defect it was written to find.
   third-state rule, inverted.
 - **Nothing swept.** No status changed, nothing deleted. A leaf with no open PR
   is a candidate, never a verdict.
+
+## The candidate set sampled — by reading all 47 bodies, not a subset
+
+The claim's falsifier was: *they may be real work somebody is mid-way through,
+in which case the fix is a blocked-record sweep rather than a release.* Read
+every body in the `leaf-no-open-pr` bucket (2026-09-22T19:0xZ, 47 beans):
+
+| what the body says | n |
+|---|---|
+| a structured `## Blocked on` record | **0** |
+| a block or an owner dependency **in prose only** | **21** |
+| every checkbox ticked while still reading `in-progress` | 1 (`z4mq`) |
+| neither | 25 |
+
+**The falsifier holds.** Nearly half the candidate set is blocked work whose
+block no date can expire — not abandoned work. Releasing them would discard a
+stated dependency; the answer is `bean-blocking`'s four fields. This corroborates
+#951's corpus-wide measurement (**0 of 99** carrying `expires`, 29 prose-only)
+on the subset that actually matters, measured independently.
+
+So **stream 4 releases nothing.** The sweep's output is an input to #951's gate,
+and the 21 are per-bean judgements about what each is waiting on — which is what
+#951 says it deliberately did not do in bulk, for the same reason.
+
+`z4mq` is a `ready-to-close` candidate, reported and **not closed**: closing on
+evidence means re-deriving the evidence, and it is not this stream's bean.
+
+## `u9r9` is the worked example, and it validates against stream 1's gate
+
+`u9r9` is in the candidate set: `in-progress`, untouched, no open PR. It is
+**not abandoned** — it waits on the owner authorising a first-ever `gh-pages`
+publish from a never-run workflow, which no expiry may take over. Given the
+four-field record, with the expiry written as a **re-ask date**.
+
+Checked against **stream 1's own checker**, run from their branch without
+touching their PR:
+
+```
+Bean blocks (1 structured and complete, 9 incomplete, 30 in prose only, over 510 bean(s))
+```
+
+The 1 is `u9r9`. The 9 incomplete are the beans #951 repairs on its own branch,
+reading incomplete here only because this checkout predates it — stated so the
+number is not misread as damage.
+
+`ai9u` also closed `u9r9`'s premise in the meantime: `check:workflow-paths` runs
+a second criterion, *every `working-directory` must EXIST*, and holds both
+TypeDoc steps as `missing — baselined, still owed`. The suspicion is now a
+gate's finding that cannot regress. It is still not the dispatch, and the bean
+says so.
