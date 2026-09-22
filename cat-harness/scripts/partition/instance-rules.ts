@@ -863,6 +863,13 @@ export const RULES: Rule[] = [
       // here" — which is the same claim `check-portable-paths.ts` makes about
       // filenames. Imports node builtins only.
       "scripts/check-secret-leaks.ts",
+      // The dependency-advisory gate. Harness by the same argument as its
+      // neighbours, with one twist worth writing down: its SUBJECT is the
+      // resolved dependency tree, which is a property of this checkout's
+      // build wiring rather than of any folio's material — a folio's prose
+      // does not acquire a CVE. It shells out to `bun audit` and otherwise
+      // imports node builtins only.
+      "scripts/check-dependency-advisories.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge

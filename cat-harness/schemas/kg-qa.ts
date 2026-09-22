@@ -286,7 +286,26 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
 
 
 /** What kind of node a sidecar audits. */
-export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph"] as const;
+/**
+ * The subject kinds this audit reports on.
+ *
+ * `tool` arrived last (issue #853, requirement 1) and is a different KIND of
+ * member from the rest, which is worth saying because it changes what its
+ * criteria are allowed to be. Every other kind's criteria DECIDE something
+ * here. A Tool node's properties were already decided, by `check-tools.ts`,
+ * `tools.test.ts` and `check-maintained-artefacts.ts` — measured 2026-09-22,
+ * after a first attempt to add a `maintains` criterion turned out to be a
+ * second answer to a question one of those already answers.
+ *
+ * So the `tool-*` criteria below PROJECT those verdicts rather than re-derive
+ * them. What that buys is the thing a script cannot: a **committed sidecar per
+ * Tool**, so "unbound since it was drawn" and "broken in the commit under
+ * review" stop looking identical — the argument `AGENTS.md` makes for sidecars
+ * over a printed verdict. It buys no new judgement, and a criterion here that
+ * decided something `check-tools` does not would be the drift this note exists
+ * to prevent.
+ */
+export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph", "tool"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /** Outcome of one criterion. `unknown` is never a pass. */
@@ -313,6 +332,96 @@ export interface KgCriterionDefinition {
  * should be walking the model.
  */
 export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
+  {
+    id: "tool-invoke-path-resolves",
+    applies: ["tool"],
+    severity: "critical",
+    summary:
+      "A Tool names a command or module that does not exist, so it is unreachable through its own " +
+      "declaration. Projects `unresolvedPaths()`; nine of forty-four checkable values were stale once.",
+  },
+  {
+    id: "tool-satisfies-resolves",
+    applies: ["tool"],
+    severity: "critical",
+    summary:
+      "A `satisfies` names a skill that does not exist — an edge to nothing, so the Tool claims to " +
+      "implement something an agent cannot open. A skill declared by ANOTHER instance is neither " +
+      "covered nor dangling, and is not a finding here.",
+  },
+  {
+    id: "tool-satisfies-contract-met",
+    applies: ["tool"],
+    severity: "major",
+    summary:
+      "A Tool claims to satisfy a skill whose input contract it has no port for, so it cannot actually " +
+      "exercise the skill. A contract that is present but UNREADABLE records `unknown`, never a pass — " +
+      "the rule `check-tools` already states as \"never counted as agreement\".",
+  },
+  {
+    id: "tool-io-types-declared",
+    applies: ["tool"],
+    severity: "major",
+    summary: "An `io` port references a type the shared vocabulary does not declare.",
+  },
+  {
+    id: "tool-args-shell-safe",
+    applies: ["tool"],
+    severity: "critical",
+    summary:
+      "A command-line input has a type that can express a shell payload. `critical` because this is the " +
+      "one projected criterion about what a Tool can be made to DO rather than whether it is wired up.",
+  },
+  {
+    id: "tool-alternative-resolves",
+    applies: ["tool"],
+    severity: "major",
+    summary:
+      "An `alternativeTo` names a Tool that does not exist, or the relation is not symmetric — a choice " +
+      "the agent cannot find, or can find from only one side. `n/a` for a Tool declaring no alternative, " +
+      "which is most of them.",
+  },
+  {
+    id: "tool-maintains-in-tree",
+    applies: ["tool"],
+    // `minor`, and NOT because a rotted artefact is a small thing — it is a
+    // 404 a reader follows. It is minor because from here this criterion can
+    // only ever be `unknown`, and `unknown` counts toward `worstSeverity`.
+    //
+    // At `major` the seven Tools declaring `maintains` would put
+    // `kg:audit:strict` permanently beyond reach, with no change to the
+    // repository able to clear it. That is the failure mode this file already
+    // names on `skill-in-role-or-process` — "a wall of false findings is how a
+    // check gets switched off" — and `nested-instance-audited` is the exact
+    // precedent: `minor` precisely BECAUSE the silence is correct and only its
+    // invisibility was the defect.
+    //
+    // The real verdict is not softened by this. It is reached by
+    // `check:maintained-artefacts` against the assembled tree, where a genuine
+    // absence exits 1 and fails the docs-site workflow.
+    severity: "minor",
+    // THE THIRD STATE, and the reason this criterion is worth having at all.
+    //
+    // `maintains` asserts a Tool is authoritative for a PUBLISHED artefact, and
+    // whether that artefact is in the tree is a question with no answer until
+    // `_site/` is assembled. `check-maintained-artefacts.ts` asks it in the
+    // `docs-site` workflow, after assembly, and exits 2 rather than 0 when
+    // there is no tree.
+    //
+    // `kg:audit` runs on a checkout, where there is no tree. So this records
+    // `unknown` with that reason — NOT `pass`. A sidecar claiming a green
+    // `maintains` from a checkout would be green in exactly the place nobody
+    // built the site, which is how the `docs-site` workflow failed 30 times
+    // over two months without anybody noticing (`xom7`).
+    //
+    // It is not dropped instead, because "asked and unanswerable here" and
+    // "never asked" are different facts and only the first tells a reader where
+    // the answer lives.
+    summary:
+      "A Tool's `maintains` artefact is missing from the published tree. Answerable only against an " +
+      "assembled `_site/`, so from a checkout this records `unknown` naming `check:maintained-artefacts` " +
+      "as where the answer lives — never `pass`. `n/a` for a Tool that maintains nothing.",
+  },
   {
     id: "skill-ref-resolves",
     applies: ["process"],
