@@ -226,6 +226,41 @@ function resolveSpecifier(spec: PartitionSpec, fromFile: string, ref: string): s
   return null;
 }
 
+/**
+ * Is this module a **composition root** — a command, rather than a library?
+ *
+ * The layering rule (`core may import the harness; the harness may not import
+ * core`) is a rule about LIBRARIES. A command is where an application is
+ * assembled, so it necessarily knows every layer it wires together; that is
+ * what makes it the command and not a library. Reading the edge out of a
+ * composition root as a layering violation asks a binary not to know its own
+ * dependencies.
+ *
+ * **Derived, never listed.** A hand-maintained set of "entry points" is the
+ * kind that rots — the `tyyc` shape, where the symptom of forgetting is
+ * invisible. Measured 2026-09-21 over the 25 modules bean `q2wn` exposed, the
+ * two criteria separate them EXACTLY and with nothing left over:
+ *
+ * | | shebang or `import.meta.main` | |
+ * |---|---|---|
+ * | the 18 commands | **all 18** | `kg-export.ts`, `print-stub.ts`, every `check-*` |
+ * | the 7 libraries | **none** | `repo-root.ts`, `known-skills.ts`, `harness-config.ts` |
+ *
+ * So the split costs no judgement here, and a new command declares itself by
+ * being runnable rather than by being remembered.
+ *
+ * **What this does NOT license.** A library reaching across a layer is still a
+ * violation and still fails — which is the half that was actually load-bearing,
+ * because a library's edge is inherited by every module that imports it, and
+ * `repo-root.ts` alone has 92 importers. `check:composition-roots` is the
+ * other half: it refuses a command that READS a declaration without carrying
+ * the registration, so removing those library imports cannot reintroduce the
+ * `unknown graph kind "folio"` class (#464) by forgetting one.
+ */
+export function isCompositionRoot(src: string): boolean {
+  return /^#!/.test(src) || /\bimport\.meta\.main\b/.test(src);
+}
+
 // ── Analysis ────────────────────────────────────────────────────
 
 export function analyse(spec: PartitionSpec): PartitionReport {
@@ -251,6 +286,9 @@ export function analyse(spec: PartitionSpec): PartitionReport {
     } catch {
       continue;
     }
+    // Computed once per module, not per edge: the answer is a property of the
+    // file, and `isCompositionRoot` scans the whole source.
+    const composes = isCompositionRoot(src);
     for (const ref of extractSpecifiers(src)) {
       const target = resolveSpecifier(spec, f, ref);
       if (!target) continue;
@@ -261,6 +299,12 @@ export function analyse(spec: PartitionSpec): PartitionReport {
         unresolvedEdges.push({ from: rel, to: target });
         continue;
       }
+      // A composition root assembles layers by definition — see
+      // `isCompositionRoot`. Counted in `totalEdges` above either way, so the
+      // edge stays VISIBLE in the census and is only exempt from the
+      // direction rule; an exemption that also hid the edge would be the
+      // blindness `q2wn` was opened about, one level up.
+      if (composes) continue;
       if (!(spec.allowed[fromA.repo] ?? []).includes(toA.repo)) {
         crossEdges.push({ from: rel, fromRepo: fromA.repo, to: target, toRepo: toA.repo });
       }
