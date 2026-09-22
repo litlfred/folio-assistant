@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T20:47:15Z
-updated_at: 2026-09-21T22:58:51Z
+updated_at: 2026-09-21T23:03:58Z
 parent: folio-assistant-o3xy
 ---
 
@@ -38,6 +38,16 @@ Two commits on `claude/zealous-turing-v49ph5`, PR #803.
 `f99b1735` — the glyph. Declared by name, default-deny registry, fallback on unknown. TWO beans rather than the reference's four: five candidates were rendered at 20px and only two-outlined kept its shapes and hilums separate there. An icon is not a picture shrunk.
 
 ## Closed on evidence
+
+**Surfaced by the `bean-self-declared-done` check on its first real run**
+(bean `fkjo`, PR #832): `in-progress` with all four Done-when boxes ticked,
+twenty minutes after #803 merged. That is the check's own worked example, and
+it is why this bean is cited from #832 — the finding named a bean that had
+genuinely landed and was still carrying a claim a sibling would honour.
+
+Two sessions then re-derived it independently and agreed. The record below is
+the fuller of the two and is kept whole; per the check's own action text,
+neither closed it on the strength of its ticks.
 
 PR #803 merged to `main` as `170bae8d`, 2026-09-21. Closure is on evidence
 rather than on authorship, so the evidence is the check rather than the merge
