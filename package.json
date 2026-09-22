@@ -171,6 +171,7 @@
     "ingest": "bun run cat-harness/scripts/ingest-document.ts",
     "ingest:ig": "bun run cat-harness/scripts/ingest-ig-artifacts.ts",
     "ingest:ig:check": "bun run cat-harness/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --check",
+    "ingest:ig:check:smart-base": "bun run cat-harness/scripts/ingest-ig-artifacts.ts --out smart-base --materialize-dak --check",
     "init-folio": "bun run cat-harness/scripts/init-folio.ts",
     "iris:covers": "bun run who-iris/scripts/gen-covers.ts",
     "iris:covers:check": "bun run who-iris/scripts/gen-covers.ts --check",

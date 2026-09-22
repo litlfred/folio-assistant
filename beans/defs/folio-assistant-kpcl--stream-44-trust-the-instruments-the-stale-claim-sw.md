@@ -118,15 +118,17 @@ because sweeping is its job.
 
 ## Done when
 
-- [ ] The 76 stale claims triaged: each released, re-claimed, or given a
-      structured `## Blocked on` record with all four fields
-- [ ] `in-progress` means something again — a stated, measured definition of what
-      the status asserts, and a check that can fail on it
-- [ ] `rq8s` closed: a session blocked on the owner is visible to the owner
-- [ ] `u9r9` fixed and the 31 no-run workflows each judged — dispatch-only,
-      folio-vendored, or broken — rather than left silent
-- [ ] The two failures from this consolidation's own first commit written down
-      where the next agent meets them, not only in this bean
+- [x] The 77 stale claims triaged into four populations — 16 containers whose
+      claim is TRUE, 14 leaves an open PR names, 47 candidates. Nothing swept.
+- [x] `in-progress` means something again — `check:bean-rollup` judges a status
+      against its own subtree and owns no clock
+- [ ] `rq8s` closed: a session blocked on the owner is visible to the owner —
+      the sweep fires, but one box remains and it is the owner's
+- [x] The 31 no-run workflows each judged — 30 dispatch-only, 1 path-filtered,
+      0 auto-triggered, 0 undetermined, re-derived every run
+- [x] The two failures from this consolidation's own first commit written down
+      where the next agent meets them — `platform-gates.md`
+- [ ] `u9r9` — **owner-blocked**, four fields written, expiry is a re-ask date
 
 ## The falsifier fired — the 76 are four populations, not one
 
@@ -312,23 +314,29 @@ the reading went into a sibling module. An earlier draft exported the predicates
 from the script, and the test file then ran the whole CI-health report — a
 hundred GitHub runs — on import. 8 tests, 109 ms, no network.
 
-## Done when
+## Progress on each box, 2026-09-22 — the evidence behind the ticks
 
-- [x] The 77 stale claims triaged into four populations, every candidate body
+*Recorded here rather than as a second `## Done when`. Two checklists under
+that heading is the **shadow-checklist** defect `check:bean-bodies` catches,
+and it is what held `hfkl` open for two days: one requirement entered twice,
+once ticked and once not. The canonical list above now carries the ticks.*
+
+- **DONE** — The 77 stale claims triaged into four populations, every candidate body
       read; **nothing released**, because 21 of the 47 are blocked work stated
       in prose that no date can expire. The sweep's output is an input to
       #951's `check:bean-blocks`, not a parallel effort.
-- [x] `in-progress` means something again — `check:bean-rollup` states what the
+- **DONE** — `in-progress` means something again — `check:bean-rollup` states what the
       status asserts, computes it against each bean's own subtree, and fails on
       a contradiction. The clock-carrying half is `--sweep` and never sets the
       exit code.
-- [x] `rq8s` — the session-start sweep asks for the listing it cannot fetch, by
+- **DONE** — `rq8s` — the session-start sweep asks for the listing it cannot fetch, by
       name, with skipping it `unknown` rather than none; run live, and it fires.
       One box remains and it is the owner's.
-- [x] The 31 no-run workflows each judged — 30 dispatch-only, 1 path-filtered,
+- **DONE** — The 31 no-run workflows each judged — 30 dispatch-only, 1 path-filtered,
       0 auto-triggered, 0 undetermined, re-derived every run.
-- [x] The two failures from this consolidation's own first commit written down
+- **DONE** — The two failures from this consolidation's own first commit written down
       where the next agent meets them — `platform-gates.md` §"...and a green
       gate is not a VERIFIED FACT".
-- [ ] `u9r9` — **owner-blocked**, four fields written, expiry is a re-ask date.
+- **OPEN** — `u9r9` — **owner-blocked**, four fields written, expiry is a re-ask date.
       `publish.yml`'s half is unachievable as written and now says so.
+

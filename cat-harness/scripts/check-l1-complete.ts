@@ -138,6 +138,69 @@ export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
  * is one no rung has run on, and asking it for a chapter tree would report a
  * defect where the fact is that nothing has been derived yet.
  */
+/**
+ * Distinct figure labels the document's own text DECLARES, as a lower bound.
+ *
+ * ## Why this exists — bean `m4xy`
+ *
+ * `pdf-images.py` recovers the RASTER layer. WHO's conceptual figures —
+ * frameworks, maturity models, taxonomies, process flows — are drawn in
+ * VECTOR, so they are never extracted, and `image-descriptions` went on
+ * reporting `met` over documents whose every figure was missing. Measured
+ * 2026-09-22 across `smart-base/library/`:
+ *
+ *   9789240120747-eng   declares 6 captioned figures, places ZERO images,
+ *                       and reported "0 image(s), 0 describable and all
+ *                       described" — a DETERMINED empty that is true about
+ *                       raster and misleading about figures.
+ *   9789240010567-eng   declares 42, places 17, and the 17 are logos, a
+ *                       photograph and a barcode. On page 92 the five
+ *                       component logos were extracted and Fig. 5.6.2, the
+ *                       diagram they sit INSIDE, was not.
+ *
+ * ## What this does NOT do
+ *
+ * **It does not compare counts.** Declared figures and placed images are not
+ * commensurable and a ratio between them asserts a coverage this cannot
+ * establish: the MAPS Toolkit declares 4 figures and places 162 images, of
+ * which 63 are blank fragments of one title page. `placed >= declared` would
+ * read as "covered" there and be wrong in both directions.
+ *
+ * So the number is reported and never graded, which is the same rule the
+ * repository applies to every count it prints.
+ *
+ * ## Lower bound, and the matching is stated rather than assumed
+ *
+ * A caption is matched only at the START of a line, because a cross-reference
+ * ("see Fig. 3.1") runs mid-sentence. That misses a caption typeset inline and
+ * counts one that begins a line for another reason, so the figure is a LOWER
+ * BOUND on what the document declares — said here rather than left for a
+ * reader to infer from a bare integer.
+ */
+export function declaredFigureLabels(sectionsDir: string): Set<string> {
+  const labels = new Set<string>();
+  let files: string[];
+  try {
+    files = readdirSync(sectionsDir).filter((f) => f.endsWith(".md"));
+  } catch {
+    // No sections directory is "could not determine", not "declares none" —
+    // the same third state the rest of this file keeps.
+    return labels;
+  }
+  for (const f of files) {
+    let body: string;
+    try {
+      body = readFileSync(join(sectionsDir, f), "utf-8");
+    } catch {
+      continue;
+    }
+    for (const m of body.matchAll(/^[ \t]*(?:Fig\.|Figure)[ \t]*(\d+(?:\.\d+)*)/gm)) {
+      labels.add(m[1]!);
+    }
+  }
+  return labels;
+}
+
 export function entryKind(has: (file: string) => boolean): EntryKind {
   for (const [kind, file] of KIND_SIDECAR) if (has(file)) return kind;
   return "undetermined";
@@ -583,15 +646,49 @@ function derivableRequirements(dir: string): Requirement[] {
           // unknown. Counting it as described would be the pass-by-default
           // this gate exists against.
           const unjudged = parsed.images.filter((i) => i.role === "undetermined");
-          out.push({
-            name: "image-descriptions",
-            state: undescribed.length || unjudged.length ? "unmet" : "met",
-            detail:
-              undescribed.length || unjudged.length
-                ? `${undescribed.length} describable image(s) with no narrative, ` +
-                  `${unjudged.length} with an undetermined role`
-                : `${parsed.images.length} image(s), ${describable.length} describable and all described`,
-          });
+          // What the TEXT declares, against what the raster arm placed — bean
+          // `m4xy`. Never compared as a ratio; see `declaredFigureLabels`.
+          const declared = declaredFigureLabels(join(dir, "sections"));
+          const declaredNote =
+            declared.size > 0
+              ? ` The text declares at least ${declared.size} captioned figure(s); ` +
+                `which of them correspond to placed images is NOT established.`
+              : "";
+          if (undescribed.length || unjudged.length) {
+            out.push({
+              name: "image-descriptions",
+              state: "unmet",
+              detail:
+                `${undescribed.length} describable image(s) with no narrative, ` +
+                `${unjudged.length} with an undetermined role.${declaredNote}`,
+            });
+          } else if (parsed.images.length === 0 && declared.size > 0) {
+            // THE CASE THIS THIRD STATE EXISTS FOR. Zero images placed while
+            // the text declares figures: nothing could correspond, so no arm
+            // described them and none could. `met` here is the silence `m4xy`
+            // measured — true about raster, misleading about figures.
+            //
+            // `not-derivable` rather than `unmet`: the document is not broken
+            // and no amount of describing would satisfy it. It is reported and
+            // does not block promotion, which is what makes it safe to be
+            // honest rather than a new permanent blocker — the `pn6j` failure.
+            out.push({
+              name: "image-descriptions",
+              state: "not-derivable",
+              detail:
+                `no raster image was placed, and the text declares at least ` +
+                `${declared.size} captioned figure(s) — they are drawn in vector ` +
+                `and no arm reads them (bean m4xy)`,
+            });
+          } else {
+            out.push({
+              name: "image-descriptions",
+              state: "met",
+              detail:
+                `${parsed.images.length} image(s), ${describable.length} describable ` +
+                `and all described.${declaredNote}`,
+            });
+          }
         }
       } catch (e) {
         out.push({

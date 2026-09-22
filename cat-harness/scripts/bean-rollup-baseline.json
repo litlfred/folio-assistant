@@ -1,7 +1,5 @@
 {
-  "_comment": "One contradiction that predates this check (bean `kpcl`, issue #956): `5a3l` (DEPLOYMENT) is `completed` while 12 of its children are open. Whether those twelve are unfinished deployment work or belong under another epic is a judgement about `5a3l`, and re-parenting or re-opening somebody's epic belongs to its owner — so the checker's author records it rather than repairs it. THIS FILE MAY ONLY SHRINK: an entry nothing matches is reported stale and fails, so a repair cannot leave a licence behind.",
+  "_comment": "Bean `kpcl`, issue #956. This file recorded one contradiction that predated the check: `5a3l` (DEPLOYMENT) read `completed` while 12 of its children were open. The checker's author declined to repair it, because re-opening or re-parenting somebody's epic belongs to its owner. THE OWNER RULED 2026-09-22 -- 're-open 5a3l' -- and it landed on main as `in-progress` (#970), so the entry stopped matching and this check FAILED on it: 'baseline entry matches nothing, remove it'. That is the file's stated property working, not a regression. THIS FILE MAY ONLY SHRINK: an entry nothing matches is reported stale and fails, so a repair cannot leave a licence behind. An empty `outstanding` is the success state -- it exempts nothing, so any new contradiction fails.",
   "_shape": "Same as bean-parents-baseline.json. Key is `<rule>:<bean-id>` — stable across a title edit, because a title is prose and an id is not.",
-  "outstanding": [
-    "closed-container-open-subtree:folio-assistant-5a3l"
-  ]
+  "outstanding": []
 }
