@@ -203,6 +203,104 @@ jobs:
           bun run cat-harness/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
           bun run cat-harness/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
 
+      # ── What must this preview CARRY? ───────────────────────
+      #
+      # Bean `tebu`. `health` reported `staging-preview-size` CRITICAL at
+      # 878.7 MiB of GitHub's 1 GB Pages limit, which the main site shares.
+      # Every one of the ten previews belonged to an OPEN, ACTIVE pull
+      # request, so nothing was prunable and the eleventh concurrent review
+      # would have breached the cap. Pruning was never the lever; per-preview
+      # SIZE is, and the check's own threshold basis says so.
+      #
+      # WHERE THE BYTES ARE, measured on a real preview rather than estimated:
+      #
+      #                  pages    MiB   per page
+      #   reference/       257   35.8    143 KiB   <- 38% of pages, 66% of HTML
+      #   api/ (TypeDoc)   298    7.4     26 KiB
+      #   everything else  121   11.2     95 KiB
+      #
+      # `reference/` is generated output that is already on the main site, and
+      # its source is 2.7 MB in the repo against 35.8 MiB built — the inflation
+      # is just-the-docs inlining the whole navigation into every page, and
+      # `reference/` contributes the most pages carrying the least content.
+      #
+      # PRUNED AT THE SOURCE, NOT FROM `_site`. Removing them after the build
+      # would leave the nav on all 676 pages linking into a tree that is not
+      # there — 404s a reviewer hits, which is precisely the `udx8` defect the
+      # navbar-tile check below exists to catch. Removing them before Jekyll
+      # runs means the nav never mentions them, the build is faster, and every
+      # REMAINING page shrinks too, because the nav is what makes them large.
+      #
+      # CONDITIONAL, because these are exactly what a reviewer needs on a PR
+      # that changes schemas or skills. Dropping them unconditionally would
+      # delete the thing under review.
+      #
+      # The PR's file list comes from the API, not from `git diff`: this job
+      # checks out at depth 1, so no merge base exists to diff against, and
+      # deepening the clone costs more than the question is worth.
+      #
+      # ANY DOUBT KEEPS THEM. No PR number (a `workflow_dispatch` preview), a
+      # failed API call, or an unreadable list all fall through to carrying
+      # everything. A preview that is too big is a threshold finding; a preview
+      # missing the pages under review is a reviewer misled, and this file's
+      # whole family of bugs is absence read as evidence.
+      - name: Decide what this preview must carry
+        id: carry
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          ref=yes; api=yes; why="no pull request — carrying everything"
+          if [ -n "$PR" ]; then
+            if files="$(gh pr view "$PR" --json files --jq '.files[].path' 2>/dev/null)" && [ -n "$files" ]; then
+              ref=no; api=no; why="nothing under review touches them"
+              # `reference/` is built from the schema and skill corpora and by
+              # three generators; `api/` is TypeDoc over the schema entry
+              # points. Matching the SOURCES, not the generated directory, so
+              # a regeneration that lands in the same commit is still covered.
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness/scripts/gen-(schema|skill|docs)-'; then
+                ref=yes; why="the branch touches schemas, skills or the reference generators"
+              fi
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
+                api=yes
+              fi
+            else
+              why="could not read the pull request's files — carrying everything"
+            fi
+          fi
+          echo "reference=$ref" >> "$GITHUB_OUTPUT"
+          echo "api=$api"       >> "$GITHUB_OUTPUT"
+          echo "carry reference/: $ref · api/: $api — $why"
+
+      # Replaced by a stub that says where the full copy is, so a reviewer who
+      # expected the page gets a pointer rather than a 404.
+      - name: Trim what this preview does not need
+        if: steps.carry.outputs.reference != 'yes'
+        run: |
+          rm -rf cat-harness/docs/reference
+          mkdir -p cat-harness/docs/reference
+          cat > cat-harness/docs/reference/index.md <<'STUB'
+          ---
+          title: Reference
+          nav_order: 90
+          ---
+
+          # Reference
+
+          The generated schema and skill-instruction reference is **not built
+          into this preview**. Nothing on this branch changes it, and carrying
+          it costs 35.8 MiB of the Pages budget the main site shares — see bean
+          `tebu`.
+
+          Read it on the published site:
+          <https://litlfred.github.io/folio-assistant/reference/>.
+
+          A branch that touches `cat-harness/schemas/`, `cat-harness/skills/`,
+          `cat-harness/methodologies/` or the reference generators gets the
+          full tree here instead.
+          STUB
+          echo "reference/ replaced with a stub (bean tebu)"
+
       - name: Render BPMN workflow diagrams
         run: |
           npx --yes playwright install --with-deps chromium
@@ -380,7 +478,11 @@ jobs:
       # the reason `docs-site.yml` is deliberately NOT changed: the published
       # site keeps SHA-pinned links, where there is one copy, nothing to
       # deduplicate, and a permanent link is worth more than a live one.
+      # Skipped unless the branch touches `cat-harness/schemas/`, which is
+      # what TypeDoc reads. Bean `tebu`; 7.4 MiB and ~90 s of build when it is
+      # not what anybody is reviewing.
       - name: Generate TypeDoc API reference
+        if: steps.carry.outputs.api == 'yes'
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
