@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 522,
+      "count": 551,
       "unit": "beans"
     },
     {
@@ -324,34 +324,8 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 0,
+      "count": 2,
       "unit": "entries"
-    },
-    {
-      "id": "methodology-crdm",
-      "directory": "methodology-crdm",
-      "title": "Skills — CRDM methodology",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-crdm/index.html",
-      "surfaces": [
-        "navbar",
-        "board"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/methodology-crdm/",
-      "hidden": false,
-      "theme": "analyst"
-    },
-    {
-      "id": "methodology-raci",
-      "directory": "methodology-raci",
-      "title": "Skills — RACI methodology",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/methodology-raci/index.html",
-      "surfaces": [
-        "navbar",
-        "board"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/methodology-raci/",
-      "hidden": false,
-      "theme": "analyst"
     },
     {
       "id": "processes",
@@ -469,7 +443,7 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "smart-ig"
       ],
       "icon": null,
       "tone": 0,
@@ -846,7 +820,26 @@
       "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
-      "icon": null,
+      "icon": {
+        "src": "/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "w": 0.3064,
+          "h": 1
+        }
+      },
+      "mark": {
+        "src": "/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "crop": {
+          "width": 326.3708,
+          "height": 100,
+          "left": 0,
+          "top": 0
+        }
+      },
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
@@ -968,7 +961,7 @@
       "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "smart-ig"
       ],
       "icon": null,
       "tone": 0,
@@ -1013,13 +1006,145 @@
       ]
     },
     {
+      "name": "smart-l1",
+      "title": "SMART L1",
+      "label": "SMART L1",
+      "description": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evidence a Digital Adaptation Kit is written from.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-l1: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-ig",
+      "title": "SMART IG",
+      "label": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-ig: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-dak",
+      "title": "SMART DAK",
+      "label": "SMART DAK",
+      "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-dak: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
       "name": "smart-base",
       "title": "SMART Base",
       "label": "SMART Base",
       "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "fhir-harness"
       ],
       "icon": null,
       "tone": 0,
@@ -1272,6 +1397,28 @@
           "y": 0.46,
           "w": 0.5,
           "h": 0.5
+        },
+        "crop": {
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
+        "region": {
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
+        },
+        "crop": {
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "tone": 268,
@@ -1284,7 +1431,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 44
+          "value": 41
         },
         {
           "id": "kinds",
@@ -1408,6 +1555,38 @@
       "footer": true,
       "needs": [],
       "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-bootstrap-card.webp",
+        "title": "CatBootstrap",
+        "region": {
+          "x": 0.27,
+          "y": 0.615,
+          "w": 0.24,
+          "h": 0.24
+        },
+        "crop": {
+          "width": 416.6667,
+          "height": 416.6667,
+          "left": -112.5,
+          "top": -256.25
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-bootstrap-card.webp",
+        "title": "CatBootstrap",
+        "region": {
+          "x": 0.27,
+          "y": 0.615,
+          "w": 0.24,
+          "h": 0.24
+        },
+        "crop": {
+          "width": 416.6667,
+          "height": 416.6667,
+          "left": -112.5,
+          "top": -256.25
+        }
+      },
       "tone": 96,
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,

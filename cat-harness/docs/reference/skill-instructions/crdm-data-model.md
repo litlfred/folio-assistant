@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/crdm/crdm-data-model.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-data-model.md) — do not edit here.
+> Generated from [`skills/crdm/crdm-data-model.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/crdm/crdm-data-model.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-data-model.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/crdm/crdm-data-model.md){: .fa-edit-source }
 
 {% raw %}
 # CRDM — the data-modelling phase

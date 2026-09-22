@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-requirements-workflow.md) — do not edit here.
+> Generated from [`skills/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/crdm/crdm-requirements-workflow.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-requirements-workflow.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/crdm/crdm-requirements-workflow.md){: .fa-edit-source }
 
 {% raw %}
 # CRDM requirements workflow
@@ -25,7 +25,7 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 ## BPMN reference
 
-[`methodologies/crdm/processes/crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn)
+[`processes/crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn)
 is the outer process — detection, the `Feature?` decision, then six phases, each
 a real subprocess in its own file:
 

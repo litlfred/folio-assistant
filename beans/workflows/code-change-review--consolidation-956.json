@@ -1,0 +1,69 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--consolidation-956",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-956-consolidate-the-stalled-work-plan",
+  "bean": "folio-assistant-kpcl",
+  "tokens": [
+    "Task_PrepareMerge"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-22T20:35:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "RECORDED RETROACTIVELY, and that is the first thing this instance says about itself. The work ran from 17:58Z to 20:35Z with NO instance on disk. The owner asked 'what process were you in?' and the honest answer was: none that was recorded. This is bean `vlhk`'s defect exactly -- 'a STRICT rule whose breach looked exactly like compliance' -- committed by the session that convened four streams to find defects of that shape. The process was named once in chat at 17:58Z ('work-plan lane') and then not again across eighteen turns, through four switches. Backfilled from the session transcript and the commits; every entry below is re-derivable from git log and the GitHub API, and none is reconstructed from memory of intent."
+    },
+    {
+      "at": "2026-09-22T18:00:00.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Swept the preceding six hours: 17 PRs merged 11:00Z-15:19Z and none in the 2h40m after; CI green on all eight workflows that ran; 98 beans `in-progress` with 76 untouched for a day or more. Created four stream claims (upgd, 10uc, w0cr, kpcl) and three queued (jo87, k660, mkqf) under the owner's three-then-four stream split."
+    },
+    {
+      "at": "2026-09-22T18:10:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/exciting-bardeen-csx7ay; issue #956 opened; PR #957 at the first commit, not at the end. Announced on the issue with the session link."
+    },
+    {
+      "at": "2026-09-22T18:12:00.000Z",
+      "node": "Task_RunGates",
+      "outcome": "failed",
+      "actor": "claude",
+      "note": "Ran only the four bean checks, not `bun run gates`. CI then failed on check:stale-paths -- bean 10uc quoted p5wm's stale path verbatim, in a claim whose own first instruction is to re-verify it. 'A subset of the gate set is not the gate set', committed by the change documenting it."
+    },
+    {
+      "at": "2026-09-22T18:17:00.000Z",
+      "node": "Task_Diagnose",
+      "actor": "claude",
+      "note": "Re-measured both milestones. p5wm: four of eight steps completed plus both side-conditions. yg29: step 1 entirely finished. w0cr carried identical stale content while PASSING, because its path was prose rather than numbered steps -- gate-green and wrong. Fixed in 9564d4d1; the stale chain is not quoted even to show what it says, because quoting it failed the gate a second time."
+    },
+    {
+      "at": "2026-09-22T19:12:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "Owner ruled that crossing into a sibling's subject is permitted with coordination. Recorded in skills/folio-core/coordinate.md rather than in chat: the line is CHECKER vs SESSION, and the collision surface is FILES rather than subjects. This was a SWITCH into skill authoring and was not announced as one."
+    },
+    {
+      "at": "2026-09-22T19:36:00.000Z",
+      "node": "Task_Review",
+      "actor": "claude",
+      "note": "Coordination pass. The predicted collision materialised: #960 and #961 both edit stale-paths-baseline.json, each removing its own entry and keeping the other's. Resolution posted to both and to the issue: the merged state is `known: []`, which is the file's success state rather than its failure state. Second collision: #962 carried seven unmerged bean files from #957."
+    },
+    {
+      "at": "2026-09-22T19:41:00.000Z",
+      "node": "Task_PrepareMerge",
+      "actor": "litlfred",
+      "note": "Owner: 'merge #957'. Merged as 6ac5e7f3 with explicit confirmation, which is the one git action needing it. Then 'merge #960 and #961'. #960's conflict resolved by merging main in (never rebasing another session's branch) and taking stream 2's 10uc, which supersedes mine: hfkl closed, path four steps not five."
+    },
+    {
+      "at": "2026-09-22T20:20:00.000Z",
+      "node": "Task_PrepareMerge",
+      "actor": "claude",
+      "note": "Tried to pre-set #961's baseline to the final `[]` to save a round. check:stale-paths refused: on stream 3's branch p5wm is not yet repaired, so `[]` is only valid once both repairs are on one ref. Reverted and sequenced. Asserting a file's end state from two branches read separately, rather than from the ref the check runs against, is the same error class as the stale path."
+    }
+  ]
+}

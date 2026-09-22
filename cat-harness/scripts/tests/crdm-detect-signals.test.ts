@@ -26,7 +26,7 @@ import {
 } from "../../src/crdm/detect-signals.ts";
 
 const root = resolve(import.meta.dir, "../..");
-const skillPath = join(root, "methodologies/crdm/crdm-detect.md");
+const skillPath = join(root, "skills/crdm/crdm-detect.md");
 const skillMarkdown = readFileSync(skillPath, "utf-8");
 const skill = parseSkillExclusions(skillMarkdown);
 const skillCategories = parseSkillCategories(skillMarkdown);

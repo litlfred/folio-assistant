@@ -66,7 +66,7 @@ Active workflows in this platform:
 | **Content lifecycle** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Content moves through validate → render → publish |
 | **Document ingestion** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | User drops a file in `uploads/` |
 | **Draft to publication** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../../methodologies/crdm/processes/crdm-requirements.bpmn) | Agent detects a feature request |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | Agent detects a feature request |
 | **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
@@ -119,7 +119,7 @@ classification determines which workflow the agent enters.
 | **Content authoring** | Write, edit, extend folio content (chapters, blocks, sections) | Authoring workflow (paper or document) |
 | **Content review** | Review, validate, provide feedback on existing content | Content lifecycle / editing-HCI workflow |
 | **Content ingestion** | Ingest a source document into the folio | Document ingestion workflow |
-| **Feature request** | Request new platform capability (see [crdm-detect](../../methodologies/crdm/crdm-detect.md)) | CRDM requirements workflow |
+| **Feature request** | Request new platform capability (see [crdm-detect](../../skills/crdm/crdm-detect.md)) | CRDM requirements workflow |
 | **Information request** | Ask about the platform, content, or process | No workflow — answer directly |
 | **Tool invocation** | Run a specific tool (`content_validate`, `qa_sweep`, etc.) | No workflow — execute and report |
 | **Work-plan management** | Create, update, or query beans | No workflow — execute and report |
@@ -129,7 +129,7 @@ classification determines which workflow the agent enters.
 
 The critical classification boundary is between **content authoring** and
 **feature request**. The `crdm-detect` skill
-([`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md))
+([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
 provides the detailed detection signals. The summary rule:
 
 > If implementing the request would require changes to **folio-assistant**
@@ -214,7 +214,7 @@ says so.
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
 ([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../methodologies/crdm/processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most
 value, because it describes a behaviour that was previously implicit. The
@@ -223,7 +223,7 @@ requirements workflow existed only as ad-hoc conversation.
 
 ### How the agent enters CRDM
 
-The detection logic is in [`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md).
+The detection logic is in [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
 Three scenarios:
 
 **New session, first request is a feature:**
@@ -349,8 +349,8 @@ back to its authoritative sources.
 | Session start sweep | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Commit and PR discipline | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Feature-request detection | `crdm-detect.md` | [`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md) |
-| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`methodologies/crdm/crdm-requirements-workflow.md`](../../methodologies/crdm/crdm-requirements-workflow.md) |
+| Feature-request detection | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
+| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | Content authoring (document) | folio-document-adapter skills | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |

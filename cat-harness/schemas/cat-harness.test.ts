@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -590,14 +590,26 @@ describe("materialiseDirectories", () => {
     const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
     expect(libraries.length).toBeGreaterThan(1);
-    // The platform's own library EXISTS and is EMPTY. It was absent for a few
-    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
-    // reports a declared-but-missing directory, so re-declaring it required
-    // re-creating it. Emptiness is the assertion — existence is what the
-    // declaration demands, and holding nothing is what the platform rule does.
+    // The platform's own library EXISTS. It was absent for a few hours between
+    // `frs5` and the owner's 2026-09-20 ruling; `harness:dirs:check` reports a
+    // declared-but-missing directory, so re-declaring it required re-creating
+    // it.
+    //
+    // EMPTINESS WAS ALSO ASSERTED HERE UNTIL 2026-09-22, and is not any more.
+    // The owner's ruling that day — "they should be under <stub>/library and
+    // appear in the library visualizer for the harness. dont bury sub-graph
+    // assets" — puts the sources the harness's OWN methodologies cite in this
+    // directory, so an emptiness assertion would forbid what was asked for.
+    //
+    // The rule did not go away, it MOVED, and it moved rather than being
+    // copied: `folio-assistant-core/schemas/library-ref.test.ts` now asserts
+    // that every entry here is cited by a methodology node, which still fails
+    // the moment folio content appears and names the offending entry when it
+    // does. Restating it here would be the one-fact-in-two-places drift this
+    // schema's own comments keep paying for — and the weaker of the two copies
+    // would be this one.
     const own = libraries.find((d) => d.id === "library")!.absPath;
     expect(existsSync(own)).toBe(true);
-    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
@@ -1062,7 +1074,18 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // it, and the voice derived from it -- KG assets, not the IG pipeline,
       // which stays `nsbb`'s question.
       "smart-base",
+      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
+      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
+      // smart-dak, smart-ig}`. They were named in the ruling and in
+      // `smart-stack-layering` for a whole PR while no directory declared any
+      // of them, so the stack existed in prose and nowhere a consumer could
+      // read it. Each declares NO directories, deliberately: that is the
+      // `folio-assistant-core` precedent, because a declared-but-absent
+      // directory is the `dh4f` defect.
+      "smart-dak",
+      "smart-ig",
       "smart-immunizations",
+      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",
@@ -1145,9 +1168,19 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const repo = resolve(import.meta.dir, "..", "..");
     const decl = readDeclaration(join(repo, "cat-harness"));
     const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
-    expect(themed.map((d) => d.id).sort()).toEqual([
-      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
-    ]);
+    // TWO, not four, since 2026-09-22. `methodology-crdm` and
+    // `methodology-raci` were dropped when the owner's "dont bury sub-graph
+    // assets" moved their skills into `skills/` — a package subdirectory of
+    // the already declared `skills/` graph needs no entry of its own, and a
+    // second entry would declare one directory twice.
+    //
+    // The theme did not move with them, deliberately: `theme` is a property of
+    // a DIRECTORY in the declaration, and those two directories no longer
+    // exist as declared subjects. What remains themed is the graph that holds
+    // the methodology nodes, here and in `smart-kg` — which is the right
+    // grain anyway, since `analyst` describes the methodologies rather than
+    // the skills that apply them.
+    expect(themed.map((d) => d.id).sort()).toEqual(["methodologies", "smart-kg-methodologies"]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });
