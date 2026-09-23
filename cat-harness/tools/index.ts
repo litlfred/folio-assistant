@@ -1111,7 +1111,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "context-prefixes",
       title: "JSON-LD prefix check",
       description:
-        "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean.",
+        "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean.",
       install: { none: true },
       invoke: { shell: "bun run check:context-emission" },
       io: {

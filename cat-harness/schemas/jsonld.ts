@@ -584,6 +584,53 @@ export const CONTENT_CONTEXT = {
 
   meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
 
+  // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
+  //
+  // `tabular.jsonld` (folio-tabular-records/v1) and `contents.jsonld`
+  // (folio-archive-contents/v1) were named `.jsonld` and carried an `@id`, but
+  // no `@context`, so a JSON-LD processor dropped every key. And the
+  // `narrative` object on 392 committed figure blocks used keys this context
+  // did not declare, so every agent-drafted figure narrative was dropped too.
+  // Owner's choice, 2026-09-23: make them real JSON-LD, not rename them.
+  //
+  // THE SPLIT, and why. A fact a consumer queries across documents gets a
+  // real term: what the record conforms to, its format, its counts, its
+  // header vocabulary. A structure that is OURS and nested — a narrative with
+  // its attribution, a sheet's shape, an archive's entry list, a file's
+  // technical metadata — is `@json`: kept verbatim, NULLS INCLUDED. That is
+  // not a shortcut. The three-state rule lives in those nulls — `text: null`
+  // means "nobody has written one", `rows: null` means "could not be counted"
+  // — and JSON-LD DROPS a null in any other position, which would make
+  // "determined absent" and "never recorded" the same fact. The same reason
+  // bean `792y` kept the CSVW record as plain JSON.
+  //
+  // Datatypes are written as full IRIs rather than through an `xsd` prefix: a
+  // prefix spoken only inside this context is one `check:context-emission`
+  // correctly reports as bound-and-never-emitted.
+  $schema: { "@id": "dcterms:conformsTo" },
+  format: { "@id": "dcterms:format" },
+  narrative: { "@id": "folio-assistant-core:narrative", "@type": "@json" },
+  source: { "@id": "folio-assistant-core:sourceTechnicalMetadata", "@type": "@json" },
+  archive: { "@id": "folio-assistant-core:archiveTechnicalMetadata", "@type": "@json" },
+  sheets: { "@id": "folio-assistant-core:sheets", "@type": "@json" },
+  entries: { "@id": "folio-assistant-core:archiveEntries", "@type": "@json" },
+  n_sheets: { "@id": "folio-assistant-core:sheetCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_entries: { "@id": "folio-assistant-core:entryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_files: { "@id": "folio-assistant-core:fileCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_directories: { "@id": "folio-assistant-core:directoryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  uncompressed_bytes: { "@id": "folio-assistant-core:uncompressedBytes", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  // The findable surface — `p67i`: "a grep for a column header finds the
+  // dataset that has it". A SET on the record (deduplicated, sorted); an
+  // ordered LIST on a table block, where column order is a fact.
+  header_vocabulary: { "@id": "folio-assistant-core:headerVocabulary", "@container": "@set" },
+  headers: { "@id": "folio-assistant-core:headers", "@container": "@list" },
+  // A figure block's image, as a path RELATIVE TO THE BLOCK (`../images/…`).
+  // A LITERAL, deliberately — `kg-export`'s rule for a path. Coerced to `@id`
+  // it would resolve against `@base` rather than against the block, and name
+  // `https://litlfred.github.io/images/…`, which is not where the image is. That
+  // is what `text` above does today (bean filed with `yh6u`); it is not copied.
+  file: { "@id": "folio-assistant-core:file" },
+
   // Ingest side. Declared in the shared context precisely so that an
   // ingested node and an authored block are the same kind of thing.
   //

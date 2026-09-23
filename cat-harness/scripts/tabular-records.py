@@ -47,6 +47,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _pdf_doc_id import slugify as _slugify  # noqa: E402
+from _content_context import CONTENT_CONTEXT_URL  # noqa: E402
 
 
 def _load_tech_meta():
@@ -263,6 +264,9 @@ def records(path: Path) -> dict[str, Any]:
             f"{path.name}: sniffed {mime} — not a CSV or spreadsheet, nothing written"
         )
     return {
+        # The record is JSON-LD, and says so (bean `yh6u`): without this every
+        # key below was dropped by a JSON-LD processor.
+        "@context": CONTENT_CONTEXT_URL,
         "$schema": "folio-tabular-records/v1",
         "@id": f"library/{_slugify(path.stem)}/tabular",
         "source": meta,
