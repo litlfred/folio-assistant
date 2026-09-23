@@ -51,7 +51,7 @@ documents mint, and no script path covers it).
 
 A wildcard **over-triggers** — a change to a script a workflow never runs now
 rebuilds. That is the cheap direction and it is the trade
-[`incremental-render`](../../cat-harness/skills/folio-core/incremental-render.md)
+[`incremental-render`](../../../cat-harness/skills/folio-core/incremental-render.md)
 already states: over-declaring costs a needless run, under-declaring serves a
 stale page that looks fresh.
 

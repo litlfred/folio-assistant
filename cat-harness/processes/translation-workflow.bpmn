@@ -37,12 +37,14 @@ Staleness is an END state that re-enters at the beginning, not a failure. A sour
          human decision.  ──────────────────────────────────────── -->
     <laneSet id="LaneSet_Translation">
       <lane id="Lane_Author" name="Author (source content)">
+        <extensionElements><folio:role ref="author"/></extensionElements>
         <flowNodeRef>Start_ContentAuthored</flowNodeRef>
       </lane>
       <lane id="Lane_Platform" name="Agent / platform (automated)">
         <documentation>Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence.
 
 It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead.</documentation>
+        <extensionElements><folio:role ref="authoring-agent"/></extensionElements>
         <flowNodeRef>Task_PotExtract</flowNodeRef>
         <flowNodeRef>Task_Translate</flowNodeRef>
         <flowNodeRef>Task_PoInject</flowNodeRef>
@@ -60,6 +62,7 @@ It is one lane rather than two because agentic and mechanical is a judgement rat
         <documentation>The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.
 
 Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.</documentation>
+        <extensionElements><folio:role ref="translation-adjudicator"/></extensionElements>
         <flowNodeRef>Task_Adjudicate</flowNodeRef>
         <flowNodeRef>Task_EditTranslation</flowNodeRef>
         <flowNodeRef>Task_Signoff</flowNodeRef>

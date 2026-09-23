@@ -69,7 +69,7 @@ describe("every activity in every diagram is performed by a declared role", () =
       const model = await loadProcessModel(join(dir, f));
       for (const lane of model.lanes) {
         const role = graph!.roles.find(
-          (r) => (lane.roleRef ? r.id === lane.roleRef : lane.name !== undefined && r.lanes.includes(lane.name)),
+          (r) => lane.roleRef !== undefined && r.id === lane.roleRef,
         );
         if (!role) unbound.push(`${f}: ${lane.name ?? lane.id}`);
       }

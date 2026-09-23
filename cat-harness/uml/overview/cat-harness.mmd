@@ -524,7 +524,6 @@ classDiagram
       title [1] string
       description [1] string
       actorKinds [1..*] list~person | agent | system | external~
-      lanes [0..*] string[]
       skills [0..*] string[]
       inherits [0..*] string[]
       actedUpon [0..1] boolean
@@ -543,6 +542,40 @@ classDiagram
       name [1] string
       roles [0..*] Role[]
       actors [0..*] Actor[]
+    }
+  }
+  namespace cat_harness__policies {
+    class cat_harness_policies_Constraint["Constraint"] {
+      <<json: OdrlPolicySchema>>
+      leftOperand [1] cat-harness:process | cat-harness:task | cat-harness:role
+      operator [1] odrl:eq | odrl:neq | odrl:isAnyOf | odrl:isNoneOf
+      rightOperand [1] string | string[]
+    }
+    class cat_harness_policies_Permission["Permission"] {
+      <<json: OdrlPolicySchema>>
+      assignee [1] string
+      action [1] string
+      target [0..1] string
+      constraint [0..*] Constraint[]
+    }
+    class cat_harness_policies_Prohibition["Prohibition"] {
+      <<json: OdrlPolicySchema>>
+      assignee [1] string
+      action [1] string
+      target [0..1] string
+      constraint [0..*] Constraint[]
+    }
+    class cat_harness_policies_OdrlPolicy["OdrlPolicy"] {
+      <<json: OdrlPolicySchema>>
+      @context [1] string | any[] | map~any~
+      @type [1] Set | Offer | Agreement
+      uid [1] string
+      profile [1] string
+      inheritFrom [0..*] string[]
+      conflict [0..1] odrl:perm | odrl:prohibit | odrl:invalid
+      assigner [0..1] string
+      permission [0..*] Permission[]
+      prohibition [0..*] Prohibition[]
     }
   }
   namespace cat_harness__processes {
@@ -1206,6 +1239,14 @@ classDiagram
   cssClass "cat_harness_scenarios_Role" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_RoleGraph" fa_uml_kind_scenarios
+  cat_harness_policies_Permission *-- "0..*" cat_harness_policies_Constraint : constraint
+  cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : permission
+  cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
+  cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
+  cssClass "cat_harness_policies_Constraint" fa_uml_kind_policies
+  cssClass "cat_harness_policies_Permission" fa_uml_kind_policies
+  cssClass "cat_harness_policies_Prohibition" fa_uml_kind_policies
+  cssClass "cat_harness_policies_OdrlPolicy" fa_uml_kind_policies
   cssClass "cat_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined

@@ -444,7 +444,7 @@ agent to work that exists.
 | `Task_RoundTripQA` carries a skill ref | **done** | it already did |
 | a `qa-sweep` axis for the round trip | **refused, correctly** | the sweep cannot back-translate |
 | `check-l1-complete` given the same treatment | **done** | `ca5ec3e373` (12:58) — Tool `l1-complete-check`, plus `check:l1-complete` in `package.json` |
-| the pattern written into a skill | **done** | [`covered-is-not-reachable`](../../cat-harness/skills/folio-core/covered-is-not-reachable.md) §"one mechanism, several dispatch points" (line 145), citing this bean at 168 |
+| the pattern written into a skill | **done** | [`covered-is-not-reachable`](../../../cat-harness/skills/folio-core/covered-is-not-reachable.md) §"one mechanism, several dispatch points" (line 145), citing this bean at 168 |
 
 **And this bean's own opening measurement was already wrong when it was
 filed.** It lists `check-l1-complete.ts` as having "none" for callers;

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-54rk
-title: 'CACHING + on-demand subgraph materialization, post-bootstrap'
-status: todo
+title: CACHING + on-demand subgraph materialization, post-bootstrap
+status: completed
 type: task
-parent: folio-assistant-5a3l
 priority: high
 created_at: 2026-09-20T00:00:00Z
-updated_at: 2026-09-23T02:45:00Z
+updated_at: 2026-09-23T20:03:59Z
+parent: folio-assistant-5a3l
 ---
 
 Owner, 2026-09-20:
@@ -45,15 +45,15 @@ anything else.
 
 ## Done when
 
-- [ ] A cache index: what is materialized, from where, when, how big, last
+- [x] A cache index: what is materialized, from where, when, how big, last
       read. Derived from the `materialization` records rather than a second
       store, so the two cannot disagree.
-- [ ] A skill for the on-demand ask — including the size gate, because "the
+- [x] A skill for the on-demand ask — including the size gate, because "the
       user can ask" must not mean 361 GB arrives without a number first.
-- [ ] Eviction REPORTS and never acts. `deletion-requires-confirmation`, and
+- [x] Eviction REPORTS and never acts. `deletion-requires-confirmation`, and
       the health sweep's own worked example (`plj1`) is a workflow whose shape
       deleted every open PR's preview without anybody deciding it.
-- [ ] Stubbed into the cat-harness bootstrap initiation steps, so a freshly
+- [x] Stubbed into the cat-harness bootstrap initiation steps, so a freshly
       bootstrapped agent learns the option exists rather than discovering it
       in a schema.
 
@@ -79,3 +79,21 @@ about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 **Nothing about this bean's own work changed** — not its status, not its
 Done-when, not a line of its body above this note. Only the question *"whose
 goal does finishing this serve?"* is answered differently.
+
+---
+
+## Summary of Changes — 2026-09-23
+
+| Done-when item | Evidence |
+|---|---|
+| cache index, derived from the records | `cat-harness/scripts/cache-index.ts`, run as `bun run cache:index`. It reuses `collect()` from `check-materialized-fixity.ts` (which now also carries the raw record), so there is one walk and no second store. |
+| on-demand skill with the size gate | `large-datasets/skills/materialize-on-demand.md`, next to `materialize-remote`. Before anything moves, it requires naming the subset, closing it over dependencies, stating the size with its basis, and saying what it adds to the cache. |
+| eviction reports, never acts | `evictionCandidates()` returns a list with reasons: expired first, then no-expiry working copies, largest first. Archival and fresh copies are never included. Pinned by `tests/cache-index.test.ts` (12 tests). |
+| stubbed into cat-harness initiation | `skills/folio-core/getting-started.md` §5 step 4 names the skill and the command. It is in cat-harness, not bootstrap: a bootstrap → cat-harness link is wrong-direction. |
+
+**Measured on the corpus (2026-09-23):**
+- 276 materialized copies, 19.1 MB where size is known.
+- Size: recorded for 6, measured now for 266, directory (counted by its parts) 3, absent 1. The absent one is `who-iris/uploads/wpr-rdo-2020-003-eng/intake.json`, which has no `localPath`; `check:materialized-fixity` already warns about it.
+- Fetched date: recorded for 3, not recorded for 273.
+- Last read: not recorded for any copy. That is the owner's ruling; recording reads is bean `7wgs`.
+- **273 of 276 are `no-expiry` working copies**, so every one is an eviction candidate. That is a real finding about the corpus, not noise from the tool.
