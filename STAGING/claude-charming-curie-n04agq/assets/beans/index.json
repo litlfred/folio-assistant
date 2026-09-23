@@ -8287,14 +8287,14 @@
     {
       "id": "folio-assistant-yh6u",
       "title": "RECORDS ARE REAL JSON-LD: tabular.jsonld and contents.jsonld carry no @context, and 392 figure narratives use undeclared keys",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T11:55:23Z",
-      "updatedAt": "2026-09-23T11:55:23Z",
+      "updatedAt": "2026-09-23T12:13:09Z",
       "preview": "Found while closing `792y`.\n\n## What is wrong\n\n- `folio-tabular-records/v1` (`tabular.jsonld`, written by `tabular-records.py`) and `folio-archive-contents/v1` (`contents.jsonld`, written by `archive-contents.py`) are named `.jsonld` and carry an `@id`, but have NO `@context`. A JSON-LD processor drops every key.\n- Measured 2026-09-23 over the 2,926 committed content-context documents: 8 keys are ",
       "file": "beans/defs/folio-assistant-yh6u--records-are-real-json-ld-tabularjsonld-and-content.md"
     },
