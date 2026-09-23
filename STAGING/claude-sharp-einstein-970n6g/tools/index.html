@@ -447,28 +447,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790161894">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790163113">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790161894">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790163113">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790161894">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790163113">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790161894">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790163113">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790161894">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790163113">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -485,7 +485,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790161894" defer></script>
+<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790163113" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -783,9 +783,9 @@ is <code class="language-plaintext highlighter-rouge">satisfies</code>, and it r
 to do that</em>, never <em>this skill is a tool</em>.</p>
 
 <div class="tg-grid">
-<div class="tg-stat"><b>73</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>53</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>55</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>74</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>54</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>56</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 <h2 id="how-they-are-invoked-and-installed">
@@ -809,7 +809,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><span class="tg-tag tg-shell">shell</span></td>
-      <td>55</td>
+      <td>56</td>
     </tr>
     <tr>
       <td><span class="tg-tag tg-inproc">inProcess</span></td>
@@ -836,7 +836,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">none</code></td>
-      <td>68</td>
+      <td>69</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cli</code></td>
@@ -853,7 +853,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
 </h2>
     
 
-<p>Yes — all <strong>53</strong> skills named across <strong>73</strong> tools resolve to a
+<p>Yes — all <strong>54</strong> skills named across <strong>74</strong> tools resolve to a
 skill document in this checkout. A <code class="language-plaintext highlighter-rouge">satisfies</code> pointing at nothing would be a
 tool advertising a capability the graph cannot locate.</p>
 <h2 id="every-tool">
@@ -972,6 +972,13 @@ tool advertising a capability the graph cannot locate.</p>
       <td>Publish a branch’s built site to <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.</td>
       <td><span class="tg-tag tg-shell">shell</span></td>
       <td><code class="language-plaintext highlighter-rouge">feature-staging</code></td>
+      <td>3 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-block-qa-summary</code><br />Folio block QA summary</td>
+      <td>Summarise a folio’s committed per-block QA verdicts into one <code class="language-plaintext highlighter-rouge">block-qa.json</code> a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block’s current files), passing, or unaudited. Freshness is the QA sweep’s own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><code class="language-plaintext highlighter-rouge">review-heatmap</code></td>
       <td>3 in / 1 out</td>
     </tr>
     <tr>

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 611,
+      "count": 613,
       "unit": "beans"
     }
   },
@@ -1781,14 +1781,14 @@
     {
       "id": "folio-assistant-792y",
       "title": "CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:30:19Z",
-      "updatedAt": "2026-09-23T07:34:10Z",
+      "updatedAt": "2026-09-23T10:35:31Z",
       "preview": "Found by bean `zaqn` (prefix = stub).\n\n## What is wrong\n\n`schemas/tabular-csvw.ts` writes four annotation keys as `fac:anchor`, `fac:headerRow`, `fac:extent`, `fac:stub`. A CSVW metadata document may put ONLY `@language` and `@base` in its local `@context` (W3C CSVW Metadata §5.2), so no prefix of ours can be bound there — `fac` expands as a URI scheme, the same defect `zaqn` fixed in the content ",
       "file": "beans/defs/folio-assistant-792y--csvw-keys-dangle-the-tabular-fac-annotation-keys-c.md"
     },
@@ -1847,6 +1847,20 @@
       "updatedAt": "2026-09-20T06:23:14Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also need avator of librarian for knwoledge content specific stuff in\n> folio-asst-core where dubln core skill should be introduced for first time.\n\n## Two things, and they are separable\n\n1. **A librarian avatar** for knowledge-content-specific material in\n   `folio-assist-core`.\n2. **A Dublin Core skill**, introduced there for the first time.\n\n## What ex",
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
+    },
+    {
+      "id": "folio-assistant-7go7",
+      "title": "laneBinding reports every ref-bearing lane as dangling when the role graph cannot be read",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:46:28Z",
+      "updatedAt": "2026-09-23T10:46:28Z",
+      "preview": "schemas/role-graph.ts laneBinding(): with graph undefined, a lane carrying a roleRef returns kind:dangling. One unreadable file therefore renders as a corpus of dangling references — the dh4f shape. Found while building zw4a; NOT changed unilaterally because kg:audit shares the resolver.\n\n## The behaviour\n\n`schemas/role-graph.ts`, `laneBinding()`:\n\n```ts\nconst role = graph ? roleForLane(graph, lan",
+      "file": "beans/defs/folio-assistant-7go7--lanebinding-reports-every-ref-bearing-lane-as-dang.md"
     },
     {
       "id": "folio-assistant-7iog",
@@ -6485,6 +6499,20 @@
       "file": "beans/defs/folio-assistant-s0ki--uploads-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-s3p2",
+      "title": "qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:52:44Z",
+      "updatedAt": "2026-09-23T10:52:44Z",
+      "preview": "Measured 2026-09-23 on a folio scaffolded by init-folio. Running `qa-sweep.ts folio` wrote `folio/test/results/block-qa/handbook/introduction/overview.qa.json`. That is INSIDE the content graph directory, not `<repo>/test/results/block-qa/…`, which is where `blockQaPath` documents verdicts as living (relative to the instance root).\n\nCause: `findContentRepoRoot(startAbs)` in `cat-harness/content/pi",
+      "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -8553,14 +8581,14 @@
     {
       "id": "folio-assistant-zw4a",
       "title": "PROCESS VIEWER: show the skills bound to each role/swimlane, not just the lane name",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:59:29Z",
-      "updatedAt": "2026-09-23T05:59:29Z",
+      "updatedAt": "2026-09-23T11:00:13Z",
       "preview": "The process viewer renders BPMN lanes but does not surface what the KG already knows about each lane: the role it binds, and that role's skills. Owner's request 2026-09-23.\n\n## What is already true, so this is a rendering gap rather than a modelling one\n\nThe chain the viewer needs is **already declared and already traversed\nelsewhere**. AGENTS.md states it in one sentence: *\"An actor performs a ta",
       "file": "beans/defs/folio-assistant-zw4a--process-viewer-show-the-skills-bound-to-each-roles.md"
     },
