@@ -62,7 +62,7 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
         the criterion does not belong in this genre and should carry `profiles`;
         or the block is a stated exception and a reviewer entry records why.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
 
     <bpmn:callActivity id="Call_VoiceOverlay" name="Voice overlay review" calledElement="Process_VoiceReview">

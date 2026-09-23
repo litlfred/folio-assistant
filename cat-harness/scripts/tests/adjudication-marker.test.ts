@@ -239,3 +239,144 @@ describe("absence stays absence", () => {
     for (const f of files) await load(join(dir, f));
   });
 });
+
+/**
+ * A caller and the judge it calls — bean `bvuk`.
+ *
+ * Two files, because a `callActivity` resolves `calledElement` against the
+ * SIBLING diagrams in its own directory, which is the mechanism these check.
+ */
+function caller(callerExt: string, judgeCodes = "a b"): string {
+  const dir = mkdtempSync(join(tmpdir(), "adjudication-call-"));
+  writeFileSync(
+    join(dir, "child.bpmn"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Child" name="Child" isExecutable="false">
+    <bpmn:startEvent id="Start_C" name="Start"/>
+    ${
+      judgeCodes === ""
+        ? '<bpmn:task id="A_C" name="Not a judgement"/>'
+        : `<bpmn:task id="A_C" name="Judge"><bpmn:extensionElements>` +
+          `<folio:adjudication codes="${judgeCodes}"/>${JUDGE}</bpmn:extensionElements></bpmn:task>`
+    }
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  const p = join(dir, "parent.bpmn");
+  writeFileSync(
+    p,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Parent" name="Parent" isExecutable="false">
+    <bpmn:startEvent id="Start_P" name="Start"/>
+    <bpmn:callActivity id="Call_P" name="Ask" calledElement="Process_Child">
+      <bpmn:extensionElements>${callerExt}</bpmn:extensionElements>
+    </bpmn:callActivity>
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  return p;
+}
+
+describe("a caller says what it can act on, and it is checked", () => {
+  test("accepts the matching case, and the list is on the node", async () => {
+    const m = await loadProcessModel(caller('<folio:adjudication accepts="a b"/>'));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["a", "b"]);
+  });
+
+  test("ORDER does not matter — a set, as on the judge side", async () => {
+    const m = await loadProcessModel(caller('<folio:adjudication accepts="b a"/>'));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["b", "a"]);
+  });
+
+  test("REFUSES a caller accepting an answer the judge cannot give", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a c"/>')),
+    ).rejects.toThrow(/accepts \(a, c\) but Process_Child's A_C may answer \(a, b\)/);
+  });
+
+  test("REFUSES a strict SUBSET — the unaccepted answers still arrive", async () => {
+    // Not a subset check by oversight: a caller that handles two of three
+    // answers receives the third and does something undefined with it.
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "a b c")),
+    ).rejects.toThrow(/may answer \(a, b, c\)/);
+  });
+
+  test("REFUSES `accepts` on a call into a process that judges nothing", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "")),
+    ).rejects.toThrow(/contains no judgement/);
+  });
+
+  test("REFUSES `accepts` anywhere but a call activity", async () => {
+    // It states what a CALLER can act on; a plain task calls nothing.
+    await expect(
+      loadProcessModel(fixture('<folio:adjudication accepts="a b"/>')),
+    ).rejects.toThrow(/only meaningful on a call activity/);
+  });
+
+  test("REFUSES declaring both `codes` and `accepts` — it cannot be both", async () => {
+    await expect(
+      loadProcessModel(caller(`<folio:adjudication codes="a b" accepts="a b"/>`)),
+    ).rejects.toThrow(/declares both/);
+  });
+
+  test("REFUSES a single accepted answer", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a"/>')),
+    ).rejects.toThrow(/names 1 code/);
+  });
+
+  test("a caller declaring NOTHING loads — absence is reported, not refused", async () => {
+    // Four of the six real callers are in this state and what each should
+    // accept is undecided. Refusing here would force a guess that looks
+    // checked; `check:workflow-refs` prints them instead.
+    const m = await loadProcessModel(caller("<folio:skill ref=\"adjudication\"/>"));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toBeUndefined();
+    expect(m.children.get("Call_P")).toBeDefined();
+  });
+});
+
+describe("a misspelled attribute is refused, not ignored", () => {
+  test("REFUSES an attribute the engine does not read", async () => {
+    // The `folio:bean action="create"` failure, one element over: every one of
+    // this element's three attributes has a MEANINGFUL absence, so a typo
+    // parses as a deliberate abstention.
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accept="a b"/>')),
+    ).rejects.toThrow(/carries "accept", which the engine does not read/);
+  });
+
+  test("REFUSES a judge whose codes are misspelled into nothing", async () => {
+    await expect(loadProcessModel(fixture(`<folio:adjudication code="a b"/>${JUDGE}`)))
+      .rejects.toThrow(/carries "code"/);
+  });
+});
+
+describe("the two real callers that fit", () => {
+  test("review-narrative and voice-review declare the three, and they match", async () => {
+    // The diagram's own claim, now checked: "The three outcomes are the ones
+    // `review-narrative` and `voice-review` already use". It was prose in a
+    // documentation element and nothing compared it to anything.
+    const dir = join(import.meta.dir, "../../processes");
+    for (const [f, id] of [
+      ["review-narrative.bpmn", "Task_AdjudicateVoice"],
+      ["voice-review.bpmn", "Task_Adjudicate"],
+    ] as const) {
+      const m = await loadProcessModel(join(dir, f));
+      expect(m.nodes.get(id)!.adjudicationAccepts, `${f} lost its accepts`).toEqual([
+        "stands",
+        "scope",
+        "dispensation",
+      ]);
+    }
+  });
+});

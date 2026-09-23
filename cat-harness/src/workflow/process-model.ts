@@ -265,6 +265,18 @@ export interface ProcessNode {
    * {@link adjudicationOf} for why the two are not one import.
    */
   adjudication?: { codes: string[] };
+  /**
+   * `<folio:adjudication accepts="…"/>` — on a CALL ACTIVITY: the answers this
+   * caller can act on, checked against the judge inside the process it calls.
+   *
+   * A different claim from {@link adjudication}, on a different element, which
+   * is why it is a different attribute rather than the same one reused. A
+   * judge SAYS what may be answered; a caller says what it can HEAR. Bean
+   * `bvuk`: six diagrams call `Process_Adjudication` and each asks it a
+   * different question, and nothing compared any of them to its three
+   * outcomes.
+   */
+  adjudicationAccepts?: string[];
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
@@ -632,32 +644,149 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
  * a DMN table behind `folio:decision`, which this engine already refuses to
  * let a caller hand-answer.
  */
+/**
+ * The three attributes `<folio:adjudication/>` carries, by where it sits.
+ *
+ * `codes` on the judging activity, `code` on a branch out of its gateway,
+ * `accepts` on a call activity. They are deliberately three names rather than
+ * one overloaded one: a judge declaring its enum, a branch naming the answer
+ * that selects it, and a caller stating what it can act on are three different
+ * assertions, and a single attribute would let a reader believe any of them.
+ */
+const ADJUDICATION_ATTRS = {
+  /** On a node: a judge's enum, or a caller's list of answers it can act on. */
+  node: ["codes", "accepts"],
+  /** On a sequence flow: the one answer that selects this branch. */
+  flow: ["code"],
+} as const;
+
+/**
+ * Read `<folio:adjudication/>` off an element, REFUSING an attribute the
+ * engine does not read.
+ *
+ * The same guard `folio:bean` carries, and for the same measured reason: that
+ * element gained a second attribute, a diagram spelled one of them wrong, and
+ * "the step silently did nothing for weeks" because an absent attribute was
+ * itself meaningful. This element now has three attributes whose absences are
+ * all meaningful — an activity with no `codes` is not a judgement, a branch
+ * with no `code` opts out, a caller with no `accepts` has not checked — so a
+ * misspelling is again indistinguishable from an abstention.
+ *
+ * Written when `accepts` was added rather than before it, which is the point:
+ * one attribute could not be misspelled into another's meaning.
+ */
+function adjudicationDeclOf(
+  ext: { $type: string }[],
+  elId: string,
+  where: keyof typeof ADJUDICATION_ATTRS = "node",
+): { codes?: string; code?: string; accepts?: string } | undefined {
+  const decl = ext.find((v) => v.$type === "folio:adjudication") as
+    | (Record<string, unknown> & { codes?: string; code?: string; accepts?: string })
+    | undefined;
+  if (!decl) return undefined;
+  // Checked PER POSITION, not against the union. `code` is a real attribute
+  // on a flow and meaningless on an activity, so a union guard would let
+  // `<folio:adjudication code="a b"/>` sit on a judge and be ignored — which
+  // is precisely the shape the guard exists to refuse, one element over.
+  const allowed = ADJUDICATION_ATTRS[where] as readonly string[];
+  const unknown = Object.keys(decl).filter((k) => !k.startsWith("$") && !allowed.includes(k));
+  if (unknown.length > 0) {
+    throw new UnsupportedBpmn(
+      `${elId}: <folio:adjudication/> carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
+        `which the engine does not read on a ${where}. Here the attribute(s) are ` +
+        `${allowed.map((a) => `\`${a}\``).join(", ")} — and each one's ABSENCE ` +
+        `means something, so a misspelling reads as a deliberate abstention.`,
+    );
+  }
+  if (decl.codes !== undefined && decl.accepts !== undefined) {
+    throw new Error(
+      `${elId}: <folio:adjudication/> declares both \`codes\` and \`accepts\`. ` +
+        `A step either MAKES a judgement or CALLS one; declaring both says it is ` +
+        `its own caller, and nothing could check that against anything.`,
+    );
+  }
+  return decl;
+}
+
+/** Split a whitespace-separated code list, refusing a degenerate enum. */
+function codeList(raw: string | undefined, elId: string, attr: string, why: string): string[] {
+  const codes = (raw ?? "").trim().split(/\s+/).filter(Boolean);
+  if (codes.length < 2) {
+    throw new Error(
+      `${elId}: <folio:adjudication ${attr}="…"/> names ${codes.length} code(s). ${why}`,
+    );
+  }
+  if (new Set(codes).size !== codes.length) {
+    throw new Error(
+      `${elId}: <folio:adjudication ${attr}="…"/> repeats a code. ` +
+        `The outcome could not say which was chosen.`,
+    );
+  }
+  return codes;
+}
+
+/**
+ * `<folio:adjudication accepts="a b c"/>` on a call activity — the answers
+ * this caller can act on.
+ *
+ * Bean `bvuk`, and the measurement that produced it is worth carrying here
+ * because it is the reason this is a declaration rather than an inference.
+ * Six diagrams call `Process_Adjudication`; **not one of them branches on the
+ * outcome** — every call activity has exactly one outgoing flow, and the
+ * called process has exactly one settled end event, so no caller could branch
+ * even if it wanted to. The three codes are therefore internal work selectors,
+ * not a value the caller reads.
+ *
+ * So the mismatch could not be found by looking at the caller's own flows:
+ * a caller asking "which side wins" and one asking "does this finding stand"
+ * have IDENTICAL shapes. Somebody has to state what the caller can act on,
+ * and then a machine can compare it.
+ *
+ * The check itself is in {@link loadProcessModel}'s descent, because it needs
+ * the called process — see there for what it refuses and what it leaves alone.
+ */
+function adjudicationAcceptsOf(
+  ext: { $type: string }[],
+  el: { id: string; $type: string },
+  decl: { codes?: string; accepts?: string } | undefined,
+): string[] | undefined {
+  if (!decl || decl.accepts === undefined) return undefined;
+  if (el.$type !== "bpmn:CallActivity") {
+    throw new Error(
+      `${el.id}: <folio:adjudication accepts="…"/> is only meaningful on a call activity — ` +
+        `it states what a CALLER can act on, and ${el.$type} calls nothing. ` +
+        `A step that makes the judgement itself declares \`codes\`.`,
+    );
+  }
+  return codeList(
+    decl.accepts,
+    el.id,
+    "accepts",
+    `A caller that can act on one answer is not consuming a judgement, and the ` +
+      `called judge must offer at least two.`,
+  );
+}
+
 function adjudicationOf(
   ext: { $type: string; codes?: string }[],
   el: { id: string; $type: string },
   fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
+  decl: { codes?: string; accepts?: string } | undefined,
 ): { codes: string[] } | undefined {
-  const decl = ext.find((v) => v.$type === "folio:adjudication");
-  if (!decl) return undefined;
+  if (!decl || decl.codes === undefined) return undefined;
   if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
     throw new Error(
       `${el.id}: <folio:adjudication/> is only meaningful on an activity — ` +
         `somebody performs a judgement, and ${el.$type} is not performed.`,
     );
   }
-  const codes = (decl.codes ?? "").trim().split(/\s+/).filter(Boolean);
-  if (codes.length < 2) {
-    throw new Error(
-      `${el.id}: <folio:adjudication/> declares ${codes.length} code(s). A judgement ` +
-        `needs at least two permitted answers — one is assent, and naming it a ` +
-        `judgement would give a rubber stamp a decision's authority.`,
-    );
-  }
-  if (new Set(codes).size !== codes.length) {
-    throw new Error(
-      `${el.id}: <folio:adjudication/> repeats a code. The outcome could not say which was chosen.`,
-    );
-  }
+  const codes = codeList(
+    decl.codes,
+    el.id,
+    "codes",
+    `A judgement needs at least two permitted answers — one is assent, and naming ` +
+      `it a judgement would give a rubber stamp a decision's authority.`,
+  );
   // Refusal 2. Absent fulfilment is REFUSED rather than defaulted: a step that
   // has not said who may judge has not restricted anyone, and the restriction
   // is the whole reason this process kind exists.
@@ -777,6 +906,8 @@ interface ModdleElement {
       codes?: string;
       /** `<folio:adjudication code="…"/>` on a branch out of its gateway. */
       code?: string;
+      /** `<folio:adjudication accepts="…"/>` on a call activity. */
+      accepts?: string;
       relaxable?: string;
       /** `<folio:precondition>` — bean `lv3j`. */
       id?: string;
@@ -1009,7 +1140,8 @@ export async function loadProcessModel(
       noCallReason: noCallReasonOf(ext, el.id),
       judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
-      adjudication: adjudicationOf(ext, el, fulfilmentOf(ext, el.id)),
+      adjudication: adjudicationOf(ext, el, fulfilmentOf(ext, el.id), adjudicationDeclOf(ext, el.id)),
+      adjudicationAccepts: adjudicationAcceptsOf(ext, el, adjudicationDeclOf(ext, el.id)),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
@@ -1035,9 +1167,9 @@ export async function loadProcessModel(
       name: el.name?.trim() || undefined,
       from,
       to,
-      adjudicationCode: (el.extensionElements?.values ?? [])
-        .find((v) => v.$type === "folio:adjudication")
-        ?.code?.trim() || undefined,
+      adjudicationCode:
+        adjudicationDeclOf(el.extensionElements?.values ?? [], el.id ?? "(flow)", "flow")
+          ?.code?.trim() || undefined,
     });
     nodes.get(from)!.outgoing.push(el.id);
     nodes.get(to)!.incoming.push(el.id);
@@ -1225,7 +1357,9 @@ export async function loadProcessModel(
     }
     const home = index.get(node.calledElement);
     if (!home) continue;
-    children.set(node.id, await loadProcessModel(home, path));
+    const child = await loadProcessModel(home, path);
+    children.set(node.id, child);
+    checkAcceptedCodes(node, child, bpmnPath);
   }
 
   return {
@@ -1245,6 +1379,69 @@ export async function loadProcessModel(
     decisions,
     children,
   };
+}
+
+/**
+ * A caller's `accepts` and the judge's `codes` are ONE fact — bean `bvuk`.
+ *
+ * ## What it refuses, and what it deliberately does not
+ *
+ * **Refused:** a declared `accepts` that is not the called judge's enum, and a
+ * declared `accepts` on a call into a process that judges nothing. Both are
+ * claims a reader would act on that no longer hold.
+ *
+ * **Not refused — reported instead, by `check:workflow-refs`:** a caller that
+ * declares NOTHING. Every one of the six callers in this corpus was in that
+ * state when the attribute was added, so refusing absence would mean either
+ * failing the corpus on day one or backfilling six declarations nobody had
+ * grounds for. Four of the six ask `Process_Adjudication` a question its three
+ * QA-criterion outcomes do not obviously answer, and guessing an `accepts` for
+ * them would convert an open question into a checked-looking assertion — the
+ * `dh4f` shape pointed the wrong way. An undeclared caller is "could not
+ * determine", and that is never rendered as clean.
+ *
+ * **Not checked at all:** a call into a process no file here defines. A folio
+ * may legitimately call out, the descent above already leaves those opaque,
+ * and a refusal would be this checker reporting on something it cannot see.
+ *
+ * ## Why set equality rather than a subset
+ *
+ * A caller accepting a strict subset would be saying it can act on some of the
+ * answers the judge may give — which means the others reach it and it does
+ * something undefined with them. There is no useful reading of a partial
+ * accept, so it is the same defect as a wrong one.
+ */
+function checkAcceptedCodes(
+  node: ProcessNode,
+  child: ProcessModel,
+  bpmnPath: string,
+): void {
+  if (node.adjudicationAccepts === undefined) return;
+  const judges = [...child.nodes.values()].filter((n) => n.adjudication !== undefined);
+  if (judges.length === 0) {
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} declares <folio:adjudication accepts="…"/> but ` +
+        `${child.id} contains no judgement. Either the called process lost its ` +
+        `<folio:adjudication codes="…"/>, or this caller is not calling an adjudication.`,
+    );
+  }
+  if (judges.length > 1) {
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} calls ${child.id}, which judges more than once ` +
+        `(${judges.map((j) => j.id).join(", ")}). One \`accepts\` cannot say which of them ` +
+        `it answers, so the caller would look checked while naming nothing in particular.`,
+    );
+  }
+  const offered = [...new Set(judges[0]!.adjudication!.codes)].sort();
+  const accepted = [...new Set(node.adjudicationAccepts)].sort();
+  if (offered.join("\u0000") !== accepted.join("\u0000")) {
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} accepts (${accepted.join(", ")}) but ` +
+        `${child.id}'s ${judges[0]!.id} may answer (${offered.join(", ")}). ` +
+        `An answer the caller cannot act on still reaches it — see bean \`bvuk\`, ` +
+        `where six callers asked one three-outcome process six different questions.`,
+    );
+  }
 }
 
 /**

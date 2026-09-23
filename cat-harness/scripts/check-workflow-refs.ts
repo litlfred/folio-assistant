@@ -86,6 +86,29 @@ const branches = {
   undeclared: [] as Array<{ file: string; node: string }>,
 };
 
+/**
+ * Every call into a process that JUDGES, and whether the caller says which
+ * answers it can act on. Bean `bvuk`.
+ *
+ * REPORTED, not enforced, and the reason is specific rather than the usual
+ * adoption argument. Six diagrams call `Process_Adjudication`; **none of them
+ * branches on its outcome** — each call activity has one outgoing flow and the
+ * called process one settled end event — so the mismatch is invisible in the
+ * diagram's shape. Four of the six ask it a question its three QA-criterion
+ * outcomes do not obviously answer (`refresh-materialized` asks *which side
+ * wins* a conflict), and what each of those four SHOULD accept is an open
+ * decision, not a backfill.
+ *
+ * So an undeclared caller is "could not determine", printed rather than
+ * failed. A DECLARED one that disagrees with its judge is refused at load, by
+ * `checkAcceptedCodes` in `process-model.ts` — this list is the third state
+ * between that refusal and silence.
+ */
+const adjudicationCalls = {
+  declared: [] as Array<{ file: string; node: string; codes: string[] }>,
+  undeclared: [] as Array<{ file: string; node: string; called: string }>,
+};
+
 let knownCount = 0;
 let fileCount = 0;
 let rootFiles: string[] = [];
@@ -132,6 +155,20 @@ for (const file of files) {
     else if (node.judgementReason) branches.judgement.push(where);
     else branches.undeclared.push(where);
   }
+
+  // Calls into a judging process. `model.children` is what the loader already
+  // resolved, so a call OUT of this corpus is absent here rather than counted
+  // — a process no file defines is opaque by design and cannot be checked.
+  for (const [nodeId, child] of model.children) {
+    if (![...child.nodes.values()].some((n) => n.adjudication !== undefined)) continue;
+    const node = model.nodes.get(nodeId)!;
+    const where = { file: relative(INSTANCE_ROOT, file), node: nodeId };
+    if (node.adjudicationAccepts) {
+      adjudicationCalls.declared.push({ ...where, codes: node.adjudicationAccepts });
+    } else {
+      adjudicationCalls.undeclared.push({ ...where, called: child.id });
+    }
+  }
 }
 }
 
@@ -166,6 +203,28 @@ if (totalUncovered) {
 }
 
 if (!dangling.length && !totalUncovered) console.log("\nAll refs resolve, every activity covered.");
+
+const adjTotal = adjudicationCalls.declared.length + adjudicationCalls.undeclared.length;
+if (adjTotal > 0) {
+  console.log(
+    `\nAdjudication callers — ${adjudicationCalls.declared.length} of ${adjTotal} say ` +
+      `which answers they can act on`,
+  );
+  for (const d of adjudicationCalls.declared) {
+    console.log(`  \u2713 ${d.file} \u00b7 ${d.node} accepts (${d.codes.join(", ")})`);
+  }
+  for (const u of adjudicationCalls.undeclared) {
+    console.log(`  ? ${u.file} \u00b7 ${u.node} \u2192 ${u.called}: does not say`);
+  }
+  if (adjudicationCalls.undeclared.length) {
+    console.log(
+      `\n${adjudicationCalls.undeclared.length} caller(s) run a judgement without saying which of\n` +
+        `its answers they can act on. Not an error — what each should accept is the open\n` +
+        `question in bean \`bvuk\`, and guessing one would make an undecided thing look\n` +
+        `checked. Add <folio:adjudication accepts="…"/> once the answer is decided.`,
+    );
+  }
+}
 
 /*
  * The same failure, one layer over: `schemas/translation-tools.ts` lists
