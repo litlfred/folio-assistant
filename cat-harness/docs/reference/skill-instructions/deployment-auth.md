@@ -52,6 +52,26 @@ CLI/API clients can skip OAuth entirely:
 curl -H 'Authorization: Bearer <FOLIO_API_TOKEN>' https://<folio-domain>/mcp
 ```
 
+## Where this is going: the gateway decides with ODRL (issue #1180)
+
+**Not built.** The three gateway roles above are a second permission
+vocabulary that joins to nothing in the knowledge graph. The target, per the
+owner's 2026-09-23 decisions:
+
+1. **The data store authenticates** (the auth-gateway here) and maps the login
+   to an **actor id**. That mapping lives in the data store only; no actor file
+   and no policy carries a login.
+2. **It authorizes with the instance's ODRL policies** in `policies/`, by
+   calling `permits()` (`schemas/odrl.ts`) with the actor, the action and the
+   scope. `unknown` is a refusal, never a pass.
+3. **An unauthenticated request is `cat-harness:anyone`**, which the policies allow to
+   `visualize` and `render`, and nothing else.
+4. **A relationship engine (OpenFGA) is later**, and the policies do not change
+   when it arrives: the data store would compile them.
+
+Until then the whitelists stay authoritative, and the table below still
+describes the running gateway.
+
 ## CRITICAL: Whitelist Protection
 
 **NEVER modify these files:**

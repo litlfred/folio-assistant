@@ -132,7 +132,7 @@ the diff it was warning about.
 That is the same blind spot this session hit five times from the other side —
 building something a sibling had already landed. The guard for the read
 direction is now
-[`bean-coordination`](../../cat-harness/skills/folio-core/bean-coordination.md)
+[`bean-coordination`](../../../cat-harness/skills/folio-core/bean-coordination.md)
 §"Re-derive from the REMOTE"; this bean is the WRITE direction, and there is
 no skill line for it yet. Worth one if a third instance appears: **when you
 move or rename a file a sibling branch edits, say so in a bean neither branch

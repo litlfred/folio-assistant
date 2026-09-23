@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: atomic-mass-drift-check\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.762Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:08.945Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/atomic-mass-drift-check.bpmn:48
+#: processes/atomic-mass-drift-check.bpmn:49
 #. Diagram element documentation
 msgid "Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source."
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:47
+#: processes/atomic-mass-drift-check.bpmn:48
 #. Diagram label
 msgid "Did anything&#10;change?"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:53
+#: processes/atomic-mass-drift-check.bpmn:54
 #. Diagram label
 msgid "Generated file in sync"
 msgstr ""
@@ -39,27 +39,27 @@ msgstr ""
 msgid "Is AtomicMass.lean still in sync with its data table?"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:56
+#: processes/atomic-mass-drift-check.bpmn:57
 #. Diagram label
 msgid "Job RED &#8212; the generated&#10;file is stale"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:61
+#: processes/atomic-mass-drift-check.bpmn:62
 #. Diagram label
 msgid "no &#8212; in sync"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:33
+#: processes/atomic-mass-drift-check.bpmn:34
 #. Diagram label
 msgid "Pull request, push to main,&#10;or dispatch"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:39
+#: processes/atomic-mass-drift-check.bpmn:40
 #. Diagram label
 msgid "Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff"
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:40
+#: processes/atomic-mass-drift-check.bpmn:41
 #. Diagram element documentation
 msgid "Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces."
 msgstr ""
@@ -74,7 +74,7 @@ msgstr ""
 msgid "THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.&#10;&#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that \"a diagram that is drawn once and then drifts is worse than none, because it is consulted\", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&#10;&#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one it carries no `<folio:job>`, so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting."
 msgstr ""
 
-#: processes/atomic-mass-drift-check.bpmn:62
+#: processes/atomic-mass-drift-check.bpmn:63
 #. Diagram label
 msgid "yes &#8212; drifted"
 msgstr ""

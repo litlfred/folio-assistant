@@ -293,8 +293,6 @@ export interface GlossaryReport {
   readonly usages: number;
   /** Declared roles no task-containing lane in this instance draws. */
   readonly undrawn: string[];
-  /** ...of those, whose `lanes[]` names a lane no diagram contains at all. */
-  readonly danglingLaneBindings: { role: string; lane: string }[];
   /** Lanes whose binding is dangling or contradictory — reported, not gated. */
   readonly problems: string[];
   /** True when the ledger on disk differs from the one this run computed. */
@@ -539,21 +537,13 @@ export function buildGlossary(opts: {
   const ledger: Ledger = { $schema: LEDGER_SCHEMA, instance: id.stub, concepts };
   const ledgerStale = JSON.stringify(prior.concepts) !== JSON.stringify(concepts) || prior.instance !== id.stub;
 
-  // Declared but undrawn, split by CAUSE — the two need different fixes.
-  const drawnNames = new Set(swimlanes.map((l) => l.laneName).filter((n): n is string => n !== null));
-  const allLaneNames = new Set(lanes.map((l) => l.laneName).filter((n): n is string => n !== null));
+  // Declared but undrawn. A role no longer lists lanes (data-modelling step 8,
+  // #1168), so a "role names a lane no diagram contains" (`fd6i`) cannot occur
+  // any more: a lane names its role, and a lane naming no declared role is a
+  // dangling `ref`, reported with the other problems.
   const undrawn: string[] = [];
-  const danglingLaneBindings: { role: string; lane: string }[] = [];
   for (const r of roles) {
-    if (occurrences.has(r.id)) continue;
-    undrawn.push(r.id);
-    for (const l of r.lanes ?? []) {
-      // A role naming a lane that appears in NO diagram is `fd6i` — declared
-      // and never used. A role whose lane exists but holds no task is not:
-      // `check-lane-documentation` scopes to task-containing lanes for the
-      // same reason, and an `actedUpon` lane holds none BY CONSTRUCTION.
-      if (!drawnNames.has(l) && !allLaneNames.has(l)) danglingLaneBindings.push({ role: r.id, lane: l });
-    }
+    if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
 
   const doc = {
@@ -605,7 +595,6 @@ export function buildGlossary(opts: {
       restored,
       usages,
       undrawn,
-      danglingLaneBindings,
       problems,
       ledgerStale,
     },
@@ -633,9 +622,6 @@ if (import.meta.main) {
   for (const k of report.newlyRetired) console.log(`    NEWLY RETIRED: ${k}`);
   if (report.undrawn.length > 0) {
     console.log(`  ${report.undrawn.length} declared role(s) no swimlane draws: ${report.undrawn.join(", ")}`);
-  }
-  for (const d of report.danglingLaneBindings) {
-    console.log(`    DANGLING: role "${d.role}" binds lane ${JSON.stringify(d.lane)}, which no diagram contains`);
   }
   for (const p of report.problems) console.log(`  PROBLEM: ${p}`);
 

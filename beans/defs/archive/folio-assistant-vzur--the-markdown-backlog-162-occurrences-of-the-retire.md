@@ -28,7 +28,7 @@ The filename is stale AND the assertion is now false in substance — the
 declaration *is* stub-named (`cat-harness/cat-harness.json`). Several of the 8
 occurrences in that file are claims about how the system works, not mentions of
 a path. Fixing them is editorial work on a skill, and
-[`AGENTS.md`](../../AGENTS.md) says the skill is where the discipline lives.
+[`AGENTS.md`](../../../AGENTS.md) says the skill is where the discipline lives.
 
 ## Four of them already fail a gate, and are baselined
 

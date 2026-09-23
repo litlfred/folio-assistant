@@ -505,6 +505,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     validator: "schemas/role-graph.ts#RoleGraphSchema",
     summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
   },
+  // ── What an Actor may do: W3C ODRL 2.2 policies — issue #1180 ──────────
+  //
+  // Owner, 2026-09-23: permissions are *"W3C ODRL 2.2"*, and policies are
+  // their own graph kind rather than a file inside `scenarios`. A policy is
+  // authored, and is true whether or not anything reads it, so it `holds`
+  // content like the role graph beside it: it owes no viewer.
+  policies: {
+    type: termIri("PolicyGraph"),
+    renderable: false,
+    holds: "content",
+    skill: "role-model",
+    schema: "schemas/odrl.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/odrl.ts#OdrlPolicySchema",
+    summary:
+      "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role " +
+      "constraints. Actions are the folio profile in skills/permissions/permissions.json.",
+  },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
   //
   // A methodology is a NAMED, EXTERNAL way of reaching a judgement — Kepner-Tregoe

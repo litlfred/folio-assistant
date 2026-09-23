@@ -112,7 +112,7 @@ removed above.
 **2. Proposing options for a settled question.** Offering three shapes made the
 owner answer twice, and the second answer had to overrule a confident-sounding
 reason that did not exist. The rule is now in
-[`opening-brief`](../../cat-harness/skills/folio-core/opening-brief.md)
+[`opening-brief`](../../../cat-harness/skills/folio-core/opening-brief.md)
 §"Before you offer options, check whether it is already ruled".
 
 ### Why the scheme was missed, and it is not only carelessness

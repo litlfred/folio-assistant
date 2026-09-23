@@ -100,7 +100,7 @@ the actual condition, not just a clean tree.
 defect and was filed at 12:56:15 — **three minutes and fifty-three seconds
 after this one**. My check-before-you-create grep ran against a checkout that
 did not yet contain `55f542af23`, so it found nothing. That is
-[`bean-coordination` §"A claim is branch-local"](../../cat-harness/skills/folio-core/bean-coordination.md)
+[`bean-coordination` §"A claim is branch-local"](../../../cat-harness/skills/folio-core/bean-coordination.md)
 exactly: a bean announces rather than reserves until the PR carrying it
 exists, and two sessions four minutes apart is inside that window.
 
@@ -115,7 +115,7 @@ ignored"*. Where the two disagree, this one is correct.
 
 The sibling's note above says *"not my bean, and resolving somebody else's is
 what `bean-coordination` forbids."* **That rule changed today.**
-[`bean-coordination` §"Closing a bean whose work has already landed"](../../cat-harness/skills/folio-core/bean-coordination.md)
+[`bean-coordination` §"Closing a bean whose work has already landed"](../../../cat-harness/skills/folio-core/bean-coordination.md)
 (bean `0pes`, merged in #527) now states it: **a bean closes on evidence, not
 on authorship** — anyone may close any bean whose measurement they have re-run
 themselves; nobody may close one because a note in it says somebody else

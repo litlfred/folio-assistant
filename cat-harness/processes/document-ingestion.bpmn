@@ -40,10 +40,12 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Ingestion_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
+        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Dropped</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Detect</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Extract</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Derive</bpmn:flowNodeRef>
@@ -56,10 +58,12 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_2" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>A one-task detour from the Ingestion Engine's own loop: it exists as its own lane rather than a step inside Lane_1 specifically so that recording an incomplete L1 build is visible as a write to the SHARED plan — a bean anyone can see and pick up — rather than a private retry the engine keeps to itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_OpenBean</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_3" name="Corpus — L1 source knowledge graph">
         <bpmn:documentation>The terminal state the whole diagram exists to reach: once Task_Promote lands material in library/&lt;bib-slug&gt;/, this lane is where that fact is recorded as available, and it is the boundary this diagram stops at — everything that depends on the source afterward, such as authoring-a-document.bpmn's citations, starts from here rather than being drawn into this process.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Citeable</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Ingested</bpmn:flowNodeRef>
       </bpmn:lane>

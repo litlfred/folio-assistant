@@ -9,7 +9,7 @@ updated_at: 2026-09-20T20:10:00Z
 
 Created by the `wqht` fix, 2026-09-20, under the owner's decision that **a goal
 is a `milestone` bean, in the owner's own words, with the epics serving it
-parented to it** ([`todo-manager`](../../cat-harness/skills/folio-core/todo-manager.md)
+parented to it** ([`todo-manager`](../../../cat-harness/skills/folio-core/todo-manager.md)
 §"A GOAL is a `milestone` bean").
 
 ## ⚠ THE TITLE IS A PARAPHRASE, NOT THE GOAL

@@ -116,7 +116,7 @@ an instance actually consumed by someone who cannot see this git history.
 
 ## What "make sure documented" means
 
-[`folio-core/directory-conventions`](../../cat-harness/skills/folio-core/directory-conventions.md)
+[`folio-core/directory-conventions`](../../../cat-harness/skills/folio-core/directory-conventions.md)
 owns the declaration and what an instance inherits from a dependency. The
 version/pin rule belongs there, not in a new skill — a second skill about
 declarations is a second answer to what a declaration says. The generated
@@ -153,7 +153,7 @@ sufficient pin; the third message bars a SHA from a published reference. C is
 npm-style ranges; FHIR pins exact versions and a downstream aligning to FHIR
 cannot be handed ranges. **Option A, on the rules rather than the registry.**
 
-Full scheme drafted: [`cat-harness/docs/proposals/instance-versioning.md`](../../cat-harness/docs/proposals/instance-versioning.md).
+Full scheme drafted: [`cat-harness/docs/proposals/instance-versioning.md`](../../../cat-harness/docs/proposals/instance-versioning.md).
 
 Three defects found while establishing the ground, all the `xom7` shape and
 none of them this bean's to fix:

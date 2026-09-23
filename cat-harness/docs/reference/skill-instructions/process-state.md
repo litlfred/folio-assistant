@@ -46,6 +46,16 @@ than the capability: the engine's "what is enabled now" call reports the enabled
 step, the lane that owns it, and the skill that implements it — so the answer is
 something to act on rather than a bare step name.
 
+**Say which permission you are acting under.** Entering a task in a lane
+means performing it as that lane's role, and since issue #1180 that needs an
+ODRL rule that permits it there (`permits()` in `schemas/odrl.ts`: the actor,
+the action, and the process, task and role as scope). If the answer is
+`unknown` or `deny`, you are out of process for that task: route it to a lane
+whose actor holds the permission, or stop and ask. The engine enforces this
+before the task at the deterministic end of the spectrum; at the agentic end
+nothing stops you, and the QA/QC report over the PROV-O record finds it
+afterwards (`agentic-harness.html#bpmn-execution`).
+
 **Switching processes is the case that matters.** Moving between processes
 changes who is accountable for the next step and which gates apply, and **a
 reader who does not know you switched will assume the old lane's rules still
