@@ -45,6 +45,10 @@
  * ruling; it is what pinning `cohesion` MEANS under this package's own rule.
  */
 
+import { join } from "node:path";
+
+import { resolveDirectories } from "./cat-harness.js";
+
 /** The pinned measurement for one candidate group. */
 export interface DetangleSidecar {
   /** The schema tag, so the file declares what it is rather than being identified by shape. */
@@ -123,6 +127,25 @@ export function sidecarFor(m: {
     recordedBoundary: m.recordedBoundary,
     proseMentions: m.proseMentions,
   };
+}
+
+/**
+ * The directory the sidecars live in: `detangle/` under the harness's declared
+ * `qa` directory, looked up BY ID (bean `byql`: a by-kind lookup throws the
+ * day a second `qa` directory is declared). One function, so the writer
+ * (`kg-detangle.ts`) and every reader (`gen-uml-overview.ts`) cannot disagree
+ * when the directory moves, which it did when detangle was folded into
+ * cat-harness.
+ */
+export function detangleResultsDir(harness: string): string {
+  const qaDir =
+    resolveDirectories([{ name: "(local)", root: harness, own: true }]).find(
+      (d) => d.id === "qa" && d.own && d.scope !== "repository",
+    )?.absPath ??
+    // declared-path-literal: the convention fallback, at the call site — an
+    // instance declaring no `qa` directory still needs a home for the sidecars.
+    join(harness, "test", "results");
+  return join(qaDir, "detangle");
 }
 
 /** Where a group's sidecar lives, relative to the results directory. */
