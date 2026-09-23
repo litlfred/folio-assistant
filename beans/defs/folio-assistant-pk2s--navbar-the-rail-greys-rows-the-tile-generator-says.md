@@ -3,6 +3,7 @@
 title: 'NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree'
 status: todo
 type: task
+parent: folio-assistant-yj32
 created_at: 2026-09-23T05:12:12Z
 updated_at: 2026-09-23T05:12:12Z
 ---
