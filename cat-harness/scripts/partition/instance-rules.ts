@@ -426,6 +426,11 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Issue #1023. Both read every instance's declaration (visualisers) or
+      // every declared library (manifests), and hold no folio's content: the
+      // same reason as the layout norm above.
+      "scripts/check-source-licence.ts",
+      "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
