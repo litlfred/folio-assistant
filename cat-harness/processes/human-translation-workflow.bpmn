@@ -55,12 +55,11 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
         <bpmn:flowNodeRef>End_OfficialTranslation</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Automated Pipeline">
-        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
+        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
         <bpmn:flowNodeRef>Task_ExtractPOT</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PrepareGlossary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_InjectPO</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RoundTripQA</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_Drift</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AppendDisclaimer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_WriteStatus</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -269,10 +268,15 @@ Tool: translation_inject MCP tool</bpmn:documentation>
       <bpmn:documentation>Bean: folio-assistant-ktt2
 Back-translates target-language .md to source language and compares
 meaning. Distinguishes semantic drift from terminology misses.
-Tool: translation_validate MCP tool</bpmn:documentation>
+Tool: translation_validate MCP tool
+
+No gateway follows: drift or clean, the translation goes to Task_SMEReview
+with the findings attached. Which of two readings is right is a human call
+(translation-manager, "route drift to a human reviewer"), and every
+translation in this workflow is reviewed and signed off anyway, so a clean
+result is evidence for the reviewer and never a way around them.</bpmn:documentation>
     </bpmn:serviceTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Drift" name="Drift detected?" />
 
     <bpmn:serviceTask id="Task_AppendDisclaimer" name="Append WHO&#10;disclaimer (if DAK)">
       <bpmn:extensionElements>
@@ -323,9 +327,7 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
 
     <!-- Pipeline: inject + QA -->
     <bpmn:sequenceFlow id="F13" sourceRef="Task_InjectPO" targetRef="Task_RoundTripQA" />
-    <bpmn:sequenceFlow id="F14" sourceRef="Task_RoundTripQA" targetRef="Gateway_Drift" />
-    <bpmn:sequenceFlow id="F15" name="Drift found" sourceRef="Gateway_Drift" targetRef="Task_SMEReview" />
-    <bpmn:sequenceFlow id="F16" name="Clean" sourceRef="Gateway_Drift" targetRef="Task_SMEReview" />
+    <bpmn:sequenceFlow id="F14" name="findings attached" sourceRef="Task_RoundTripQA" targetRef="Task_SMEReview" />
 
     <!-- Reviewer -->
     <bpmn:sequenceFlow id="F17" sourceRef="Task_SMEReview" targetRef="Gateway_Accurate" />
@@ -431,12 +433,6 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
       <bpmndi:BPMNShape id="Task_RoundTripQA_di" bpmnElement="Task_RoundTripQA">
         <dc:Bounds x="2380" y="650" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Drift_di" bpmnElement="Gateway_Drift" isMarkerVisible="true">
-        <dc:Bounds x="2580" y="665" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2540" y="720" width="130" height="30" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_AppendDisclaimer_di" bpmnElement="Task_AppendDisclaimer">
         <dc:Bounds x="3180" y="650" width="140" height="80" />
       </bpmndi:BPMNShape>
@@ -510,18 +506,12 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
         <di:waypoint x="2520" y="690" />
-        <di:waypoint x="2580" y="690" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
-        <di:waypoint x="2605" y="665" />
-        <di:waypoint x="2605" y="490" />
-        <di:waypoint x="2700" y="490" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16">
-        <di:waypoint x="2630" y="690" />
-        <di:waypoint x="2665" y="690" />
-        <di:waypoint x="2665" y="530" />
-        <di:waypoint x="2700" y="530" />
+        <di:waypoint x="2610" y="690" />
+        <di:waypoint x="2610" y="510" />
+        <di:waypoint x="2700" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2616" y="595" width="80" height="28" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
         <di:waypoint x="2840" y="510" />
