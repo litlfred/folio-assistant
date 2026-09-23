@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/skills/proof-verification/output.schema.json",
+  "title": "Proof Verification Output",
+  "description": "Output schema for the proof-verification skill.",
+  "type": "object",
+  "required": [
+    "verified",
+    "sorryCount"
+  ],
+  "properties": {
+    "verified": {
+      "type": "boolean"
+    },
+    "sorryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sorries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "line",
+          "obligation"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "obligation": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-albattani-0qe9gj",
+    "sha": "27d0f17c6d78525ba1df630233f1d8d90aa20a0e",
+    "pr": "1005/merge",
+    "run": "35828117745"
+  }
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Processes — smart-base-processes · docs-auto</title>
+<style>
+  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; }
+  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
+  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
+  td:first-child { width: 26rem; }
+  /* A repo-relative path is long and has no spaces, so it breaks mid-word
+     unless the breakpoints are named. Slashes are where a reader expects it. */
+  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--muted); font-style: italic; }
+  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+<div class="wrap">
+<h1>Processes <span class="p">smart-base-processes</span></h1>
+<p class="lede">Derived: every BPMN process, with its own documentation, its lanes, and the skills its activities name. Sub-graph <code>smart-base/methodologies/processes</code>.</p>
+
+<div class="note">
+  <strong>This is an index, not the documentation.</strong> It says what exists and what each
+  artefact declares about itself. What a process is <em>for</em>, when you would be in it, and
+  what it is not, is authored beside it and reuses these entries rather than restating them —
+  see the <code>docs-auto</code> skill.
+</div>
+
+<ul class="subs">
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><strong>smart-base-processes</strong> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
+</ul>
+
+<table>
+<thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
+<tbody>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>DIIG — from a health system bottleneck to a costed implementation plan</code></a><br><span class="p">smart-base/methodologies/processes/diig-investment-path.bpmn</span></td>
+  <td>The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Programme manager · Business analyst</div><div class="f"><span class="k">skills</span> methodology-adoption</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<script>
+/* The sub-graph this page indexes. Read by orphanSubjectPages() to establish
+   ownership before pruning — the same line the viewer generators emit. */
+var SCOPE = "smart-base-processes";
+</script>
+</body>
+</html>

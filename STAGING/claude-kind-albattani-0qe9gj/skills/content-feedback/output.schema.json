@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": [
+    "triagedItems"
+  ],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "priority",
+          "disposition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "backlog",
+              "next-sprint",
+              "wont-fix",
+              "duplicate",
+              "needs-info"
+            ]
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "linkedIssue": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "critical": {
+          "type": "integer"
+        },
+        "major": {
+          "type": "integer"
+        },
+        "minor": {
+          "type": "integer"
+        },
+        "enhancement": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-albattani-0qe9gj",
+    "sha": "27d0f17c6d78525ba1df630233f1d8d90aa20a0e",
+    "pr": "1005/merge",
+    "run": "35828117745"
+  }
+}
