@@ -41,7 +41,6 @@ export const GLOSSARY_GRAPH_KIND: GraphKindDef = {
   // Authored or extracted terms and what they mean: true on their own, read by
   // every rendering, written by no process run. Content, as `scenarios` is.
   holds: "content",
-  skill: "glossary-terms",
   summary:
     "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to " +
     "external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page.",
