@@ -109,19 +109,25 @@ describe("the binding verdict is `laneBinding`'s, not this file's", () => {
     expect(laneDetail({ id: "L", name: "Nowhere" }, ACTS, GRAPH).binding).toBe("unbound");
   });
 
-  test("an unreadable role graph reports `dangling` — verbatim, and bean `7go7`", () => {
-    // This test first asserted `unbound`, on a comment claiming `laneBinding`
-    // returned that. It does not: with no graph, a ref that resolves to
-    // nothing is `dangling`, so ONE missing file renders every ref-bearing
-    // lane as a defect. Arguably the `dh4f` shape.
+  test("an unreadable role graph reports `ungraphed` — bean `7go7`, resolved", () => {
+    // It used to report `dangling`, so ONE missing file rendered all 44
+    // ref-bearing lanes in this corpus as broken references — the `dh4f`
+    // shape, a sweep that could not look reporting findings.
     //
-    // Pinned as-is rather than guarded here, because `laneBinding` is
-    // `kg:audit`'s resolver as well and a viewer quietly disagreeing with the
-    // audit about whether a lane is bound would be worse than the shape it
-    // avoids. Recorded as `7go7` instead of decided unilaterally.
+    // This test pinned that behaviour rather than guarding it, on the stated
+    // ground that `laneBinding` is `kg:audit`'s resolver too and a viewer
+    // disagreeing with the audit would be worse. **That ground was false**,
+    // and checking it is what unblocked the fix: `kg-audit.ts` already
+    // branches on `!graph` and overwrites these criteria with `unknown`, so
+    // the audit never published `dangling` here — it computed it and threw it
+    // away. The viewer was the one disagreeing.
+    //
+    // The owner ruled 2026-09-23 for a required parameter over a sixth kind,
+    // so there is no verdict to take and the viewer says it could not look.
     const d = laneDetail({ id: "L", name: "Adjudicator", roleRef: "adjudicator" }, ACTS, undefined);
-    expect(d.binding).toBe("dangling");
+    expect(d.binding).toBe("ungraphed");
     expect(d.roleSkills).toEqual([]);
+    expect(d.roleId, "no graph means no role, not a guessed one").toBeUndefined();
   });
 });
 

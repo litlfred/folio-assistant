@@ -86,6 +86,7 @@ import {
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
+import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
@@ -424,7 +425,20 @@ async function auditProcess(
   /** ...and those that declared one alongside a `ref`, which cannot be both. */
   const contradictoryPerformer: KgFinding[] = [];
   const laneRole = new Map<string, string>(); // lane id → role id
+  // Skipped entirely with no graph, rather than computed and discarded.
+  //
+  // The `!graph` branch below already overwrote every one of these criteria
+  // with `unknown` — so this loop's verdicts were thrown away, and bean `7go7`
+  // records what that cost: `laneBinding` used to accept an undefined graph
+  // and answer `dangling` for all 44 ref-bearing lanes in this corpus. The
+  // audit was protected from that by the overwrite; the VIEWER, which takes
+  // the verdict verbatim, was not. Making the parameter required (owner's
+  // ruling, 2026-09-23) turned the discard into a skip and forced the viewer
+  // to have its own answer.
   for (const lane of m.lanes) {
+    // `break` rather than a cast: it narrows `graph` for the rest of the body,
+    // and skipping is what the overwrite below already meant.
+    if (!graph) break;
     // One decision, in `laneBinding`, so the rule is testable without running
     // this script — which matters because the case it exists for
     // (`log-message.bpmn`'s `Actor`) is in a NESTED instance this audit does
@@ -658,6 +672,7 @@ async function auditProcess(
     // document here, which is not the same as having documented it.
     "gateway-documented": entry(undocumentedDecision, decisions.length > 0),
     "gateway-branches-named": entry(indistinct, decisions.length > 0),
+    ...reachabilityCriteria(m),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -677,6 +692,24 @@ async function auditProcess(
     }
   }
   return report("process", m.id, rel, hash, criteria);
+}
+
+
+
+/**
+ * `node-reachable` and `node-has-exit`, from the shared walk.
+ *
+ * The walk is in `src/workflow/reachability.ts` so it can be tested without
+ * importing this script, which runs at load. `preStart` is deliberately not a
+ * criterion: a node gating an entry point is correct, and reporting it would
+ * make a modelling decision a permanent finding.
+ */
+function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry> {
+  const r = reachability(m);
+  return {
+    "node-reachable": entry(r.unreachable),
+    "node-has-exit": entry(r.noExit),
+  };
 }
 
 // ── Per-decision criteria ───────────────────────────────────────

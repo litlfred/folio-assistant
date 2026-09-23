@@ -58,7 +58,9 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
 
     <bpmn:startEvent id="Start_BaseVoiceDone" name="Base voice&#10;adjudicated"/>
 
-    <bpmn:exclusiveGateway id="GW_AnyActive" name="Any voice&#10;activated?"/>
+    <bpmn:exclusiveGateway id="GW_AnyActive" name="Any voice&#10;activated?">
+      <bpmn:documentation>Is any voice activated for this block, beyond the base voice already adjudicated? `none` ends with nothing to review; `one or more` loads the active voices.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:endEvent id="End_NoVoice" name="No voice —&#10;nothing to review">
       <bpmn:documentation>A pass, not a gap. An empty `voices.active` is the default and a legitimate answer: this instance ships four voices and activates none.</bpmn:documentation>
@@ -79,7 +81,9 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
       <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_QuoteSupports" name="Does the quote&#10;support the rule?"/>
+    <bpmn:exclusiveGateway id="GW_QuoteSupports" name="Does the quote&#10;support the rule?">
+      <bpmn:documentation>Answered by opening the rule's citation: does the quoted source support the rule? `no` means the rule itself is the defect and is beaned; `yes` goes to adjudicating the prose, the rule's scope or an exception.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_RuleIsWrong" name="The RULE is the defect — bean it">
       <bpmn:documentation>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags "clearly", and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</bpmn:documentation>
@@ -94,7 +98,9 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
       <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/><folio:skill ref="adjudication"/><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
 
-    <bpmn:exclusiveGateway id="GW_MoreVoices" name="Another active&#10;voice?"/>
+    <bpmn:exclusiveGateway id="GW_MoreVoices" name="Another active&#10;voice?">
+      <bpmn:documentation>Is another active voice left to review? `yes` runs that voice's mechanical half; `no` records the results on the block's QA sidecar.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_RecordOnSidecar" name="Record on the block's QA sidecar">
       <bpmn:documentation>Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information.</bpmn:documentation>

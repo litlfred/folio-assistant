@@ -47,11 +47,11 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **FHIR valid?**<br>`Gateway_Valid` | — | **no** → Author FSH profiles<br>**yes** → QC gates |
-| **QC clean?**<br>`Gateway_QcPass` | — | **no** → File QC findings as beans<br>**yes** → IG Publisher build |
+| **FHIR valid?**<br>`Gateway_Valid` | Answered by validating the resources against their profiles. `no` returns to FSH authoring; `yes` goes on to the QC gates. | **no** → Author FSH profiles<br>**yes** → QC gates |
+| **QC clean?**<br>`Gateway_QcPass` | Answered by the QC gates. `no` files the findings as beans; `yes` goes on to the IG Publisher build. | **no** → File QC findings as beans<br>**yes** → IG Publisher build |
 
 {% endraw %}

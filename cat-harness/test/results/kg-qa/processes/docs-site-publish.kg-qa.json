@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:f7c95b60249ce25081c7888796ee978c159290ee9b84e4b18803f55f03a1ec47",
+  "source_hash": "sha256:acefbb4ccf164b8b453971044d4a0fbf86926f7cc96304ccb0bd364227402b0f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Complete",
-          "detail": "\"Is every maintained&#10;artefact present?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Survived",
-          "detail": "\"Did the previews&#10;survive?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   },
@@ -116,7 +115,7 @@
       "kind": "implements",
       "prose": "cat-harness/processes/docs-site-publish.bpmn",
       "code": ".github/workflows/docs-site.yml",
-      "prose_hash": "f7c95b60249c",
+      "prose_hash": "acefbb4ccf16",
       "code_hash": "771f7cf73311",
       "by": "baseline"
     }

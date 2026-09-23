@@ -107,6 +107,7 @@ IN the source">
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Layouts" name="Every layout
 present?">
+      <bpmn:documentation>Is every layout the theme must cover present in the source? `yes` goes on to the contrast and non-colour review; `no` refuses the theme as incomplete rather than filling the gap by guessing.</bpmn:documentation>
       <bpmn:incoming>Flow_t7</bpmn:incoming>
       <bpmn:outgoing>Flow_t8</bpmn:outgoing>
       <bpmn:outgoing>Flow_t9</bpmn:outgoing>

@@ -5,7 +5,7 @@
     "id": "Process_Publication",
     "path": "processes/draft-to-publication.bpmn"
   },
-  "source_hash": "sha256:749da60b35470599081135f8106ef21215279f8413441e3e267a7aad483b17d6",
+  "source_hash": "sha256:d1999f84dc39c4520932ad78426fd0b7b8f2a8bfba58052504dd8ee3b9695e8b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_QaGreen",
-          "detail": "\"Draft QA green?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_ReviewOutcome",
-          "detail": "\"Approved?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 1,
+    "pass": 17,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

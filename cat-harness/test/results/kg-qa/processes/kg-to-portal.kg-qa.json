@@ -5,7 +5,7 @@
     "id": "Process_KgToPortal",
     "path": "processes/kg-to-portal.bpmn"
   },
-  "source_hash": "sha256:5612fb216f41543661101807d785544830a0819925dcdc82f2bd12989d6432ea",
+  "source_hash": "sha256:3e2c29e968cc7c7f05cb745149fccc866ddbc84e373f2f0a613d7ea709387837",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -121,15 +121,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Verified",
-          "detail": "\"Verifies?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -143,8 +146,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 2,
+    "pass": 14,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

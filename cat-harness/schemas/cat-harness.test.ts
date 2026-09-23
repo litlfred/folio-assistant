@@ -1036,7 +1036,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "bootstrap",
       "bootstrap-tools",
       "cat-harness",
-      "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
@@ -1052,7 +1051,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "kg-navigation",
       "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`

@@ -163,6 +163,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_ReviewerKind" name="Judgement call?">
+      <bpmn:documentation>Does this change need a judgement call? `no` goes to agent review; `yes` goes to a human or SME. The question is about the change, not about who is available.</bpmn:documentation>
       <bpmn:incoming>Flow_09</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
@@ -246,6 +247,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
       <bpmn:outgoing>Flow_21b</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
+      <bpmn:documentation>The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>

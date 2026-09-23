@@ -112,7 +112,9 @@ flagged for follow-up. The coordinator checks:
 - Missing critical sections</bpmn:documentation>
     </bpmn:userTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?" />
+    <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?">
+      <bpmn:documentation>Answered by the completeness check on the submitted PO file: are enough strings translated? `Incomplete` asks the translator to finish the rest; `Complete` injects the PO into translated Markdown.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:userTask id="Task_RequestMoreWork" name="Request completion&#10;of remaining strings">
       <bpmn:extensionElements>
@@ -185,7 +187,9 @@ force in the target language.</bpmn:documentation>
       </bpmn:extensionElements>
     </bpmn:userTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?" />
+    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?">
+      <bpmn:documentation>The SME's result. `Needs correction` returns the translation with annotations; `Accurate` goes on to the WHO disclaimer, sign-off and status.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:userTask id="Task_ReturnForCorrection" name="Return for correction&#10;with annotations">
       <bpmn:extensionElements>

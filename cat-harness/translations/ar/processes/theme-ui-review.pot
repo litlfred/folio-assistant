@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: theme-ui-review\n"
-"POT-Creation-Date: 2026-09-23T09:16:26.989Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.999Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Every user-facing string reaches the .pot; every declared locale renders without clipping or overflow; right-to-left is laid out rather than mirrored by accident. New UI is where untranslated strings enter, because nothing was stale — there was nothing there before."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:58
+#: processes/theme-ui-review.bpmn:60
 #. Diagram element documentation
 msgid "Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so."
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "MVP accepted"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:70
+#: processes/theme-ui-review.bpmn:72
 #. Diagram label
 msgid "none"
 msgstr ""
@@ -94,12 +94,12 @@ msgstr ""
 msgid "Post-MVP theme and UI review"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:57
+#: processes/theme-ui-review.bpmn:59
 #. Diagram label
 msgid "Raise findings against the authoring"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:61
+#: processes/theme-ui-review.bpmn:63
 #. Diagram label
 msgid "Reviewed"
 msgstr ""
@@ -114,6 +114,11 @@ msgstr ""
 msgid "Reviewing what the MVP actually RENDERS — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: choosing a theme is an authoring judgement made per note, and there is no role-to-theme mapping to check at build time. What can be reviewed is the result, and only after there is one."
 msgstr ""
 
+#: processes/theme-ui-review.bpmn:57
+#. Diagram element documentation
+msgid "The reviewer's judgement of the rendered result. `yes` raises findings against the authoring; `none` ends reviewed."
+msgstr ""
+
 #: processes/theme-ui-review.bpmn:16
 #. Diagram element documentation
 msgid "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches."
@@ -124,7 +129,7 @@ msgstr ""
 msgid "Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:68
+#: processes/theme-ui-review.bpmn:70
 #. Diagram label
 msgid "yes"
 msgstr ""

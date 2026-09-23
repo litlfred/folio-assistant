@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:af4c4a06c6be975e56e4d6639ceb77b5ab1d36e41ff1c889287616cf3ffb4914",
+  "source_hash": "sha256:fac6dde7889fc91d091608b0173bfdbc44f462261b731c3c5d4d2f06382c5938",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -105,26 +105,24 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Hard",
-          "detail": "\"Any HARD&#10;gate red?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -132,8 +130,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 3,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -142,8 +140,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "af4c4a06c6be",
-      "code_hash": "ee3939965cde",
+      "prose_hash": "fac6dde7889f",
+      "code_hash": "b38fd96544b8",
       "by": "agent",
       "reason": "Re-read after main added five check:* lines inside the typescript job (uml-overview, methodologies:viz, external-schemas:viz, source-licence, wireframes). Task_TypeScript documents 'the repository gates …' with bun run gates deriving its list from this job, so the diagram still holds; no new job or branch to draw."
     }

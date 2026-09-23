@@ -5,7 +5,7 @@
     "id": "Process_BoardPlaceNote",
     "path": "processes/board-place-note.bpmn"
   },
-  "source_hash": "sha256:7313f52c22cd7db24a2fd03dc7edd1cb354aab4fc2acbdc4bee50316e3ceb15e",
+  "source_hash": "sha256:5ffc7a670582d0cb862d65db0831bef085ce50f1156ef8e6f21ee8e87b73b26c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -93,15 +93,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Exists",
-          "detail": "\"Does the note exist already?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -115,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

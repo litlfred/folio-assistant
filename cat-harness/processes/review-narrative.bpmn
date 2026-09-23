@@ -79,7 +79,9 @@ Placed after the base voice adjudication because a voice OVERLAYS the house voic
       <bpmn:extensionElements><folio:skill ref="uses-editorial-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?"/>
+    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?">
+      <bpmn:documentation>Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_ReviewTranslation" name="Review the translation">
       <bpmn:documentation>

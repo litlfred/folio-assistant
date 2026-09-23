@@ -51,12 +51,12 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**1** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Within the stated budget?**<br>`GW_Budget` | Measured against D_Constraints' numbers, not against a feeling. The gate is here rather than before packaging because the package's own size is the quantity being judged, and estimating it from the graph's node count is the guess this gate exists to replace. | **within budget** → Sign the package and/or each asset<br>**over budget** → Refused — over budget |
 | **Which transport? (UNDETERMINED)**<br>`GW_Transport` | THIS GATEWAY HAS NO DEFAULT BRANCH, AND THAT IS THE POINT. Owner, 2026-09-20: "ingestion method not determined." Pull from the portal, push to an object store, a git fetch, a signed tarball on a schedule — they differ in cost, in who initiates, in what must be reachable from where, and in what happens when a publication is missed. The deployment answers using D_Constraints' numbers; until it does, the diagram reaches here and stops. Drawing one branch as the obvious one would record a decision nobody made. | **a transport was chosen** → Publish to the origin (a cache may front it)<br>**still undetermined** → Record the decision as still open |
-| **Verifies?**<br>`GW_Verified` | — | **signature and digests match** → Readers have the bytes<br>**mismatch** → Rejected — serve the previous version |
+| **Verifies?**<br>`GW_Verified` | Answered by verifying what arrived against what was signed. `signature and digests match` serves the bytes; `mismatch` rejects them and keeps serving the previous version. | **signature and digests match** → Readers have the bytes<br>**mismatch** → Rejected — serve the previous version |
 
 {% endraw %}

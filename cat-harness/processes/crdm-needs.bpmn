@@ -51,7 +51,9 @@ checks it against what they actually need.</bpmn:documentation>
 statement">
       <bpmn:documentation>Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
+    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?">
+      <bpmn:documentation>The BA's answer to the needs statement. `revise` goes back to synthesising needs from the sources; `yes` completes the phase.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Process_CRDM_Needs" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_1" sourceRef="Start_Process_CRDM_Needs" targetRef="A_Stakeholders"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_2" sourceRef="A_Stakeholders" targetRef="A_Synthesise"/>

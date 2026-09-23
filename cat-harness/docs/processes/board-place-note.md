@@ -39,10 +39,10 @@ Every one of the 3 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Does the note exist already?**<br>`GW_Exists` | — | **new sticky** → Write the note into the folio — with no coordinate<br>**an existing card, dragged** → Record x,y for this note on THIS board |
+| **Does the note exist already?**<br>`GW_Exists` | Is the note already in the folio? A `new sticky` is written into the folio first, with no coordinate; an `existing card, dragged` only needs its x,y recorded on this board, since position belongs to the board and not to the note. | **new sticky** → Write the note into the folio — with no coordinate<br>**an existing card, dragged** → Record x,y for this note on THIS board |
 
 {% endraw %}

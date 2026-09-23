@@ -5,7 +5,7 @@
     "id": "Process_CodeChangeReview",
     "path": "processes/code-change-review.bpmn"
   },
-  "source_hash": "sha256:79ee343293f688373d50b4a42e5ba1886068369566ccbc6b1d821b2be7ef15b2",
+  "source_hash": "sha256:08c4a30f26fda3d61785945b3e7d690dfdfd1baeb5ec90695886b856a90ffb01",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_CIGreen",
-          "detail": "\"CI green?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_ReviewClear",
-          "detail": "\"Review clear?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

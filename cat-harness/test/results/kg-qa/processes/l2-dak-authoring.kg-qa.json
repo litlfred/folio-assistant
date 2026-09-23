@@ -5,7 +5,7 @@
     "id": "Process_L2Dak",
     "path": "processes/l2-dak-authoring.bpmn"
   },
-  "source_hash": "sha256:c9c6d489590444271db05e25735c4b87ed8263b2573bcd47ffc2f4f7587f191a",
+  "source_hash": "sha256:f18494ed40ee10fa0f7ab328edbaa4dd14f17538dd84602bd41900bc6e81c453",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Accurate",
-          "detail": "\"Clinically accurate?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

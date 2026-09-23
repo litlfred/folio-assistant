@@ -43,10 +43,10 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Which signing route?**<br>`Gateway_SigningRoute` | — | **api** → Sign over the API<br>**human** → Sign as release authority |
+| **Which signing route?**<br>`Gateway_SigningRoute` | Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign. | **api** → Sign over the API<br>**human** → Sign as release authority |
 
 {% endraw %}
