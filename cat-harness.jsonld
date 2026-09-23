@@ -268,22 +268,22 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T19:35:21.351Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7e6959f5996e82f40fd040b57792fad1560213a7",
-  "sourceCommitSha": "7e6959f5996e82f40fd040b57792fad1560213a7",
-  "sourceCommitAt": "2026-09-23T21:32:31+02:00",
+  "generatedAt": "2026-09-23T19:50:27.978Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0edfb4a51ca5ab0b874236e30373e2512a9b9cf1",
+  "sourceCommitSha": "0edfb4a51ca5ab0b874236e30373e2512a9b9cf1",
+  "sourceCommitAt": "2026-09-23T21:47:22+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 248,
+    "Skill": 249,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 15,
-    "Process": 67,
-    "SequenceFlow": 863,
+    "Process": 68,
+    "SequenceFlow": 878,
     "Role": 146,
-    "ProcessNode": 817,
+    "ProcessNode": 833,
     "Tool": 77,
     "Schema": 105,
     "GraphKind": 30,
@@ -3115,6 +3115,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "sample-import",
+      "title": "Sample import",
+      "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/content-lifecycle/sample-import.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-author",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "content-author",
@@ -5584,6 +5600,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-feedback",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-retire"
@@ -27902,6 +27919,461 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Sample import into a structured data store",
+      "enforcement": "strict",
+      "sourcePath": "processes/sample-import.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Proposed",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Upstream"
+      ],
+      "nodeCount": 16,
+      "flowCount": 15,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Proposed",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Scope",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Materialize",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Materialize",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Materialized",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Materialized",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Permanent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no, or unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Materialized",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "permanent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Permanent",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Library",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "trial",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Permanent",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Trial",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Library",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_ImportTest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Trial",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_ImportTest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_ImportTest",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Passed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Passed",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Imported",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no, or could not run",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Passed",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_RecordFindings",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_RecordFindings",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Failed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Upstream",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Refresh",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Refresh",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Refreshed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Proposed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A sample of a remote source is proposed",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Scope the sample: which items, which store, and is it PERMANENT?",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Materialize",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Materialize remote content (the five gates)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Materialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Materialized?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_4",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Permanent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Meant to be permanent?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_6",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Land it in library/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_Trial",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Keep it as a trial: the unpublished trashcan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_ImportTest",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Import into the store, and test the import",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Gateway_Passed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Every check passed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_11",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Task_RecordFindings",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record what failed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Refused",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not imported; stays referenced, with why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Failed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Import failed, findings recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Imported",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sample imported and tested",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_11"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Upstream",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A permanent sample is due or changed upstream",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Refresh",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Refresh materialized content",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/EndEvent_Refreshed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Refreshed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_15"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_JsonLdDrift",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Are the .jsonld siblings still in sync with their .ts manifests?",
@@ -37632,8 +38104,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "7e6959f5996e82f40fd040b57792fad1560213a7",
+    "sha": "0edfb4a51ca5ab0b874236e30373e2512a9b9cf1",
     "pr": "main",
-    "run": "35910018056"
+    "run": "35911651895"
   }
 }

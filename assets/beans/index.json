@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 649,
+      "count": 651,
       "unit": "beans"
     }
   },
@@ -687,15 +687,15 @@
     {
       "id": "folio-assistant-2sns",
       "title": "GRAPH RENDERING: one skill for drawing any graph, applied to schemas, papers and Lean (#1137)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:10Z",
-      "updatedAt": "2026-09-23T18:09:10Z",
-      "preview": "Owner 2026-09-23: 'make skill that applies to graphs in general.... then apply to papers, shcemas, math proofs/lean etc'. Issue #1137. Related: xgd8 (schema visualiser).",
+      "updatedAt": "2026-09-23T19:25:59Z",
+      "preview": "Owner 2026-09-23: 'make skill that applies to graphs in general.... then apply to papers, shcemas, math proofs/lean etc'. Issue #1137. Related: xgd8 (schema visualiser).\n\n## Summary of Changes\n\n- #1143: the graph-rendering skill, cross-links with graph-detanglement / uml-overview / content-graph, detangle numbers on the UML pages (vorg).\n- #1161: one block-graph renderer for papers and Lean, gen-c",
       "file": "beans/defs/folio-assistant-2sns--graph-rendering-one-skill-for-drawing-any-graph-ap.md"
     },
     {
@@ -4323,14 +4323,14 @@
     {
       "id": "folio-assistant-hfwl",
       "title": "SAMPLE-IMPORT SDLC: the process for testing an import into a KG, with size, retention, source-loss and copyright as first-class gates",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:02:10Z",
-      "updatedAt": "2026-09-20T08:02:10Z",
+      "updatedAt": "2026-09-23T19:24:02Z",
       "preview": "Owner: 'this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright. bpmn and skills strawperson please.'\n\nGENERAL, NOT WHO-SPECIFIC. The subject is 'a sample import into a structured data store'; IRIS is the worked instance. So the BPMN and the skill are cat",
       "file": "beans/defs/folio-assistant-hfwl--sample-import-sdlc-the-process-for-testing-an-impo.md"
     },
@@ -4351,14 +4351,14 @@
     {
       "id": "folio-assistant-hpax",
       "title": "MATERIALIZE REMOTE CONTENT: one subprocess, shared by catalogue import and harness bootstrap, plus its refresh",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:04:11Z",
-      "updatedAt": "2026-09-20T08:04:11Z",
+      "updatedAt": "2026-09-23T19:24:03Z",
       "preview": "Owner, 2026-09-20: 'so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess. also need to know about refreshing amterialed remote content. general proce",
       "file": "beans/defs/folio-assistant-hpax--materialize-remote-content-one-subprocess-shared-b.md"
     },
@@ -5783,14 +5783,14 @@
     {
       "id": "folio-assistant-o3p3",
       "title": "Apply graph-rendering to paper block graphs (uses[] editorial vs formal, chapters as groups)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2sns",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:22Z",
-      "updatedAt": "2026-09-23T18:52:18Z",
+      "updatedAt": "2026-09-23T19:25:48Z",
       "preview": "Replace or wrap content-graph-analysis.py with a renderer built on buildContentGraph: groups = chapters, editorial and formal edges drawn distinctly, portrait/landscape, stamped staleness check. Folio content lives in separate repos (qou): ask the owner before any PR there. Issue #1137.\n\n## Done when\n- [x] a platform renderer draws it under the graph-rendering rules: `gen-content-graph-uml.ts` (To",
       "file": "beans/defs/folio-assistant-o3p3--apply-graph-rendering-to-paper-block-graphs-uses-e.md"
     },
@@ -7311,6 +7311,20 @@
       "file": "beans/defs/folio-assistant-tc95--blocked-on-owner-translationsfragent-onboardingmd.md"
     },
     {
+      "id": "folio-assistant-tcq2",
+      "title": "SEARCH: capped at 44% of the panel, glyph hidden while open, and gone entirely below the theme's nav breakpoint",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:41:47Z",
+      "updatedAt": "2026-09-23T18:52:10Z",
+      "preview": "Owner, 2026-09-23: *\"search box takes way too many clicks to get to. it should\nstart open full top of display panel and then hide away. maginfyingglass\navatar/braadning should be visibile always.\"*\n\nThis revises their own earlier ruling — *\"move the search to a icon in navbar\nthat expands.... keep main display panel uncluttered\"* — rather than\ncontradicting it: the field still collapses, and the c",
+      "file": "beans/defs/folio-assistant-tcq2--search-capped-at-44-of-the-panel-glyph-hidden-whil.md"
+    },
+    {
       "id": "folio-assistant-tdu3",
       "title": "The module-scope gate covers folioDir only, and walks only cat-harness",
       "status": "completed",
@@ -7609,14 +7623,14 @@
     {
       "id": "folio-assistant-ukfw",
       "title": "Apply graph-rendering to Lean proof dependency graphs (stale check, status colours)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2sns",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:22Z",
-      "updatedAt": "2026-09-23T18:52:18Z",
+      "updatedAt": "2026-09-23T19:25:49Z",
       "preview": "generate_dependency_graph.py draws proof-object dependencies with dot and has no staleness check. Bring it under the graph-rendering rules: one source, stamped output, status colour declared once, portrait/landscape. Math repos: ask the owner before any PR. Issue #1137.\n\n## Done when\n- [x] a platform renderer draws it under the graph-rendering rules: `gen-content-graph-uml.ts` (Tool `content-graph",
       "file": "beans/defs/folio-assistant-ukfw--apply-graph-rendering-to-lean-proof-dependency-gra.md"
     },
@@ -7845,6 +7859,20 @@
       "updatedAt": "2026-09-22T09:33:37Z",
       "preview": "Issue #877. `smart-base/smart-base.json` + `AGENTS.md` + `README.md`, shaped as `smart-trust/` and `smart-immunizations/` are. Declares `library/` (kind `library`, holds `derived`), `methodologies/` (`methodology`, `context`), `skills/voices/` (`voices`, `content`) and `scenarios/` (`scenarios`, `content`). `needs: [\"folio-assistant-core\"]`.\n\n**Declare only what exists** — the `dh4f` defect is a d",
       "file": "beans/defs/folio-assistant-ve07--smart-base-stage-the-instance-and-declare-its-grap.md"
+    },
+    {
+      "id": "folio-assistant-vfr8",
+      "title": "LHS NAV PAINTS BEHIND THE PAGE on any page with an auto-expanded figure — a z-index fix scoped to the whole sidebar instead of the one panel",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:21:27Z",
+      "updatedAt": "2026-09-23T18:24:17Z",
+      "preview": "Owner, 2026-09-23, with a screenshot of `/document-ingestion.html`: *\"bad LHS\n… and probably similar pages\"*. The opened nav and the page content are drawn on\ntop of each other.\n\n## What it is\n\nThe open nav **overlays** the page rather than pushing it — `.side-bar + .main`\nkeeps `margin-left: var(--fa-nav-collapsed)` at every width, so the opened\n16.5rem column sits over content that is still ther",
+      "file": "beans/defs/folio-assistant-vfr8--lhs-nav-paints-behind-the-page-on-any-page-with-an.md"
     },
     {
       "id": "folio-assistant-vhmz",
