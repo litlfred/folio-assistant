@@ -21,7 +21,7 @@ answer free to drift:
 
 ## What this settles
 
-The [harness-instances docs page](../../cat-harness/docs/architecture/harness-instances.md)
+The [harness-instances docs page](../../../cat-harness/docs/architecture/harness-instances.md)
 was published with a named, unresolved conflict: `cat-harness-minimum` carries
 *"if it produces something a human looks at, it is not the harness"*, which
 cannot hold literally alongside *"an instance renders by default"*.

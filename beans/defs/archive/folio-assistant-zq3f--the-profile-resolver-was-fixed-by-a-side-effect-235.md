@@ -12,7 +12,7 @@ parent: folio-assistant-vke6
 Found 2026-09-21 while clearing `vzur`'s retired-filename backlog, and **not
 fixed there**: it is a question about QA verdicts, not about prose.
 
-[`domain-fencing`](../../cat-harness/skills/graph-management/domain-fencing.md)
+[`domain-fencing`](../../../cat-harness/skills/graph-management/domain-fencing.md)
 records a defect under §"Two things the fencing turned up". Re-measuring it to
 fix the filename in the quoted output showed the measurement itself had moved.
 
@@ -52,7 +52,7 @@ current finding.
       business carrying. The registry probe answered it directly.
 - [x] If it does not: the 235 sidecars are stale output, and refreshing them
       is the fix — **not** deleting them
-      ([`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
+      ([`deletion-requires-confirmation`](../../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
       **They are not stale output in the sense meant**: every verdict is
       `n/a`, so there is nothing false recorded, and they refresh in a folio
       repo rather than here.
@@ -122,7 +122,7 @@ preflights on `content/package.json`, which this platform repo does not have
 dispatch workflow.
 
 No deletion, and none was ever warranted
-([`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
+([`deletion-requires-confirmation`](../../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
 
 ### Done when
 

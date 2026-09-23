@@ -158,7 +158,7 @@ deploy time, so anything a concurrent session appended in between is
 
 > `appendFileSync`, never read-modify-write: six workflows publish to this
 
-and [`render-logging`](../../cat-harness/skills/folio-core/render-logging.md):
+and [`render-logging`](../../../cat-harness/skills/folio-core/render-logging.md):
 *"whatever landed in between, and the tool appends a line rather than
 rewriting."*
 

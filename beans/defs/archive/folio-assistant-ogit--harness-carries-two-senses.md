@@ -61,7 +61,7 @@ That is why nothing shipped. A 31-finding gate whose true-positive count is zero
 ## Decided — the owner, 2026-09-23: document both senses, no rename
 
 Chosen over giving sense 2 its own word. The two senses are now a section of
-[`harness-tiles`](../../cat-harness/skills/folio-core/harness-tiles.md), beside
+[`harness-tiles`](../../../cat-harness/skills/folio-core/harness-tiles.md), beside
 the instantiation rule they qualify: a table separating *instantiated here*
 from *a layer others instantiate*, the evidence that sense 2 is deliberate
 (`smart-stack-layering`, `fhir-harness`'s own description, bean titles `2yyh`
