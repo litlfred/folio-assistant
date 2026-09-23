@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T10:42:58.914Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0c91582625b0ac4385127c8096803ea030915cb",
-  "sourceCommitSha": "d0c91582625b0ac4385127c8096803ea030915cb",
-  "sourceCommitAt": "2026-09-23T10:39:52Z",
+  "generatedAt": "2026-09-23T10:59:59.268Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d16183369a72563ff8201e7297106e1d79d1f981",
+  "sourceCommitSha": "d16183369a72563ff8201e7297106e1d79d1f981",
+  "sourceCommitAt": "2026-09-23T10:52:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -289,7 +289,7 @@
     "Role": 144,
     "ProcessNode": 784,
     "Tool": 71,
-    "Schema": 101,
+    "Schema": 102,
     "GraphKind": 30,
     "Directory": 40,
     "Asset": 3
@@ -841,12 +841,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "deterministic-and-agentic",
       "title": "The deterministic-to-agentic spectrum",
-      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, what is measured today, and the three research questions — which are open, and marked as open.",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
-      "instructionLines": 152,
+      "instructionLines": 235,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2724,7 +2724,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 517,
+      "instructionLines": 547,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -35975,6 +35975,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/diff-renderers",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "diff-renderers",
+      "title": "The diff renderers a reviewer chooses between on the review page. Bean",
+      "module": "schemas/diff-renderers.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/diff-renderers"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -38480,8 +38489,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "56fbd5a3801e6d4cfd124881ea2ce5b055889f8a",
+    "sha": "9ce09ddd8d07f2aafa0714623f73fd5cc40c5401",
     "pr": "1048/merge",
-    "run": "35850095964"
+    "run": "35851726683"
   }
 }
