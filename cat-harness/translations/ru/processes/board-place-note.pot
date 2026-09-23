@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: board-place-note\n"
-"POT-Creation-Date: 2026-09-22T08:18:09.974Z\n"
+"POT-Creation-Date: 2026-09-23T08:54:30.332Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,12 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: processes/board-place-note.bpmn:76
+#. Diagram element documentation
+msgid "A new note: write it into the folio with no x, no y, no board and no position. A folio is complete with no board, and one note may sit on several boards, which a coordinate on the note could not express."
+msgstr ""
+
 #: processes/board-place-note.bpmn:65
 #. Diagram label
 msgid "A note is to appear at a spot"
 msgstr ""
 
-#: processes/board-place-note.bpmn:109
+#: processes/board-place-note.bpmn:112
 #. Diagram label
 msgid "an existing card, dragged"
 msgstr ""
@@ -49,7 +54,7 @@ msgstr ""
 msgid "Layout layer"
 msgstr ""
 
-#: processes/board-place-note.bpmn:108
+#: processes/board-place-note.bpmn:111
 #. Diagram label
 msgid "new sticky"
 msgstr ""
@@ -64,17 +69,27 @@ msgstr ""
 msgid "Reached only on the `new sticky` branch of GW_Exists — dragging an existing card never re-enters this lane, because A_CreateNote is the one write to the folio and everything after it is positioning. Leaving out `x`, `y` and `board` here is what lets one note sit on several boards without this lane arbitrating between them; arbitration would make placement an authoring decision, which it is not."
 msgstr ""
 
-#: processes/board-place-note.bpmn:86
+#: processes/board-place-note.bpmn:88
+#. Diagram element documentation
+msgid "Record the note's x,y in the layout layer for THIS board, naming the note by id. An existing card dragged here only gets a new position — placing is not creating, so no content is duplicated."
+msgstr ""
+
+#: processes/board-place-note.bpmn:87
 #. Diagram label
 msgid "Record x,y for this note on THIS board"
 msgstr ""
 
-#: processes/board-place-note.bpmn:93
+#: processes/board-place-note.bpmn:96
+#. Diagram element documentation
+msgid "Remove every position in this board's layer whose note no longer exists. The sweep edits only the layer — one file, one pass — and never a note a person owns; a stale position must not keep a note alive."
+msgstr ""
+
+#: processes/board-place-note.bpmn:95
 #. Diagram label
 msgid "Sweep positions whose note is gone"
 msgstr ""
 
-#: processes/board-place-note.bpmn:103
+#: processes/board-place-note.bpmn:106
 #. Diagram label
 msgid "The board shows it there"
 msgstr ""

@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "processes/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:cb91d09a0f0a2036654e388c2bc9bf6c9ca02412a19a9e5adb68836e1760cec2",
+  "source_hash": "sha256:b2766096048311c0942cdc4dae0d22dd9278ed39fd41a3ddbb76956278a74adb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,13 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Verdict",
-          "detail": "\"Record the L1 completeness verdict\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -86,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
+    "pass": 12,
+    "fail": 0,
     "n/a": 6,
     "unknown": 0
   }

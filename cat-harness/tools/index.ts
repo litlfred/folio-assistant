@@ -468,7 +468,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "problems", schema: t("Text"), description: "Sources that could not be read, counted rather than silently omitted." },
         ],
       },
-      satisfies: ["kg-export"],
+      // Bean `n350`: the Tool that publishes bootstrap's graph, so it also
+      // satisfies the two skills that govern that graph. They live in
+      // `bootstrap/skills/`; `check-tools` resolves them across instances.
+      satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
       // No `alternativeTo`, deliberately. The four siblings sharing this skill
       // are COMPLEMENTARY steps — export, then publish, then serve — not four
       // ways to do one thing, and the schema's own note on that field says a

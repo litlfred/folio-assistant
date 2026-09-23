@@ -93,12 +93,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:startEvent>
 
     <bpmn:task id="A_LogStart" name="Log task-start">
+      <bpmn:documentation>Write a task-start entry before touching anything: summary, actor, and the process/task/bean/branch/session it belongs to where they exist. role, process and task are optional on purpose — do not invent a lane for work done outside a process.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_DoWork" name="Do the work">
+      <bpmn:documentation>The task itself. This diagram says nothing about how it is done; it only brackets it, so that a reader of the log can tell where one run of work began and ended.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- The work itself belongs to whatever process called this one; the
              log has nothing to say about how it is done. -->
@@ -111,12 +113,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:task>
 
     <bpmn:task id="A_LogMessage" name="Log a message or an error">
+      <bpmn:documentation>Write a message or error entry whenever a later reader would need it. A command run goes in `execution` (command, exit code, where output went) — never the output itself, and never a secret, token or credential: capture on puts entries in git.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_3b</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_LogEnd" name="Log task-end">
+      <bpmn:documentation>Write a task-end entry, with the outcome in the detail. The step is the unit: an entry per step, not one when the whole process finishes, or every intermediate entry is lost.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_4</bpmn:incoming>
       <bpmn:outgoing>F_5</bpmn:outgoing>
@@ -131,12 +135,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_PersistLog" name="Persist the log to the data store">
+      <bpmn:documentation>Capture is explicitly on — by &lt;folio:log capture="on"/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_On</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_ReportCaptureState" name="Report the capture state">
+      <bpmn:documentation>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_OffOrUnknown</bpmn:incoming>
       <bpmn:outgoing>F_7</bpmn:outgoing>
@@ -165,12 +171,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_EmptyOne" name="Discard one entry by id">
+      <bpmn:documentation>Remove one entry by its stable id, with emptyLog({ id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_E_One</bpmn:incoming>
       <bpmn:outgoing>F_E2</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_EmptyAll" name="Discard all entries, or a whole session">
+      <bpmn:documentation>Remove every entry, one session's, or those before a date — emptyLog with { all }, { session } or { before }; there is no default selector. A file that will not parse is kept, and the result must say what was refused and why, not only what was removed.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_E_All</bpmn:incoming>
       <bpmn:incoming>F_S1</bpmn:incoming>

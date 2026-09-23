@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.453Z\n"
+"POT-Creation-Date: 2026-09-23T08:48:43.910Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:53
+#: processes/docs-site-publish.bpmn:54
 #. Diagram label
 msgid "Build the Jekyll site&#10;and the API reference"
 msgstr ""
@@ -29,37 +29,57 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:105
+#: processes/docs-site-publish.bpmn:110
 #. Diagram label
 msgid "complete"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:89
+#: processes/docs-site-publish.bpmn:55
+#. Diagram element documentation
+msgid "Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:79
+#. Diagram element documentation
+msgid "Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:94
 #. Diagram label
 msgid "Did the previews&#10;survive?"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:60
+#: processes/docs-site-publish.bpmn:63
+#. Diagram element documentation
+msgid "Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:62
 #. Diagram label
 msgid "Export the knowledge graph&#10;and its schema"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:67
+#: processes/docs-site-publish.bpmn:70
 #. Diagram label
 msgid "Is every maintained&#10;artefact present?"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:97
+#: processes/docs-site-publish.bpmn:102
 #. Diagram label
 msgid "Job RED &#8212; a preview&#10;was deleted"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:109
+#: processes/docs-site-publish.bpmn:114
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:82
+#: processes/docs-site-publish.bpmn:87
+#. Diagram element documentation
+msgid "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:86
 #. Diagram label
 msgid "Publish to gh-pages&#10;(FULL REPLACE)"
 msgstr ""
@@ -79,9 +99,14 @@ msgstr ""
 msgid "Push to main,&#10;or dispatch"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:72
+#: processes/docs-site-publish.bpmn:75
 #. Diagram label
 msgid "Refused &#8212;&#10;nothing published"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:47
+#. Diagram element documentation
+msgid "Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale."
 msgstr ""
 
 #: processes/docs-site-publish.bpmn:46
@@ -89,22 +114,22 @@ msgstr ""
 msgid "Regenerate every derived&#10;reference from its source"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:75
+#: processes/docs-site-publish.bpmn:78
 #. Diagram label
 msgid "Restore the OPEN PRs'&#10;staging previews"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:94
+#: processes/docs-site-publish.bpmn:99
 #. Diagram label
 msgid "Site published,&#10;previews intact"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:104
+#: processes/docs-site-publish.bpmn:109
 #. Diagram label
 msgid "something is missing"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:108
+#: processes/docs-site-publish.bpmn:113
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:c0c8f333c0879097a5b3494969d0075bef5d47846051e3039bc6ab149bed7795",
+  "source_hash": "sha256:cec39a61cf16170c4ff5159dc85198d0cf78ea69cf31b2141a8fc446b7625b81",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -93,29 +93,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Sweep",
-          "detail": "\"Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Label",
-          "detail": "\"Ensure the tracking&#10;label exists\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "\"Close the&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "\"Open or EDIT the one&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Comment",
-          "detail": "\"Comment ONCE per&#10;(PR, head sha)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -123,8 +102,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

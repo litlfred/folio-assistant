@@ -6515,3 +6515,115 @@ a.fa-harness-tab__body:focus-visible {
 
 :root[data-fa-scheme="light"] .fa-site-mark--light { display: inline-block; }
 :root[data-fa-scheme="light"] .fa-site-mark--dark { display: none; }
+
+/* ── A sticky AWAY FROM HOME (bean `pv6g`) ────────────────────────────────
+ *
+ * A pinned sticky whose home panel is not on this page, drawn from its stored
+ * text. Opaque for the reason every floating card is: it sits over page
+ * content, and see-through words over words are unreadable. */
+.fa-sticky-away {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  background: #1f1e24;
+  color: #e8eaed;
+  border: 1px solid #5a5670;
+  border-radius: var(--fa-folio-radius, 0);
+}
+:root[data-fa-scheme="light"] .fa-sticky-away {
+  background: #ffffff;
+  color: #1b1b1f;
+  border-color: #8a8699;
+}
+.fa-sticky-away-title { margin: 0; font-size: 1rem; }
+.fa-sticky-away-text { margin: 0; font-size: 0.85rem; line-height: 1.35; }
+.fa-sticky-away-home { color: inherit; text-decoration: underline; font-size: 0.85rem; }
+.fa-sticky-away .fa-sticky-tools,
+.fa-home-tools { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+.fa-sticky-sendhome,
+.fa-home-tools .fa-sticky-move,
+.fa-sticky-away .fa-sticky-move {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.7rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.fa-home-pin { margin-top: 0.4rem; }
+
+/* ── Touch: where a finger drags, and where it scrolls (bean `c132`) ──────
+ *
+ * `wireMove` takes a non-mouse drag only from a GRIP or in move mode. These
+ * are exactly those, and `touch-action: none` is what stops the browser
+ * claiming the gesture as a scroll before the page sees it. Everywhere else
+ * a finger scrolls, so a long note is still readable on a tablet. */
+[data-fa-grip],
+.fa-sticky-floating[data-fa-moving="true"],
+.fa-glass-asset[data-fa-moving="true"] {
+  touch-action: none;
+}
+
+/* ── A PHONE gets one column (bean `c132`) ─────────────────────────────────
+ *
+ * Owner, 2026-09-23: *"Mobile phone is maybe linearized view due to space.
+ * But tablet should be like laptops."* 37.5rem (600px) is the line: every
+ * phone in portrait is under it and every tablet is over it, including an
+ * iPad mini (744px) held upright.
+ *
+ * LINEARIZED, and !important is the mechanism, not a shortcut: each card
+ * carries its laptop geometry as INLINE left/top/width/height (the reader's
+ * saved place), and only !important outranks an inline style. The saved
+ * place is left in the store untouched, so the same reader on a laptop finds
+ * their cards where they put them. */
+@media (max-width: 37.49rem) {
+  /* Closed: nothing floats over the page. The handle says how many wait. */
+  .fa-sticky-layer[data-fa-glass="closed"] > .fa-sticky-floating { display: none; }
+  .fa-glass-handle[data-fa-count]::after {
+    content: " \00b7 " attr(data-fa-count);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Open: the layer is ONE scrolling column, in reading order. */
+  .fa-sticky-layer[data-fa-glass="open"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    padding: 3.5rem 0.75rem 8.5rem;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-glass-sheet {
+    position: static;
+    inset: auto;
+    padding: 0;
+    overflow: visible;
+    order: 1;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-sticky-floating {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none;
+    order: 2;
+  }
+  .fa-glass-shelf {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .fa-glass-shelf > .fa-glass-asset {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  /* A position means nothing in a column, so the controls that set one go.
+     Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
+  .fa-sticky-layer [data-fa-control="move"],
+  .fa-glass-asset-tool[aria-label^="Make "],
+  .fa-glass-tidy { display: none; }
+}

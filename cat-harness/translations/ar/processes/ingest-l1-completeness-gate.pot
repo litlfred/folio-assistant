@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-l1-completeness-gate\n"
-"POT-Creation-Date: 2026-09-22T09:06:04.863Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.313Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -24,12 +24,12 @@ msgstr ""
 msgid "Adjudicate the flagged passage"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:109
+#: processes/ingest-l1-completeness-gate.bpmn:110
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:107
+#: processes/ingest-l1-completeness-gate.bpmn:108
 #. Diagram label
 msgid "drift"
 msgstr ""
@@ -74,6 +74,11 @@ msgstr ""
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see."
 msgstr ""
 
+#: processes/ingest-l1-completeness-gate.bpmn:93
+#. Diagram element documentation
+msgid "Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/."
+msgstr ""
+
 #: processes/ingest-l1-completeness-gate.bpmn:91
 #. Diagram label
 msgid "Record the L1 completeness verdict"
@@ -99,7 +104,7 @@ msgstr ""
 msgid "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:101
+#: processes/ingest-l1-completeness-gate.bpmn:102
 #. Diagram label
 msgid "Verdict recorded"
 msgstr ""

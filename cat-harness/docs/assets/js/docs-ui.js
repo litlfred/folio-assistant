@@ -2763,20 +2763,47 @@
     });
 
     /* THE ACCELERATOR, over the top of the path above rather than instead of
-     * it. Everything it can do, the keyboard can already do. */
+     * it. Everything it can do, the keyboard can already do.
+     *
+     * POINTER EVENTS, not mouse events — bean `c132`, owner 2026-09-23: *"tablet
+     * should be like laptops"*. `mousedown` never fires for a finger drag, so on
+     * a touch tablet the surface could not be arranged at all. One listener
+     * set now serves mouse, pen and touch.
+     *
+     * A FINGER MUST STILL SCROLL. A touch that starts on a card's text is the
+     * reader scrolling that text, and taking it for a drag would make long
+     * notes unreadable on a tablet. So a non-mouse pointer drags only from a
+     * declared GRIP (`[data-fa-grip]` — the glass card's face, a sticky's
+     * head) or while the card is in move mode. The CSS gives exactly those
+     * `touch-action: none`, which is what stops the browser claiming the
+     * gesture as a scroll first. */
     var from = null;
-    handle.addEventListener("mousedown", function (e) {
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
       // Not on a control: a drag that started on `[x]` would fight the click
-      // that closes the panel.
-      // Nor on a LINK: a drag that started on an asset's name would swallow
-      // the press a reader meant as "open it".
+      // that closes the panel. Nor on a LINK: a drag that started on an
+      // asset's name would swallow the press a reader meant as "open it".
       if (e.target.closest("[data-fa-control]") || e.target.closest("button") ||
           e.target.closest("a")) return;
-      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
-      e.preventDefault();
+      if (e.pointerType !== "mouse" && panel.getAttribute("data-fa-moving") !== "true" &&
+          !e.target.closest("[data-fa-grip]")) return;
+      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel), id: e.pointerId };
+      // NOT for a mouse. `preventDefault` on `pointerdown` suppresses the
+      // compatibility `mousedown` that follows it, and the board windows RAISE
+      // on `mousedown` — the switch to pointer events broke "selecting any part
+      // raises it" until `board-windows.e2e.ts` said so. A mouse drag's text
+      // selection is stopped on that `mousedown` instead, below, as it was
+      // before. A touch drag is stopped here, where it has no mousedown.
+      if (e.pointerType !== "mouse") {
+        try { handle.setPointerCapture(e.pointerId); } catch (_e) { /* not capturable; document listeners still see it */ }
+        e.preventDefault();
+      }
     });
-    document.addEventListener("mousemove", function (e) {
-      if (!from) return;
+    handle.addEventListener("mousedown", function (e) {
+      if (from) e.preventDefault();
+    });
+    document.addEventListener("pointermove", function (e) {
+      if (!from || e.pointerId !== from.id) return;
       applyGeometry(panel, {
         left: Math.max(0, from.g.left + (e.clientX - from.x)),
         top: Math.max(0, from.g.top + (e.clientY - from.y)),
@@ -2784,10 +2811,13 @@
         height: from.g.height,
       });
     });
-    document.addEventListener("mouseup", function () {
-      if (from) settle();
+    function end(e) {
+      if (!from || (e && e.pointerId !== from.id)) return;
+      settle();
       from = null;
-    });
+    }
+    document.addEventListener("pointerup", end);
+    document.addEventListener("pointercancel", end);
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -4264,7 +4294,7 @@
         tabindex: "-1",
       });
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-      var face = el("div", { class: "fa-glass-asset-face" });
+      var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
       if (ava) face.appendChild(ava);
       // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
@@ -4689,8 +4719,362 @@
       handle.focus();
     });
 
+    /* HOW MANY ARE WAITING, on the handle — bean `c132`. On a phone a closed
+     * glass shows nothing over the page (there is no room for a floating card
+     * there), so the handle is where a reader learns their folio holds
+     * something. A data attribute the stylesheet prints, so the handle's text
+     * and accessible name are unchanged on every other screen. Counted from
+     * the DOM because a board sticky floats without touching the folio store. */
+    function countWaiting() {
+      var n = layer.querySelectorAll(".fa-sticky-floating").length +
+        Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      if (n > 0) handle.setAttribute("data-fa-count", String(n));
+      else handle.removeAttribute("data-fa-count");
+    }
+    countWaiting();
+    document.addEventListener("fa:folio-changed", countWaiting);
+    if (typeof MutationObserver === "function") {
+      new MutationObserver(countWaiting).observe(layer, { childList: true });
+    }
+
     layer.__faSetGlassOpen = setOpen;
     return layer;
+  }
+
+  /* ═══ A STICKY'S HOME — the panel it came from ═══════════════════════════
+   *
+   * Bean `pv6g`. Owner, 2026-09-21: *"stickies can detach from the panel and
+   * placed on the 'display window/glass' and dont scroll when the
+   * folio/document/page scrolls. when closed tehy returned to their home
+   * display panel."* And 2026-09-23, choosing between three senses of "home":
+   * **"Panel it came from"** — *"each sticky records which panel and slot it
+   * came from, and closing returns it there."*
+   *
+   * ## The home is RECORDED, not remembered
+   *
+   * `mountTodoBoard` already returned a floated sticky to `slots[todo.id]`,
+   * but that home lived in the board's closure: gone on the next page, and
+   * unaskable of any sticky the board did not build. So a home is now DATA,
+   * declared in markup and stored with the pin:
+   *
+   *   a panel  `data-fa-home-panel="<panel>"`   (the landing board, the todo board)
+   *   a slot   `data-fa-home-slot="<id>"`        (one per sticky it holds)
+   *   the pin  `{ panel, slot, title, text, href, label, geom }` in this browser
+   *
+   * ## A pinned sticky is on the GLASS, so it is on every page
+   *
+   * The glass is the reader's and comes down over whatever they browse, so a
+   * sticky pinned on the landing page is still pinned on a library page. Off
+   * its home page it renders from the stored TEXT — never stored HTML, which
+   * would be markup read back out of `localStorage` into the DOM — and says
+   * where its home is. Closing it anywhere unpins it; it is back in its slot
+   * the next time the home panel is on screen, because that is where the
+   * slot IS. Per-reader and per-browser, like everything else on the glass.
+   */
+  var PIN_KEY = "fa-pinned-stickies";
+
+  function pinnedStickies() {
+    try {
+      var raw = localStorage.getItem(PIN_KEY);
+      var m = raw ? JSON.parse(raw) : {};
+      return m && typeof m === "object" && !Array.isArray(m) ? m : {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function setPinnedStickies(m) {
+    try { localStorage.setItem(PIN_KEY, JSON.stringify(m)); } catch (_e) {
+      console.warn("docs-ui: a pinned sticky could not be saved (storage blocked); " +
+                   "it stays pinned for this page view only.");
+    }
+  }
+
+  function pinKey(panel, slot) { return panel + "/" + slot; }
+
+  /** Record a pin, keeping any place the reader already gave it. */
+  function recordPin(panel, slot, meta) {
+    var all = pinnedStickies();
+    var key = pinKey(panel, slot);
+    var prev = all[key] || {};
+    all[key] = {
+      panel: panel,
+      slot: slot,
+      title: String((meta && meta.title) || prev.title || slot).slice(0, 200),
+      // TEXT, capped. Enough to recognise the note away from home; the whole
+      // note is one click away, at its home.
+      text: String((meta && meta.text) || prev.text || "").replace(/\s+/g, " ").trim().slice(0, 600),
+      href: safeHref((meta && meta.href) || prev.href) || "",
+      label: String((meta && meta.label) || prev.label || "").slice(0, 200),
+    };
+    if (prev.geom) all[key].geom = prev.geom;
+    setPinnedStickies(all);
+    return all[key];
+  }
+
+  function dropPin(panel, slot) {
+    var all = pinnedStickies();
+    delete all[pinKey(panel, slot)];
+    setPinnedStickies(all);
+  }
+
+  function pinGeom(panel, slot, g) {
+    var all = pinnedStickies();
+    var e = all[pinKey(panel, slot)];
+    if (!e) return;
+    e.geom = { left: Math.round(g.left), top: Math.round(g.top),
+               width: Math.round(g.width), height: Math.round(g.height) };
+    setPinnedStickies(all);
+  }
+
+  function pinOf(panel, slot) { return pinnedStickies()[pinKey(panel, slot)] || null; }
+
+  /** The home panel element for `panel` on THIS page, or null. */
+  function homePanelEl(panel) {
+    var all = document.querySelectorAll("[data-fa-home-panel]");
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].getAttribute("data-fa-home-panel") === panel) return all[i];
+    }
+    return null;
+  }
+
+  function homeSlotEl(panel, slot) {
+    var p = homePanelEl(panel);
+    if (!p) return null;
+    var slots = ownSlots(p);
+    for (var i = 0; i < slots.length; i++) {
+      if (slots[i].getAttribute("data-fa-home-slot") === slot) return slots[i];
+    }
+    return null;
+  }
+
+  /**
+   * The slots that belong to THIS panel — its nearest home-panel ancestor is
+   * the panel itself. Panels NEST: on the landing page the todo board is
+   * mounted inside the landing board, and without this a todo's slot would
+   * be read as a landing sticky's.
+   */
+  function ownSlots(panel) {
+    return Array.prototype.filter.call(panel.querySelectorAll("[data-fa-home-slot]"), function (n) {
+      return n.parentElement && n.parentElement.closest("[data-fa-home-panel]") === panel;
+    });
+  }
+
+  /** Where a newly pinned card lands with no saved place: the bottom-right, stacked. */
+  function defaultPinGeom(n) {
+    var w = Math.min(352, Math.max(240, window.innerWidth - 32));
+    var h = 220;
+    return {
+      left: Math.max(0, window.innerWidth - w - 16 - n * 12),
+      top: Math.max(0, window.innerHeight - h - 16 - n * 12),
+      width: w,
+      height: h,
+    };
+  }
+
+  /** Say something about a home, once, in the glass's own live region. */
+  function announceHome(text) {
+    var layer = mountGlass();
+    var live = layer.querySelector(".fa-home-live");
+    if (!live) {
+      live = el("p", { class: "fa-sr-only fa-home-live", "aria-live": "polite" });
+      layer.appendChild(live);
+    }
+    live.textContent = text;
+  }
+
+  /**
+   * A pinned sticky shown AWAY FROM HOME, from its stored text.
+   *
+   * Two controls and a link, and the words say what each does: the link goes
+   * to the home page, where the whole note is; "Send home" unpins it, and the
+   * note is back in its slot the next time that panel is on screen.
+   */
+  function awayCard(e, n) {
+    var layer = mountGlass();
+    var key = pinKey(e.panel, e.slot);
+    var card = el("article", {
+      class: "fa-sticky fa-sticky-floating fa-sticky-away",
+      "data-fa-pin": key,
+      "aria-label": e.title,
+      tabindex: "-1",
+    });
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    card.appendChild(el("h3", { class: "fa-sticky-away-title", "data-fa-grip": "" }, e.title));
+    if (e.text) card.appendChild(el("p", { class: "fa-sticky-away-text" }, e.text));
+    var href = safeHref(e.href);
+    var where = e.label ? "its home panel on “" + e.label + "”" : "its home panel";
+    card.appendChild(href
+      ? el("a", { class: "fa-sticky-away-home", href: href }, "Go to " + where)
+      : el("p", { class: "fa-sticky-away-home" }, "Its home is " + where + "."));
+    var tools = el("div", { class: "fa-sticky-tools" });
+    var move = el("button", {
+      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
+      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = card.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(card, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var home = el("button", {
+      type: "button", class: "fa-sticky-sendhome",
+      "aria-label": "Send " + e.title + " home to " + where,
+      title: "Send home",
+    }, "⌂ Send home");
+    home.addEventListener("click", function () {
+      dropPin(e.panel, e.slot);
+      if (card.parentNode) card.parentNode.removeChild(card);
+      announceHome(e.title + " was sent home to " + where + ".");
+      document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
+    });
+    tools.appendChild(move);
+    tools.appendChild(home);
+    card.appendChild(tools);
+    card.appendChild(live);
+    wireMove(card, card, live, function (g) { pinGeom(e.panel, e.slot, g); });
+    layer.appendChild(card);
+    applyGeometry(card, e.geom || defaultPinGeom(n));
+    return card;
+  }
+
+  /**
+   * THE LANDING PANEL as a home: each landing sticky gets a Pin control, and a
+   * pinned one floats onto the glass as a copy of the real card, leaving a
+   * "Return" button in its slot. Closing it — from the card or the slot —
+   * returns it there. The owner's option text: *"Landing stickies get a Pin
+   * button too."*
+   */
+  function mountLandingHomes() {
+    var panel = homePanelEl("landing");
+    if (!panel) return;
+    ownSlots(panel).forEach(function (cell) {
+      var slot = cell.getAttribute("data-fa-home-slot");
+      var art = cell.querySelector(".fa-sticky");
+      if (!art || cell.querySelector(".fa-home-pin")) return;
+      var titleEl = art.querySelector("[id$='-summary']") || art.querySelector("h2, h3");
+      var title = (titleEl && titleEl.textContent.trim()) || slot;
+      var pin = el("button", {
+        type: "button",
+        class: "fa-sticky-pin fa-home-pin",
+        "aria-label": "Pin " + title + " to your glass — closing it brings it back here",
+      }, "Pin to glass");
+      pin.addEventListener("click", function () {
+        recordPin("landing", slot, {
+          title: title,
+          text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
+          href: safeHref(location.pathname),
+          label: document.title,
+        });
+        floatLanding(slot, true);
+      });
+      cell.appendChild(pin);
+    });
+    // Restore every landing pin whose slot is on this page.
+    Object.keys(pinnedStickies()).forEach(function (k) {
+      var e = pinnedStickies()[k];
+      if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
+    });
+  }
+
+  function floatLanding(slot, focus) {
+    var cell = homeSlotEl("landing", slot);
+    var e = pinOf("landing", slot);
+    if (!cell || !e) return;
+    var layer = mountGlass();
+    var key = pinKey("landing", slot);
+    if (layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]')) return;
+    var art = cell.querySelector(".fa-sticky");
+    var card = art.cloneNode(true);
+    // A COPY must not carry the original's ids: two elements with one id make
+    // `aria-labelledby` name whichever the browser finds first.
+    Array.prototype.forEach.call(card.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    card.removeAttribute("id");
+    card.removeAttribute("aria-labelledby");
+    card.setAttribute("aria-label", e.title);
+    card.classList.add("fa-sticky-floating");
+    card.setAttribute("data-fa-pin", key);
+    card.setAttribute("tabindex", "-1");
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    var tools = el("div", { class: "fa-sticky-tools fa-home-tools" });
+    var move = el("button", {
+      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
+      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = card.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(card, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var close = el("button", {
+      type: "button", class: "fa-sticky-sendhome",
+      "aria-label": "Return " + e.title + " to its panel",
+      title: "Return to its panel",
+    }, "⌂ Return");
+    close.addEventListener("click", function () { dockLanding(slot, true); });
+    tools.appendChild(move);
+    tools.appendChild(close);
+    card.appendChild(tools);
+    card.appendChild(live);
+    wireMove(card, card, live, function (g) { pinGeom("landing", slot, g); });
+    layer.appendChild(card);
+    var n = layer.querySelectorAll(".fa-sticky-floating").length - 1;
+    applyGeometry(card, e.geom || defaultPinGeom(n));
+
+    // The slot keeps its place and says where the note went. A REAL button,
+    // as on the todo board: a reader who clicks the grey space gets it back.
+    art.setAttribute("hidden", "hidden");
+    cell.classList.add("fa-sticky-slot-floating");
+    var pinBtn = cell.querySelector(".fa-home-pin");
+    if (pinBtn) pinBtn.hidden = true;
+    var recall = el("button", {
+      type: "button", class: "fa-sticky-recall",
+      "aria-label": "Return " + e.title + " from your glass to this panel",
+    }, e.title + " — on your glass. Return it here");
+    recall.addEventListener("click", function () { dockLanding(slot, true); });
+    cell.appendChild(recall);
+    if (focus) move.focus();
+    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "pinned" } }));
+  }
+
+  function dockLanding(slot, focus) {
+    var cell = homeSlotEl("landing", slot);
+    var key = pinKey("landing", slot);
+    dropPin("landing", slot);
+    var layer = mountGlass();
+    var card = layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]');
+    if (card) card.parentNode.removeChild(card);
+    if (!cell) return;
+    var art = cell.querySelector(".fa-sticky");
+    if (art) art.removeAttribute("hidden");
+    cell.classList.remove("fa-sticky-slot-floating");
+    var recall = cell.querySelector(".fa-sticky-recall");
+    if (recall) recall.parentNode.removeChild(recall);
+    var pinBtn = cell.querySelector(".fa-home-pin");
+    if (pinBtn) {
+      pinBtn.hidden = false;
+      if (focus) pinBtn.focus();
+    }
+    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
+  }
+
+  /**
+   * Every pin whose home is NOT on this page, as an away card. Pins whose home
+   * IS here are restored by that home: the landing panel above, the todo board
+   * when it mounts. The todo board mounts wherever the page declares a todo
+   * index, so a todo pin is "away" only on a page that declares none.
+   */
+  function mountAwayPins() {
+    var all = pinnedStickies();
+    var hasTodoBoard = !!document.querySelector('meta[name="fa-todo-src"]');
+    var n = 0;
+    Object.keys(all).forEach(function (k) {
+      var e = all[k];
+      if (!e || typeof e.panel !== "string" || typeof e.slot !== "string") return;
+      if (e.panel === "todos" && hasTodoBoard) return;
+      if (homePanelEl(e.panel)) return;
+      awayCard(e, n++);
+    });
   }
 
   function mountTodoBoard(items) {
@@ -4749,6 +5133,8 @@
       "aria-label": "Todos",
     };
     if (!landing) boardAttrs.hidden = "hidden";
+    // A HOME PANEL (bean `pv6g`): its slots are where a pinned todo returns.
+    boardAttrs["data-fa-home-panel"] = "todos";
     var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
 
@@ -4870,6 +5256,9 @@
     var slots = {};
 
     function dock(todo) {
+      // THE HOME IS RECORDED, so docking forgets the pin as well as the card
+      // (bean `pv6g`) — or it would float again on the next page.
+      dropPin("todos", todo.id);
       var f = todoState.floating[todo.id];
       if (f) {
         // REMEMBER WHERE IT WAS, because dock DESTROYS the card and float
@@ -4921,7 +5310,8 @@
      * the origin is a card whose controls cannot be reached.
      */
     function placeFloating(card, todo) {
-      var saved = todoState.floatGeom[todo.id];
+      var pinned = pinOf("todos", todo.id);
+      var saved = todoState.floatGeom[todo.id] || (pinned && pinned.geom);
       if (saved) { applyGeometry(card, saved); return; }
       var n = Object.keys(todoState.floating).length;
       var w = Math.min(352, Math.max(240, window.innerWidth - 32));
@@ -4934,8 +5324,16 @@
       });
     }
 
-    function float(todo) {
+    function float(todo, restoring) {
       if (todoState.floating[todo.id]) return;
+      // Recorded BEFORE the card is placed, so `placeFloating` finds a saved
+      // place on a restore and the store holds the home on a fresh pin.
+      recordPin("todos", todo.id, {
+        title: todo.summary,
+        text: todo.comment || "",
+        href: safeHref(location.pathname),
+        label: document.title,
+      });
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
       // Focusable so the move mode has somewhere to put focus and the arrow
@@ -4979,7 +5377,11 @@
         tools.appendChild(moveBtn);
       }
 
-      wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
+      var grip = card.querySelector(".fa-sticky-head");
+      if (grip) grip.setAttribute("data-fa-grip", "");
+      wireMove(card, grip || card, live, function (g) {
+        pinGeom("todos", todo.id, g);
+      });
       layer.appendChild(card);
       placeFloating(card, todo);
       todoState.floating[todo.id] = card;
@@ -5001,9 +5403,10 @@
         slot.appendChild(recall);
       }
       // Focus follows the sticky, or a reader who cannot see the page has no
-      // idea anything happened.
+      // idea anything happened. NOT on a restore: a page that moved focus on
+      // load would drop a keyboard reader somewhere they did not go.
       var t = card.querySelector(".fa-sticky-toggle");
-      if (t) t.focus();
+      if (t && !restoring) t.focus();
     }
 
     // Items this browser discarded are off the board. Filtered HERE rather
@@ -5016,6 +5419,7 @@
       var row = rows[i];
       var slot = el("div", {
         class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
+        "data-fa-home-slot": row.todo.id,
       });
       if (row.process) {
         // The process is named ON the sticky rather than as a run-in heading,
@@ -5031,6 +5435,17 @@
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
+    // RESTORE this board's pins, quietly — the reader pinned them on an
+    // earlier page and they are still on their glass.
+    Object.keys(pinnedStickies()).forEach(function (k) {
+      var pe = pinnedStickies()[k];
+      if (!pe || pe.panel !== "todos") return;
+      var t = live.filter(function (x) { return x.id === pe.slot; })[0];
+      if (t && slots[t.id]) float(t, true);
+      // A pin whose todo no longer exists (done, or discarded) has no home
+      // to go back to; drop it rather than float a card for nothing.
+      else if (!t) dropPin("todos", pe.slot);
+    });
     if (live.length === 0) {
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
@@ -7285,6 +7700,8 @@
     // than this page's furniture, so it must not inherit any of the guards
     // that decide whether a BOARD mounts — see `mountGlass`.
     mountGlass();
+    mountLandingHomes();
+    mountAwayPins();
     mountLibraryPullouts();
     mountTodoStickies();
     mountPageLanguageBar();

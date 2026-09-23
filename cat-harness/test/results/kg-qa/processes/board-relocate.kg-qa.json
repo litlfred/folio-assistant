@@ -5,7 +5,7 @@
     "id": "Process_BoardRelocate",
     "path": "processes/board-relocate.bpmn"
   },
-  "source_hash": "sha256:7ae2916b54f7fc630299ad786f6f12414bfa09d658331397fc9bcddb2aa7871a",
+  "source_hash": "sha256:f6f27b61c10b40ae124d8561431a91962fa47725507222d669ffed0d05275fe5",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,29 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_AskConfirm",
-          "detail": "\"Name what will move, and where it lands\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Cancel",
-          "detail": "\"Leave the content exactly where it is\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_MoveContent",
-          "detail": "\"Relocate the content to the trashcan\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_UpdateLayer",
-          "detail": "\"Drop its positions and sweep orphans\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_ReportMove",
-          "detail": "\"Say what moved and where it went\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -102,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

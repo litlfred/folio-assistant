@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zaqn
 title: 'JSON-LD PREFIX = STUB: the content context uses an undeclared `folio:` prefix, so every content term expands to a meaningless IRI'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T07:22:19Z
-updated_at: 2026-09-23T07:34:10Z
+updated_at: 2026-09-23T08:48:57Z
 parent: folio-assistant-zzmr
 ---
 
@@ -45,3 +45,16 @@ A namespace is `<canonical>/<stub>/ns#`, so its prefix is that same word:
 ## Done when
 
 A sample block expands to `https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#Definition`, and a context that uses an undeclared prefix fails a gate.
+
+## Summary of Changes
+
+Merged in #1016 (`12a61867`) on the owner's "merge it", 2026-09-23.
+
+- **Prefix = stub.** `NS_PREFIXES` is keyed by instance stub (`bootstrap`, `cat-harness`, `folio-assistant-core`); `stubOfNamespace()` reads it back. The content context and every JSON-LD emitter write `folio-assistant-core:`; the unbound `folio:` is gone.
+- **The missing gate direction.** `check:context-emission` gained `checkPrefixDeclaration`: a prefix SPOKEN as a key or `@type` must be bound; a binding onto our own `…/<stub>/ns#` must be spelt `<stub>` and name a declared instance; an unresolvable context is "could not determine". Falsified both ways; 9 tests.
+- **Regenerated.** `gen:jsonld` plus 91 orphaned block files rewritten in place (owner's choice over pruning). A real block expands with 0 IRIs outside http(s).
+- **Documented.** Skills: `kg-export` §"A prefix is the stub"; `directory-conventions` §"Why Zod" (the owner's three functional grounds, and the `.ts`-hallucination observation labelled an unscientific house rule). Tool node `context-prefixes`.
+- **Process slip, recorded.** The first two commits were pushed while local gates were still running; CI caught four failures the local run also found (bean parents, the new Tool's sidecar, tools viewer). Fixed in `440cc48e`.
+- **Issue #1015 was auto-closed** by "Closes #1015" in the PR body — the agent's wording, not the owner's sign-off. Reported on the issue for the owner to reopen if wanted.
+
+Follow-ups: `792y` (CSVW keys need absolute IRIs), `xwi8` (orphaned blocks: keep or prune).

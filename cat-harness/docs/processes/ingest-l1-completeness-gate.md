@@ -29,13 +29,13 @@ folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of
 
 ## Steps
 
-**1** of 4 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 4 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Is every derived artefact present?**<br>`Task_CheckDerived` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational. |
 | **Round-trip translation QA**<br>`Task_RoundTrip` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see. |
 | **Adjudicate the flagged passage**<br>`Task_FlagDrift` | Reviewer (SME or editor) | calls [Adjudication](adjudication.html)<br>[`document-intake`](../reference/skill-instructions/document-intake.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | A machine can detect that two readings differ. Which one is right is a human call. |
-| **Record the L1 completeness verdict**<br>`Task_Verdict` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | — |
+| **Record the L1 completeness verdict**<br>`Task_Verdict` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/. |
 
 {% endraw %}
