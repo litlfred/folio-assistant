@@ -494,11 +494,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     // Actors, the Roles they take, and the User Stories those Roles serve.
     //
-    // NAMED FOR WHAT IT WILL HOLD, and one third of that is not declared yet:
-    // a Role carries `useCases` as free-text strings, so a User Story cannot
-    // be pointed at or traced to the Workflow it justifies. Naming the kind
-    // now is what gives that gap somewhere to be fixed; calling it `roles`
-    // would have to be renamed the moment it was.
+    // `roles.json` and `stories.json`. A User Story points at its Role
+    // (#1168); it was `Role.useCases`, free text on the role, until then —
+    // the gap this kind was named ahead of, so that fixing it needed no rename.
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
@@ -880,8 +878,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // + `process-state` in #266; the rationale is in this map's doc comment above,
   // and the #263 version it supersedes is preserved there too. PR #266 changed
   // the map and left that comment describing the old five-kind design.
-  glossary: {
-    type: termIri("GlossaryGraph"),
+  // RENAMED from `glossary` on 2026-09-23 (owner: "Rename harness one"). The
+  // name `glossary` now belongs to folio-assistant-core's kind: local SKOS
+  // terms plus references to external SKOS schemes, rendered on every
+  // instance's glossary/ page. This is the harness's swimlane-role ledger, one
+  // source that page reads.
+  "swimlane-glossary": {
+    type: termIri("SwimlaneGlossaryGraph"),
     renderable: false,
     // `state`, and NOT `derived` — the interesting call now that `derived`
     // exists. The glossary DOCUMENT is derived and lives in `_kg/`; what is
@@ -917,7 +920,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // that did would be manufacturing its own evidence.
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "bootstrap:schemas/model-registry.ts#ModelRegistrySchema",
+    validator: "schemas/model-registry.ts#ModelRegistrySchema",
     summary:
       "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
       "as ONE input to the communication-language determination and never as the answer. " +
@@ -1625,6 +1628,7 @@ export const REGISTRATION_MODULE: Readonly<Record<string, string>> = {
   // pasted. It resolves through the module graph, not through the declaration,
   // so routing it through a directory resolver would be a category error.
   folio: "schemas/folio-graph-kind.js",
+  glossary: "schemas/glossary-graph-kind.js",
 };
 
 export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {

@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-voice/v1",
+  "id": "address-compute-authoring-agent",
+  "title": "Addressing the Compute authoring agent",
+  "description": "How to write for a reader acting as Compute authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+  "provenance": "house",
+  "sources": [
+    {
+      "title": "Role `compute-authoring-agent` — its persona, in the cat-harness role graph",
+      "instance": "cat-harness",
+      "kgRef": "scenarios/roles.json"
+    }
+  ],
+  "activeIn": {
+    "roles": [
+      {
+        "instance": "cat-harness",
+        "role": "compute-authoring-agent"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "id": "address-compute-authoring-agent-register",
+      "title": "Numeric and traceable",
+      "description": "Numeric and traceable. Every value names the computation that produced it and the commit it was produced at.",
+      "category": "register",
+      "severity": "minor",
+      "judgementOnly": true,
+      "source": {
+        "instance": "cat-harness",
+        "kgRef": "scenarios/roles.json",
+        "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
+      }
+    }
+  ]
+}

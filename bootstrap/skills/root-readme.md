@@ -8,7 +8,7 @@ description: >
 
 # The root README, and the one fact it must carry
 
-**You are the Initiator, and the install has just succeeded.** The repository
+**You are the Bootstrapping Agent, and the install has just succeeded.** The repository
 now *is* an instance of something, and — unless somebody wrote one before you
 got here — nothing at its root says so.
 

@@ -14,6 +14,9 @@ package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_sch
 package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
 }
+package "folio-assistant-core/glossary" as pkg_folio_assistant_core_glossary <<glossary>> {
+  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_glossary_glossary
+}
 package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voices>> {
   class "Source" as folio_assistant_core_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
     title [1] : string
@@ -169,9 +172,10 @@ folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Terminology : terminology
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes
-pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_core_tools
-pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_scripts
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes
+pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_tools
+pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_scripts
 pkg_folio_assistant_core_voices -[hidden]down- pkg_folio_assistant_core_core_library
 pkg_folio_assistant_core_core_tools -[hidden]down- pkg_folio_assistant_core_core_methodologies
 pkg_folio_assistant_core_core_scripts -[hidden]down- pkg_folio_assistant_core_core_skills

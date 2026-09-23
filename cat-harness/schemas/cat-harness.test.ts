@@ -189,6 +189,19 @@ describe("inheritance — the Phase 0.3 gate", () => {
     expect(kg[0]!.declaredBy).toBe("relocated");
   });
 
+  it("a renamed id still overrides the entry it meant (cat-harness → skills, bean iwtn)", () => {
+    const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
+    try {
+      mkdirSync(join(root, "old-skills"));
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", dependents: "skip", graphKinds: ["skills"] }] });
+      const dirs = resolveDirectories([{ name: "older", root, own: true }]);
+      expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
+      expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
   it("an override keeps the inherited position rather than reshuffling the scan order", () => {
     const dirs = resolveDirectories([
       { name: "agentic-harness", root: HARNESS },
@@ -673,11 +686,11 @@ describe("default directories — inherit the convention, declare only the devia
     writeDeclaration(inst, JSON.stringify({ name: "minimal" }));
 
     const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
-    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "skills", "tools"]);
     // `(default)` rather than the instance's name: a consumer can tell an
     // inherited convention from something this instance chose.
     expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("skills/");
   });
 
   it("a default whose directory is ABSENT is not seeded", () => {
@@ -701,11 +714,11 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
-    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "skills")!.declaredBy).toBe("relocated");
     // ...and the defaults it did NOT override are still there.
     expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
   });

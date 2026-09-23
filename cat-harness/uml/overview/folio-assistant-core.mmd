@@ -10,6 +10,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant_core__glossary {
+    class n_folio_assistant_core_glossary_glossary["glossary: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace folio_assistant_core__voices {
     class folio_assistant_core_voices_Source["Source"] {
       <<json: VoiceProfileSchema>>
@@ -178,6 +183,8 @@ classDiagram
   cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_undetermined
   cssClass "n_folio_assistant_core_folios_folio" fa_uml_kind_folio
   cssClass "n_folio_assistant_core_folios_folio" fa_uml_undetermined
+  cssClass "n_folio_assistant_core_glossary_glossary" fa_uml_kind_glossary
+  cssClass "n_folio_assistant_core_glossary_glossary" fa_uml_undetermined
   folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
   folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
   folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology

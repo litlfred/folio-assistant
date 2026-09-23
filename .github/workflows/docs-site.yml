@@ -84,6 +84,9 @@ on:
       # fix. A suffix that moves twice in a day is not a thing to spell twice.
       - 'cat-harness/*.json'
       - 'bootstrap/*.json'
+      # Every file of bootstrap is published as it sits (`publish-instance-files.ts`,
+      # bean `iwtn`), so a change to any of them changes the site.
+      - 'bootstrap/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -412,6 +415,14 @@ jobs:
           bun run cat-harness/scripts/kg-locale-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
+          # bootstrap's OWN files, as they sit, with each `.md` also rendered
+          # as `.html` -- bean `iwtn`, ruling 3. bootstrap renders nothing, so
+          # its `renderExemption.reachableAt` names its own `README.md`, and
+          # the navbar tab links to `<base>/bootstrap/README.html`. LAST, and
+          # it never overwrites: the graph's `.json` copy above has the same
+          # name as bootstrap's declaration, and the graph keeps that address.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
