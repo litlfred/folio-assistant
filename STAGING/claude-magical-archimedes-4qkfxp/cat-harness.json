@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T13:34:34.231Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/06c4ae692516d26b095cbbb44cd38e9fcd8ffe7c",
-  "sourceCommitSha": "06c4ae692516d26b095cbbb44cd38e9fcd8ffe7c",
-  "sourceCommitAt": "2026-09-23T13:31:33Z",
+  "generatedAt": "2026-09-23T13:55:00.393Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/19e797b2f6bbe44176ac7b07b39d69c0cabab1be",
+  "sourceCommitSha": "19e797b2f6bbe44176ac7b07b39d69c0cabab1be",
+  "sourceCommitAt": "2026-09-23T13:52:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -284,10 +284,10 @@
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 15,
-    "Process": 66,
-    "SequenceFlow": 848,
+    "Process": 67,
+    "SequenceFlow": 850,
     "Role": 146,
-    "ProcessNode": 804,
+    "ProcessNode": 807,
     "Tool": 74,
     "Schema": 104,
     "GraphKind": 30,
@@ -1612,7 +1612,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/narrative-asserts-code.md",
-      "instructionLines": 86,
+      "instructionLines": 88,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1830,7 +1830,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 434,
+      "instructionLines": 443,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2405,7 +2405,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/adjudication.md",
-      "instructionLines": 209,
+      "instructionLines": 265,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -17400,8 +17400,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/Start_Disagreement"
       ],
-      "nodeCount": 11,
-      "flowCount": 12,
+      "nodeCount": 7,
+      "flowCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication"
     },
@@ -17448,7 +17448,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Adjudicate",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_3"
     },
@@ -17456,67 +17456,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_4",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/End_Adjudicated",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "the finding stands",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "the criterion does not apply here",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "it applies; this is an exception",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_6",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_7",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Feedback%20provider",
@@ -17634,9 +17577,9 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispatch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Adjudicate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Judge the disagreement",
+      "name": "Adjudicate the disagreement",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
@@ -17653,102 +17596,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Judge"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Adjudicate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/End_Adjudicated",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Which of the three?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/GW_Outcome"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Scope the criterion so it stops applying here",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Scope"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_ScopeCriterion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Grant a dispensation, with its reason",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": false,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Exception"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_Dispensation"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Write the entry that LEADS — keeping the checker's beneath it",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": false,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_Stands",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/A_RecordEntry"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Settled, with the reason on the record",
+      "name": "Adjudicated, with the reason recorded",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication",
@@ -17757,11 +17610,11 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_7"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_Adjudication/flow/F_4"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_Settled"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication/node/End_Adjudicated"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CodeChangeReview",
@@ -18643,6 +18496,243 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Lifecycle/node/EndEvent_Retired"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Criterion adjudication",
+      "enforcement": "advisory",
+      "sourcePath": "processes/criterion-adjudication.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Start_CriterionDisagreement"
+      ],
+      "nodeCount": 7,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Stands",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the finding stands",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Stands"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the criterion does not apply here",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Exception",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "it applies; this is an exception",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_Dispensation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Exception"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_Dispensation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Entries for one criterion disagree",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Start_CriterionDisagreement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Adjudicate the criterion disagreement",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/Call_Adjudicate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which of the three?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Scope",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Exception"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/GW_Outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Scope the criterion so it stops applying here",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Scope"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_ScopeCriterion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_Dispensation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Grant a dispensation, with its reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Exception"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_Dispensation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write the entry that LEADS — keeping the checker's beneath it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/node/End_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Settled, with the reason on the record",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#role/Adjudicator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_CriterionAdjudication/flow/F_C7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication/node/End_Settled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#process/Process_L1Gate",
@@ -39418,8 +39508,8 @@
   ],
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp",
-    "sha": "61201bef4d73173f2f51194ec1ae2511b8419937",
+    "sha": "f9dd7df19b0aee2969b3b4ebbc88057acf7cb8c0",
     "pr": "1086/merge",
-    "run": "35867686475"
+    "run": "35870107220"
   }
 }
