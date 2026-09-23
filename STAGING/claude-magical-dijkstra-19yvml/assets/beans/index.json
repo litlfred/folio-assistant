@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 555,
+      "count": 557,
       "unit": "beans"
     }
   },
@@ -1271,6 +1271,20 @@
       "updatedAt": "2026-09-20T10:59:55Z",
       "preview": "Owner, 2026-09-20, on the CRDM process: *\"and to data modeling guidance in\nskills for CRDM when data modelling comes in (does subprocess exist yet?)\"*.\n\n## The factual half, answered\n\n**Yes, the subprocess mechanism exists, and CRDM is already built on it.**\n`crdm-requirements.bpmn` is a shell of four `callActivity` elements:\n\n| call | into |\n|---|---|\n| `Call_Issue` | `Process_CRDM_Issue` |\n| `Ca",
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
+    },
+    {
+      "id": "folio-assistant-5vo9",
+      "title": "ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T06:15:42Z",
+      "preview": "Formalize 'use judgement' as a declared subprocess with a typed I/O contract, so a non-deterministic step is marked as one rather than left implicit. Owner's spec 2026-09-23. A CONCRETE INSTANCE ALREADY EXISTS (processes/adjudication.bpmn) — this generalises it rather than starting over.\n\n## The owner's specification, 2026-09-23, verbatim in substance\n\n> need formalized adjudication process so the",
+      "file": "beans/defs/folio-assistant-5vo9--adjudication-as-a-typed-subprocess-one-judgement-c.md"
     },
     {
       "id": "folio-assistant-5wrg",
@@ -4295,6 +4309,20 @@
       "updatedAt": "2026-09-22T22:30:48Z",
       "preview": "Owner, 2026-09-22: \"bootstrap and who-iris need theme avatars, bootstrap = cowboy grump cat\", then the IRIS wordmark by screenshot.\n\n## What was wrong\n\n`tileFor` resolved an instance's theme backdrop against **its own** `decl.images`. `bootstrap` declares a sticky naming `theme: bootstrap` and **zero images** — `cat-harness` declares the `landing-bootstrap` role. So the resolver found nothing and ",
       "file": "beans/defs/folio-assistant-ka1p--harness-theme-avatars-an-instances-mark-is-its-the.md"
+    },
+    {
+      "id": "folio-assistant-kacl",
+      "title": "DETERMINISTIC-AND-AGENTIC: open question 2 now has a cited answer to argue with",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T06:15:42Z",
+      "preview": "skills/workflow/deterministic-and-agentic.md marks 'how much needs to be deterministic?' as open and probably malformed. The newly ingested Neubauer et al. (arXiv:2508.05192v2) proposes a different decomposition that the skill's three questions do not cover.\n\n## What the skill says today\n\n`skills/workflow/deterministic-and-agentic.md` is an **agenda, not a result**,\nand says so. It carries the own",
+      "file": "beans/defs/folio-assistant-kacl--deterministic-and-agentic-open-question-2-now-has.md"
     },
     {
       "id": "folio-assistant-ke0o",

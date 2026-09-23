@@ -450,25 +450,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790143883">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790145095">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790143883">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790145095">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790143883">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790145095">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790143883">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790145095">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -485,7 +485,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790143883" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790145095" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -971,6 +971,46 @@ cannot be fetched, that is an outcome to report — a located-but-unreachable
 document, never a missing one — and the node keeps its <code class="language-plaintext highlighter-rouge">origin</code> with no
 <code class="language-plaintext highlighter-rouge">evidence</code> until somebody closes the gap.</li>
 </ol>
+<h2 id="extract-the-process-not-the-papers-tools">
+  
+  
+    <a href="#extract-the-process-not-the-papers-tools" class="anchor-heading" aria-labelledby="extract-the-process-not-the-papers-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Extract the PROCESS, not the paper’s tools
+  
+  
+</h2>
+    
+
+<p><strong>A source that presents a method through an implementation is presenting two
+things, and only one of them is the methodology.</strong> The owner, 2026-09-23, on
+ingesting a tool paper:</p>
+
+<blockquote>
+  <p>do not need to match tools in paper, start with process, determine most
+appropriate tools (known or which can be added)</p>
+</blockquote>
+
+<p>So the order is: render the method, <em>then</em> ask what this platform should use to
+perform it. A node that adopted the source’s tool stack would be adopting an
+implementation and calling it a method — and it would be unfalsifiable in the
+worst way, because the tools would work and the method would never be examined.</p>
+
+<p><code class="language-plaintext highlighter-rouge">hybrid-llm-deterministic</code> is the worked case. Its source demonstrates the
+method in one tool with one model and one expression language; the node renders
+the rule/result inversion, the five safeguards and the bounded-truncation
+technique, and §”Where this rendering stops” names every tool it declined to
+adopt and why. The method survives replacing all of them, which is the test of
+whether you extracted a method at all.</p>
+
+<p><strong>Ask it as: what would still be true if they had built it differently?</strong> What
+survives is the methodology. What does not is their engineering, and it belongs
+in the skill if anywhere — where this platform’s own tool choices already live.</p>
+
+<p><strong>And say what the source does NOT establish.</strong> A demonstration is not an
+evaluation. Where a paper shows an approach working once, with no baseline and
+no measurement, the node records that no performance claim rests on it. Doing
+otherwise manufactures a finding the authors did not make — the same failure as
+§”Never quantify a judgement to make it look measured”, arriving through a
+citation instead.</p>
 <h2 id="an-origin-nobody-can-open-is-not-evidence">
   
   
