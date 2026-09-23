@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153669">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153669">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153669">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153669">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153276" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153669" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -813,7 +813,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p><strong>5</strong> of 12 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 12 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -829,7 +829,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Build the docs site Jekyll · TypeDoc · KG export</strong><br /><code class="language-plaintext highlighter-rouge">Task_Build</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging</code></a></td>
-      <td>—</td>
+      <td>Build the preview from the PR’s head: regenerate the generated docs, trim what this preview does not need, render the BPMN diagrams, then Jekyll, TypeDoc and the knowledge-graph export, with the staging banner and SEO identity claims stripped.</td>
     </tr>
     <tr>
       <td><strong>Publish to STAGING/&lt;slug&gt;</strong><br /><code class="language-plaintext highlighter-rouge">Task_Deploy</code></td>
@@ -847,13 +847,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Comment the preview URL on the PR</strong><br /><code class="language-plaintext highlighter-rouge">Task_Comment</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a></td>
-      <td>—</td>
+      <td>Post, or update in place, one comment on the PR giving the preview URL (STAGING/<slug>/) and the commit it was built from. Pull-request events only.</slug></td>
     </tr>
     <tr>
       <td><strong>Derive the slug from the head ref</strong><br /><code class="language-plaintext highlighter-rouge">Task_Slug</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging</code></a></td>
-      <td>—</td>
+      <td>Derive the slug from the PR’s head ref: every character outside [a-zA-Z0-9._-] becomes ‘-‘, runs of ‘-‘ collapse, and leading or trailing ‘-‘ is trimmed. It must be one safe path segment, checked by value.</td>
     </tr>
     <tr>
       <td><strong>Remove the preview AND append <code class="language-plaintext highlighter-rouge">removed</code> — one commit</strong><br /><code class="language-plaintext highlighter-rouge">Task_Remove</code></td>
@@ -871,7 +871,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Post the retention notice on the PR</strong><br /><code class="language-plaintext highlighter-rouge">Task_Notice</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a></td>
-      <td>—</td>
+      <td>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</td>
     </tr>
     <tr>
       <td><strong>Check the slug’s SHAPE and that the confirmation repeats it</strong><br /><code class="language-plaintext highlighter-rouge">Task_Validate</code></td>
@@ -889,7 +889,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Remove it AND append <code class="language-plaintext highlighter-rouge">removed</code> — one commit</strong><br /><code class="language-plaintext highlighter-rouge">Task_RemoveDisp</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a></td>
-      <td>—</td>
+      <td>Say what is going — size and file count — then remove STAGING/<slug>/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</slug></td>
     </tr>
     <tr>
       <td><strong>Repeat the slug, exactly, to confirm</strong><br /><code class="language-plaintext highlighter-rouge">H_Confirm</code></td>

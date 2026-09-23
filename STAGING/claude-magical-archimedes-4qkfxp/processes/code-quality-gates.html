@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153669">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153669">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153669">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153276">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153669">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153276" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153669" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -816,7 +816,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes <code
 </h2>
     
 
-<p><strong>5</strong> of 6 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 6 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -833,35 +833,35 @@ Mechanical throughout. Nothing here waits on a person, which is what makes <code
 <code class="language-plaintext highlighter-rouge">import Mathlib</code> (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Lean</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>—</td>
+      <td>Fail on any bare <code class="language-plaintext highlighter-rouge">import Mathlib</code> in content/<em>*/</em>.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</td>
     </tr>
     <tr>
       <td><strong>Python: unused and
 wildcard imports (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Python</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>—</td>
+      <td>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</td>
     </tr>
     <tr>
       <td><strong>TypeScript: tests, lint, types,
 and ~30 repository gates (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_TypeScript</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>—</td>
+      <td>bun test, lint, tsc –noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). <code class="language-plaintext highlighter-rouge">bun run gates</code> derives its list from this job, so it is the local way to run the same set before pushing.</td>
     </tr>
     <tr>
       <td><strong>End-to-end +
 accessibility (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_E2E</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>—</td>
+      <td>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</td>
     </tr>
     <tr>
       <td><strong>Rust wildcard imports
 (WARN-ONLY)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Rust</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>—</td>
+      <td>Report non-test <code class="language-plaintext highlighter-rouge">use …::*;</code> in tools/<em>*/</em>.rs, excluding <code class="language-plaintext highlighter-rouge">use super::*;</code>. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</td>
     </tr>
     <tr>
       <td><strong>Dependency advisories
