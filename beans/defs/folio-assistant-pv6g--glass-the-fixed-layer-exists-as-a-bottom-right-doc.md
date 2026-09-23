@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pv6g
 title: 'GLASS: the fixed layer exists as a bottom-right dock, not a surface a note is placed on'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-21T17:28:39Z
-updated_at: 2026-09-23T08:30:36Z
+updated_at: 2026-09-23T09:54:09Z
 parent: folio-assistant-6lb8
 ---
 
@@ -102,3 +102,11 @@ So the home is sense 1, **recorded on the sticky** rather than living in one boa
 ### A guard the specs do NOT prove, said rather than hidden
 
 `ownSlots` keeps a panel from claiming a nested panel's slots (the todo board mounts INSIDE the landing board). A mutation to `return true` still passes, because landing pins are wired at init, before the board's fetch resolves. The guard is kept for when that ordering changes. The nesting spec asserts the structure and the count, and its comment says what it does not prove.
+
+## Summary of Changes
+
+Merged in #1030 (issue #1029). Owner's ruling: the home is the panel the sticky came from.
+- Home panels and slots are declared in markup, and pins are stored per reader.
+- Landing stickies get "Pin to glass"; todos share the same store.
+- Away from home, a pinned sticky is a text card with a way home.
+- The `ownSlots` nesting guard is recorded above as not independently provable by the specs.
