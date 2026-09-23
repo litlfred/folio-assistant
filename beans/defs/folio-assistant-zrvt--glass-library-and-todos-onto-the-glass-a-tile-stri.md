@@ -65,6 +65,12 @@ The owner, asked what next: **"Add card moving next"**.
 
 The drag spec failed with left 0 → 0. The cause was a real layout defect, not a test problem: the default card was 112px tall, the cover avatar 78px, and the tool row 44px, so the cover drew ABOVE the card's top edge and was clipped. The press landed on the glass behind it. The card is now 152px tall, and the spec asserts the avatar sits inside its card.
 
+## CI round, 2026-09-23 — the covers linked to a mount that only the BUILT site has
+
+`library-viewer-scope.e2e.ts` (new on `main`) failed on the merge ref: 3 × `Failed to load resource: 404`, one per who-iris cover. The avatar href was `/library/who-iris/<slug>-cover.png`, the instance MOUNT, which `mount-instance-docs.ts` creates only at deploy. The e2e server serves the committed tree, so the covers were not there. The spec was right: a page that 404s on every surface except the deployed one is broken on every one of them.
+
+Fix: `gen-library-viz` COPIES each avatar under the site (`assets/library/avatars/<instance>/<slug>.<ext>`), and `--check` compares the copy BYTE FOR BYTE against its source, so a cover re-rendered upstream cannot go stale here silently. Copies are capped at `AVATAR_MAX_BYTES` (128 KB): covers measured 6–15 KB, but a first figure ran to 1.3 MB (a full-page scan), and an avatar is a thumbnail. The mount floor is gone, since the copy is always published, so smart-base and cat-harness entries whose first figure is small now get avatars too. 148 KB in total.
+
 ## Not done
 
 - The "cats" avatar option. The existing art avatars are per-THEME sticky backdrops, not per-item pictures, and "Kind avatars" is the existing per-item set.

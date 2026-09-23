@@ -563,6 +563,20 @@ function emit(path: string, content: string): void {
   console.log(`  ✓ ${path}`);
 }
 
+/** `emit` for a binary file: same check-or-write contract, compared byte for byte. */
+function emitBytes(path: string, content: Buffer): void {
+  if (check) {
+    if (existsSync(path) && readFileSync(path).equals(content)) return;
+    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
+    stale++;
+    return;
+  }
+  if (existsSync(path) && readFileSync(path).equals(content)) return;
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, content);
+  console.log(`  ✓ ${path}`);
+}
+
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
   const g = readLibraryGraph([ROOT, repoRoot]);
@@ -723,6 +737,17 @@ if (import.meta.main) {
   }
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
+
+  // ── AVATARS (bean `zrvt`) ─────────────────────────────────────────────
+  //
+  // Each entry's picture, COPIED under the site so it resolves wherever the
+  // committed tree is served — the instance mount exists only on the built
+  // site. `--check` compares BYTES, so a cover regenerated upstream and not
+  // re-copied here is stale, never silently old.
+  for (const e of g.entries) {
+    if (!e.avatar) continue;
+    emitBytes(join(site, e.avatar.href.slice(1)), readFileSync(join(repoRoot, e.avatar.src)));
+  }
   emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
