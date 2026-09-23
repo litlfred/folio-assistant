@@ -1,7 +1,7 @@
 ---
 # folio-assistant-fuve
 title: 'OVERLAY RESOLUTION: an unresolvable needs name is dropped silently, and repoRootFor climbs out of the repo for the root instance'
-status: in-progress
+status: completed
 type: bug
 parent: folio-assistant-uhkv
 created_at: 2026-09-23T09:16:46Z
@@ -109,3 +109,40 @@ is what defect A costs, and why the proof had to be constructed: a bogus
 deliberate, and unrelated to the overlay. Recorded because it looks exactly
 like overlay leakage at a glance, and the next person to read that list will
 have the same question.
+
+## Summary of Changes
+
+Merged as [#1038](https://github.com/litlfred/folio-assistant/pull/1038) →
+`6055951`, closing [#1037](https://github.com/litlfred/folio-assistant/issues/1037).
+
+| file | change |
+|---|---|
+| `schemas/cat-harness.ts` | `siblingScopeFor` — the sibling-lookup scope, distinct from `repoRootFor` |
+| `schemas/harness-config.ts` | uses it in `dependenciesFromNeeds`; `resolveInstanceGraph` now reports `unresolved` as `missing` |
+| `schemas/depends-on.ts` | same sibling-lookup fix |
+| `schemas/overlay-resolution.test.ts` | 8 tests over throwaway trees |
+
+Measured after: the root instance goes **1 → 5** skill directories;
+`unresolved` `["folio-assistant-core"]` → `[]`.
+
+A base merge took 20 commits from `main` before the merge; the measurement was
+re-run on the merged tree and still holds, and `bun run gates` was **133 green**
+(main had added two gates).
+
+## The part worth remembering
+
+`check:instance-graph` printed the identical sentence before and after the fix.
+Before, it was false. **There was no diff in that output to notice**, which is
+why the fix had to be proved by construction — a bogus `needs` on `detangle`
+now makes the gate exit 1 and name it.
+
+So the lesson is not "the gate was missing". The gate existed, read `problems`,
+and would have failed correctly. It was fed an empty array. A gate is only as
+honest as what reaches it, and nothing tested that the feed was populated.
+
+## Left open deliberately
+
+Bean `zkgs` — `findContentRepoRoot()` stopping at `cat-harness/` — is a THIRD
+root-finder with the same shape. Cross-referenced, not touched: it is a
+different resolver in a different file, and folding it in here would have
+widened a fix that was already proved.
