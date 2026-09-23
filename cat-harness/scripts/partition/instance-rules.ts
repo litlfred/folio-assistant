@@ -277,6 +277,7 @@ export const RULES: Rule[] = [
       "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas

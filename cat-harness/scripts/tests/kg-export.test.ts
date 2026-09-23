@@ -906,7 +906,7 @@ describe("exporting ANOTHER instance's graph", () => {
 
   test("a Tool satisfying a sibling's skill links into the SIBLING's document", async () => {
     // The edge `pve3` created: the skills live in bootstrap so an
-    // Initiator can read them with nothing installed, the Tool nodes live here
+    // Bootstrapping Agent can read them with nothing installed, the Tool nodes live here
     // because a Tool is cat-harness's vocabulary (`gn4l`).
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE });

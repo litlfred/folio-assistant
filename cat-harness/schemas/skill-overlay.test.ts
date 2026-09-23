@@ -253,11 +253,11 @@ describe("the two resolvers agree about what a declaration means", () => {
   });
 
   test("a declared entry OVERRIDES the default of the same id", () => {
-    // `cat-harness` is the default id for `skills/`. Declaring it at `kg/`
+    // `skills` is the default id for `skills/`. Declaring it at `kg/`
     // must move it, not add a second entry.
     const root = instance("relocated", "kg");
     const dirs = ownDirectories({ name: "x", root, own: true });
-    const kg = dirs.filter((d) => d.id === "cat-harness");
+    const kg = dirs.filter((d) => d.id === "skills");
     expect(kg).toHaveLength(1);
     expect(kg[0]!.absPath).toBe(join(root, "kg"));
     expect(kg[0]!.declaredBy).not.toBe("(default)");
