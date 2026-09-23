@@ -2,11 +2,11 @@
   "$schema": "folio-library-index/v1",
   "tile": {
     "uploads": {
-      "count": 21,
+      "count": 20,
       "unit": "waiting"
     },
     "agent-skills-library": {
-      "count": 5,
+      "count": 6,
       "unit": "entries"
     },
     "library": {
@@ -23,6 +23,41 @@
     }
   },
   "entries": [
+    {
+      "id": "arxiv-2602.12670v4",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/arxiv-2602.12670v4",
+      "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "arxiv-2602.12670v4",
+      "sourceFile": "2602.12670v4.pdf",
+      "sourceSha256": "e987ebc3f0084a1ffc8acbca58259e33120b95fcef3876abfad060e169cf210b",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 82,
+      "blocks": 85,
+      "images": 7,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 42,
+      "words": 17553,
+      "chars": 127637,
+      "bytes": 365058,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "avatar": {
+        "href": "/assets/library/avatars/agent-skills/arxiv-2602.12670v4.png",
+        "src": "agent-skills/library/arxiv-2602.12670v4/images/img-p025-1.png",
+        "source": "figure"
+      },
+      "referencedBy": []
+    },
     {
       "id": "arxiv-2607.25032v1",
       "instance": "agent-skills",
@@ -881,7 +916,7 @@
       "path": "uploads/2602.12670v4.pdf",
       "bytes": 1769852,
       "ext": "pdf",
-      "ingestedBy": "",
+      "ingestedBy": "arxiv-2602.12670v4",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -1307,8 +1342,8 @@
       "instance": "folio-assistant",
       "dir": "uploads",
       "total": 31,
-      "ingested": 12,
-      "uningested": 19
+      "ingested": 13,
+      "uningested": 18
     },
     {
       "instance": "who-iris",
@@ -1319,7 +1354,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1756,
+    "filesRead": 1761,
     "unreadable": []
   }
 }

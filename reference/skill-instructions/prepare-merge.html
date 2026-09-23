@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790171988">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790174646">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790171988">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790174646">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790171988">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790174646">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790171988">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790174646">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790171988">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790174646">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790171988" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790174646" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -831,6 +831,18 @@ conflicted paths). Do <strong>not</strong> grep the old three-arg output for
 <code class="language-plaintext highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / “changed in both” — that false-positives on files which
 legitimately contain those literals (docs about merge conflicts, test
 fixtures — this very skill tripped that check when it was first run).</li>
+      <li><strong>A clean text merge is not a clean state.</strong> <code class="language-plaintext highlighter-rouge">merge-tree</code> answers “do
+the files conflict?”, not “do the gates pass on the result?”. Before
+asking for a merge, run <strong><code class="language-plaintext highlighter-rouge">bun run check:merged</code></strong>: it builds the merge
+with the current base in a throwaway worktree and runs the full
+<code class="language-plaintext highlighter-rouge">bun run gates</code> there (exit 0 passes, 1 fails, 2 could not determine —
+never read as clean). Bean <code class="language-plaintext highlighter-rouge">nytj</code>: three times on 2026-09-23 a
+generated measurement was green on the branch, green on the base,
+merged without a conflict, and stale on the result.</li>
+      <li>The structural fix is GitHub’s <strong>merge queue</strong>, which tests exactly the
+commit that will land; the gating workflows carry <code class="language-plaintext highlighter-rouge">merge_group:</code> so it
+works the moment the owner turns it on. Until then, <code class="language-plaintext highlighter-rouge">check:merged</code> is
+the agent’s half.</li>
     </ul>
   </li>
   <li>
@@ -1432,7 +1444,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35870851790"><code>5d57f0a</code></a> &middot; 2026-09-23T13:59:44Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35876213651"><code>83803af</code></a> &middot; 2026-09-23T14:44:01Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
