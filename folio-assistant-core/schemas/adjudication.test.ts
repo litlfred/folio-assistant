@@ -47,7 +47,7 @@ const OUTCOME: AdjudicationOutcome = {
   at: "2026-09-23",
 };
 
-describe("who may judge", () => {
+describe("who may adjudicate", () => {
   it("excludes the MECHANICAL kind — the whole reason the step exists", () => {
     // The owner: "ONLY agentic human actor". `system` is this repository's
     // name for the mechanical kind. A judgement a script can perform is a
@@ -70,14 +70,14 @@ describe("who may judge", () => {
     }
   });
 
-  it("matches what `adjudication.bpmn` already declares on its judge step", () => {
-    // `<folio:fulfilment kinds="person agent"/>` on A_Judge. The contract and
-    // the diagram must not disagree about who may judge, and the diagram got
+  it("matches what `adjudication.bpmn` already declares on its adjudicator step", () => {
+    // `<folio:fulfilment kinds="person agent"/>` on A_Adjudicate. The contract and
+    // the diagram must not disagree about who may adjudicate, and the diagram got
     // there first.
     expect([...ADJUDICATOR_KINDS].sort()).toEqual(["agent", "person"]);
   });
 
-  it("an `agent` judge must name its model", () => {
+  it("an `agent` adjudicator must name its model", () => {
     const noModel = { ...OUTCOME, by: { id: "a", kind: "agent" as const } };
     expect(AdjudicationOutcomeSchema.safeParse(noModel).success).toBe(false);
     const person = { ...OUTCOME, by: { id: "litlfred", kind: "person" as const } };
@@ -126,7 +126,7 @@ describe("an asset says where it is, when it is anywhere", () => {
   });
 
   it("carries `unknown` as its own state, not a flavour of `referenced`", () => {
-    // Inherited from MATERIALIZATION_STATES on purpose: a judge told "here is
+    // Inherited from MATERIALIZATION_STATES on purpose: an adjudicator told "here is
     // the evidence" about bytes nobody can find has been misled.
     expect(AdjudicationAssetSchema.safeParse({ ref: "x", state: "unknown" }).success).toBe(true);
   });
@@ -196,7 +196,7 @@ describe("it expresses the adjudication that already exists", () => {
     for (const c of REQUEST.codes) expect(c.means.length).toBeGreaterThan(0);
   });
 
-  it("can RESTRICT what the judge sees — `adjudicator_sees`, not the artefact", () => {
+  it("can RESTRICT what the adjudicator sees — `adjudicator_sees`, not the artefact", () => {
     // A contract that always handed over everything would silently undo the
     // untainted-verification epic. The request names its own set, so the
     // artefact simply is not in it.

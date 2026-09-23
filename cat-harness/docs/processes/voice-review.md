@@ -18,7 +18,7 @@ The voice axis: load whichever editorial voices are active, run each rule's mech
 ## How it connects
 
 - **Called by:** [Narrative review](review-narrative.html)
-- **Calls:** [Adjudication](adjudication.html)
+- **Calls:** [Criterion adjudication](criterion-adjudication.html)
 
 ## Lanes — who acts
 
@@ -36,7 +36,7 @@ Every one of the 6 step(s) is documented.
 | **Run the rule's mechanical half**<br>`Task_MechanicalHalf` | Narrative reviewer | [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | Whatever `patterns` and `terminology` the rule carries. A `judgementOnly` rule has no mechanical half by declaration, which is different from nobody having written one yet. |
 | **Open the rule's citation**<br>`Task_OpenCitation` | Narrative reviewer | [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | Every rule resolves to a real `library/` section or a KG node, and carries the quote it was read from. Opening it is what lets a reviewer say WHY the rule applies — and it is the only way to catch a rule that misread its own source. |
 | **The RULE is the defect — bean it**<br>`Task_RuleIsWrong` | Narrative reviewer | [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags "clearly", and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`). |
-| **Adjudicate: prose, scope, or exception**<br>`Task_Adjudicate` | Narrative reviewer | calls [Adjudication](adjudication.html)<br>[`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why). |
+| **Adjudicate: prose, scope, or exception**<br>`Task_Adjudicate` | Narrative reviewer | calls [Criterion adjudication](criterion-adjudication.html)<br>[`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why). |
 | **Record on the block's QA sidecar**<br>`Task_RecordOnSidecar` | Narrative reviewer | [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information. |
 
 ## Decisions
