@@ -70,13 +70,33 @@ the repository had grown to eight.
 
 ## Done when
 
-- [ ] A preview composes an instance's `composed: true` directory only when the branch's diff touches that instance, leaving a stub that links to the published copy
-- [ ] The instance list comes from the declarations, not from a literal
-- [ ] Any doubt carries everything — no PR number, an unreadable file list, a failed API call
-- [ ] The saving is measured on a real preview, not projected
-- [ ] A test covers the carry decision, including the fall-through
+- [x] A preview composes an instance's `composed: true` directory only when the branch's diff touches that instance, leaving a stub that links to the published copy
+- [x] The instance list comes from the declarations, not from a literal
+- [x] Any doubt carries everything — no PR number, an unreadable file list, a failed API call
+- [x] The saving is measured on a real preview, not projected
+- [x] A test covers the carry decision, including the fall-through
 
 Owner authorised the approach 2026-09-23, alongside labelling the two orphaned
 `zod-4.6.5` previews for cleanup (201.2 MB, neither branch still on the remote).
 
 Parent `1xhc`. Follow-on from `tebu` / [#843](https://github.com/litlfred/folio-assistant/issues/843).
+
+## Measured on a real preview — 2026-09-23
+
+`STAGING/claude-cool-fermi-htir5p/`, the first preview built with the cut. This
+branch touches `.github/`, `cat-harness/scripts/`, `cat-harness/test/` and
+`beans/`, and no instance, so both cuts fired.
+
+| | before (largest of the 13) | this preview |
+|---|---|---|
+| `smart-trust/` | 111.6 MB, 681 files | **0.10 MB, 1 file** |
+| `reference/` | 50.6 MB, 281 files | 0.10 MB, 1 file (`tebu`) |
+| `api/` | 6.2 MB, 307 files | absent (`tebu`) |
+| whole preview | 269.3 MB | **86.6 MB** |
+
+86.6 MB is below every one of the 13 previews measured before it (87.2 –
+269.3 MB). The `smart-trust/` saving alone is **111.5 MB**.
+
+The stub renders with the full theme and its link RESOLVES — the canonical site
+carries `/smart-trust/` at 97.8 MB across 681 files, checked on `gh-pages`
+rather than assumed. `pb04` satisfied against the real target.
