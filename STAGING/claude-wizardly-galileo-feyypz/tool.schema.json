@@ -33,8 +33,7 @@
               "type": "boolean",
               "const": true
             }
-          },
-          "additionalProperties": false
+          }
         },
         "invoke": {
           "type": "object",
@@ -55,8 +54,7 @@
               },
               "required": [
                 "tool"
-              ],
-              "additionalProperties": false
+              ]
             },
             "inProcess": {
               "type": "object",
@@ -72,15 +70,13 @@
               },
               "required": [
                 "module"
-              ],
-              "additionalProperties": false
+              ]
             },
             "manual": {
               "type": "boolean",
               "const": true
             }
-          },
-          "additionalProperties": false
+          }
         },
         "io": {
           "type": "object",
@@ -119,21 +115,20 @@
                         },
                         "required": [
                           "flag"
-                        ],
-                        "additionalProperties": false
+                        ]
                       },
                       {
                         "type": "object",
                         "properties": {
                           "positional": {
                             "type": "integer",
-                            "minimum": 0
+                            "minimum": 0,
+                            "maximum": 9007199254740991
                           }
                         },
                         "required": [
                           "positional"
-                        ],
-                        "additionalProperties": false
+                        ]
                       },
                       {
                         "type": "object",
@@ -145,8 +140,7 @@
                         },
                         "required": [
                           "stdin"
-                        ],
-                        "additionalProperties": false
+                        ]
                       }
                     ]
                   }
@@ -155,8 +149,7 @@
                   "name",
                   "schema",
                   "required"
-                ],
-                "additionalProperties": false
+                ]
               }
             },
             "outputs": {
@@ -179,24 +172,22 @@
                 "required": [
                   "name",
                   "schema"
-                ],
-                "additionalProperties": false
+                ]
               }
             }
           },
           "required": [
             "inputs",
             "outputs"
-          ],
-          "additionalProperties": false
+          ]
         },
         "satisfies": {
+          "minItems": 1,
           "type": "array",
           "items": {
             "type": "string",
             "minLength": 1
-          },
-          "minItems": 1
+          }
         },
         "alternativeTo": {
           "type": "array",
@@ -226,8 +217,7 @@
             "when",
             "limits",
             "cost"
-          ],
-          "additionalProperties": false
+          ]
         },
         "requires": {
           "type": "object",
@@ -247,8 +237,7 @@
             "network": {
               "type": "boolean"
             }
-          },
-          "additionalProperties": false
+          }
         },
         "maintains": {
           "type": "array",
@@ -271,8 +260,7 @@
             "required": [
               "source",
               "artefact"
-            ],
-            "additionalProperties": false
+            ]
           }
         }
       },
@@ -284,18 +272,16 @@
         "invoke",
         "io",
         "satisfies"
-      ],
-      "additionalProperties": false
+      ]
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/tool.schema.json",
   "title": "Tool definition",
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/wizardly-galileo-feyypz",
-    "sha": "ab0f3b853955d766525dcbc6a0b4ad0d8434b601",
+    "sha": "2a9c14cd5bd4ba63555879b54379e0a3dfba9eca",
     "pr": "951/merge",
-    "run": "35733294309"
+    "run": "35844540079"
   }
 }
