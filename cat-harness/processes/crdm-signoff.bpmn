@@ -41,6 +41,7 @@ what this step records here is a note that the plan now exists.</bpmn:documentat
     </bpmn:task>
     <bpmn:task id="BA_Signoff" name="Sign off on
 requirements">
+      <bpmn:documentation>The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="decision-audit"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_AnnounceBranch" name="Announce the branch

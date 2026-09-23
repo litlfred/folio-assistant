@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Close",
     "path": "processes/crdm-close.bpmn"
   },
-  "source_hash": "sha256:8d3b526fea8e7b49c4631ef2b85cbda81e7bf26f85260f5e1642c34ee3178756",
+  "source_hash": "sha256:dc2bb2db3946d27652fb9134a6cbad510606e9639ff287a0fd4128ba69864e41",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,17 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_FeatureSignoff",
-          "detail": "\"Feature sign-off on issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "BA_Confirm",
-          "detail": "\"Confirm all criteria met\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -90,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

@@ -73,7 +73,9 @@ impact analysis the agent produced.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="S_ApproveReqs" name="Approve
-requirements"/>
+requirements">
+      <bpmn:documentation>Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf.</bpmn:documentation>
+    </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?"/>
     <bpmn:endEvent id="End_Process_CRDM_Requirements" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Requirements_1" sourceRef="Start_Process_CRDM_Requirements" targetRef="A_MapWorkflow"/>

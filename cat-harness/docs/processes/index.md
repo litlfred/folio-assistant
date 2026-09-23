@@ -27,7 +27,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Agent activity log](activity-log.html) | 8 | — |
 | [Actor and role administration](actor-role-administration.html) | 6 | — |
 | [Adjudication](adjudication.html) | 6 | — |
-| [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | 1 |
+| [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | — |
 | [Authoring a document](authoring-a-document.html) | 9 | — |
 | [Authoring a paper](authoring-a-paper.html) | 9 | — |
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
@@ -39,32 +39,32 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [The gates a change must pass before it can merge](code-quality-gates.html) | 6 | — |
 | [Content acquisition](content-acquisition.html) | 6 | — |
 | [Content Change and Review](content-change-review.html) | 23 | — |
-| [Content lifecycle](content-lifecycle.html) | 8 | 1 |
+| [Content lifecycle](content-lifecycle.html) | 8 | — |
 | [Copy out materialized content — to work on somebody else's bytes](copy-out-materialized.html) | 5 | — |
-| [CRDM close-out](crdm-close.html) | 3 | 2 |
+| [CRDM close-out](crdm-close.html) | 3 | — |
 | [CRDM data model](crdm-data-model.html) | 5 | — |
 | [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html) | 10 | — |
-| [CRDM — link the work to an issue](crdm-issue-linking.html) | 3 | 2 |
-| [CRDM Phase 1 — needs](crdm-needs.html) | 4 | 2 |
-| [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | 1 |
-| [CRDM requirements](crdm-requirements.html) | 9 | 1 |
-| [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | 1 |
+| [CRDM — link the work to an issue](crdm-issue-linking.html) | 3 | — |
+| [CRDM Phase 1 — needs](crdm-needs.html) | 4 | — |
+| [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | — |
+| [CRDM requirements](crdm-requirements.html) | 9 | — |
+| [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 5 | — |
 | [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 9 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
-| [Editing and HCI validation](editing-hci-validation.html) | 17 | 1 |
+| [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
 | [Getting started](getting-started.html) | 12 | — |
-| [A sub-graph wants to leave](graph-detanglement.html) | 8 | 2 |
+| [A sub-graph wants to leave](graph-detanglement.html) | 8 | — |
 | [Human Translation Workflow](human-translation-workflow.html) | 16 | — |
 | [Incremental IG build](ig-incremental-build.html) | 18 | — |
-| [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html) | 5 | 2 |
+| [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html) | 5 | — |
 | [Ingestion subprocess — derive content from the assets](ingest-derive-content.html) | 6 | — |
-| [Ingestion subprocess — extract structure](ingest-extract-structure.html) | 5 | 2 |
-| [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html) | 4 | 1 |
+| [Ingestion subprocess — extract structure](ingest-extract-structure.html) | 5 | — |
+| [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html) | 4 | — |
 | [Ingestion subprocess — ingest a theme](ingest-theme.html) | 5 | — |
-| [Are the .jsonld siblings still in sync with their .ts manifests?](jsonld-drift-check.html) | 1 | 1 |
+| [Are the .jsonld siblings still in sync with their .ts manifests?](jsonld-drift-check.html) | 1 | — |
 | [KG to public portal](kg-to-portal.html) | 10 | — |
 | [L2 DAK authoring](l2-dak-authoring.html) | 10 | — |
 | [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | — |

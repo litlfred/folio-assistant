@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-build-l1-kg\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.488Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.309Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,14 +14,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ingest-build-l1-kg.bpmn:99
+#: processes/ingest-build-l1-kg.bpmn:101
 #. Diagram element documentation
 msgid "Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/."
 msgstr ""
 
-#: processes/ingest-build-l1-kg.bpmn:84
+#: processes/ingest-build-l1-kg.bpmn:85
 #. Diagram label
 msgid "Bind the folder name to the bibliography slug"
+msgstr ""
+
+#: processes/ingest-build-l1-kg.bpmn:87
+#. Diagram element documentation
+msgid "Bind the folder name to the document's bibliography slug, so library/<bib-slug>/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them."
 msgstr ""
 
 #: processes/ingest-build-l1-kg.bpmn:46
@@ -49,17 +54,17 @@ msgstr ""
 msgid "Ingestion subprocess — build the L1 knowledge graph"
 msgstr ""
 
-#: processes/ingest-build-l1-kg.bpmn:80
+#: processes/ingest-build-l1-kg.bpmn:81
 #. Diagram element documentation
 msgid "kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync."
 msgstr ""
 
-#: processes/ingest-build-l1-kg.bpmn:103
+#: processes/ingest-build-l1-kg.bpmn:105
 #. Diagram label
 msgid "L1 graph built"
 msgstr ""
 
-#: processes/ingest-build-l1-kg.bpmn:93
+#: processes/ingest-build-l1-kg.bpmn:95
 #. Diagram label
 msgid "Link L1 nodes into the corpus graph"
 msgstr ""
@@ -69,7 +74,7 @@ msgstr ""
 msgid "One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one."
 msgstr ""
 
-#: processes/ingest-build-l1-kg.bpmn:74
+#: processes/ingest-build-l1-kg.bpmn:75
 #. Diagram label
 msgid "Record assets[] — local path or remote URL"
 msgstr ""
@@ -82,6 +87,11 @@ msgstr ""
 #: processes/ingest-build-l1-kg.bpmn:55
 #. Diagram label
 msgid "Write dublin-core.jsonld (the record of truth)"
+msgstr ""
+
+#: processes/ingest-build-l1-kg.bpmn:67
+#. Diagram element documentation
+msgid "Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields."
 msgstr ""
 
 #: processes/ingest-build-l1-kg.bpmn:65

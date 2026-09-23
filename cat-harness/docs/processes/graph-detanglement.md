@@ -30,7 +30,7 @@ THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DI
 
 ## Steps
 
-**2** of 8 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 8 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -38,9 +38,9 @@ THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DI
 | **1 &#183; Declare in place&#10;(nothing moves)**<br>`Task_Declare` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | A `<name>.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder. |
 | **2a &#183; Measure &#8212; unassigned&#10;column FIRST**<br>`Task_Measure` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | `bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in. |
 | **2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong**<br>`Task_Move` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner. |
-| **3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact**<br>`Task_Isolate` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | — |
+| **3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact**<br>`Task_Isolate` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place. |
 | **Report what would move&#10;&#8212; sizes, and what breaks**<br>`Task_Propose` | Authoring agent | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative. |
 | **Authorise the extraction**<br>`Task_Authorise` | Administrator | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The one step no package may relax. A repository cut changes the substrate every other diagram's lanes bind to, and that is a person's decision. |
-| **4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift**<br>`Task_Extract` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | — |
+| **4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift**<br>`Task_Extract` | Authoring agent | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II. |
 
 {% endraw %}
