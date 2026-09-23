@@ -39,4 +39,13 @@ Every one of the 6 step(s) is documented.
 | **Remove the artefact**<br>`A_Remove` | CI/CD Pipeline | [`render-logging`](../reference/skill-instructions/render-logging.html) | `rm -rf STAGING/<slug>`. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref. |
 | **Append `restored`**<br>`A_LogRestored` | CI/CD Pipeline | [`render-logging`](../reference/skill-instructions/render-logging.html) | A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because "somebody pushed this branch" and "an unrelated merge nearly deleted it" are different facts — and bean `plj1` is what happens when the second is invisible. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **What is happening?**<br>`GW_What` | — | **deploy** → Append `rendered`<br>**takedown** → Preflight: is the preview live?<br>**full-replace deploy** → Append `restored` |
+| **Any liveness signal fired?**<br>`GW_Live` | — | **yes — refuse** → Append `retained` with the reason<br>**no** → Append `removed` with the reason |
+
 {% endraw %}

@@ -41,4 +41,12 @@ Every one of the 6 step(s) is documented.
 | **Accept it, and record where it came from**<br>`A_Accept` | Agent | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | Both branches land here. An unprompted offer is accepted as it stands — do not make somebody follow a process to hand over what they already have. Provenance is recorded whichever channel it arrived through: a description given in chat has a source and can be wrong, exactly as a PDF does. |
 | **Route it, and watch the queue**<br>`A_Route` | Agent | [`uploads-watch`](../reference/skill-instructions/uploads-watch.html)<br>[`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | A file goes to ingestion; a link or a description goes to whatever will resolve it. Acquisition stops here — the moment a file is in the queue, library-ingestion owns it, and keeping that seam sharp is what lets a resource acquired through a channel that does not exist yet reach ingestion unchanged. An arrival may be minutes or days away, so it is watched rather than chased. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Offered already?**<br>`GW_Offered` | — | **no** → Say what is needed, and ask for a link OR a description<br>**yes** → Accept it, and record where it came from |
+
 {% endraw %}

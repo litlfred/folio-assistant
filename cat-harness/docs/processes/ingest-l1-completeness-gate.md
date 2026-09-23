@@ -38,4 +38,12 @@ Every one of the 4 step(s) is documented.
 | **Adjudicate the flagged passage**<br>`Task_FlagDrift` | Reviewer (SME or editor) | calls [Adjudication](adjudication.html)<br>[`document-intake`](../reference/skill-instructions/document-intake.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | A machine can detect that two readings differ. Which one is right is a human call. |
 | **Record the L1 completeness verdict**<br>`Task_Verdict` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Drift or bad terminology?**<br>`Gateway_Drift` | — | **drift** → Adjudicate the flagged passage<br>**clean** → Record the L1 completeness verdict |
+
 {% endraw %}

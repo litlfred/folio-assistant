@@ -55,9 +55,13 @@ The adoption itself is a call activity, so the judgement half lives in its own r
       <bpmn:documentation>`git ls-remote --tags`, filtered by the row's `tagPattern` and ordered by version. Nothing is cloned and no API token is needed, so the check runs the same way on a laptop and in CI.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="upstream-version-adoption"/></bpmn:extensionElements>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="GW_Determined" name="Could we tell?"/>
+    <bpmn:exclusiveGateway id="GW_Determined" name="Could we tell?">
+      <bpmn:documentation>Asked of the `verdict` output of 'Check the pins' in .github/workflows/upstream-pins.yml, which runs `check:upstream-pins --out`. Exit 0 is every pin current, 1 at least one behind, 2 could not tell; an exit 1 with no report file is a crash and is reclassified as could-not-tell, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an undetermined pin' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `upstream-pin` label.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Unknown" name="Unknown &#8212;&#10;issue untouched, job red"/>
-    <bpmn:exclusiveGateway id="GW_Stale" name="Behind a release?"/>
+    <bpmn:exclusiveGateway id="GW_Stale" name="Behind a release?">
+      <bpmn:documentation>Asked of the same `verdict`. `no` is verdict == 'current': the tracking issue is closed because every pin is current. `yes` is verdict == 'behind': the one tracking issue is opened or edited in place.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_CloseIssue" name="Close the&#10;tracking issue">
       <bpmn:documentation>Closed automatically when every pin is current, so the issue's existence is the state rather than a log of past states.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="upstream-version-adoption"/></bpmn:extensionElements>

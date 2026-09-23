@@ -39,4 +39,12 @@ Every one of the 4 step(s) is documented.
 | **Review synthesised needs statement**<br>`BA_ReviewNeeds` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA reviews what the agent synthesised and checks it against what they actually need. |
 | **Confirm needs statement**<br>`S_ConfirmNeeds` | Stakeholders | — | Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **BA approves?**<br>`GW_Needs` | — | **revise** → Phase 1: Synthesise needs from sources<br>**yes** → Phase complete |
+
 {% endraw %}

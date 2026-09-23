@@ -43,4 +43,13 @@ Every one of the 9 step(s) is documented.
 | **Monitor, and use data effectively**<br>`A_MonitorAndUseData` | Programme manager | [`methodology-adoption`](../reference/skill-instructions/methodology-adoption.html) | DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, `9789241511766-eng`, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two. |
 | **Make the value proposition and set next steps**<br>`A_ValueProposition` | Programme manager | [`methodology-adoption`](../reference/skill-instructions/methodology-adoption.html) | DIIG Chapter 9. The case made to whoever pays, and what follows. Scaling up is a different method and a different publication — `9789241509510-eng`, The MAPS Toolkit — which begins where this implementation ends. |
 
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Progress check 4.5: requirements settled?**<br>`GW_ProgressCheck4` | DIIG's own gate at 4.5, not one added here. No DMN: what counts as settled is the programme's judgement and its stakeholders', and a computed branch would assert a repeatability this question does not have. | **no — revisit the bottlenecks** → Map the current state and confirm bottlenecks<br>**yes** → Plan the implementation |
+| **Progress check 8.5: implementation on track?**<br>`GW_ProgressCheck8` | DIIG's own gate at 8.5. A "no" returns to Chapter 8 rather than failing the process, because adaptive management IS the answer the Guide gives: 8.4 is "use data to optimize interventions", so iterating here is the method working rather than the method stalling. | **no — adapt** → Monitor, and use data effectively<br>**yes** → Make the value proposition and set next steps |
+
 {% endraw %}
