@@ -273,6 +273,7 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
@@ -344,6 +345,8 @@ export const RULES: Rule[] = [
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
+      "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
+      "schemas/detangle-sidecar.ts",         // what a detangle measurement pins (bean `byql`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
       "schemas/diff-renderers.ts",           // the review page's diff renderers, declared as data (bean `d903`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`

@@ -44,7 +44,7 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-**At knowledge-graph scale** — `detangle/scripts/kg-detangle.ts`, over the
+**At knowledge-graph scale** — `scripts/kg-detangle.ts` (`bun run kg:detangle`), over the
 instance stack each `<instance>.json` declares in `needs`.
 
 The repository and knowledge-graph scales share ONE verdict function,

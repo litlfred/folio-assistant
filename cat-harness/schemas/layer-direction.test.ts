@@ -9,15 +9,15 @@ import { describe, expect, test } from "bun:test";
 import { allowedFromNeeds, directionOf, type LayerRule } from "./layer-direction.ts";
 import { ancestorsOf, flattenDependencies } from "./dependency-order.ts";
 import { ALLOWED } from "../scripts/partition/instance-rules.ts";
-import { classifyByDirection } from "../../detangle/schemas/detangle.ts";
+import { classifyByDirection } from "./detangle.ts";
 
-/** This repository's instance stack, as `kg-detangle` reads it: two declared, one not. */
+/** This repository's instance stack, as `kg-detangle` reads it: three declared, one not. */
 function needsRule(): LayerRule {
   const needs = new Map<string, readonly string[] | undefined>([
     ["bootstrap", []],
     ["cat-harness", ["bootstrap"]],
     ["folio-assistant-core", ["cat-harness"]],
-    ["kg-navigation", undefined],
+    ["undeclared", undefined],
   ]);
   const flat = flattenDependencies([...needs].map(([id, n]) => ({ id, needs: n ?? [], fatal: false })));
   expect(flat.problems).toEqual([]);
@@ -42,10 +42,10 @@ describe("directionOf over a `needs` graph", () => {
 
   test("absent `needs` is UNDETERMINED — never 'reaches nothing' and never 'reaches anything'", () => {
     const r = needsRule();
-    expect(directionOf(e, "kg-navigation", "cat-harness", r).verdict).toBe("undetermined");
-    expect(directionOf(e, "kg-navigation", "kg-navigation", r).verdict).toBe("undetermined");
+    expect(directionOf(e, "undeclared", "cat-harness", r).verdict).toBe("undetermined");
+    expect(directionOf(e, "undeclared", "undeclared", r).verdict).toBe("undetermined");
     // An edge INTO an undeclared layer is still decided by the source's declaration.
-    expect(directionOf(e, "bootstrap", "kg-navigation", r).verdict).toBe("wrong-direction");
+    expect(directionOf(e, "bootstrap", "undeclared", r).verdict).toBe("wrong-direction");
   });
 
   test("an end in no layer at all is undetermined, and says which end", () => {
@@ -96,7 +96,7 @@ describe("detangle's cut kind is read off the verdict and nothing else", () => {
 
   test("allowed and undetermined stay unclassified — restatement vs essential is an adjudication", () => {
     const r = needsRule();
-    for (const [f, t] of [["cat-harness", "bootstrap"], ["kg-navigation", "bootstrap"]] as const) {
+    for (const [f, t] of [["cat-harness", "bootstrap"], ["undeclared", "bootstrap"]] as const) {
       const c = classifyByDirection(edge, directionOf(edge, f, t, r));
       expect(c.kind).toBe("unclassified");
       expect(c.basis.length).toBeGreaterThan(0);
