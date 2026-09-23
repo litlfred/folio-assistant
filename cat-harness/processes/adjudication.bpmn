@@ -43,7 +43,9 @@ You are in this process when a sidecar holds two entries for ONE criterion that 
 
 Three things the diagram holds that prose kept losing. The adjudicator is DISPATCHED rather than briefed — given the findings and the checker's output and, deliberately, never the artefact, because an adjudicator shown the artefact can talk itself into any reading of the finding and that failure raises no error. The adjudication LEADS the criterion and the checker's entry is KEPT beneath it, because a disagreement between a checker and a reviewer is information and a sidecar showing only the winner has lost it. And the dispensation is scoped to the version it was granted against by its `field_hash`, so it lapses when the source moves and never becomes precedent.
 
-The three outcomes are the ones `review-narrative` and `voice-review` already use: the finding stands, the criterion does not apply here, or it applies and this is a stated exception. All three converge on the same write, because what makes an outcome legitimate is not which one it is but that its reason was recorded.</bpmn:documentation>
+This process ENDS at the judgement. What the answer means, and what is done about it, belongs to whoever asked — `criterion-adjudication.bpmn` is the QA-criterion specialisation, where the finding stands, the criterion is scoped, or a dispensation is granted with its reason. Until 2026-09-23 those three lived here and every caller ran them: six diagrams called this process and only two asked a question they answer. Bean `bvuk`.
+
+What stays shared is what must not vary: the entry condition nobody may declare their way past, the untainted dispatch, and the restriction to a person or an agent. What a legitimate outcome IS does vary, and it now varies where it is asked.</bpmn:documentation>
     <bpmn:extensionElements>
       <folio:policy enforcement="advisory"/>
     </bpmn:extensionElements>
@@ -64,12 +66,8 @@ A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than i
         <bpmn:extensionElements><folio:role ref="adjudicator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>GW_Adjudicable</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Dispatch</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Judge</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Outcome</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_ScopeCriterion</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Dispensation</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_RecordEntry</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_Settled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_Adjudicate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Adjudicated</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NotAdjudicable</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -112,97 +110,47 @@ A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than i
       <bpmn:outgoing>F_3</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="A_Judge" name="Judge the disagreement">
-      <bpmn:documentation>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. What IS checkable is that the outcome is one of the three below and that it carries a reason, which is what the steps after this gateway exist for.</bpmn:documentation>
+    <bpmn:task id="A_Adjudicate" name="Adjudicate the disagreement">
+      <bpmn:documentation>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered.
+
+It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question.
+
+What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="stands scope dispensation"/>
+        <folio:adjudication defers="caller"/>
         <folio:fulfilment kinds="person agent" reason="an agent adjudicates here as legitimately as a person — `untainted-adjudicator` is a declared agent actor and `refresh-materialized` already says 'a human or agentic decision' — so drawing this as a userTask would assert a person the model does not require. Said explicitly rather than left to the abstract task's silence, because the kinds are a real constraint: a mechanical system may NOT take this step, which is the whole reason the process exists."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Outcome" name="Which of the three?">
-      <bpmn:extensionElements>
-        <folio:judgement reason="This is THE judgement — the branch the whole process exists to take, and the one thing nothing here can compute. A table deciding it would decide the case that, by the entry condition, no mechanism could: the checker and the reviewer both read the artefact and reached different answers, so a rule keying on either would be picking a side by construction rather than by reason."/>
-      </bpmn:extensionElements>
-      <bpmn:documentation>The same three `review-narrative` and `voice-review` already name, and they are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason.</bpmn:documentation>
+    <bpmn:endEvent id="End_Adjudicated" name="Adjudicated, with the reason recorded">
+      <bpmn:documentation>The judgement and its reason, and nothing about what follows from them. What a caller DOES with the answer is the caller's — `criterion-adjudication.bpmn` scopes a criterion or grants a dispensation because that is what the QA-criterion question admits, and a caller asking which side of a conflict wins would do something else entirely.
+
+`A_RecordEntry`'s rule has not been relaxed by moving out of here: a judgement nobody wrote down is still indistinguishable from a checker that was never run. It is now the RECORDING CALLER's `relaxable="false"` step rather than this process's, which is the honest place for it, since the entry written depends on what was being adjudicated.</bpmn:documentation>
       <bpmn:incoming>F_4</bpmn:incoming>
-      <bpmn:outgoing>F_Stands</bpmn:outgoing>
-      <bpmn:outgoing>F_Scope</bpmn:outgoing>
-      <bpmn:outgoing>F_Exception</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-
-    <bpmn:task id="A_ScopeCriterion" name="Scope the criterion so it stops applying here">
-      <bpmn:documentation>One edit to the criterion rather than ten overrules on the blocks it should never have covered. This branch is the one an adjudicator under time pressure converts into a dispensation, and the conversion is a defect: a dispensation lapses when the source moves, so a mis-scoped criterion granted its way past comes back every time anybody touches the block.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adjudication"/></bpmn:extensionElements>
-      <bpmn:incoming>F_Scope</bpmn:incoming>
-      <bpmn:outgoing>F_5</bpmn:outgoing>
-    </bpmn:task>
-
-    <bpmn:task id="A_Dispensation" name="Grant a dispensation, with its reason">
-      <bpmn:documentation>The rule applies and this subject is a stated exception. A `kind: "human"` entry with `result: "pass"` overrides the script's `fail` for that criterion, and ONLY while its `field_hash` matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it.
-
-A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:policy relaxable="false"/>
-      </bpmn:extensionElements>
-      <bpmn:incoming>F_Exception</bpmn:incoming>
-      <bpmn:outgoing>F_6</bpmn:outgoing>
-    </bpmn:task>
-
-    <bpmn:task id="A_RecordEntry" name="Write the entry that LEADS — keeping the checker's beneath it">
-      <bpmn:documentation>Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not.
-
-Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:policy relaxable="false"/>
-      </bpmn:extensionElements>
-      <bpmn:incoming>F_Stands</bpmn:incoming>
-      <bpmn:incoming>F_5</bpmn:incoming>
-      <bpmn:incoming>F_6</bpmn:incoming>
-      <bpmn:outgoing>F_7</bpmn:outgoing>
-    </bpmn:task>
-
-    <bpmn:endEvent id="End_Settled" name="Settled, with the reason on the record">
-      <bpmn:documentation>Settled for this version of the source. The sidecar now holds both readings and the reason one of them leads.</bpmn:documentation>
-      <bpmn:incoming>F_7</bpmn:incoming>
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="F_1" sourceRef="Start_Disagreement" targetRef="A_StateFinding"/>
     <bpmn:sequenceFlow id="F_2" sourceRef="A_StateFinding" targetRef="GW_Adjudicable"/>
     <bpmn:sequenceFlow id="F_Adjudicable" name="both sides present" sourceRef="GW_Adjudicable" targetRef="A_Dispatch"/>
     <bpmn:sequenceFlow id="F_NotAdjudicable" name="only one side" sourceRef="GW_Adjudicable" targetRef="End_NotAdjudicable"/>
-    <bpmn:sequenceFlow id="F_3" sourceRef="A_Dispatch" targetRef="A_Judge"/>
-    <bpmn:sequenceFlow id="F_4" sourceRef="A_Judge" targetRef="GW_Outcome"/>
-    <bpmn:sequenceFlow id="F_Stands" name="the finding stands" sourceRef="GW_Outcome" targetRef="A_RecordEntry">
-      <bpmn:extensionElements><folio:adjudication code="stands"/></bpmn:extensionElements>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="F_Scope" name="the criterion does not apply here" sourceRef="GW_Outcome" targetRef="A_ScopeCriterion">
-      <bpmn:extensionElements><folio:adjudication code="scope"/></bpmn:extensionElements>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="F_Exception" name="it applies; this is an exception" sourceRef="GW_Outcome" targetRef="A_Dispensation">
-      <bpmn:extensionElements><folio:adjudication code="dispensation"/></bpmn:extensionElements>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="F_5" sourceRef="A_ScopeCriterion" targetRef="A_RecordEntry"/>
-    <bpmn:sequenceFlow id="F_6" sourceRef="A_Dispensation" targetRef="A_RecordEntry"/>
-    <bpmn:sequenceFlow id="F_7" sourceRef="A_RecordEntry" targetRef="End_Settled"/>
+    <bpmn:sequenceFlow id="F_3" sourceRef="A_Dispatch" targetRef="A_Adjudicate"/>
+    <bpmn:sequenceFlow id="F_4" sourceRef="A_Adjudicate" targetRef="End_Adjudicated"/>
   </bpmn:process>
 
   <!-- Layout only. Nothing below changes what the process does. -->
   <bpmndi:BPMNDiagram id="BPMNDiagram_Adjudication">
     <bpmndi:BPMNPlane id="BPMNPlane_Adjudication" bpmnElement="Collab_Adjudication">
       <bpmndi:BPMNShape id="Shape_Participant_Adjudication" bpmnElement="Participant_Adjudication" isHorizontal="true">
-        <dc:Bounds x="160" y="60" width="1320" height="520"/>
+        <dc:Bounds x="160" y="60" width="820" height="520"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_FeedbackProvider" bpmnElement="Lane_FeedbackProvider" isHorizontal="true">
-        <dc:Bounds x="190" y="60" width="1290" height="150"/>
+        <dc:Bounds x="190" y="60" width="790" height="150"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Adjudicator" bpmnElement="Lane_Adjudicator" isHorizontal="true">
-        <dc:Bounds x="190" y="210" width="1290" height="370"/>
+        <dc:Bounds x="190" y="210" width="790" height="370"/>
       </bpmndi:BPMNShape>
 
       <bpmndi:BPMNShape id="Shape_Start_Disagreement" bpmnElement="Start_Disagreement">
@@ -220,24 +168,16 @@ Do not resolve the disagreement away: both entries stay, the adjudication on top
       <bpmndi:BPMNShape id="Shape_A_Dispatch" bpmnElement="A_Dispatch">
         <dc:Bounds x="480" y="235" width="150" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Judge" bpmnElement="A_Judge">
+      <bpmndi:BPMNShape id="Shape_A_Adjudicate" bpmnElement="A_Adjudicate">
         <dc:Bounds x="680" y="235" width="150" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_GW_Outcome" bpmnElement="GW_Outcome" isMarkerVisible="true">
-        <dc:Bounds x="880" y="250" width="50" height="50"/>
+      <bpmndi:BPMNShape id="Shape_End_Adjudicated" bpmnElement="End_Adjudicated">
+        <dc:Bounds x="890" y="257" width="36" height="36"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_ScopeCriterion" bpmnElement="A_ScopeCriterion">
-        <dc:Bounds x="980" y="340" width="150" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Dispensation" bpmnElement="A_Dispensation">
-        <dc:Bounds x="980" y="450" width="150" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_RecordEntry" bpmnElement="A_RecordEntry">
-        <dc:Bounds x="1190" y="235" width="160" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_End_Settled" bpmnElement="End_Settled">
-        <dc:Bounds x="1410" y="257" width="36" height="36"/>
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_F_4" bpmnElement="F_4">
+        <di:waypoint x="830" y="275"/>
+        <di:waypoint x="890" y="275"/>
+      </bpmndi:BPMNEdge>
 
       <bpmndi:BPMNEdge id="Edge_F_1" bpmnElement="F_1">
         <di:waypoint x="266" y="135"/>
@@ -258,38 +198,6 @@ Do not resolve the disagreement away: both entries stay, the adjudication on top
       <bpmndi:BPMNEdge id="Edge_F_3" bpmnElement="F_3">
         <di:waypoint x="630" y="275"/>
         <di:waypoint x="680" y="275"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_4" bpmnElement="F_4">
-        <di:waypoint x="830" y="275"/>
-        <di:waypoint x="880" y="275"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_Stands" bpmnElement="F_Stands">
-        <di:waypoint x="930" y="275"/>
-        <di:waypoint x="1190" y="275"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_Scope" bpmnElement="F_Scope">
-        <di:waypoint x="905" y="300"/>
-        <di:waypoint x="905" y="380"/>
-        <di:waypoint x="980" y="380"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_Exception" bpmnElement="F_Exception">
-        <di:waypoint x="905" y="300"/>
-        <di:waypoint x="905" y="490"/>
-        <di:waypoint x="980" y="490"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_5" bpmnElement="F_5">
-        <di:waypoint x="1130" y="380"/>
-        <di:waypoint x="1270" y="380"/>
-        <di:waypoint x="1270" y="315"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_6" bpmnElement="F_6">
-        <di:waypoint x="1130" y="490"/>
-        <di:waypoint x="1310" y="490"/>
-        <di:waypoint x="1310" y="315"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F_7" bpmnElement="F_7">
-        <di:waypoint x="1350" y="275"/>
-        <di:waypoint x="1410" y="275"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

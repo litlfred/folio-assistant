@@ -91,18 +91,19 @@ const branches = {
  * answers it can act on. Bean `bvuk`.
  *
  * REPORTED, not enforced, and the reason is specific rather than the usual
- * adoption argument. Six diagrams call `Process_Adjudication`; **none of them
- * branches on its outcome** — each call activity has one outgoing flow and the
- * called process one settled end event — so the mismatch is invisible in the
- * diagram's shape. Four of the six ask it a question its three QA-criterion
- * outcomes do not obviously answer (`refresh-materialized` asks *which side
- * wins* a conflict), and what each of those four SHOULD accept is an open
- * decision, not a backfill.
+ * adoption argument. Six diagrams called `Process_Adjudication` when it still
+ * held the QA-criterion outcome half; **none of them branched on its outcome**
+ * — each call activity has one outgoing flow and the called process had one
+ * settled end event — so the mismatch was invisible in the diagram's shape.
+ * The split (bean `bvuk`) moved that half into `criterion-adjudication.bpmn`
+ * and left `A_Adjudicate` deferring its enum, which fixes the four callers
+ * that were running QA branches for a question with no criterion in it. What
+ * each of those four SHOULD ask is still an open decision, not a backfill.
  *
  * So an undeclared caller is "could not determine", printed rather than
- * failed. A DECLARED one that disagrees with its judge is refused at load, by
- * `checkAcceptedCodes` in `process-model.ts` — this list is the third state
- * between that refusal and silence.
+ * failed. A DECLARED one that disagrees with its adjudicator is refused at
+ * load, by `checkAcceptedCodes` in `process-model.ts` — this list is the third
+ * state between that refusal and silence.
  */
 const adjudicationCalls = {
   declared: [] as Array<{ file: string; node: string; codes: string[] }>,
@@ -156,18 +157,21 @@ for (const file of files) {
     else branches.undeclared.push(where);
   }
 
-  // Calls into a judging process. `model.children` is what the loader already
+  // Calls into an adjudicating process. `model.children` is what the loader already
   // resolved, so a call OUT of this corpus is absent here rather than counted
   // — a process no file defines is opaque by design and cannot be checked.
   for (const [nodeId, child] of model.children) {
-    if (![...child.nodes.values()].some((n) => n.adjudication !== undefined)) continue;
+    const fixed = [...child.nodes.values()].some((n) => n.adjudication !== undefined);
+    const defers = [...child.nodes.values()].some((n) => n.adjudicationDefers);
+    if (!fixed && !defers) continue;
     const node = model.nodes.get(nodeId)!;
     const where = { file: relative(INSTANCE_ROOT, file), node: nodeId };
-    if (node.adjudicationAccepts) {
-      adjudicationCalls.declared.push({ ...where, codes: node.adjudicationAccepts });
-    } else {
-      adjudicationCalls.undeclared.push({ ...where, called: child.id });
-    }
+    // Two ways to be declared, one per kind of callee. A fixed enum is
+    // ACCEPTED (the caller has read it); a deferred one is DECLARED (the
+    // caller writes it, and its own gateway acts on it).
+    const codes = node.adjudicationAccepts ?? (defers ? node.adjudication?.codes : undefined);
+    if (codes) adjudicationCalls.declared.push({ ...where, codes });
+    else adjudicationCalls.undeclared.push({ ...where, called: child.id });
   }
 }
 }
@@ -218,10 +222,11 @@ if (adjTotal > 0) {
   }
   if (adjudicationCalls.undeclared.length) {
     console.log(
-      `\n${adjudicationCalls.undeclared.length} caller(s) run a judgement without saying which of\n` +
-        `its answers they can act on. Not an error — what each should accept is the open\n` +
-        `question in bean \`bvuk\`, and guessing one would make an undecided thing look\n` +
-        `checked. Add <folio:adjudication accepts="…"/> once the answer is decided.`,
+      `\n${adjudicationCalls.undeclared.length} caller(s) run an adjudication without naming the\n` +
+        `answers it may give. Not an error — what each should ask is the open question in\n` +
+        `bean \`bvuk\`, and guessing would make an undecided thing look checked. Declare\n` +
+        `<folio:adjudication codes="…"/> here, with this step's gateway coding the same\n` +
+        `set, once the answer is decided — or \`accepts\` where the callee fixes its own.`,
     );
   }
 }

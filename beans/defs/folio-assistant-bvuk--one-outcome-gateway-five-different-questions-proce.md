@@ -90,7 +90,44 @@ That is worth stating plainly because the tempting reading is the opposite —
 "the new codes broke six callers". They did not. Six callers were already
 routing different questions through one three-branch gateway.
 
-## What landed now, and what is still the owner's
+## The owner picked shape (4) — split at the judgement
+
+2026-09-23, from the four candidates below. Implemented:
+
+- **`adjudication.bpmn` ends at `A_Adjudicate` → `End_Adjudicated`.** It keeps
+  what must not vary: `GW_Adjudicable` (the entry condition nobody may declare
+  their way past), `A_Dispatch` (`adjudicator_sees`, never the artefact), and
+  the `person agent` restriction. `A_Adjudicate` declares
+  `<folio:adjudication defers="caller"/>` — **declared, not a missing `codes`**,
+  so a marker lost by accident and a deferral on purpose do not parse the same.
+- **`criterion-adjudication.bpmn` is new** and owns `GW_Outcome`,
+  `A_ScopeCriterion`, `A_Dispensation`, `A_RecordEntry`, `End_Settled`. Its
+  `Call_Adjudicate` declares `codes="stands scope dispensation"`, which the
+  engine checks against its own gateway's coded branches.
+- **`review-narrative` and `voice-review` call the specialisation.** The other
+  four call the shared half and **no longer reach `A_ScopeCriterion` or
+  `A_Dispensation`** — pinned as reachability rather than as a name, since that
+  is the defect, not the naming.
+
+`A_RecordEntry`'s `relaxable="false"` was not dropped in the move: it travels
+with the recording caller, which is the honest place for it, because the entry
+written depends on what was adjudicated.
+
+**The objection to shape (2) does not apply.** "It loses the one place where
+`adjudicator_sees` and the actor restriction are stated" — those did not move
+and are not restated. The one restatement is the `folio:fulfilment` on
+`Call_Adjudicate`, which is required because that is where the enum is declared
+and a step naming permitted answers without saying who may choose among them
+has restricted nobody. It cannot drift wrong: the engine refuses `system` or
+`external` on any step carrying `folio:adjudication`, so the only failure
+available is absence, and absence is refused too.
+
+**Terminology, the owner 2026-09-23: "not Judge, but Adjudicator".** `A_Judge`
+is `A_Adjudicate`; the actor noun is adjudicator throughout the code, the
+schemas, the messages and the tests. "Judgement" stays — it is the thing
+produced, and `folio:judgement` is an established gateway marker.
+
+## What landed first, and what is still the owner's
 
 Shape-independent, so built without waiting:
 `<folio:adjudication accepts="…"/>` on a call activity — the answers a caller
@@ -119,9 +156,14 @@ union guard would have let `code` sit ignored on a judge.
 
 ## Done when
 
-- [ ] Owner picks a shape — (2), (4), or something else — with the reason
-      recorded. **(1) is off the table**; see above.
+- [x] Owner picks a shape — **(4), split at the judgement**, 2026-09-23. (1)
+      was off the table: the codes selected TASKS, not a returned value.
 - [ ] Each caller's permitted answers are the ones its own question admits.
+      **Two of six done** (`review-narrative`, `voice-review`, via
+      `criterion-adjudication`). The other four no longer run the wrong
+      outcomes, but still declare no enum of their own — reported by
+      `check:workflow-refs`, deliberately not guessed. That is the remaining
+      work and it is four separate questions, not one.
 - [x] A caller whose codes differ from the shared gateway's is REFUSED rather
       than silently routed through the wrong three — `checkAcceptedCodes` in
       `process-model.ts`, with absence reported rather than guessed.

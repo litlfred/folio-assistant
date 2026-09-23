@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_NarrativeReview",
-    "path": "processes/review-narrative.bpmn"
+    "id": "Process_CriterionAdjudication",
+    "path": "processes/criterion-adjudication.bpmn"
   },
-  "source_hash": "sha256:d00d855c682293e1aa8bc4b2e5bd2673a51b3bacf6f10ba603193181b0aaea34",
+  "source_hash": "sha256:3a5184237df528914ffcc2e426b90d5d2ff8fc4f45a873f93c72e5155ddb0fd4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -60,7 +60,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
@@ -85,9 +85,9 @@
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 12,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

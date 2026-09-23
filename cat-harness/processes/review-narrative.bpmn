@@ -56,7 +56,7 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
       <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_Adjudication" name="Adjudicate the voice findings">
+    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_CriterionAdjudication" name="Adjudicate the voice findings">
       <bpmn:documentation>
         Three outcomes, all legitimate: the register is wrong for this genre;
         the criterion does not belong in this genre and should carry `profiles`;

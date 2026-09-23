@@ -89,7 +89,7 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
       </bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate: prose, scope, or exception">
+    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_CriterionAdjudication" name="Adjudicate: prose, scope, or exception">
       <bpmn:documentation>The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why).</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/><folio:skill ref="adjudication"/><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>

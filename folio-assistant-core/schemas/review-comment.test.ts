@@ -22,7 +22,9 @@ import {
 
 const PROCESSES = resolve(import.meta.dir, "../../cat-harness/processes");
 const EDITOR = { process: "Process_Review", task: "Task_EditorDecides" };
-const ADJUDICATOR = { process: "Process_Adjudication", task: "A_RecordEntry" };
+// `Process_CriterionAdjudication` since bean `bvuk` split the outcome half
+// out of the shared judgement — A_RecordEntry went with the outcome.
+const ADJUDICATOR = { process: "Process_CriterionAdjudication", task: "A_RecordEntry" };
 
 const pc = (id: number, body: string): PrComment => ({
   id,
