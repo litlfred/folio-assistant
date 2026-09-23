@@ -146,3 +146,7 @@ That registry holds GRAPH kinds (directories such as `todo-items` and
    is skipped silently. A cycle is unambiguous (throw), but a missing
    dependency is also what an uncloned git-URL dependency looks like in a
    partial checkout.
+   **Ruled by the owner, 2026-09-23: warn at runtime, and the gate fails.** At
+   runtime the missing layer is named in a warning and the run continues
+   without it. A gate check fails on it, so it cannot merge unnoticed. A cycle
+   always throws.
