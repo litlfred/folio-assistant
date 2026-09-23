@@ -1,0 +1,149 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "https://litlfred.github.io/folio/",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "doco": "http://purl.org/spar/doco/",
+    "deo": "http://purl.org/spar/deo/",
+    "cito": "http://purl.org/spar/cito/",
+    "oa": "http://www.w3.org/ns/oa#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "fhir": "http://hl7.org/fhir/",
+    "csvw": "http://www.w3.org/ns/csvw#",
+    "label": "folio-assistant-core:label",
+    "title": "dcterms:title",
+    "kind": "folio-assistant-core:kind",
+    "uses": {
+      "@id": "folio-assistant-core:uses",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "interprets": {
+      "@id": "folio-assistant-core:interprets",
+      "@type": "@id"
+    },
+    "foreshadows": {
+      "@id": "folio-assistant-core:foreshadows",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "proofs": {
+      "@id": "folio-assistant-core:proofs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "examples": {
+      "@id": "folio-assistant-core:examples",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "cites": {
+      "@id": "cito:cites",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "tags": {
+      "@id": "folio-assistant-core:tag",
+      "@container": "@set"
+    },
+    "defines": {
+      "@id": "folio-assistant-core:defines",
+      "@container": "@set"
+    },
+    "leanRef": "folio-assistant-core:leanRef",
+    "sorryFree": "folio-assistant-core:sorryFree",
+    "text": {
+      "@id": "folio-assistant-core:text",
+      "@type": "@id"
+    },
+    "leanSource": {
+      "@id": "folio-assistant-core:leanSource",
+      "@type": "@id"
+    },
+    "meta": {
+      "@id": "folio-assistant-core:meta",
+      "@type": "@json"
+    },
+    "$schema": {
+      "@id": "dcterms:conformsTo"
+    },
+    "format": {
+      "@id": "dcterms:format"
+    },
+    "narrative": {
+      "@id": "folio-assistant-core:narrative",
+      "@type": "@json"
+    },
+    "source": {
+      "@id": "folio-assistant-core:sourceTechnicalMetadata",
+      "@type": "@json"
+    },
+    "archive": {
+      "@id": "folio-assistant-core:archiveTechnicalMetadata",
+      "@type": "@json"
+    },
+    "sheets": {
+      "@id": "folio-assistant-core:sheets",
+      "@type": "@json"
+    },
+    "entries": {
+      "@id": "folio-assistant-core:archiveEntries",
+      "@type": "@json"
+    },
+    "n_sheets": {
+      "@id": "folio-assistant-core:sheetCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_entries": {
+      "@id": "folio-assistant-core:entryCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_files": {
+      "@id": "folio-assistant-core:fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_directories": {
+      "@id": "folio-assistant-core:directoryCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "uncompressed_bytes": {
+      "@id": "folio-assistant-core:uncompressedBytes",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "header_vocabulary": {
+      "@id": "folio-assistant-core:headerVocabulary",
+      "@container": "@set"
+    },
+    "headers": {
+      "@id": "folio-assistant-core:headers",
+      "@container": "@list"
+    },
+    "file": {
+      "@id": "folio-assistant-core:file"
+    },
+    "contains": {
+      "@id": "dcterms:hasPart",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "refs": {
+      "@id": "folio-assistant-core:refs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "derivedFrom": {
+      "@id": "prov:wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceDocument": {
+      "@id": "folio-assistant-core:sourceDocument",
+      "@type": "@id"
+    },
+    "provenance": "folio-assistant-core:provenance",
+    "pageStart": "folio-assistant-core:pageStart",
+    "pageEnd": "folio-assistant-core:pageEnd",
+    "strength": "folio-assistant-core:strength"
+  }
+}
