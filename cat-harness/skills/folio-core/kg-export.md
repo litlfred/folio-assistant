@@ -101,6 +101,65 @@ Four questions, in this order. The worked call for each term is in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
 
+## A prefix is the stub — and a prefix that is spoken must be bound
+
+Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is
+`<canonical>/<stub>/ns#`, so the prefix bound to it is **that same word**:
+
+| namespace | prefix |
+|---|---|
+| `…/bootstrap/ns#` | `bootstrap` |
+| `…/cat-harness/ns#` | `cat-harness` |
+| `…/folio-assistant-core/ns#` | `folio-assistant-core` |
+
+One word in three places — path segment, stub, prefix — instead of three
+words that must agree. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
+list; `stubOfNamespace()` reads the stub back off an IRI. The abbreviations
+`bs`, `cat` and `fac` were retired the same day, for a measured reason
+rather than taste.
+
+**Why an abbreviation is a defect waiting to happen (bean `zaqn`).** The
+content `@context` renamed its binding from `folio` to `fac` and kept writing
+twenty terms as `folio:…`. **An unbound prefix is not an error to a JSON-LD
+processor**: it reads `folio` as a URI SCHEME, so `folio:Definition` expanded
+to an absolute IRI that is well-formed, means nothing, and joins with nothing
+— in 1,737 committed documents. Every gate was green, for two reasons worth
+remembering:
+
+- a `--check` drift gate compares the generated copy with its SOURCE, and the
+  source was wrong the same way — **a drift gate proves agreement, never
+  correctness**;
+- `check:context-emission` asked only whether each *bound* prefix is spoken.
+  The converse — is each *spoken* prefix bound? — is the direction that
+  corrupts data, and nothing asked it.
+
+**The two rules, and what enforces them** — `bun run check:context-emission`,
+in CI (`code-quality-gates.yml`), over every committed `.jsonld`:
+
+1. **Spoken ⇒ bound.** A compact IRI used as a KEY or an `@type` value must
+   have its prefix bound in that document's context — inline, or the
+   published one by URL, or an array of both. The published context's own
+   term targets are checked too, whether or not a document uses them. Plain
+   string VALUES are not read as CURIEs: `label: "def:foo"` is an authored
+   label, which is exactly the hazard `schemas/jsonld.ts` opens with.
+2. **Own namespace ⇒ stub spelling.** A binding onto a `…/<stub>/ns#`
+   namespace of ours must be spelt `<stub>`, and `<stub>` must be declared by
+   an instance (`<stub>/<stub>.json`).
+
+A context URL the check cannot resolve is **"could not determine"**, counted
+and listed — never read as clean.
+
+**Checking a fix: expand, don't read.** A compact IRI looks right to a human
+whether or not it is bound. The evidence that closes a prefix defect is a
+document run through a JSON-LD processor, with **zero** expanded IRIs outside
+`http(s):`.
+
+**Where a prefix cannot be bound at all, the answer is an absolute IRI, not a
+different spelling.** CSVW metadata allows only `@language` and `@base` in
+its local context, so the `fac:` keys in
+[`tabular-metadata`](tabular-metadata.md) dangle under ANY prefix. Renaming
+them would move the defect, not fix it (bean `792y`).
+
 ## `fsh-guts` NEVER reaches a published graph
 
 Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts stripped

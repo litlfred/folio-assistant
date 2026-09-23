@@ -830,8 +830,39 @@ something reads the stale one.
 
 Both renderings already have their mechanism, so adding a schema introduces no
 new machinery: `scripts/generate-schemas.ts` walks a map of Zod schemas through
-`zodToJsonSchema` into `schemas/generated/`, and `toJsonLd()` in
-`schemas/cat-harness.ts` is the worked example of the graph projection.
+`schemas/to-json-schema.ts` (Zod 4's native `z.toJSONSchema`; the older
+`zodToJsonSchema` silently emptied its output under Zod 4) into
+`schemas/generated/`, and `toJsonLd()` in `schemas/cat-harness.ts` is the
+worked example of the graph projection.
+
+### Why Zod — the grounds, and what kind of ground each is
+
+The owner, 2026-09-23: *"not preference on .ts, fixed on
+functionality/pragmatism"*. The choice is a JUDGEMENT on what the tool does,
+and stating its grounds is what lets a later reader tell whether they still
+hold. **Three are functional and checkable:**
+
+1. **It produces both renderings the graph needs** — JSON Schema natively and
+   the JSON-LD projection from the same definition — so there is one source.
+2. **Validation is easy**, at author time (`tsc`, the editor) and at run time
+   (`.parse`), with the TypeScript type inferred rather than restated.
+3. **A large, active community** — the converter replacement above was a
+   version bump, not a rewrite, because the library is maintained.
+
+**One is a HOUSE RULE, and is labelled as one.** In the owner's
+trials, agents hallucinated less authoring schemas in `.ts` than in the
+alternatives tried — the owner's guess is that it is easier to digest, or
+costs fewer tokens. The owner calls this *unscientific*: it is an
+observation, **not a measurement**, and it must not be quoted as evidence
+that `.ts` is better. It is a tie-breaker between options that pass the
+three functional grounds, never a reason on its own.
+
+**What would reopen the decision:** another carrier that meets all three
+functional grounds and measurably beats this one on something that matters
+here. "`.ts` is what we use" is not a ground, and nor is the house rule by
+itself. Keep the two kinds of ground apart when you argue it either way —
+running a preference and a measurement together is how a judgement comes to
+look like a fact.
 
 **Generate as many renderings as have a consumer, and no more.** JSON Schema
 because validators and editors speak it; JSON-LD because the KG query path

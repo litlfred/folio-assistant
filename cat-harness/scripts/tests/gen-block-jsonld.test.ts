@@ -86,7 +86,7 @@ describe("gen-block-jsonld", () => {
 
   test("co-types with DoCO where the mapping is unambiguous", () => {
     const doc = blockToJsonLd(blocks.get("thm:main")!, PAPER, []);
-    expect(doc["@type"]).toEqual(["folio:Theorem", "doco:Section"]);
+    expect(doc["@type"]).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
   });
 
   test("resolves uses[] to IRIs, dedupes, and preserves authored order", () => {
