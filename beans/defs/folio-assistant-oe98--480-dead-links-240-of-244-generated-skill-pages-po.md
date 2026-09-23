@@ -1,10 +1,11 @@
 ---
 # folio-assistant-oe98
 title: '480 dead links: 240 of 244 generated skill pages point ''Edit this page''s source'' at a path that does not exist'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-22T12:09:09Z
-updated_at: 2026-09-22T12:09:09Z
+updated_at: 2026-09-23T19:04:18Z
 parent: folio-assistant-1swy
 ---
 
@@ -48,7 +49,27 @@ Found while verifying PR #949, whose subject is the vocabulary registry. Fixing 
 
 ## Done when
 
-- [ ] `repoPrefix` resolves from the instance declaration rather than being composed, for BOTH the same-instance and cross-instance cases
-- [ ] The `..` case is gone rather than normalised — a cross-instance skill's source lives at a real repo-relative path, and if it cannot be named as one, the page says so instead of emitting a URL that 404s
-- [ ] A check that RESOLVES these links rather than comparing bytes. Byte-comparison cannot see this class, and the two `--check` gates over this directory were green throughout
+- [x] `repoPrefix` resolves from the instance declaration rather than being composed, for BOTH the same-instance and cross-instance cases
+- [x] The `..` case is gone rather than normalised — a cross-instance skill's source lives at a real repo-relative path, and if it cannot be named as one, the page says so instead of emitting a URL that 404s
+- [x] A check that RESOLVES these links rather than comparing bytes. Byte-comparison cannot see this class, and the two `--check` gates over this directory were green throughout
 - [ ] Re-measure: 244 pages, 0 non-resolving
+  - Published pages: 252, 0 non-resolving (504 links). 8 ORPHAN pages remain — see Summary.
+
+## Summary of Changes
+
+**Cause.** `gen-skill-docs.ts` built each group's `repoPrefix` as `relative(INSTANCE_ROOT, dir)` — relative to `cat-harness/`, not to the repository. Same-instance groups therefore lost the `cat-harness/` segment (`skills/folio-core/...`), and a dependency's directory came out as `../bootstrap/skills/...`. The twin-banner table also carried hand-written `repoPrefix` literals with the same pre-split path.
+
+**Fix.** `repoRelative(abs)` — relative to `repoRootFor(INSTANCE_ROOT)`, returning `undefined` for anything outside the checkout (no `..`, no absolute). Every group's prefix goes through it, including `.claude/skills/local`; the twin table's literals are gone and a twin's location is looked up from the group that publishes it. A source with no repository path gets a sentence saying so and no edit link.
+
+**Check.** `cat-harness/scripts/tests/skill-doc-source-links.test.ts` resolves every blob/edit link on every page the index publishes against the checkout (and rejects `..`). Verified it fails on the pre-fix `todo-manager.md`.
+
+**Measured** (every page in `cat-harness/docs/reference/skill-instructions/` carrying a source link):
+
+```
+before: 260 pages, 520 links, 514 dead
+after : 260 pages, 520 links,  16 dead  — all 16 on the 8 orphans below
+        252 PUBLISHED pages, 504 links, 0 dead
+```
+
+**Not done — the last box stays open on a deletion question.** Eight pages in that directory are no longer written by the generator (not in its index; sources moved or no longer in a declared kg directory after `258d6e0a`), so regeneration cannot fix their links and `--check` cannot see them: `AGENTS.md` (2.2 KB), `bootstrap-graph-emission.md` (4.6 KB), `bootstrap-graph-publication.md` (7.0 KB), `bootstrap-kg-navigation.md` (3.8 KB), `confirm-harness.md` (2.5 KB), `discussion.md` (5.5 KB), `log-message.md` (4.5 KB), `root-readme.md` (4.0 KB). Removing them is a deletion of published pages, so it is asked for (`deletion-requires-confirmation`), not done here. Related and also left: `kg-navigation.md`'s twin banner links `local-kg-navigation.html`, which no group publishes.
+

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../large-datasets/skills/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/../large-datasets/skills/materialize-remote.md) — do not edit here.
+> Generated from [`large-datasets/skills/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../large-datasets/skills/materialize-remote.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/materialize-remote.md){: .fa-edit-source }
 
 {% raw %}
 # Materializing remote content

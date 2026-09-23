@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/readme-sections.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/readme-sections.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/readme-sections.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/readme-sections.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/readme-sections.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/readme-sections.md){: .fa-edit-source }
 
 {% raw %}
 # A folio's README — the folio owns the file, the platform owns the markers
