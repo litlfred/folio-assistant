@@ -1,0 +1,22 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "skills-in-openai-api",
+  "blocks": [
+    {
+      "id": "library/skills-in-openai-api/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "7) Request a local shell call (optional, live API request).\nLocal shell uses the files you created above, without uploading or referencing a hosted skill.\nRun this snippet from the directory containing csv_insights_skill in your execution\nenvironment.\nThis snippet only requests and displays commands. It does not execute them or complete\nthe analysis. To complete the workflow, your application must review and execute\nshell_call commands in a sandbox, capture stdout, stderr, and the exit outcome, and\nreturn shell_call_output with the matching call_id . Continue until the model\nreturns its final",
+      "truncated": true,
+      "provenance": "ingested"
+    }
+  ]
+}
