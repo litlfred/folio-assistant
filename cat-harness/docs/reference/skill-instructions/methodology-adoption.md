@@ -64,6 +64,39 @@ edit, which would make the independence fake.
 So the declared set is **the contents of the `methodology` graph**, read from the
 instance's declaration. Ask for it; do not remember it.
 
+## Node, skill, or both? — the question RACI made somebody ask
+
+An adopted methodology can produce up to two artefacts, and which ones is not
+obvious. Settled by the owner 2026-09-22 (bean `2xfl`), after `raci` spent
+months as a skill with no node and the methodology graph could not see the one
+methodology this repository uses on every diagram.
+
+| you are writing | it is a **node** in the `methodology` graph | it is a **skill** |
+|---|---|---|
+| what the method IS — its vocabulary, its constraints, what it refuses | ✅ | ❌ |
+| how to PERFORM it here — the extension element, the gate, the procedure | ❌ | ✅ |
+| a house process with no external origin | ❌ | ✅ — and do not dress it as an adoption |
+
+**Most adoptions produce both, and the split is the same every time:** the node
+is the method, the skill is this platform's application of it. The skill names
+the node and does not restate it, because two files carrying one definition is
+two copies free to drift.
+
+Three worked cases, each a different answer:
+
+- **`raci`** — both. The four letters and the one-Accountable rule are the
+  method (node); reading R from the BPMN lane, the `folio:raci` element and
+  `check:raci` are this platform's application (skill).
+- **`crdm`** — skill only, and correctly so. It is a house method with no
+  external origin, and §"Adopting a new one" step 1 says such a thing is a
+  skill. A node for it would be the dressing that rule forbids.
+- **`swot`** — both, written that way from the start.
+
+**A methodology in use with no node is invisible to the graph**, which is what
+`2xfl` recorded: `check:methodology-evidence` counted the nodes and RACI was
+not among them, so a reader asking "what methodologies does this repository
+adopt?" got an answer that omitted one they had just used.
+
 ## Adopting a new one — the ingestion process
 
 1. **Establish it is external and named.** A methodology has an origin: authors,
@@ -84,6 +117,73 @@ instance's declaration. Ask for it; do not remember it.
 6. **State its refusals.** The part of a method a platform must not do is as
    load-bearing as the part it follows, and it is the part a later agent will
    breach first.
+7. **Ingest the source and cite it as `evidence`.** `origin` names the work;
+   `evidence: library/<bib-slug>` points at a copy a reader can open from this
+   checkout. Use [`literature-search`](literature-search.md) to find it and
+   [`library-ingestion`](library-ingestion.md) to bring it in. Where the source
+   cannot be fetched, that is an outcome to report — a located-but-unreachable
+   document, never a missing one — and the node keeps its `origin` with no
+   `evidence` until somebody closes the gap.
+
+## Extract the PROCESS, not the paper's tools
+
+**A source that presents a method through an implementation is presenting two
+things, and only one of them is the methodology.** The owner, 2026-09-23, on
+ingesting a tool paper:
+
+> do not need to match tools in paper, start with process, determine most
+> appropriate tools (known or which can be added)
+
+So the order is: render the method, *then* ask what this platform should use to
+perform it. A node that adopted the source's tool stack would be adopting an
+implementation and calling it a method — and it would be unfalsifiable in the
+worst way, because the tools would work and the method would never be examined.
+
+`hybrid-llm-deterministic` is the worked case. Its source demonstrates the
+method in one tool with one model and one expression language; the node renders
+the rule/result inversion, the five safeguards and the bounded-truncation
+technique, and §"Where this rendering stops" names every tool it declined to
+adopt and why. The method survives replacing all of them, which is the test of
+whether you extracted a method at all.
+
+**Ask it as: what would still be true if they had built it differently?** What
+survives is the methodology. What does not is their engineering, and it belongs
+in the skill if anywhere — where this platform's own tool choices already live.
+
+**And say what the source does NOT establish.** A demonstration is not an
+evaluation. Where a paper shows an approach working once, with no baseline and
+no measurement, the node records that no performance claim rests on it. Doing
+otherwise manufactures a finding the authors did not make — the same failure as
+§"Never quantify a judgement to make it look measured", arriving through a
+citation instead.
+
+## An origin nobody can open is not evidence
+
+**Measured 2026-09-22: six methodologies cited an origin and not one of those
+sources was in any declared library.** Every citation resolved against nothing
+— the shape the retired skill `roles:` field cost 260 dangling values (`qif9`),
+on the one kind whose entire justification is being somebody else's named,
+external work.
+
+`bun run check:methodology-evidence` is the axis that makes this visible, and
+`test/results/methodology-evidence.qa-results.json` is where it is recorded. It
+**reports and does not gate**: whether a methodology whose source nobody can
+open may still be used is the owner's call, and a gate failing on the whole
+corpus at once is one somebody switches off. Two things it does fail on — front
+matter that does not validate, and an `evidence` pointing at a bib-slug no
+library holds, because a citation that claims to resolve and does not is worse
+than none.
+
+**The evidence is an input to SELECTION, not only to adoption.**
+`options-analysis.bpmn`'s `A_CheckEvidence` reads it before the chosen
+methodology is applied. Adoption happens once; selection happens at every
+decision, and a source can stop being reachable in between.
+
+**A contested origin is recorded as contested.** `methodologies/swot.md` is the
+worked example: the usual attribution is repeated everywhere and its own source
+says no academic reference supports it, so the node declines to name an
+inventor. Flattening that into a fact would carry the authority of a citation
+while resting on nothing, which is the failure this whole section is about.
 
 ## Refusals
 
@@ -97,4 +197,17 @@ instance's declaration. Ask for it; do not remember it.
 - **Never let a rejected option go unrecorded.** Whichever methodology was used,
   the alternatives and why they lost are part of the output — the same argument
   `bean-coordination` makes for `scrapped` over deleted.
+- **Never write a method from recall and cite a paper nobody fetched.** Read the
+  source, or say you read it through another and mark each attribution
+  second-hand. See [`literature-search`](literature-search.md) §"Never fill the
+  gap with recall".
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Options analysis](../../processes/options-analysis.html) | Select the methodology by context; Apply it, and state each option's trade-offs |
+| [SWOT situation analysis](../../processes/swot-analysis.html) | Hand the candidates to a decision methodology |
+| [DIIG — from a health system bottleneck to a costed implementation plan](../../processes/diig-investment-path.html) | Form the team and establish goals; Map the current state and confirm bottlenecks; Prioritize, and map to health system challenges; Determine appropriate digital health interventions; Plan the implementation; Link to the enterprise architecture; Develop a budget; Monitor, and use data effectively; Make the value proposition and set next steps |
+

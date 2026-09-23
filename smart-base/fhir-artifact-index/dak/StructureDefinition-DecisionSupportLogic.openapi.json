@@ -1,0 +1,74 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Decision-Support Logic (DAK) API",
+    "description": "Logical Model for representing Decision-Support Logic from a DAK. Decision-support logic and algorithms to support appropriate service delivery in accordance with WHO clinical, public health and data use guidelines.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-DecisionSupportLogic.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-DecisionSupportLogic",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-DecisionSupportLogic.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-DecisionSupportLogic",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-DecisionSupportLogic.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-DecisionSupportLogic": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-DecisionSupportLogic.schema.json",
+        "title": "Decision-Support Logic (DAK)",
+        "description": "Logical Model for representing Decision-Support Logic from a DAK. Decision-support logic and algorithms to support appropriate service delivery in accordance with WHO clinical, public health and data use guidelines.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "DecisionSupportLogic",
+            "description": "Resource type identifier for DecisionSupportLogic logical model"
+          },
+          "id": {
+            "type": "string",
+            "description": "An identifier for the decision support logic"
+          },
+          "description[x]": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "description": "Description of the decision support logic - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+          },
+          "source": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to a DMN file containing the decision logic. Source URI could be absolute or relative to the root of the DAK"
+          }
+        },
+        "required": [
+          "resourceType",
+          "id",
+          "source"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/DecisionSupportLogic",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}

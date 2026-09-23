@@ -3,7 +3,7 @@
  * Run the gates CI runs — DERIVED from the workflow, never listed here.
  *
  * Bean `folio-assistant-n60j`. The SDLC audit
- * (`fsh-guts/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
+ * (`cat-harness/docs/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
  * phase unowned for the platform: the commands a contributor runs before
  * pushing lived in `package.json` and in CI YAML and nowhere an agent was
  * told to read. An agent found them by grepping.
@@ -431,6 +431,33 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`waitFor` is the only arithmetic here and this script does not repeat it (bean `06kg`). " +
       "That it is reached from every retry loop, rather than each loop computing its own wait, " +
       "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
+  },
+  {
+    // The ChangeSet step of `folio-staging.yml`, the reusable workflow folios
+    // call (bean `ojcx`). It computes over a folio's `folio` graph against
+    // its base, and this repository holds no folio, so there is nothing for
+    // a gate here to run it on. Its logic is not exempt: every change kind
+    // is asserted by `folio-assistant-core/schemas/changeset.test.ts` in
+    // `bun test`, which IS in the gate set.
+    match: "changeset.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's graph; the platform carries no folio. " +
+      "Covered by changeset.test.ts in `bun test`",
+  },
+  {
+    // Same reason as the ChangeSet above (bean `423d`): the review-comments
+    // Tool ingests a FOLIO's pull-request comments against that folio's
+    // blocks, in the folio's staging job and in its comment-triggered
+    // refresh. The platform has no folio and no such pull request to run it
+    // on here. Its logic is not exempt: `review-comments.test.ts` (the Tool,
+    // including the command run offline exactly as both jobs call it) and
+    // `review-comment.test.ts` (the kind) are in `bun test`.
+    match: "review-comments.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging and comment-refresh jobs over that folio's PR and blocks; the platform carries no folio. " +
+      "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
   },
   {
     match: "staging-banner.ts",

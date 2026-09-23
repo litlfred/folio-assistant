@@ -139,3 +139,13 @@ this check, because a workflow with no runs and a workflow with no failures look
 identical in the run history. Both are "could not check", and the first rule
 applies.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Is CI actually working on the default branch?](../../processes/ci-health-watch.html) | Run check:ci-health,&#10;WRITING the report file; Ensure the tracking&#10;label exists; Close the&#10;tracking issue; Open or EDIT the one&#10;tracking issue |
+| [Code change and review](../../processes/code-change-review.html) | Root-cause the failure |
+| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min; Ensure the tracking&#10;label exists; Close the&#10;tracking issue; Open or EDIT the one&#10;tracking issue |
+| [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Ensure the tracking&#10;label exists; Close the&#10;tracking issue; Open or EDIT the one&#10;tracking issue |
+

@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-20T09:01:32Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-5a3l
 ---
 
 Owner, 2026-09-20: 'noting cacheing olean stragety for "compiled/compuable" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'
@@ -27,3 +27,18 @@ FHIR is the second instance and it is COMING, not hypothetical — the owner nam
 - Validity expressed against INPUTS: toolchain version, source revision, input digest.
 - A stale cache is DETECTED rather than trusted, and the detection runs before use, not on a schedule.
 - lake-cache-refresh's existing behaviour is read and either adopted or explicitly superseded.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `5a3l`.** Compiled-artefact caching (.olean for mathlib) is the same shape as 54rk and has nothing to do with IRIS.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

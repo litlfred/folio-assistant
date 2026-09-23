@@ -141,6 +141,10 @@ export const RULES: Rule[] = [
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
+      // HARNESS: the review page is rendered surface, which the harness owns
+      // (bean txut; 7ofc's ruling for the folio visualiser). It imports
+      // nothing; build-document-site (core) calls it, core -> harness.
+      "scripts/gen-review-page.ts",
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -220,6 +224,16 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // The geometry that navbar became a reader of, and the generator that
+      // renders it to CSS (bean `sjic`). HARNESS for the same reason as
+      // `navbar.ts` and one step more plainly: the numbers are the width of
+      // the PLATFORM's chrome on every instance's pages at once, so a folio
+      // owning them would set the navbar's width for every other folio. The
+      // generator writes into the site's own asset directory, deriving the
+      // path from `siteDirFor` rather than naming it, so it does not know
+      // which instance it is writing for either.
+      "scripts/lib/navbar-geometry.ts",
+      "scripts/gen-navbar-geometry-css.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -319,6 +333,8 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
+      "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
       // twenty lines up, and it arrived the same way: classified core first
       // because a badge is something a reader sees, and `check:partition`
@@ -394,6 +410,19 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // Whether each methodology's cited `origin` resolves to an ingested
+      // source. Harness for the same reason as the two above: it reads the
+      // declaration for the `methodology` and `library` graphs and fans out
+      // over every declared library, and it has nothing to say about any
+      // folio's content — the methodologies it reads are the harness's own
+      // judgement methods, which is why `smart-kg` carries GRADE separately.
+      "scripts/check-methodology-evidence.ts",
+      // The layout norm — no declared directory inside another declared
+      // directory. Harness for the plainest reason in this block: its whole
+      // input is the instance declarations, it reads no content of any kind,
+      // and it runs across EVERY instance in the repository rather than for
+      // one folio.
+      "scripts/check-layout-norms.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -535,6 +564,13 @@ export const RULES: Rule[] = [
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      // The methodology graph → projection + viewer. CORE by the same two
+      // counts as its siblings, and by a third: it renders the graph across
+      // EVERY instance that declares one, so it is the harness answering
+      // "what has this repository adopted", not one instance answering for
+      // itself. Its node list and its evidence join both come from
+      // `check-methodology-evidence.ts` rather than a second walk.
+      "scripts/gen-methodologies-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
@@ -710,6 +746,10 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, plus one of its own: its `--github`
+      // half asks the forge which PRs are open, and a PR is a fact about
+      // this checkout and the forge, not about any folio's material.
+      "scripts/check-bean-rollup.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
@@ -1002,12 +1042,14 @@ export const RULES: Rule[] = [
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
+      "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
+      "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
+      "scripts/check-instance-graph.ts",  // every instance's dependency graph resolves (bean `a1lq`)
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
-      "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
@@ -1218,6 +1260,10 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
+      // CORE: renders a DOCUMENT folio to a site through the document
+      // pipeline's own `buildDocumentMarkdown` (content/pipeline, core). Its
+      // subject is a folio's content, not the harness (bean `fyu2`).
+      "scripts/build-document-site.ts",
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
       // The voice-graph validator. It resolves each rule's citation into

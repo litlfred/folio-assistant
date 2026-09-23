@@ -1,3 +1,31 @@
+/* navbar-geometry:begin — GENERATED, do not edit */
+/* The navbar's geometry, from `scripts/lib/navbar-geometry.ts`. That module
+ * carries the argument for every value here, including which side's numbers
+ * won and why. `navbar.ts` interpolates the same constants into the
+ * stylesheet it injects on a mounted page, so the rail and this site's sidebar
+ * cannot be different widths.
+ *
+ * Regenerate with `bun run navbar:geometry`; `navbar:geometry:check` fails
+ * the build when this region is stale. Edit the MODULE, never these lines. */
+:root {
+  /* The mark column — the avatar or glyph, and the only thing in the strip. */
+  --fa-nav-mark: 2rem;
+  /* Gutter either side of it. DERIVED: (collapsed - mark) / 2. */
+  --fa-nav-pad: 0.75rem;
+  /* At rest. Closed is NOT gone — a width, never a `visibility: hidden`. */
+  --fa-nav-collapsed: 3.5rem;
+  /* Open, at the theme's mq(md). */
+  --fa-nav-open: 15.5rem;
+}
+
+/* The theme widens its own sidebar here, with a `min-width` FLOOR in
+ * layout.scss that a later `width` cannot cross. That floor is why these are
+ * the numbers both surfaces adopt rather than the rail's. */
+@media (min-width: 66.5rem) {
+  :root { --fa-nav-open: 16.5rem; }
+}
+/* navbar-geometry:end */
+
 /*
  * Docs-site UI affordances: the header QR toggle, and zoom / full-width
  * controls on the workflow figures.
@@ -618,18 +646,24 @@
  * MEASURED LIMIT: written against the selectors an earlier session read off
  * the BUILT stylesheet, recorded above. The rendered result is not checked
  * here; litlfred.github.io is refused at this environment's proxy. */
-:root {
-  /* DERIVED, not picked: the theme's own 1rem gutter on `.site-title`, plus
-     `.fa-site-mark` at 2rem, plus a matching right gutter. So the strip is
-     exactly the mark and its padding, and no label can sit inside it. */
-  --fa-nav-collapsed: 3.5rem;
-  /* The theme's width at mq(md); redefined below where the theme widens it. */
-  --fa-nav-open: 15.5rem;
-}
-
-@media (min-width: 66.5rem) {
-  :root { --fa-nav-open: 16.5rem; }
-}
+/* `--fa-nav-collapsed` and `--fa-nav-open` ARE NOT DEFINED HERE any more.
+ *
+ * They were, and `navbar.ts` defined them again — 56px against 40px at rest,
+ * 248px against 232px open, on two navbars the owner had asked to be
+ * "presented same way" (`sjic`). Both sides had a test asserting its own copy,
+ * so both were green while the widths disagreed.
+ *
+ * They now come from `assets/css/navbar-geometry.css`, GENERATED from
+ * `scripts/lib/navbar-geometry.ts` by `bun run navbar:geometry` and gated by
+ * `navbar:geometry:check`. That module carries the derivation this comment
+ * used to — the theme's gutter, `.fa-site-mark` at 2rem, a matching right
+ * gutter — plus the reason these numbers are the ones the RAIL adopted rather
+ * than the other way round: only this side has a `min-width` floor in the
+ * theme's own layout.scss, and a floor is not something a `width` can cross.
+ *
+ * Every `var(--fa-nav-*)` USE below is still authored here. Only the two
+ * definitions moved, which is what keeps this file hand-written.
+ */
 
 @media (min-width: 50rem) {
   .side-bar {
@@ -657,6 +691,88 @@
      */
     min-width: 0;
     align-items: flex-start;
+    /* THE THREE REGIONS, and this is where they stop being a convention.
+     *
+     * `navbar.ts` has had them since it was extracted: `.fa-nav-top` at
+     * `0 0 auto`, `.fa-nav-graphs` at `1 1 auto; min-height:0; overflow-y:auto`
+     * and `.fa-nav-bottom` at `0 0 auto`. THIS side had `overflow-y: auto` on
+     * `.side-bar` itself -- ONE scroll box -- so the harness tabs scrolled off
+     * the bottom with everything else. The owner's layout is explicit that they
+     * must not: *"KG libraries is a scrollable stacks between fixed top an
+     * bottom parts of navbar menu/tab."*
+     *
+     * `hidden`, not `auto`: the column no longer has anything to scroll, and
+     * leaving `auto` here gives a second scrollbar that appears only when a
+     * rounding error makes the column one pixel too tall. */
+    overflow: hidden;
+    /* AT REST NO TEXT. Read by every text region below; see the block that
+     * uses it for why this is one flag rather than a list of selectors. It is
+     * declared HERE, inside the breakpoint, so that `var(--fa-nav-text, 1)`
+     * means "this rule never ran" and resolves to visible — the safe
+     * direction, and the only one a silently-invalid custom property leaves
+     * open. Below 50rem the theme owns the sidebar and nothing is hidden. */
+    --fa-nav-text: 0;
+  }
+
+  /* The theme's own children ARE the regions, so nothing is re-ordered and
+   * `sidebar.html` is not overridden -- the same refusal this file already
+   * makes for the `☰`'s placement.
+   *
+   * Written as "every child is fixed, then `.site-nav` absorbs" rather than as
+   * three selectors, because the theme resolves through `remote_theme` and is
+   * not in this checkout: the count of `.side-bar`'s children is a fact about
+   * a gem, and a rule that names each one by hand is a rule that breaks on the
+   * next theme bump. `0 0 auto` for an unknown fourth child is the safe
+   * default -- it keeps its own height, which is what it had. */
+  .side-bar > * { flex: 0 0 auto; }
+  /* THE MIDDLE, when the folder block is mounted: one scroll over both.
+   *
+   * `mountInstanceGraphs` moves `.site-nav` inside this wrapper, so the rule
+   * below stops matching and this one takes over. Both are kept — if the
+   * script does not run, `.site-nav` is still a direct child and still the
+   * middle. A single selector could not express that.
+   *
+   * The owner's layout is one scrollable stack, not two: *"KG libraries is a
+   * scrollable stacks between fixed top an bottom parts of navbar
+   * menu/tab."* */
+  .side-bar > .fa-nav-middle {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    /* Floor and scroll for the same reasons as the bare `.site-nav` below —
+       stated once there and not repeated here. */
+    min-height: 8rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Inside the wrapper the nav scrolls with the folders rather than apart from
+     them, so it must NOT keep its own. */
+  .fa-nav-middle > .site-nav {
+    flex: 0 0 auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .side-bar > .site-nav {
+    /* The middle absorbs, and it must be allowed to shrink far below its
+     * content: a flex child defaults to `min-height: auto`, which refuses to,
+     * so the column grows past the viewport and the fixed bottom is pushed off
+     * the screen -- taking the harnesses and home with it. `navbar.ts` carries
+     * the same sentence over its own middle region; it is here because the
+     * failure is identical, not because it was copied.
+     *
+     * BUT NOT TO NOTHING, and that floor was measured rather than guessed.
+     * The other two regions are capped, and with the document index open the
+     * three caps add up: 60px of header, 33% of index and 50% of footer left
+     * the middle **93px** in a 900px column -- one and a half rows of a
+     * navigation that is the whole point of the navbar. A cap on a sibling is
+     * a claim on this region, and `8rem` is the smallest height at which this
+     * still reads as a list rather than as a clipped row. Both siblings yield
+     * to it below (`flex: 0 1 auto`), which they can afford because each
+     * scrolls inside its own cap. */
+    flex: 1 1 auto;
+    min-height: 8rem;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -678,27 +794,203 @@
 
   .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
 
-  /* Every label is held invisible at rest rather than merely clipped. The
-     width arithmetic is a geometry argument, and a longer title or an
-     inherited `letter-spacing` moves where a label starts without touching any
-     of these values. `opacity`, not `display:none` -- the labels stay in the
-     accessibility tree. */
+  /* AT REST THE STRIP CARRIES MARKS AND NOTHING ELSE.
+   *
+   * Owner, 2026-09-23, with a screenshot of the strip: *"looks horrible when
+   * collapsed. should only be icons/avatars so compat."* What they were
+   * looking at was "ON" — `On this page`, clipped mid-word — over six folder
+   * names bleeding out of a 3.5rem column.
+   *
+   * ## Why it regressed, and why this is a FLAG rather than a longer list
+   *
+   * The rule this replaces named three things to hide, by hand. The round that
+   * added the document index and the folder block added two more text regions
+   * and did not extend it, so they were never hidden — the defect was in the
+   * enumeration, not in either new region. A list that has to be extended by
+   * whoever adds a region is a list that will not be.
+   *
+   * So the state is a single inherited flag, `--fa-nav-text`, set ONCE on the
+   * open selectors and read by every text region. Adding a region is then one
+   * line in one place, and the three open conditions stay stated once instead
+   * of being multiplied across the list (they were 9 selectors for 3 regions;
+   * 8 regions would have been 24).
+   *
+   * `var(--fa-nav-text, 1)` — the fallback is VISIBLE, and it is deliberate.
+   * An undefined custom property inside `var()` is invalid at computed-value
+   * time and fails SILENTLY, which has cost this file three debugging sessions
+   * already. If the flag ever goes missing the navbar shows too much, which a
+   * reader can work with; the other direction is a navbar that renders blank.
+   *
+   * WHAT STAYS: `.fa-harness-tab__mark`, which is why `.fa-harness-tabs` is no
+   * longer hidden wholesale — the owner asked for avatars in the strip, and
+   * hiding the group took its avatars with its labels. Only the group's
+   * heading, its labels and its per-harness graph lists go.
+   *
+   * `opacity`, not `display: none` — the labels stay in the accessibility
+   * tree, which is the previous rule's reason and is unchanged.
+   */
+  .side-bar:hover,
+  .side-bar:focus-within,
+  .side-bar:has(.fa-nav-open:checked) {
+    --fa-nav-text: 1;
+  }
   .side-bar .fa-site-title,
   .side-bar .site-nav,
-  .side-bar .fa-harness-tabs {
-    opacity: 0;
+  .side-bar .fa-doc-index,
+  .side-bar .fa-nav-folders,
+  .side-bar .fa-harness-tabs__heading,
+  .side-bar .fa-harness-tab__label,
+  .side-bar .fa-harness-tab__graphs,
+  .side-bar .fa-nav-home__label {
+    opacity: var(--fa-nav-text, 1);
     transition: opacity .12s ease;
   }
-  .side-bar:hover .fa-site-title,
-  .side-bar:hover .site-nav,
-  .side-bar:hover .fa-harness-tabs,
-  .side-bar:focus-within .fa-site-title,
-  .side-bar:focus-within .site-nav,
-  .side-bar:focus-within .fa-harness-tabs,
-  .side-bar:has(.fa-nav-open:checked) .fa-site-title,
-  .side-bar:has(.fa-nav-open:checked) .site-nav,
-  .side-bar:has(.fa-nav-open:checked) .fa-harness-tabs {
-    opacity: 1;
+
+  /* INVISIBLE IS NOT ABSENT, and in the bottom stack that difference was
+   * visible as a defect rather than as a subtlety.
+   *
+   * `opacity: 0` keeps a box. With the labels and the per-harness graph lists
+   * merely transparent, the five harness rows were 60, 465, 166... pixels tall
+   * — measured in a browser — so their AVATARS, which are what the strip is
+   * for, sat in a column with 80 to 150px of nothing between them. The owner
+   * asked for *"icons/avatars so compat"*; a compact column is the half that
+   * opacity alone cannot give.
+   *
+   * THE SAME ONE FLAG, so the open state is still stated once. `max-height`
+   * rather than `height`, because these boxes have no height to restate and
+   * `calc()` cannot produce `auto`. `200vh` is HEADROOM, not a measurement: it
+   * has to exceed the tallest of these regions when open, and the tallest
+   * measured here is 465px in a 900px viewport. A list that ever exceeded it
+   * would be clipped rather than mis-laid, and its own parent scrolls.
+   *
+   * `.fa-site-title` and `.site-nav` are deliberately NOT in this list. The
+   * title's box is the theme's header and the nav's is the middle region's
+   * flex floor; collapsing either changes a layout this rule has no business
+   * changing, and neither leaves a gap between marks.
+   */
+  /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
+   *
+   * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
+   * — measured at a 500px viewport, the region was **22px** tall around a
+   * summary of **25**, so the row read as `ON THIS PAG` with its descenders
+   * sliced off. Fine at 600 and above, which is why it had not been seen.
+   *
+   * `.fa-doc-index` is `flex: 0 1 auto`, and its own rule says why it may
+   * shrink: *"it scrolls inside its cap."* That is true while it is OPEN. A
+   * CLOSED `<details>` has nothing to scroll, so every pixel the flex layout
+   * takes from it is a pixel of the one row it still has — and the reader
+   * cannot scroll to recover it or even tell that it happened.
+   *
+   * So the yield is conditioned on the thing that made it safe. `.fa-nav-folders`
+   * needs no rule here: it is already `flex: 0 0 auto` and never shrank, which
+   * is why the owner's screenshot shows `FOLDERS 24` intact directly beneath a
+   * clipped `ON THIS PAGE 8`. */
+  .side-bar .fa-doc-index:not([open]) { flex-shrink: 0; }
+
+  .side-bar .fa-doc-index,
+  .side-bar .fa-nav-folders,
+  .side-bar .fa-harness-tabs__heading,
+  .side-bar .fa-harness-tab__label,
+  .side-bar .fa-harness-tab__graphs,
+  .side-bar .fa-nav-home__label {
+    max-height: calc(var(--fa-nav-text, 1) * 200vh);
+    /* `max-height` caps the CONTENT box, and `min-height` outranks it outright.
+     * Measured at rest with only the cap in place: the document index still
+     * held 17px of padding and border, and the harnesses' heading held its
+     * whole 36px floor plus the group's padding — 70px of nothing in the one
+     * column this rule exists to compact.
+     *
+     * SCALED BY THE SAME FLAG, and by each region's OWN published metric
+     * (`--fa-nav-rest-pad`, `--fa-nav-rest-min`), which its base rule declares
+     * once and uses itself. So the open state keeps exactly what the base rule
+     * gives it and no number is written here at all. A region that publishes
+     * neither falls back to `0px` and is unaffected. */
+    padding-block: calc(var(--fa-nav-text, 1) * var(--fa-nav-rest-pad, 0px));
+    min-height: calc(var(--fa-nav-text, 1) * var(--fa-nav-rest-min, 0px));
+    overflow: hidden;
+  }
+
+  /* THE MIDDLE DOES NOT GROW WHILE IT IS EMPTY, and this was the measurement
+   * that mattered most. At rest every text region above is invisible, yet the
+   * middle's `flex-grow: 1` still claimed 422px of a 900px column — so the
+   * fixed bottom shrank to 104px and showed ONE of five harness avatars. The
+   * avatars are what the owner asked the strip to be.
+   *
+   * The same flag again, read as a NUMBER rather than as a length: grow 0 at
+   * rest, grow 1 open. `min-height` likewise falls to zero, since the 8rem
+   * floor is a claim about a list a reader can read, and at rest there is
+   * none. Both are restored by the same hover/focus/pin that restores the
+   * text, so the open navbar is unchanged.
+   *
+   * AFTER the two rules that set `flex: 1 1 auto` on these, which is why this
+   * block is here rather than beside them. */
+  .side-bar > .fa-nav-middle,
+  .side-bar > .site-nav {
+    /* `flex-basis: 0`, and it is the whole fix. Measured at rest: the middle
+     * held 444px of a 900px column and the fixed bottom was squeezed to 104,
+     * showing ONE of five harness avatars — with every one of the middle's own
+     * text regions invisible.
+     *
+     * `flex: 1 1 auto` means "start from my own content height". This page's
+     * `.site-nav` is 1008px of links, so the column overflowed and the browser
+     * shrank EVERY region proportionally, the fixed bottom included. Starting
+     * from zero makes the middle take the spare space and only the spare
+     * space, which is what a region between two fixed ones is for — and it is
+     * what keeps the harnesses anchored to the bottom, the owner's word for
+     * where they go.
+     *
+     * NOT flag-scaled, unlike everything else here: this is right in both
+     * states. Collapsing the middle to nothing at rest was the first attempt
+     * and it floated the bottom region up to meet the icons — anchored to the
+     * bottom is a property of the OPEN navbar too.
+     *
+     * The floor still is: 8rem while open, because a middle squeezed below
+     * that stops reading as a list; nothing at rest, because at rest there is
+     * no list to read. */
+    flex-basis: 0;
+    min-height: calc(var(--fa-nav-text, 1) * 8rem);
+  }
+
+  /* THE AVATAR AND THE TITLE START AT THE GUTTER.
+   *
+   * Owner, same message: *"avatar/text at top needs to be left aligned"*.
+   * The theme's `.site-title` carries `padding-left: 32px`, so in a 56px strip
+   * a 32px mark began at 32 and was CUT IN HALF by the strip's own edge —
+   * measured in a browser, not read off this file.
+   *
+   * `--fa-nav-pad` is the strip's gutter and is derived rather than chosen:
+   * `(3.5rem - 2rem) / 2` in `navbar-geometry.ts`, the same 12px the icon row
+   * and every rail row already indent by. So the mark lands centred in the
+   * strip at rest and flush with the icons when open, from one number. */
+  .side-bar .site-title { padding-left: var(--fa-nav-pad); }
+
+  /* THE ICON ROW BECOMES AN ICON COLUMN at rest.
+   *
+   * Six 36px icons are 232px wide: in a 3.5rem strip five of them are simply
+   * off the edge, which is the other half of what the owner was looking at.
+   * Wrapping at the strip's width stacks them one per line — the shape
+   * `navbar.ts` already gives every rail row, and the shape a reader expects
+   * of a vertical rail.
+   *
+   * It is the ONE child that does not keep its open width. The general rule
+   * below gives every child `--fa-nav-open` so labels do not reflow to one
+   * character per line on open; here the reflow IS the behaviour, and a row
+   * clipped at its second icon is not a row.
+   *
+   * `padding-top` clears `.fa-nav-toggle`, which is absolutely positioned over
+   * this area — it is painted from `.site-footer` and cannot be re-ordered, so
+   * the row yields to it rather than the other way round. */
+  .side-bar > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+    padding-top: 2rem;
+  }
+  .side-bar:hover > .fa-nav-icons,
+  .side-bar:focus-within > .fa-nav-icons,
+  .side-bar:has(.fa-nav-open:checked) > .fa-nav-icons {
+    width: var(--fa-nav-open);
+    flex-wrap: nowrap;
+    padding-top: 0.25rem;
   }
 
   /* THE OPEN CONTROL. A pointer is not the only input: `:hover` does nothing
@@ -720,7 +1012,12 @@
    * lands under the mark rather than beside it. */
   .fa-nav-toggle {
     position: absolute;
-    top: 3.25rem;
+    /* AT THE HEADER'S BOTTOM EDGE, not 0.5rem inside it. The header is capped
+       at 3.75rem and this is 1.75rem tall, so `3.25rem` put it 52-80px down
+       the column while the icon row below began at 60 — two glyphs in one
+       20px band, which is what "looks horrible when collapsed" was partly
+       about. The row's `padding-top` above reserves the space this now takes. */
+    top: 3.75rem;
     left: 0;
     z-index: 2;
     display: flex;
@@ -740,13 +1037,39 @@
 
   /* THE CLOSE CONTROL. Only while pinned open -- an `[x]` alone in a 3.5rem
      strip would be the only thing in it and would read as a close button for
-     the page. `sticky` so it survives the inner scroll. */
+     the page.
+
+     `absolute`, NOT `sticky`, and the change is forced by the regions above.
+     `sticky; top: 0` lifted this to the top of `.side-bar`'s scroll -- which
+     worked only because `.side-bar` WAS the scroll container. It no longer is,
+     and this control is painted from `.site-footer`, the LAST of the sidebar's
+     children, so a sticky one would have sat at the BOTTOM of the navbar.
+
+     Anchored instead to `.side-bar`, which is `position: fixed` at this
+     breakpoint and therefore a containing block. Same argument the `☰` above
+     already makes and for the same reason: where a label is PAINTED is free of
+     where it sits in the markup, so neither control needs the theme's
+     `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    float: right;
+    /* IN THE ICON ROW, not floating over the bar — owner, 2026-09-22: *"[x]
+     * should be on the navbar w/ other icons"*.
+     *
+     * Still `absolute`, and still for the reason the round before established:
+     * this is a `<label>` painted from `.site-footer`, the LAST of the
+     * sidebar's children, and it must keep driving the pure-CSS checkbox with
+     * no script at all. So it cannot be MOVED into the row's markup without
+     * giving up that property — but where a label is painted is free, which is
+     * the same argument `.fa-nav-toggle` above already makes.
+     *
+     * `right` and `top` put it in the row's last slot. The row is
+     * `2.25rem` tall under a header whose height the theme owns, so `top` is
+     * measured from the header's bottom rather than composed from font metrics
+     * — see `.fa-nav-toggle`, which clears the same header the same way. */
+    position: absolute;
+    top: 3.5rem;
+    right: 0.5rem;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2007,6 +2330,46 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 .fa-site-title {
   vertical-align: baseline;
+  /* SMALLER — owner, 2026-09-22: *"text on top navbar too big"*.
+   *
+   * The theme renders the site title at its own `fs-5`, which at 264px wrapped
+   * "C@T Harness" onto two lines and then clipped the second against the
+   * header's height — visible in the before/after screenshots of this change,
+   * and present on `main`. `1rem` fits it on one line at every width the strip
+   * opens to, measured rather than picked: the longest instance title here is
+   * "folio-assistant-core" at 20 characters, which is what the ellipsis below
+   * is for when a longer one arrives.
+   *
+   * `!important` answers the theme's own, in kind, as this file already does
+   * for `.site-footer`'s font-size. */
+  overflow: hidden;
+  font-size: 1rem !important;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* THE THEME AVATAR in the sidebar header — the card art clipped to the cat.
+ *
+ * The frame is the same `--fa-nav-mark` column the rail's marks use, so the
+ * two surfaces line their titles up at the same x. The image is positioned
+ * inside it and the four percentages come from the declaration via
+ * `sync-docs-harness.ts`; nothing here knows a box. */
+.fa-site-mark--avatar {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--fa-nav-mark);
+  height: var(--fa-nav-mark);
+  margin-right: 0.4rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  vertical-align: -0.32em;
+}
+
+.fa-site-mark--avatar img {
+  position: absolute;
+  max-width: none;
 }
 
 /* ── Action tiles ─────────────────────────────────────────────────────── */
@@ -2930,15 +3293,263 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * is mounted on — which is now every page — unusable, and it would do so
  * invisibly, since a transparent full-viewport div looks like nothing at all.
  */
+/* THE GLASS'S LOOK IS THE READER'S, set from the Settings tile (bean `zrvt`,
+ * issue #1006). Three tokens per theme — the tint, the card and the ink —
+ * and ONE opacity the reader moves, carried as `--fa-glass-opacity` on the
+ * layer. Default, on the owner's words 2026-09-23: *"start with the glass
+ * being 20% opaque with a blur effect."*
+ *
+ * THE CARDS ARE SOLID WHATEVER THE OPACITY. The owner's screenshot of the
+ * first glass showed an asset's title printed straight over the library
+ * table — *"very hard to read"*. See-through is the glass; the things ON it
+ * are paper, so a reader can turn the glass down to nothing and still read. */
+.fa-sticky-layer {
+  --fa-glass-tint: 20, 20, 24;
+  --fa-glass-card: #1f1e24;
+  --fa-glass-ink: #e8eaed;
+  --fa-glass-muted: #b4b8c0;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #8c74f0;
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer,
+.fa-sticky-layer[data-fa-glass-theme="paper"] {
+  --fa-glass-tint: 240, 240, 244;
+  --fa-glass-card: #ffffff;
+  --fa-glass-ink: #1b1b1f;
+  --fa-glass-muted: #4a4d55;
+  --fa-glass-edge: #8a8699;
+  --fa-glass-accent: #4a34b8;
+}
+.fa-sticky-layer[data-fa-glass-theme="night"] {
+  --fa-glass-tint: 12, 12, 16;
+  --fa-glass-card: #1a1a1f;
+  --fa-glass-ink: #f1f2f4;
+  --fa-glass-muted: #c3c6cc;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #a592ff;
+}
+/* HIGH CONTRAST: black and white, 2px white edges and a yellow focus — the
+   usability theme, so no tint, no shadow and no picture is load-bearing. */
+.fa-sticky-layer[data-fa-glass-theme="contrast"] {
+  --fa-glass-tint: 0, 0, 0;
+  --fa-glass-card: #000000;
+  --fa-glass-ink: #ffffff;
+  --fa-glass-muted: #ffffff;
+  --fa-glass-edge: #ffffff;
+  --fa-glass-accent: #ffe600;
+}
 .fa-sticky-layer[data-fa-glass="open"] {
   pointer-events: auto;
   /* Translucent rather than opaque: the point of a glass is that you can see
      what you were browsing underneath it. */
-  background: rgba(20, 20, 24, 0.55);
+  background: rgba(var(--fa-glass-tint), var(--fa-glass-opacity, 0.2));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-:root[data-fa-scheme="light"] .fa-sticky-layer[data-fa-glass="open"] {
-  background: rgba(240, 240, 244, 0.72);
+.fa-sticky-layer[data-fa-glass="open"][data-fa-glass-blur="off"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
+
+/* ── What sits ON the glass: solid, and legible at any opacity ─────────── */
+.fa-glass-empty,
+.fa-glass-notes p,
+.fa-glass-asset,
+.fa-glass-panel {
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-empty,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-notes p,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-asset,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-panel {
+  border-width: 2px;
+  box-shadow: none;
+}
+/* THE SHELF IS A SURFACE, not a list: each card carries its own left/top/
+   width/height (set by the script from the reader's saved place, or a grid),
+   and the shelf is as tall as its lowest card so what follows sits below. */
+.fa-glass-shelf {
+  position: relative;
+  margin: 1rem 0 0;
+}
+.fa-glass-asset {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  overflow: auto;
+  border-radius: var(--fa-folio-radius, 0);
+}
+.fa-glass-asset-face {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4.85rem;
+  flex: 1 1 auto;
+  cursor: grab;
+}
+.fa-glass-asset-tools { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+.fa-glass-asset[data-fa-moving="true"] {
+  outline: 3px dashed var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+/* SEMANTIC ZOOM: below the declared width, the avatar alone. The NAME is
+   still the card's accessible name (`aria-label`), so a reader who cannot see
+   the picture loses nothing by the zoom. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-name { display: none; }
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-face { justify-content: center; }
+.fa-glass-avatar {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 4.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--fa-glass-edge);
+  background: rgba(var(--fa-glass-tint), 0.35);
+}
+.fa-glass-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fa-glass-kind-avatar { --fa-avatar-size: 2rem; color: var(--fa-glass-accent); }
+.fa-glass-asset-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--fa-glass-ink);
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; }
+.fa-glass-asset-tool,
+.fa-glass-panel-close,
+.fa-glass-step {
+  flex: 0 0 auto;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fa-glass-notes { max-width: 40rem; margin: 1rem auto 0; }
+.fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
+
+/* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
+.fa-glass-tiles {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--fa-glass-card);
+  border-top: 2px solid var(--fa-glass-accent);
+  color: var(--fa-glass-ink);
+}
+.fa-glass-tiles .fa-tile,
+.fa-glass-tiles .fa-glass-chrome-tile {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+.fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+.fa-glass-chrome-tile { font-weight: 700; }
+.fa-glass-tile-glyph { font-size: 1.6rem; line-height: 1; }
+.fa-glass-tiles .fa-glass-chrome-tile[aria-expanded="true"] {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-tiles .fa-tile-caption { overflow-wrap: anywhere; line-height: 1.15; }
+.fa-glass-tiles .fa-tile:focus-visible,
+.fa-glass-tiles .fa-glass-chrome-tile:focus-visible,
+.fa-glass-sheet button:focus-visible,
+.fa-glass-sheet a:focus-visible,
+.fa-glass-sheet input:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* ── The panel a chrome tile opens, above the strip ───────────────────── */
+.fa-glass-panel {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  padding: 0.75rem 1rem 1rem;
+}
+.fa-glass-panel-head { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-panel-title { flex: 1 1 auto; margin: 0; font-size: 1.1rem; color: var(--fa-glass-ink); }
+.fa-glass-panel-status { color: var(--fa-glass-muted); font-size: 0.85rem; }
+.fa-glass-panel-more { color: var(--fa-glass-ink); text-decoration: underline; }
+.fa-glass-todo-list { list-style: none; margin: 0.5rem 0; padding: 0; }
+.fa-glass-todo { border-top: 1px solid var(--fa-glass-edge); padding: 0.5rem 0; }
+.fa-glass-todo-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.fa-glass-todo-row .fa-avatar { --fa-avatar-size: 1.5rem; color: var(--fa-glass-accent); }
+.fa-glass-todo-summary { flex: 1 1 14rem; }
+.fa-glass-setting { border: 1px solid var(--fa-glass-edge); margin: 0.75rem 0; padding: 0.5rem 0.75rem; }
+.fa-glass-setting legend { font-weight: 700; padding: 0 0.25rem; }
+.fa-glass-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+.fa-glass-choice input { width: 1.4rem; height: 1.4rem; margin: 0; }
+.fa-glass-choice-label { font-weight: 600; }
+.fa-glass-choice-hint { color: var(--fa-glass-muted); font-size: 0.82rem; }
+.fa-glass-opacity { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-opacity input[type="range"] { flex: 1 1 auto; min-width: 6rem; height: 2.75rem; }
+.fa-glass-opacity-value { min-width: 3.5rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+.fa-glass-reset {
+  display: block;
+  margin: 0.5rem 0;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  cursor: pointer;
+}
+
+/* ── The pull-out, first in its row ───────────────────────────────────── */
+.fa-pullout-slot { display: inline-flex; align-items: center; gap: 0.4rem; margin-left: 0.5rem; vertical-align: middle; }
+.fa-pullout {
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  border: 2px solid #8c74f0;
+  background: #4a34b8;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.fa-pullout::before { content: "\2934\00a0"; }
+.fa-pullout-state { font-size: 0.78rem; }
 
 /* The sheet is the glass's own chrome and is ALWAYS present, which is what
    keeps `:empty` above from hiding an open glass that holds no cards yet. It
@@ -2947,7 +3558,11 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-glass-sheet {
   position: absolute;
   inset: 0;
-  padding: 3rem 1rem 1rem;
+  /* The BOTTOM is kept clear for the tile strip, which overlays this edge:
+     padding to scroll into, and scroll-padding so a control scrolled into
+     view — by focus or by a click — lands above the strip, not under it. */
+  padding: 3rem 1rem 8.5rem;
+  scroll-padding-bottom: 8.5rem;
   overflow: auto;
 }
 .fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
@@ -3965,13 +4580,107 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * `:has()` scopes this to the footer that carries OUR block, so a future
  * footer with ordinary footer content keeps the theme's layout.
  */
-.site-footer:has(> .fa-harness-tabs) {
+.site-footer:has(.fa-nav-home) {
   position: static;
-  width: 100%;
+  /* `var(--fa-nav-open)`, NOT `100%`, and the difference is a measured defect.
+   *
+   * This said `width: 100%` and was correct when written: the sidebar had one
+   * width and 100% of it WAS the open width. The icon strip then landed, 100%
+   * became `3.5rem`, and the harness tabs began wrapping to about one
+   * character per line. Measured in a browser 2026-09-22 at 1280x900: the
+   * footer laid out **55px wide and 5262px tall**, inside a 900px column.
+   *
+   * It was invisible because every label in the strip is held at `opacity: 0`,
+   * so the only symptom was a scrollbar on a collapsed navbar. `.side-bar > *`
+   * already carries the right value and says why; this rule was simply beating
+   * it on specificity, which is the whole failure.
+   *
+   * Scoped to `.fa-nav-home` rather than `> .fa-harness-tabs` because the tabs
+   * moved into the scrolling stack below, and home renders even when no tile
+   * does — so this now matches exactly when our block is present, which is
+   * what the original `:has()` was for. */
+  width: var(--fa-nav-open);
   padding-right: 0;
   padding-left: 0;
   /* The theme's `!important` has to be answered in kind. */
   font-size: 0.75rem !important;
+
+  /* THE FIXED BOTTOM, as a column of its own: the stack scrolls, home does
+   * not. `min-height: 0` for the same reason it appears on the middle region
+   * — without it a flex child refuses to shrink below its content and the
+   * cap below does nothing.
+   *
+   * `!important` ON THE DISPLAY, and it is not belt-and-braces. The theme puts
+   * `d-md-block` on this element, which is `display: block !important` from
+   * `mq(md)` up — so a plain `display: flex` loses and every flex value below
+   * goes inert. MEASURED: the footer computed `display: block`, the stack took
+   * its full 1044px instead of shrinking, and home landed at y=1510 in a 900px
+   * viewport — rendered, clipped, and unreachable. The same answer this rule
+   * already gives the theme's `font-size` two lines down, for the same
+   * reason. */
+  display: flex !important;
+  flex-direction: column;
+  /* YIELDS to the middle's floor. `0 1 auto` rather than `0 0 auto`: this
+   * region already scrolls inside its own cap, so giving space back costs no
+   * reachability, while refusing to would take the middle below `8rem`. */
+  flex: 0 1 auto;
+  min-height: 0;
+  /* AT MOST HALF THE NAVBAR.
+   *
+   * Not a taste number and not tuned to today's content: the owner's three
+   * regions each have a job, and a "fixed" bottom that may take the whole
+   * column has taken the middle's job away. Half is the largest share that
+   * cannot crowd the other two out, and it is the only fraction with that
+   * property. Beyond it the stack scrolls, which is why the cap costs no
+   * reachability. */
+  max-height: 50%;
+  overflow: hidden;
+}
+
+/* The harnesses, between the cap and home. */
+.fa-nav-bottom__stack {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* HOME, PINNED BELOW THE STACK — *"keep home at bottom for who iris."*
+ *
+ * `flex: 0 0 auto`, so folding or scrolling the harnesses cannot take it with
+ * them. It is the one destination that must stay reachable when everything
+ * else is collapsed, which is also why the markup puts it outside both
+ * `<details>`. */
+.fa-nav-home {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 var(--fa-nav-pad);
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+  color: inherit;
+  text-decoration: none;
+}
+
+.fa-nav-home:hover,
+.fa-nav-home:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+}
+
+.fa-nav-home__mark {
+  flex: none;
+  width: var(--fa-nav-mark);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.fa-nav-home__label {
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* ═══ THE HARNESS DIVIDERS ═════════════════════════════════════════════════
@@ -4002,6 +4711,346 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * invisible in the other.
  * ───────────────────────────────────────────────────────────────────────── */
 
+/* ═══ THIS INSTANCE'S CONTROLLED FOLDERS ═══════════════════════════════════
+ *
+ * Owner, 2026-09-22: *"next on navbar then is is library docs/ and other
+ * controlled folders next would the navigation for the current harness (per
+ * its rules)."* So: the folders first, the harness's own navigation under
+ * them, both in the one scrollable middle.
+ *
+ * WHICH folders is the instance's declaration, resolved in
+ * `sync-docs-harness.ts` from the same tile the icon row comes from. This
+ * stylesheet knows no kind names.
+ *
+ * A `<details>` and OPEN on arrival, matching the graphs group in
+ * `navbar.ts` — the folders are what the navbar is FOR, so a reader should not
+ * have to open them to see the KG has anything in it. Foldable because the
+ * owner asked for that on the harnesses for the same reason: *"they eat up all
+ * the nav bar sspace."*
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-nav-folders {
+  /* See `.fa-doc-index` — declared once, read by the collapsed-strip rule. */
+  --fa-nav-rest-pad: 0.5rem;
+  flex: 0 0 auto;
+  padding: var(--fa-nav-rest-pad) 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  font-size: 0.75rem;
+}
+
+.fa-nav-folders__heading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem var(--fa-nav-pad);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fa-nav-folders__count {
+  padding: 0 0.375rem;
+  border-radius: 0.625rem;
+  background: rgba(128, 128, 128, 0.28);
+  font-weight: 700;
+}
+
+.fa-nav-folders__list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-nav-folders__link {
+  display: block;
+  padding: 0.1875rem var(--fa-nav-pad);
+  overflow: hidden;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+a.fa-nav-folders__link:hover,
+a.fa-nav-folders__link:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* Declared, with no published viewer. Struck through rather than hidden, the
+ * same way the harness tabs' graph list marks one: a gap a reader can see is a
+ * gap somebody can close. */
+.fa-nav-folders__link--dead {
+  cursor: default;
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+/* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
+ *
+ * Owner, 2026-09-22: *"[x] should be on the navbar w/ other icons, can make
+ * two lines avatar+name of harness/catalogue/sub-grrraph as approrirate, the
+ * second line are the icons."*
+ *
+ * WHY TWO LINES AND NOT ONE. The single-line header was already over budget:
+ * the title, three action controls and the strip's gutters share 264px, and
+ * shrinking the title to fit (the first attempt at *"text on top navbar too
+ * big"*) only moved the failure — "C@T Harness" then ellipsised to "C@..."
+ * with the icons still crowding it. Measured, not guessed; it is in the
+ * screenshots of that round. A second line gives the name the whole width and
+ * the icons their own.
+ *
+ * WHICH icons is declared per instance and resolved through `needs`; this
+ * stylesheet draws a row of unknown length and knows no ids.
+ *
+ * IN THE FIXED TOP because `mountNavIconRow` inserts it as a `.side-bar`
+ * child, so `.side-bar > * { flex: 0 0 auto }` already places it. No rule
+ * here puts it anywhere.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* LINE 1 IS THE AVATAR AND THE NAME, and nothing else.
+ *
+ * The header carried three controls beside the title — the scheme mini, the
+ * language mini and the panel launcher. With the title shrunk they still left
+ * it ellipsised to "C@..." at 264px, which is the measurement that made the
+ * second line necessary rather than merely tidier.
+ *
+ * NOTHING BECOMES UNREACHABLE. The panel those three sat beside holds Search,
+ * Settings, Language, QR, Todos, Knowledge graph, JSON-LD and Source, and the
+ * row's `launcher` opens that same panel through that same button. The minis
+ * were shortcuts into a panel that is now one tap away.
+ *
+ * SCOPED TO `:has(.fa-nav-icons)`, which is the whole safety argument: the row
+ * is mounted by script, so if the script does not run — or the instance
+ * declares no icons and `mountNavIconRow` deliberately draws nothing — this
+ * selector does not match and the three controls stay exactly where they are.
+ * A reader never loses a control to a row that failed to arrive.
+ */
+@media (min-width: 50rem) {
+  .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
+  .side-bar:has(.fa-nav-icons) .fa-lang-mini,
+  .side-bar:has(.fa-nav-icons) .fa-tiles-toggle {
+    display: none;
+  }
+}
+
+.fa-nav-icons {
+  display: flex;
+  gap: 0.125rem;
+  align-items: center;
+  /* Aligned to the mark above it rather than to the strip's edge: the avatar
+     starts at the gutter, so the first icon does too and the two lines read as
+     one block. */
+  padding: 0.25rem calc(var(--fa-nav-pad) - 0.25rem);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.fa-nav-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  /* 2.25rem = 36px. Above the 44px pointer target only with the row's gap and
+     padding counted, which is the honest reading -- six of these plus gutters
+     is 232px inside a 248px strip, so a bigger box does not fit the owner's
+     own cap of six. The declared interaction profile here is low-dexterity and
+     this is the constraint binding against it: SIX and FULL WIDTH are the two
+     requirements, and they set the size between them. */
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.fa-nav-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.fa-nav-icon:hover,
+.fa-nav-icon:focus-visible {
+  background: rgba(128, 128, 128, 0.22);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* DECLARED, WITH NO PUBLISHED VIEWER. Not a link and it must not look like
+ * one — `pb04`, the same rule the harness tabs' graph list follows. Rendered
+ * rather than dropped, because a declared graph missing its viewer is a
+ * FINDING and hiding it answers "where is beans" with silence. */
+.fa-nav-icon--dead {
+  cursor: default;
+  opacity: 0.35;
+}
+
+/* Buttons in the row carry the browser's own chrome otherwise. */
+button.fa-nav-icon {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
+ *
+ * Owner: *"when a document or other indexed object is opened, the document
+ * index/idices are shown in a navbar tab/menu."* Mounted by
+ * `mountDocumentIndex` in docs-ui.js, which carries why this half is scripted
+ * while the rail's is not.
+ *
+ * IN THE FIXED TOP, and it needs no rule to get there: it is inserted as a
+ * `.side-bar` child, so `.side-bar > * { flex: 0 0 auto }` already makes it
+ * one of the two regions that do not scroll.
+ *
+ * ITS OWN SCROLL, capped. The fixed top must not do to the middle what the
+ * fixed bottom was doing before its cap — and a long page's index is exactly
+ * the content that would. A third of the navbar, and it scrolls beyond that.
+ *
+ * CLOSED ON ARRIVAL, unlike the graphs group. The graphs are what the navbar
+ * is FOR, so they arrive open; this is about one page, and a reader who
+ * wanted the current page's structure is already looking at the page. It is a
+ * `<details>` for the reason every disclosure here is one: keyboard-operable,
+ * announces its own state, no script needed to open it.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-doc-index {
+  /* Published as a property so the collapsed strip can scale it to nothing
+     without restating it — see `--fa-nav-text`. The value is declared once,
+     here, and read twice. */
+  --fa-nav-rest-pad: 0.5rem;
+  width: 100%;
+  /* Yields, for the same reason the footer does and with the same safety: it
+   * scrolls inside its cap. A quarter rather than a third — with all three
+   * regions capped the arithmetic is what squeezed the middle, and this is
+   * the region a reader asked for least. */
+  flex: 0 1 auto;
+  max-height: 25%;
+  padding: var(--fa-nav-rest-pad) 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 0.75rem;
+}
+
+.fa-doc-index__heading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem var(--fa-nav-pad);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fa-doc-index__count {
+  padding: 0 0.375rem;
+  border-radius: 0.625rem;
+  background: rgba(128, 128, 128, 0.28);
+  font-weight: 700;
+}
+
+.fa-doc-index__list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-doc-index__link {
+  display: block;
+  padding: 0.1875rem var(--fa-nav-pad);
+  overflow: hidden;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.fa-doc-index__link:hover,
+.fa-doc-index__link:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* An `h3` under the `h2` it follows. Indented by the SAME step `navbar.ts`
+ * gives a sub-item — `--fa-nav-pad` plus the mark column plus its gap — so a
+ * reader moving between the two surfaces meets one indent, not two. */
+.fa-doc-index__item--sub .fa-doc-index__link {
+  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
+  opacity: 0.7;
+}
+
+/* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
+ *
+ * `harness-tiles.ts` writes `tone` as an ANGLE — 268, 236, 96, 0 — and this
+ * file's own comments say so twice: *"the avatar's declared hue, passed in as
+ * `--fa-tile-tone`"*. Nine rules then fed that angle straight to
+ * `color-mix()` and to a `border-left` shorthand.
+ *
+ * MEASURED IN A BROWSER, 2026-09-22, with a control rather than from the spec:
+ *
+ *     --h: 268; background: color-mix(in oklab, var(--h) 28%, transparent)
+ *       -> rgba(0, 0, 0, 0)          INVALID at computed-value time
+ *     --h: 268; background: hsl(var(--h) 45% 28%)
+ *       -> rgb(69, 39, 104)          works
+ *
+ * So every harness divider rendered with **no background and no left stripe**.
+ * The coloured tabs the owner asked for — *"as if you are opening a giant
+ * tabbed folio"* — had no colour at all, and nothing caught it because an
+ * invalid custom-property substitution fails SILENTLY: no parse error, no
+ * console warning, just the initial value.
+ *
+ * THE TWO LIGHTNESSES ARE THE AVATAR GENERATOR'S OWN, not new ones:
+ * `hsl(<tone> 46% 34%)` light and `hsl(<tone> 42% 72%)` dark, from
+ * `gen-avatars-css.ts` — the same pair `.fa-site-mark--masked` already uses.
+ * Picking a third here would remove one colour vocabulary while adding
+ * another.
+ *
+ * `--fa-tile-on` IS THE ABSENCE, and it is why the saturation is computed
+ * rather than declared. `GENERIC.tone` is **0**, and it means *"a question
+ * mark — no avatar is declared for this kind"*, NOT red. Nine of the fourteen
+ * harnesses are generic today, so saturating hue 0 would paint two thirds of
+ * the navbar red on the strength of a missing declaration. At `0` the
+ * saturation computes to `0%` and the divider is grey, which is what an
+ * absence looks like.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+.fa-harness-tab,
+.fa-harness-section {
+  --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(46% * var(--fa-tile-on, 0)) 34%);
+  /* WHAT GOES ON THE INK, in the same two schemes and derived the same way.
+   *
+   * The ink is a 34%-lightness blue here and a 72% one in dark, so a single
+   * letter colour cannot sit on both — which is the `y8cm` failure this whole
+   * block exists to have ended, and it would have come straight back the
+   * moment a mark was painted at full ink. Tinted rather than pure white or
+   * black so a knocked-out initial still reads as belonging to its hue. */
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 97%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-fa-scheme="light"]) .fa-harness-tab,
+  :root:not([data-fa-scheme="light"]) .fa-harness-section {
+    --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+    --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
+  }
+}
+
+:root[data-fa-scheme="dark"] .fa-harness-tab,
+:root[data-fa-scheme="dark"] .fa-harness-section {
+  --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
+}
+
 .fa-harness-tabs {
   width: 100%;
   margin: 1rem 0 0;
@@ -4017,7 +5066,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   gap: 0.375rem;
   /* A disclosure a low-dexterity reader has to hit. Not the place to
    * economise on target size. */
-  min-height: 2.25rem;
+  --fa-nav-rest-min: 2.25rem;
+  min-height: var(--fa-nav-rest-min);
   padding: 0 0.5rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -4070,8 +5120,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   /* The tab shape: square where it meets the spine, rounded where it sticks
    * out. Horizontally oriented, per the owner's photo turned on its side. */
   border-radius: 0 0.375rem 0.375rem 0;
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 28%, transparent);
-  border-left: 0.375rem solid var(--fa-tile-tone, #888);
+  background: color-mix(in oklab, var(--fa-tile-ink) 28%, transparent);
+  border-left: 0.375rem solid var(--fa-tile-ink);
   color: inherit;
   font-weight: 600;
   text-decoration: none;
@@ -4079,17 +5129,17 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) .fa-harness-tab__body {
-    background: color-mix(in oklab, var(--fa-tile-tone, #888) 34%, transparent);
+    background: color-mix(in oklab, var(--fa-tile-ink) 34%, transparent);
   }
 }
 
 :root[data-fa-scheme="dark"] .fa-harness-tab__body {
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 34%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 34%, transparent);
 }
 
 a.fa-harness-tab__body:hover,
 a.fa-harness-tab__body:focus-visible {
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 48%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 48%, transparent);
   text-decoration: none;
   /* The reach-for gesture, made visible: the tab comes out a little. */
   transform: translateX(0.125rem);
@@ -4100,6 +5150,65 @@ a.fa-harness-tab__body:focus-visible {
    * than no link. */
   opacity: 0.55;
   cursor: default;
+}
+
+/* THE MARK — the harness's avatar, or its initial.
+ *
+ * Sized to `--fa-nav-mark`, the SAME column `navbar.ts` gives its own mark, so
+ * the two surfaces line their labels up at the same x. That is the point of
+ * the shared geometry record: the strip is exactly this column and its two
+ * gutters, on both sides.
+ *
+ * An INITIAL rather than a placeholder glyph when nothing is declared —
+ * `navbar.ts`'s own rule, and the reason is the same one: `603s` reports "no
+ * avatar declared" as a finding elsewhere, and a navbar is not the place to
+ * render a gap as a `?`. Nine of fourteen harnesses take this branch today, so
+ * it is the common case and not the edge. */
+.fa-harness-tab__mark {
+  flex: none;
+  width: var(--fa-nav-mark);
+  height: var(--fa-nav-mark);
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+/* THE THEME AVATAR in a tab: the card art clipped to the cat. Same frame as
+ * the plain mark, same column, so a tab with art and a tab with an initial
+ * line their labels up. The four percentages come from the declaration via
+ * `harness-tiles.ts`; nothing here knows a box. */
+.fa-harness-tab__mark--art {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.1875rem;
+}
+
+.fa-harness-tab__mark--art img {
+  position: absolute;
+  max-width: none;
+}
+
+.fa-harness-tab__mark--initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.1875rem;
+  /* THE TONE AT FULL STRENGTH, with the letter knocked out of it.
+   *
+   * Owner, 2026-09-23: *"no logo on who-iris icon (for now). just WHO blue"*.
+   * who-iris is the only harness with no art, so this rule IS its mark — and
+   * at the 55% mix it carried before, hue 199 arrived as a grey-blue square.
+   * A tone diluted until it is not the colour anybody named is the same as not
+   * having declared one.
+   *
+   * A generic harness still computes to grey: `--fa-tile-on` is `0` for a kind
+   * with no declared avatar, so the saturation resolves to `0%` and this
+   * paints the absence rather than painting hue 0 red. The dilution was never
+   * what made that safe — that block above is. */
+  background: var(--fa-tile-ink);
+  color: var(--fa-tile-ink-on);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .fa-harness-tab__label {
@@ -4156,14 +5265,39 @@ a.fa-harness-tab__body:focus-visible {
   text-decoration: underline;
 }
 
-/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`. Marked
- * with a rule rather than only by opacity, because opacity alone is the same
- * signal this file already uses for "quiet" and would make "declared but
- * unbuilt" indistinguishable from "just a sub-item". */
+/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`.
+ *
+ * The comment here used to argue that opacity alone would make "declared but
+ * unbuilt" indistinguishable from "just a sub-item", and answered it with a
+ * `line-through`. The argument was right and the answer was not: a struck-out
+ * label means REMOVED, and a graph whose viewer has not been built yet has
+ * not been removed from anything. It is now `.fa-harness-graph__note`, which
+ * says which of the four reasons applies in words — a signal that is neither
+ * colour nor typographic convention, and the only one of the three a screen
+ * reader gets for free.
+ *
+ * `cursor: help` went with the `title` it promised. With no tooltip left to
+ * reveal, a help cursor is a promise the row cannot keep.
+ *
+ * NO RATIO IS CLAIMED FOR THE DIM, because none can be: the ink is
+ * `inherit`ed from the theme and this file does not own either end of the
+ * pair. That is the whole reason the state is not left to the dim — 0.45 of
+ * an unknown ink is unmeasurable, so it is decoration here and never the
+ * signal. It is raised to 0.6 so the note beside it stays readable, still
+ * below the 0.72 a live row carries. */
 .fa-harness-graph__link--unlinked {
-  opacity: 0.45;
-  text-decoration: line-through;
-  cursor: help;
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* THE REASON, beside the kind. Its own element so it can be quieter than the
+ * label without the label having to carry two opacities, and inline so the
+ * row keeps the one-line shape every other row in this list has. */
+.fa-harness-graph__note {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+  font-style: italic;
+  opacity: 0.6;
 }
 
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════
@@ -4185,9 +5319,9 @@ a.fa-harness-tab__body:focus-visible {
 .fa-harness-section {
   margin: 1rem 0;
   padding: 0.75rem 1rem;
-  border-left: 0.375rem solid var(--fa-tile-tone, #888);
+  border-left: 0.375rem solid var(--fa-tile-ink);
   border-radius: 0 0.375rem 0.375rem 0;
-  background: color-mix(in oklab, var(--fa-tile-tone, #888) 10%, transparent);
+  background: color-mix(in oklab, var(--fa-tile-ink) 10%, transparent);
 }
 
 .fa-harness-section__title {
@@ -4630,7 +5764,7 @@ a.fa-harness-tab__body:focus-visible {
  * reader who cannot see the outline still has to be told what their arrow keys
  * now do. */
 .fa-board-window[data-fa-moving="true"] {
-  outline: 2px dashed var(--fa-tile-tone, currentColor);
+  outline: 2px dashed var(--fa-tile-ink, currentColor);
   outline-offset: 2px;
 }
 

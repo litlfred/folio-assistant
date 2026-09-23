@@ -21,8 +21,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import {
   readHarnessConfig,
-  resolveDependencyTree,
-  flattenDependencies,
+  orderedDependencies,
   type HarnessConfig,
 } from "../../schemas/harness-config";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
@@ -139,10 +138,9 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
     results.push({ path: globalPo, resolution: "folio" });
   }
 
-  // Step 4: Dependency walk — depth-first, transitive, with cycle detection.
+  // Step 4: Dependency walk — deepest first, each dependency once (bean a1lq).
   // Uses the canonical resolution from schemas/harness-config.ts.
-  const depTree = resolveDependencyTree(folioRoot);
-  const flatDeps = flattenDependencies(depTree);
+  const flatDeps = orderedDependencies(folioRoot);
   for (const resolved of flatDeps) {
     // Skip deps that don't provide translations
     if (

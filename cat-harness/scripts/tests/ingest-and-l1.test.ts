@@ -22,6 +22,7 @@ import {
   appliesTo,
   checkAll,
   checkEntry,
+  declaredFigureLabels,
   entryKind,
   expiredExceptions,
   sidecarDocument,
@@ -226,7 +227,7 @@ function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown
   );
   writeFileSync(
     join(dir, "manifest.jsonld"),
-    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio:SourceDocument"], contains: ["a"], provenance: {} }),
+    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio-assistant-core:SourceDocument"], contains: ["a"], provenance: {} }),
   );
   // Bean `d5f1` shipped, so `image-descriptions` is CHECKED rather than
   // not-derivable, and a fixture standing for "every derivable requirement
@@ -794,5 +795,126 @@ describe("the L1 gate stopped assuming every document is a PDF", () => {
     // PRESENCE, which is the opposite of what it means.
     for (const [kind] of KIND_SIDECAR) expect(kind).not.toBe("undetermined");
     expect(KIND_SIDECAR.length).toBeGreaterThan(1);
+  });
+});
+
+
+describe("a document's figures can be VECTOR, and the gate no longer passes over them — bean `m4xy`", () => {
+  // `pdf-images.py` recovers the RASTER layer. WHO's frameworks, maturity
+  // models and process flows are drawn in vector, so they are never placed —
+  // and `image-descriptions` reported `met` over a document whose every figure
+  // was missing. Measured on `smart-base/library/9789240120747-eng`: SIX
+  // captioned figures declared, ZERO images placed, and the verdict read "0
+  // image(s), 0 describable and all described".
+  const base = { $schema: "folio-document-images/v1", doc_id: "doc" };
+
+  /** A fixture whose first section carries `body`. */
+  const withSection = (body: string, images: unknown): { state: string; detail: string } => {
+    const dir = entry({ images });
+    writeFileSync(join(dir, "sections", "s0.md"), body);
+    const r = checkEntry(dir).requirements.find((q) => q.name === "image-descriptions");
+    return { state: r?.state ?? "(absent)", detail: r?.detail ?? "" };
+  };
+
+  test("a caption is counted at the start of a line; a cross-reference is not", () => {
+    // "see Fig. 3.1" runs mid-sentence and is the same label as its caption,
+    // so counting both would double it. Matching at line start is why the
+    // figure is a LOWER BOUND rather than a measurement.
+    const dir = entry({});
+    writeFileSync(
+      join(dir, "sections", "s0.md"),
+      "Fig. 1. The first one\nsome prose referring to see Fig. 1 and see Fig. 9 inline\nFigure 2.3. Another\n",
+    );
+    writeFileSync(join(dir, "sections", "s1.md"), "Fig. 1. repeated in a list of figures\n");
+    const labels = declaredFigureLabels(join(dir, "sections"));
+    expect([...labels].sort()).toEqual(["1", "2.3"]);
+  });
+
+  test("ZERO images placed, but every declared figure is CAPTIONED — the caption is the handle", () => {
+    // Owner ruling 2026-09-23, over building a vector arm: the caption text is
+    // the reader's handle and the arm is a later bean. This test asserted
+    // `not-derivable` until then, and the change is the ruling rather than a
+    // gate being lowered — the caption has to actually be there, per figure.
+    const r = withSection("Fig. 3. DIIG digital health enterprise architecture framework\n", {
+      ...base,
+      images: [],
+    });
+    expect(r.state).toBe("met");
+    // MET ON THE EVIDENCE, NOT ON A COUNT. The caption is quoted into the
+    // detail, so a reader can see what stood in for the description. `m4xy`
+    // exists because an entry could be "L1-complete, gate-green, and missing
+    // every figure it declares, with nothing anywhere signalling a gap" — a
+    // bare `met` here would rebuild exactly that.
+    expect(r.detail).toContain("DIIG digital health enterprise architecture framework");
+    expect(r.detail).toContain("m4xy");
+  });
+
+  test("a figure with NO caption text is still not-derivable, and is NAMED", () => {
+    // `Fig. 7` with nothing after it is a cross-reference or a caption this
+    // lower bound could not read. Either way nothing describes that figure, so
+    // the caption handle does not reach it and saying otherwise would be the
+    // silent pass this gate exists against.
+    //
+    // Measured on the real corpus 2026-09-23: `9789240093362-eng` declares 18
+    // figures and only THREE are captions. A blanket `met` on "declares
+    // figures" would have passed over fifteen.
+    const r = withSection("Fig. 7 illustrates the maturity model\n", { ...base, images: [] });
+    expect(r.state).toBe("not-derivable");
+    // The LABEL is named, so a reader sees which figure is uncovered rather
+    // than a bare shortfall they cannot act on.
+    expect(r.detail).toContain("Fig. 7");
+    expect(r.detail).toContain("m4xy");
+  });
+
+  test("a caption beats a bare mention of the SAME figure, in either order", () => {
+    // One real caption and three cross-references is a captioned figure. The
+    // handbook's `Fig. 5` is exactly this: "Fig. 5 illustrates the M&E …"
+    // appears before "Fig. 5. Intervention maturity over time".
+    const r = withSection(
+      "Fig. 5 illustrates the M&E framework\nFig. 5. Intervention maturity over time\n",
+      { ...base, images: [] },
+    );
+    expect(r.state).toBe("met");
+    expect(r.detail).toContain("Intervention maturity over time");
+  });
+
+  test("...and NOT `unmet`, because that would be a permanent blocker", () => {
+    // `pn6j`'s failure, which this must not repeat: a requirement no amount of
+    // work can satisfy blocks promotion forever. `not-derivable` is reported
+    // and does not block, which is what makes it safe to be honest.
+    const r = withSection("Fig. 3. A vector diagram\n", { ...base, images: [] });
+    expect(r.state).not.toBe("unmet");
+  });
+
+  test("zero images and NO declared figures stays `met` — a determined empty", () => {
+    // `who-rhr-1806-eng` genuinely places none and declares none. The new
+    // state must not fire on it, or every image-free document reads as gapped.
+    const r = withSection("Prose with no figures at all.\n", { ...base, images: [] });
+    expect(r.state).toBe("met");
+  });
+
+  test("described images still pass, but the detail refuses to claim coverage", () => {
+    // DIIG places 17 and declares 42; the 17 are logos, a photograph and a
+    // barcode. Counts are NOT compared — the MAPS Toolkit declares 4 and
+    // places 162, so `placed >= declared` would read as covered and be wrong.
+    const r = withSection("Fig. 5.6.2. How mHero integrates digital health interventions\n", {
+      ...base,
+      images: [
+        {
+          id: "i1",
+          file: "images/i1.png",
+          role: "figure",
+          basis: { method: "geometry", coverage: 0.4, imagesOnPage: 1, page: 1 },
+          narrative: {
+            text: "A logo.",
+            state: "draft",
+            drafted_by: { kind: "agent", id: "a", model: "m" },
+          },
+        },
+      ],
+    });
+    expect(r.state).toBe("met");
+    expect(r.detail).toContain("declares at least 1 captioned figure");
+    expect(r.detail).toContain("NOT established");
   });
 });

@@ -45,6 +45,16 @@ column), `fac:headerRow`, `fac:extent`.
 Adding a fourth `fac:` term is the moment to stop and ask whether CSVW really
 cannot express it. Usually it can.
 
+> **Known defect, not a pattern to copy — the `fac:` spelling here dangles.**
+> Everywhere else the core namespace's prefix is its stub,
+> `folio-assistant-core` ([`kg-export`](kg-export.md) §"A prefix is the
+> stub"). These keys cannot simply be renamed to match, because a CSVW
+> metadata document may put only `@language` and `@base` in its local
+> `@context` — no prefix of ours can be bound there, under ANY spelling, so
+> a JSON-LD processor reads `fac` as a URI scheme. The fix is absolute IRIs
+> as keys, which changes the document format; it is tracked as its own bean
+> (`792y`) rather than folded into the prefix rename.
+
 ## "As best as can" means three states, never two
 
 The owner's phrase, and this repository's oldest rule wearing different

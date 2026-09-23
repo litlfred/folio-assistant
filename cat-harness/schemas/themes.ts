@@ -317,6 +317,75 @@ const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
     kind: "sticky",
+    id: "architecture",
+    name: "Grumpy cat, architecture",
+    description: "Cloud cream and a drafting slate, behind the cat with the rolled drawings.",
+    palette: {
+      // SAMPLED FROM THE ART, not chosen to match its neighbours: the card was
+      // drawn to a canvas and every pixel binned into a 32-step cube, so these
+      // are the colours the image is actually made of with the share each
+      // occupies.
+      //
+      //   #fdfbf0  35.38%   the thought-cloud cream
+      //   #6a7c73  33.07%   the drafting slate — the second signature colour
+      //   #a6aea8   3.45%   its light edge
+      //   #1a372d   2.32%   the darkest green in the frame
+      //
+      // `ink` on `surface` measures **12.43:1**, past the AAA 7:1 floor the
+      // whole set is held to. `edge` is 5.68:1 against that ink — a divider
+      // rather than a second text colour, which is why the chip rule paints on
+      // `surface` and never on `edge`.
+      surface: "#fdfbf0", ink: "#1a372d", edge: "#a6aea8",
+      // The drafting slate, a third of the frame. NOT the white of the coat or
+      // the hard hat, however much those read as "architect": `accent` is the
+      // priority stripe's hue for `medium`, and a near-white stripe would be
+      // invisible on a cream surface — the same reasoning that keeps
+      // `engineer` off its hi-vis orange, one step along. Clear of the literal
+      // amber and red the high and critical stripes carry, so urgency reads
+      // the same on every board.
+      accent: "#6a7c73",
+    },
+    // NO `backdrop`, AND THAT IS THE WHOLE STORY OF THIS THEME.
+    //
+    // Owner, 2026-09-23: *"create architecture theme"*. The palette above is
+    // real and measured; the art is NOT complete, so the backdrop is withheld
+    // rather than declared against a set that cannot serve it.
+    //
+    // `landing-architecture` declares **laptop and card, and no mobile**.
+    // `resolveThemeBackdrop` refuses a partial set wholesale, and
+    // `themes.test.ts` fails any shipped backdrop that does not resolve all
+    // three — which is exactly what happened when this entry was first written
+    // WITH a backdrop. The gate caught it; that is the gate working.
+    //
+    // The reason the set is short is recorded on the card image itself and in
+    // that test: the third upload was a byte-identical copy of the second, so
+    // the portrait crop was never actually supplied. It is not a file somebody
+    // mislaid — it does not exist.
+    //
+    // A palette-only theme is a real object: it carries an id, a palette and
+    // layouts, and a sticky using it renders palette-only. What it cannot yet
+    // do is supply a backdrop or a navbar avatar, both of which come from the
+    // art.
+    //
+    // WHEN THE PORTRAIT CROP ARRIVES, this is the whole edit — declare
+    // `landing-architecture-mobile` beside its two siblings, then add here:
+    //
+    //     backdrop: {
+    //       imageRole: "landing-architecture",
+    //       scrim: "rgba(253, 251, 240, 0.86)",
+    //       description: "...",
+    //     },
+    //
+    // The scrim is already measured, so it is not a value the next person has
+    // to re-derive: ink over it is **9.02:1** on PURE BLACK and 12.52:1 over
+    // white, swept rather than copied — 0.78 already clears the 7:1 floor at
+    // 7.36:1, and 0.86 buys margin without going past where the other cards
+    // settled.
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",

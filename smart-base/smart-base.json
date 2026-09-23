@@ -1,0 +1,106 @@
+{
+  "_comment": "The WHO SMART Base layer, staged as a top-level directory ahead of becoming its own repository — the same path `who-iris`, `smart-trust` and `smart-immunizations` are already on. The owner settled the location 2026-09-22: \"same as other smart-* now in corpus... we are migrating. want KG assets here, can break apart later. OK to reference smart-* github sources (e.g markdown) per the smart-* harnessing insutrctiots. needs smart-base harness\". Bean `nsbb` had already called for this harness from the other direction — it rules that a per-IG harness should not exist because it adds no new functionality, and that the DAK/IG pipeline belongs in an IG base under a NEW `smart-base` harness. This is that harness. It holds KG ASSETS first — the ingested WHO digital-health corpus, the methodologies read out of it, and the voices derived from it — and takes no position on the pipeline layering, which is `nsbb`'s to settle. THE UPSTREAM TOOLCHAIN IS NOT VENDORED HERE: `WorldHealthOrganization/smart-base` stays the authoritative home of the ~54 Python scripts, and `smart-base-tools` states why — a copy here would be a second, drifting toolchain.",
+  "name": "smart-base",
+  "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against it. Bean `t3n8`.",
+  "title": "SMART Base",
+  "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+  "directories": [
+    {
+      "id": "library",
+      "path": "library/",
+      "dependents": "reproduce",
+      "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "skill": "library-ingestion"
+      }
+    },
+    {
+      "id": "methodologies",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
+      "id": "voices",
+      "path": "skills/voices/",
+      "dependents": "reproduce",
+      "description": "Editorial voice profiles derived from this layer's own `library/` -- `who-digital-health` is the first. Every rule cites `{ libraryId, sectionId, pages, quote }` resolving into `library/`, and `check:voices` refuses one whose citation does not resolve, which is what makes a voice auditable rather than asserted. The id is `voices`, the CONVENTIONAL one, so this overrides the default rather than joining it. Declared in the commit that created its content. Issue #877, bean `7mi0`.",
+      "graphKinds": [
+        "voices"
+      ],
+      "coverage": {
+        "skill": "voice-editorial-review"
+      }
+    },
+    {
+      "id": "processes",
+      "path": "methodologies/processes/",
+      "dependents": "skip",
+      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph kinds and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
+    },
+    {
+      "id": "smart-base-artifact-index",
+      "path": "fhir-artifact-index/",
+      "dependents": "skip",
+      "description": "The published IG's artefact index, reconstructed by `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1). 225 artefacts known, 47 materialized -- the DAK API surface, whose JSON Schemas and OpenAPI have no other home, against resource JSON that does. `dak/` sits INSIDE this directory rather than beside it, so one entry covers both the index and the bytes it points at; a sibling would be an undeclared directory holding the very bytes the index claims to have, which is the `dh4f` shape. NOTHING HERE IS AUTHORED: `ingest:ig:check` re-derives it and a hand-edit is a defect the next check either overwrites or reports. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`.",
+      "graphKinds": [
+        "fhir-artifact-index"
+      ],
+      "coverage": {
+        "skill": "ig-artifact-ingestion"
+      },
+      "readOnly": true,
+      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened. Answered rather than left silent, because absent is NOT a declaration of writability -- a directory that has not answered has asserted nothing, which is why the verdict for silence is `undeclared` and never `false`."
+    },
+    {
+      "id": "tools",
+      "path": "tools/",
+      "dependents": "skip",
+      "description": "smart-base's Tool nodes. The owner, 2026-09-22: \"things like dmn -> fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\", serving \"want to slowly get smart-base back to a more conventional IG state w/o tooling\". THIS REVERSES NOTHING THIS FILE'S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step's own name overruling the layering rule.",
+      "graphKinds": [
+        "tools"
+      ],
+      "coverage": {
+        "skill": "smart-stack-layering"
+      }
+    }
+  ],
+  "_directories_comment": "FIVE entries. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — smart-base",
+      "description": "Cold start for work in this layer: what is ingested rather than authored, what is referenced upstream rather than vendored, and why a voice rule with no resolvable citation is refused."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "smart-base",
+      "description": "What this layer holds, where each document came from, and how to re-derive an entry."
+    }
+  ],
+  "needs": [
+    "fhir-harness"
+  ],
+  "_canonicalUrl_comment": "smart-base's published base, as `sushi-config.yaml` declares it (`canonical: http://smart.who.int/base`). Added 2026-09-22 with `tools/`, because a Tool node's I/O type IRIs are minted against this at load and Zod refuses a relative one. It is READ from upstream rather than chosen here, so it is a fact about smart-base and not a decision about where this staging directory publishes.",
+  "canonicalUrl": "http://smart.who.int/base",
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `fhir-harness`, per the owner's stack ruling. It read `folio-assistant-core` because it was staged (PR #881) BEFORE `fhir-harness` existed, and taking no position on the pipeline layering was that PR's explicit scope. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here."
+}

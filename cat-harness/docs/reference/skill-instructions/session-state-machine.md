@@ -131,3 +131,10 @@ it is enforced.** Not the writer's discipline, not a review, not a convention
 - [`process-state`](process-state.md) — the five detectors for being out of
   process. A session whose view has drifted from its instances is one of them.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Session state machine](../../processes/session-state-machine.html)**.
+
+<img src="../../assets/img/workflows/session-state-machine.svg" alt="BPMN diagram: Session state machine" style="max-width:100%">
+

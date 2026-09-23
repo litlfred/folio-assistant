@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T08:02:10Z
-updated_at: 2026-09-20T08:02:10Z
+updated_at: 2026-09-23T03:55:00Z
 parent: folio-assistant-kupb
 ---
 
@@ -103,3 +103,66 @@ rules, and whether an arbitrary branded PDF does is the open question. Recorded
 in `every-workflow-in-the-repo.md` under the table, where a reader of the
 workflow page meets it.
 
+---
+
+## Wired 2026-09-23 — the gateway is answered, not computed
+
+Owner ruled **"human/agentic judgement at the gateway"** over a declared
+predicate. `ingest-theme.bpmn` is now a call activity of
+`document-ingestion.bpmn`, reached through `Gateway_ThemeSource` —
+*"A theme source? (author's judgement)"*.
+
+**The predicate is deliberately absent, and the diagram says why.** The
+alternative on offer was testable — a captured web deployment, or a document
+that STATES palette and typography rules — and it was refused for the reason
+the owner had already given when withdrawing `xffc`/`d3yq`: *"no formal
+role/theme mapping per se. that is authoring (human/agentic) decision/
+judgement."* An arbitrary branded PDF is not a theme source because a rule says
+so; it is not one because the author says it is not.
+
+**Why a gateway rather than a filter inside the subprocess.** `ingest-theme`
+starts at *"Theme source in hand"* and can refuse as incomplete. Routing every
+document into it would make *"this is not a theme"* and *"this theme is
+malformed"* the same refusal — and the second is a defect while the first is
+the normal case.
+
+### Placement, and the thing that nearly went wrong
+
+`Derive` → `Gateway_ThemeSource` → (yes) `CallActivity_IngestTheme` →
+`BuildKg`; (no) straight to `BuildKg`. It sits before the L1 build because a
+theme is derived content that has to reach the graph.
+
+**It stays in Lane_1 (Ingestion Engine).** The obvious way to make room was to
+drop the call activity below the main line, where `Task_OpenBean` sits — but
+that is **Lane_2, the shared work plan**, and filing a theme ingestion there
+would have said this is a write to the plan rather than the engine asking its
+author a question. So the 7 shapes right of x=940 were shifted +340 instead,
+and the pool and all four lanes widened to match. Lane_1's own documentation
+now says this.
+
+### Two gates caught what review would not have
+
+- **`check:lane-documentation`** and the interpretability test both failed:
+  the two new nodes had DI, flows and documentation, and **no
+  `<bpmn:flowNodeRef>`**. A node can be drawn, connected and rendered while
+  belonging to no lane — which is to say, to no ROLE.
+- Regeneration is not optional and is not one command: `render:bpmn`,
+  `translate-bpmn --extract` (**5 locales**, since a new label is a new
+  translatable string), `processes:viz`, `docs:auto`, `kg:audit`.
+
+### Verified on the rendering, not on the generator
+
+`bun run gates` 127/127, and the built SVG opened: viewBox widened to
+`155 75 2217 730`, all four new labels present, and the branch inside Lane_1's
+y-band (310–415 against 260–440). A green gate set is not a rendered page.
+
+### One thing fixed in passing
+
+`Task_OpenBean` carried `<folio:skill ref="todo-manager" />` **three times**.
+Reduced to one; nothing else about that task changed.
+
+### Still open on this bean
+
+The two themes themselves — `iris-web` (source already on disk in the IRIS
+capture) and `who-wpro-publication` (source is the style guide's own rules).
+This entry wires the process; it does not ingest them.

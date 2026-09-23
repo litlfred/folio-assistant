@@ -12,6 +12,8 @@
  * sidebar, after #791 lands) has to be able to satisfy.
  */
 import { describe, expect, it } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import {
   NAV_COLLAPSED_PX,
@@ -24,6 +26,17 @@ import {
   type NavbarModel,
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
+import { documentIndexOf } from "../lib/navbar.js";
+import {
+  BEGIN,
+  END,
+  NAVBAR_GEOMETRY_MARKER_ERROR,
+  navbarGeometryCssPath,
+  renderNavbarGeometryCss,
+  withGeometry,
+} from "../gen-navbar-geometry-css.js";
+import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
+import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
 const model: NavbarModel = {
@@ -33,8 +46,10 @@ const model: NavbarModel = {
     label: "Graphs",
     items: [
       { href: "../docs/who-iris/", label: "docs", icon: "D" },
-      // Declared with no published viewer — a GAP, drawn as a non-link.
-      { label: "catalogue", icon: "C" },
+      // Declared with no published viewer — a GAP, drawn as a non-link, and
+      // now SAYING which of the four reasons applies. The wording is the
+      // generator's (`inertNote`); nothing in the renderer chooses it.
+      { label: "catalogue", icon: "C", note: "no viewer yet" },
     ],
     collapsible: true,
     open: true,
@@ -123,6 +138,32 @@ describe("three regions, and only the middle one scrolls", () => {
     // by default, because a navbar whose content arrives folded looks empty.
     const html = navbarHtml(model);
     expect(region(html, "fa-nav-graphs")).toContain('<details class="fa-nav-group" open>');
+  });
+
+  it("an inert row SAYS why, in text a screen reader gets for free", () => {
+    // THIS IS THE ASSERTION THAT WAS MISSING, and its absence is what let the
+    // two navbars diverge. The Jekyll sidebar said why with
+    // `title="declared, with no published viewer"` on a `<span>` — hover-only,
+    // no keyboard path, not reliably announced — and this rail said nothing
+    // whatever: `opacity:.55` and no words, state carried by contrast alone.
+    // Both are `gjli`; the fix for both is that the reason is CONTENT.
+    const graphs = region(navbarHtml(model), "fa-nav-graphs");
+    expect(graphs).toContain('<span class="fa-nav-note">no viewer yet</span>');
+    // Inside the same element as the label, so it is read as one row rather
+    // than as a label and a detached aside.
+    expect(graphs).toMatch(/<span class="fa-nav-dead">.*?catalogue.*?no viewer yet.*?<\/span>/s);
+    // NOT `aria-disabled`, and this is the owner's "so it does not read as a
+    // control": nothing here is disabled, because nothing here is a control.
+    // Marking a `<span>` disabled announces a widget that does not exist.
+    expect(graphs).not.toContain("aria-disabled");
+    // And not `title` either — the thing that was already tried.
+    expect(graphs).not.toContain("title=");
+  });
+
+  it("a row that OPENS carries no note — only an inert row owes a reason", () => {
+    const graphs = region(navbarHtml(model), "fa-nav-graphs");
+    const docs = graphs.slice(graphs.indexOf("../docs/who-iris/"));
+    expect(docs.slice(0, docs.indexOf("</a>"))).not.toContain("fa-nav-note");
   });
 
   it("a declared graph with NO viewer is listed, as a non-link", () => {
@@ -359,10 +400,391 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     expect(kinds()).toEqual([...kinds()].sort());
   });
 
+  it("carries the generator's REASON onto the rows that have no href", () => {
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([
+        ["catalogue", { note: "no viewer yet" }],
+        ["themes", { note: "staging only" }],
+      ]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.note).toBe("no viewer yet");
+    // TWO ROWS, TWO REASONS. One wording for every inert row is the defect
+    // this replaced — `title="declared, with no published viewer"` was wrong
+    // for the staging-only and render-exempt cases, which are not gaps.
+    expect(got.find((i) => i.label === "themes")?.note).toBe("staging only");
+    // A kind the generator said nothing about renders as it always did: grey,
+    // and making no claim about why. The honest third state.
+    expect(got.find((i) => i.label === "skills")?.note).toBeUndefined();
+  });
+
+  it("never labels a row that OPENS, even if a stale reason is passed for it", () => {
+    // The href wins. A `note` left behind for a kind whose viewer has since
+    // been published would otherwise caption a working link "no viewer yet" —
+    // and the note's whole job is to be true.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["docs", { note: "no viewer yet" }]]),
+    );
+    expect(got.find((i) => i.label === "docs")?.note).toBeUndefined();
+  });
+
+  it("links a kind whose viewer the HANDLER published — `pk2s`", () => {
+    // The defect: who-iris's `catalogue` drew as a grey row over a page that
+    // exists. `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes on
+    // `gh-pages`, measured 2026-09-23 — the rail was losing a working link.
+    //
+    // The mount table cannot see it. `mountable()` requires an `index.html`
+    // in the instance's own directory, and `who-iris/catalogue/` holds DATA.
+    // The page that renders it is the cat-harness HANDLER's, and a handler's
+    // viewer is never a mount.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["catalogue", { href: "../cat-harness/catalogue/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.href).toBe("../cat-harness/catalogue/who-iris/");
+    // And it is a LINK, so it owes no explanation.
+    expect(got.find((i) => i.label === "catalogue")?.note).toBeUndefined();
+  });
+
+  it("the MOUNT TABLE wins where it has an answer — the owner's order, not a tie-break", () => {
+    // *"cliking shoud go to folio view, not the schema viweer."* A mount is
+    // the instance presenting itself; the handler's viewer is cat-harness's
+    // default rendering of the same graph. Both exist for `library`, and the
+    // instance's own route is the one a reader gets.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["library", "../who-iris/"]]),
+      new Map([["library", { href: "../cat-harness/library/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "library")?.href).toBe("../who-iris/");
+  });
+
   it("returns EMPTY for an instance that declares nothing readable", () => {
     // Not a throw and not a guess. An unparseable declaration is
     // `kg:schema:check`'s finding, not this script's; here it is an empty
     // middle, and the caller still renders the root and the harnesses.
     expect(declaredGraphs("does-not-exist", new Map())).toEqual([]);
+  });
+});
+
+describe("the geometry is stated ONCE — `sjic`", () => {
+  // The defect this guards was invisible to a suite that had a test on each
+  // side: `navbar.ts` asserted its own numbers and `sidebar-strip.test.ts`
+  // asserted `docs-ui.css`'s, and they were 40px against 56px at rest.
+  // DERIVED, not spelled out. `site-dir-single-answer` refuses a literal site
+  // root anywhere in source, including here — and it caught this file's first
+  // draft, which is the gate working: a test that hardcodes `docs/` is a
+  // second answer to the question `siteDirFor` exists to answer, and it goes
+  // on passing against a path nothing serves.
+  const INSTANCE = instanceRootFor(import.meta.dir);
+  const uiCss = readFileSync(join(INSTANCE, navbarGeometryCssPath(INSTANCE)), "utf8");
+  // The generated REGION, sliced out of the authored stylesheet it now lives
+  // in. See the "self-sufficient" spec below for why it is a region rather
+  // than a second file.
+  const geometryCss = uiCss.slice(uiCss.indexOf(BEGIN), uiCss.indexOf(END) + END.length);
+
+  it("the generated stylesheet carries the module's own numbers", () => {
+    expect(geometryCss).toBe(renderNavbarGeometryCss());
+  });
+
+  it("the rail's px and the sidebar's rem are THE SAME LENGTH", () => {
+    // The whole bean in one assertion. Read the rem out of the generated file
+    // rather than restating it, or this test becomes a third copy.
+    const rem = (name: string): number => {
+      const m = new RegExp(`--fa-nav-${name}:\\s*([0-9.]+)rem`).exec(geometryCss);
+      expect({ name, found: m !== null }).toEqual({ name, found: true });
+      return Number(m![1]) * 16;
+    };
+    expect(rem("collapsed")).toBe(NAV_COLLAPSED_PX);
+    expect(rem("open")).toBe(NAV_OPEN_PX);
+    expect(rem("mark")).toBe(NAV_GLYPH_PX);
+  });
+
+  it("defines every width ONLY inside the generated region", () => {
+    // The duplication this bean exists to end, checked from the other side: a
+    // hand-authored definition anywhere outside the fences is the second copy
+    // coming back.
+    //
+    // NOT "exactly once" — the first draft asserted that and was wrong about
+    // the CSS rather than finding a bug in it. `--fa-nav-open` is defined
+    // TWICE on purpose, at `:root` and again inside the wide media query,
+    // because the theme widens its own sidebar there. The invariant is about
+    // WHERE a definition may appear, not how many there are.
+    const authored = uiCss.slice(0, uiCss.indexOf(BEGIN)) + uiCss.slice(uiCss.indexOf(END));
+    for (const prop of ["--fa-nav-collapsed", "--fa-nav-open", "--fa-nav-mark", "--fa-nav-pad"]) {
+      expect({ prop, definedOutsideTheRegion: new RegExp(`${prop}:\\s*[0-9]`).test(authored) }).toEqual({
+        prop,
+        definedOutsideTheRegion: false,
+      });
+      expect({ prop, definedInside: new RegExp(`${prop}:\\s*[0-9]`).test(geometryCss) }).toEqual({
+        prop,
+        definedInside: true,
+      });
+    }
+    expect(uiCss).toContain("var(--fa-nav-collapsed)");
+  });
+
+  it("docs-ui.css is SELF-SUFFICIENT — the region travels with it", () => {
+    // WHY A REGION AND NOT A SECOND FILE, and it cost a debugging session.
+    //
+    // The first version generated `navbar-geometry.css` beside docs-ui.css and
+    // linked it from `head_custom.html`. That made docs-ui.css depend on a
+    // file 23 sources inline it WITHOUT — every e2e fixture that builds a page
+    // from `readFileSync(docs-ui.css)`. Those pages got
+    // `width: var(--fa-nav-collapsed)` with the property undefined, which is
+    // INVALID AT COMPUTED-VALUE TIME and therefore silent: the sidebar took
+    // `auto` width, `.side-bar + .main` lost its margin, the main column
+    // landed on top of the fixed sidebar, and a11y clicks timed out against a
+    // button that was visible, enabled and stable throughout.
+    //
+    // Patching 23 fixtures would have been 23 places to forget. One
+    // self-sufficient stylesheet is none.
+    expect(uiCss.indexOf(BEGIN)).toBeGreaterThanOrEqual(0);
+    expect(uiCss.indexOf(END)).toBeGreaterThan(uiCss.indexOf(BEGIN));
+    // Before every rule that reads it, or the cascade order stops being true.
+    expect(uiCss.indexOf(END)).toBeLessThan(uiCss.indexOf("var(--fa-nav-collapsed)"));
+  });
+
+  it("refuses an unterminated region rather than guessing where it ends", () => {
+    // A wrong guess eats authored CSS, which is the one outcome a generator
+    // over a hand-written file must never have.
+    expect(() => withGeometry(`${BEGIN}\n:root{}\n/* no end */`)).toThrow(
+      NAVBAR_GEOMETRY_MARKER_ERROR,
+    );
+  });
+
+  it("is idempotent — regenerating replaces the region, never stacks it", () => {
+    const once = withGeometry("body{}");
+    expect(withGeometry(once)).toBe(once);
+    expect([...withGeometry(once).matchAll(/navbar-geometry:begin/g)]).toHaveLength(1);
+  });
+
+  it("the strip is the mark and its two gutters, derived either way", () => {
+    expect(NAV_COLLAPSED_PX).toBe(NAV_PAD_PX * 2 + NAV_GLYPH_PX);
+  });
+});
+
+describe("the document index — `documentIndexOf`", () => {
+  const page = (body: string) => `<html><body>${body}</body></html>`;
+
+  it("takes h2 and h3 that carry an id, nesting the h3s", () => {
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
+    );
+    expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
+      ["#a", "Alpha", 0],
+      ["#b", "Beta", 1],
+      ["#c", "Gamma", 0],
+    ]);
+  });
+
+  it("SKIPS a heading with no id — it is not a destination", () => {
+    // `pb04` one layer in: a fragment link to a heading with no id goes
+    // nowhere, and a dead row invites a click and then reads as broken.
+    const g = documentIndexOf(page(`<h2 id="a">Alpha</h2><h2>Nowhere</h2><h2 id="c">Gamma</h2>`));
+    expect(g?.items.map((i) => i.label)).toEqual(["Alpha", "Gamma"]);
+  });
+
+  it("ignores h1 and h4 — the title, and past where an index helps", () => {
+    const g = documentIndexOf(
+      page(`<h1 id="t">Title</h1><h2 id="a">A</h2><h4 id="d">D</h4><h2 id="b">B</h2>`),
+    );
+    expect(g?.items.map((i) => i.label)).toEqual(["A", "B"]);
+  });
+
+  it("strips markup and entities out of a heading's text", () => {
+    const g = documentIndexOf(page(`<h2 id="a">A <code>b&amp;c</code></h2><h2 id="z">Z</h2>`));
+    expect(g?.items[0]!.label).toBe("A b&c");
+  });
+
+  it("is ABSENT below two rows, never an empty or one-row menu", () => {
+    // Same rule as the harnesses region: an empty disclosure invites a click
+    // that does nothing, and a "Contents" holding the one section the reader
+    // is looking at is that defect with a row in it.
+    expect(documentIndexOf(page(`<p>no headings</p>`))).toBeUndefined();
+    expect(documentIndexOf(page(`<h2 id="a">Only</h2>`))).toBeUndefined();
+  });
+
+  it("`injectRail` reads it off the page it is given", () => {
+    // Not passed in: the mount loops over hundreds of files, and the other
+    // shape invites the right nav carrying the previous page's contents.
+    const html = injectRail(page(`<h2 id="a">Alpha</h2><h2 id="b">Beta</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(html).toContain("Alpha");
+    expect(html).toContain('href="#b"');
+  });
+
+  it("a page with nothing to index gets NO index region", () => {
+    const html = injectRail(page(`<p>flat</p>`), { instance: "who-iris", toRoot: "..", links: [] })!;
+    // Asserted on the FIXED TOP, not on the page: `fa-nav-group` is also the
+    // graphs group's class and that region always renders. The first draft of
+    // this test checked the whole document and failed for that reason — which
+    // is the assertion being wrong, not the code.
+    expect(region(html, "fa-nav-top")).not.toContain("fa-nav-group");
+    expect(html).toContain("fa-nav-graphs");
+  });
+
+  it("sits in the FIXED top, with the instance", () => {
+    const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "who-iris",
+      toRoot: "..",
+      links: [],
+    });
+    expect(region(html!, "fa-nav-top")).toContain('href="#a"');
+    expect(region(html!, "fa-nav-graphs")).not.toContain('href="#a"');
+  });
+});
+
+describe("a declared avatar region crops the mark — `603s`", () => {
+  const withRegion = (region?: { x: number; y: number; w: number; h: number }) =>
+    navbarHtml({
+      instance: "i",
+      graphs: { label: "Graphs", items: [] },
+      harnesses: {
+        label: "Harnesses",
+        items: [{ href: "/x", label: "X", avatar: { src: "/a.png", ...(region ? { region } : {}) } }],
+      },
+    });
+
+  it("an avatar with NO region is the plain image it always was", () => {
+    const h = withRegion();
+    expect(h).toContain('<img src="/a.png"');
+    expect(h).not.toContain("fa-nav-crop");
+  });
+
+  it("scales by 1/w and 1/h and offsets by -x and -y of the SCALED image", () => {
+    // `603s`'s arithmetic. A half-width, half-height box at (0, 0.46) — the
+    // measured `landing-card` crop — doubles the image and lifts it 92%.
+    const h = withRegion({ x: 0, y: 0.46, w: 0.5, h: 0.5 });
+    expect(h).toContain("width:200%");
+    expect(h).toContain("height:200%");
+    expect(h).toContain("left:0%");
+    expect(h).toContain("top:-92%");
+  });
+
+  it("clips, and the frame is a positioning context", () => {
+    const css = navbarCss();
+    expect(css).toContain(".fa-nav-crop{position:relative;overflow:hidden");
+    // Without these the `img` rule's fixed width and height fight the inline
+    // percentages and the crop silently does nothing.
+    expect(css).toContain(".fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}");
+  });
+
+  it("the region is stated in PERCENTAGES, so it survives a mark resize", () => {
+    const h = withRegion({ x: 0.25, y: 0.25, w: 0.25, h: 0.25 });
+    expect(h).not.toContain("px;");
+    expect(h).toContain("width:400%");
+    expect(h).toContain("left:-100%");
+  });
+});
+
+describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () => {
+  // Owner, 2026-09-22: *"fix the .md paths in the harness tabs too."*
+  //
+  // Swept with a HEAD request per link against a local build: 3 of 31 distinct
+  // harness-tab links 404'd, all three `index.md`. The conversion had handled
+  // `.html` and passed `.md` through untouched.
+
+  it("an index leaf addresses as its directory — either extension", () => {
+    expect(publishedUrlOf("processes/index.md")).toBe("/processes/");
+    expect(publishedUrlOf("processes/index.html")).toBe("/processes/");
+  });
+
+  it("any OTHER page addresses as itself, with `.html`", () => {
+    // This is the row that stops the obvious fix from being right. Stripping
+    // `.md` would give `/tool-graph/`, which is a 404 — measured against the
+    // built site, where `/tool-graph.html` is 200 and `/tool-graph/` is not.
+    expect(publishedUrlOf("tool-graph.md")).toBe("/tool-graph.html");
+    expect(publishedUrlOf("subgraph-viewers.md")).toBe("/subgraph-viewers.html");
+  });
+
+  it("a directory is already a URL and is left alone", () => {
+    expect(publishedUrlOf("cat-harness/library/cat-harness/")).toBe("/cat-harness/library/cat-harness/");
+  });
+
+  it("does not mistake a mid-path `index` for the leaf", () => {
+    // `.../index/skills/...` is a real shape here — the docs-auto tree — and a
+    // rule anchored anywhere but the end would eat a directory called `index`.
+    expect(publishedUrlOf("cat-harness/docs-auto/index/skills/")).toBe(
+      "/cat-harness/docs-auto/index/skills/",
+    );
+  });
+
+  it("no harness tab link ends in `.md`, over the REAL committed data", () => {
+    // The regression guard, run over what actually ships rather than over a
+    // fixture: a fixture would have passed throughout the defect.
+    // Derived, never spelled out — `site-dir-single-answer` refuses a literal
+    // site root anywhere in source, and it caught this file once already.
+    const root = instanceRootFor(import.meta.dir);
+    const data = JSON.parse(
+      readFileSync(join(root, siteDirFor(root), "_data", "harness.json"), "utf8"),
+    ) as { harnesses: { name: string; visualisations?: { kind: string; path?: string }[] }[] };
+    const offenders = data.harnesses.flatMap((h) =>
+      (h.visualisations ?? [])
+        .filter((v) => v.path?.endsWith(".md"))
+        .map((v) => `${h.name}:${v.kind} -> ${v.path}`),
+    );
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe("the crop is ONE sum, and two renderers do it", () => {
+  /**
+   * `solveCrop` solves a declared `avatarRegion` for the Jekyll sidebar, where
+   * the consumer is Liquid; `mark()` solves the same region inline for a
+   * mounted page. The arithmetic is `603s`'s and it is written out twice,
+   * which is the shape that let the navbar widths be stated twice with a test
+   * per copy — both green, and disagreeing (`sjic`).
+   *
+   * Nothing here says the arithmetic is RIGHT; `schemas/avatar-region.test.ts`
+   * owns the declaration and this file's other tests own the markup. What it
+   * says is that the two surfaces cannot drift apart silently, which is the
+   * failure neither of those would notice.
+   */
+  const regions = [
+    // who-iris: the WHO emblem cut out of a 581x178 emblem-and-wordmark.
+    { x: 0, y: 0, w: 0.3064, h: 1 },
+    { x: 0, y: 0, w: 1, h: 1 },
+    { x: 0.25, y: 0.46, w: 0.5, h: 0.5 },
+    // A third that divides badly on purpose: 1/0.3 is not representable, and
+    // agreement has to survive the rounding rather than dodge it.
+    { x: 0.1, y: 0.1, w: 0.3, h: 0.3 },
+  ];
+
+  /** What the rail actually writes, read back off its own markup. */
+  function railCrop(r: { x: number; y: number; w: number; h: number }) {
+    const html = navbarHtml({
+      instance: "x",
+      root: { href: "./", label: "x", avatar: { src: "m.svg", region: r } },
+      graphs: { label: "Graphs", items: [] },
+      harnesses: { label: "Harnesses", items: [] },
+    });
+    const style = /style="(width:[^"]+)"/.exec(html)?.[1] ?? "";
+    const num = (k: string) => Number(new RegExp(k + ":([-0-9.]+)%").exec(style)?.[1]);
+    return { width: num("width"), height: num("height"), left: num("left"), top: num("top") };
+  }
+
+  for (const r of regions) {
+    it(`agrees on ${JSON.stringify(r)}`, () => {
+      expect(railCrop(r)).toEqual(solveCrop(r));
+    });
+  }
+
+  it("the whole image is the identity crop, not a no-op that skips the branch", () => {
+    // A renderer that treated w=h=1 as "no crop" would agree with the other by
+    // accident on every other case and diverge on this one.
+    expect(solveCrop({ x: 0, y: 0, w: 1, h: 1 })).toEqual({
+      width: 100,
+      height: 100,
+      left: 0,
+      top: 0,
+    });
   });
 });

@@ -10,7 +10,7 @@ parent: folio-assistant-zzmr
 ---
 
 
-Route B of `folio-assistant-3lbz` (`fsh-guts/proposals/zod-schemas-as-tools.md`),
+Route B of `folio-assistant-3lbz` (`cat-harness/docs/proposals/zod-schemas-as-tools.md`),
 authorised by the owner as "route B y".
 
 ## What was asked, and what was built

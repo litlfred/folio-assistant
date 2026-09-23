@@ -66,11 +66,32 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Isolate",
+          "detail": "\"3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Extract",
+          "detail": "\"4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
+    "pass": 11,
+    "fail": 1,
     "n/a": 6,
     "unknown": 0
   }

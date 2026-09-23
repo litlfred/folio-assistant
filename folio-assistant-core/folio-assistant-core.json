@@ -108,6 +108,15 @@
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "voice-authoring-guidance"
       }
+    },
+    {
+      "id": "core-tools",
+      "path": "tools/",
+      "dependents": "skip",
+      "description": "The content layer's Tool nodes. Declared 2026-09-22 with the first one, `folio-changeset` (bean jwox, epic q4jm), which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery (bean p0za, owner ruling 2026-09-22), never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
+      "graphKinds": [
+        "tools"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

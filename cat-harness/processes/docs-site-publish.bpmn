@@ -75,7 +75,7 @@
     <bpmn:task id="Task_Restore" name="Restore the OPEN PRs'&amp;#10;staging previews">
       <bpmn:extensionElements>
         <folio:skill ref="feature-staging"/>
-      </bpmn:extensionElements>
+      <folio:no-call reason="Re-deploys EVERY open PR's preview after a publish — a loop over many previews. A call runs feature-staging once, for one PR, from its first start event."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
