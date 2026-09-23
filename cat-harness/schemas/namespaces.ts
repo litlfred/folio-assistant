@@ -48,6 +48,31 @@
  * and that does not change.
  */
 import { type TermLayer, termLayer } from "./vocabulary";
+// The VALUES live in a code list, not here (owner, 2026-09-23: "list of codes
+// and corresponding narrative desc and source should be part of a
+// node/asset"). Each code there carries what the namespace names and where
+// the decision came from; this module only names them for callers. A static
+// JSON import rather than the declaration resolver, because `cat-harness.ts`
+// imports this module and the resolver lives there — reaching back would be a
+// cycle. `check:code-lists` validates the file against its schema.
+// READ, not `import`ed: Node's ESM loader (Playwright runs under it) refuses a
+// JSON import without `with { type: "json" }`, and this repository's
+// `module: ES2022` cannot spell that attribute. Bun accepted the bare import,
+// so every local run passed while the e2e job could not load the module.
+import { readFileSync } from "node:fs";
+
+const ownNamespaces = JSON.parse(
+  readFileSync(new URL("../code-lists/own-namespaces.json", import.meta.url), "utf-8"),
+) as { codes: { code: string; value?: string }[] };
+
+/** One of our namespaces, by its code in `code-lists/own-namespaces.json`. */
+export function ownNamespace(code: string): string {
+  const c = ownNamespaces.codes.find((x) => x.code === code);
+  if (c?.value === undefined) {
+    throw new Error(`code-lists/own-namespaces.json has no namespace "${code}" — this module cannot name it`);
+  }
+  return c.value;
+}
 
 /**
  * The namespace that WAS — kept only so the vocabulary document can name the
@@ -58,7 +83,7 @@ import { type TermLayer, termLayer } from "./vocabulary";
  * document that CARRIES all three vocabularies, which is a different thing
  * from a namespace terms hang off.
  */
-export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
+export const LEGACY_FOLIO_NS = ownNamespace("legacy-folio");
 
 /**
  * One namespace per LAYER, because a term belongs to whatever declares it.
@@ -81,9 +106,9 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  * that after separation each namespace is already the IRI its own instance
  * publishes at and nothing has to move a second time.
  */
-export const CAT_BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/bootstrap/ns#";
-export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
-export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#";
+export const CAT_BOOTSTRAP_NS = ownNamespace("cat-bootstrap");
+export const CAT_HARNESS_NS = ownNamespace("cat-harness");
+export const CORE_NS = ownNamespace("folio-assistant-core");
 
 /**
  * The XML namespace our BPMN EXTENSION elements bind to — `folio:skill`,
@@ -107,7 +132,7 @@ export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assista
  * three layer namespaces, so every IRI this project mints is under a domain
  * it controls.
  */
-export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
+export const FOLIO_BPMN_NS = ownNamespace("folio-bpmn");
 
 /**
  * The spelling that was never ours, kept so a gate can NAME it rather than
@@ -119,7 +144,7 @@ export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
  * this, the drift read as two undeclared external specifications and the
  * finding told the reader to go and write records for them.
  */
-export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
+export const LEGACY_FOLIO_BPMN_NS = ownNamespace("legacy-folio-bpmn");
 
 /**
  * The `targetNamespace` every diagram under `processes/` declares: the
@@ -143,7 +168,19 @@ export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
  * Bootstrap's diagrams use `…/bootstrap/workflows` on purpose: a different
  * instance, so a different set of process ids.
  */
-export const WORKFLOWS_NS = "https://litlfred.github.io/folio-assistant/workflows";
+export const WORKFLOWS_NS = ownNamespace("workflows");
+
+/** The `@base` emitted content documents resolve relative ids against — ours, and not a vocabulary. */
+export const FOLIO_BASE = ownNamespace("folio-base");
+
+/**
+ * Every IRI this project mints, active or retired — the whole
+ * `own-namespaces` code list. A reconciler asks this, not a hand list, whether
+ * a namespace is OURS (spelt one way) or an external one (needs a record).
+ */
+export const OWN_NAMESPACE_VALUES: readonly string[] = ownNamespaces.codes.flatMap((c) =>
+  c.value === undefined ? [] : [c.value],
+);
 
 /** Every XML namespace this project mints for itself. */
 export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;

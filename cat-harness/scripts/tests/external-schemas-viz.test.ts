@@ -98,9 +98,14 @@ describe("the page a reader gets — over the REAL registry", () => {
     const rendered = page(specs, used, namespacesInUse());
     const committed = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), pageRelPath(REPO)!), "utf-8");
     for (const text of [rendered, committed]) {
-      const targets = new Set([...text.matchAll(/<a id="([^"]+)"><\/a>/g)].map((m) => m[1]));
+      // A target is a kramdown heading id (`### Title {#id}`), the form the
+      // generator emits since bean `uknu`. A bare `<a id>` beside the heading
+      // collided with kramdown's own slug ("HL7 FHIR" -> `hl7-fhir`, twice).
+      const targets = new Set([...text.matchAll(/\{#([^}\s]+)\}/g)].map((m) => m[1]));
       const links = [...text.matchAll(/\]\(#([^)]+)\)/g)].map((m) => m[1]);
       expect(links.length).toBe(specs.length);
+      // One element per id: no separate anchor may duplicate a heading's id.
+      expect([...text.matchAll(/<a id="([^"]+)"><\/a>/g)].map((m) => m[1])).toEqual([]);
       expect(links.filter((l) => !targets.has(l))).toEqual([]);
     }
   });

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 258,
+      "count": 263,
       "unit": "beans"
     }
   },
@@ -107,6 +107,20 @@
       "file": "beans/defs/folio-assistant-0lmb--content-model-block-kinds-adapters-and-the-authori.md"
     },
     {
+      "id": "folio-assistant-0ytk",
+      "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:29:49Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
+      "preview": "Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagrams as bare strings: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset. can we use existing tools for new Skills?\" Chosen: all of adjudication answers, JSON-LD namespaces (2j09), our own namespaces; published through the exi",
+      "file": "beans/defs/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md"
+    },
+    {
       "id": "folio-assistant-10uc",
       "title": "STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)",
       "status": "in-progress",
@@ -119,6 +133,20 @@
       "updatedAt": "2026-09-22T18:09:11Z",
       "preview": "## What this is\n\nStream 2 of 3 in the 2026-09-22 consolidation (see the sibling claims under\n`vuip` and `yg29` for the stall measurement that prompted it). It owns **GOAL 2\n(`p5wm`) — 39 open beans**, the largest single group in the store.\n\nThis is the stream where the artefact a reader judges actually appears: the LHS\nnavbar, the visualisers, the stickies, avatars and themes.\n\n## What this stream",
       "file": "beans/defs/folio-assistant-10uc--stream-23-goal-2-the-rendered-surface-navbar-visua.md"
+    },
+    {
+      "id": "folio-assistant-12s9",
+      "title": "PREFIX = DECLARING SUBGRAPH: rename the folio: BPMN prefix and folio-*/v1 schema ids to the path of the Subgraph that declares them (owner ruling iwtn #1)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:03:10Z",
+      "updatedAt": "2026-09-23T21:03:10Z",
+      "preview": "## Owner ruling, 2026-09-23 (bean iwtn, ruling 1 of 4)\n\n> use `<sub>:` as prefix when assets are declared/instantiated in `<sub>`. what patterns for sub-sub-graphs? `<path>:<in>:<graph>:` or so?\n\nA nested Subgraph uses its **path of Subgraph ids joined with dots**. XML forbids a colon inside a prefix, so `a:b:c:` cannot be used. The owner chose this pattern on 2026-09-23 over \"Harness name only\" a",
+      "file": "beans/defs/folio-assistant-12s9--prefix-declaring-subgraph-rename-the-folio-bpmn-pr.md"
     },
     {
       "id": "folio-assistant-12ws",
@@ -237,14 +265,14 @@
     {
       "id": "folio-assistant-2j09",
       "title": "The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T11:48:29Z",
-      "updatedAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
       "preview": "Split out of the 2026-09-22 fix to `external-schemas.ts`, deliberately not taken there because it is a much larger decision than the bug beside it.\n\n## The fix that was taken\n\n`unusedNamespaces` was reporting Dublin Core — 43 real uses, live in the glossary's own `@context` — as *\"a record outliving its dependency\"*, because `namespacesInUse()` reads **only** `processes/*.bpmn|dmn`. A vocabulary c",
       "file": "beans/defs/folio-assistant-2j09--the-undeclared-namespace-check-reads-only-bpmn-xml.md"
     },
@@ -333,6 +361,20 @@
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
+      "id": "folio-assistant-319n",
+      "title": "ZOD IS IN CAT-HARNESS: move bootstrap-tools' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:17Z",
+      "updatedAt": "2026-09-23T22:52:17Z",
+      "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
+      "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
+    },
+    {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
       "status": "in-progress",
@@ -375,6 +417,20 @@
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
     },
     {
+      "id": "folio-assistant-46nf",
+      "title": "B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:20:00Z",
+      "updatedAt": "2026-09-23T22:20:00Z",
+      "preview": "Part of s4sp (plan B). The 35 role voice sentences become one-rule voice profiles in folio-assistant-core (activeIn.roles to the cat-harness role); the 107 useCases become scenarios/stories.json UserStory nodes pointing at their role. Role.skills typed SkillNameSchema. kg-audit role-declares-voice and role-has-use-cases replaced by role-has-story and story-role-resolves; check:voices resolves acti",
+      "file": "beans/defs/folio-assistant-46nf--b2-1168-voices-and-user-stories-point-at-their-rol.md"
+    },
+    {
       "id": "folio-assistant-4ccr",
       "title": "WIREFRAME FINDINGS: usability and accessibility defects the as-is wireframes observed (#1023)",
       "status": "todo",
@@ -391,7 +447,7 @@
     {
       "id": "folio-assistant-4d22",
       "title": "A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-ahvw",
@@ -1247,7 +1303,7 @@
     {
       "id": "folio-assistant-byql",
       "title": "Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
@@ -1261,14 +1317,14 @@
     {
       "id": "folio-assistant-bzre",
       "title": "BPMN ARROW CROSSES THE DIAGRAM: document-ingestion's gap-to-derive edge routes under every task instead of back along the lane",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T20:00:15Z",
-      "updatedAt": "2026-09-23T20:00:15Z",
+      "updatedAt": "2026-09-23T20:41:46Z",
       "preview": "Owner, 2026-09-23, on the rendered `document-ingestion` diagram: **\"bad\narrow\"**, then the rule: **\"keep rectilinear if possible, no overlapping.\"**\n\n## What is wrong\n\nThe `gap` flow from *Record the gap as a bean* back to *Derive content from the\nassets* is drawn as ONE LONG DIAGONAL crossing the full width of the process,\npassing beneath every task in the lane. It is an ordinary loop-back and it",
       "file": "beans/defs/folio-assistant-bzre--bpmn-arrow-crosses-the-diagram-document-ingestions.md"
     },
@@ -1571,14 +1627,14 @@
     {
       "id": "folio-assistant-fz39",
       "title": "DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:00:43Z",
-      "updatedAt": "2026-09-23T18:00:43Z",
+      "updatedAt": "2026-09-23T21:53:32Z",
       "preview": "Found by the ojcx rehearsal, 2026-09-23. A document folio's `table` block, with its rows written as a Markdown table in `<block>.md`, renders in the staging site as a paragraph of raw `| a | b |` text, not as a `<table>`.\n\n**Cause:** `cat-harness/scripts/build-document-site.ts` runs `remark().use(remarkHtml)` without GitHub-flavoured Markdown, so pipe tables, strikethrough and task lists are not p",
       "file": "beans/defs/folio-assistant-fz39--document-site-markdown-tables-render-as-raw-pipe-t.md"
     },
@@ -2653,6 +2709,20 @@
       "file": "beans/defs/folio-assistant-s0ki--uploads-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-s36s",
+      "title": "SWEEP COVERAGE: a corpus sweep that silently under-matches reports a clean corpus — found while sweeping for exactly that",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:14:41Z",
+      "updatedAt": "2026-09-23T22:14:57Z",
+      "preview": "Four findings this session had prescribed actions that could not clear them —\n`o5qj`, `thux`, `vq8g`, `7umv`. Four is a class, so `generalise-the-fix` Move 1.2\nsays to sweep for siblings rather than stop at the fourth instance.\n\n## The sweep\n\nEvery `action:` in `cat-harness/test/health/checks.ts`, asked one question: **can\nthe mechanism this names reach the subject this finding can have?**\n\n**Resu",
+      "file": "beans/defs/folio-assistant-s36s--sweep-coverage-a-corpus-sweep-that-silently-under.md"
+    },
+    {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
       "status": "in-progress",
@@ -2923,14 +2993,14 @@
     {
       "id": "folio-assistant-uknu",
       "title": "DUPLICATE id ON EVERY DOCS PAGE: just-the-docs renders nav_footer_custom twice, so both copies carry id=\"fa-nav-open\"",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:18:10Z",
-      "updatedAt": "2026-09-22T19:18:10Z",
+      "updatedAt": "2026-09-23T21:59:49Z",
       "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
     },
@@ -3035,14 +3105,14 @@
     {
       "id": "folio-assistant-vigi",
       "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:50:21Z",
-      "updatedAt": "2026-09-22T08:50:42Z",
+      "updatedAt": "2026-09-23T21:29:14Z",
       "preview": "Found 2026-09-22 while answering ruling 2 on #596 — the owner asked what is\nJSON-LD-centric in this ecosystem and what has pre-existing wrappers. The\nanswer to the second is **nothing**, and that turns out to matter beyond the\nquestion that produced it.\n\n## Measured\n\n**28 dependencies, and not one is an RDF, JSON-LD, SPARQL or FHIR library.**\n\nEvery JSON-LD document this repository publishes — the",
       "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
     },

@@ -45,8 +45,6 @@ classDiagram
     class bootstrap_scenarios_Role["Role"] {
       <<json: RoleGraphSchema>>
       persona [0..1] string
-      voice [0..1] string
-      useCases [0..*] string[]
       id [1] string
       title [1] string
       description [1] string

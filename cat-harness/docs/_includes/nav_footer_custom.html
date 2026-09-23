@@ -56,7 +56,30 @@
   `:has()`, which is why neither has to sit in any particular place. No
   JavaScript; a real checkbox is focusable and announces its own state.
 {%- endcomment -%}
+{%- comment -%}
+  THE CHECKBOX IS RENDERED ONCE; its labels are rendered in every copy (bean
+  `uknu`). just-the-docs renders this include TWICE per page by design: once
+  in `.site-footer`, INSIDE `.side-bar`, and once in a `.d-md-none` block
+  below the content, OUTSIDE it. With the input in both, every page carried
+  `id="fa-nav-open"` twice (measured: 429 of 1,283 built pages).
+
+  The first fix tried gave the second copy its own id, `fa-nav-open-2`, and
+  a browser showed it was WRONG: the stylesheet reads
+  `.side-bar:has(.fa-nav-open:checked)`, and the second checkbox is not in
+  `.side-bar`, so its toggle checked a box nothing reads and the sidebar
+  stayed shut. The duplicate id had been working by accident: both copies'
+  labels resolved to the FIRST input, the one inside `.side-bar`.
+
+  So that accident is now the design. The first copy renders the input, and
+  every later copy renders only the labels, `for` the same id. There is one
+  control, it lives where the stylesheet reads it, and both copies operate it.
+  A Liquid `assign` inside an include sets the PAGE's context, so the counter
+  survives from the first copy to the second and resets per page.
+{%- endcomment -%}
+{%- assign fa_nav_copy = fa_nav_copy | default: 0 | plus: 1 -%}
+{%- if fa_nav_copy == 1 -%}
 <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+{%- endif %}
 <label class="fa-nav-close" for="fa-nav-open" title="Close navigation">
   <span aria-hidden="true">&times;</span>
   <span class="fa-sr-only">Close navigation</span>

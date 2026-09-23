@@ -1,7 +1,7 @@
 ---
 # folio-assistant-byql
 title: Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T17:02:35Z
@@ -20,9 +20,9 @@ This reverses the 2026-09-20 ruling that kg-navigation be a top-level named subg
   - `detangle/results/` → `cat-harness/test/results/detangle/` (under the declared `qa` directory)
   - `detangle/README.md` + `AGENTS.md` → `cat-harness/docs/detangle.md` (AGENTS.md's rules kept verbatim as a section)
 - [x] `detangle.json` and `kg-navigation.json` removed; their three directory entries in `cat-harness.json` removed too — the existing `skills`, `schemas` and `qa` declarations cover the new homes
-- [ ] every hand-written reference updated; generated ones regenerated
+- [x] every hand-written reference updated; generated ones regenerated
 - [x] kg:detangle reports 0 undetermined edges repository-wide
-- [ ] `bun run gates` green
+- [x] `bun run gates` green
 - [x] the two kg-navigation bodies (bootstrap's and the tooled one) are both still addressable (bean v3se)
 
 ## Why not `cat-harness/detangle/` and `cat-harness/kg-navigation/` as declared directories
@@ -41,3 +41,15 @@ Tried first, and measured wrong:
 So both were folded all the way into the homes their siblings already use.
 `kg-detangle.ts` now finds its results directory by the declared `qa` id, as
 `kg-audit` does.
+
+## Closed 2026-09-23 on re-derived evidence (bean `4d22`)
+
+The work merged in #1123, but this bean stayed `in-progress` on `main` with two
+boxes unticked. That is the shape `4d22` names, and `bun run beans:landed` was
+built to report it. Re-measured on `main` (`937e72f9`), not quoted:
+
+- `git grep` for the old paths (`detangle/{schemas,scripts,results}`,
+  `kg-navigation/skills`, both instance files) in `*.ts`, `*.json`, `*.yml`
+  outside generated docs and QA sidecars: **0 hits**.
+- `kg:detangle`: 25 groups, **0 undetermined**, 0 wrong-direction.
+- `bun run gates`: green on the tree carrying this change (see the `4d22` PR).

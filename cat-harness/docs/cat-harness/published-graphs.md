@@ -63,6 +63,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 
+### `code-list`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `docs`
 
 3 of 3 published.
@@ -213,7 +220,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/cat-harness/' | relative_url }})
+- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*

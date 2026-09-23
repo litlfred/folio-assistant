@@ -76,6 +76,7 @@
     "beans",
     "cat-harness",
     "code",
+    "code-list",
     "docs",
     "external-schema",
     "folio",
@@ -145,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 258,
+      "count": 263,
       "unit": "beans"
     },
     {
@@ -162,19 +163,6 @@
       "hidden": false,
       "count": 3,
       "unit": "modules"
-    },
-    {
-      "id": "cat-harness",
-      "directory": "cat-harness",
-      "title": "Skills — cat-harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
-      "hidden": false
     },
     {
       "id": "docs",
@@ -358,6 +346,19 @@
       "hidden": false,
       "count": 136,
       "unit": "modules"
+    },
+    {
+      "id": "skills",
+      "directory": "skills",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
+      "hidden": false
     },
     {
       "id": "todos",
@@ -1439,12 +1440,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 40
+          "value": 41
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 26
+          "value": 27
         },
         {
           "id": "views",
@@ -1463,6 +1464,10 @@
         },
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code-list",
           "note": "no viewer yet"
         },
         {
@@ -1532,7 +1537,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
         },
         {
           "kind": "todos",
@@ -1560,7 +1565,8 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness/skills: declares visualiser \"Skills — cat-harness\" at \"cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html\", which does not resolve on disk."
       ],
       "navbarIcons": [
         "close",
@@ -1615,7 +1621,7 @@
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/bootstrap/initialization.html",
+      "href": "/bootstrap/README.html",
       "hrefKind": "handled",
       "stats": [
         {
@@ -1666,7 +1672,7 @@
       ],
       "findings": [
         "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
-        "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
+        "bootstrap: renders nothing of its own (render-exempt), so its tab opens one of its own files as published (/bootstrap/README.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
         "close",
@@ -1705,6 +1711,10 @@
       },
       {
         "kind": "code",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "code-list",
         "note": "no viewer yet"
       },
       {
@@ -1774,7 +1784,7 @@
       },
       {
         "kind": "skills",
-        "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+        "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
       },
       {
         "kind": "todos",
@@ -2530,7 +2540,7 @@
           },
           {
             "key": "directories",
-            "summary": "40: tools, external-schemas, schemas, uml, cat-harness, scenarios, policies, processes, metho…"
+            "summary": "41: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",
@@ -2572,7 +2582,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: cat-harness, schemas, scenarios, processes, models, glossary, bootstrap-translations"
+            "summary": "7: skills, schemas, scenarios, processes, models, glossary, bootstrap-translations"
           },
           {
             "key": "stickies",
