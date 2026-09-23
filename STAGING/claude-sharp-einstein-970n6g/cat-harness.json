@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T10:45:04.983Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b851cfd0ad3f9c50c14dcc900145546cc8ed72fd",
-  "sourceCommitSha": "b851cfd0ad3f9c50c14dcc900145546cc8ed72fd",
-  "sourceCommitAt": "2026-09-23T10:42:00Z",
+  "generatedAt": "2026-09-23T11:03:46.537Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3b5a0e2beb870790a4ac2c6645335c264ea12863",
+  "sourceCommitSha": "3b5a0e2beb870790a4ac2c6645335c264ea12863",
+  "sourceCommitAt": "2026-09-23T11:01:46Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -1848,7 +1848,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/uml-overview.md",
-      "instructionLines": 106,
+      "instructionLines": 123,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33127,7 +33127,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "uml-overview",
       "title": "UML overview per named sub-graph",
-      "description": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema. A kind with none is drawn as could-not-determine, never as an empty box.",
+      "description": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       "install": {
         "none": true
       },
@@ -33139,7 +33139,7 @@
           {
             "name": "check",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/tool-types.schema.json#/$defs/Flag",
-            "description": "Fail if any diagram or page is stale or orphaned, instead of writing.",
+            "description": "Fail if any diagram, SVG or page is stale or orphaned, instead of writing.",
             "required": false,
             "arg": {
               "flag": "--check"
@@ -33150,7 +33150,7 @@
           {
             "name": "diagrams",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/tool-types.schema.json#/$defs/RepoPath",
-            "description": "uml/overview/ (.puml and .mmd) and the docs/uml/overview/ pages that render them."
+            "description": "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them."
           }
         ]
       },
@@ -38128,7 +38128,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/uml"
       ],
-      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which render the Mermaid and link both sources. Owner, 2026-09-23.",
+      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -38584,8 +38584,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "017eb2cbd6c0ba222316e67b05d35c2eda437bc4",
+    "sha": "91c726fed936bf8f513c58e7e5df4fb07a33ee85",
     "pr": "1053/merge",
-    "run": "35850299409"
+    "run": "35852168613"
   }
 }
