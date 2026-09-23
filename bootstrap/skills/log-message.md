@@ -14,7 +14,7 @@ fills in: it receives, records and decides nothing, so it cannot know who acted.
 A line that named the Logger would record that logging happened and nothing
 about what did.
 
-The process is [`workflows/log-message.bpmn`](../workflows/log-message.bpmn).
+The process is [`processes/log-message.bpmn`](../processes/log-message.bpmn).
 It is a **sub-process** — nobody starts there. A task in another process calls
 it, which is why bootstrap still has one process you *start*.
 

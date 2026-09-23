@@ -4,8 +4,8 @@ An agent that has just read `bootstrap/README.md` knows the shape of a
 harness and nothing about **this** one. Two questions have no answer in any
 file it can reach:
 
-- **which harness** this repository should become — `bootstrap` itself, or a
-  derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`;
+- **which harness** this repository should become: `bootstrap` itself, or
+  any Harness built on it;
 - **which repositories** are involved — where the dependency is read from,
   where the new declaration is written to, and whether they are the same.
 
@@ -57,8 +57,8 @@ conflated.
 
 **Ask the fewest questions that settle it.** The Initiator's persona is
 "asks exactly one question when it must". Narrow the candidate list from
-context first — a repository that already carries `cat-harness/cat-harness.json`
-is not a blank slate — and put the residue as one question with the
+context first (a repository whose root already holds a declaration,
+`<name>.json`, is not a blank slate) and put the residue as one question with the
 candidates named. A question a reader must go and research is not ready.
 
 **Never infer the answer from a default.** If nothing is known, the output's
