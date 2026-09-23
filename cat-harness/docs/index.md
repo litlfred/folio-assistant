@@ -45,7 +45,7 @@ does not pick up the same item; a bean that turns out not to be wanted is
 `scrapped`, with its reasons, never deleted.
 
 ```sh
-scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 beans list                          # what is open
 beans create "<title>"              # ...after checking the title does not exist
 beans <id> --status in-progress     # claim it, visibly

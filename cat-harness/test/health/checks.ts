@@ -1030,7 +1030,17 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus " +
       "integrity; a thin record misleads a future reader, it does not break a consumer. Measured " +
       "2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the " +
-      "store already has rather than demanding work.",
+      "store already has rather than demanding work. " +
+      "THE COUNTER READ ONE MARKDOWN FORM UNTIL BEAN `vq8g`, and was wrong in BOTH DIRECTIONS. " +
+      "Re-measured 2026-09-23 across the 12 records the store had grown to: `j6t3` and `xgd8` " +
+      "enumerate their options as bold paragraphs (`**A. …**`) and counted ZERO, while carrying FIVE " +
+      "options each against the typical three — so the two most developed analyses in the corpus were " +
+      "the two reported empty, against an action that says to DROP THE SECTION. `dhvf` enumerates four " +
+      "options as `### A —` subheadings over Pro/Con/Cost bullets and counted TEN. MADR is the " +
+      "authority and it is FORMAT-AGNOSTIC — \"at least two, every one real\", never a markdown list — " +
+      "so the detector changed rather than the beans: three forms are recognised and the most " +
+      "structured one present wins, never summed (summing `dhvf` gives 14 for 4). After the fix: " +
+      "dhvf 10 -> 4, j6t3 0 -> 5, xgd8 0 -> 5, the other nine unchanged at 3, and 0 records thin.",
   },
   {
     metric: "bean-self-declared-done",

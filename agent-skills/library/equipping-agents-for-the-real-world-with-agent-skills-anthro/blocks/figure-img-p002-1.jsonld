@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p002-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p002-1.png",
+  "pageStart": 2,
+  "pageEnd": 2,
+  "narrative": {
+    "text": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill — skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/sections/page-002",
+  "sourceDocument": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/manifest",
+  "provenance": "ingested"
+}

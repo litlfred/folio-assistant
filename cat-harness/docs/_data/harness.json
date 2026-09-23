@@ -128,7 +128,7 @@
       ],
       "href": "/cat-harness/library/agent-skills/",
       "hidden": false,
-      "count": 4,
+      "count": 11,
       "unit": "entries"
     },
     {
@@ -144,7 +144,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 647,
+      "count": 656,
       "unit": "beans"
     },
     {
@@ -174,21 +174,6 @@
       ],
       "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
       "hidden": false
-    },
-    {
-      "id": "detangle-schemas",
-      "directory": "detangle-schemas",
-      "title": "detangle-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/detangle/",
-      "hidden": false,
-      "count": 2,
-      "unit": "modules"
     },
     {
       "id": "docs",
@@ -289,19 +274,6 @@
       "hidden": false
     },
     {
-      "id": "kg-navigation",
-      "directory": "kg-navigation",
-      "title": "Skills — kg-navigation",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/kg-navigation/",
-      "hidden": false
-    },
-    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -341,7 +313,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 4,
+      "count": 5,
       "unit": "entries"
     },
     {
@@ -442,7 +414,7 @@
       "href": "/cat-harness/uploads/",
       "hidden": false,
       "icon": "uploads",
-      "count": 22,
+      "count": 15,
       "unit": "waiting"
     },
     {
@@ -674,69 +646,6 @@
       ]
     },
     {
-      "name": "detangle",
-      "title": "detangle",
-      "label": "detangle",
-      "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/detangle/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 3
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 4
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 2
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "cat-harness",
-          "path": "/cat-harness/schemas/detangle/"
-        },
-        {
-          "kind": "code",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/detangle/"
-        }
-      ],
-      "findings": [
-        "detangle: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
-        "detangle: no avatar declared for this instance — showing the generic mark.",
-        "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
-        "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "folio-assistant-sci",
       "title": "folio-assistant-sci",
       "label": "folio-assistant-sci",
@@ -780,54 +689,6 @@
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "kg-navigation",
-      "title": "kg-navigation",
-      "label": "kg-navigation",
-      "description": "How an agent finds the knowledge graph, and the skill that governs its task, before it knows the layout.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "skills",
-          "note": "no viewer yet"
-        }
-      ],
-      "findings": [
-        "kg-navigation: declares 1 graph(s) with no published viewer — skills. Declared and not rendered is a gap, not a dead link.",
-        "kg-navigation: no avatar declared for this instance — showing the generic mark.",
-        "kg-navigation: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
       "navbarIcons": [
         "close",
@@ -1578,7 +1439,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 41
+          "value": 39
         },
         {
           "id": "kinds",

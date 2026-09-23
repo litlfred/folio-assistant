@@ -41,6 +41,7 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from "fs";
 import { join, relative, dirname, resolve } from "path";
+import { directionOf, type LayerRule } from "../../schemas/layer-direction.js";
 
 /** How a module came to be assigned — never collapsed into a boolean. */
 export type Provenance = "rule" | "triage" | "keyword" | "default";
@@ -308,6 +309,17 @@ export function analyse(spec: PartitionSpec): PartitionReport {
     modules.set(rel, classify(spec, rel));
   }
 
+  const rule: LayerRule = {
+    // A repo missing from `spec.allowed` read as `[]` — may reach nothing,
+    // not even itself. Kept: an absent key here is a typo in a typed record,
+    // and flagging its edges is what surfaced one before.
+    allowed: new Map(
+      [...new Set([...Object.keys(spec.allowed), ...[...modules.values()].map((a) => a.repo)])].map(
+        (r) => [r, new Set(spec.allowed[r] ?? [])],
+      ),
+    ),
+    permits: spec.permittedEdges,
+  };
   const crossEdges: CrossEdge[] = [];
   // Which permits were actually used, so the unused ones can be reported.
   const honoured = new Set<string>();
@@ -342,12 +354,17 @@ export function analyse(spec: PartitionSpec): PartitionReport {
       // direction rule; an exemption that also hid the edge would be the
       // blindness `q2wn` was opened about, one level up.
       if (composes) continue;
-      if (!(spec.allowed[fromA.repo] ?? []).includes(toA.repo)) {
-        const permit = (spec.permittedEdges ?? []).find((p) => p.from === rel && p.to === target);
-        if (permit) {
-          honoured.add(`${permit.from}\u0000${permit.to}`);
-          continue;
-        }
+      // The direction verdict is `layer-direction.ts`'s, shared with
+      // `kg-detangle` (bean `j79e`). `undetermined` cannot arise from a
+      // well-typed spec — every repo `classify` returns is a key of
+      // `allowed` — and if it ever does it is reported as a cross edge, the
+      // same as before the extraction, rather than passed as clean.
+      const d = directionOf({ from: rel, to: target }, fromA.repo, toA.repo, rule);
+      if (d.verdict === "permitted") {
+        honoured.add(`${d.permit.from}\u0000${d.permit.to}`);
+        continue;
+      }
+      if (d.verdict !== "allowed") {
         crossEdges.push({ from: rel, fromRepo: fromA.repo, to: target, toRepo: toA.repo });
       }
     }

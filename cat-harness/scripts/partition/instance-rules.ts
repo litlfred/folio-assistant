@@ -274,6 +274,7 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
@@ -281,6 +282,7 @@ export const RULES: Rule[] = [
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
+      "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -344,6 +346,9 @@ export const RULES: Rule[] = [
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
+      "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
+      "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
+      "schemas/detangle-sidecar.ts",         // what a detangle measurement pins (bean `byql`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
       "schemas/diff-renderers.ts",           // the review page's diff renderers, declared as data (bean `d903`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
@@ -489,6 +494,12 @@ export const RULES: Rule[] = [
       "schemas/dak-blocks.ts",
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      // CORE, not harness beside gen-uml-overview: it needs a folio to have
+      // anything to do, and its input is the core content model
+      // (`content/pipeline/content-graph.ts`). The shared PlantUML machinery it
+      // imports (`scripts/plantuml-render.ts`) stays harness, so the edge runs
+      // core → harness, the allowed direction.
+      "scripts/gen-content-graph-uml.ts",    // a paper's block graph (uses[] vs Lean), graph-rendering rules
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
       // Re-triaged 2026-09-19, bean `zlmp`. Listed as harness until then, on
       // "editing-process authorisation gate". But AGENTS.md says it runs IN a
@@ -1068,6 +1079,7 @@ export const RULES: Rule[] = [
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
+      "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)

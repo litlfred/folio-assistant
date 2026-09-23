@@ -202,8 +202,8 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // `bootstrap/skills/` stays `bootstrap`, both measured unchanged
     // at the time; `theming/` becomes `theming`. Since #760 removed
     // `src/skills/`, the live subjects of rule 1 are `bootstrap/skills/`,
-    // `kg-navigation/skills/`, `large-datasets/skills/` and
-    // `who-iris/skills/`.
+    // `large-datasets/skills/` and `who-iris/skills/` — `kg-navigation/skills/`
+    // was one until bean `byql` folded it into `skills/kg-navigation/`.
     //
     // Two `skills`-named directly-held directories in ONE instance would still
     // collide. That is a narrower and more obviously wrong configuration than

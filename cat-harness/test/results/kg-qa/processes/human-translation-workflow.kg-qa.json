@@ -5,7 +5,7 @@
     "id": "Process_HumanTranslation",
     "path": "processes/human-translation-workflow.bpmn"
   },
-  "source_hash": "sha256:c1e6cb3bc24032bde4f8467d2b99ff11d639b3eecb8f487d057979b82026e839",
+  "source_hash": "sha256:f618492daba254498ced6dd03c24484f9a059b9c9c61da638d61610c8f85ac6a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 15,
     "fail": 0,
     "n/a": 9,
     "unknown": 0

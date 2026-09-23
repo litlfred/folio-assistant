@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w5bn
 title: 'LARGE DATA SETS: a subgraph of skills for taking a SUBSET of a corpus you will never hold — IRIS, mathlib, CODATA, weather'
-status: todo
+status: completed
 type: task
 priority: critical
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-23T02:45:00Z
+updated_at: 2026-09-23T18:44:43Z
 parent: folio-assistant-zzmr
 ---
 
@@ -50,3 +50,28 @@ about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 **Nothing about this bean's own work changed** — not its status, not its
 Done-when, not a line of its body above this note. Only the question *"whose
 goal does finishing this serve?"* is answered differently.
+
+---
+
+## Summary of Changes — checked and closed 2026-09-23
+
+Owner's pick: **"w5bn check + close"**. Each done-when item was checked against
+the files, not the bean's own claims. Two of the four did not hold, and both
+were fixed before closing.
+
+| Done-when item | Evidence |
+|---|---|
+| `large-datasets` subgraph with its own declaration | `large-datasets/large-datasets.json` (schemas, sources, skills) |
+| a source-descriptor schema | `large-datasets/schemas/source-descriptor.ts`, `SourceDescriptorSchema` |
+| IRIS **and** mathlib as worked descriptors | both in `large-datasets/sources/`. **mathlib FAILED its own schema**: it had an `_subsetIsSelfContained_note` key and the schema is `.strict()`. The owner chose a new optional `subsetBasis` field, and the note moved there word for word. |
+| `materialize-remote` CALLS the descriptor | before this, only the skill's prose pointed at it. `materialize-remote.bpmn` now has **Task_Enumerate** before the SIZE gate: supported subset strategies, closure over dependencies when `subsetIsSelfContained` is false, and `enumerationCost()` undefined → SIZE refuses. |
+
+**Why nobody noticed:** no gate read `sources/`. The new
+`large-datasets/schemas/source-descriptor.test.ts` finds the directory through
+the declaration and parses every descriptor. It was shown to fail on the
+old mathlib file with the exact original error, then pass on the fixed one.
+It also requires a `subsetBasis` wherever `subsetIsSelfContained` is false.
+
+**Left open, not in this bean's done-when:** `large-datasets.json` declares no
+`needs`, the same gap `detangle` and `kg-navigation` had (bean `byql`). It is
+not scanned by `kg:detangle` today, so nothing reports it yet.

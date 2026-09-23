@@ -5,7 +5,7 @@
     "id": "Process_BeanLifecycle",
     "path": "processes/bean-lifecycle.bpmn"
   },
-  "source_hash": "sha256:909a4a891e2f9bcf0fb93d893af505fe905066849421b18c61160b5235131b76",
+  "source_hash": "sha256:88860d44e96c7bf8fa5cee49841f90bbb4a3ebaa7ffe6dcc7857e9eed12fcd5c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 12,
+    "pass": 14,
     "fail": 0,
     "n/a": 10,
     "unknown": 0

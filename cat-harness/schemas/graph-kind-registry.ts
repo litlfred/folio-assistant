@@ -700,13 +700,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
       "folio-qa-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
-      // The detangle INSTANCE's own sidecars, in its own declared qa directory.
-      // Not a harness: `detangle` is declared (`detangle/detangle.json`) and has
-      // no `detangle.config.json` at the repository root, which is what
-      // instantiates one (`harness-tiles`, bean `6n23`). Corrected 2026-09-23
-      // after this one word sent a reader looking for an instantiation that is
-      // not there; `check:harness-claims` now refuses the next one.
-      "folio-detangle-sidecar/v1": { shape: "detangle:schemas/detangle-sidecar.ts#DetangleSidecar" },
+      // The detangle sidecars, in cat-harness
+      // qa directory. `detangle` was its own instance until 2026-09-23 and is
+      // now a directory of this harness (bean `byql`), so the shape is an
+      // ordinary instance-relative path under `schemas/` and needs no `detangle:` qualifier.
+      "folio-detangle-sidecar/v1": { shape: "schemas/detangle-sidecar.ts#DetangleSidecar" },
     },
     // No `validator`, and that is a finding rather than an omission: the
     // module above exports TypeScript interfaces only. The largest generated

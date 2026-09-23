@@ -27,6 +27,35 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 ---
 
+## 按顺序的四件事
+
+**1. 工作计划是你说明自己在做什么的地方。**
+不是聊天消息，也不是评论，而是 [beans]({{ '/beans-and-todos.html' | relative_url }})——一个纳入版本管理、任何会话或智能体都能读取的存储。开始工作前先认领，以免并行会话领取同一项；最终不需要的 bean 标记为 `scrapped` 并写明原因，绝不删除。
+
+```sh
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+beans list                          # 有哪些待办
+beans create "<title>"              # ……先确认该标题尚不存在
+beans <id> --status in-progress     # 认领它，让大家可见
+```
+
+**2. 创建你的第一个 folio。** 本仓库是*平台*；你的内容存放在它自己的仓库中。一条命令即可搭好框架——清单、声明、智能体文件以及指回这里的链接：
+
+```sh
+bun run init-folio --help
+```
+
+然后，[快速入门]({{ '/getting-started.html' | relative_url }}) 会带着第一个块走完验证、渲染和审阅。
+
+**3. 弄清你在写哪一类东西。** *文档*是结构化的散文；*论文*（paper）在此之上还包含那些断言为形式化命题的块类型，由 Lean 支撑并通过 LaTeX 排版。这一选择决定了哪些块合法、哪些检查会运行：[内容类型]({{ '/content-types.html' | relative_url }})。
+
+**4. 你永远不会读的文档。**
+[全部文档]({{ '/guides/index.html' | relative_url }})——写作指南、架构、发布流程、自动生成的模式与技能参考。它就在这里，内容详尽，而实话实说，你多半会在某样东西出问题的那一刻从搜索引擎来到这里。这样用它完全没问题。上面三步才是现在值得读的。
+
+如果让你困惑的是*机制*而不是写作——谁做某件事、在哪个流程中、用哪项技能——请从 [平台]({{ '/platform.html' | relative_url }}) 开始。那里的一句话承载了整个模型，其中每个词都是一个单独声明的对象。
+
+---
+
 ## 什么是 folio-assistant？
 
 **folio-assistant** 是*平台*——它本身不包含内容。它提供技能、模式、工具链以及一个 MCP（Model Context Protocol）服务器，供 LLM 驱动的智能体用于规划、撰写、验证、审阅、测试和发布存放在独立仓库中的内容**作品集（folio）**。

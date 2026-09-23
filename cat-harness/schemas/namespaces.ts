@@ -121,6 +121,30 @@ export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
  */
 export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
 
+/**
+ * The `targetNamespace` every diagram under `processes/` declares: the
+ * namespace its processes, and so every `calledElement` naming them, live in.
+ *
+ * A different object again from {@link FOLIO_BPMN_NS}: that is the namespace
+ * our extension ELEMENTS are in; this one is the diagram's IDENTITY. Bean
+ * `rtrg`, measured 2026-09-23: 47 diagrams declared this IRI, 4
+ * `https://folio-assistant.dev/workflows`, and 15 one per diagram under
+ * `http://folio-assistant.dev/bpmn/`, a domain this project does not own.
+ *
+ * **One shared namespace, not one per diagram (owner, 2026-09-23).** BPMN
+ * types `calledElement` as a QName, so a call is resolved against a namespace
+ * and not only an id. With one namespace, every call in the corpus names a
+ * process in the caller's own namespace; the split left 12 call edges crossing
+ * namespaces with no `<bpmn:import>` between them, which a conformant tool
+ * cannot resolve. It is also the IRI every existing `<bpmn:import namespace>`
+ * already used. Nothing in this repository resolved a QName against it, so the
+ * change was invisible here and only a standards tool would have noticed.
+ *
+ * Bootstrap's diagrams use `…/bootstrap/workflows` on purpose: a different
+ * instance, so a different set of process ids.
+ */
+export const WORKFLOWS_NS = "https://litlfred.github.io/folio-assistant/workflows";
+
 /** Every XML namespace this project mints for itself. */
 export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;
 

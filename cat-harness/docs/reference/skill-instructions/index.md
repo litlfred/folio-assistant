@@ -276,6 +276,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Domain fencing](domain-fencing.html) | `domain-fencing` | — | > Skill id: `domain-fencing` · Capability: `architecture` · Package: `graph-management` |
 | [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
+| [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
+
+## Knowledge-graph navigation (tooled)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 
 ## RACI involvement model (skills/raci)
 
@@ -318,12 +325,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
-
-## Knowledge-graph navigation (tooled)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 
 ## Large data sets (subsetting, materializing, publishing)
 
