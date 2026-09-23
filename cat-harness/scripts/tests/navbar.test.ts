@@ -46,8 +46,10 @@ const model: NavbarModel = {
     label: "Graphs",
     items: [
       { href: "../docs/who-iris/", label: "docs", icon: "D" },
-      // Declared with no published viewer — a GAP, drawn as a non-link.
-      { label: "catalogue", icon: "C" },
+      // Declared with no published viewer — a GAP, drawn as a non-link, and
+      // now SAYING which of the four reasons applies. The wording is the
+      // generator's (`inertNote`); nothing in the renderer chooses it.
+      { label: "catalogue", icon: "C", note: "no viewer yet" },
     ],
     collapsible: true,
     open: true,
@@ -136,6 +138,32 @@ describe("three regions, and only the middle one scrolls", () => {
     // by default, because a navbar whose content arrives folded looks empty.
     const html = navbarHtml(model);
     expect(region(html, "fa-nav-graphs")).toContain('<details class="fa-nav-group" open>');
+  });
+
+  it("an inert row SAYS why, in text a screen reader gets for free", () => {
+    // THIS IS THE ASSERTION THAT WAS MISSING, and its absence is what let the
+    // two navbars diverge. The Jekyll sidebar said why with
+    // `title="declared, with no published viewer"` on a `<span>` — hover-only,
+    // no keyboard path, not reliably announced — and this rail said nothing
+    // whatever: `opacity:.55` and no words, state carried by contrast alone.
+    // Both are `gjli`; the fix for both is that the reason is CONTENT.
+    const graphs = region(navbarHtml(model), "fa-nav-graphs");
+    expect(graphs).toContain('<span class="fa-nav-note">no viewer yet</span>');
+    // Inside the same element as the label, so it is read as one row rather
+    // than as a label and a detached aside.
+    expect(graphs).toMatch(/<span class="fa-nav-dead">.*?catalogue.*?no viewer yet.*?<\/span>/s);
+    // NOT `aria-disabled`, and this is the owner's "so it does not read as a
+    // control": nothing here is disabled, because nothing here is a control.
+    // Marking a `<span>` disabled announces a widget that does not exist.
+    expect(graphs).not.toContain("aria-disabled");
+    // And not `title` either — the thing that was already tried.
+    expect(graphs).not.toContain("title=");
+  });
+
+  it("a row that OPENS carries no note — only an inert row owes a reason", () => {
+    const graphs = region(navbarHtml(model), "fa-nav-graphs");
+    const docs = graphs.slice(graphs.indexOf("../docs/who-iris/"));
+    expect(docs.slice(0, docs.indexOf("</a>"))).not.toContain("fa-nav-note");
   });
 
   it("a declared graph with NO viewer is listed, as a non-link", () => {
@@ -370,6 +398,69 @@ describe("every declared graph reaches the navbar, linked or not", () => {
 
   it("is sorted, so the order is a function of the declaration", () => {
     expect(kinds()).toEqual([...kinds()].sort());
+  });
+
+  it("carries the generator's REASON onto the rows that have no href", () => {
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([
+        ["catalogue", { note: "no viewer yet" }],
+        ["themes", { note: "staging only" }],
+      ]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.note).toBe("no viewer yet");
+    // TWO ROWS, TWO REASONS. One wording for every inert row is the defect
+    // this replaced — `title="declared, with no published viewer"` was wrong
+    // for the staging-only and render-exempt cases, which are not gaps.
+    expect(got.find((i) => i.label === "themes")?.note).toBe("staging only");
+    // A kind the generator said nothing about renders as it always did: grey,
+    // and making no claim about why. The honest third state.
+    expect(got.find((i) => i.label === "skills")?.note).toBeUndefined();
+  });
+
+  it("never labels a row that OPENS, even if a stale reason is passed for it", () => {
+    // The href wins. A `note` left behind for a kind whose viewer has since
+    // been published would otherwise caption a working link "no viewer yet" —
+    // and the note's whole job is to be true.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["docs", { note: "no viewer yet" }]]),
+    );
+    expect(got.find((i) => i.label === "docs")?.note).toBeUndefined();
+  });
+
+  it("links a kind whose viewer the HANDLER published — `pk2s`", () => {
+    // The defect: who-iris's `catalogue` drew as a grey row over a page that
+    // exists. `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes on
+    // `gh-pages`, measured 2026-09-23 — the rail was losing a working link.
+    //
+    // The mount table cannot see it. `mountable()` requires an `index.html`
+    // in the instance's own directory, and `who-iris/catalogue/` holds DATA.
+    // The page that renders it is the cat-harness HANDLER's, and a handler's
+    // viewer is never a mount.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["catalogue", { href: "../cat-harness/catalogue/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.href).toBe("../cat-harness/catalogue/who-iris/");
+    // And it is a LINK, so it owes no explanation.
+    expect(got.find((i) => i.label === "catalogue")?.note).toBeUndefined();
+  });
+
+  it("the MOUNT TABLE wins where it has an answer — the owner's order, not a tie-break", () => {
+    // *"cliking shoud go to folio view, not the schema viweer."* A mount is
+    // the instance presenting itself; the handler's viewer is cat-harness's
+    // default rendering of the same graph. Both exist for `library`, and the
+    // instance's own route is the one a reader gets.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["library", "../who-iris/"]]),
+      new Map([["library", { href: "../cat-harness/library/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "library")?.href).toBe("../who-iris/");
   });
 
   it("returns EMPTY for an instance that declares nothing readable", () => {

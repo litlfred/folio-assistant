@@ -1,5 +1,4 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "The bootstrap graph"
 kind: proposal
 movedOn: 2026-09-19
@@ -9,6 +8,15 @@ summary: >-
 ---
 
 # `bootstrap/` — the graph an agent can read before it knows anything
+
+> **Editorial correction, 2026-09-23.** This proposal was written while the
+> instance declaration was a fixed `harness.json`; it is `<name>.json` since
+> the 2026-09-21 split (`<name>.config.json` is the config beside it). The
+> references below were updated so a reader is not sent to a file that does not
+> exist — the proposal's argument is untouched, and only the filename moved.
+> The occurrences were invisible while this lived under `fsh-guts/`, which the
+> filename gate counts as retired material; publishing it is what surfaced them.
+
 {: .no_toc }
 
 Every other graph in this repository assumes a reader who already knows what a
@@ -215,7 +223,7 @@ bootstrapped against a different harness re-enters through *that* one.
 When bootstrap instantiates a repository that is not yet an instance, the
 upstream library is **replicated under `bootstrap/<instance>/`** as a local
 cache — `bootstrap/cat-harness/`, and under §5 `bootstrap/f-a-sci/` beside it —
-and those directories are **declared in bootstrap's own `harness.json`**, so
+and those directories are **declared in bootstrap's own `<name>.json`**, so
 ordinary resolution finds them with no special case.
 
 That is deliberately the same shape as `tools/<stub>/` (shipped 2026-09-19) and
@@ -232,7 +240,7 @@ bootstrap"*, and *"bootstrap should be an instance and contain its own
 definitions — minimal, self-defining."*
 
 §1 and §6 already have most of this: bootstrap declares itself, and its cache
-directories live in **bootstrap's own `harness.json`**. Saying *instance*
+directories live in **bootstrap's own `<name>.json`**. Saying *instance*
 rather than *standalone graph* closes the gap, because an instance is a thing
 this repository already knows how to compose, inherit from and override **by
 `id`**. CatBootstrap then stops being a directory the platform must know about
@@ -240,7 +248,7 @@ and becomes the smallest possible instance, with cat-harness composed on top.
 
 `AGENTS.md` is the artefact that move is worth making for. It is the first
 file a cold agent reads, and today — measured 2026-09-19 — it is the **only**
-root artefact this instance does not declare: `harness.json` declares
+root artefact this instance does not declare: `<name>.json` declares
 `directories[]` and `images[]`, and `AGENTS.md` appears in neither.
 
 ### The default is to copy, and the copy is the problem
@@ -349,7 +357,7 @@ adjacent work that has shipped and that bootstrap depends on:
 | shipped | why bootstrap needs it |
 |---|---|
 | `tools/<stub>/` with an aggregating barrel | the cache in §6 reuses this exact shape |
-| `harness.json` directory declarations | bootstrap declares its cache through them |
+| `<name>.json` directory declarations | bootstrap declares its cache through them |
 | `workflowDirs()` / `workflowFiles()` reading the declaration | a topical `bootstrap/workflows/` is found without a code change |
 | `bs:` / `cat:` / `fac:` namespaces | bootstrap's terms are minted in its own namespace |
 | `check:declared-paths` | enforces §4's "declared and checked" rule corpus-wide |

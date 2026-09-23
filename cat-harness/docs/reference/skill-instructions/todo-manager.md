@@ -474,7 +474,7 @@ asked for the sweep by hand.
 
 **Neither disposition is built yet**, and the first question is which —
 bean `folio-assistant-m8gz`, analysis in
-`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+`cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
 owner's word and `beans archive`, run deliberately. Note the CLI prints
 `.beans/archive/` but honours `path:` from `.beans.yml`; here that means
 `beans/defs/archive/`.

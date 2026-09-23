@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T08:14:40Z
-updated_at: 2026-09-20T08:14:40Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-zzmr
 ---
 
 Owner, 2026-09-20, defining the term after four carves had already been picked by judgement:
@@ -37,3 +37,18 @@ Three implementations, one question, no shared vocabulary. `repo-partition.ts`'s
 - It runs over the KG and REPORTS the candidates, so a carve cites a number instead of an argument.
 - `repo-partition` is shown to be an instance of it, or a bean records exactly why it cannot be.
 - A `detangle-subgraph` subprocess and a heuristics skill exist, and the carves in this PR are re-checked against them.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `zzmr`.** DETANGLE measures whether a candidate subgraph is cohesive. That is the knowledge graph judging its own structure.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

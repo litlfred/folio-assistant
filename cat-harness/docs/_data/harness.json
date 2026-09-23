@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 551,
+      "count": 553,
       "unit": "beans"
     },
     {
@@ -219,7 +219,7 @@
       ],
       "href": "/cat-harness/folio/",
       "hidden": false,
-      "count": 4,
+      "count": 5,
       "unit": "stickies"
     },
     {
@@ -405,7 +405,7 @@
       "href": "/cat-harness/uploads/",
       "hidden": false,
       "icon": "uploads",
-      "count": 20,
+      "count": 22,
       "unit": "waiting"
     },
     {
@@ -508,7 +508,8 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true
+          "readOnly": true,
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -665,7 +666,8 @@
           "path": "/cat-harness/schemas/detangle/"
         },
         {
-          "kind": "qa"
+          "kind": "qa",
+          "note": "no viewer yet"
         },
         {
           "kind": "schemas",
@@ -771,7 +773,8 @@
       ],
       "visualisations": [
         {
-          "kind": "skills"
+          "kind": "skills",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -828,7 +831,8 @@
           "path": "/cat-harness/schemas/large-datasets/"
         },
         {
-          "kind": "skills"
+          "kind": "skills",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -910,10 +914,12 @@
           "path": "/cat-harness/library/who-iris/"
         },
         {
-          "kind": "skills"
+          "kind": "skills",
+          "note": "no viewer yet"
         },
         {
-          "kind": "themes"
+          "kind": "themes",
+          "note": "no viewer yet"
         },
         {
           "kind": "uploads",
@@ -1020,7 +1026,8 @@
       "visualisations": [
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true
+          "readOnly": true,
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -1183,7 +1190,7 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
-      "href": "/cat-harness/voices/smart-base/",
+      "href": "/cat-harness/library/smart-base/",
       "hrefKind": "viewer",
       "stats": [
         {
@@ -1199,25 +1206,30 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true
+          "readOnly": true,
+          "note": "no viewer yet"
         },
         {
-          "kind": "library"
+          "kind": "library",
+          "path": "/cat-harness/library/smart-base/"
         },
         {
-          "kind": "methodology"
+          "kind": "methodology",
+          "note": "no viewer yet"
         },
         {
-          "kind": "processes"
+          "kind": "processes",
+          "note": "no viewer yet"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "note": "no viewer yet"
         },
         {
           "kind": "voices",
@@ -1225,10 +1237,10 @@
         }
       ],
       "findings": [
-        "smart-base: declares 5 graph(s) with no published viewer — fhir-artifact-index, library, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: no avatar declared for this instance — showing the generic mark.",
-        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/smart-base/) rather than the instance's own themed root."
+        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -1249,6 +1261,38 @@
         "folio-assistant-core"
       ],
       "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
       "tone": 236,
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
@@ -1323,10 +1367,12 @@
       ],
       "visualisations": [
         {
-          "kind": "skills"
+          "kind": "skills",
+          "note": "no viewer yet"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -1413,14 +1459,16 @@
           "path": "/cat-harness/schemas/folio-assistant-core/"
         },
         {
-          "kind": "folio"
+          "kind": "folio",
+          "note": "no viewer yet"
         },
         {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "note": "no viewer yet"
         },
         {
           "kind": "voices",
@@ -1518,14 +1566,16 @@
           "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "code"
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/docs/"
         },
         {
-          "kind": "external-schema"
+          "kind": "external-schema",
+          "note": "no viewer yet"
         },
         {
           "kind": "folio",
@@ -1544,7 +1594,8 @@
           "path": "/health/"
         },
         {
-          "kind": "interaction"
+          "kind": "interaction",
+          "note": "no viewer yet"
         },
         {
           "kind": "issue-marks",
@@ -1555,10 +1606,12 @@
           "path": "/cat-harness/library/cat-harness/"
         },
         {
-          "kind": "memory"
+          "kind": "memory",
+          "note": "no viewer yet"
         },
         {
-          "kind": "methodology"
+          "kind": "methodology",
+          "note": "no viewer yet"
         },
         {
           "kind": "processes",
@@ -1569,7 +1622,8 @@
           "path": "/qa/"
         },
         {
-          "kind": "scenarios"
+          "kind": "scenarios",
+          "note": "no viewer yet"
         },
         {
           "kind": "schemas",
@@ -1596,7 +1650,8 @@
           "path": "/uploads/"
         },
         {
-          "kind": "waiver"
+          "kind": "waiver",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
@@ -1676,25 +1731,32 @@
       ],
       "visualisations": [
         {
-          "kind": "glossary"
+          "kind": "glossary",
+          "note": "no viewer by design"
         },
         {
-          "kind": "models"
+          "kind": "models",
+          "note": "no viewer by design"
         },
         {
-          "kind": "processes"
+          "kind": "processes",
+          "note": "no viewer by design"
         },
         {
-          "kind": "scenarios"
+          "kind": "scenarios",
+          "note": "no viewer by design"
         },
         {
-          "kind": "schemas"
+          "kind": "schemas",
+          "note": "no viewer by design"
         },
         {
-          "kind": "skills"
+          "kind": "skills",
+          "note": "no viewer by design"
         },
         {
-          "kind": "translation-sources"
+          "kind": "translation-sources",
+          "note": "no viewer by design"
         }
       ],
       "findings": [
