@@ -29,11 +29,10 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import {
-  BASE_GRAPH_KINDS,
-  defaultGraphKinds,
   findDeclarationFile,
   instanceRootsIn,
-  resolveGraphKind,
+  isDerivedGraph,
+  isStateGraph,
 } from "../schemas/cat-harness.js";
 import { ancestorsOf, flattenDependencies } from "../schemas/dependency-order.js";
 import { allowedFromNeeds, type LayerRule } from "../schemas/layer-direction.js";
@@ -84,6 +83,13 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * not a weaker one: the instance SAYS what a process does with the directory,
  * and `check:graph-kind-work` already gates that it said something.
  *
+ * Asked through `isStateGraph`/`isDerivedGraph` rather than by reading
+ * `holds` directly, because those two are deliberately NOT each other's
+ * negations and both are false for a kind the registry does not know. An
+ * unregistered kind has said nothing, so the file is READ — the conservative
+ * direction, since the cost of reading an excluded file is a finding somebody
+ * dismisses, while the cost of excluding a read one is a leak nobody sees.
+ *
  * NOT a complete answer, and the gap is named rather than papered over:
  * three projections under a `docs` directory (`assets/schemas/index.json`,
  * `assets/beans/index.json`, `assets/voices/index.json`, 440 occurrences
@@ -92,8 +98,6 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * in each generator — emit `"_generated"`, as `sync-docs-harness.ts` already
  * does for `docs/_data/harness.json` — not a path rule here.
  */
-const MACHINE_WRITTEN = new Set(["state", "derived"]);
-
 /** Text this axis can read. A binary or an image carries no reference a reader follows. */
 const EXTENSIONS = new Set([".ts", ".tsx", ".md", ".json", ".jsonld", ".bpmn", ".dmn", ".yml", ".yaml"]);
 
@@ -154,14 +158,11 @@ interface Instance {
 /** True when EVERY kind the directory declares is machine-written — conservative, so a directory that also holds authored content keeps being read. */
 function declaresMachineWritten(kinds: readonly string[] | undefined): boolean {
   if (kinds === undefined || kinds.length === 0) return false;
-  return kinds.every((k) => {
-    const holds = BASE_GRAPH_KINDS[resolveGraphKind(k, defaultGraphKinds).kind]?.holds;
-    return holds !== undefined && MACHINE_WRITTEN.has(holds);
-  });
+  return kinds.every((k) => isStateGraph(k) || isDerivedGraph(k));
 }
 
-function instances(): Instance[] {
-  return instanceRootsIn(REPO_ROOT).map((root) => {
+function instances(repoRoot: string): Instance[] {
+  return instanceRootsIn(repoRoot).map((root) => {
     const decl = JSON.parse(readFileSync(join(root, findDeclarationFile(root)!), "utf-8")) as {
       name?: string;
       needs?: string[];
@@ -219,7 +220,7 @@ export interface ReferenceReport {
 }
 
 export function analyse(root = REPO_ROOT): ReferenceReport {
-  const all = instances().filter((i) => i.name !== "");
+  const all = instances(root).filter((i) => i.name !== "");
   const byName = new Map(all.map((i) => [i.name, i]));
   const needs = new Map(all.map((i) => [i.name, i.needs]));
 

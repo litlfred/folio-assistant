@@ -110,6 +110,8 @@
     "check:module-scope-resolution": "bun run cat-harness/scripts/check-module-scope-resolution.ts",
     "check:orphan-verdicts": "bun run cat-harness/content/pipeline/orphan-verdict-sweep.ts",
     "check:partition": "bun run cat-harness/scripts/repo-partition.ts",
+    "check:reference-direction": "bun run cat-harness/scripts/check-reference-direction.ts",
+    "check:reference-direction:strict": "bun run cat-harness/scripts/check-reference-direction.ts --strict",
     "check:partition:edges": "bun run cat-harness/scripts/repo-partition.ts --edges",
     "check:portable-paths": "bun run cat-harness/scripts/check-portable-paths.ts",
     "check:process-documentation": "bun run cat-harness/scripts/check-process-documentation.ts --strict",
