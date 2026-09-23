@@ -7,7 +7,7 @@ pages: 58-58
 pdf_page: 58
 source_pdf: 9789240120747-eng.pdf
 source_sha256: c710f7cf4a432221
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 7. Share implementation 

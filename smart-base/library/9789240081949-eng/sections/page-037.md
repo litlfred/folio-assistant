@@ -7,7 +7,7 @@ pages: 37-37
 pdf_page: 37
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 The  digital health interventions for health management and support 

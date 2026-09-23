@@ -59,7 +59,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Getting started](getting-started.html) | 12 | — |
 | [A sub-graph wants to leave](graph-detanglement.html) | 8 | — |
 | [Human Translation Workflow](human-translation-workflow.html) | 16 | — |
-| [Incremental IG build](ig-incremental-build.html) | 18 | — |
+| [Incremental IG build](ig-incremental-build.html) | 19 | — |
 | [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html) | 5 | — |
 | [Ingestion subprocess — derive content from the assets](ingest-derive-content.html) | 6 | — |
 | [Ingestion subprocess — extract structure](ingest-extract-structure.html) | 5 | — |

@@ -7,7 +7,7 @@ pages: 56-56
 pdf_page: 56
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Systems that serve as a repository containing data that has been validated. They provide 

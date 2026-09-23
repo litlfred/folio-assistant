@@ -7,7 +7,7 @@ pages: 4-4
 pdf_page: 4
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Classification of digital interventions, services and applications in health: a shared language to describe 
