@@ -4665,6 +4665,13 @@
       body.appendChild(fs);
       showOpacity();
 
+      // THE HARNESSES PANEL (issue #1146): each harness's properties and the
+      // skill that edits each. A Settings view, as candidate H drew it.
+      var hc = el("button", { type: "button", class: "fa-glass-reset fa-glass-harnesses" },
+        "Harnesses — properties, and the skill that edits each");
+      hc.addEventListener("click", function () { openHarnesses(null); });
+      body.appendChild(hc);
+
       // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
       // nothing leaves the folio and nothing leaves the glass.
       var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
@@ -5056,7 +5063,13 @@
       });
     }
     var HARNESSES_TITLE = "Harnesses — each one's properties, and the skill that edits each";
-    chromeTile("glass-harnesses", "Harnesses", "⚙︎", HARNESSES_TITLE, function (b) { buildHarnesses(b, null); });
+    // NOT A STRIP TILE. Owner, 2026-09-23: *"too many tiles!"* — the strip is
+    // the glass's four. The panel is reached from Settings (candidate H drew it
+    // as a Settings view) and from the ⚙ on each sidebar divider.
+    function openHarnesses(name) {
+      if (openPanelId === "glass-harnesses") closePanel();
+      openPanel("glass-harnesses", HARNESSES_TITLE, function (b) { buildHarnesses(b, name); });
+    }
     // THE SIDEBAR'S ⚙ — one per divider, rendered by `nav_footer_custom.html`.
     // Delegated, because the sidebar is drawn by Jekyll and knows no script.
     document.addEventListener("click", function (ev) {
@@ -5065,8 +5078,7 @@
       ev.preventDefault();
       var name = t.getAttribute("data-fa-harness-config");
       setOpen(true);
-      if (openPanelId === "glass-harnesses") closePanel();
-      openPanel("glass-harnesses", HARNESSES_TITLE, function (b) { buildHarnesses(b, name); });
+      openHarnesses(name);
     });
 
     /* ── MORE, not twenty tiles — owner, 2026-09-23: *"too many tiles!"* ──
