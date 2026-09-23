@@ -1173,6 +1173,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // folding the menu into the index would give one file two answers to
       // "where did this come from" (bean `0818`).
       "folio-ig-menu/v1": { validator: "cat-harness:schemas/ig-menu.ts#IgMenuSchema" },
+      // The IG's own CHROME — its palette, its status watermark, its publish
+      // box — resolved from the `fhir.template` chain its `ig.ini` names. A
+      // THIRD family in this directory because it comes from a third SOURCE,
+      // and this one is not even a single source: the index is harvested from
+      // the IG's published output, the menu from its `sushi-config.yaml`, and
+      // the chrome from separate template repositories the IG merely depends
+      // on. Three provenances, three documents (bean `ajx9`).
+      "folio-ig-chrome/v1": { validator: "cat-harness:schemas/ig-chrome.ts#IgChromeSchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:

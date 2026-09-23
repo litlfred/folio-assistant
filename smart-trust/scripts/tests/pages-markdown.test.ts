@@ -150,9 +150,45 @@ describe("the pages carry no theme CSS of their own", () => {
     });
   }
 
-  it("the style block is small enough to read in one screen", () => {
+  /**
+   * The AUTHORED half stays small — and this used to be a bare line count over
+   * the whole block.
+   *
+   * That count was a PROXY for the property above: nobody has quietly
+   * reintroduced a theme. `ajx9` then added one **on purpose** — the WHO IG's
+   * chrome, ingested from its template chain — and the block went 12 -> 77.
+   * Raising the number to 80 would have kept the test green while retiring the
+   * thing it was for, since a future hand-written theme would fit under 80 just
+   * as comfortably.
+   *
+   * So the proxy is replaced by what it stood for. The chrome is identifiable
+   * because it is SCOPED, every line of it under `CHROME_SCOPE`, and the split
+   * below is the same fact the scoping buys at runtime: what is not scoped is
+   * what somebody typed here, and that is what must stay readable.
+   */
+  it("the hand-written half of the style block is still small enough to read in one screen", () => {
     const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
-    expect(css.trim().split("\n").length).toBeLessThanOrEqual(12);
+    const authored = css
+      .trim()
+      .split("\n")
+      .filter((l) => !l.includes(".st-ig") && l.trim() !== "" && !/^\s*(--|\}|[-\w]+\s*:)/.test(l));
+    expect(authored.length).toBeLessThanOrEqual(12);
+  });
+
+  /**
+   * The ingested chrome NEVER escapes its scope.
+   *
+   * This is the rule that makes mirroring somebody else's palette safe at all.
+   * The IG Publisher can put WHO's colours on `:root` because every document it
+   * builds is the IG's; ours are folio pages that carry a mirror, and one
+   * unscoped `:root` block would repaint the whole site the moment a reader
+   * opened a single artefact page.
+   */
+  it("every mirrored declaration is scoped — no bare :root anywhere", () => {
+    for (const [label, src] of pages) {
+      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
+      expect(`${label}: ${/(^|[\s,}]):root\s*\{/.test(css)}`).toBe(`${label}: false`);
+    }
   });
 });
 

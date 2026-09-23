@@ -59,6 +59,19 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { join, resolve } from "node:path";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+import {
+  IgChromeSchema,
+  chromeCss,
+  chromeFileFor,
+  tokenOf,
+  type IgChrome,
+} from "../../cat-harness/schemas/ig-chrome.js";
+import {
+  declarationPathIn,
+  directoriesForGraph,
+  instanceRootsIn,
+  repoRootFor,
+} from "../../cat-harness/schemas/cat-harness.js";
 
 import {
   FhirArtifactIndexSchema,
@@ -83,6 +96,118 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+
+/**
+ * The instance that OWNS the WHO chrome.
+ *
+ * Named rather than walked to, and `schemas/ig-chrome.ts` §`chromeFileFor`
+ * carries why: `smart-trust` needs `smart-ig` while `smart-base` needs
+ * `fhir-harness`, so there is no `needs` path between them to walk. Widening
+ * the walk until one matched would settle a layering question — `nsbb`'s —
+ * inside a stylesheet loader.
+ */
+const CHROME_OWNER = "smart-base";
+
+/** The declaration's `name`, or `undefined` when a directory is not an instance. */
+function declaredName(root: string): string | undefined {
+  const decl = declarationPathIn(root);
+  if (decl === undefined) return undefined;
+  try {
+    return (JSON.parse(readFileSync(decl, "utf8")) as { name?: string }).name;
+  } catch {
+    // Unparseable is "could not determine", never "not smart-base": returning
+    // a name here would make a broken sibling silently supply the chrome.
+    return undefined;
+  }
+}
+
+/**
+ * The IG's chrome, ingested from its template chain — OPTIONAL, like the menu.
+ *
+ * Absent is a third state rather than "this IG has no chrome":
+ * `ingest-ig-chrome.ts` needs three upstream checkouts, which are on no CI
+ * runner. Absent -> the pages render without WHO's palette and the build SAYS
+ * so, rather than quietly shipping unstyled pages and calling them a mirror.
+ */
+function loadChrome(): IgChrome | undefined {
+  const file = chromeFileFor(repoRootFor(INSTANCE), CHROME_OWNER, {
+    instanceRootsIn,
+    declarationNameOf: declaredName,
+    directoriesForGraph: (root, graph) => directoriesForGraph(root, graph),
+    exists: existsSync,
+    join,
+  });
+  if (file === undefined) return undefined;
+  const parsed = IgChromeSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
+  if (!parsed.success) {
+    console.error(`the committed IG chrome does not validate — refusing to style from it:`);
+    for (const i of parsed.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  return parsed.data;
+}
+
+const CHROME = loadChrome();
+
+/**
+ * Where the mirrored chrome applies.
+ *
+ * SCOPED, never `:root`. The IG Publisher can put WHO's palette on `:root`
+ * because every document it builds is the IG's; ours are folio pages that
+ * happen to carry a mirror, and a bare `:root` block would repaint the whole
+ * site the moment one of these pages loaded.
+ */
+const CHROME_SCOPE = ".st-ig";
+
+/**
+ * The IG's own status banner — the blue bar and, while it is a draft, the
+ * watermark.
+ *
+ * **The VALUES are WHO's; the MARKUP is ours, and the difference is the ask.**
+ * The owner wanted our pages to mirror the WHO IG *"except navar menu is now
+ * on LHS"* — so reproducing the template's Bootstrap `.navbar-inverse` would
+ * rebuild the very top bar that was moved. What is mirrored is the palette and
+ * the watermark; what is ours is a header element that consumes them.
+ *
+ * `#ig-status`'s class comes from the IG's OWN `status` (`draft` here), read
+ * from `sushi-config.yaml` by the ingest, exactly as the template's
+ * `fragment-pagebegin.html` does it. Nothing here decides that smart-trust is
+ * a draft.
+ */
+function igBanner(chrome: IgChrome): string {
+  const title = chrome.id;
+  const label = [chrome.version, chrome.status].filter(Boolean).join(" — ");
+  return [
+    `<div class="${CHROME_SCOPE.slice(1)}">`,
+    `  <div class="st-ig-bar"><a href="${esc(chrome.canonical)}">${esc(title)}</a></div>`,
+    `  <div id="ig-status" class="ig-status-${esc(chrome.status)}">`,
+    `    <p><span class="st-ig-title">WHO SMART Trust</span><br/><span>${esc(label)}</span></p>`,
+    `  </div>`,
+    `  <p id="publish-box">This page mirrors a published WHO Implementation Guide. ` +
+      `The authoritative version is at <a href="${esc(chrome.canonical)}">${esc(chrome.canonical)}</a>.</p>`,
+    `</div>`,
+  ].join("\n");
+}
+
+/**
+ * The chrome's stylesheet, plus the handful of rules OUR markup needs.
+ *
+ * `chromeCss` emits the ingested tokens and the mirrored rules. The three
+ * added here style elements the template has no equivalent of, and every
+ * colour in them is `var(--…)` off an ingested token rather than a literal —
+ * a hex typed here would be exactly the transcription this whole pipeline
+ * exists to avoid.
+ */
+function chromeStyles(chrome: IgChrome): string {
+  const bar = tokenOf(chrome, "--navbar-bg-color") ? "var(--navbar-bg-color)" : "currentColor";
+  const ink = tokenOf(chrome, "--ig-status-text-color") ? "var(--ig-status-text-color)" : "currentColor";
+  return (
+    chromeCss(chrome, CHROME_SCOPE) +
+    `${CHROME_SCOPE} .st-ig-bar{background:${bar};padding:.5rem .8rem;border-radius:4px 4px 0 0}\n` +
+    `${CHROME_SCOPE} .st-ig-bar a{color:#fff;font-weight:600;text-decoration:none}\n` +
+    `${CHROME_SCOPE} .st-ig-title{font-size:12pt;font-weight:bold;color:${ink}}\n`
+  );
+}
 
 const CHECK = process.argv.includes("--check");
 
@@ -244,7 +369,26 @@ function navFrontMatter(nav: NavRole): string[] {
   }
 }
 
-function shell(title: string, description: string, body: string, nav: NavRole = { kind: "index" }): string {
+/**
+ * Whether a page carries the IG chrome.
+ *
+ * Owner, 2026-09-23, on the navbar: *"etc... common fixture unless explicty
+ * removed in harness visualtion."* The same rule governs the chrome, and it is
+ * a DEFAULT-ON parameter rather than a list of pages that opt in — the two are
+ * not the same thing. A list of opted-in pages makes every page added later
+ * silently bare, and nobody notices, because a missing fixture looks exactly
+ * like a page that was never meant to have one. Default-on inverts that: a
+ * page without the chrome had to say so.
+ */
+type ChromeChoice = "fixture" | "removed";
+
+function shell(
+  title: string,
+  description: string,
+  body: string,
+  nav: NavRole = { kind: "index" },
+  chrome: ChromeChoice = "fixture",
+): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
@@ -257,7 +401,13 @@ function shell(title: string, description: string, body: string, nav: NavRole = 
   // file no longer owns. It is now the handful of rules just-the-docs has no
   // opinion about; everything the theme already provides was removed rather
   // than overridden.
-  return `${fm}<style>${CSS}</style>\n\n${body.trim()}\n`;
+  // The chrome is mirrored only when it was actually ingested. Absent, the
+  // page renders as an ordinary folio page: a mirror nobody could build is
+  // reported by the build, never faked with a hand-typed palette.
+  const wearsChrome = chrome === "fixture" && CHROME !== undefined;
+  const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
+  const banner = wearsChrome ? `${igBanner(CHROME!)}\n\n` : "";
+  return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
 }
 
 /**
@@ -734,5 +884,25 @@ if (CHECK) {
   } else {
     console.log("  0 menu section(s) — COULD NOT DETERMINE: no menu.json.");
     console.log("    Run `ingest-ig-menu.ts --source <ig-repo>`; this is not an IG without navigation.");
+  }
+  // THE CHROME, SAID OUT LOUD EITHER WAY. Its absence is the same third state
+  // the menu's is: unstyled pages and "we mirrored it" look identical from a
+  // build log that only mentions the chrome when it is there.
+  if (CHROME) {
+    const conflicted = CHROME.conflicts.length;
+    console.log(
+      `  chrome mirrored on every page — ${CHROME.tokens.length} token(s) over ` +
+        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s), status "${CHROME.status}"`,
+    );
+    for (const l of CHROME.layers) console.log(`    ${l.package} ${l.version} @ ${l.ref.slice(0, 8)}`);
+    if (conflicted > 0) {
+      console.log(`    ${conflicted} upstream defect(s) mirrored verbatim and recorded, not corrected:`);
+      for (const c of CHROME.conflicts) {
+        console.log(`      ${c.kind} ${c.token} — ${c.sites.map((x) => `${x.package}="${x.value}"`).join(" vs ")}`);
+      }
+    }
+  } else {
+    console.log("  chrome NOT applied — COULD NOT DETERMINE: no chrome.json.");
+    console.log("    Run `ingest-ig-chrome.ts --ig <ig> --layer <base> --layer <next>`; the pages are unstyled, not a mirror.");
   }
 }
