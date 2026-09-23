@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rtrg
 title: BPMN targetNamespace drifted three ways across the workflow corpus
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:56:52Z
-updated_at: 2026-09-23T02:45:00Z
+updated_at: 2026-09-23T18:20:53Z
 parent: folio-assistant-ahvw
 ---
 
@@ -35,18 +35,18 @@ process a call edge resolves to — the opposite of cosmetic.
 
 ## Done when
 
-- [ ] Established, from the BPMN 2.0 record already in `external-schemas/`,
+- [x] Established, from the BPMN 2.0 record already in `external-schemas/`,
       what `targetNamespace` is required to do here — in particular whether
       anything in this corpus resolves a QName against it. `loadProcessModel`
       and the `calledElement` regex in `processHierarchy` are the two readers
       to check.
-- [ ] ONE shape chosen, with the reason written down rather than the majority
+- [x] ONE shape chosen, with the reason written down rather than the majority
       silently winning.
-- [ ] Only then, rewritten — and `bun run render:bpmn:check`, the hierarchy
+- [x] Only then, rewritten — and `bun run render:bpmn:check`, the hierarchy
       tests in `scripts/tests/todos.test.ts`, and the committed workflow state
       under `beans/workflows/` all verified after, since an instance records
       the process it is in.
-- [ ] A check that keeps it, in `scripts/external-schemas.ts` beside the
+- [x] A check that keeps it, in `scripts/external-schemas.ts` beside the
       own-namespace drift check `0d99` added.
 
 ## Not urgent, and say why
@@ -71,3 +71,13 @@ about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 **Nothing about this bean's own work changed** — not its status, not its
 Done-when, not a line of its body above this note. Only the question *"whose
 goal does finishing this serve?"* is answered differently.
+
+## Summary of Changes
+
+**Measured 2026-09-23:** 47 diagrams on `https://litlfred.github.io/folio-assistant/workflows`, 4 on `https://folio-assistant.dev/workflows`, 15 on `http://folio-assistant.dev/bpmn/<name>` (66 in `processes/`, plus smart-base's one, already canonical).
+
+**What reads it here:** nothing. `loadProcessModel`, `kg-audit`, `render-bpmn`, `gen-docs-pages` and `gen-processes-viz` all match `calledElement` as a bare id; no `calledElement` is prefixed; `beans/workflows/` records no namespace. What it matters to is a conformant tool: `calledElement` is a QName, and 12 call edges crossed namespaces with no `<bpmn:import>`. All 8 existing imports already named the shared IRI and their targets matched it.
+
+**Chosen (owner, 2026-09-23, option A):** one shared namespace, the one 47 diagrams and every import already used. The 12 cross-namespace calls become same-namespace. Bootstrap keeps `…/bootstrap/workflows` (another instance).
+
+**Changed:** `WORKFLOWS_NS` in `schemas/namespaces.ts` with the reasoning; 19 diagrams' `targetNamespace` rewritten (nothing else in them); `targetNamespacesInUse` + a drift check in `scripts/external-schemas.ts` (`external-schemas:check`, a gate), reading the DECLARED workflow graph; `scripts/tests/external-schemas-target-ns.test.ts`. Verified after: `render:bpmn:check`, `todos.test.ts` (14 pass), `beans/workflows/` unchanged.

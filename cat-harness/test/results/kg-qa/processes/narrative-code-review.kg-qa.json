@@ -5,7 +5,7 @@
     "id": "Process_NarrativeCodeReview",
     "path": "processes/narrative-code-review.bpmn"
   },
-  "source_hash": "sha256:e8a9c140970ab316434786f63ce66ff3cca296c7db64c2febfd5c5d9c33ee544",
+  "source_hash": "sha256:b96195178780d03fbcc66b2e5c0f4107f33e51ba6a1fcacd5b5d8233cdde389c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 15,
     "fail": 0,
     "n/a": 9,
     "unknown": 0

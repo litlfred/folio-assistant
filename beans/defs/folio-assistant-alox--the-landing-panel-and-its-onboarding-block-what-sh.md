@@ -1,11 +1,11 @@
 ---
 # folio-assistant-alox
 title: The landing panel and its onboarding block — what shipped, and what is still judgement
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T07:27:54Z
-updated_at: 2026-09-22T08:17:09Z
+updated_at: 2026-09-23T17:08:01Z
 parent: folio-assistant-o3xy
 ---
 
@@ -77,8 +77,8 @@ external fetch blocked. That is the `staging-review` route, and it works.
       carries a long rationale about which way `opacity` blends that is worth
       keeping somewhere. Owner's call: delete, or move the reasoning to the
       sticky backdrop's CSS where a fade would now live.
-- [ ] (b) the onboarding block's placement — unchanged, needs the owner
-- [ ] (c) English only — unchanged; the bean itself says not a defect yet
+- [x] (b) the onboarding block's placement — owner: keep it below the panel
+- [x] (c) English only — owner: translate now; done in all five declared locales
 
 ## DONE 2026-09-22 — the dead CSS is out, and the scope was larger than reported
 
@@ -137,3 +137,11 @@ recorded two hundred lines away in `docs-ui.css`, where
 a grandchild — *"the page built clean, the markup was right, every request
 returned 200"*. Twice in one stylesheet, found both times by looking rather
 than by a gate.
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner went through this bean's two open items when asked to "go through beans".
+
+- **(b) Placement: kept below the panel.** Owner's choice, recommended. Since #1095 the cat card starts as a tile, so putting the block inside the card is even less workable than the 53% × 28% text region already made it.
+- **(c) English only: translated now.** Owner's choice. The "Four things, in order" block is now on `ar/`, `es/`, `fr/`, `ru/` and `zh/` `index.md`, in the same position as the English: after the buttons, before "What is folio-assistant?". Code fences, commands and link targets are unchanged, and every link goes through `relative_url` so the `/<locale>/` pages resolve. Each page keeps `translation_status: unverified`, which is true: these are agent translations that no human has checked.
+- **One fix to the English source while in there.** The fence named `scripts/install-beans.sh`. That path has not existed since the split, so it failed for anyone who copied it (bean `b963`'s class of defect). It is now `cat-harness/scripts/install-beans.sh` in all six languages.

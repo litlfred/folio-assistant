@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:b38973a6eb386b21a8449100a01acd04402a861db62799c58261e4795bba17db",
+  "source_hash": "sha256:f24e016d1ec3a3ab868d7910ef3d16881dd9f11e9eae90f033e1c6e8b3880ecc",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -73,7 +73,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
@@ -100,6 +100,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -110,9 +118,9 @@
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 15,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "processes/activity-log.bpmn"
   },
-  "source_hash": "sha256:7a44c7819c0c1b58756ef2071269e9e0cdea3e5696d66a5f00754b383927ad86",
+  "source_hash": "sha256:a214e186f833c1ba6d7c1b5370269b618cef560c84051b8b0b12998933234ab6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -116,6 +116,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -126,7 +134,7 @@
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 13,
     "fail": 1,
     "n/a": 10,
     "unknown": 0

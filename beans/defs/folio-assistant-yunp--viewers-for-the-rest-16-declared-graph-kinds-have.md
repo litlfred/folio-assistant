@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yunp
 title: 'VIEWERS FOR THE REST: 16 declared graph kinds have no visualiser — fsh-guts among them — so the navbar lists them disabled'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:34Z
-updated_at: 2026-09-22T01:16:15Z
+updated_at: 2026-09-23T17:57:16Z
 parent: folio-assistant-p5wm
 ---
 
@@ -125,7 +125,7 @@ decision rather than leaving it as an unexplained disabled row.
       like neglect. The five are decided in the table above; `scenarios` is the
       one that is deferred rather than declined, and it names the bean that
       holds it.
-- [ ] The prioritisation above is the owner's, not mine: a kind I called
+- [x] The prioritisation above is the owner's, not mine — **owner agreed 2026-09-23**: a kind I called
       agent-facing may be one they open weekly
 
 
@@ -441,3 +441,13 @@ canonical `.html` for an `href` into `fsh-guts/`: **none**. The generated
 skill-instruction page `reference/skill-instructions/fsh-guts.html` stays
 canonical — it is the *skill body* (how to author an fsh-guts node), not the
 proposals, and it names one proposal file without linking it.
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner went through the last open item when asked to "go through beans", and chose **"Agree, close it"**.
+
+The prioritisation is now the owner's, not the agent's. The five graphs `code`, `scenarios`, `interaction`, `memory` and `waiver` stay without a viewer. Their navbar entries stay disabled, for the reasons in the table above.
+
+`scenarios` is still **deferred, not declined**. It is revisited once `zw4a` puts roles into the process viewer, and that bean holds it, not this one.
+
+What this bean delivered over its life: the split was re-measured from 16/22 to 7/24 to 5; `fsh-guts` turned out to have a viewer already; and viewers were built for `methodology` and `external-schema`.

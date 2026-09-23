@@ -5,7 +5,7 @@
     "id": "Process_CodeChangeReview",
     "path": "processes/code-change-review.bpmn"
   },
-  "source_hash": "sha256:08c4a30f26fda3d61785945b3e7d690dfdfd1baeb5ec90695886b856a90ffb01",
+  "source_hash": "sha256:3f4aac0f2314dd7f97839ba546398d4b7d23533a572e565b431cb27f380a5140",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 15,
     "fail": 0,
     "n/a": 9,
     "unknown": 0
