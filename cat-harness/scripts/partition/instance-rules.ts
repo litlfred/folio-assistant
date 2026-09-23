@@ -779,6 +779,12 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, and by its SUBJECT twice over: it reads
+      // the agent work plan and compares it against `skills/`, which is the
+      // `kg` graph the harness declares. Bean `8v0y` — a bean restating a
+      // skill's contract is a defect in the harness's own discipline, and a
+      // folio has neither a bean store nor a skill graph to be wrong about.
+      "scripts/check-bean-restates-skill.ts",
       // Harness for the same reason, plus one of its own: its `--github`
       // half asks the forge which PRs are open, and a PR is a fact about
       // this checkout and the forge, not about any folio's material.
