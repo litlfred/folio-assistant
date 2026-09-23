@@ -90,21 +90,6 @@ const REPO = repoRootFor(resolve(import.meta.dir, ".."));
  */
 export const EXEMPT: Readonly<Record<string, string>> = {
   "smart-trust": "a content library replicating WHO's identity — its mark is not this repository's to choose",
-  // Added 2026-09-23 with `smart-base.config.json`, and deliberately taking
-  // the same reason rather than the `who-iris` route. smart-base is WHO's
-  // SMART Base IG — its index, its library, its DAK API sidecars — so its
-  // mark is WHO's in exactly the sense this list exists for.
-  //
-  // THE OTHER ROUTE IS OPEN AND IS THE OWNER'S TO TAKE. `who-iris` left this
-  // list the same day on the owner's ruling — *"no logo on who-iris icon (for
-  // now). just WHO blue"* — because an organisation's published colour with a
-  // neutral glyph is not inventing its identity. That is available here too,
-  // and would be better than an exemption. It is not taken unilaterally
-  // because choosing how an instance LOOKS is a design decision, and this
-  // list's own docblock warns that an exemption naming an instance which has
-  // since declared an avatar FAILS — so taking it later costs one line here
-  // and nothing else.
-  "smart-base": "WHO's SMART Base IG — its mark is not this repository's to choose. The `who-iris` route (WHO blue, neutral glyph, no logo) is open and preferable; it needs the owner's call on the art",
 };
 
 /** Every instantiated harness: a `<name>.config.json` at the repository root. */

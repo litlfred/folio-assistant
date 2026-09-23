@@ -600,6 +600,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-translation-status/v1": { writtenBy: "scripts/gen-translation-status.ts" },
       "folio-schema-graph/v1": { writtenBy: "scripts/gen-schema-viz.ts" },
       "folio-library-index/v1": { writtenBy: "scripts/gen-library-viz.ts" },
+      // The per-entry block graph, one file per library entry (bean `7nvr`).
+      // Same writer as the index and deliberately a SEPARATE family: the index
+      // answers "what entries are there" and this answers "what is in one",
+      // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
+      // they are fetched at different times by different questions.
+      "folio-library-entry/v1": { writtenBy: "scripts/gen-library-viz.ts" },
       "folio-voices-index/v1": { writtenBy: "scripts/gen-voices-viz.ts" },
       "folio-graph-projection/v1": { writtenBy: "scripts/gen-folio-viz.ts" },
     },

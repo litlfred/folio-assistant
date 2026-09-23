@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 649,
+      "count": 648,
       "unit": "beans"
     }
   },
@@ -4323,14 +4323,14 @@
     {
       "id": "folio-assistant-hfwl",
       "title": "SAMPLE-IMPORT SDLC: the process for testing an import into a KG, with size, retention, source-loss and copyright as first-class gates",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:02:10Z",
-      "updatedAt": "2026-09-20T08:02:10Z",
+      "updatedAt": "2026-09-23T19:24:02Z",
       "preview": "Owner: 'this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright. bpmn and skills strawperson please.'\n\nGENERAL, NOT WHO-SPECIFIC. The subject is 'a sample import into a structured data store'; IRIS is the worked instance. So the BPMN and the skill are cat",
       "file": "beans/defs/folio-assistant-hfwl--sample-import-sdlc-the-process-for-testing-an-impo.md"
     },
@@ -4351,14 +4351,14 @@
     {
       "id": "folio-assistant-hpax",
       "title": "MATERIALIZE REMOTE CONTENT: one subprocess, shared by catalogue import and harness bootstrap, plus its refresh",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:04:11Z",
-      "updatedAt": "2026-09-20T08:04:11Z",
+      "updatedAt": "2026-09-23T19:24:03Z",
       "preview": "Owner, 2026-09-20: 'so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess. also need to know about refreshing amterialed remote content. general proce",
       "file": "beans/defs/folio-assistant-hpax--materialize-remote-content-one-subprocess-shared-b.md"
     },
@@ -8941,20 +8941,6 @@
       "updatedAt": "2026-09-21T11:02:32Z",
       "preview": "Owner, 2026-09-21, two messages:\n\n> i want the proposal pages for who-iris moved to their docs/. the docs/ should\n> not be for the who-iris top navbar, instead, f-a navbar should still be on\n> the left, with who-iris and then link to docs on side in navbar. see other\n> beans/sibling work on LHS\n\nand, ruling out the question of where the replica lives:\n\n> the iris KG should be in who-iris/library (",
       "file": "beans/defs/folio-assistant-zgba--who-iris-routing-the-kg-renders-library-side-the-d.md"
-    },
-    {
-      "id": "folio-assistant-zgwz",
-      "title": "PROMOTE the five agent-skills uploads, and stop check:subgraphs reporting a transcription's own links as dangling",
-      "status": "completed",
-      "type": "feature",
-      "priority": "normal",
-      "parent": "",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-09-23T18:38:49Z",
-      "updatedAt": "2026-09-23T18:39:11Z",
-      "preview": "parent: folio-assistant-slw1\n\n\nIssue #1148. The first use of the path `8suc` created, and it surfaced a gate\ndefect on contact with real content.\n\n## The uploads — five promoted, one deliberately not\n\nDestination derived from the `source_file` relation across all 22 existing\nentries, never from a path convention (`v1hw`).\n\n| document | rung | images |\n|---|---|---|\n| Agent Skill best practices - G",
-      "file": "beans/defs/folio-assistant-zgwz--promote-the-five-agent-skills-uploads-and-stop-che.md"
     },
     {
       "id": "folio-assistant-zj6c",
