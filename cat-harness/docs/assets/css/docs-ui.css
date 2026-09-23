@@ -3448,7 +3448,92 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-glass-shelf {
   position: relative;
   margin: 1rem 0 0;
+  /* A SURFACE to grab even with nothing on it, and one a finger pinches and
+     pans rather than scrolls (`b8eq`). */
+  min-height: 50vh;
+  touch-action: none;
+  cursor: grab;
 }
+.fa-glass-shelf[data-fa-pinching] { cursor: grabbing; }
+
+/* ── Zoom, pan and Home — bean `b8eq` ─────────────────────────────────────
+   Sticky to the top of the glass so it stays in reach however far the glass
+   is scrolled, and ABOVE the cards so a zoomed-in card never covers it. */
+.fa-glass-zoom {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 0 auto;
+  padding: 0.3rem 0.5rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-zoom-btn {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fa-glass-home { font-size: 0.9rem; }
+.fa-sticky-layer[data-fa-glass-home="false"] .fa-glass-home {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-zoom-slider { width: 9rem; height: 2.75rem; accent-color: var(--fa-glass-accent); }
+.fa-glass-zoom-value { min-width: 3.2rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.fa-glass-zoom button:focus-visible,
+.fa-glass-zoom input:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* ── A todo's avatar is a sticky note — owner, 2026-09-23 (`b8eq`) ──────
+   A square of note yellow, a folded corner and ruled lines: the thing a todo
+   is everywhere else on this site. Fixed colours on purpose — a sticky note
+   is yellow in both schemes, and the ink is measured against that yellow. */
+.fa-sticky-note-avatar {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: #fbe38e;
+  border: 1px solid #a88a1f;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.35);
+  transform: rotate(-3deg);
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+}
+.fa-sticky-note-avatar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28%;
+  height: 28%;
+  background: linear-gradient(to bottom right, #d9bb4f 50%, transparent 50%);
+}
+.fa-sticky-note-lines {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 24%;
+  height: 46%;
+  background: repeating-linear-gradient(to bottom, #6b5a12 0 2px, transparent 2px 33%);
+  opacity: 0.6;
+}
+.fa-glass-todo-row .fa-sticky-note-avatar { width: 1.9rem; height: 1.9rem; }
 .fa-glass-asset {
   position: absolute;
   box-sizing: border-box;
@@ -3515,11 +3600,47 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
 
 /* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
-.fa-glass-tiles {
+/* THE DOCK holds the strip and the tab that slides it away (`b8eq`). The
+   dock is what is fixed to the bottom edge; hidden, it drops by the strip's
+   height and leaves the tab on screen — the way back is never off-screen. */
+.fa-glass-dock {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* The dock spans the width; only its tab and strip take presses, so the
+     glass beside the tab stays usable. */
+  pointer-events: none;
+  transition: transform 0.25s ease;
+  z-index: 3;
+}
+.fa-glass-dock > * { pointer-events: auto; }
+.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem)); }
+@media (prefers-reduced-motion: reduce) {
+  .fa-glass-dock { transition: none; }
+}
+.fa-glass-strip-toggle {
+  min-height: 2.75rem;
+  margin-right: 1rem;
+  padding: 0 1rem;
+  border: 2px solid var(--fa-glass-accent);
+  border-bottom: 0;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fa-glass-strip-toggle:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+.fa-glass-tiles {
+  align-self: stretch;
   display: flex;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
@@ -6864,6 +6985,10 @@ a.fa-harness-tab__body:focus-visible {
     width: auto !important;
     height: auto !important;
   }
+  /* The phone's own pinch zooms the column, so the glass's zoom stands down:
+     a second zoom over the browser's would be two answers to one gesture. */
+  .fa-glass-shelf { transform: none !important; touch-action: auto; min-height: 0; cursor: auto; }
+  .fa-glass-zoom { display: none; }
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
   .fa-sticky-layer [data-fa-control="move"],
@@ -6919,6 +7044,13 @@ a.fa-harness-tab__body:focus-visible {
 .fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar img {
   object-fit: cover;
   object-position: center top;
+}
+/* Filling a card, the note is square and centred, not stretched to the card. */
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-sticky-note-avatar {
+  width: auto;
+  height: 58%;
+  aspect-ratio: 1;
+  max-width: 70%;
 }
 .fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-glass-kind-avatar {
   --fa-avatar-size: 45%;
@@ -7056,3 +7188,48 @@ a.fa-harness-tab__body:focus-visible {
   border-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.5));
 }
 .fa-landing-window .fa-board-window-control { color: inherit; border-color: currentColor; }
+
+
+/* ── Arranging tiles between the strip and More — bean `b8eq` ────────────
+   Each tile in More carries its "Strip" button beneath it, and the strip's
+   tiles are listed with a "More" button: the whole arrangement can be made
+   by pressing (WCAG 2.5.7). Dragging highlights where a tile would land. */
+.fa-glass-more-item { display: flex; flex-direction: column; align-items: stretch; gap: 0.3rem; }
+.fa-glass-arrange {
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fa-glass-arrange:focus-visible { outline: 3px solid var(--fa-glass-accent); outline-offset: 2px; }
+.fa-glass-arrange-hint { color: var(--fa-glass-muted); font-size: 0.85rem; margin: 0.25rem 0 0.5rem; }
+.fa-glass-arrange-title { font-size: 0.95rem; margin: 1rem 0 0.4rem; color: var(--fa-glass-ink); }
+.fa-glass-arrange-list { list-style: none; margin: 0; padding: 0; }
+.fa-glass-arrange-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 0;
+  border-top: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-arrange-name { flex: 1 1 auto; font-weight: 600; }
+[data-fa-draggable-tile] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+[data-fa-draggable-tile][data-fa-dragging] { opacity: 0.4; }
+.fa-glass-tile-ghost {
+  position: fixed;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0.9;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  background: var(--fa-glass-card, #1f2933);
+}
+.fa-sticky-layer[data-fa-drop="strip"] .fa-glass-tiles,
+.fa-sticky-layer[data-fa-drop="more"] .fa-glass-panel[data-fa-panel="glass-more"] {
+  outline: 3px dashed var(--fa-glass-accent);
+  outline-offset: -3px;
+}
