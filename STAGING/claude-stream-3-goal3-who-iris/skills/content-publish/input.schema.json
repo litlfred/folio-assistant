@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": [
+    "versionIncrement"
+  ],
+  "properties": {
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "github-release",
+        "npm",
+        "fhir-registry",
+        "arxiv"
+      ],
+      "description": "Publication target."
+    }
+  },
+  "staging": {
+    "branch": "claude/stream-3-goal3-who-iris",
+    "sha": "89a078bc319db25a3160ddc154a68a066100f2a9",
+    "pr": "1114/merge",
+    "run": "35894056695"
+  }
+}

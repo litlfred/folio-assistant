@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/content-test/output.schema.json",
+  "title": "Content Test Output",
+  "description": "Output schema for content testing results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "testResults"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "testResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "testId",
+          "status"
+        ],
+        "properties": {
+          "testId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "passed": {
+          "type": "integer"
+        },
+        "failed": {
+          "type": "integer"
+        },
+        "skipped": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/stream-3-goal3-who-iris",
+    "sha": "89a078bc319db25a3160ddc154a68a066100f2a9",
+    "pr": "1114/merge",
+    "run": "35894056695"
+  }
+}

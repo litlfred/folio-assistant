@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/document-publishing/output.schema.json",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/stream-3-goal3-who-iris",
+    "sha": "89a078bc319db25a3160ddc154a68a066100f2a9",
+    "pr": "1114/merge",
+    "run": "35894056695"
+  }
+}

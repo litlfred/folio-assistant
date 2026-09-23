@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/content-test/input.schema.json",
+  "title": "Content Test Input",
+  "description": "Input schema for end-to-end content testing.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string",
+      "description": "Path to test plan file."
+    },
+    "testData": {
+      "type": "string",
+      "description": "Path to test data directory."
+    },
+    "regressionBaseline": {
+      "type": "string",
+      "description": "Git ref for regression baseline."
+    }
+  },
+  "staging": {
+    "branch": "claude/stream-3-goal3-who-iris",
+    "sha": "89a078bc319db25a3160ddc154a68a066100f2a9",
+    "pr": "1114/merge",
+    "run": "35894056695"
+  }
+}
