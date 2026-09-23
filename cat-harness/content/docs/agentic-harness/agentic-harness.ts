@@ -35,6 +35,11 @@ export default webpage({
       block: "deterministic-and-agentic",
     },
     {
+      id: "bpmn-execution",
+      title: "BPMN execution: one skill, two engines",
+      block: "bpmn-execution",
+    },
+    {
       id: "feature-request-workflow",
       title: "Feature-request workflow (CRDM)",
       block: "feature-request-workflow",
