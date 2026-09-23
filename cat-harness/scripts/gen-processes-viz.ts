@@ -178,8 +178,18 @@ export interface LaneDetail {
   name: string;
   roleRef?: string;
   documentation?: string;
-  /** `laneBinding`'s verdict — bound / dangling / variable / contradictory / unbound. */
-  binding: LaneBinding["kind"];
+  /**
+   * `laneBinding`'s verdict — bound / dangling / variable / contradictory /
+   * unbound — or `ungraphed` when there is no role graph to ask.
+   *
+   * `ungraphed` is the VIEWER's word for "could not determine", not a sixth
+   * `LaneBinding` kind: bean `7go7` made the graph a required parameter, so
+   * with none there is no verdict to take. It is what `kg:audit` already
+   * records in that state (`unknown` against `role-ref-resolves`,
+   * `lane-binds-role` and five more), so the two agree — which they did NOT
+   * before: the audit discarded its verdicts and this viewer published them.
+   */
+  binding: LaneBinding["kind"] | "ungraphed";
   /** The role actually resolved, which may have come from lane-NAME matching rather than a ref. */
   roleId?: string;
   /**
@@ -415,22 +425,23 @@ export function laneDetail(
       .flatMap((a) => a.skills),
   ).sort((a, b) => a.localeCompare(b, "en"));
 
-  const b = laneBinding(roleGraph, { name, roleRef: lane.roleRef, performerVaries: lane.performerVaries });
-  const role = b.kind === "bound" ? b.role : undefined;
+  // No graph, no question. Before bean `7go7` this asked anyway and got
+  // `dangling` for every ref-bearing lane — 44 of them in this corpus, all of
+  // which bind. One unreadable file rendered as a wall of broken references.
+  const b = roleGraph
+    ? laneBinding(roleGraph, { name, roleRef: lane.roleRef, performerVaries: lane.performerVaries })
+    : undefined;
+  const role = b?.kind === "bound" ? b.role : undefined;
   return {
     id: lane.id,
     name,
     ...(lane.roleRef ? { roleRef: lane.roleRef } : {}),
     ...(lane.documentation ? { documentation: lane.documentation } : {}),
-    binding: b.kind,
+    binding: b?.kind ?? "ungraphed",
     ...(role ? { roleId: role.id } : {}),
-    // `laneBinding`'s verdict is taken VERBATIM, including the case where the
-    // graph could not be read at all: it then reports every ref-bearing lane
-    // as `dangling`, because from its side a ref that resolves to nothing is a
-    // ref that resolves to nothing. That is arguably the `dh4f` shape — one
-    // missing file rendering as a corpus of defects — but it is `kg:audit`'s
-    // resolver too, and a viewer quietly disagreeing with the audit about
-    // whether a lane is bound would be worse than the shape. Bean `7go7`.
+    // A lane's binding is not a fact that exists without a role registry, so
+    // with no graph this reports that it could not look rather than what it
+    // would have guessed. Bean `7go7`, the owner's ruling 2026-09-23.
     roleSkills: role && roleGraph ? resolveRoleSkills(roleGraph, role.id) : [],
     activitySkills,
   };
