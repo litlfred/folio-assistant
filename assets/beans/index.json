@@ -4379,14 +4379,14 @@
     {
       "id": "folio-assistant-iumj",
       "title": "e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:17:56Z",
-      "updatedAt": "2026-09-19T01:34:39Z",
+      "updatedAt": "2026-09-23T09:58:54Z",
       "preview": "## What happened\n\n`main` went red at `78a399ee5` on `End-to-end + accessibility (hard)` — two\nspecs in `tests/qa-panel.e2e.ts`. Fixed on `claude/ecstatic-goldberg-eroyaz`\n(PR #314); this bean is the general defect that fix does not close.\n\nA composition failure. #317 added the e2e job, green against the corpus as it\nthen stood. #302 adjudicated all 26 `voice-*` findings to zero — correctly —\nand w",
       "file": "beans/defs/folio-assistant-iumj--e2e-fixtures-read-the-live-qa-corpus-so-adjudicati.md"
     },
