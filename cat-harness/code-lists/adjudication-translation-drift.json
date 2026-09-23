@@ -2,21 +2,26 @@
   "$schema": "folio-code-list/v1",
   "id": "adjudication-translation-drift",
   "title": "Round-trip drift outcomes",
-  "description": "The answers an adjudicator may give when round-trip translation QA flags a passage whose back-translation differs from the source. A machine can detect that two readings differ; which one is right is a human call.",
+  "description": "The answers an adjudicator may give on ONE passage round-trip QA flagged. All three are reasons recorded against the L1 completeness verdict, which Lane_0 owns; what differs is the obligation each creates.",
   "source": {
-    "href": "https://github.com/litlfred/folio-assistant/issues/1073",
-    "note": "bean bvuk; owner approved the answer set 2026-09-23"
+    "href": "https://github.com/litlfred/folio-assistant/pull/1156",
+    "note": "bean bvuk; the owner's own answer set and design, 2026-09-23"
   },
   "codes": [
     {
-      "code": "drift",
-      "label": "Real drift",
-      "definition": "The translation lost or changed the meaning of the source, or used the wrong term; the passage needs correcting."
+      "code": "real",
+      "label": "The drift is real",
+      "definition": "The translation lost or changed the source's meaning, or used the wrong term; recorded as the reason against the completeness verdict."
     },
     {
-      "code": "false-positive",
+      "code": "spurious",
       "label": "False positive",
-      "definition": "The two readings say the same thing; the flag was a difference in wording, not in meaning."
+      "definition": "The two readings say the same thing. Recorded so the passage stops being re-flagged on every run."
+    },
+    {
+      "code": "source-wrong",
+      "label": "The SOURCE is wrong",
+      "definition": "The flag is right but the fault is in the source, not the translation. The one answer that sends work out of this process: re-translating a wrong source cannot produce a right target."
     }
   ]
 }

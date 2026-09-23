@@ -159,20 +159,15 @@ union guard would have let `code` sit ignored on a judge.
 - [x] Owner picks a shape — **(4), split at the judgement**, 2026-09-23. (1)
       was off the table: the codes selected TASKS, not a returned value.
 - [x] Each caller's permitted answers are the ones its own question admits.
-      **All ten, 2026-09-23** (owner approved the five proposals as a set):
-      content-change-review `stands withdrawn`; ingest-l1-completeness-gate
-      `drift false-positive`; refresh-materialized `local upstream`;
-      translation-workflow `accepted retranslate` (its existing Gateway_PostQA
-      branches coded); wireframe-design-review re-pointed to
-      `Process_CriterionAdjudication`, `accepts="stands scope dispensation"`;
-      document-ingestion `accepts="drift false-positive"` on its call into the
-      L1 gate, which now contains a judgement. `check:workflow-refs`:
-      "10 of 10 say which answers they can act on".
-      **Two of six done** (`review-narrative`, `voice-review`, via
-      `criterion-adjudication`). The other four no longer run the wrong
-      outcomes, but still declare no enum of their own — reported by
-      `check:workflow-refs`, deliberately not guessed. That is the remaining
-      work and it is four separate questions, not one.
+      **All ten, 2026-09-23.** Three are the owner's own design with real
+      branches (#1156, another session): refresh-materialized
+      `remote local merge defer`, translation-workflow `accept edit retranslate`,
+      ingest-l1-completeness-gate `real spurious source-wrong`. The rest came
+      from this session's proposals, approved as a set (#1155):
+      content-change-review `stands withdrawn`; wireframe-design-review
+      re-pointed to `Process_CriterionAdjudication`; document-ingestion
+      `accepts` the L1 gate's three. `check:workflow-refs`: "10 of 10 say which
+      answers they can act on".
 - [x] A caller whose codes differ from the shared gateway's is REFUSED rather
       than silently routed through the wrong three — `checkAcceptedCodes` in
       `process-model.ts`, with absence reported rather than guessed.
@@ -180,15 +175,15 @@ union guard would have let `code` sit ignored on a judge.
 
 ## Summary of Changes
 
-Shape (4) landed earlier today (split at the judgement; `accepts` checked at load). This closes the remaining box: every caller now names the answers ITS question admits, approved by the owner as one set on 2026-09-23.
+Shape (4) landed first (split at the judgement; `accepts` checked at load). Every caller now names the answers ITS question admits.
 
-| caller | answers | how |
+| caller | answers | from |
 |---|---|---|
-| content-change-review | `stands` · `withdrawn` | recorded on the comment; no branch |
-| ingest-l1-completeness-gate | `drift` · `false-positive` | Task_Verdict records either |
-| refresh-materialized | `local` · `upstream` | Task_Apply applies the winner |
-| translation-workflow | `accepted` · `retranslate` | Gateway_PostQA's two existing branches coded; "edit and re-run QA" folds into `retranslate` |
-| wireframe-design-review | `stands` · `scope` · `dispensation` | re-pointed to Process_CriterionAdjudication (`accepts`) |
-| document-ingestion | `accepts="drift false-positive"` | its call into the L1 gate, which now contains a judgement |
+| refresh-materialized | `remote` · `local` · `merge` · `defer` | #1156 — owner's design, each answer its own branch |
+| translation-workflow | `accept` · `edit` · `retranslate` | #1156 — new Task_EditTranslation |
+| ingest-l1-completeness-gate | `real` · `spurious` · `source-wrong` | #1156 — reasons recorded against the verdict |
+| content-change-review | `stands` · `withdrawn` | #1155 — recorded on the comment; no branch |
+| wireframe-design-review | `stands` · `scope` · `dispensation` | #1155 — re-pointed to Process_CriterionAdjudication |
+| document-ingestion | `accepts` the L1 gate's three | #1155 — its call into the gate, which now contains a judgement |
 
-Each call declaring `codes` also carries `folio:fulfilment kinds="person agent"`. `check:workflow-refs`: 10 of 10 callers declared. `adjudication-marker.test.ts` updated: wireframe moves to the criterion callers, and each shared-half caller's own codes are pinned.
+#1155 first proposed two-answer sets for the three #1156 callers; #1156 merged first with the owner's own design, so #1155 took main's side for those diagrams when bringing main in. `adjudication-marker.test.ts` pins every shared-half caller's own codes.

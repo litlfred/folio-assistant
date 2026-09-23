@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-09-23T18:39:15.098Z\n"
+"POT-Creation-Date: 2026-09-23T19:45:54.300Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -161,7 +161,7 @@ msgstr ""
 
 #: processes/document-ingestion.bpmn:148
 #. Diagram element documentation
-msgid "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `drift` or `false-positive`), and its own Task_Verdict records either answer before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
+msgid "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
 msgstr ""
 
 #: processes/document-ingestion.bpmn:125

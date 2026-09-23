@@ -518,12 +518,13 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
   test("the other four call the shared half, reach NO outcome task, and declare their OWN answers", async () => {
     // The defect this closes, asserted as reachability rather than as a name:
     // before the split every one of these ran A_ScopeCriterion's gateway. And
-    // each now names the answers ITS question admits (owner, 2026-09-23), so
+    // each now names the answers ITS question admits (owner, 2026-09-23; the
+    // three multi-answer sets are the owner's own design, #1156), so
     // no caller runs an adjudication whose answers nobody stated.
     for (const [f, id, codes] of [
-      ["refresh-materialized.bpmn", "Task_Adjudicate", ["local", "upstream"]],
-      ["translation-workflow.bpmn", "Task_Adjudicate", ["accepted", "retranslate"]],
-      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["drift", "false-positive"]],
+      ["refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
+      ["translation-workflow.bpmn", "Task_Adjudicate", ["accept", "edit", "retranslate"]],
+      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["real", "source-wrong", "spurious"]],
       ["content-change-review.bpmn", "Call_Adjudication", ["stands", "withdrawn"]],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
