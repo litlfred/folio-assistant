@@ -1,0 +1,38 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--issue-1015-prefix-is-stub",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-1015-prefix-is-stub",
+  "bean": "folio-assistant-zaqn",
+  "tokens": [
+    "Task_RunGates"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-23T07:40:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "RECORDED DURING THE WORK, after Implement had begun — not at the start. The session opened as a QUESTION (explain JSON Schema / JSON / JSON-LD and no-dangles), the answer surfaced the defect, and the owner chose 'bean + fix + PR'. The process should have been named at that choice."
+    },
+    {
+      "at": "2026-09-23T07:45:00.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Bean zaqn created in-progress after a duplicate scan (two prefix-mentioning beans, x4mt and cjtm, neither the same defect)."
+    },
+    {
+      "at": "2026-09-23T07:46:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/charming-curie-n04agq (session-designated). Issue #1015 opened; the branch announcement comment goes on it with the first push."
+    },
+    {
+      "at": "2026-09-23T08:30:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "Owner decisions taken during Implement: prefix = stub (bootstrap / cat-harness / folio-assistant-core); 91 orphaned blocks rewritten in place, not pruned (bean xwi8); CSVW tabular keys deferred (bean 792y); document the rule in skills and tools; record the Zod carrier grounds with the house rule labelled as one."
+    }
+  ]
+}
