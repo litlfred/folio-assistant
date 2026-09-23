@@ -346,6 +346,13 @@ export interface ProcessModel {
    * agent can report a decision or only a default.
    */
   logCapture?: "on" | "off";
+  /**
+   * `<bpmn:documentation>` on the process element itself — what the diagram
+   * is FOR. The node-level `documentation` says what one step does; this is
+   * the paragraph a reader meets before any step, and `process-documented`
+   * in `schemas/kg-qa.ts` is what notices when it is missing.
+   */
+  documentation?: string;
   /** The process's lanes, in document order. A lane IS a role — see below. */
   lanes: LaneDef[];
   /** Every start event, in document order. */
@@ -937,6 +944,7 @@ export async function loadProcessModel(
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
     dir: dirname(bpmnPath),
+    documentation: (proc as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
     enforcement,
     logCapture,
     preconditions,

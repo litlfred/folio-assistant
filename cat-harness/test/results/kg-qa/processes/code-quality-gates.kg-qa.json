@@ -91,11 +91,49 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_CodeQualityGates",
+          "detail": "code-quality-gates.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Lean",
+          "detail": "\"Lean: no bare&#10;`import Mathlib` (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Python",
+          "detail": "\"Python: unused and&#10;wildcard imports (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_TypeScript",
+          "detail": "\"TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_E2E",
+          "detail": "\"End-to-end +&#10;accessibility (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Rust",
+          "detail": "\"Rust wildcard imports&#10;(WARN-ONLY)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
   }

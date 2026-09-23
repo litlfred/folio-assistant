@@ -66,11 +66,37 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_CRDM_Close",
+          "detail": "crdm-close.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "S_FeatureSignoff",
+          "detail": "\"Feature sign-off on issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "BA_Confirm",
+          "detail": "\"Confirm all criteria met\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

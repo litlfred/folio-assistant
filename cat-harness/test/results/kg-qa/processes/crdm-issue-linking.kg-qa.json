@@ -66,11 +66,37 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_CRDM_Issue",
+          "detail": "crdm-issue-linking.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ScanIssues",
+          "detail": "\"Scan open issues for match\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_LinkIssue",
+          "detail": "\"Link to existing issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

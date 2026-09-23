@@ -79,11 +79,28 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_QaReportSigning",
+          "detail": "qa-report-signing.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 1,
+    "pass": 10,
+    "fail": 2,
     "n/a": 6,
     "unknown": 0
   }

@@ -66,11 +66,54 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_DocsSite",
+          "detail": "docs-site-publish.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Regenerate",
+          "detail": "\"Regenerate every derived&#10;reference from its source\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Build",
+          "detail": "\"Build the Jekyll site&#10;and the API reference\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Export",
+          "detail": "\"Export the knowledge graph&#10;and its schema\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Restore",
+          "detail": "\"Restore the OPEN PRs'&#10;staging previews\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Publish",
+          "detail": "\"Publish to gh-pages&#10;(FULL REPLACE)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Restore",
+          "detail": "\"Restore the OPEN PRs'&#10;staging previews\" names skill \"feature-staging\", which owns feature-staging.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
   }

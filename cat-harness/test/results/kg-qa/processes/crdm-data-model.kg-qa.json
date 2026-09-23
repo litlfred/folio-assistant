@@ -87,11 +87,28 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_CRDM_DataModel",
+          "detail": "crdm-data-model.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 11,
+    "fail": 2,
     "n/a": 5,
     "unknown": 0
   }

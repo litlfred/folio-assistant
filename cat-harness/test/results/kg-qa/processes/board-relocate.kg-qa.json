@@ -66,11 +66,49 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_BoardRelocate",
+          "detail": "board-relocate.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_AskConfirm",
+          "detail": "\"Name what will move, and where it lands\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_Cancel",
+          "detail": "\"Leave the content exactly where it is\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_MoveContent",
+          "detail": "\"Relocate the content to the trashcan\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_UpdateLayer",
+          "detail": "\"Drop its positions and sweep orphans\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_ReportMove",
+          "detail": "\"Say what moved and where it went\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

@@ -66,11 +66,33 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_UpstreamAdoption",
+          "detail": "upstream-version-adoption.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Mvp",
+          "detail": "\"MVP: build the candidate on a staging branch\" names skill \"feature-staging\", which owns feature-staging.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
+    "pass": 10,
+    "fail": 2,
     "n/a": 6,
     "unknown": 0
   }

@@ -66,11 +66,33 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_Translation",
+          "detail": "translation-workflow.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Adjudicate",
+          "detail": "\"Adjudicate flagged passage (human reviewer)\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 9,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   }

@@ -66,11 +66,33 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_VoiceReview",
+          "detail": "voice-review.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Adjudicate",
+          "detail": "\"Adjudicate: prose, scope, or exception\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }
