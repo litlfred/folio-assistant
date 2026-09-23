@@ -454,25 +454,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790147726">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790148549">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790147726">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790148549">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790147726">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790148549">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790147726">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790148549">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -489,7 +489,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790147726" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790148549" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -973,6 +973,74 @@ had noticed</strong>, because a swallowed init is silent.</li>
 claim it is not. One run against a build of <code class="language-plaintext highlighter-rouge">origin/main</code> is what turned
 “something I just broke” into “a live defect nobody had reported”, and it is
 the same measurement either way.</p>
+<h2 id="a-static-read-of-a-client-rendered-page-is-not-verification--in-either-direction">
+  
+  
+    <a href="#a-static-read-of-a-client-rendered-page-is-not-verification--in-either-direction" class="anchor-heading" aria-labelledby="a-static-read-of-a-client-rendered-page-is-not-verification--in-either-direction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A STATIC read of a client-rendered page is not verification — in either direction
+  
+  
+</h2>
+    
+
+<p>This skill is usually reached for to stop a false <strong>green</strong>. It stops a false
+<strong>red</strong> just as often, and that failure is less obvious because being wrong
+about a defect feels like diligence.</p>
+
+<blockquote>
+  <p><strong>Grepping a page’s committed HTML for content the page fetches at runtime
+proves nothing.</strong> The content is absent whether the page works or not.</p>
+</blockquote>
+<h3 id="the-failure-this-is-written-from">
+  
+  
+    <a href="#the-failure-this-is-written-from" class="anchor-heading" aria-labelledby="the-failure-this-is-written-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The failure this is written from
+  
+  
+</h3>
+    
+
+<p>2026-09-23, bean <code class="language-plaintext highlighter-rouge">yag0</code>. The owner reported a library viewer as broken. A
+session “confirmed” it by grepping
+<code class="language-plaintext highlighter-rouge">cat-harness/docs/cat-harness/library/who-iris/index.html</code> for the entry names,
+finding none, and reporting the page as <em>“a shell”</em> — 20,160 bytes, committed
+and built identically, holding none of its subject’s three entries.</p>
+
+<p>The viewer is client-rendered. It carries
+<code class="language-plaintext highlighter-rouge">DATA_HREF = "../../../assets/library/index.json"</code>, fetches it, and filters by
+<code class="language-plaintext highlighter-rouge">inScope(x) { return !SCOPE || x.instance === SCOPE }</code>. <strong>The names could not
+have been in that file.</strong> The test could not have returned any other answer,
+for a working page or a broken one.</p>
+
+<p>Loading it in Chromium took one command and settled it:
+<code class="language-plaintext highlighter-rouge">who-iris · 3 entries · 84,292 words · 404 sections</code>, data <code class="language-plaintext highlighter-rouge">200</code>, no console
+errors, all three entries present.</p>
+<h3 id="the-cost-of-a-false-red">
+  
+  
+    <a href="#the-cost-of-a-false-red" class="anchor-heading" aria-labelledby="the-cost-of-a-false-red"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cost of a false red
+  
+  
+</h3>
+    
+
+<p>A false green ships a defect. A false red files a bug against working code,
+sends the next agent to rewrite a generator that is correct, and — because the
+report carries measurements and a file size — reads as thoroughly evidenced.
+The bean was filed with a “where to look first” list, every item pointing at
+code with nothing wrong with it.</p>
+<h3 id="the-rule-1">
+  
+  
+    <a href="#the-rule-1" class="anchor-heading" aria-labelledby="the-rule-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
+  
+  
+</h3>
+    
+
+<p><strong>If a page assembles any of its content after load, open it.</strong> The tell is
+cheap to check: a <code class="language-plaintext highlighter-rouge">fetch</code>, an <code class="language-plaintext highlighter-rouge">XMLHttpRequest</code>, a <code class="language-plaintext highlighter-rouge">DATA_HREF</code>, a <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>
+that writes into the DOM. Finding one means a static read cannot answer the
+question, and <code class="language-plaintext highlighter-rouge">§"Running it here"</code> above is how to answer it instead.</p>
 <h2 id="what-this-does-not-replace">
   
   
@@ -1177,7 +1245,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35830686680"><code>4951d5d</code></a> &middot; 2026-09-23T07:15:23Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35831852039"><code>edf3a89</code></a> &middot; 2026-09-23T07:29:06Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
