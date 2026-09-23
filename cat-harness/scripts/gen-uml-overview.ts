@@ -74,6 +74,13 @@ const DOCS_ROOT = join(HARNESS, siteDir(OWN), "uml", "overview");
 const SVG_ROOT = join(HARNESS, siteDir(OWN), "assets", "img", "uml", "overview");
 /** The schemas view, one level above the overviews in both trees. */
 const SCHEMAS_PUML = join(UML_ROOT, "..", "harness-schemas.puml");
+/**
+ * The full object model. `gen-object-model-uml.ts` writes it, and only where
+ * the `beans` CLI is on PATH, so this generator never writes it: it renders
+ * the COMMITTED file. The SVG's stamp is checked against that file, which
+ * needs neither Java nor beans.
+ */
+const OBJECT_MODEL_PUML = join(UML_ROOT, "..", "harness-object-model.puml");
 const REPO_URL = "https://github.com/litlfred/folio-assistant";
 const SITE_URL = OWN.canonicalUrl ?? "";
 const GENERATOR = relative(REPO, import.meta.path);
@@ -86,7 +93,16 @@ interface Attr {
   name: string;
   type: string;
   mult: string;
+  /**
+   * Set on the one line a box carries when it has no fields to show, saying
+   * why. A box with nothing in it reads as a rendering fault; the owner asked
+   * "why empty?" of exactly that, 2026-09-23.
+   */
+  remark?: boolean;
 }
+
+/** The line that stands in for fields a box cannot show. */
+const remark = (text: string): Attr => ({ name: text, type: "", mult: "", remark: true });
 
 interface UmlClass {
   /** Unique within an instance diagram. */
@@ -183,6 +199,9 @@ function decompose(
     if (depth < 2 && items?.type === "object" && items.properties) {
       const child = decompose(items, singular(name), source, kind, prefix, out, depth + 1);
       out.compositions.push({ from: id, to: child, label: name, mult: multOf(s, req.has(name)) });
+      // Kept as a line too: a class whose only field is composed otherwise
+      // draws as an empty box with an arrow leaving it.
+      attrs.push({ name, type: `${singular(name)}[]`, mult: multOf(s, req.has(name)) });
       continue;
     }
     attrs.push({ name, type: typeOf(s), mult: multOf(s, req.has(name)) });
@@ -196,6 +215,9 @@ function decompose(
   if (!out.classes.some((c) => c.id === id)) out.classes.push({ id, title, source, kind, attrs });
   return id;
 }
+
+/** A `$schema` that names a JSON Schema metaschema: its nodes are schemas. */
+const JSON_SCHEMA_META = /^https?:\/\/json-schema\.org\//;
 
 /** One `$schema` family, as a class — or as the finding it is. */
 function drawFamily(
@@ -217,10 +239,53 @@ function drawFamily(
       kind,
       attrs: f.fields.map((x) => ({ name: x.name, type: x.type, mult: x.optional ? "0..1" : "1" })),
     });
+  } else if (f.state === "external" && JSON_SCHEMA_META.test(f.tag)) {
+    // The nodes ARE JSON Schemas: their `$schema` names the metaschema, which
+    // says only "this is a schema", so a box for it had no fields (owner,
+    // 2026-09-23: "why empty?"). Draw each schema document instead: its
+    // properties are the fields the sub-graph actually declares.
+    //
+    // A schema with no properties of its own (a value set's `enum`, or one
+    // composed by `$ref`/`allOf`) has no fields to draw, and smart-base holds
+    // 22 of them: one empty box each was the same defect 22 times over. They
+    // are listed, one line each, in a single summary class instead.
+    const docs = (filesByTag(join(REPO, section.path)).get(f.tag) ?? []).sort();
+    const listed: Attr[] = [];
+    for (const file of docs) {
+      const doc = JSON.parse(readFileSync(file, "utf8")) as Json;
+      const rel = relative(join(REPO, section.path), file).replace(/\\/g, "/");
+      const title = typeof doc.title === "string" ? doc.title : rel;
+      const props = (doc.properties ?? {}) as Record<string, unknown>;
+      if (Object.keys(props).length > 0) {
+        decompose(doc, title, `schema: ${rel}`, kind, safeId(`${prefix}_${rel}`), acc);
+        continue;
+      }
+      const shape = Array.isArray(doc.enum)
+        ? `enum(${(doc.enum as unknown[]).length}) of ${String(doc.type ?? "any")}`
+        : doc.$ref || doc.allOf || doc.anyOf || doc.oneOf
+          ? "composed ($ref / allOf / anyOf / oneOf)"
+          : String(doc.type ?? "any");
+      listed.push({ name: rel.replace(/\.schema\.json$/, ""), type: shape, mult: "1" });
+    }
+    if (listed.length) {
+      acc.classes.push({
+        id: safeId(`${prefix}_${f.tag}_listed`),
+        title: `${listed.length} schema(s) with no properties`,
+        source: `ext: ${f.spec}`,
+        kind,
+        attrs: listed,
+      });
+    }
   } else if (f.state === "external") {
     acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title: f.spec, source: `ext: ${f.spec}`, kind, attrs: [] });
   } else if (f.state === "untyped") {
-    acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title, source: `untyped: written by ${f.writtenBy}`, kind, attrs: [] });
+    acc.classes.push({
+      id: safeId(`${prefix}_${f.tag}`),
+      title,
+      source: `untyped: written by ${f.writtenBy}`,
+      kind,
+      attrs: [remark(`no schema declared, shape is whatever ${f.writtenBy} writes`)],
+    });
   } else {
     section.undetermined.push({ kind: `${kind} ${f.tag}`, reason: f.reason });
   }
@@ -228,7 +293,12 @@ function drawFamily(
 
 /** Every `$schema` tag carried by a JSON file under `dir`. */
 function tagsUnder(dir: string): Set<string> {
-  const out = new Set<string>();
+  return new Set(filesByTag(dir).keys());
+}
+
+/** The JSON files under `dir`, grouped by the `$schema` tag each carries. */
+function filesByTag(dir: string): Map<string, string[]> {
+  const out = new Map<string, string[]>();
   const walkDir = (d: string): void => {
     let entries: string[];
     try {
@@ -242,7 +312,7 @@ function tagsUnder(dir: string): Set<string> {
       else if (p.endsWith(".json")) {
         try {
           const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
-          if (typeof tag === "string") out.add(tag);
+          if (typeof tag === "string") out.set(tag, [...(out.get(tag) ?? []), p]);
         } catch {
           // not a node
         }
@@ -288,7 +358,13 @@ function fromSchemaField(
       return true;
     }
   }
-  acc.classes.push({ id: safeId(`${prefix}_${kind}_shape`), title: kind, source: `schema: ${where}`, kind, attrs: [] });
+  acc.classes.push({
+    id: safeId(`${prefix}_${kind}_shape`),
+    title: kind,
+    source: `schema: ${where}`,
+    kind,
+    attrs: [remark(`fields not machine-readable: ${where} names no exported schema`)],
+  });
   return true;
 }
 
@@ -375,7 +451,9 @@ function puml(name: string, pageUrl: string, sections: Section[], withAttrs: boo
     L.push(`package "${s.instance}/${s.id}" as ${safeId(`pkg_${s.instance}_${s.id}`)} <<${s.kinds.join(", ")}>> {`);
     for (const c of s.classes) {
       L.push(`  class "${pumlEsc(c.title)}" as ${c.id} <<${pumlEsc(c.source)}>> ${PALETTE.kind(c.kind)} {`);
-      if (withAttrs) for (const a of c.attrs) L.push(`    ${a.name} [${a.mult}] : ${pumlEsc(a.type)}`);
+      if (withAttrs) {
+        for (const a of c.attrs) L.push(a.remark ? `    //${pumlEsc(a.name)}//` : `    ${a.name} [${a.mult}] : ${pumlEsc(a.type)}`);
+      }
       L.push("  }");
     }
     for (const u of s.undetermined) {
@@ -418,7 +496,9 @@ function mmd(sections: Section[], withAttrs: boolean): string {
     for (const c of s.classes) {
       L.push(`    class ${c.id}["${mmdText(c.title)}"] {`);
       L.push(`      <<${mmdText(c.source)}>>`);
-      if (withAttrs) for (const a of c.attrs) L.push(`      ${mmdText(a.name)} [${a.mult}] ${mmdText(a.type)}`);
+      if (withAttrs) {
+        for (const a of c.attrs) L.push(a.remark ? `      ${mmdText(a.name)}` : `      ${mmdText(a.name)} [${a.mult}] ${mmdText(a.type)}`);
+      }
       L.push("    }");
     }
     for (const u of s.undetermined) {
@@ -576,10 +656,20 @@ async function build(): Promise<Map<string, string>> {
     "",
     "Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`.",
     "",
-    `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model with Bean and Todo is [\`harness-object-model.puml\`](${REPO_URL}/blob/main/${relative(REPO, join(UML_ROOT, "..", "harness-object-model.puml"))}).`,
+    `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model, with Bean and Todo, is [below](#the-full-object-model).`,
     "",
     `<figure class="bpmn-figure">`,
     `  <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships.">`,
+    "</figure>",
+    "",
+    "## The full object model",
+    "",
+    "The same classes plus the state family, Todo and Bean, and the edges that reach them: Task's `folio:bean` op, and Todo's tags on Role, Process, Task and Actor. Bean is read from the `beans` CLI's GraphQL schema, so this file is regenerated only where that CLI is installed (`bun run cat-harness/scripts/gen-object-model-uml.ts`).",
+    "",
+    `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, OBJECT_MODEL_PUML)})`,
+    "",
+    `<figure class="bpmn-figure">`,
+    `  <img src="{{ '/assets/img/uml/harness-object-model.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships.">`,
     "</figure>",
     "",
     "## Per harness",
@@ -691,6 +781,8 @@ async function main(): Promise<void> {
   const check = process.argv.includes("--check");
   const files = await build();
   const pumls = [...files].filter(([p]) => p.endsWith(".puml"));
+  if (!existsSync(OBJECT_MODEL_PUML)) throw new Error(`${relative(REPO, OBJECT_MODEL_PUML)} is missing: run gen-object-model-uml.ts`);
+  pumls.push([OBJECT_MODEL_PUML, readFileSync(OBJECT_MODEL_PUML, "utf8")]);
   const svgs = new Set(pumls.map(([p]) => svgFor(p)));
   const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT), ...walk(SVG_ROOT)];
   // Only this generator's own kinds of output count as orphans.

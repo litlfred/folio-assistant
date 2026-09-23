@@ -43,6 +43,7 @@ classDiagram
     class bootstrap_models_ModelRegistry["ModelRegistry"] {
       <<json: ModelRegistrySchema>>
       $schema [1] 'folio-model-registry/v1'
+      models [0..*] Model[]
     }
   }
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models

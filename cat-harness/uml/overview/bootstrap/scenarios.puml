@@ -32,6 +32,8 @@ package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
   }
   class "RoleGraph" as bootstrap_scenarios_RoleGraph <<json: RoleGraphSchema>> #e8f0ee {
     name [1] : string
+    roles [0..*] : Role[]
+    actors [0..*] : Actor[]
   }
 }
 

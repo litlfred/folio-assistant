@@ -30,6 +30,8 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     capturedAt [0..1] : string
     producer [0..1] : string
     readAt [1] : string
+    assets [0..*] : Asset[]
+    omitted [0..*] : Omitted[]
   }
 }
 

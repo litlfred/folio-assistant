@@ -25,9 +25,12 @@ classDiagram
       capturedAt [0..1] string
       producer [0..1] string
       readAt [1] string
+      assets [0..*] Asset[]
+      omitted [0..*] Omitted[]
     }
     class who_iris_who_iris_uploads_folio_intake_v1["folio-intake/v1"] {
       <<untyped: written by scripts/library-graph.ts>>
+      no schema declared, shape is whatever scripts/library-graph.ts writes
     }
   }
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets

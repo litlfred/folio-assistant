@@ -49,6 +49,7 @@ classDiagram
       target [0..1] object
       theme [0..1] string
       tags [1] object
+      relations [0..*] Relation[]
       viewHref [0..1] string
       editHref [0..1] string
     }
@@ -57,6 +58,7 @@ classDiagram
       $schema [1] 'folio-todo-index/v1'
       tile [0..1] map~object~
       repoWeb [1] string
+      items [0..*] Item[]
       processes [1] map~string[]~
       themeArt [1] map~map~string~~
     }
@@ -83,21 +85,27 @@ classDiagram
     }
     class cat_harness_root_docs_folio_bean_index_v1["folio-bean-index/v1"] {
       <<untyped: written by scripts/gen-docs-pages.ts>>
+      no schema declared, shape is whatever scripts/gen-docs-pages.ts writes
     }
     class cat_harness_root_docs_folio_translation_status_v1["folio-translation-status/v1"] {
       <<untyped: written by scripts/gen-translation-status.ts>>
+      no schema declared, shape is whatever scripts/gen-translation-status.ts writes
     }
     class cat_harness_root_docs_folio_schema_graph_v1["folio-schema-graph/v1"] {
       <<untyped: written by scripts/gen-schema-viz.ts>>
+      no schema declared, shape is whatever scripts/gen-schema-viz.ts writes
     }
     class cat_harness_root_docs_folio_library_index_v1["folio-library-index/v1"] {
       <<untyped: written by scripts/gen-library-viz.ts>>
+      no schema declared, shape is whatever scripts/gen-library-viz.ts writes
     }
     class cat_harness_root_docs_folio_voices_index_v1["folio-voices-index/v1"] {
       <<untyped: written by scripts/gen-voices-viz.ts>>
+      no schema declared, shape is whatever scripts/gen-voices-viz.ts writes
     }
     class cat_harness_root_docs_folio_graph_projection_v1["folio-graph-projection/v1"] {
       <<untyped: written by scripts/gen-folio-viz.ts>>
+      no schema declared, shape is whatever scripts/gen-folio-viz.ts writes
     }
   }
   cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations

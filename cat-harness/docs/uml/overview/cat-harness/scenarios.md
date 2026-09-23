@@ -56,6 +56,8 @@ classDiagram
     class cat_harness_scenarios_RoleGraph["RoleGraph"] {
       <<json: RoleGraphSchema>>
       name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
     }
   }
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles

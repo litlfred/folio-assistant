@@ -9,8 +9,41 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
-  class "JSON Schema draft-07" as bootstrap_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> #e9edf3 {
+  class "KnownRepository" as bootstrap_schemas_discussion_input_schema_json_KnownRepository <<schema: discussion.input.schema.json>> #e9edf3 {
+    url [1] : string
+    role [1] : read-from | written-to
+    note [0..1] : string
+  }
+  class "Discussion Input" as bootstrap_schemas_discussion_input_schema_json_Discussion_Input <<schema: discussion.input.schema.json>> #e9edf3 {
+    open [1..*] : list<harness | repositories>
+    askedOf [1] : object
+    candidates [0..*] : string[]
+    knownRepositories [0..*] : KnownRepository[]
+    context [0..1] : string
+  }
+  class "Repository" as bootstrap_schemas_discussion_output_schema_json_Repository <<schema: discussion.output.schema.json>> #e9edf3 {
+    url [1] : string
+    role [1] : read-from | written-to
+    note [0..1] : string
+  }
+  class "Exchange" as bootstrap_schemas_discussion_output_schema_json_Exchange <<schema: discussion.output.schema.json>> #e9edf3 {
+    asked [1] : string
+    answered [0..1] : string
+    at [0..1] : string<date-time>
+  }
+  class "Discussion Output" as bootstrap_schemas_discussion_output_schema_json_Discussion_Output <<schema: discussion.output.schema.json>> #e9edf3 {
+    outcome [1] : settled | unsettled
+    harness [0..1] : string
+    repositories [0..*] : Repository[]
+    determinedBy [0..1] : asked | assumed
+    assumption [0..1] : string
+    answeredBy [1] : object
+    exchange [1..*] : Exchange[]
+    stillOpen [0..*] : list<harness | repositories>
   }
 }
 
+bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
+bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "0..*" bootstrap_schemas_discussion_output_schema_json_Repository : repositories
+bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" bootstrap_schemas_discussion_output_schema_json_Exchange : exchange
 @enduml
