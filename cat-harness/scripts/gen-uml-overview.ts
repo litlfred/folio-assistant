@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * UML for every NAMED SUB-GRAPH a harness declares — PlantUML and Mermaid
+ * UML for every NAMED SUB-GRAPH an instance declares — PlantUML and Mermaid
  * from one model.
  *
  * Owner, 2026-09-23: *"cat-harness/uml/overview/<sub-graph path> … the
@@ -688,7 +688,15 @@ async function build(): Promise<Map<string, string>> {
       join(DOCS_ROOT, `${inst.name}.md`),
       page({
         title: inst.name,
-        lead: `Every named sub-graph the \`${inst.name}\` harness declares, one box each, with the node schema kinds found in it.`,
+        // `instance`, not `harness`. This one template emitted "the `X`
+        // harness declares" on every page, and 10 of the 22 instances it runs
+        // over are NOT harnesses — declared, with no `<name>.config.json` at
+        // the repository root, which is what instantiates one (`harness-tiles`,
+        // bean `6n23`). Measured 2026-09-23: a single generator was the largest
+        // producer of that mislabelling in the whole corpus, ten pages to one
+        // word. `instance` is correct for all 22, since an instantiated one is
+        // an instance too.
+        lead: `Every named sub-graph the \`${inst.name}\` instance declares, one box each, with the node schema kinds found in it.`,
         sourceBase: `${umlRel}/${inst.name}`,
         svg: svgSite(inst.name),
         mermaid: overviewMmd,
