@@ -4915,7 +4915,7 @@
         recordPin("landing", slot, {
           title: title,
           text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
-          href: location.pathname,
+          href: safeHref(location.pathname),
           label: document.title,
         });
         floatLanding(slot, true);
@@ -5283,7 +5283,7 @@
       recordPin("todos", todo.id, {
         title: todo.summary,
         text: todo.comment || "",
-        href: location.pathname,
+        href: safeHref(location.pathname),
         label: document.title,
       });
       var card = buildSticky(todo, float, dock, discard);
