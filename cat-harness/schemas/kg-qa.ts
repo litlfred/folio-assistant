@@ -686,6 +686,29 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "takes it. Every branch of a decision needs a label distinct from the others on the same gateway.",
   },
   {
+    id: "node-reachable",
+    applies: ["process"],
+    // `major`: a node nothing can reach is not run, and a diagram is the
+    // normative statement of what runs. Not `critical`, because the engine
+    // does not fault on it — the step is simply never offered, which is the
+    // quiet kind of wrong.
+    severity: "major",
+    summary:
+      "A flow node no path from any start event reaches, and which reaches no start event either. A node that flows " +
+      "INTO a start event is a PRE-START GATE and passes — `feature-staging`'s H_Confirm is one, and reporting it " +
+      "would make a correct modelling decision a permanent finding.",
+  },
+  {
+    id: "node-has-exit",
+    applies: ["process"],
+    // `major` for the same reason, from the other end: control arrives and
+    // the process neither continues nor ends.
+    severity: "major",
+    summary:
+      "A node that is not an end event and has no outgoing flow, so control arrives and the process neither " +
+      "continues nor terminates.",
+  },
+  {
     id: "prose-reviewed-since-code-changed",
     applies: ["process", "skill"],
     // `minor` and not gated (R7, issue #1042): it asserts nothing about
