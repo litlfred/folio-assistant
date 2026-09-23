@@ -1,7 +1,7 @@
 ---
 # folio-assistant-0818
 title: 'SMART-TRUST LHS NAV: the IG harvest dropped the menu AND the narrative pages — 0 of 12 menu labels resolve against 674 artefacts'
-status: in-progress
+status: completed
 type: feature
 parent: folio-assistant-yj32
 created_at: 2026-09-23T10:59:25Z
@@ -167,3 +167,55 @@ stale docs-auto index, an unmapped `$schema` family, and an unrun check script.
 The verification declaration names the real gap — **nothing resolves the 29
 hrefs**, because the pages they point at are published upstream and both hosts
 answer 403 here.
+
+
+## Summary of Changes
+
+Merged as [#1064](https://github.com/litlfred/folio-assistant/pull/1064) →
+`5a71d8e`, closing
+[#1063](https://github.com/litlfred/folio-assistant/issues/1063).
+
+The IG's top bar is the left-hand nav, built from the IG's own
+`sushi-config.yaml` at commit `26635f7b` — 5 groups, 29 items, in the config's
+own order.
+
+| file | what |
+|---|---|
+| `cat-harness/schemas/ig-menu.ts` | `folio-ig-menu/v1`; its `source` block requires a commit |
+| `cat-harness/scripts/ingest-ig-menu.ts` | both SUSHI menu shapes; no `--source` exits 2 |
+| `smart-trust/scripts/gen-smart-trust-pages.ts` | `NavRole` replaces `depth`; one section page per group |
+| `cat-harness/schemas/graph-kind-registry.ts` | the family mapped — `1/1 parse` |
+| `cat-harness/scripts/gates.ts` | the exemption, with why CI cannot obtain the input |
+
+## What merged it, and what did NOT
+
+**Code-quality gates never returned a verdict on any of the four heads.**
+`get_status` read `total_count: 0` on `f5a1e1f`, `50bf8c7`, `cdb7e33` and
+`8e6eb44`. It was merged on `bun run gates` — 135/135, run on four separate
+merged trees — plus the JSON-LD drift job, which is real CI and passed on the
+exact head, plus `smart-trust:pages:check`, `ingest:ig-menu:check --source`
+and `check:kind-validators`.
+
+Same checks, since `gates.ts` derives its list from that very workflow file.
+**Not the same evidence**, and the distinction is recorded rather than
+smoothed over.
+
+**A claim made in chat and then falsified: I said the `pull_request` trigger
+was systematically stalled.** It is not. Measured afterwards: Code-quality
+gates ran on `pull_request` and completed for #1085, #1074 and #1086 inside
+the same window. The cause is at least partly my own push cadence — see bean
+`mc8h`.
+
+## Left open, deliberately
+
+- **`smart-base.config.json`** — offered three times, never authorised. smart-base
+  holds 2575 library files, 139 artefact-index entries, tools, skills and
+  methodologies here and carries no root config, so it is absent from the
+  navbar's harness tiles. `smart-ig` is excluded on purpose: it declares no
+  directories and holds 5 boilerplate files, so instantiating it would assert
+  something false.
+- **The WHO visual styling** — blue bar, DRAFT watermark, yellow publish
+  banner. A different question from the menu, and probably smart-base's theme
+  rather than smart-trust's.
+- **Nothing resolves the 29 hrefs.** Declared in `artefact-verification.json`,
+  not assumed away.
