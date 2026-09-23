@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: Skills — cat-harness · docs-auto</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 26px; margin: 16px 0 4px; }
+  .lede { color: var(--mute); margin: 0 0 16px; }
+  .note { border-left: 4px solid var(--line); padding: 8px 14px; margin: 16px 0; font-size: 14px; color: var(--mute); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--fill); }
+  td:first-child { width: 26rem; }
+  .p { color: var(--mute); font-size: 12px; font-family: ui-monospace, monospace; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--mute); font-style: italic; }
+  .f { margin-top: 4px; font-size: 13px; color: var(--mute); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 20px; }
+  ul.subs li { padding: 6px 0; border-bottom: 1px solid var(--line); min-height: 32px; }
+  .n { float: right; color: var(--mute); }
+  .gap td { color: var(--mute); font-size: 13px; background: var(--fill); }
+  .clip { width: 100%; }
+  @media (max-width: 700px) {
+    .clip { overflow: hidden; border-right: 3px dashed var(--ink); }
+    .clip table { width: 421px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · skills-index · covers: cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html (template also for index/skills/kg-navigation, large-datasets-skills, who-iris-skills)</div>
+<div class="wrap">
+<h1>Skills <span class="p">cat-harness</span></h1>
+<p class="lede">Derived: every skill markdown file, with the description it declares in its own front matter. Sub-graph <code>cat-harness/skills</code>.</p>
+
+<div class="note">
+  <strong>This is an index, not the documentation.</strong> It says what exists and what each
+  artefact declares about itself. What a process is <em>for</em>, when you would be in it, and
+  what it is not, is authored beside it and reuses these entries rather than restating them —
+  see the <code>docs-auto</code> skill.
+</div>
+
+<ul class="subs" aria-label="Sibling sub-graphs">
+<li><strong>cat-harness</strong> <span class="p">cat-harness/skills</span> <span class="n">240</span></li>
+<li><a href="#kg-navigation">kg-navigation</a> <span class="p">kg-navigation/skills</span> <span class="n">1</span></li>
+<li><a href="#large-datasets-skills">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">2</span></li>
+<li><a href="#who-iris-skills">who-iris-skills</a> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
+</ul>
+
+<p class="wf-note wf-mobile-only">At 390 px the table is 421 px wide (unbroken tokens in some descriptions), so the page scrolls sideways and the description column is cut at the right (the dashed edge).</p>
+<div class="clip">
+<table aria-label="Skills index">
+<thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
+<tbody>
+<tr>
+  <td><a href="#cat-harness/skills/authoring-math/latex-authoring.md"><code>latex-authoring</code></a><br><span class="p">cat-harness/skills/authoring-math/latex-authoring.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/authoring-math/lean-formalization.md"><code>lean-formalization</code></a><br><span class="p">cat-harness/skills/authoring-math/lean-formalization.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/authoring-math/proof-verification.md"><code>proof-verification</code></a><br><span class="p">cat-harness/skills/authoring-math/proof-verification.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md"><code>dak-postprocessing</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md</span></td>
+  <td>What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at.</td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md"><code>dak-preprocessing</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md</span></td>
+  <td>What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index.</td>
+</tr>
+<tr class="gap"><td colspan="2">Not drawn: authoring-who-smart-guidelines (10 more), content-lifecycle (9), crdm (3), and folio-core (137) up to:</td></tr>
+<tr>
+  <td><a href="#cat-harness/skills/folio-core/wireframe-design-review.md"><code>wireframe-design-review</code></a><br><span class="p">cat-harness/skills/folio-core/wireframe-design-review.md</span></td>
+  <td>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both vie…</td>
+</tr>
+<tr class="gap"><td colspan="2">Not drawn: the rest of folio-core. Then folio-document-adapter (4, a new folder):</td></tr>
+<tr>
+  <td><a href="#cat-harness/skills/folio-document-adapter/document-authoring.md"><code>document-authoring</code></a><br><span class="p">cat-harness/skills/folio-document-adapter/document-authoring.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr class="gap"><td colspan="2">Not drawn: folio-document-adapter (3 more, all without a description), folio-paper-adapter (47), graph-management (3), raci (1), remote-stubs (5), theming (8), workflow <code>bpmn-authoring</code> and <code>bpmn-processes</code>. 227 of 240 rows are left out of this drawing in all.</td></tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/deterministic-and-agentic.md"><code>deterministic-and-agentic</code></a><br><span class="p">cat-harness/skills/workflow/deterministic-and-agentic.md</span></td>
+  <td>Workflow processing is a SPECTRUM, not a switch.</td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/dmn-authoring.md"><code>dmn-authoring</code></a><br><span class="p">cat-harness/skills/workflow/dmn-authoring.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/process-state.md"><code>process-state</code></a><br><span class="p">cat-harness/skills/workflow/process-state.md</span></td>
+  <td>Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it.</td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/session-context.md"><code>session-context</code></a><br><span class="p">cat-harness/skills/workflow/session-context.md</span></td>
+  <td>What a state machine tracks across a session, as against one process instance.</td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/session-state-machine.md"><code>session-state-machine</code></a><br><span class="p">cat-harness/skills/workflow/session-state-machine.md</span></td>
+  <td>An agent PLAYING a state machine rather than an engine executing one.</td>
+</tr>
+<tr>
+  <td><a href="#cat-harness/skills/workflow/workflow-state.md"><code>workflow-state</code></a><br><span class="p">cat-harness/skills/workflow/workflow-state.md</span></td>
+  <td>Where a running process keeps what it knows, and which store answers which question.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="wf-note">240 rows on one page (20,126 px tall at 1280, 40,578 at 390) with no folder headings, search or filter; 50 say <i>no description in the artefact</i>; 31 descriptions are cut at 220 characters with "…"; 22 show literal backticks. The one-row sibling pages (kg-navigation, who-iris-skills) repeat this whole header above their single row.</p>
+</div>
+</body>
+</html>

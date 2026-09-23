@@ -43,7 +43,7 @@
 </div>
 
 <ul class="subs">
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">64</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -132,7 +132,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-issue-linking.bpmn"><code>CRDM — link the work to an issue</code></a><br><span class="p">cat-harness/processes/crdm-issue-linking.bpmn</span></td>
-  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-needs.bpmn"><code>CRDM Phase 1 — needs</code></a><br><span class="p">cat-harness/processes/crdm-needs.bpmn</span></td>
@@ -231,6 +231,10 @@
   <td>One process, called wherever remote content is landed locally.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>Adopt a methodology from a source document</code></a><br><span class="p">cat-harness/processes/methodology-from-source.bpmn</span></td>
+  <td>The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refuse…<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Owner · Agent</div><div class="f"><span class="k">skills</span> adopt-methodology-from-source, methodology-adoption</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>Options analysis</code></a><br><span class="p">cat-harness/processes/options-analysis.bpmn</span></td>
   <td>A decision reached by a NAMED methodology, with its rejected options recorded.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Business analyst</div><div class="f"><span class="k">skills</span> decision-audit, literature-search, methodology-adoption, opening-brief</div></td>
 </tr>
@@ -245,6 +249,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>Refresh materialized remote content</code></a><br><span class="p">cat-harness/processes/refresh-materialized.bpmn</span></td>
   <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/related-work.bpmn</span></td>
+  <td>Before new work takes shape, find the work it touches.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Agent · User</div><div class="f"><span class="k">skills</span> related-work-coordination</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
@@ -293,6 +301,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>Voice overlay review</code></a><br><span class="p">cat-harness/processes/voice-review.bpmn</span></td>
   <td>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, voice-overlay-review</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/wireframe-design-review.bpmn"><code>Wireframe design review</code></a><br><span class="p">cat-harness/processes/wireframe-design-review.bpmn</span></td>
+  <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>DIIG — from a health system bottleneck to a costed implementation plan</code></a><br><span class="p">smart-base/methodologies/processes/diig-investment-path.bpmn</span></td>
