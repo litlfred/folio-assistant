@@ -291,3 +291,40 @@ describe("a key a content document writes must be a declared term", () => {
     expect(k.undeclared).toEqual([]);
   });
 });
+
+// ── A path is never an `@id` — bean `589f` ────────────────────────────────
+
+import { checkPathsAreNotLinks, looksLikePath } from "../check-context-emission.ts";
+
+describe("a file path under an `@id` term is caught", () => {
+  const U = "https://example.org/ctx.jsonld";
+  const LINKED = { text: { "@id": "x:text", "@type": "@id" }, uses: { "@id": "x:uses", "@type": "@id" } } as Record<string, unknown>;
+  const LITERAL = { text: { "@id": "x:text" }, uses: { "@id": "x:uses", "@type": "@id" } } as Record<string, unknown>;
+
+  test("the 589f shape — `../sections/x.md` under a coerced `text` — fails", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, text: "../sections/sec-001-intro.md", uses: ["papers/p/blocks/def-a"] } });
+    const p = checkPathsAreNotLinks(root, LINKED, U);
+    expect(p.documents).toBe(1);
+    expect(p.undeclared.map((u) => u.prefix)).toEqual(["text"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the same value under a LITERAL `text` passes, and node ids never trip it", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, text: "../sections/sec-001-intro.md", uses: ["papers/p/blocks/def-a"] } });
+    const p = checkPathsAreNotLinks(root, LITERAL, U);
+    expect(p.documents).toBe(1);
+    expect(p.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("what counts as a path", () => {
+    for (const v of ["../sections/a.md", "./x", "thm-foo.md", "Proof.lean", "img.PNG"]) expect(looksLikePath(v)).toBe(true);
+    for (const v of ["library/doc/blocks/prose-sec-001", "papers/p/blocks/def-a", "https://example.org/x"]) expect(looksLikePath(v)).toBe(false);
+  });
+
+  test("the real corpus: no path under an `@id` term", () => {
+    const p = checkPathsAreNotLinks();
+    expect(p.documents).toBeGreaterThan(0);
+    expect(p.undeclared).toEqual([]);
+  });
+});

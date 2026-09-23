@@ -577,10 +577,28 @@ export const CONTENT_CONTEXT = {
   leanRef: "folio-assistant-core:leanRef",
   sorryFree: "folio-assistant-core:sorryFree",
 
-  // Companions, as links rather than inlined content. Inlining prose would
+  // Companions, by PATH rather than inlined content. Inlining prose would
   // duplicate the corpus and make every prose edit a two-file diff.
-  text: { "@id": "folio-assistant-core:text", "@type": "@id" },
-  leanSource: { "@id": "folio-assistant-core:leanSource", "@type": "@id" },
+  //
+  // LITERALS, not `@id` — bean `589f`, the owner's choice (2026-09-23) for the
+  // least drift. The values are paths relative to the DOCUMENT
+  // (`../sections/sec-001-intro.md`, `thm-foo.md`). Coerced to `@id`, a
+  // JSON-LD processor resolves them against the context's `@base` instead, and
+  // `../sections/x.md` became `https://litlfred.github.io/sections/x.md` —
+  // a well-formed link to nowhere, on all 1,323 committed prose blocks.
+  //
+  // A literal has ONE reading: a path, resolved by our tools against the file
+  // that carries it, exactly as they already did. Nothing is regenerated and no
+  // reader changes.
+  //
+  // THE UPGRADE RULE, so this does not become the next thing nobody revisits:
+  // these become links — `@type: @id` with ABSOLUTE IRIs minted by the one
+  // function that mints block IRIs — when, and only when, the files they name
+  // are SERVED at a URL an instance declares. Until then any link would be a
+  // promise nothing keeps. `check:context-emission` fails if a path is put
+  // back under an `@id` term (`checkPathsAreNotLinks`).
+  text: { "@id": "folio-assistant-core:text" },
+  leanSource: { "@id": "folio-assistant-core:leanSource" },
 
   meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
 
