@@ -1245,6 +1245,10 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
+      // CORE: renders a DOCUMENT folio to a site through the document
+      // pipeline's own `buildDocumentMarkdown` (content/pipeline, core). Its
+      // subject is a folio's content, not the harness (bean `fyu2`).
+      "scripts/build-document-site.ts",
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
       // The voice-graph validator. It resolves each rule's citation into
