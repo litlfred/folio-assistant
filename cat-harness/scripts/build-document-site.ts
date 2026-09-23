@@ -24,6 +24,18 @@
  *   <out>/<slug>/index.html   one page per document, block anchors intact
  *   <out>/review/index.html   what changed from main, read from the preview's
  *                             changeset.json when opened (bean txut)
+ *   <out>/outline.json        every document's chapters, sections and blocks
+ *                             in manifest order, for the review page's
+ *                             outline and minimap (bean eb4l)
+ *
+ * ## The outline's section keys are the ChangeSet's
+ *
+ * `folio-assistant-core/schemas/changeset.ts` names a section
+ * `<manifest dir, relative to the folio>::<label ?? title>`, from the text of
+ * the manifest. The outline writes exactly that key, so the review page can
+ * join the two without guessing, and a test holds them equal on a real folio.
+ * A section REFERENCE (its own `.ts`) is skipped here, as the Markdown build
+ * skips it.
  *
  * ## Failure is loud
  *
@@ -37,11 +49,12 @@
  * has.
  */
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 
 import { folioDir } from "../schemas/cat-harness.js";
+import type { Chapter, Paper, Section, SectionRef } from "../schemas/types.js";
 import { buildDocumentMarkdown } from "../content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "./gen-review-page.js";
 
@@ -86,6 +99,62 @@ export function documentManifests(repoRoot: string): { slug: string; path: strin
     .sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
+export const OUTLINE_SCHEMA = "folio-outline/v1" as const;
+
+export interface OutlineSection {
+  /** The ChangeSet's section key: `<chapter dir>::<label ?? title>`. */
+  key: string;
+  title: string;
+  label?: string;
+  /** Block labels in manifest order. */
+  blocks: string[];
+}
+export interface OutlineDocument {
+  slug: string;
+  title: string;
+  /** The document's page, relative to the site root. */
+  page: string;
+  chapters: Array<{ title: string; label?: string; sections: OutlineSection[] }>;
+}
+export interface Outline {
+  $schema: typeof OUTLINE_SCHEMA;
+  documents: OutlineDocument[];
+}
+
+const isRef = (s: Section | SectionRef): s is SectionRef => !("blocks" in s);
+
+/** One document's outline. Loads the manifests the Markdown build already loads. */
+export async function documentOutline(manifestPath: string, folioRoot: string, slug: string): Promise<OutlineDocument> {
+  const docDir = dirname(manifestPath);
+  const paper = (await import(manifestPath)).default as Paper;
+  const doc: OutlineDocument = { slug, title: paper.title ?? slug, page: `${slug}/index.html`, chapters: [] };
+  for (const chRef of paper.chapters) {
+    const chDir = join(docDir, chRef.dir);
+    const chPath = join(chDir, `${chRef.dir}.ts`);
+    if (!existsSync(chPath)) continue;
+    const chapter = (await import(chPath)).default as Chapter;
+    const rel = relative(folioRoot, chDir) || ".";
+    const sections: OutlineSection[] = [];
+    const walk = async (secs: Array<Section | SectionRef>) => {
+      for (const sec of secs) {
+        if (isRef(sec)) continue;
+        const labels: string[] = [];
+        for (const root of sec.blocks) {
+          const ts = join(chDir, `${root}.ts`);
+          if (!existsSync(ts)) continue;
+          const b = (await import(ts)).default as { label?: string };
+          if (b.label) labels.push(b.label);
+        }
+        sections.push({ key: `${rel}::${sec.label ?? sec.title}`, title: sec.title, ...(sec.label ? { label: sec.label } : {}), blocks: labels });
+        if (sec.subsections) await walk(sec.subsections);
+      }
+    };
+    await walk(chapter.sections);
+    doc.chapters.push({ title: chapter.title, ...(chapter.label ? { label: chapter.label } : {}), sections });
+  }
+  return doc;
+}
+
 export interface SiteBuildResult {
   documents: { slug: string; blocks: number; page: string }[];
   errors: string[];
@@ -111,6 +180,9 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
   const list = result.documents
     .map((d) => `<li><a href="${esc(d.page)}">${esc(d.slug)}</a> (${d.blocks} blocks)</li>`)
     .join("\n");
+  const outline: Outline = { $schema: OUTLINE_SCHEMA, documents: [] };
+  for (const d of docs) outline.documents.push(await documentOutline(d.path, folioDir(repoRoot), d.slug));
+  writeFileSync(join(outDir, "outline.json"), JSON.stringify(outline) + "\n");
   mkdirSync(join(outDir, "review"), { recursive: true });
   writeFileSync(join(outDir, "review", "index.html"), reviewPageHtml());
   writeFileSync(
