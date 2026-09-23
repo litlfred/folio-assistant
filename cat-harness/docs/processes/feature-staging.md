@@ -48,4 +48,13 @@ Every one of the 12 step(s) is documented.
 | **Remove it AND append `removed` — one commit**<br>`Task_RemoveDisp` | CI/CD Pipeline | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Say what is going — size and file count — then remove STAGING/<slug>/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard. |
 | **Repeat the slug, exactly, to confirm**<br>`H_Confirm` | Human actor | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The one step in this process that is a person's. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview. |
 
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Removal confirmed?**<br>`GW_Confirmed` | THREE inputs, two outcomes, and bean `1feu` set the split: a MERGED pull request needs no label, because the merge IS the confirmation — a person decided the content belongs on `main`, which says more about the preview than a label does. A pull request closed WITHOUT merging still needs `staging:cleanup`, because there the preview is the only rendering of that work: not redundant, the last copy. The branch taken is emitted as `reason=merged \| labelled \| closed-unmerged-and-unlabelled` and written into the log entry, so an audit of a removal can tell which rule did it. | **merged, or labelled** → Remove the preview AND append `removed` — one commit<br>**closed unmerged, no label** → Append `retained`, with why it stays |
+| **Still in use?**<br>`GW_Live` | THREE states, and the third is why this gateway exists. Still in use → refuse, exit 1. COULD NOT TELL → refuse, exit 2. Only a determined absence of every liveness signal removes anything. Refusing to delete is the only recoverable direction, and a preflight that has gone blind must not read as permission. | **no signal — safe to remove** → Remove it AND append `removed` — one commit<br>**live, OR could not tell** → REFUSED — nothing removed |
+
 {% endraw %}

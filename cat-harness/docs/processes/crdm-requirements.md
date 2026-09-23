@@ -43,4 +43,12 @@ Every one of the 9 step(s) is documented.
 | **Phase 6 Implement + acceptance**<br>`Call_Deliver` | Agent | calls [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html)<br>[`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says. |
 | **Close-out**<br>`Call_Close` | Agent | calls [CRDM close-out](crdm-close.html)<br>[`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Feature?**<br>`GW_Feature` | — | **no** → Continue authoring<br>**yes** → Link the work to an issue |
+
 {% endraw %}

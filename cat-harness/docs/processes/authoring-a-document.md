@@ -46,4 +46,13 @@ Every one of the 9 step(s) is documented.
 | **8 · Review and feedback**<br>`Task_Review` | Reviewer / subject-matter expert | [`content-review`](../reference/skill-instructions/content-review.html) | The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document. |
 | **9 · Publish**<br>`Task_Publish` | Build pipeline — validate · render · publish | [`content-publish`](../reference/skill-instructions/content-publish.html) | See draft-to-publication.bpmn for the review and release path this expands into. Release authorisation is not relaxable. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Within the declared profile?**<br>`Gateway_ProfileClean` | — | **violations** → 4 · Author blocks<br>**clean** → 6 · Validate |
+| **Ready to publish?**<br>`Gateway_ReviewOutcome` | — | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
+
 {% endraw %}

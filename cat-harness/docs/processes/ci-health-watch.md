@@ -37,4 +37,13 @@ Every one of the 4 step(s) is documented.
 | **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. |
 | **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. |
 
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we&#10;tell?**<br>`GW_Determined` | Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Anything red&#10;on main?**<br>`GW_Finding` | Asked of the same `verdict`, once it is known. `clean` is verdict == 'clean' (exit 0): the open `ci-health` issue, if there is one, is closed saying main is clean. `not clean` is verdict == 'red' (exit 1 with a report): the one open issue labelled `ci-health` is edited in place with the report as its body, or created if there is none. Neither branch fails the job — a red main speaks through the issue, not through this workflow's status. | **clean** → Close the&#10;tracking issue<br>**not clean** → Open or EDIT the one&#10;tracking issue |
+
 {% endraw %}

@@ -48,4 +48,12 @@ Every one of the 10 step(s) is documented.
 | **Clinical validation**<br>`Task_SmeValidate` | Clinical SME | [`content-review`](../reference/skill-instructions/content-review.html) | Ground truth: does the DAK say what the guideline says? |
 | **Assemble and validate the DAK**<br>`Task_AssembleDak` | Business analyst | [`content-validate`](../reference/skill-instructions/content-validate.html) | Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Clinically accurate?**<br>`Gateway_Accurate` | — | **changes needed** → Gateway_AuthorMerge<br>**validated** → Assemble and validate the DAK |
+
 {% endraw %}

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iumj
 title: e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T01:17:56Z
-updated_at: 2026-09-19T01:34:39Z
+updated_at: 2026-09-23T09:58:54Z
 parent: folio-assistant-1swy
 ---
 
@@ -103,3 +103,53 @@ The last test asserts the real corpus still holds `voice-status-leak`. That is
 the early-warning: it runs in `bun test`, which runs everywhere, so the next
 adjudication that would break the e2e fixture reports in the fast job instead
 of the browser one.
+
+## Re-measured, 2026-09-23 — the guard the resolution above did not add
+
+The helper closed the one spec. Nothing stopped the NEXT one. Re-measured on
+`main` (`3de80dc3`) over the 33 `*.e2e.ts` under `cat-harness/test/`:
+
+| spec | reads | asserts | verdict source |
+|---|---|---|---|
+| `qa-panel.e2e.ts` | block sidecar | verdict (fail/critical, first row) | `sidecarWithVerdicts` / `applyVerdicts`: pinned |
+| `qa-panel.e2e.ts` | KG sidecar, **raw `readFileSync`** | shape ("not recorded", subject) | n/a, but nothing marked it shape-only |
+| `qa-panel.e2e.ts` | the same block sidecar | the literal `5af6856733f3` | a **corpus witness value**, rewritten by any re-sweep after a voice-checker edit |
+| `qa-badge.e2e.ts` | `qa-index.json` + generated page markup | verdict | `indexWithRows`: pinned |
+| `translation-badges.e2e.ts` | nothing from disk | verdict | in-test payloads |
+| others | CSS/JS, library/folio projections, `_kg/` exports | structure | no QA verdicts |
+
+Evidence is still absent from disk: 0 criteria carry `evidence` across 113 block
+sidecars, so only the fixture can supply `.fa-qa-evidence pre`.
+
+**Option 1 still stands** (the helper exists). What was missing was the part of
+"Done when" that says *cannot silently inherit*, which is a guard. The smallest
+one that actually catches the 78a399ee5 shape is a unit scan, not a
+convention.
+
+- [x] `qa-panel.e2e.ts`: the KG read goes through `sidecar()` (declared shape-only);
+      the checker hash is DERIVED from the fixture (`SCRIPT_HASH`), throwing by
+      name if the witness is gone.
+- [x] `scripts/tests/e2e-corpus-coupling.test.ts`: scans every `*.e2e.ts`.
+      Rule 1 is no raw fs read (`readFileSync`/`readFile`/`createReadStream`/
+      `Bun.file`) of a QA/witness/results corpus path, followed through `const`
+      indirection to a fixpoint. Rule 2 is that a spec whose only corpus source
+      is the verbatim `sidecar()` asserts no verdict literal.
+- [x] Proven to fire: bad example strings (the 78a399ee5 shape, two-level
+      indirection, four other corpora, verdict-off-verbatim), plus main's own
+      `qa-panel.e2e.ts` copied in, which it flagged at line 145. Proven not to
+      fire on the real specs, and it asserts it recognises `qa-panel` /
+      `qa-badge` as corpus readers, so a rotted path regex cannot pass vacuously.
+- [x] Playwright ran locally (`/opt/pw-browsers`): `qa-panel` + `qa-badge`, 14/14.
+
+**Known limit, stated rather than hidden:** rule 2 is per file. A spec that
+pins one verdict may also read another sidecar verbatim, and a regex cannot tell
+which assertion targets which document. The rule catches a NEW spec reading a
+sidecar and asserting what it says, which is the case that took `main` red.
+
+## Summary of Changes
+
+- `cat-harness/test/qa-panel.e2e.ts`: the KG sidecar is read via `sidecar()`,
+  and `SCRIPT_HASH` is derived from the fixture instead of the corpus literal.
+- `cat-harness/scripts/tests/e2e-corpus-coupling.test.ts`: the new guard with
+  its fires / does-not-fire tests and a per-spec check over the real suite.
+- Issue #1043.
