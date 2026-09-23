@@ -4958,3 +4958,6 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
 // no-ops. Two were NOT removed and are the mechanism rather than instances of
 // the problem: this import, and `schemas/test-preload.ts`.
 import "./folio-graph-kind.js";
+// Core's `glossary` kind, registered the same way and for the same reason
+// (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
+import "./glossary-graph-kind.js";

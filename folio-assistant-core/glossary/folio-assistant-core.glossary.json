@@ -1,0 +1,68 @@
+{
+  "$schema": "folio-glossary/v1",
+  "id": "platform",
+  "title": "Folio Assistant platform terms",
+  "description": "Terms the platform introduced in September 2026, each defined where its schema defines it and linked to the W3C concept it corresponds to, rather than copying that concept's definition.",
+  "hasVersion": "2026-09-23",
+  "modified": "2026-09-23",
+  "license": "CC-BY-4.0",
+  "terms": [
+    {
+      "id": "associated-harness",
+      "prefLabel": "associated harness",
+      "definition": "A harness this one knows by name, site and repository, and never loads, builds or copies. The fourth relation beside depends (needs), references (remoteGraphs) and utilizes (dependencies).",
+      "source": "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
+      "status": "authored"
+    },
+    {
+      "id": "policy",
+      "prefLabel": "policy",
+      "definition": "Which Actor may do which action, and where, written as W3C ODRL 2.2 permission and prohibition rules scoped by Process, Task and Role.",
+      "exactMatch": ["http://www.w3.org/ns/odrl/2/Policy"],
+      "source": "cat-harness/schemas/odrl.ts",
+      "status": "authored"
+    },
+    {
+      "id": "permission",
+      "prefLabel": "permission",
+      "definition": "One ODRL rule allowing an assignee an action, optionally on a target and within constraints. A permission to a broader action permits every action included in it.",
+      "exactMatch": ["http://www.w3.org/ns/odrl/2/Permission"],
+      "broader": ["policy"],
+      "source": "cat-harness/schemas/odrl.ts",
+      "status": "authored"
+    },
+    {
+      "id": "task-run",
+      "prefLabel": "task run",
+      "definition": "One performance of a BPMN task by an Actor in a Role under a policy, recorded as a W3C PROV-O activity whose plan is the task.",
+      "closeMatch": ["http://www.w3.org/ns/prov#Activity"],
+      "source": "cat-harness/schemas/prov.ts",
+      "status": "authored"
+    },
+    {
+      "id": "actor",
+      "prefLabel": "actor",
+      "definition": "A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles. Which login is which actor is the data store's to know.",
+      "closeMatch": ["http://www.w3.org/ns/prov#Agent"],
+      "source": "cat-harness/skills/folio-core/role-model.md",
+      "status": "authored"
+    },
+    {
+      "id": "role",
+      "prefLabel": "role",
+      "definition": "The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need.",
+      "closeMatch": ["http://www.w3.org/ns/prov#Role"],
+      "related": ["actor"],
+      "source": "cat-harness/skills/folio-core/role-model.md",
+      "status": "authored"
+    },
+    {
+      "id": "glossary",
+      "prefLabel": "glossary",
+      "definition": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied.",
+      "closeMatch": ["http://www.w3.org/2004/02/skos/core#ConceptScheme"],
+      "source": "folio-assistant-core/schemas/glossary.ts",
+      "status": "authored"
+    }
+  ]
+}

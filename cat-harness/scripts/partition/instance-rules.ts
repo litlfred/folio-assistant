@@ -1479,6 +1479,14 @@ const PERMITTED_EDGES: readonly PermittedEdge[] = [
       "registered only if the process happened to import core first — an import-order property " +
       "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
   },
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/glossary-graph-kind.ts",
+    reason:
+      "The same trigger for core's second kind, `glossary` (owner, 2026-09-23: \"put glossary " +
+      "into folio-assistant-core\"). One entry per endpoint pair, as this list's rule requires; " +
+      "it goes away with the folio entry when the split lands (#223).",
+  },
 ];
 
 export const SPEC: PartitionSpec = {

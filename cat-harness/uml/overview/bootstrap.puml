@@ -131,8 +131,8 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
     models [0..*] : Model[]
   }
 }
-package "bootstrap/glossary" as pkg_bootstrap_glossary <<glossary>> {
-  class "folio-glossary-ledger/v1" as bootstrap_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #e8f0ee {
+package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
+  class "folio-glossary-ledger/v1" as bootstrap_swimlane_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #f4f4f1 {
     $schema [1] : string
     instance [1] : string
     concepts [1] : Record<string, LedgerEntry>
@@ -156,10 +156,10 @@ bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" boots
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-' grid: portrait, 2 column(s) — pkg_bootstrap_cat_harness pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_glossary pkg_bootstrap_bootstrap_translations
+' grid: portrait, 2 column(s) — pkg_bootstrap_cat_harness pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_swimlane_glossary pkg_bootstrap_bootstrap_translations
 pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_scenarios
 pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes
 pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_models
-pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_glossary
+pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_swimlane_glossary
 pkg_bootstrap_models -[hidden]down- pkg_bootstrap_bootstrap_translations
 @enduml
