@@ -37,6 +37,7 @@
     <bpmn:laneSet id="Process_ExtractStructure_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Binary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_HasText</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ExtractText</bpmn:flowNodeRef>

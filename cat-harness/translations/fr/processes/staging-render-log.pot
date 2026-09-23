@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: staging-render-log\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.993Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.217Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,57 +14,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/staging-render-log.bpmn:47
+#: processes/staging-render-log.bpmn:48
 #. Diagram element documentation
 msgid "`previewLiveness` — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. Bean `w2g5`: a preview whose pull request is closed is NOT an abandoned one."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:69
+#: processes/staging-render-log.bpmn:70
 #. Diagram element documentation
 msgid "`rm -rf STAGING/<slug>`. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:74
+#: processes/staging-render-log.bpmn:75
 #. Diagram element documentation
 msgid "A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because \"somebody pushed this branch\" and \"an unrelated merge nearly deleted it\" are different facts — and bean `plj1` is what happens when the second is invisible."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:41
+#: processes/staging-render-log.bpmn:42
 #. Diagram element documentation
 msgid "A re-deploy is a rendering, so it gets its own entry rather than overwriting the last. \"When was this last built\" is then answerable without diffing commits."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:53
+#: processes/staging-render-log.bpmn:54
 #. Diagram element documentation
 msgid "Answered by the preflight: did any liveness signal fire for this preview? `yes — refuse` keeps it and appends `retained` with the reason; `no` removes it and appends `removed` with the reason."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:51
+#: processes/staging-render-log.bpmn:52
 #. Diagram label
 msgid "Any liveness signal fired?"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:62
+#: processes/staging-render-log.bpmn:63
 #. Diagram label
 msgid "Append `removed` with the reason"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:40
+#: processes/staging-render-log.bpmn:41
 #. Diagram label
 msgid "Append `rendered`"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:73
+#: processes/staging-render-log.bpmn:74
 #. Diagram label
 msgid "Append `restored`"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:56
+#: processes/staging-render-log.bpmn:57
 #. Diagram label
 msgid "Append `retained` with the reason"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:64
+#: processes/staging-render-log.bpmn:65
 #. Diagram element documentation
 msgid "BEFORE the removal, not after: a job that dies mid-step must leave a record of the intent rather than an artefact that vanished with no entry. A reason is REQUIRED — an entry saying an artefact went and not why is the ambiguity this log exists to prevent."
 msgstr ""
@@ -74,12 +74,12 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:82
+#: processes/staging-render-log.bpmn:83
 #. Diagram label
 msgid "deploy"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:78
+#: processes/staging-render-log.bpmn:79
 #. Diagram label
 msgid "Entry appended; history intact"
 msgstr ""
@@ -94,27 +94,27 @@ msgstr ""
 msgid "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants. The question it exists to answer: what happened to STAGING/<slug>, and why. Bean `plj1` is why it is needed — a full-replace deploy silently deleted every open PR's preview, for months, and the publish branch kept no record of its own changes."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:84
+#: processes/staging-render-log.bpmn:85
 #. Diagram label
 msgid "full-replace deploy"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:87
+#: processes/staging-render-log.bpmn:88
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:45
+#: processes/staging-render-log.bpmn:46
 #. Diagram label
 msgid "Preflight: is the preview live?"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:32
+#: processes/staging-render-log.bpmn:33
 #. Diagram label
 msgid "Publish branch is about to change"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:68
+#: processes/staging-render-log.bpmn:69
 #. Diagram label
 msgid "Remove the artefact"
 msgstr ""
@@ -124,27 +124,27 @@ msgstr ""
 msgid "Render log — the publish branch keeps its own history"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:83
+#: processes/staging-render-log.bpmn:84
 #. Diagram label
 msgid "takedown"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:58
+#: processes/staging-render-log.bpmn:59
 #. Diagram element documentation
 msgid "THE ENTRY THAT MAKES THE LOG WORTH READING. A preview still standing because a signal fired leaves no trace otherwise, and the next person asking \"why is this still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:37
+#: processes/staging-render-log.bpmn:38
 #. Diagram element documentation
 msgid "What is about to happen to the publish branch? A `deploy` appends `rendered`; a `takedown` first preflights whether the preview is live; a `full-replace deploy` appends `restored` for the previews it put back."
 msgstr ""
 
-#: processes/staging-render-log.bpmn:35
+#: processes/staging-render-log.bpmn:36
 #. Diagram label
 msgid "What is happening?"
 msgstr ""
 
-#: processes/staging-render-log.bpmn:86
+#: processes/staging-render-log.bpmn:87
 #. Diagram label
 msgid "yes — refuse"
 msgstr ""

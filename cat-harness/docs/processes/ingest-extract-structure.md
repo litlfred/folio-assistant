@@ -24,7 +24,7 @@ folio-assistant — Ingestion subprocess — extract structure. Source of truth:
 
 | lane | role | what it does here |
 |---|---|---|
-| Ingestion Engine (agent, runs unattended) | — | Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled. |
 
 ## Steps
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-close\n"
-"POT-Creation-Date: 2026-09-23T09:01:16.257Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.009Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/crdm-close.bpmn:19
+#: processes/crdm-close.bpmn:20
 #. Diagram label
 msgid "Agent"
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: processes/crdm-close.bpmn:40
+#: processes/crdm-close.bpmn:43
 #. Diagram label
 msgid "Close issue ONLY on BA authorisation"
 msgstr ""
 
-#: processes/crdm-close.bpmn:35
+#: processes/crdm-close.bpmn:38
 #. Diagram label
 msgid "Confirm all criteria met"
 msgstr ""
@@ -39,37 +39,37 @@ msgstr ""
 msgid "CRDM close-out"
 msgstr ""
 
-#: processes/crdm-close.bpmn:31
+#: processes/crdm-close.bpmn:34
 #. Diagram label
 msgid "Feature sign-off on issue"
 msgstr ""
 
-#: processes/crdm-close.bpmn:20
+#: processes/crdm-close.bpmn:21
 #. Diagram element documentation
 msgid "Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread."
 msgstr ""
 
-#: processes/crdm-close.bpmn:30
+#: processes/crdm-close.bpmn:33
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: processes/crdm-close.bpmn:51
+#: processes/crdm-close.bpmn:54
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: processes/crdm-close.bpmn:42
+#: processes/crdm-close.bpmn:45
 #. Diagram element documentation
 msgid "Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it."
 msgstr ""
 
-#: processes/crdm-close.bpmn:24
+#: processes/crdm-close.bpmn:26
 #. Diagram label
 msgid "Stakeholders"
 msgstr ""
 
-#: processes/crdm-close.bpmn:33
+#: processes/crdm-close.bpmn:36
 #. Diagram element documentation
 msgid "Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it."
 msgstr ""
@@ -79,12 +79,12 @@ msgstr ""
 msgid "Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it."
 msgstr ""
 
-#: processes/crdm-close.bpmn:37
+#: processes/crdm-close.bpmn:40
 #. Diagram element documentation
 msgid "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so."
 msgstr ""
 
-#: processes/crdm-close.bpmn:25
+#: processes/crdm-close.bpmn:27
 #. Diagram element documentation
 msgid "The first of three sequential checks this diagram exists to enforce in order — sign off, confirm, close, never any other sequence — and what is being signed off here is the delivered FEATURE on the issue, not the requirement model that crdm-requirements-definition.bpmn's Lane_Stakeholders approved earlier in the process."
 msgstr ""

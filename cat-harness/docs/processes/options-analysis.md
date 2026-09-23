@@ -24,7 +24,7 @@ A decision reached by a NAMED methodology, with its rejected options recorded. C
 
 | lane | role | what it does here |
 |---|---|---|
-| Business analyst | — | This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell "not needed" from "we chose X" cannot audit either one. |
+| Business analyst | `business-analyst` | This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell "not needed" from "we chose X" cannot audit either one. |
 
 ## Steps
 

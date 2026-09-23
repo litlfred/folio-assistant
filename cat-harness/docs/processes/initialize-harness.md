@@ -24,9 +24,9 @@ THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. An Initiator that has read bo
 
 | lane | role | what it does here |
 |---|---|---|
-| Initiator | — | Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping. |
-| Requestor | — | The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Initiator's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Initiator may not break that tie itself. |
-| Knowledge Graph Data Store | — | Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Initiator writes anything. |
+| Initiator | `initiator` | Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping. |
+| Requestor | `requestor` | The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Initiator's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Initiator may not break that tie itself. |
+| Knowledge Graph Data Store | `knowledge-graph-data-store` | Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Initiator writes anything. |
 
 ## Steps
 
