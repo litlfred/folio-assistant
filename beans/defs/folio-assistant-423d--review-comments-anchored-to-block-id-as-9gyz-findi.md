@@ -5,10 +5,11 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:04:32Z
+updated_at: 2026-09-23T06:15:45Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
+    - folio-assistant-a1lq
 ---
 
 Owner: *"and then manage review comments etc."*
