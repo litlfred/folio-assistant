@@ -67,6 +67,7 @@ surfaces:
 | a template or include | the pages that include it | where on the page to look |
 | generated content | the page it generates | **what it was generated from** — a stale generator and a correct one look identical on the page |
 | a schema, a test, a gate | **none** | say so, and point at the diff |
+| **folio content** (block manifests and prose) | the page each block renders on | **the ChangeSet's aspect**: reworded, moved, renamed, added, removed. See below. |
 
 **Where a change is only visible after an interaction — a control behind a
 disclosure, a mode a reader turns on — say WHICH interaction.** A reviewer who
@@ -331,8 +332,16 @@ review the rendered output, not just the code diff.
 
 When an author has made content changes on a feature branch:
 
-1. **List all changed files** in the feature branch vs main
-2. **Construct before/after URLs** for each changed docs page
+1. **Compute the ChangeSet**, not a file list, when the branch touches a
+   folio's `folio` graph:
+   `bun run <platform>/folio-assistant-core/schemas/changeset.ts --folio <folio dir> --base origin/main --head <branch>`.
+   It says, per block, whether it was added, removed, reworded (`prose`),
+   edited (`manifest`), `moved` or `renamed`. A file list cannot: a
+   prose-only edit changes no `.ts`, and a move changes two files that look
+   unrelated. Rank "where to start" by it. For a large document, the section
+   with the most changed blocks is where a reviewer's time goes first.
+2. **Construct before/after URLs** for each changed docs page, and for each
+   page carrying a changed block
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
 

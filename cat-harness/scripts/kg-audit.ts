@@ -43,7 +43,7 @@
 
 import { createHash } from "node:crypto";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.

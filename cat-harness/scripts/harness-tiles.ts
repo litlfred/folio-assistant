@@ -234,18 +234,71 @@ export type HarnessTile = {
  * ## Two parts, because an instance is not always at the site root
  *
  * The published path is the instance's mount plus the asset's path with its
- * site directory removed. `folioRoot` already answers the first — `/` for the
- * instance that owns the site, `/<name>/` for one mounted beneath it — so this
- * takes it rather than re-deriving it, and an instance whose mount is unknown
- * gets **no icon at all**. That is the `pb04` rule one layer down: an `<img>`
- * whose `src` 404s is worse than no `<img>`, because a placeholder reads as a
- * broken site rather than as an instance with no art.
+ * site directory removed. An instance whose mount is unknown gets **no icon at
+ * all** — the `pb04` rule one layer down: an `<img>` whose `src` 404s is worse
+ * than no `<img>`, because a placeholder reads as a broken site rather than as
+ * an instance with no art.
+ *
+ * ## `folioRoot` IS THE WRONG MOUNT FOR THIS, and it shipped
+ *
+ * This took `folioRoot` — *"`/` for the instance that owns the site,
+ * `/<name>/` for one mounted beneath it"* — and that is the instance's FRONT
+ * DOOR, which is a different question from where its SITE DIRECTORY lands.
+ *
+ * MEASURED by running the mount rather than by reading either file:
+ *
+ *     who-iris/library/  ->  /who-iris/        (1378 files)
+ *     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+ *
+ * `mount-instance-docs` gives every instance a `<kind>/<name>` route
+ * unconditionally and a bare `<name>` route to whichever kind claims it first.
+ * For who-iris that is the **library**, so `/who-iris/` serves 1,378 corpus
+ * files and the front door is not the docs at all. The icon composed against
+ * it 404s — confirmed, 404 against 200 for the same asset at
+ * `/docs/who-iris/assets/img/who-emblem.svg`.
+ *
+ * So this composes against the route the site directory ACTUALLY takes: the
+ * unconditional `<kind>/<name>` one, from the kind the instance declares for
+ * that directory. The site owner keeps `/`, because its docs are the site
+ * root and are not mounted at all.
+ *
+ * The local preview hid it: `preview:site` does not run the mount, so the
+ * asset was missing there for an unrelated reason and the wrong URL looked
+ * like the same 404.
  */
-function publishedIcon(instanceDir: string, src: string, mount: string | undefined): string | undefined {
-  if (mount === undefined) return undefined;
+function publishedIcon(
+  instanceDir: string,
+  src: string,
+  siteMount: string | undefined,
+): string | undefined {
+  if (siteMount === undefined) return undefined;
   const prefix = `${siteDirFor(instanceDir)}/`;
   if (!src.startsWith(prefix)) return undefined;
-  return `${mount.replace(/\/$/, "")}/${src.slice(prefix.length)}`;
+  return `${siteMount.replace(/\/$/, "")}/${src.slice(prefix.length)}`;
+}
+
+/**
+ * Where this instance's SITE DIRECTORY is served from.
+ *
+ * `/` for the instance that owns the site — the main docs pipeline builds it
+ * in place. For every other instance, the `<kind>/<name>` route
+ * `mount-instance-docs` always produces, with the kind read from the
+ * declaration entry whose path IS the site directory. `undefined` when the
+ * instance declares no kind for it, which is a real answer: nothing can be
+ * said about where a directory nobody classified will be served.
+ */
+function siteDirMount(
+  decl: CatHarnessDeclaration,
+  instanceDir: string,
+  ownsSite: boolean,
+): string | undefined {
+  if (ownsSite) return "/";
+  const site = siteDirFor(instanceDir);
+  const entry = (decl.directories ?? []).find(
+    (d) => (d.path ?? "").replace(/\/$/, "") === site,
+  );
+  const kind = entry?.graphKinds?.[0];
+  return kind === undefined ? undefined : `/${kind}/${decl.name}/`;
 }
 
 /**
@@ -628,7 +681,10 @@ function tileFor(
   // THE ICON, published rather than declared — see `publishedIcon`. Resolved
   // here rather than beside `icon` because it needs the mount, and the mount
   // is `folio`.
-  const iconSrc = icon ? publishedIcon(instanceDir, icon.src, folio) : undefined;
+  // The SITE-DIR mount, not `folio` — see `publishedIcon`. `folio` is the
+  // instance's front door, which for who-iris is its 1,378-file library.
+  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot);
+  const iconSrc = icon ? publishedIcon(instanceDir, icon.src, siteMount) : undefined;
   if (icon && iconSrc === undefined) {
     // Reported, never rendered as a placeholder. The instance ASKED for a
     // mark and did not get one, and that is a fact about its declaration
@@ -694,7 +750,33 @@ function tileFor(
   // The instance's theme, from the sticky it contributes about ITSELF. A
   // contribution whose id is this instance is the instance talking about
   // itself, which is the same key `composeContributions` dedupes on.
-  const ownSticky = decl.stickies?.find((st) => st.id === decl.name);
+  // THE INSTANCE'S OWN STICKY — and a card id is NOT the instance name.
+  //
+  // This matched `st.id === decl.name` and therefore found nothing for
+  // `folio-assistant-core`, whose card id is `folio-assist-core`. That is not
+  // a stale declaration: `landing-sticky.test.ts` pins the divergence
+  // deliberately, because *"a card id is a published identifier on the landing
+  // page and the directory is only where the files sit ... which is exactly
+  // why it broke when they were assumed to be one string."* The exact
+  // assumption, written here one file over, and it cost core its avatar while
+  // its theme had been declared all along.
+  //
+  // THE SET IS ALREADY RIGHT: `decl.stickies` is what THIS instance
+  // contributes, so its own card is in there whatever it is called. An exact
+  // match still wins where one exists (cat-harness, bootstrap); a lone
+  // contribution is taken as the instance's own; and several with no exact
+  // match is REPORTED rather than picked from, because choosing by order would
+  // make the avatar depend on declaration order.
+  const contributed = decl.stickies ?? [];
+  const exact = contributed.find((st) => st.id === decl.name);
+  const ownSticky = exact ?? (contributed.length === 1 ? contributed[0] : undefined);
+  if (exact === undefined && contributed.length > 1) {
+    findings.push(
+      `${decl.name}: contributes ${contributed.length} stickies and none carries its own name ` +
+        `(${contributed.map((st) => st.id).join(", ")}), so which one is this instance's own card ` +
+        `cannot be told — showing no theme avatar rather than picking by declaration order.`,
+    );
+  }
   const theme = ownSticky?.theme === undefined ? undefined : themeById(ownSticky.theme);
   if (ownSticky?.theme !== undefined && theme === undefined) {
     findings.push(
@@ -727,7 +809,7 @@ function tileFor(
   // serve, which is `68au` with the baseurl replaced by the wrong instance.
   const cardSrc = card
     ? ownCard !== undefined
-      ? publishedIcon(instanceDir, card.src, folio)
+      ? publishedIcon(instanceDir, card.src, siteMount)
       : publishedIcon(owner!.dir, card.src, "/")
     : undefined;
   const themeAvatar =

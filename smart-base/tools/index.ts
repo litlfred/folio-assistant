@@ -95,7 +95,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "generated", schema: t("Count"), description: "How many were produced. Zero is a determined empty only if the DMN directory was found; absent input is a different state and is reported as such." },
         ],
       },
-      satisfies: ["l2-dak-authoring", "dak-preprocessing"],
+      // `l2-dak-authoring` dropped 2026-09-22 (bean p0za): that skill's contract
+      // requires `dakComponent` and `sourceGuideline`, which this Tool does not
+      // accept. The edge had never been checked, because no check could see
+      // smart-base's Tools until tool auto-discovery.
+      satisfies: ["dak-preprocessing"],
       selection: {
         when: "A DAK carries DMN decision tables and the IG is to expose them as answerable questionnaires.",
         limits:
@@ -116,7 +120,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [{ name: "dmnDir", schema: t("RepoPath"), required: true }],
         outputs: [{ name: "html", schema: t("RepoPath"), description: "One HTML fragment per decision table." }],
       },
-      satisfies: ["l2-dak-authoring", "dak-preprocessing"],
+      // `l2-dak-authoring` dropped 2026-09-22 (bean p0za): that skill's contract
+      // requires `dakComponent` and `sourceGuideline`, which this Tool does not
+      // accept. The edge had never been checked, because no check could see
+      // smart-base's Tools until tool auto-discovery.
+      satisfies: ["dak-preprocessing"],
       selection: {
         when: "A reader needs to see a decision table. Nothing else in the toolchain renders one.",
         limits:
@@ -137,7 +145,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [{ name: "bpmn", schema: t("FilesystemPath"), required: true }],
         outputs: [{ name: "fsh", schema: t("RepoPath"), description: "Generated FSH, for SUSHI to compile." }],
       },
-      satisfies: ["l2-dak-authoring", "smart-base-tools"],
+      // `l2-dak-authoring` dropped 2026-09-22 (bean p0za): that skill's contract
+      // requires `dakComponent` and `sourceGuideline`, which this Tool does not
+      // accept. The edge had never been checked, because no check could see
+      // smart-base's Tools until tool auto-discovery.
+      satisfies: ["smart-base-tools"],
       selection: {
         when: "An L2 business process is to reach L3 as a computable artefact rather than as a picture.",
         limits:
@@ -207,7 +219,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
         outputs: [{ name: "schemas", schema: t("RepoPath") }],
       },
-      satisfies: ["dak-postprocessing", "terminology-management"],
+      // `terminology-management` dropped 2026-09-22 (bean p0za): that skill's
+      // contract requires `operation`, which this Tool does not accept. Never
+      // checked before tool auto-discovery made smart-base's Tools visible.
+      satisfies: ["dak-postprocessing"],
       selection: {
         when: "A DAK IG is to expose its terminology as an API.",
         limits:
@@ -227,7 +242,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
         outputs: [{ name: "vocabularies", schema: t("RepoPath"), description: "`*.jsonld` at the published root." }],
       },
-      satisfies: ["dak-postprocessing", "terminology-management"],
+      // `terminology-management` dropped 2026-09-22 (bean p0za): that skill's
+      // contract requires `operation`, which this Tool does not accept. Never
+      // checked before tool auto-discovery made smart-base's Tools visible.
+      satisfies: ["dak-postprocessing"],
       selection: {
         when: "The terminology is to be reachable as linked data rather than only as FHIR.",
         limits:

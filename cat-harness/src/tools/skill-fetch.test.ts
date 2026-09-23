@@ -276,12 +276,34 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the skills LIVE rather than from who asked, so the nearest enclosing
     // declaration decides. If this goes red the change is a behaviour break.
     //
-    // The subject was `src/skills/` until #760 removed it. A title naming the
-    // expected STRING goes stale on a move that is not a behaviour change; one
-    // naming the RULE does not — which is why only the subject moved here.
-    // `bootstrap/tools/` is directly-held and not basenamed `skills`, so
-    // it reaches the same answer by rule 2 rather than rule 1: the sole
-    // directly-held directory takes its instance's name.
-    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/tools");
+    // The subject was `src/skills/` until #760 removed it, then
+    // `bootstrap/tools/` until 2026-09-22. A title naming the expected STRING
+    // goes stale on a move that is not a behaviour change; one naming the RULE
+    // does not — which is why only the subject moves.
+    //
+    // ## Why the subject moved again, and why it is NOT a behaviour break
+    //
+    // `needs` now derives the dependency overlay for edges inside one checkout
+    // (bean `5kn6`), so `bootstrap/skills/` became reachable from here where
+    // only `bootstrap/tools/` was before. That flips which rule applies:
+    // rule 2 (the SOLE directly-held directory takes the instance name) gave
+    // the name to `bootstrap/tools/` while it was alone; rule 1 (a directory
+    // basenamed `skills` IS the instance's own package) takes precedence now
+    // that the real one is in reach.
+    //
+    // The rule this test guards is unchanged and is the one in its title: a
+    // directly-held set is named by ITS instance, not by the caller's root.
+    // `bootstrap/skills/` resolves to `bootstrap` and not to `cat-harness`,
+    // which is the whole claim.
+    const live = discoverLocalPackages(ROOT);
+    expect(live["bootstrap"]).toContain("bootstrap/skills");
+
+    // AND NOTHING WAS DROPPED, which is the half worth asserting: the failure
+    // mode this naming rule exists against is a second directory being found
+    // and then silently losing its key — the `dh4f` shape one layer up. Rule 3
+    // gives `bootstrap/tools/` its own basename, so both remain reachable.
+    expect(live["tools"]).toContain("bootstrap/tools");
+    const paths = Object.values(live);
+    expect(paths.length).toBe(new Set(paths).size);
   });
 });

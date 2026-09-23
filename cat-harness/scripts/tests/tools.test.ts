@@ -9,7 +9,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { tools } from "../../tools/index.js";
+import { tools } from "../../tools/discover.js";
 import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";

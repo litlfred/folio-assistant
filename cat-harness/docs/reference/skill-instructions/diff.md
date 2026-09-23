@@ -32,14 +32,32 @@ git fetch origin <BRANCH> && git switch <BRANCH> && git pull origin <BRANCH> && 
 **This is the most important part.** Every changed content block gets a
 clickable viewer link and 1-line explanation.
 
-### Finding changed blocks
+### Finding changed blocks: use the ChangeSet
 
 ```bash
-for f in $(git diff origin/main..HEAD --name-only -- 'content/**/*.ts' | grep -v '/rendered/' | grep -v 'schema/' | grep -v 'pipeline/'); do
-  label=$(grep -oP "label:\s*['\"]\\K[^'\"]+" "$f" 2>/dev/null || echo "")
-  if [ -n "$label" ]; then echo "$f|$label"; fi
-done
+bun run folio-assistant/folio-assistant-core/schemas/changeset.ts \
+  --folio <folio graph dir> --base origin/main --head worktree --out /tmp/changeset.json
 ```
+
+`--folio` is the directory the folio declares for its `folio` graph in
+`<slug>.json`, usually `folio/`. The path prefix is wherever this folio
+links the platform. Its stderr line is the summary. The JSON
+(`folio-changeset/v1`, schema in
+`folio-assistant-core/schemas/changeset.ts`) lists every block that differs,
+keyed on its **label**, in reading order.
+
+**Why not `git diff --name-only` over `.ts` files**, which this section used
+to do. That misses three things a reviewer needs:
+- **A prose-only edit.** The `.md` changed and the `.ts` did not, which is
+  the commonest edit in a document folio.
+- **A move** between sections. It either vanishes or reads as noise.
+- **A rename.** A relabelled block reads as a different block.
+
+The ChangeSet matches blocks by label, follows `renamedFrom`, and reads
+section position from the manifests.
+
+It reads the base ref as text and never executes it. An unresolvable base is
+an error, not "no changes". Say so rather than reporting an empty diff.
 
 ### Viewer link format
 
@@ -60,14 +78,26 @@ Group by chapter. Markdown table: **Block** (link), **What changed**.
 | [def:central-object](http://localhost:8080/assistant/#def:central-object) | Rewrote axiom 3 |
 | [prf:main-lemma](http://localhost:8080/assistant/#prf:main-lemma) | Added first SVG render |
 
-### Change categories
+### Change categories: the ChangeSet's, verbatim
 
-- **Narrative edit**: `.md` content modified
-- **Re-rendered SVG**: notation/style change → SVG hash update
-- **New SVG render**: block got first rendered SVG
-- **Structural change**: label, uses[], lean ref, or kind changed
-- **New block**: entirely new content block added
-- **Removed block**: block deleted
+Report each entry with the ChangeSet's own words, so the report and the
+review page never disagree:
+
+- **added** / **removed**: the whole block is new, or gone. A removed block
+  reports where it WAS.
+- **changed**, with every aspect that applies (one edit can carry several):
+  - `prose`: the `.md` narrative changed.
+  - `manifest`: the `.ts` changed (uses[], lean ref, kind, metadata), ignoring
+    the label.
+  - `moved`: a different section, or a different order relative to its
+    neighbours. Inserting a block above does **not** move the ones below.
+  - `renamed`: the label changed and the block records the old one in
+    `renamedFrom`. A relabel WITHOUT `renamedFrom` shows as removed + added,
+    and the `id-stable` QA criterion fails it. Point that out; do not
+    paper over it.
+
+Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
+Report them separately from `rendered[]` hashes, as before.
 
 ## 3. Viewer features for reviewing changes
 
