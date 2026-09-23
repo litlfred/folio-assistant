@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-22T00:47:08Z
-updated_at: 2026-09-22T10:57:18Z
+updated_at: 2026-09-22T12:43:26Z
 parent: folio-assistant-1xhc
 ---
 
@@ -187,3 +187,30 @@ That the **workflow reaches this step in production**. Steps 7 and 8 are gated `
 
 - [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **still open after two clean sweeps**
 - [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs, four of them with no synthetic input at all; no `UNKNOWN` mergeability verdict in any case
+
+
+_2026-09-22T12:40:00Z_ — **THIRD CLEAN SWEEP. Box still unticked.** Run 44 fired 11:42:37 on `0a818847b9`; steps 7 and 8 both `skipped`, step 9 succeeded. Nobody flagged, so the `no-run` branch has now failed to execute on three consecutive post-fix runs (42, 43, 44).
+
+Three is where a run of clean results is most tempting to read as evidence, and it is the same non-evidence as one. Recorded as a count rather than a conclusion.
+
+## THE FIX WAS USED IN ANGER, on this session's own pull request
+
+Reading #944 minutes later:
+
+    "mergeable_state": "unknown"
+
+**That is this bean's exact subject, arriving unprompted on my own PR.** The pre-fix reading would have been *"mergeability cannot be determined"*. The instrument this bean established says otherwise, and it was applied rather than the field trusted:
+
+    git ls-remote origin refs/pull/944/merge   -> 1 ref
+    git ls-remote origin refs/pull/944/head    -> 1 ref
+    => MERGEABLE
+
+The merge ref exists. The API had simply **not computed the field yet** — lazily, as `h2s9` says — and the PR merged cleanly against a base six commits ahead with zero conflicts, which confirms the probe's verdict over the field's.
+
+**This is not the production verification and must not be counted as one.** The sweep did not flag #944; I read its state by hand because a check-in told me to look. What it does establish is narrower and still worth writing down: **the field went `unknown` on a genuinely mergeable PR again, in ordinary use, six days-worth of commits after the first observation on #731.** The defect this bean fixed is live and recurring, not a one-off race that has since settled — which is the strongest available answer to anyone asking whether the fix was worth making.
+
+## Done when
+
+- [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **open after three clean sweeps**
+- [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs
+- [x] **THE DEFECT IS RECURRENT, not a settled race:** `mergeable_state: "unknown"` observed again on #944, a mergeable PR, and correctly resolved by the merge-ref probe
