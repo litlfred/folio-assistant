@@ -3,8 +3,9 @@
 title: A repo's type set is the markers it carries, closed under the dependency tree
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T21:28:21Z
-updated_at: 2026-09-18T21:28:21Z
+updated_at: 2026-09-23T06:15:45Z
 parent: folio-assistant-vke6
 ---
 
@@ -231,3 +232,8 @@ content types — the markers present, closed under the dependency tree — with
 every member naming a type it can dereference, and a disagreement between two
 markers reported rather than silently resolved. `sushi` and `ig` are among the
 formalised types. The skills say so and the existing repos are migrated.
+
+
+## Related, 2026-09-23
+
+Bean a1lq (multiple inheritance) states the owner's rule for resolving a dependency tree: fully resolve, then walk deepest-first from bootstrap/, with one resolver for instances AND node kinds. This bean's type set is closed under the same tree, so it should use that resolver, not a third one.
