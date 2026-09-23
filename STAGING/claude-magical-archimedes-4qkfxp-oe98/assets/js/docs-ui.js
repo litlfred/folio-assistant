@@ -1592,6 +1592,15 @@
         // collapsed behind the icon — that IS the point of sending it there.
         searchHome.setAttribute("data-open", corner ? "false" : "true");
         cornerIcon.setAttribute("aria-expanded", "false");
+        /* THE GLYPH IS SHOWN IN BOTH STATES (owner, 2026-09-23: *"maginfyingglass
+         * avatar/braadning should be visibile always"*), so it means two
+         * different things and must SAY so. In the corner it reveals a field
+         * that is not on screen; in the navbar the field is already there and
+         * it moves the cursor into it. One label for both would be wrong in
+         * one of them, and a control whose name does not match what it does is
+         * worse than no control. */
+        cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
+        cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
         slide.setAttribute("aria-label",
           corner ? "Dock search back into the navbar" : "Slide search out to the corner");
         slide.setAttribute("title", slide.getAttribute("aria-label"));
@@ -1619,7 +1628,20 @@
        * fallbacks exist because a theme that renamed the container may also
        * have renamed the header, and search in the wrong place beats search
        * nowhere. */
-      var navbar = firstMatch([".main-header", "#main-header", ".main-content-wrap"]);
+      /* NOT `.main-header` ANY MORE, and the reason is measured. The theme
+       * sets `.main-header { display: none }` below its own nav breakpoint, so
+       * at 700px the whole search home -- field, chevron AND the glyph that is
+       * the only way back to it -- computed to 0x0. Search was not merely
+       * awkward to reach on a narrow screen, it was unreachable from the
+       * display panel at all, which is the owner's *"takes way too many
+       * clicks"* at its worst.
+       *
+       * `.main-content-wrap` is the panel's own content column and the theme
+       * never hides it, so homing here is what *"full top of display panel"*
+       * actually means. `.main-header` stays in the fallback list: a theme that
+       * renamed the wrap may still have the header, and search in the wrong
+       * place beats search nowhere. */
+      var navbar = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
       if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
       else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
@@ -2822,9 +2844,17 @@
     });
     document.addEventListener("pointermove", function (e) {
       if (!from || e.pointerId !== from.id) return;
+      // A SECOND FINGER made this a pinch of the whole glass (`b8eq`): the
+      // card stands still rather than following one of two fingers.
+      if (panel.closest && panel.closest("[data-fa-pinching]")) return;
+      // ON A ZOOMED SURFACE a finger's pixels are not the card's pixels: at
+      // 50% a card must move two of its own for every one the pointer moves,
+      // or it slides out from under the finger.
+      var host = panel.parentNode && panel.parentNode.closest ? panel.parentNode.closest("[data-fa-scale]") : null;
+      var scale = (host && parseFloat(host.getAttribute("data-fa-scale"))) || 1;
       applyGeometry(panel, {
-        left: Math.max(0, from.g.left + (e.clientX - from.x)),
-        top: Math.max(0, from.g.top + (e.clientY - from.y)),
+        left: Math.max(0, from.g.left + (e.clientX - from.x) / scale),
+        top: Math.max(0, from.g.top + (e.clientY - from.y) / scale),
         width: from.g.width,
         height: from.g.height,
       });
@@ -4135,6 +4165,30 @@
   }
 
   /**
+   * A TODO'S AVATAR IS A STICKY NOTE — owner, 2026-09-23: *"todos should have
+   * stick note avatar"* (bean `b8eq`, issue #1154).
+   *
+   * The declared `todos` kind glyph is a thin outline of a note, drawn as a
+   * MASK in the accent colour — right for a navbar icon, and nearly invisible
+   * filling a card on a 20%-opaque glass. A todo IS a sticky note everywhere
+   * else on this site, so on the glass it is drawn as one: a yellow square
+   * with a folded corner and ruled lines. Built from CSS alone — no asset to
+   * 404, nothing to fetch.
+   *
+   * Decorative: the card's name carries the words, so this is `aria-hidden`.
+   */
+  function stickyNoteAvatar() {
+    var n = el("span", { class: "fa-sticky-note-avatar", "data-fa-kind": "todos", "aria-hidden": "true" });
+    n.appendChild(el("span", { class: "fa-sticky-note-lines" }));
+    return n;
+  }
+
+  /** The avatar an item falls back to with no picture: a note for a todo, the kind glyph otherwise. */
+  function fallbackAvatar(kind) {
+    return kind === "todos" ? stickyNoteAvatar() : kindAvatar(kind);
+  }
+
+  /**
    * An asset's avatar on the glass, honouring the reader's avatar style.
    * A picture that fails to load becomes the kind avatar — never a broken
    * image, which reads as "something failed" where the truth is "no picture".
@@ -4146,11 +4200,11 @@
     if (src) {
       var img = el("img", { src: src, alt: "", loading: "lazy" });
       img.addEventListener("error", function () {
-        if (img.parentNode) img.parentNode.replaceChild(kindAvatar(a.kind), img);
+        if (img.parentNode) img.parentNode.replaceChild(fallbackAvatar(a.kind), img);
       });
       box.appendChild(img);
     } else {
-      box.appendChild(kindAvatar(a.kind));
+      box.appendChild(fallbackAvatar(a.kind));
     }
     return box;
   }
@@ -4239,7 +4293,10 @@
      * every page they visit. Rendering them into one list would tell a reader
      * their page's stickies travel with them.
      */
-    var shelf = el("div", { class: "fa-glass-shelf", "aria-label": "Assets on your folio" });
+    // `role="group"`: a NAME on a bare div is prohibited ARIA (axe
+    // `aria-prohibited-attr`), found the first time axe measured an open
+    // glass (`b8eq`). A group is what the shelf is — the cards, together.
+    var shelf = el("div", { class: "fa-glass-shelf", role: "group", "aria-label": "Assets on your folio" });
     sheet.appendChild(shelf);
     var notes = el("div", { class: "fa-glass-notes" });
     sheet.appendChild(notes);
@@ -4307,6 +4364,196 @@
       var w = card.getBoundingClientRect().width || parseFloat(card.style.width) || 0;
       card.setAttribute("data-fa-zoom", rendersAvatar(kind, w) ? "avatar" : "card");
     }
+
+    /* ── ZOOM AND PAN THE GLASS, AND SNAP BACK HOME ───────────────────────
+     *
+     * Owner, 2026-09-23 (bean `b8eq`, issue #1154): *"need to be able to zoom
+     * in and out of folio and move it around (plus snap back to home). slider
+     * and two finger."*
+     *
+     * ONE TRANSFORM ON THE SHELF, never a change to any card. A card's saved
+     * left/top/width/height is where the READER put it; the view is how far
+     * they are standing from the whole surface. Mixing the two would make
+     * zooming out rewrite every card's geometry, and Home could not undo it.
+     *
+     * SEMANTIC ZOOM COMES FOR FREE, and that is the point of doing it this
+     * way. `zoomGlassCard` measures a card's RENDERED width, which the scale
+     * shrinks — so zooming out past the folio's declared threshold turns cards
+     * into their avatars, exactly as the board promised (`6lb8`: *"switching
+     * over to content avatars if content no longer legible"*).
+     *
+     * THREE WAYS IN, and only one of them is a gesture. The slider and the
+     * −/+ buttons are the keyboard and low-dexterity path; a two-finger pinch
+     * and a drag on empty glass are accelerators over it; Ctrl + wheel is a
+     * laptop trackpad's pinch. Home is one press, always. */
+    var VIEW_KEY = "fa-glass-view";
+    var ZOOM_MIN = 25, ZOOM_MAX = 200, ZOOM_STEP = 10;
+    function clampScale(v) { return Math.min(ZOOM_MAX / 100, Math.max(ZOOM_MIN / 100, v)); }
+    function loadView() {
+      try {
+        var v = JSON.parse(localStorage.getItem(VIEW_KEY) || "null");
+        if (v && isFinite(v.s) && isFinite(v.x) && isFinite(v.y)) return { s: clampScale(v.s), x: v.x, y: v.y };
+      } catch (_e) { /* unreadable: start at home */ }
+      return { s: 1, x: 0, y: 0 };
+    }
+    function saveView() {
+      try { localStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_e) { /* a view that resets next page is the safe failure */ }
+    }
+    var view = loadView();
+    function atHome() { return view.s === 1 && view.x === 0 && view.y === 0; }
+
+    var glassLive = el("p", { class: "fa-sr-only", "aria-live": "polite" });
+    var zoomBar = el("div", { class: "fa-glass-zoom", role: "group", "aria-label": "Zoom and position of your folio" });
+    var zoomOutBtn = el("button", { type: "button", class: "fa-glass-zoom-btn", "data-fa-zoom-control": "out",
+      "aria-label": "Zoom out", title: "Zoom out" }, "−");
+    var zoomSlider = el("input", { type: "range", class: "fa-glass-zoom-slider", id: "fa-glass-zoom",
+      min: String(ZOOM_MIN), max: String(ZOOM_MAX), step: "5", "aria-label": "Zoom" });
+    var zoomValue = el("output", { class: "fa-glass-zoom-value", for: "fa-glass-zoom" });
+    var zoomInBtn = el("button", { type: "button", class: "fa-glass-zoom-btn", "data-fa-zoom-control": "in",
+      "aria-label": "Zoom in", title: "Zoom in" }, "+");
+    var homeBtn = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-home",
+      "data-fa-zoom-control": "home",
+      "aria-label": "Snap back home — 100%, where your folio starts",
+      title: "Home: 100%, where your folio starts" }, "⌂ Home");
+    zoomBar.appendChild(zoomOutBtn);
+    zoomBar.appendChild(zoomSlider);
+    zoomBar.appendChild(zoomValue);
+    zoomBar.appendChild(zoomInBtn);
+    zoomBar.appendChild(homeBtn);
+    sheet.insertBefore(zoomBar, empty);
+    sheet.appendChild(glassLive);
+
+    function applyView() {
+      shelf.style.transformOrigin = "0 0";
+      shelf.style.transform = atHome() ? "" :
+        "translate(" + view.x + "px, " + view.y + "px) scale(" + view.s + ")";
+      shelf.setAttribute("data-fa-scale", String(view.s));
+      var pct = Math.round(view.s * 100);
+      zoomSlider.value = String(pct);
+      zoomValue.textContent = pct + "%";
+      layer.setAttribute("data-fa-glass-home", atHome() ? "true" : "false");
+      // The scale changes a card's RENDERED width without resizing its box,
+      // so the ResizeObserver never hears of it. Asked here instead.
+      Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
+    }
+
+    /** Zoom to `s`, keeping the point under (cx, cy) where it is. No point: the middle of the glass. */
+    function zoomAbout(s, cx, cy) {
+      s = Math.round(clampScale(s) * 100) / 100;
+      var r = shelf.getBoundingClientRect();
+      // With the origin at 0 0, the transform moves the box's corner by
+      // exactly the translation — so this is where the corner sits untransformed.
+      var ox = r.left - view.x, oy = r.top - view.y;
+      if (cx == null) {
+        var sr = sheet.getBoundingClientRect();
+        cx = sr.left + sr.width / 2;
+        cy = sr.top + sr.height / 2;
+      }
+      var fx = cx - ox, fy = cy - oy;
+      var px = (fx - view.x) / view.s, py = (fy - view.y) / view.s;
+      view = { s: s, x: Math.round(fx - px * s), y: Math.round(fy - py * s) };
+      applyView();
+      saveView();
+    }
+    function sayZoom() { glassLive.textContent = "Zoom " + Math.round(view.s * 100) + "%."; }
+
+    zoomOutBtn.addEventListener("click", function () { zoomAbout(view.s - ZOOM_STEP / 100); sayZoom(); });
+    zoomInBtn.addEventListener("click", function () { zoomAbout(view.s + ZOOM_STEP / 100); sayZoom(); });
+    zoomSlider.addEventListener("input", function () { zoomAbout(Number(zoomSlider.value) / 100); });
+    homeBtn.addEventListener("click", function () {
+      view = { s: 1, x: 0, y: 0 };
+      applyView();
+      saveView();
+      glassLive.textContent = "Back home: 100%, where your folio starts.";
+    });
+
+    // CTRL + WHEEL is how a laptop trackpad reports a pinch. A plain wheel is
+    // left alone: it scrolls the glass, which is what a reader expects of it.
+    sheet.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey || layer.getAttribute("data-fa-glass") !== "open") return;
+      e.preventDefault();
+      zoomAbout(view.s * Math.exp(-e.deltaY * 0.01), e.clientX, e.clientY);
+    }, { passive: false });
+
+    /* PAN: a drag that starts on EMPTY glass. A drag on a card is that card's
+     * (`wireMove`), and a drag on the sheet's scrollbar is a scroll — so only
+     * the surface itself starts one. */
+    function onEmptyGlass(e) {
+      if (e.target === shelf || e.target === notes) return true;
+      // The sheet's own box includes its scrollbar; a press there is a scroll.
+      return e.target === sheet && e.offsetX < sheet.clientWidth && e.offsetY < sheet.clientHeight;
+    }
+    var panFrom = null;
+    var touches = {};
+    var pinch = null;
+    function distance(a, b) { return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
+    sheet.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      // A finger only pans where the browser has been told not to scroll —
+      // the shelf (`touch-action: none`). Elsewhere a finger scrolls the glass.
+      if (e.pointerType !== "mouse" && e.target !== shelf) return;
+      if (!onEmptyGlass(e)) return;
+      panFrom = { id: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false };
+    });
+    sheet.addEventListener("mousedown", function (e) {
+      // No text selection while dragging the surface.
+      if (e.button === 0 && onEmptyGlass(e)) e.preventDefault();
+    });
+    // TWO FINGERS, wherever they land on the shelf — over a card too. Seen in
+    // the CAPTURE phase so a card's own drag cannot hide the second finger;
+    // `data-fa-pinching` then tells that drag to stand still (`wireMove`).
+    shelf.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch") return;
+      touches[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(touches);
+      if (ids.length === 2) {
+        panFrom = null;
+        var a = touches[ids[0]], b = touches[ids[1]];
+        pinch = { d: distance(a, b) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2,
+                  s: view.s, x: view.x, y: view.y };
+        shelf.setAttribute("data-fa-pinching", "");
+      }
+    }, true);
+    document.addEventListener("pointermove", function (e) {
+      if (touches[e.pointerId]) touches[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (pinch) {
+        var ids = Object.keys(touches);
+        if (ids.length < 2) return;
+        var a = touches[ids[0]], b = touches[ids[1]];
+        var s = clampScale(pinch.s * distance(a, b) / pinch.d);
+        var r = shelf.getBoundingClientRect();
+        var ox = r.left - view.x, oy = r.top - view.y;
+        // The surface point that was under the fingers when they landed stays
+        // under their midpoint: pinching zooms, and moving both fingers pans.
+        var px = (pinch.mx - ox - pinch.x) / pinch.s, py = (pinch.my - oy - pinch.y) / pinch.s;
+        var mx = (a.x + b.x) / 2 - ox, my = (a.y + b.y) / 2 - oy;
+        view = { s: Math.round(s * 100) / 100, x: Math.round(mx - px * s), y: Math.round(my - py * s) };
+        applyView();
+        return;
+      }
+      if (panFrom && e.pointerId === panFrom.id) {
+        var dx = e.clientX - panFrom.x, dy = e.clientY - panFrom.y;
+        if (!panFrom.moved && Math.abs(dx) + Math.abs(dy) < 4) return;
+        panFrom.moved = true;
+        view = { s: view.s, x: Math.round(panFrom.vx + dx), y: Math.round(panFrom.vy + dy) };
+        applyView();
+      }
+    });
+    function endViewPointer(e) {
+      if (touches[e.pointerId]) delete touches[e.pointerId];
+      if (pinch && Object.keys(touches).length < 2) {
+        pinch = null;
+        shelf.removeAttribute("data-fa-pinching");
+        saveView();
+        sayZoom();
+      }
+      if (panFrom && e.pointerId === panFrom.id) {
+        if (panFrom.moved) saveView();
+        panFrom = null;
+      }
+    }
+    document.addEventListener("pointerup", endViewPointer);
+    document.addEventListener("pointercancel", endViewPointer);
 
     function buildGlassCard(key, a) {
       var card = el("article", {
@@ -4430,6 +4677,8 @@
         shelf.__faZoomObs = zo;
       }
       placed.forEach(zoomGlassCard);
+      // The reader's saved view, applied over the cards just drawn.
+      applyView();
 
       // WHERE THE WAY BACK IS, said on the surface that cannot offer it.
       // `l4zi` one level out: the inverse of close is reachable from the
@@ -4573,7 +4822,7 @@
               "data-fa-library-kind": "todos",
             });
             var host = el("div", { class: "fa-glass-todo-row", "data-fa-pullout-host": "" });
-            host.appendChild(kindAvatar("todos"));
+            host.appendChild(stickyNoteAvatar());
             host.appendChild(el("span", { class: "fa-glass-todo-summary" }, t.summary || t.id));
             li.appendChild(host);
             list.appendChild(li);
@@ -4709,10 +4958,60 @@
      * Todos and Settings. The declared `todos` tile is NOT drawn a second
      * time beside them; its page is the "Open the full todo board" link
      * inside the Todos panel. */
-    var strip = el("nav", { class: "fa-glass-tiles", "aria-label": "Folio tiles" });
-    sheet.appendChild(strip);
+    var strip = el("nav", { class: "fa-glass-tiles", id: "fa-glass-strip", "aria-label": "Folio tiles" });
 
+    /* THE STRIP SLIDES AWAY, BY ONE BUTTON — owner, 2026-09-23 (`b8eq`):
+     * *"bottom flip panel should be togglebe to stay open, but should slide
+     * away"*, and asked when, **"Only by a button"**: it never hides itself.
+     *
+     * The toggle rides ABOVE the strip in one fixed dock, so when the strip
+     * slides down the tab is still on screen — `l4zi`: the inverse of hiding
+     * is reachable from the same control. The choice is the reader's and is
+     * remembered in this browser. A hidden strip is `inert`, so the keyboard
+     * cannot land on a tile nobody can see. */
+    var dock = el("div", { class: "fa-glass-dock" });
+    var stripToggle = el("button", {
+      type: "button",
+      class: "fa-glass-strip-toggle",
+      "aria-controls": "fa-glass-strip",
+    });
+    dock.appendChild(stripToggle);
+    dock.appendChild(strip);
+    sheet.appendChild(dock);
+    var STRIP_HIDDEN_KEY = "fa-glass-strip-hidden";
+    function stripWasHidden() {
+      try { return localStorage.getItem(STRIP_HIDDEN_KEY) === "1"; } catch (_e) { return false; }
+    }
+    function setStripHidden(h) {
+      dock.setAttribute("data-fa-strip", h ? "hidden" : "shown");
+      if (h) strip.setAttribute("inert", ""); else strip.removeAttribute("inert");
+      stripToggle.setAttribute("aria-expanded", h ? "false" : "true");
+      while (stripToggle.firstChild) stripToggle.removeChild(stripToggle.firstChild);
+      stripToggle.appendChild(el("span", { "aria-hidden": "true" }, h ? "\u25B4 " : "\u25BE "));
+      stripToggle.appendChild(document.createTextNode(h ? "Show tiles" : "Hide tiles"));
+      stripToggle.title = h ? "Bring the tiles back" : "Slide the tiles away \u2014 this tab brings them back";
+    }
+    stripToggle.addEventListener("click", function () {
+      var h = dock.getAttribute("data-fa-strip") !== "hidden";
+      setStripHidden(h);
+      try {
+        if (h) localStorage.setItem(STRIP_HIDDEN_KEY, "1");
+        else localStorage.removeItem(STRIP_HIDDEN_KEY);
+      } catch (_e) { /* a strip that comes back next page is the safe failure */ }
+      glassLive.textContent = h ? "Tiles hidden. The Show tiles tab brings them back." : "Tiles shown.";
+    });
+    setStripHidden(stripWasHidden());
+
+    /* A CHROME TILE IS DECLARED ONCE and drawn wherever the reader keeps it —
+     * on the strip, or in More (owner, 2026-09-23: *"should be able to drag and
+     * drop 'more' tiles between it and bottom"*). */
+    var chromeDefs = {};
     function chromeTile(id, label, glyph, title, build) {
+      chromeDefs[id] = { label: label, glyph: glyph, title: title, build: build };
+    }
+    /** A chrome tile's button. `onStrip`: the copy whose pressed state the panel reports. */
+    function makeChromeTile(id, onStrip) {
+      var d = chromeDefs[id];
       var b = el("button", {
         type: "button",
         // NOT `data-fa-tile` and not `.fa-tile`: those mark a DECLARED graph
@@ -4723,13 +5022,12 @@
         "data-fa-glass-chrome": id,
         "aria-expanded": "false",
         "aria-controls": "fa-glass-panel",
-        "aria-label": title,
+        "aria-label": d.title,
       });
-      b.appendChild(el("span", { class: "fa-glass-tile-glyph", "aria-hidden": "true" }, glyph));
-      b.appendChild(el("span", { class: "fa-tile-caption" }, label));
-      b.addEventListener("click", function () { openPanel(id, title, build); });
-      panelButtons[id] = b;
-      strip.appendChild(b);
+      b.appendChild(el("span", { class: "fa-glass-tile-glyph", "aria-hidden": "true" }, d.glyph));
+      b.appendChild(el("span", { class: "fa-tile-caption" }, d.label));
+      b.addEventListener("click", function () { openPanel(id, d.title, d.build); });
+      if (onStrip) panelButtons[id] = b;
       return b;
     }
     chromeTile("glass-todos", "Todos", "☑", "Todos — pull one onto your glass", buildTodos);
@@ -4895,23 +5193,296 @@
      * The list is the SAME declaration filtered to the `glass` surface and
      * drawn by the same `renderGraphTiles`: moving the tiles into a panel
      * changes where they are, not what they are. */
-    function buildMore(body) {
-      var status = el("p", { class: "fa-glass-panel-status" }, "Loading\u2026");
-      body.appendChild(status);
-      var grid = el("div", { class: "fa-glass-more", role: "group", "aria-label": "Visualisations" });
-      body.appendChild(grid);
-      glassTileList(function (tiles) {
-        if (!tiles) {
-          status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
-          return;
+    /* THE READER ARRANGES THEM — owner, 2026-09-23 (`b8eq`): *"should be
+     * able to drag and drop 'more' tiles between it and bottom"*, and asked
+     * which may move, **"Only More is fixed"**. So every tile — the glass's
+     * own and every declared visualisation — lives on the strip or in More,
+     * as the reader chooses, and More itself never leaves the strip: it is the
+     * way to everything that is not there.
+     *
+     * DRAGGING IS THE ACCELERATOR, never the only way (WCAG 2.5.7, and this
+     * instance's declared low-dexterity profile). Every tile in More has a
+     * "Strip" button and every strip tile is listed with a "More" button, so
+     * the whole arrangement can be made by pressing.
+     *
+     * The arrangement is the READER'S and is remembered in this browser — a
+     * view preference like the theme, never a change to the declaration. */
+    var STRIP_KEY = "fa-glass-strip";
+    var STRIP_DEFAULT = ["glass-todos", "glass-filter", "glass-settings"];
+    function loadStrip() {
+      try {
+        var v = JSON.parse(localStorage.getItem(STRIP_KEY) || "null");
+        if (Array.isArray(v)) {
+          return v.filter(function (x) { return typeof x === "string" && x !== "glass-more"; });
         }
-        var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
-        var n = renderGraphTiles(declared, "glass", grid, readerShownTiles());
-        status.textContent = n === 0 ? "No visualisations are declared for the glass."
-          : n + (n === 1 ? " visualisation" : " visualisations") + ".";
+      } catch (_e) { /* unreadable: the default strip */ }
+      return STRIP_DEFAULT.slice();
+    }
+    var stripIds = loadStrip();
+    function saveStrip() {
+      try { localStorage.setItem(STRIP_KEY, JSON.stringify(stripIds)); } catch (_e) { /* next page: the default */ }
+    }
+
+    /** The declared glass tiles, read once. `null` while unread or unreadable. */
+    var declaredTiles = null;
+    function withDeclared(done) {
+      if (declaredTiles) return done(declaredTiles);
+      glassTileList(function (tiles) {
+        if (tiles) declaredTiles = tiles.filter(function (t) { return t && t.id !== "todos"; });
+        done(declaredTiles);
       });
     }
-    chromeTile("glass-more", "More", "\u22EF", "More \u2014 every visualisation this folio declares", buildMore);
+    function declaredById(id) {
+      if (!declaredTiles) return null;
+      for (var i = 0; i < declaredTiles.length; i++) if (declaredTiles[i].id === id) return declaredTiles[i];
+      return null;
+    }
+    /** One declared tile, drawn by the one template — or null if it is not for this surface. */
+    function declaredTileEl(t) {
+      var box = el("div");
+      renderGraphTiles([t], "glass", box, readerShownTiles());
+      return box.firstChild;
+    }
+    function labelOf(id) {
+      if (chromeDefs[id]) return chromeDefs[id].label;
+      var t = declaredById(id);
+      return (t && t.title) || id;
+    }
+
+    function renderStrip() {
+      Array.prototype.slice.call(strip.querySelectorAll("[data-fa-strip-item]")).forEach(function (n) {
+        strip.removeChild(n);
+      });
+      Object.keys(panelButtons).forEach(function (k) { if (k !== "glass-more") delete panelButtons[k]; });
+      var waiting = false;
+      stripIds.forEach(function (id) {
+        var node = null;
+        if (chromeDefs[id]) node = makeChromeTile(id, true);
+        else if (declaredTiles) { var t = declaredById(id); node = t ? declaredTileEl(t) : null; }
+        else waiting = true;
+        if (!node) return;
+        node.setAttribute("data-fa-strip-item", id);
+        wireTileDrag(node, id);
+        strip.insertBefore(node, moreBtn);
+      });
+      if (openPanelId && panelButtons[openPanelId]) panelButtons[openPanelId].setAttribute("aria-expanded", "true");
+      // A declared tile on the strip needs the list; drawn when it arrives.
+      if (waiting) withDeclared(function (t) { if (t) renderStrip(); });
+    }
+
+    function moveTile(id, toStrip, index) {
+      if (id === "glass-more") return;
+      var was = stripIds.indexOf(id);
+      if (was !== -1) stripIds.splice(was, 1);
+      if (toStrip) {
+        if (index == null || index < 0 || index > stripIds.length) index = stripIds.length;
+        stripIds.splice(index, 0, id);
+      }
+      saveStrip();
+      if (!toStrip && openPanelId === id) closePanel();
+      renderStrip();
+      if (openPanelId === "glass-more") {
+        var body = panel.querySelector(".fa-glass-panel-body");
+        if (body) {
+          while (body.firstChild) body.removeChild(body.firstChild);
+          // FOCUS FOLLOWS THE TILE: the button just pressed is gone, so the
+          // keyboard lands on the same tile's button in its new place.
+          buildMore(body, function () {
+            var sel = toStrip ? '[data-fa-strip-row="' + id + '"] button'
+                              : '[data-fa-more-item="' + id + '"] button.fa-glass-arrange';
+            var f = body.querySelector(sel);
+            if (f) f.focus();
+          });
+        }
+      }
+      glassLive.textContent = labelOf(id) + (toStrip ? " is on the strip." : " is in More.");
+    }
+
+    /* DRAG, by pointer — mouse, pen and finger alike. A mouse drags once it
+     * has moved a few pixels; a finger PRESSES AND HOLDS first, because a
+     * finger that moves at once is scrolling the strip or the panel. */
+    var tileDrag = null;
+    function wireTileDrag(node, id) {
+      node.setAttribute("data-fa-draggable-tile", id);
+      node.setAttribute("draggable", "false");
+      node.addEventListener("dragstart", function (e) { e.preventDefault(); });
+      node.addEventListener("contextmenu", function (e) { if (tileDrag) e.preventDefault(); });
+      node.addEventListener("pointerdown", function (e) {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        tileDrag = { id: id, node: node, x: e.clientX, y: e.clientY, type: e.pointerType,
+                     pointerId: e.pointerId, active: false, timer: null, ghost: null };
+        if (e.pointerType !== "mouse") {
+          var d = tileDrag;
+          d.timer = setTimeout(function () { if (tileDrag === d && !d.active) startTileDrag(d.x, d.y); }, 350);
+        }
+      });
+    }
+    function startTileDrag(x, y) {
+      var d = tileDrag;
+      d.active = true;
+      var r = d.node.getBoundingClientRect();
+      d.dx = x - r.left;
+      d.dy = y - r.top;
+      var g = d.node.cloneNode(true);
+      g.removeAttribute("id");
+      g.setAttribute("aria-hidden", "true");
+      g.classList.add("fa-glass-tile-ghost");
+      g.style.width = r.width + "px";
+      g.style.height = r.height + "px";
+      document.body.appendChild(g);
+      d.ghost = g;
+      d.node.setAttribute("data-fa-dragging", "");
+      layer.setAttribute("data-fa-arranging", "true");
+      moveTileGhost(x, y);
+    }
+    function moveTileGhost(x, y) {
+      var d = tileDrag;
+      d.ghost.style.left = x - d.dx + "px";
+      d.ghost.style.top = y - d.dy + "px";
+      var t = tileDropAt(x, y);
+      layer.setAttribute("data-fa-drop", t ? (t.toStrip ? "strip" : "more") : "");
+    }
+    function stripIndexAt(x) {
+      var items = Array.prototype.slice.call(strip.querySelectorAll("[data-fa-strip-item]"))
+        .filter(function (n) { return n.getAttribute("data-fa-strip-item") !== tileDrag.id; });
+      for (var i = 0; i < items.length; i++) {
+        var r = items[i].getBoundingClientRect();
+        if (x < r.left + r.width / 2) return i;
+      }
+      return items.length;
+    }
+    /** Where a tile let go at (x, y) would go — or null for nowhere. */
+    function tileDropAt(x, y) {
+      var under = document.elementFromPoint(x, y);
+      if (!under || !under.closest) return null;
+      // ONTO MORE's own tile means "into More", even with More's panel shut.
+      if (under.closest('[data-fa-glass-chrome="glass-more"]')) return { toStrip: false };
+      if (under.closest(".fa-glass-tiles")) return { toStrip: true, index: stripIndexAt(x) };
+      if (under.closest('.fa-glass-panel[data-fa-panel="glass-more"]')) return { toStrip: false };
+      return null;
+    }
+    function endTileDrag() {
+      var d = tileDrag;
+      tileDrag = null;
+      if (!d) return;
+      clearTimeout(d.timer);
+      if (d.ghost && d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
+      d.node.removeAttribute("data-fa-dragging");
+      layer.removeAttribute("data-fa-arranging");
+      layer.removeAttribute("data-fa-drop");
+    }
+    document.addEventListener("pointermove", function (e) {
+      var d = tileDrag;
+      if (!d || e.pointerId !== d.pointerId) return;
+      if (!d.active) {
+        var moved = Math.abs(e.clientX - d.x) + Math.abs(e.clientY - d.y);
+        if (d.type === "mouse" && moved > 6) startTileDrag(e.clientX, e.clientY);
+        else if (d.type !== "mouse" && moved > 10) endTileDrag();   // it was a scroll
+        return;
+      }
+      moveTileGhost(e.clientX, e.clientY);
+    });
+    // A held finger must not scroll the strip out from under the drag.
+    document.addEventListener("touchmove", function (e) {
+      if (tileDrag && tileDrag.active) e.preventDefault();
+    }, { passive: false });
+    document.addEventListener("pointerup", function (e) {
+      var d = tileDrag;
+      if (!d || e.pointerId !== d.pointerId) return;
+      if (d.active) {
+        var t = tileDropAt(e.clientX, e.clientY);
+        // The press that ended a drag is not also a press OF the tile.
+        var swallow = function (ev) { ev.preventDefault(); ev.stopPropagation(); };
+        document.addEventListener("click", swallow, true);
+        setTimeout(function () { document.removeEventListener("click", swallow, true); }, 0);
+        endTileDrag();
+        if (t) moveTile(d.id, t.toStrip, t.index);
+        return;
+      }
+      endTileDrag();
+    });
+    document.addEventListener("pointercancel", function (e) {
+      if (tileDrag && e.pointerId === tileDrag.pointerId) endTileDrag();
+    });
+
+    function moreItem(id, node) {
+      var wrap = el("div", { class: "fa-glass-more-item", "data-fa-more-item": id });
+      wireTileDrag(node, id);
+      wrap.appendChild(node);
+      var b = el("button", {
+        type: "button",
+        class: "fa-glass-arrange",
+        "data-fa-arrange": "to-strip",
+        "aria-label": "Move " + labelOf(id) + " to the strip",
+        title: "Move to the strip",
+      }, "↓ Strip");
+      b.addEventListener("click", function () { moveTile(id, true); });
+      wrap.appendChild(b);
+      return wrap;
+    }
+
+    /* ── MORE, not twenty tiles — owner, 2026-09-23: *"too many tiles!"* ──
+     *
+     * Offered three shapes, the owner chose **"Few + a More tile"**. The
+     * declared list is the SAME declaration filtered to the `glass` surface and
+     * drawn by the same `renderGraphTiles`: moving a tile changes where it is,
+     * not what it is. `then` runs once the list has been drawn. */
+    function buildMore(body, then) {
+      var status = el("p", { class: "fa-glass-panel-status" }, "Loading…");
+      body.appendChild(status);
+      body.appendChild(el("p", { class: "fa-glass-arrange-hint" },
+        "Drag a tile between here and the strip below — or use its Strip and More buttons."));
+      var grid = el("div", { class: "fa-glass-more", role: "group", "aria-label": "Visualisations" });
+      body.appendChild(grid);
+      var onStrip = el("div", { class: "fa-glass-on-strip" });
+      body.appendChild(onStrip);
+      Object.keys(chromeDefs).forEach(function (id) {
+        if (id === "glass-more" || stripIds.indexOf(id) !== -1) return;
+        grid.appendChild(moreItem(id, makeChromeTile(id, false)));
+      });
+      withDeclared(function (tiles) {
+        if (!tiles) {
+          status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
+        } else {
+          var n = 0;
+          tiles.forEach(function (t) {
+            var node = declaredTileEl(t);
+            if (!node) return;
+            n++;
+            if (stripIds.indexOf(t.id) === -1) grid.appendChild(moreItem(t.id, node));
+          });
+          status.textContent = n === 0 ? "No visualisations are declared for the glass."
+            : n + (n === 1 ? " visualisation" : " visualisations") + ".";
+        }
+        // THE PRESSING PATH BACK: every strip tile, with a button into More.
+        if (stripIds.length) {
+          onStrip.appendChild(el("h3", { class: "fa-glass-arrange-title" }, "On the strip"));
+          var ul = el("ul", { class: "fa-glass-arrange-list" });
+          stripIds.forEach(function (id) {
+            if (!chromeDefs[id] && !declaredById(id)) return;
+            var li = el("li", { class: "fa-glass-arrange-row", "data-fa-strip-row": id });
+            li.appendChild(el("span", { class: "fa-glass-arrange-name" }, labelOf(id)));
+            var b = el("button", {
+              type: "button",
+              class: "fa-glass-arrange",
+              "data-fa-arrange": "to-more",
+              "aria-label": "Move " + labelOf(id) + " off the strip, into More",
+              title: "Move into More",
+            }, "↑ More");
+            b.addEventListener("click", function () { moveTile(id, false); });
+            li.appendChild(b);
+            ul.appendChild(li);
+          });
+          onStrip.appendChild(ul);
+        }
+        if (then) then();
+      });
+    }
+    chromeTile("glass-more", "More", "⋯", "More — every visualisation this folio declares, and where each tile lives", buildMore);
+    // MORE IS FIXED, and last: the one tile that is always on the strip.
+    var moreBtn = makeChromeTile("glass-more", true);
+    strip.appendChild(moreBtn);
+    renderStrip();
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");

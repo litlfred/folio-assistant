@@ -68,6 +68,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human"
       ]
     },
@@ -151,6 +152,15 @@
       "label": "User",
       "scopeNote": "Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).",
       "source": "cat-harness/processes/related-work.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Contributor (human or agent)",
+      "scopeNote": "One decision, and it is the one no file answers: what the sample is FOR. Which items, into which store, and whether the result is meant to last. The last question decides the destination, and asking it after the copy exists would mean moving a copy that was already landed somewhere under the wrong obligations.",
+      "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
@@ -1421,7 +1431,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1"
       ]
     },
     {
@@ -1504,6 +1515,15 @@
       "label": "Ingestion Engine (agent, runs unattended)",
       "scopeNote": "Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted.",
       "source": "cat-harness/processes/refresh-materialized.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Ingestion Engine (agent, runs unattended)",
+      "scopeNote": "Calls the two shared subprocesses and does the part that is this process's own: landing the copy in the destination the contributor chose, importing it into the store, and testing the import. It never re-asks a gate: it acts on materialize-remote's outcome. It also answers the second entry, an upstream change to a permanent sample, by calling refresh-materialized rather than re-importing.",
+      "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#role/librarian",
@@ -2146,7 +2166,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_1",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2"
       ]
     },
     {
@@ -2211,6 +2232,15 @@
       "label": "Corpus — L1 source knowledge graph",
       "scopeNote": "Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good.",
       "source": "cat-harness/processes/refresh-materialized.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#role/corpus",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Corpus — L1 source knowledge graph",
+      "scopeNote": "Every path ends here with something written down. A refused sample stays referenced with the refusing gate's reason, a failed import records what failed, and a passed one records where it landed. None ends in silence, because an import nobody can tell was tried is the one somebody tries again.",
+      "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-oe98/cat-harness.jsonld#role/external-registry",

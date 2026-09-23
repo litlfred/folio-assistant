@@ -167,9 +167,9 @@
         "skos:Concept"
       ],
       "label": "Tool",
-      "comment": "A callable operation the harness exposes, declared as a node rather than only as code.",
+      "comment": "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing.",
       "prefLabel": "Tool",
-      "definition": "A callable operation the harness exposes, declared as a node rather than only as code.",
+      "definition": "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing.",
       "notation": "cat-harness:Tool",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -213,9 +213,9 @@
         "skos:Concept"
       ],
       "label": "Harness",
-      "comment": "An instance's root declaration: the directories it scans and the graphs they hold.",
+      "comment": "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness.",
       "prefLabel": "Harness",
-      "definition": "An instance's root declaration: the directories it scans and the graphs they hold.",
+      "definition": "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness.",
       "notation": "cat-harness:Harness",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
