@@ -81,7 +81,7 @@
  * Moving to an item announces where it is (document, chapter, section,
  * block) in the live status line. `n` and `p` jump to the next and previous
  * block with open comments, each with a button twin. "Next unreviewed" is NOT
- * offered: nothing records a review verdict yet (bean `en2d`), and a button
+ * offered: nothing records a review verdict yet (bean `px0t`), and a button
  * that guessed would send a reviewer past blocks nobody has looked at. The
  * pieces are `scripts/review-nav.ts`, embedded with `toString()`. The owner's
  * ruling puts the outline here and nowhere else.

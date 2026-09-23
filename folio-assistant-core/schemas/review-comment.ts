@@ -75,13 +75,11 @@ export interface ReviewTransition {
   to: ReviewCommentStatus;
   by: ProcessTask & {
     /** The `.bpmn` under `cat-harness/processes/` that declares it. */
-    file: string;
     /**
-     * Set when the diagram does not exist yet: the bean that will author it.
-     * A test holds every other entry to a task that EXISTS in its file, so
-     * a renamed task cannot leave this table pointing at nothing.
+     * A test holds every entry to a task that EXISTS in this file, so a
+     * renamed task cannot leave this table pointing at nothing.
      */
-    awaits?: string;
+    file: string;
   };
   /** A transition that closes a comment must name the Decision that closed it. */
   needsDecision?: boolean;
@@ -92,16 +90,18 @@ export interface ReviewTransition {
  *
  * Existing diagrams are used where they already hold the step: the editor's
  * "Accept, or send back" in `review-task.bpmn`, and the adjudicator's
- * recorded entry in `adjudication.bpmn`. Ingestion and withdrawal belong to
- * `large-document-review.bpmn`, which bean `en2d` authors. Those two entries
- * say so in `awaits` rather than pointing at a task that is not there.
+ * recorded entry in `adjudication.bpmn`. Ingestion and withdrawal are the
+ * reviewer and coordinator steps bean `en2d` added to
+ * `content-change-review.bpmn`, the process a change is reviewed in. A
+ * separate large-document diagram was the plan until the owner ruled
+ * (2026-09-23) to extend the existing one rather than fork it.
  */
 export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
   {
     name: "ingest",
     from: [null],
     to: "open",
-    by: { file: "large-document-review.bpmn", process: "Process_LargeDocumentReview", task: "Task_IngestComments", awaits: "en2d" },
+    by: { file: "content-change-review.bpmn", process: "Process_ContentChangeReview", task: "Task_IngestComments" },
   },
   {
     name: "address",
@@ -133,7 +133,7 @@ export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
     name: "withdraw",
     from: ["open", "addressed"],
     to: "withdrawn",
-    by: { file: "large-document-review.bpmn", process: "Process_LargeDocumentReview", task: "Task_WithdrawComment", awaits: "en2d" },
+    by: { file: "content-change-review.bpmn", process: "Process_ContentChangeReview", task: "Task_WithdrawComment" },
   },
 ];
 

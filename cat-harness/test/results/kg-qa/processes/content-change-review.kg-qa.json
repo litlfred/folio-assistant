@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:4bba24cfe06c71bcc0a3684cf4048377fddcbf2926481e5d84814b6639eec611",
+  "source_hash": "sha256:0c29615cd1e1e7fc59a91a9a76e264ff14a664ea549ad11c9400a08cc6d611b0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,7 +32,7 @@
       "findings": []
     },
     "decision-ref-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "role-ref-resolves": {
@@ -52,8 +52,21 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_ReviewSlices",
+          "detail": "needs skill \"review-comments\", but its lane's role \"reviewer\" does not carry it."
+        },
+        {
+          "where": "Task_WithdrawComment",
+          "detail": "needs skill \"review-comments\", but its lane's role \"reviewer\" does not carry it."
+        },
+        {
+          "where": "Task_Merge",
+          "detail": "needs skill \"prepare-merge\", but its lane's role \"reviewer\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -87,6 +100,14 @@
           "detail": "\"Satisfied with changes?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
         },
         {
+          "where": "GW_Withdraw",
+          "detail": "\"A comment withdrawn?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Disputed",
+          "detail": "\"A finding disputed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
           "where": "GW_Approved",
           "detail": "\"Changes approved?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
         },
@@ -111,8 +132,8 @@
   },
   "totals": {
     "pass": 12,
-    "fail": 1,
-    "n/a": 9,
+    "fail": 2,
+    "n/a": 8,
     "unknown": 0
   }
 }

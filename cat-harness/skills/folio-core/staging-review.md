@@ -324,7 +324,12 @@ function branchToSlug(branch: string): string {
 In the CRDM requirements workflow (Phase 5: implementation), once a staging
 preview is deployed:
 
-1. **Post the staging URL** on the GitHub issue as a comment
+1. **Post the staging URL** on the GitHub issue as a comment. For a folio,
+   post the **review page** too, `STAGING/<slug>/review/`, and name it as the
+   page a reviewer opens first. The `folio-staging` workflow's PR comment
+   carries both links. The page lists every changed block, not only every
+   changed page. Posting the site root alone sends a reviewer hunting through
+   a 300-page document for a one-word edit.
 2. **Include before/after table** for every changed page
 3. **Link from the PR body** to the staging preview
 4. **Remind reviewers** that staging uses the magenta "FEATURE BRANCH" banner
@@ -379,7 +384,7 @@ screen and above it on a narrow one:
 | `p` | Previous with comments | the previous block with open comments |
 
 **"Next unreviewed" is deliberately absent.** Nothing records a review
-verdict yet (bean `en2d`), and a guess would skip blocks nobody has read.
+verdict yet (bean `px0t`), and a guess would skip blocks nobody has read.
 Typing into a selector is never navigation.
 
 **Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
