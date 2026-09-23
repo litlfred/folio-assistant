@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 558,
+      "count": 562,
       "unit": "beans"
     }
   },
@@ -631,14 +631,14 @@
     {
       "id": "folio-assistant-2xfl",
       "title": "RACI is a skill, not a methodology node, so the methodology graph reports 5 where a reader expects 7",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T20:12:47Z",
-      "updatedAt": "2026-09-22T20:12:47Z",
+      "updatedAt": "2026-09-22T23:29:06Z",
       "preview": "Found by the new `check:methodology-evidence` axis, 2026-09-22. It reports **5** methodology nodes: dmn, kepner-tregoe, madr, swot, grade. Sibling of `h97v`.\n\n## What is actually there\n\n| | node in the `methodology` graph | its own subgraph dir |\n|---|---|---|\n| dmn, kepner-tregoe, madr, swot | yes (`methodologies/*.md`) | no |\n| grade | yes (`smart-kg/methodologies/grade.md`) | no |\n| **raci** | ",
       "file": "beans/defs/folio-assistant-2xfl--raci-is-a-skill-not-a-methodology-node-so-the-meth.md"
     },
@@ -1271,6 +1271,20 @@
       "updatedAt": "2026-09-20T10:59:55Z",
       "preview": "Owner, 2026-09-20, on the CRDM process: *\"and to data modeling guidance in\nskills for CRDM when data modelling comes in (does subprocess exist yet?)\"*.\n\n## The factual half, answered\n\n**Yes, the subprocess mechanism exists, and CRDM is already built on it.**\n`crdm-requirements.bpmn` is a shell of four `callActivity` elements:\n\n| call | into |\n|---|---|\n| `Call_Issue` | `Process_CRDM_Issue` |\n| `Ca",
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
+    },
+    {
+      "id": "folio-assistant-5vo9",
+      "title": "ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T06:15:42Z",
+      "preview": "Formalize 'use judgement' as a declared subprocess with a typed I/O contract, so a non-deterministic step is marked as one rather than left implicit. Owner's spec 2026-09-23. A CONCRETE INSTANCE ALREADY EXISTS (processes/adjudication.bpmn) — this generalises it rather than starting over.\n\n## The owner's specification, 2026-09-23, verbatim in substance\n\n> need formalized adjudication process so the",
+      "file": "beans/defs/folio-assistant-5vo9--adjudication-as-a-typed-subprocess-one-judgement-c.md"
     },
     {
       "id": "folio-assistant-5wrg",
@@ -4325,6 +4339,20 @@
       "file": "beans/defs/folio-assistant-ka1p--harness-theme-avatars-an-instances-mark-is-its-the.md"
     },
     {
+      "id": "folio-assistant-kacl",
+      "title": "DETERMINISTIC-AND-AGENTIC: open question 2 now has a cited answer to argue with",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T06:15:42Z",
+      "preview": "skills/workflow/deterministic-and-agentic.md marks 'how much needs to be deterministic?' as open and probably malformed. The newly ingested Neubauer et al. (arXiv:2508.05192v2) proposes a different decomposition that the skill's three questions do not cover.\n\n## What the skill says today\n\n`skills/workflow/deterministic-and-agentic.md` is an **agenda, not a result**,\nand says so. It carries the own",
+      "file": "beans/defs/folio-assistant-kacl--deterministic-and-agentic-open-question-2-now-has.md"
+    },
+    {
       "id": "folio-assistant-ke0o",
       "title": "VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels",
       "status": "completed",
@@ -6305,6 +6333,20 @@
       "file": "beans/defs/folio-assistant-tfo1--ingestion-a-skill-that-takes-3-avatartheme-layouts.md"
     },
     {
+      "id": "folio-assistant-thb1",
+      "title": "SOURCE ASSESSED AND SPLIT: the AI-Mediated RACI preprint backs the four letters, not one empirical claim",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T05:37:58Z",
+      "updatedAt": "2026-09-23T05:37:58Z",
+      "preview": "An SSRN preprint was uploaded 2026-09-23 and ingested to `library/dusengumuremyi-2026-ai-mediated-raci/` (rung `pdf-ocr+pdf-pages`, 6 pages, no text layer, sha256 cc0ba9bc…). On the owner's ruling the same day it IS cited as `evidence` on `methodologies/raci.md` — but for ONE paragraph only, its §2.1 rendering of the four roles. Every empirical claim in it is rejected, for the reasons below. This ",
+      "file": "beans/defs/folio-assistant-thb1--source-assessed-not-evidence-the-ai-mediated-raci.md"
+    },
+    {
       "id": "folio-assistant-tis1",
       "title": "TILE COUNT: an empty viewer's tile looks exactly like a populated one — badge the count, absent is a third state",
       "status": "completed",
@@ -7433,14 +7475,14 @@
     {
       "id": "folio-assistant-yag0",
       "title": "WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:46:53Z",
-      "updatedAt": "2026-09-23T05:51:17Z",
+      "updatedAt": "2026-09-23T06:49:58Z",
       "preview": "Reported by the owner, 2026-09-23, from the deployed site:\n\n> library for who-iris does not work,\n> https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n>\n> i got to there by clickinv library under\n> https://litlfred.github.io/folio-assistant/who-iris/ whcih should toak me to\n> who-iris library w/ 3 thigns … (at least, all materialized assets)\n\n## What is NOT ",
       "file": "beans/defs/folio-assistant-yag0--who-iris-library-viewer-is-a-shell-the-page-genera.md"
     },
@@ -7821,6 +7863,20 @@
       "updatedAt": "2026-09-21T15:11:16Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R12 + R16, and it is mostly a REUSE constraint. Unit 9 of 10.\n\n**CRDM Q8, answered:** *\"3 + default wtih sticky and fsh guts and tile(s) for KG\nviewer(s) and docs\"* — so tiles come from the **Tool registry** (a tool declares\nitself board-mountable), **plus a default set** every board carries: new sticky,\nfsh-guts, KG viewer(s), docs.\n",
       "file": "beans/defs/folio-assistant-zsah--board-tiles-tools-declare-themselves-board-mountab.md"
+    },
+    {
+      "id": "folio-assistant-zw4a",
+      "title": "PROCESS VIEWER: show the skills bound to each role/swimlane, not just the lane name",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T05:59:29Z",
+      "updatedAt": "2026-09-23T05:59:29Z",
+      "preview": "The process viewer renders BPMN lanes but does not surface what the KG already knows about each lane: the role it binds, and that role's skills. Owner's request 2026-09-23.\n\n## What is already true, so this is a rendering gap rather than a modelling one\n\nThe chain the viewer needs is **already declared and already traversed\nelsewhere**. AGENTS.md states it in one sentence: *\"An actor performs a ta",
+      "file": "beans/defs/folio-assistant-zw4a--process-viewer-show-the-skills-bound-to-each-roles.md"
     },
     {
       "id": "folio-assistant-zzar",
