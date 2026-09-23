@@ -5,7 +5,7 @@
     "id": "Process_DocumentAuthoring",
     "path": "processes/authoring-a-document.bpmn"
   },
-  "source_hash": "sha256:bf338d8a2ffaef09333bf15e5f1e160c5bb203806dc3643b9d6d242e8fc92026",
+  "source_hash": "sha256:1b57a86e07d3bcd0d7fa73124ae4b3f2adfc99537757908bfa8560fa9008c573",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_ProfileClean",
-          "detail": "\"Within the declared profile?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_ReviewOutcome",
-          "detail": "\"Ready to publish?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

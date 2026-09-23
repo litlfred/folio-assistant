@@ -76,7 +76,9 @@ impact analysis the agent produced.</bpmn:documentation>
 requirements">
       <bpmn:documentation>Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?"/>
+    <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?">
+      <bpmn:documentation>The BA's answer to the requirements and impact. `revise` goes back to defining them; `yes` completes the phase.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Process_CRDM_Requirements" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Requirements_1" sourceRef="Start_Process_CRDM_Requirements" targetRef="A_MapWorkflow"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Requirements_2" sourceRef="A_MapWorkflow" targetRef="A_DefineReqs"/>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: activity-log\n"
-"POT-Creation-Date: 2026-09-23T08:36:34.883Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.749Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/activity-log.bpmn:163
+#: processes/activity-log.bpmn:164
 #. Diagram label
 msgid "A person asks to empty the log"
 msgstr ""
@@ -39,9 +39,19 @@ msgstr ""
 msgid "Agent activity log"
 msgstr ""
 
-#: processes/activity-log.bpmn:205
+#: processes/activity-log.bpmn:207
 #. Diagram label
 msgid "all / periodic"
+msgstr ""
+
+#: processes/activity-log.bpmn:132
+#. Diagram element documentation
+msgid "Asked after a task ends: is log capture switched on for this session? `on` persists the entry to the data store. `off or unknown` persists nothing and reports the capture state instead, so an unknown setting is said out loud rather than read as off."
+msgstr ""
+
+#: processes/activity-log.bpmn:169
+#. Diagram element documentation
+msgid "Asked when a person asks to empty the log: which entries? `one` discards a single entry by id; `all / periodic` discards every entry or a whole session, the branch a scheduled clean-up also takes."
 msgstr ""
 
 #: processes/activity-log.bpmn:57
@@ -54,22 +64,22 @@ msgstr ""
 msgid "Capture enabled?"
 msgstr ""
 
-#: processes/activity-log.bpmn:138
+#: processes/activity-log.bpmn:139
 #. Diagram element documentation
 msgid "Capture is explicitly on — by <folio:log capture=\"on\"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything."
 msgstr ""
 
-#: processes/activity-log.bpmn:145
+#: processes/activity-log.bpmn:146
 #. Diagram element documentation
 msgid "Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief."
 msgstr ""
 
-#: processes/activity-log.bpmn:180
+#: processes/activity-log.bpmn:182
 #. Diagram label
 msgid "Discard all entries, or a whole session"
 msgstr ""
 
-#: processes/activity-log.bpmn:173
+#: processes/activity-log.bpmn:175
 #. Diagram label
 msgid "Discard one entry by id"
 msgstr ""
@@ -84,7 +94,7 @@ msgstr ""
 msgid "Log a message or an error"
 msgstr ""
 
-#: processes/activity-log.bpmn:188
+#: processes/activity-log.bpmn:190
 #. Diagram label
 msgid "Log emptied"
 msgstr ""
@@ -104,47 +114,47 @@ msgstr ""
 msgid "Log task-start"
 msgstr ""
 
-#: processes/activity-log.bpmn:196
+#: processes/activity-log.bpmn:198
 #. Diagram label
 msgid "more work"
 msgstr ""
 
-#: processes/activity-log.bpmn:200
+#: processes/activity-log.bpmn:202
 #. Diagram label
 msgid "off or unknown"
 msgstr ""
 
-#: processes/activity-log.bpmn:199
+#: processes/activity-log.bpmn:201
 #. Diagram label
 msgid "on"
 msgstr ""
 
-#: processes/activity-log.bpmn:204
+#: processes/activity-log.bpmn:206
 #. Diagram label
 msgid "one"
 msgstr ""
 
-#: processes/activity-log.bpmn:167
+#: processes/activity-log.bpmn:168
 #. Diagram label
 msgid "One entry or all?"
 msgstr ""
 
-#: processes/activity-log.bpmn:137
+#: processes/activity-log.bpmn:138
 #. Diagram label
 msgid "Persist the log to the data store"
 msgstr ""
 
-#: processes/activity-log.bpmn:181
+#: processes/activity-log.bpmn:183
 #. Diagram element documentation
 msgid "Remove every entry, one session's, or those before a date — emptyLog with { all }, { session } or { before }; there is no default selector. A file that will not parse is kept, and the result must say what was refused and why, not only what was removed."
 msgstr ""
 
-#: processes/activity-log.bpmn:174
+#: processes/activity-log.bpmn:176
 #. Diagram element documentation
 msgid "Remove one entry by its stable id, with emptyLog({ id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory."
 msgstr ""
 
-#: processes/activity-log.bpmn:144
+#: processes/activity-log.bpmn:145
 #. Diagram label
 msgid "Report the capture state"
 msgstr ""
@@ -154,12 +164,12 @@ msgstr ""
 msgid "Scheduled log sweep"
 msgstr ""
 
-#: processes/activity-log.bpmn:197
+#: processes/activity-log.bpmn:199
 #. Diagram label
 msgid "task complete"
 msgstr ""
 
-#: processes/activity-log.bpmn:151
+#: processes/activity-log.bpmn:152
 #. Diagram label
 msgid "Task logged"
 msgstr ""
@@ -169,7 +179,7 @@ msgstr ""
 msgid "The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one."
 msgstr ""
 
-#: processes/activity-log.bpmn:158
+#: processes/activity-log.bpmn:159
 #. Diagram label
 msgid "The periodic sweep fires"
 msgstr ""

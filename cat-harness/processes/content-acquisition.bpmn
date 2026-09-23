@@ -36,7 +36,9 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Acquire" name="A resource is needed,&#10;or one is offered"/>
-    <bpmn:exclusiveGateway id="GW_Offered" name="Offered already?"/>
+    <bpmn:exclusiveGateway id="GW_Offered" name="Offered already?">
+      <bpmn:documentation>Did the resource arrive with the request? `no`: say what is needed and ask for a link or a description. `yes`: accept it and record where it came from.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="A_Ask" name="Say what is needed, and ask&#10;for a link OR a description">
       <bpmn:documentation>Both forms, named together. A person who cannot find the file often knows exactly what it is, and a description in their own words is an acquired resource rather than a consolation prize. Asking for the upload first demands the one thing they may not have, before the cheaper answers have been offered. Say what happens if they do nothing.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="content-acquisition"/></bpmn:extensionElements>

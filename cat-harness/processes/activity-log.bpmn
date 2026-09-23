@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_ActivityLog"
-                  targetNamespace="http://folio-assistant.dev/bpmn/activity-log">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Agent activity log — folio-assistant
@@ -129,6 +129,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     <!-- ── Persistence: read, never assumed ────────────────── -->
 
     <bpmn:exclusiveGateway id="Gateway_Capture" name="Capture enabled?">
+      <bpmn:documentation>Asked after a task ends: is log capture switched on for this session? `on` persists the entry to the data store. `off or unknown` persists nothing and reports the capture state instead, so an unknown setting is said out loud rather than read as off.</bpmn:documentation>
       <bpmn:incoming>F_5</bpmn:incoming>
       <bpmn:outgoing>F_On</bpmn:outgoing>
       <bpmn:outgoing>F_OffOrUnknown</bpmn:outgoing>
@@ -165,6 +166,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:startEvent>
 
     <bpmn:exclusiveGateway id="Gateway_EmptyScope" name="One entry or all?">
+      <bpmn:documentation>Asked when a person asks to empty the log: which entries? `one` discards a single entry by id; `all / periodic` discards every entry or a whole session, the branch a scheduled clean-up also takes.</bpmn:documentation>
       <bpmn:incoming>F_E1</bpmn:incoming>
       <bpmn:outgoing>F_E_One</bpmn:outgoing>
       <bpmn:outgoing>F_E_All</bpmn:outgoing>

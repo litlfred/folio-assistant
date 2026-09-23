@@ -140,6 +140,7 @@
       <bpmn:outgoing>H08</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_NextCycle" name="More content?">
+      <bpmn:documentation>Asked after feedback is filed as beans: is there more content to write for this folio? `yes` returns to editing and HCI validation; `no` retires or archives it.</bpmn:documentation>
       <bpmn:incoming>H08</bpmn:incoming>
       <bpmn:outgoing>H09</bpmn:outgoing>
       <bpmn:outgoing>H10</bpmn:outgoing>

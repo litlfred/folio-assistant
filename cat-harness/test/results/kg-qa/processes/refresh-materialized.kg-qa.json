@@ -5,7 +5,7 @@
     "id": "Process_RefreshMaterialized",
     "path": "processes/refresh-materialized.bpmn"
   },
-  "source_hash": "sha256:a60cf7229491784ae2b586b692189927f6f878390a1b3dad56fe9ad3926916d3",
+  "source_hash": "sha256:88c49bf1b450ea05f5301f93771f7ddc83407f9b4fec469ade272ed11a35996e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Purpose",
-          "detail": "\"working, or archival?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_Both",
-          "detail": "\"Both changed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

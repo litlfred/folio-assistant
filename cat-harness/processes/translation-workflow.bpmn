@@ -4,7 +4,7 @@
              xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
              id="Definitions_Translation"
-             targetNamespace="http://folio-assistant.dev/bpmn/translation">
+             targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Translation Workflow — folio-assistant
@@ -123,7 +123,9 @@ Tool: translation_validate MCP tool</documentation>
     </serviceTask>
 
     <!-- ── Drift gateway ──────────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?" />
+    <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?">
+      <documentation>Answered by the round-trip (back-translation) QA: did it flag drift or a terminology miss? `Drift detected` sends the passage to a human reviewer; `Clean` writes an unofficial status.json.</documentation>
+    </exclusiveGateway>
 
     <!-- ── Human adjudication ─────────────────────────────────── -->
     <callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate flagged passage&#10;(human reviewer)">
@@ -142,7 +144,9 @@ right is a human call.</documentation>
     </callActivity>
 
     <!-- ── Converge after QA ──────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_PostQA" name="QA passed?" />
+    <exclusiveGateway id="Gateway_PostQA" name="QA passed?">
+      <documentation>The human reviewer's result on the flagged passage. `Re-translate` returns to producing the PO file; `Accepted` writes an unofficial status.json.</documentation>
+    </exclusiveGateway>
 
     <!-- ── Write status (unofficial) ──────────────────────────── -->
     <serviceTask id="Task_WriteUnofficial" name="Write status.json&#10;(unofficial)">
@@ -157,7 +161,9 @@ The translation is usable but carries a visible warning badge.</documentation>
     </serviceTask>
 
     <!-- ── Sign-off gateway ───────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_Signoff" name="Human sign-off?" />
+    <exclusiveGateway id="Gateway_Signoff" name="Human sign-off?">
+      <documentation>Is a human sign-off happening now? `Yes` goes to the adjudicator's sign-off, which makes the translation official; `Not now` ends with the translation complete but unofficial.</documentation>
+    </exclusiveGateway>
 
     <!-- ── Official sign-off ──────────────────────────────────── -->
     <userTask id="Task_Signoff" name="Sign off translation&#10;(human adjudicator)">

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-change-review\n"
-"POT-Creation-Date: 2026-09-22T08:18:09.981Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.805Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,22 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/code-change-review.bpmn:203
+#: processes/code-change-review.bpmn:204
 #. Diagram element documentation
 msgid "\"Flake\" is not a root cause. A red PR is work now, whatever its review state — only a green, mergeable head waits on reviewers."
 msgstr ""
 
-#: processes/code-change-review.bpmn:240
+#: processes/code-change-review.bpmn:242
 #. Diagram element documentation
 msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
 msgstr ""
 
-#: processes/code-change-review.bpmn:254
+#: processes/code-change-review.bpmn:256
 #. Diagram element documentation
 msgid "A closed work item is read later by somebody deciding whether to reopen the subject, so \"completed\" with nothing behind it cannot be audited. An ISSUE is never closed on the agent's own say-so."
 msgstr ""
 
-#: processes/code-change-review.bpmn:289
+#: processes/code-change-review.bpmn:291
 #. Diagram element documentation
 msgid "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane."
 msgstr ""
@@ -39,7 +39,7 @@ msgstr ""
 msgid "A platform change is needed"
 msgstr ""
 
-#: processes/code-change-review.bpmn:220
+#: processes/code-change-review.bpmn:222
 #. Diagram label
 msgid "Address the review"
 msgstr ""
@@ -47,6 +47,11 @@ msgstr ""
 #: processes/code-change-review.bpmn:137
 #. Diagram element documentation
 msgid "Announce the branch WHEN IT IS CREATED, not when the work is done. The gap between one agent's view of an issue and everyone else's is what this closes."
+msgstr ""
+
+#: processes/code-change-review.bpmn:197
+#. Diagram element documentation
+msgid "Answered by the gates run against the merge of head into base. `green` goes to review; `red` goes to root-causing the failure first, since a red change is never waiting on review."
 msgstr ""
 
 #: processes/code-change-review.bpmn:68
@@ -69,7 +74,7 @@ msgstr ""
 msgid "CI green?"
 msgstr ""
 
-#: processes/code-change-review.bpmn:274
+#: processes/code-change-review.bpmn:276
 #. Diagram element documentation
 msgid "CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent's tree and the merge result are different trees, and the difference is invisible from a checkout."
 msgstr ""
@@ -89,7 +94,7 @@ msgstr ""
 msgid "Claim the work item"
 msgstr ""
 
-#: processes/code-change-review.bpmn:314
+#: processes/code-change-review.bpmn:316
 #. Diagram label
 msgid "clear"
 msgstr ""
@@ -109,7 +114,7 @@ msgstr ""
 msgid "Commit, push, open the PR"
 msgstr ""
 
-#: processes/code-change-review.bpmn:221
+#: processes/code-change-review.bpmn:223
 #. Diagram element documentation
 msgid "Every finding is answered — implemented, or replied to with why not. A design question does not excuse skipping the nits in the same review."
 msgstr ""
@@ -119,7 +124,7 @@ msgstr ""
 msgid "Exists as a separate lane for one reason: what it tests — the merge of head into base — is not a claim the Agent lane could make about its own tree, so GW_CIGreen has to be fed by an independent run rather than by the agent reporting its own gates as done."
 msgstr ""
 
-#: processes/code-change-review.bpmn:312
+#: processes/code-change-review.bpmn:314
 #. Diagram label
 msgid "findings"
 msgstr ""
@@ -129,7 +134,7 @@ msgstr ""
 msgid "Getting a change to the PLATFORM from \"this is needed\" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding. You are in this process for a change to folio-assistant itself. `content-change-review` is the same shape for a folio's content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial. The loop back through \"root-cause the failure\" is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear."
 msgstr ""
 
-#: processes/code-change-review.bpmn:308
+#: processes/code-change-review.bpmn:310
 #. Diagram label
 msgid "green"
 msgstr ""
@@ -144,7 +149,7 @@ msgstr ""
 msgid "Make the change"
 msgstr ""
 
-#: processes/code-change-review.bpmn:267
+#: processes/code-change-review.bpmn:269
 #. Diagram label
 msgid "Merged"
 msgstr ""
@@ -154,37 +159,37 @@ msgstr ""
 msgid "Platform change — claim to merge"
 msgstr ""
 
-#: processes/code-change-review.bpmn:239
+#: processes/code-change-review.bpmn:241
 #. Diagram label
 msgid "Prepare the merge, and watch it through"
 msgstr ""
 
-#: processes/code-change-review.bpmn:253
+#: processes/code-change-review.bpmn:255
 #. Diagram label
 msgid "Record what was done, and close"
 msgstr ""
 
-#: processes/code-change-review.bpmn:309
+#: processes/code-change-review.bpmn:311
 #. Diagram label
 msgid "red"
 msgstr ""
 
-#: processes/code-change-review.bpmn:214
+#: processes/code-change-review.bpmn:215
 #. Diagram label
 msgid "Review clear?"
 msgstr ""
 
-#: processes/code-change-review.bpmn:288
+#: processes/code-change-review.bpmn:290
 #. Diagram label
 msgid "Review the change"
 msgstr ""
 
-#: processes/code-change-review.bpmn:202
+#: processes/code-change-review.bpmn:203
 #. Diagram label
 msgid "Root-cause the failure"
 msgstr ""
 
-#: processes/code-change-review.bpmn:273
+#: processes/code-change-review.bpmn:275
 #. Diagram label
 msgid "Run the gates against the merge of head into base"
 msgstr ""
@@ -207,4 +212,9 @@ msgstr ""
 #: processes/code-change-review.bpmn:184
 #. Diagram element documentation
 msgid "The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer."
+msgstr ""
+
+#: processes/code-change-review.bpmn:216
+#. Diagram element documentation
+msgid "The reviewer's result. `findings` go back to be addressed; `clear` goes to preparing the merge and watching it through."
 msgstr ""

@@ -41,10 +41,10 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Translated?**<br>`GW_Translated` | — | **yes** → Review the translation<br>**no** → GW_Join |
+| **Translated?**<br>`GW_Translated` | Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join. | **yes** → Review the translation<br>**no** → GW_Join |
 
 {% endraw %}

@@ -5,7 +5,7 @@
     "id": "Process_NarrativeReview",
     "path": "processes/review-narrative.bpmn"
   },
-  "source_hash": "sha256:d00d855c682293e1aa8bc4b2e5bd2673a51b3bacf6f10ba603193181b0aaea34",
+  "source_hash": "sha256:c84afaea6f70b111f5d3354bebc3d914e63bab1e8a65c43733387c6c4d9cce86",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Translated",
-          "detail": "\"Translated?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

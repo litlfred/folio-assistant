@@ -45,11 +45,11 @@ Every one of the 7 step(s) is documented.
 
 ## Decisions
 
-**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Actor established?**<br>`Gateway_ActorKnown` | — | **no** → Ask who is acting<br>**yes** → Open the session record |
+| **Actor established?**<br>`Gateway_ActorKnown` | Is it established who is acting? `no` asks; `yes` opens the session record. A session is never opened for an actor it has not identified. | **no** → Ask who is acting<br>**yes** → Open the session record |
 | **What did the turn change?**<br>`Gateway_TurnEffect` | THE non-deterministic point, and the reason this process exists. Three branches, and the agent chooses. | **nothing changed** → Refresh `updatedAt` only<br>**state changed** → Write what changed<br>**the session is ending** → Close the session |
 
 {% endraw %}

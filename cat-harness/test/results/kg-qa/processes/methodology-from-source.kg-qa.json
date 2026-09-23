@@ -5,7 +5,7 @@
     "id": "Process_MethodologyFromSource",
     "path": "processes/methodology-from-source.bpmn"
   },
-  "source_hash": "sha256:9eeacc04911312994332cccac47bd1825dcf9b8179f590194bf6676c12bdaa5f",
+  "source_hash": "sha256:83fe1253a06e908707e5bac89512a82f22be56ab31db0f1522abca567b965c2f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -85,15 +85,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Decision",
-          "detail": "\"Adopted?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -107,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 2,
+    "pass": 14,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

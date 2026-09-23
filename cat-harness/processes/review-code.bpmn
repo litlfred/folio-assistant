@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_CodeReview"
-                  targetNamespace="http://folio-assistant.dev/bpmn/review">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Code node review — a SUBPROCESS, called never inherited.
@@ -58,7 +58,9 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
       <bpmn:extensionElements><folio:skill ref="code-node-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_NodeKind" name="Which node kind?"/>
+    <bpmn:exclusiveGateway id="GW_NodeKind" name="Which node kind?">
+      <bpmn:documentation>What kind of node is under review? `Tool` goes to the Tool-node review; `schema` goes to the schema-definition review.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_ReviewTool" name="Review the Tool node">
       <bpmn:documentation>

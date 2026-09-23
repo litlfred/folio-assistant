@@ -32,7 +32,9 @@ for match">
       <bpmn:documentation>Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
+    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?">
+      <bpmn:documentation>Answered by the scan of open issues: does one already cover this work? `yes` links to it; `no` asks the BA to create or name one. The agent does not create an issue on its own.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="A_AskCreate" name="Ask BA to create
 or link issue">
       <bpmn:documentation>Ask — never create. Creating an issue without the

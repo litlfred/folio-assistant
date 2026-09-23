@@ -72,7 +72,7 @@ describe("every open bean belongs to an epic", () => {
     ]));
     expect(r.problems).toHaveLength(1);
     expect(r.problems[0]).toContain("a2");
-    expect(r.problems[0]).toContain("not an epic");
+    expect(r.problems[0]).toContain("not a milestone, epic or feature");
   });
 
   test("a CLOSED bean needs no parent — history is not back-filled", () => {
@@ -140,7 +140,7 @@ describe("every open bean belongs to an epic", () => {
       ["t2", "todo", "task", "t1"],
     ]));
     expect(bad.problems).toHaveLength(1);
-    expect(bad.problems[0]).toContain("not an epic or a milestone");
+    expect(bad.problems[0]).toContain("not a milestone, epic or feature");
   });
 
   test("the real corpus passes", () => {

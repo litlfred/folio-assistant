@@ -48,11 +48,11 @@ Every one of the 11 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **CI green?**<br>`GW_CIGreen` | — | **green** → Review the change<br>**red** → Root-cause the failure |
-| **Review clear?**<br>`GW_ReviewClear` | — | **findings** → Address the review<br>**clear** → Prepare the merge, and watch it through |
+| **CI green?**<br>`GW_CIGreen` | Answered by the gates run against the merge of head into base. `green` goes to review; `red` goes to root-causing the failure first, since a red change is never waiting on review. | **green** → Review the change<br>**red** → Root-cause the failure |
+| **Review clear?**<br>`GW_ReviewClear` | The reviewer's result. `findings` go back to be addressed; `clear` goes to preparing the merge and watching it through. | **findings** → Address the review<br>**clear** → Prepare the merge, and watch it through |
 
 {% endraw %}

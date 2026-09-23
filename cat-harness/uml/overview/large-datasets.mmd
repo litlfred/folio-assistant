@@ -23,6 +23,7 @@ classDiagram
       nodeKind [1] string
       subsetStrategies [1..*] list~container | identifier | facet | range | closure~
       subsetIsSelfContained [1] boolean
+      subsetBasis [0..1] string
       identifiers [1..*] Identifier[]
       enumeration [1] object
       termsUrl [0..1] string~uri~

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-ogit
 title: Harness carries two senses
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T14:59:06Z
@@ -56,3 +56,28 @@ That is why nothing shipped. A 31-finding gate whose true-positive count is zero
 - `graph-kind-registry.ts` no longer calls `detangle` a harness.
 - `fhir-harness.json` carries `_name_comment`: the name is not an instantiation claim — it is declared, not instantiated, and declares no visualiser.
 - **`gen-uml-overview.ts` emitted "the `X` harness declares" on every page**, and 10 of the 22 instances it runs over are not harnesses. One template, ten pages — the largest single producer of this mislabelling in the corpus. Now `instance`, which is correct for all 22. Measured after: **0** occurrences left under `docs/uml/`.
+
+
+## Decided — the owner, 2026-09-23: document both senses, no rename
+
+Chosen over giving sense 2 its own word. The two senses are now a section of
+[`harness-tiles`](../../cat-harness/skills/folio-core/harness-tiles.md), beside
+the instantiation rule they qualify: a table separating *instantiated here*
+from *a layer others instantiate*, the evidence that sense 2 is deliberate
+(`smart-stack-layering`, `fhir-harness`'s own description, bean titles `2yyh`
+and `wm63`), and a **do not write a checker for this** subsection carrying the
+246 → 31 → 0-true-positives measurement.
+
+No rename, no criterion, no corpus churn. *"Is X a harness"* stays a judgement,
+which the evidence says it genuinely is.
+
+**One thing the work turned up about itself:** writing that section tripped
+`check:declaration-filename`, because the paragraph explaining the false
+positives named the retired declaration filename. The gate was right and the
+prose was reworded. A page about a vocabulary defect produced one on its first
+draft.
+
+## Summary of Changes
+
+`harness-tiles` gains §"Harness carries TWO senses, and only one of them is
+this rule". Gates 135/135.

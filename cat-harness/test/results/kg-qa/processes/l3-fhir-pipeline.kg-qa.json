@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "processes/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:4e2fee64d1a05ee74495348627b345c8206bec1b3d2cf23ec79a249afcf7a426",
+  "source_hash": "sha256:b89ba358b2995e6a2138f38443582603d583c3d1d5a694ce85f96153aef626fb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Valid",
-          "detail": "\"FHIR valid?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_QcPass",
-          "detail": "\"QC clean?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

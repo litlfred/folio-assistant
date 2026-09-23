@@ -42,11 +42,11 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **working, or archival?**<br>`Gateway_Purpose` | — | **archival** → ARCHIVAL verify fixity — never re-fetch<br>**working** → WORKING what changed upstream |
-| **Both changed?**<br>`Gateway_Both` | — | **yes** → Adjudicate the conflict<br>**no** → Re-materialize, re-asking the five gates — and record the new fixity |
+| **working, or archival?**<br>`Gateway_Purpose` | Is this copy kept as a working copy or as an archive? `archival` only verifies fixity and never re-fetches; `working` asks what changed upstream. | **archival** → ARCHIVAL verify fixity — never re-fetch<br>**working** → WORKING what changed upstream |
+| **Both changed?**<br>`Gateway_Both` | Did the copy change both upstream and locally since it was fetched? `yes` goes to adjudicating the conflict; `no` re-materializes, re-asking the five gates, and records the new fixity. | **yes** → Adjudicate the conflict<br>**no** → Re-materialize, re-asking the five gates — and record the new fixity |
 
 {% endraw %}

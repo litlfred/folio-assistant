@@ -611,10 +611,22 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // `library/`. Verified end to end 2026-09-23: one document now goes
     // uploads/ -> library/ in two commands.
     const base = { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] };
-    const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug");
-    expect(armed.steps).toHaveLength(3);
+    const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug", "/lib");
+    expect(armed.steps).toHaveLength(4);
     expect(armed.steps[1]).toEqual(["python3", expect.stringContaining("pdf-images.py"), "-o", "/stage", "/tmp/x.pdf"]);
     expect(armed.steps[2]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
+    // The verdict arm — bean `8suc`. It takes the ENTRY directory and the
+    // DESTINATION LIBRARY, because the judgement lives in the library and a
+    // staging directory does not say which one that is.
+    expect(armed.steps[3]).toEqual([
+      "bun",
+      "run",
+      expect.stringContaining("apply-image-verdicts.ts"),
+      "--staging",
+      "/stage/slug",
+      "--library",
+      "/lib",
+    ]);
 
     // NOT for the other kinds, and this is stated rather than assumed.
     // `check-l1-complete`'s `PAGED_ONLY` list exists because not every
@@ -622,7 +634,7 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // measured here. "More arms cannot hurt" is how a gate starts reporting a
     // requirement over content it was never about.
     for (const rung of ["archive", "tabular", "undetermined"] as const) {
-      expect(withDerivedArms({ ...base, rung }, "/tmp/x.pdf", "/stage", "/stage/slug").steps).toHaveLength(1);
+      expect(withDerivedArms({ ...base, rung }, "/tmp/x.pdf", "/stage", "/stage/slug", "/lib").steps).toHaveLength(1);
     }
   });
 
@@ -636,6 +648,7 @@ describe("refuse to promote — the gate between the arms and the library", () =
       "/real.pdf",
       "/stage",
       "/stage/slug",
+      "/lib",
     );
     expect(armed.steps[1]?.at(-1)).toBe("/real.pdf");
   });
@@ -682,6 +695,47 @@ describe("refuse to promote — the gate between the arms and the library", () =
     expect(src).toContain('["python3", pyHelper("pdf-images.py"), "-o", stagingRoot, pdf]');
     expect(src).toContain('["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]');
     expect(src).toContain('const staging = join(stagingRoot, slug);');
+  });
+
+  test("the verdict arm runs AFTER pdf-images.py, which is the whole mechanism", () => {
+    // `pdf-images.py` opens the sidecar with `"w"` — no existence check, no
+    // merge (`pdf-images.py`, the `open(target, "w")` near the end). So it
+    // overwrites any narrative already applied. Order these two the other way
+    // and every run silently wipes the judgements it just wrote: the file
+    // still parses, still validates, and simply has no descriptions in it.
+    //
+    // Asserted as an ORDER rather than as two separate presence checks,
+    // because presence is exactly what would still hold in the broken case.
+    const armed = withDerivedArms(
+      { rung: "pdf-structure" as const, why: "", steps: [["python3", "pdf-structure.py"]] },
+      "/tmp/x.pdf",
+      "/stage",
+      "/stage/slug",
+      "/lib",
+    );
+    const images = armed.steps.findIndex((s) => s.some((a) => a.includes("pdf-images.py")));
+    const verdicts = armed.steps.findIndex((s) => s.some((a) => a.includes("apply-image-verdicts.ts")));
+    expect(images).toBeGreaterThanOrEqual(0);
+    expect(verdicts).toBeGreaterThan(images);
+  });
+
+  test("the verdict arm is given the DESTINATION library, not the staging root", () => {
+    // A staging directory does not say which library a document is being
+    // promoted into — `v1hw` measured that three queues fed five libraries.
+    // Handing this arm the staging root would make it read a verdicts file
+    // that is not there, report "nothing to apply", and let a document with
+    // committed judgements promote with none of them applied: a silent pass
+    // over real work, which is the `1xhc` shape this bean is already about.
+    const armed = withDerivedArms(
+      { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] },
+      "/tmp/x.pdf",
+      "/stage",
+      "/stage/slug",
+      "/some/library",
+    );
+    const arm = armed.steps.find((s) => s.some((a) => a.includes("apply-image-verdicts.ts")));
+    expect(arm?.[arm.indexOf("--library") + 1]).toBe("/some/library");
+    expect(arm).not.toContain("/stage");
   });
 
   test("staging is NOT dot-prefixed", () => {

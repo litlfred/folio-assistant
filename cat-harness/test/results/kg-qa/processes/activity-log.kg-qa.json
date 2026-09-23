@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "processes/activity-log.bpmn"
   },
-  "source_hash": "sha256:51418ba536e38dbe6778bb7c6cd68af4ea5c602db5327ce4cd5527c07ed8c93e",
+  "source_hash": "sha256:a214e186f833c1ba6d7c1b5370269b618cef560c84051b8b0b12998933234ab6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -109,19 +109,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Capture",
-          "detail": "\"Capture enabled?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_EmptyScope",
-          "detail": "\"One entry or all?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -135,8 +134,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

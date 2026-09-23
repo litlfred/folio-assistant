@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_SessionStateMachine"
-                  targetNamespace="http://folio-assistant.dev/bpmn/session-state-machine">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        An agent PLAYING a state machine — folio-assistant
@@ -96,6 +96,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="Gateway_ActorKnown" name="Actor established?">
+      <bpmn:documentation>Is it established who is acting? `no` asks; `yes` opens the session record. A session is never opened for an actor it has not identified.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:judgement reason="Only the discussion says who is acting, and it rarely says so in a field. A table would need a name to read; this branch is the reading."/>
       </bpmn:extensionElements>

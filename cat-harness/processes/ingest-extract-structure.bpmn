@@ -52,6 +52,7 @@
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="Gateway_HasText" name="Embedded
 text layer?">
+      <bpmn:documentation>Does the binary carry an embedded text layer? `yes` extracts it; `no — scanned` runs OCR into ocr/page-*.txt.</bpmn:documentation>
       <bpmn:incoming>Flow_e1</bpmn:incoming>
       <bpmn:outgoing>Flow_e2</bpmn:outgoing>
       <bpmn:outgoing>Flow_e3</bpmn:outgoing>

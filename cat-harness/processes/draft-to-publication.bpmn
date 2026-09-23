@@ -113,6 +113,7 @@
       <bpmn:outgoing>G05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_QaGreen" name="Draft QA green?">
+      <bpmn:documentation>Answered by the publication QA gates. `no` returns to editing and HCI validation; `yes` circulates the draft.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/draft-qa-gate.dmn#Decision_DraftQaGate" />
       </bpmn:extensionElements>
@@ -166,6 +167,7 @@
       <bpmn:outgoing>G14</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Approved?">
+      <bpmn:documentation>Asked once every reviewer has answered: is the draft approved? `no` opens beans for the change requests; `yes` goes to authorising the release.</bpmn:documentation>
       <bpmn:incoming>G14</bpmn:incoming>
       <bpmn:outgoing>G15</bpmn:outgoing>
       <bpmn:outgoing>G16</bpmn:outgoing>
