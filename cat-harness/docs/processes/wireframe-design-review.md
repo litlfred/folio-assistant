@@ -18,7 +18,7 @@ WireGen (methodologies/wiregen) made executable: a written design intent, at lea
 ## How it connects
 
 - **Called by:** no call activity names this process
-- **Calls:** [Adjudication](adjudication.html), [Options analysis](options-analysis.html)
+- **Calls:** [Criterion adjudication](criterion-adjudication.html), [Options analysis](options-analysis.html)
 - **Skill:** [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html)
 
 ## Lanes — who acts
@@ -39,7 +39,7 @@ Every one of the 6 step(s) is documented.
 | **Produce >= 2 candidates, web + mobile**<br>`D_Candidates` | Designer | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Mid-fidelity HTML: monochrome, real folio content, semantic icons, no placeholder text. Each candidate has both a web layout and a mobile layout. |
 | **Mechanical checks, both viewports**<br>`D_Check` | Designer | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Tool wireframe-check renders every candidate at a web and a mobile viewport. It fails on horizontal overflow at mobile width, on placeholder text, and on a missing viewport, and writes screenshots and a script entry per criterion. |
 | **Blind review per criterion**<br>`R_Review` | Feedback providers | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Criteria: intent-fit, web usability, mobile usability, accessibility, and alternatives considered. A review at one viewport only is incomplete. |
-| **Adjudication**<br>`Call_Adjudicate` | Adjudicator | calls [Adjudication](adjudication.html) | folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. |
+| **Adjudication**<br>`Call_Adjudicate` | Adjudicator | calls [Criterion adjudication](criterion-adjudication.html)<br>[`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. CALLS THE CRITERION SPECIALISATION, and that sentence above is why. It describes `A_RecordEntry` ("write the entry that LEADS — keeping the checker's beneath it") and `A_Dispensation` ("grant a dispensation, with its reason"), which are the QA-criterion outcomes — and when bean `bvuk` split the outcome half out of `adjudication.bpmn` on 2026-09-23, this call was left pointing at the shared judgement, which no longer runs either of them. For the other three callers that split REMOVED steps their question never admitted, which was the point. Here it removed steps this diagram documents, so for this one caller it was a regression rather than a fix, and repointing restores what the documentation already claimed. Corrected 2026-09-23. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes `no` here, and `Process_CriterionAdjudication` starts at "entries for one criterion disagree" — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else. |
 | **Choose a candidate**<br>`Call_Choose` | Adjudicator | calls [Options analysis](options-analysis.html) | A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost. |
 
 ## Decisions

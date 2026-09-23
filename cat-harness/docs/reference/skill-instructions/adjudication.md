@@ -280,4 +280,5 @@ This skill has its own process: **[Adjudication](../../processes/adjudication.ht
 | [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
 | [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
 | [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
+| [Wireframe design review](../../processes/wireframe-design-review.html) | Adjudication (calls a sub-process) |
 

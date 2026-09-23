@@ -168,3 +168,41 @@ union guard would have let `code` sit ignored on a judge.
       than silently routed through the wrong three — `checkAcceptedCodes` in
       `process-model.ts`, with absence reported rather than guessed.
 - [ ] `bun run gates` green.
+
+
+## `wireframe-design-review` — and a regression the split introduced
+
+Owner, 2026-09-23: *"do wireframe-design-review"*. It turned out not to be a
+judgement call once the diagram was read properly.
+
+**It calls `Process_CriterionAdjudication` now**, and the evidence is in the
+diagram rather than in a reading of it:
+
+- `GW_Agree` asks *"Do the blind reviewers' entries agree? `no` goes to
+  adjudication"* — which is `Process_CriterionAdjudication`'s entry condition,
+  *"entries for one criterion disagree"*, not approximately but exactly.
+- `R_Review` is *"blind review per criterion"*, and its lane records *"pass,
+  warn or fail per criterion with a reason"*. So what reaches the adjudication
+  is a per-criterion disagreement between reviewer entries and nothing else.
+- `Call_Adjudicate`'s own documentation — *"the adjudication leads, the
+  checker's entry is kept, and the dispensation carries its reason"* —
+  describes `A_RecordEntry` and `A_Dispensation` in substance.
+
+### The correction
+
+Those last two tasks are exactly what the split moved out of
+`adjudication.bpmn`. The merged change said of the four remaining callers that
+they *"no longer reach `A_ScopeCriterion` or `A_Dispensation`"* and framed that
+as the defect being closed.
+
+**For three of them that was right. For this one it was a regression.** Its
+documentation says the leading entry and the dispensation happen, and after the
+split they did not. Repointing restores what the diagram already claimed rather
+than deciding anything new.
+
+Recorded because the framing was confidently wrong in a merged commit message
+and a merged PR body: "the four no longer run the wrong outcome steps" was true
+of three callers and false of the fourth, and nothing distinguished them at the
+time because the difference is in prose the split did not read.
+
+`check:workflow-refs` 7 of 10 → **8 of 10**.

@@ -5,7 +5,7 @@
     "id": "Process_WireframeDesignReview",
     "path": "processes/wireframe-design-review.bpmn"
   },
-  "source_hash": "sha256:f92a33c95b6f1e34684b66167c37782f0e9688a8d03e655bd34378a97fc0f999",
+  "source_hash": "sha256:a5b5038d13af1ff716fd440affc22a7e96f72eb3b16eff5559b852d78888396b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,8 +52,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_Adjudicate",
+          "detail": "needs skill \"wireframe-design-review\", but its lane's role \"adjudicator\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -105,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 0,
+    "pass": 14,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

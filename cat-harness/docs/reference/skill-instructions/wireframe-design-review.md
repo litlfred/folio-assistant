@@ -83,5 +83,5 @@ This skill has its own process: **[Wireframe design review](../../processes/wire
 
 | process | step(s) that name it |
 |---|---|
-| [Wireframe design review](../../processes/wireframe-design-review.html) | Write the design intent; Produce >= 2 candidates, web + mobile; Mechanical checks, both viewports; Blind review per criterion |
+| [Wireframe design review](../../processes/wireframe-design-review.html) | Write the design intent; Produce >= 2 candidates, web + mobile; Mechanical checks, both viewports; Blind review per criterion; Adjudication (calls a sub-process) |
 

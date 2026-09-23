@@ -501,24 +501,37 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     expect(m.nodes.get("A_Dispensation")!.relaxable).toBe(false);
   });
 
-  test("the two QA callers now call the specialisation, not the shared half", async () => {
+  test("the QA callers call the specialisation, not the shared half", async () => {
+    // `wireframe-design-review` joined these on 2026-09-23, and the reason is
+    // a correction: the split LEFT it on the shared half, which no longer runs
+    // A_RecordEntry or A_Dispensation — and its own call documentation says
+    // both happen ("the adjudication leads, the checker's entry is kept, and
+    // the dispensation carries its reason"). For the other three the split
+    // removed steps their question never admitted; for this one it removed
+    // steps the diagram documents, so it was a regression rather than a fix.
     for (const [f, id] of [
       ["review-narrative.bpmn", "Task_AdjudicateVoice"],
       ["voice-review.bpmn", "Task_Adjudicate"],
+      ["wireframe-design-review.bpmn", "Call_Adjudicate"],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_CriterionAdjudication");
     }
   });
 
-  test("the other four call the shared half and reach NO outcome task", async () => {
+  test("the three non-criterion callers reach NO outcome task", async () => {
     // The defect this closes, asserted as reachability rather than as a name:
     // before the split every one of these ran A_ScopeCriterion's gateway.
+    //
+    // THREE, not four. `wireframe-design-review` was in this list until
+    // 2026-09-23 and did not belong: its question IS the criterion one, so
+    // removing those steps broke it rather than fixing it. This test is what
+    // caught the repointing, which is the argument for asserting reachability
+    // rather than a caller count.
     for (const [f, id] of [
       ["refresh-materialized.bpmn", "Task_Adjudicate"],
       ["translation-workflow.bpmn", "Task_Adjudicate"],
       ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift"],
-      ["wireframe-design-review.bpmn", "Call_Adjudicate"],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_Adjudication");
