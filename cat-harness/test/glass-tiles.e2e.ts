@@ -153,16 +153,31 @@ test.describe("library → glass: the control is where the eye starts", () => {
 });
 
 test.describe("the tile strip along the glass's bottom edge", () => {
-  test("Todos and Settings, then the declared glass tiles — from the published list", async ({ page }) => {
+  test("the strip holds only the glass's own four tiles — owner: \"too many tiles!\"", async ({ page }) => {
     await open(page);
     const strip = page.locator(".fa-glass-tiles");
     await expect(strip).toBeVisible();
-    await expect(strip.locator('[data-fa-glass-chrome="glass-todos"]')).toBeVisible();
-    await expect(strip.locator('[data-fa-glass-chrome="glass-settings"]')).toBeVisible();
-    await expect(strip.locator('[data-fa-tile="fsh-guts"]')).toBeVisible();
+    const ids = await strip.locator("[data-fa-glass-chrome]").evaluateAll((els) =>
+      els.map((e) => e.getAttribute("data-fa-glass-chrome")));
+    expect(ids).toEqual(["glass-todos", "glass-filter", "glass-settings", "glass-more"]);
+    // No declared visualisation sits on the strip itself any more.
+    await expect(strip.locator("[data-fa-tile]")).toHaveCount(0);
+  });
+
+  test("More lists the declared glass tiles — from the published list", async ({ page }) => {
+    await open(page);
+    await page.click('[data-fa-glass-chrome="glass-more"]');
+    const more = page.locator(".fa-glass-more");
+    await expect(more.locator('[data-fa-tile="fsh-guts"]')).toBeVisible();
     // Filtered to the glass surface, and the declared `todos` is not drawn twice.
-    await expect(strip.locator('[data-fa-tile="board-only"]')).toHaveCount(0);
-    await expect(strip.locator('[data-fa-tile="todos"]')).toHaveCount(0);
+    await expect(more.locator('[data-fa-tile="board-only"]')).toHaveCount(0);
+    await expect(more.locator('[data-fa-tile="todos"]')).toHaveCount(0);
+    await expect(page.locator(".fa-glass-panel-status")).toHaveText("1 visualisation.");
+  });
+
+  test("the strip sits on the BOTTOM edge", async ({ page }) => {
+    await open(page);
+    const strip = page.locator(".fa-glass-tiles");
     // At the BOTTOM edge.
     const box = await strip.boundingBox();
     const vh = page.viewportSize()!.height;
@@ -297,12 +312,26 @@ test.describe("cards on the glass move, resize and zoom — the glass is a surfa
     expect(box.y).toBeGreaterThanOrEqual(card.y);
     expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
     const before = await leftOf(page);
-    await page.mouse.move(box.x + 5, box.y + 5);
+    // The MIDDLE of the cover. Since the cover fills the card, its top-left
+    // corner is under the title link — and a drag deliberately never starts
+    // on a link, so that a press on the title opens the book.
+    const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+    await page.mouse.move(cx, cy);
     await page.mouse.down();
-    await page.mouse.move(box.x + 65, box.y + 45, { steps: 4 });
+    await page.mouse.move(cx + 60, cy + 40, { steps: 4 });
     await page.mouse.up();
     expect(await leftOf(page)).toBe(before + 60);
+  });
 
+  test("a press on the TITLE is not a drag — the title stays a link", async ({ page }) => {
+    await pull(page);
+    const name = (await page.locator(`${book} .fa-glass-asset-name`).boundingBox())!;
+    const before = await leftOf(page);
+    await page.mouse.move(name.x + 5, name.y + 5);
+    await page.mouse.down();
+    await page.mouse.move(name.x + 65, name.y + 45, { steps: 4 });
+    await page.mouse.up();
+    expect(await leftOf(page)).toBe(before);
   });
 
   test("the − button shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
@@ -345,5 +374,46 @@ test.describe("cards on the glass move, resize and zoom — the glass is a surfa
     await page.click(".fa-glass-tidy");
     await expect(page.locator(book)).toBeVisible();
     expect(await leftOf(page)).toBe(home);
+  });
+});
+
+test.describe("the book's cover COVERS its card — owner: \"artefact avatar should cover sheet\"", () => {
+  test("the avatar fills the whole card, and the title rides above it", async ({ page }) => {
+    await page.click('[data-fa-library-item="who-iris/book"] .fa-pullout');
+    await open(page);
+    const card = page.locator('.fa-glass-asset[data-fa-asset="who-iris/book"]');
+    const c = (await card.boundingBox())!;
+    const a = (await card.locator(".fa-glass-avatar").boundingBox())!;
+    expect(Math.abs(a.width - c.width)).toBeLessThanOrEqual(2);
+    expect(Math.abs(a.height - c.height)).toBeLessThanOrEqual(2);
+    // A book card starts portrait, the shape of a cover.
+    expect(c.height).toBeGreaterThan(c.width);
+    // The title is painted above the picture and has its own solid strip.
+    const z = await card.locator(".fa-glass-asset-name").evaluate((n) => getComputedStyle(n).zIndex);
+    expect(Number(z)).toBeGreaterThan(0);
+    await expect(card.locator(".fa-glass-asset-name")).toBeVisible();
+  });
+});
+
+test.describe("the browser-only note can be dismissed, and brought back", () => {
+  const note = ".fa-glass-sheet .fa-glass-local-note:not(.fa-glass-settings-note)";
+  test("it says no save tool is enabled", async ({ page }) => {
+    await page.click('[data-fa-library-item="who-iris/book"] .fa-pullout');
+    await open(page);
+    await expect(page.locator(note)).toContainText("No \u201Csave\u201D tool is currently enabled.");
+  });
+
+  test("dismissed, it stays gone across a reload; Settings shows it again", async ({ page }) => {
+    await page.click('[data-fa-library-item="who-iris/book"] .fa-pullout');
+    await open(page);
+    await page.click(".fa-glass-note-dismiss");
+    await expect(page.locator(note)).toHaveCount(0);
+    await page.reload();
+    await page.waitForSelector(handle, { state: "attached" });
+    await open(page);
+    await expect(page.locator(note)).toHaveCount(0);
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
+    await page.click(".fa-glass-note-restore");
+    await expect(page.locator(note)).toHaveCount(1);
   });
 });

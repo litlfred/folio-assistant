@@ -4260,11 +4260,17 @@
       var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
       var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
       var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
+      // A BOOK IS PORTRAIT. The cover fills the card (owner, 2026-09-23:
+      // *"artefact avatar should cover sheet"*), and a landscape card would
+      // show a cover's middle band. 4:3 upright, which every rendered cover
+      // here is near. Rows are laid out at the tallest card's height.
+      var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
+        ? Math.round(w * 4 / 3) : GLASS_CARD_H;
       return {
         left: (i % cols) * (w + GLASS_GAP),
-        top: Math.floor(i / cols) * (GLASS_CARD_H + GLASS_GAP),
+        top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
         width: w,
-        height: GLASS_CARD_H,
+        height: h,
       };
     }
 
@@ -4428,11 +4434,43 @@
       // Saved in THIS BROWSER, said in words wherever the reader's own items
       // appear: a reader who thinks their folio follows them to another
       // machine has been misled by the control.
-      if (keys.length > 0 || shelved.length > 0) {
-        notes.appendChild(el("p", { class: "fa-glass-local-note" },
-          "Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else."));
+      //
+      // DISMISSABLE — owner, 2026-09-23: *"need to be able to dismiss"*, and
+      // *"should also say (no 'save' tool is currently enabled)"*. Said once
+      // is enough; said on every open is noise the reader learns to skip. The
+      // dismissal is itself a per-browser preference, and Settings offers the
+      // way back ("Show the browser-only note again") — a close with no
+      // reachable inverse is not a toggle.
+      if ((keys.length > 0 || shelved.length > 0) && !localNoteDismissed()) {
+        var localNote = el("p", { class: "fa-glass-local-note" },
+          "Your folio is saved in this browser only \u2014 not sent anywhere, and not visible to anyone else. " +
+          "(No \u201Csave\u201D tool is currently enabled.)");
+        var dismissNote = el("button", {
+          type: "button",
+          class: "fa-glass-note-dismiss",
+          "aria-label": "Dismiss this note \u2014 you can show it again from Settings",
+          title: "Dismiss (Settings can show it again)",
+        }, "\u00d7");
+        dismissNote.addEventListener("click", function () {
+          setLocalNoteDismissed(true);
+          if (localNote.parentNode) localNote.parentNode.removeChild(localNote);
+          handle.focus();
+        });
+        localNote.appendChild(dismissNote);
+        notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    var NOTE_KEY = "fa-glass-local-note-dismissed";
+    function localNoteDismissed() {
+      try { return localStorage.getItem(NOTE_KEY) === "1"; } catch (_e) { return false; }
+    }
+    function setLocalNoteDismissed(on) {
+      try {
+        if (on) localStorage.setItem(NOTE_KEY, "1");
+        else localStorage.removeItem(NOTE_KEY);
+      } catch (_e) { /* a note that comes back next page is the safe failure */ }
     }
 
     /* ── THE PANEL a tile opens, above the strip ──────────────────────────
@@ -4626,7 +4664,18 @@
         buildSettings(body);
       });
       body.appendChild(reset);
-      body.appendChild(el("p", { class: "fa-glass-local-note" },
+      // THE WAY BACK for the dismissed browser-only note.
+      if (localNoteDismissed()) {
+        var showNote = el("button", { type: "button", class: "fa-glass-reset fa-glass-note-restore" },
+          "Show the browser-only note again");
+        showNote.addEventListener("click", function () {
+          setLocalNoteDismissed(false);
+          renderShelf();
+          showNote.parentNode.removeChild(showNote);
+        });
+        body.appendChild(showNote);
+      }
+      body.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
         "Saved in this browser only."));
     }
 
@@ -4666,13 +4715,185 @@
       return b;
     }
     chromeTile("glass-todos", "Todos", "☑", "Todos — pull one onto your glass", buildTodos);
+    /* ── THE FILTER — bean `7m6g`, issue #1075 ─────────────────────────────
+     *
+     * Owner, 2026-09-21: *"visualizer filter by document, library, graph, and
+     * one each thing in folio (working space)"*. Owner, 2026-09-23, choosing
+     * its shape: **"Kind + From + items"** — a Kind select, a From select, and
+     * a checkbox per item, which keeps WHAT a thing is apart from WHERE it
+     * came from. #764's finding was three axes conflated into one; this does
+     * not repeat it one level down.
+     *
+     * THE READER'S, AND IT COMMITS NOTHING. Same rule as `reader-filter.ts`
+     * on the board: session state, no store, no event anybody persists. Same
+     * logic too — AND across axes, and a hidden item is simply not shown.
+     *
+     * OPTIONS COME FROM THE GLASS, never from a list: a Kind or a From that
+     * nothing on the glass carries is not offered, so no choice can match
+     * nothing (the board filter's `propertyValues` rule). */
+    var glassFilter = { kind: "", from: "", hidden: {} };
+
+    /** Every item on the glass, described by its two axes. */
+    function glassItems() {
+      var out = [];
+      Array.prototype.forEach.call(layer.querySelectorAll(".fa-glass-asset"), function (c) {
+        var key = c.getAttribute("data-fa-asset") || "";
+        var todo = c.getAttribute("data-fa-asset-kind") === "todos";
+        out.push({
+          el: c,
+          key: key,
+          title: c.getAttribute("aria-label") || key,
+          kind: todo ? "todo" : "book",
+          from: todo ? "Todo board" : key.split("/")[0] + " library",
+        });
+      });
+      Array.prototype.forEach.call(layer.querySelectorAll(".fa-sticky-floating"), function (c) {
+        var key = c.getAttribute("data-fa-pin") || "";
+        var panel = key.split("/")[0];
+        var pin = pinnedStickies()[key];
+        var todo = panel === "todos";
+        var title = (pin && pin.title) || c.getAttribute("aria-label") ||
+          ((c.querySelector(".fa-sticky-summary, h3") || {}).textContent || key);
+        out.push({
+          el: c,
+          key: key,
+          title: String(title).trim(),
+          kind: todo ? "todo" : "sticky",
+          from: todo ? "Todo board" : ((pin && pin.label) || "Home page"),
+        });
+      });
+      return out;
+    }
+
+    var KIND_LABELS = { book: "Books", todo: "Todos", sticky: "Stickies" };
+
+    /** Show or hide each item; say so when a filter hides everything. */
+    function applyGlassFilter() {
+      var items = glassItems();
+      var shown = 0;
+      items.forEach(function (it) {
+        var keep = (!glassFilter.kind || it.kind === glassFilter.kind) &&
+          (!glassFilter.from || it.from === glassFilter.from) &&
+          !glassFilter.hidden[it.key];
+        if (keep) { it.el.removeAttribute("data-fa-filtered-out"); shown++; }
+        else it.el.setAttribute("data-fa-filtered-out", "");
+      });
+      layer.setAttribute("data-fa-glass-shown", String(shown));
+      var note = sheet.querySelector(".fa-glass-filtered-note");
+      var active = glassFilter.kind || glassFilter.from || Object.keys(glassFilter.hidden).length;
+      // A DETERMINED empty, and it says which: "nothing matches" and "nothing
+      // is on your glass" are opposite facts about the same blank glass.
+      if (active && items.length > 0 && shown === 0) {
+        if (!note) {
+          note = el("p", { class: "fa-glass-filtered-note", role: "status" },
+            "Nothing on your glass matches this filter. Clearing it brings everything back.");
+          sheet.insertBefore(note, shelf);
+        }
+      } else if (note) {
+        note.parentNode.removeChild(note);
+      }
+      var status = panel.querySelector(".fa-glass-filter-status");
+      if (status) status.textContent = "Showing " + shown + " of " + items.length + ".";
+      return shown;
+    }
+
+    function buildFilter(body) {
+      var items = glassItems();
+      if (items.length === 0) {
+        body.appendChild(el("p", { class: "fa-glass-panel-status" },
+          "Nothing is on your glass yet, so there is nothing to filter."));
+        return;
+      }
+      function selectFor(label, axis, values, labelOf) {
+        var fs = el("fieldset", { class: "fa-glass-setting" });
+        fs.appendChild(el("legend", {}, label));
+        var sel = el("select", { class: "fa-glass-filter-select", id: "fa-glass-filter-" + axis,
+                                 "aria-label": label });
+        sel.appendChild(el("option", { value: "" }, "Any"));
+        values.forEach(function (v) {
+          var o = el("option", { value: v }, labelOf ? labelOf(v) : v);
+          if (glassFilter[axis] === v) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener("change", function () { glassFilter[axis] = sel.value; applyGlassFilter(); });
+        fs.appendChild(sel);
+        return fs;
+      }
+      function uniq(key) {
+        var seen = {};
+        return items.map(function (i) { return i[key]; })
+          .filter(function (v) { if (seen[v]) return false; seen[v] = true; return true; })
+          .sort();
+      }
+      body.appendChild(selectFor("Kind", "kind", uniq("kind"), function (v) { return KIND_LABELS[v] || v; }));
+      body.appendChild(selectFor("From", "from", uniq("from")));
+
+      var fs = el("fieldset", { class: "fa-glass-setting" });
+      fs.appendChild(el("legend", {}, "Items"));
+      items.forEach(function (it) {
+        var id = "fa-glass-item-" + it.key.replace(/[^A-Za-z0-9_-]/g, "_");
+        var lab = el("label", { class: "fa-glass-choice", for: id });
+        var box = el("input", { type: "checkbox", id: id, "data-fa-filter-item": it.key });
+        box.checked = !glassFilter.hidden[it.key];
+        box.addEventListener("change", function () {
+          if (box.checked) delete glassFilter.hidden[it.key];
+          else glassFilter.hidden[it.key] = true;
+          applyGlassFilter();
+        });
+        lab.appendChild(box);
+        lab.appendChild(el("span", { class: "fa-glass-choice-label" }, it.title));
+        lab.appendChild(el("span", { class: "fa-glass-choice-hint" },
+          (KIND_LABELS[it.kind] || it.kind).replace(/s$/, "") + " \u00b7 " + it.from));
+        fs.appendChild(lab);
+      });
+      body.appendChild(fs);
+
+      body.appendChild(el("p", { class: "fa-glass-filter-status", role: "status" }, ""));
+      var clear = el("button", { type: "button", class: "fa-glass-reset fa-glass-filter-clear" },
+        "Clear the filter \u2014 show everything");
+      clear.addEventListener("click", function () {
+        glassFilter = { kind: "", from: "", hidden: {} };
+        applyGlassFilter();
+        while (body.firstChild) body.removeChild(body.firstChild);
+        buildFilter(body);
+      });
+      body.appendChild(clear);
+      body.appendChild(el("p", { class: "fa-glass-local-note" },
+        "This filter changes only your view, for now — nothing is saved or removed."));
+      applyGlassFilter();
+    }
+    chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
+
     chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings);
 
-    glassTileList(function (tiles) {
-      if (!tiles) return;
-      var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
-      renderGraphTiles(declared, "glass", strip, readerShownTiles());
-    });
+    /* ── MORE, not twenty tiles — owner, 2026-09-23: *"too many tiles!"* ──
+     *
+     * The strip held every declared visualisation — twenty-one on this site —
+     * which ran off the edge of a laptop screen. Offered three shapes, the
+     * owner chose **"Few + a More tile"**: the glass's own tiles (Todos,
+     * Filter, Settings) stay on the strip, and ONE More tile opens a panel
+     * listing every declared visualisation.
+     *
+     * The list is the SAME declaration filtered to the `glass` surface and
+     * drawn by the same `renderGraphTiles`: moving the tiles into a panel
+     * changes where they are, not what they are. */
+    function buildMore(body) {
+      var status = el("p", { class: "fa-glass-panel-status" }, "Loading\u2026");
+      body.appendChild(status);
+      var grid = el("div", { class: "fa-glass-more", role: "group", "aria-label": "Visualisations" });
+      body.appendChild(grid);
+      glassTileList(function (tiles) {
+        if (!tiles) {
+          status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
+          return;
+        }
+        var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
+        var n = renderGraphTiles(declared, "glass", grid, readerShownTiles());
+        status.textContent = n === 0 ? "No visualisations are declared for the glass."
+          : n + (n === 1 ? " visualisation" : " visualisations") + ".";
+      });
+    }
+    chromeTile("glass-more", "More", "\u22EF", "More \u2014 every visualisation this folio declares", buildMore);
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
@@ -4686,6 +4907,7 @@
       // An asset the reader pulled out counts too — a glass holding one asset
       // and no sticky must not read "Nothing on your folio glass".
       empty.hidden = floating + renderShelf() > 0;
+      applyGlassFilter();
       if (!open) closePanel();
     }
 
@@ -4757,7 +4979,10 @@
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);
     if (typeof MutationObserver === "function") {
-      new MutationObserver(countWaiting).observe(layer, { childList: true });
+      new MutationObserver(function () {
+        countWaiting();
+        applyGlassFilter();
+      }).observe(layer, { childList: true });
     }
 
     layer.__faSetGlassOpen = setOpen;
@@ -5359,6 +5584,9 @@
       });
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
+      // Its PIN KEY, the same one the store uses, so the glass's filter can
+      // tell a pinned todo from a pinned landing sticky (bean `7m6g`).
+      card.setAttribute("data-fa-pin", "todos/" + todo.id);
       // Focusable so the move mode has somewhere to put focus and the arrow
       // keys have a target. `-1`: it is reached BY the Move control, not by
       // tabbing past every pinned note on the way to the page.
