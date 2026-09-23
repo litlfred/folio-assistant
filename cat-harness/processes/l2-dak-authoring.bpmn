@@ -80,6 +80,7 @@
       <bpmn:outgoing>B02</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
+      <bpmn:documentation>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:bean op="claim" />
@@ -102,6 +103,7 @@
       <bpmn:outgoing>B07</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:userTask id="Task_Personas" name="Personas and scenarios&#10;[l2-dak-authoring]">
+      <bpmn:documentation>Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
@@ -109,6 +111,7 @@
       <bpmn:outgoing>B11</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_Bpmn" name="Business processes · BPMN 2.0&#10;[bpmn-authoring]">
+      <bpmn:documentation>Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="bpmn-authoring" />
       </bpmn:extensionElements>
@@ -116,6 +119,7 @@
       <bpmn:outgoing>B12</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_Dmn" name="Decision logic · DMN tables&#10;[dmn-authoring]">
+      <bpmn:documentation>Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="dmn-authoring" />
       </bpmn:extensionElements>
@@ -123,6 +127,7 @@
       <bpmn:outgoing>B13</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_DataDict" name="Data dictionary and core data elements&#10;[l2-dak-authoring]">
+      <bpmn:documentation>Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
@@ -130,6 +135,7 @@
       <bpmn:outgoing>B14</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_Indicators" name="Indicators and requirements&#10;[l2-dak-authoring]">
+      <bpmn:documentation>Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
@@ -167,6 +173,7 @@
       <bpmn:outgoing>B20</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Task_AssembleDak" name="Assemble and validate the DAK&#10;[content-validate]">
+      <bpmn:documentation>Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-validate" />
       </bpmn:extensionElements>
