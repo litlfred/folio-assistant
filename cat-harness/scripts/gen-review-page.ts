@@ -157,7 +157,11 @@ const STYLE = `
   .heatwrap { overflow-x: auto; margin: 1rem 0; }
   table.heat { border-collapse: separate; border-spacing: 2px; font-size: .95rem; }
   table.heat caption { text-align: left; color: var(--muted); padding-bottom: .4rem; }
-  table.heat th, table.heat td { padding: .35rem .6rem; text-align: left; border-radius: .25rem; }
+  table.heat th, table.heat td { padding: .35rem .6rem; text-align: left; border-radius: .25rem; overflow-wrap: anywhere; }
+  /* Fit the width rather than scroll sideways: a keyboard user cannot reach a
+     scrolled-off column (the ojcx run clipped QA at 1000 px). The wrapper is
+     still focusable, for the narrowest screens. */
+  table.heat { width: 100%; }
   table.heat thead th { font-weight: 600; border-bottom: 1px solid var(--rule); }
   table.heat td { font-variant-numeric: tabular-nums; }
   .h1 { background: #86b6ef; color: #1b1b1b; } .h2 { background: #3987e5; color: #1b1b1b; } .h3 { background: #1c5cab; color: #ffffff; }
@@ -593,7 +597,7 @@ export function reviewPageHtml(): string {
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
-<div id="heat" class="heatwrap"></div>
+<div id="heat" class="heatwrap" tabindex="0" role="region" aria-label="Heat map: where to look first"></div>
 <div id="changes"></div>
 </main>
 </div>

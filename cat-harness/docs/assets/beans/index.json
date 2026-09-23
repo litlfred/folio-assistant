@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 640,
+      "count": 646,
       "unit": "beans"
     }
   },
@@ -1413,6 +1413,20 @@
       "file": "beans/defs/folio-assistant-5tul--crdm-data-modelling-phase-guidance-skill-plus-the.md"
     },
     {
+      "id": "folio-assistant-5uuf",
+      "title": "FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and 'view on main' are empty; stacked PRs compare with the wrong base",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:06:56Z",
+      "updatedAt": "2026-09-23T18:06:56Z",
+      "preview": "Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's \"before\" picture, and the review page's \"view on main\" link, both read the published main site at the root of `gh-pages`. Two gaps follow:\n- **A folio has no main-site publish.** Neither `init-folio` nor `folio-staging.yml` publishes `main`'s document site to the `gh-pages` root. So every before picture reads *\"Its pag",
+      "file": "beans/defs/folio-assistant-5uuf--folio-preview-before-side-no-main-site-publish-so.md"
+    },
+    {
       "id": "folio-assistant-5vo9",
       "title": "ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN",
       "status": "in-progress",
@@ -2369,14 +2383,14 @@
     {
       "id": "folio-assistant-8suc",
       "title": "PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:54:54Z",
-      "updatedAt": "2026-09-23T13:54:54Z",
+      "updatedAt": "2026-09-23T16:44:46Z",
       "preview": "Found while closing `xeg6` on 2026-09-23, by hitting it.\n\n## The cycle\n\n- **`--promote` refuses** while the `image-descriptions` requirement is unmet.\n  Observed directly on `2602.12670v4`: *\"✗ NOT promoted — 1 requirement(s)\n  unmet: image-descriptions, 7 describable image(s) with no narrative\"*.\n- **Neither narrative writer can reach an unpromoted document.** The only two\n  are `scripts/apply-im",
       "file": "beans/defs/folio-assistant-8suc--promotion-and-descriptions-are-circular-both-narra.md"
     },
@@ -2449,6 +2463,20 @@
       "updatedAt": "2026-09-21T15:40:00Z",
       "preview": "Found while excising `harness.json` (bean 6n23, PR #695), and NOT fixed there.\n\n`qa-checker-discovery.findChecker` enumerated a module namespace with\n`Object.values`. That throws outright — `Object.keys` too — when any export is\na `const` still in its temporal dead zone, which happens when the module is\npart of an import cycle and is read while mid-evaluation. Measured 2026-09-21:\n`qa-checkers-ext",
       "file": "beans/defs/folio-assistant-95s1--import-cycle-extended-automated-checkers-is-reacha.md"
+    },
+    {
+      "id": "folio-assistant-9791",
+      "title": "QA SUMMARY: 'passing' counts only script-checkable criteria — agent-judged criteria never run are not said (heat map reads it as QA passed)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:10:15Z",
+      "updatedAt": "2026-09-23T18:10:15Z",
+      "preview": "Found while doing tw61, 2026-09-23. On a freshly scaffolded document folio, a sweep records 46 criteria per block, and every recorded one passes or is n/a. `publish-block-qa` then says **\"passing\"**. But about 15 criteria that need an agent's judgement were never run: voice traps, exposition clarity, adversarial review. They appear in the sweep output as `[needs-agent]` and nowhere in the verdict ",
+      "file": "beans/defs/folio-assistant-9791--qa-summary-passing-counts-only-script-checkable-cr.md"
     },
     {
       "id": "folio-assistant-9c34",
@@ -3997,6 +4025,20 @@
       "updatedAt": "2026-09-23T14:44:37Z",
       "preview": "Found 2026-09-22 building ojcx (folio staging).\n\n**The gap.** `publish.yml` is the platform's reusable build for folios, and it builds a PAPER: LaTeX, then PDF and blueprint HTML. The document adapter's `document_render_md` / `document_render_pdf` (pandoc) produce single documents, not a browsable site. Nothing produces a document folio's SITE, which is the thing a staging preview publishes and th",
       "file": "beans/defs/folio-assistant-fyu2--document-folio-site-build-the-platform-defines-no.md"
+    },
+    {
+      "id": "folio-assistant-fz39",
+      "title": "DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:00:43Z",
+      "updatedAt": "2026-09-23T18:00:43Z",
+      "preview": "Found by the ojcx rehearsal, 2026-09-23. A document folio's `table` block, with its rows written as a Markdown table in `<block>.md`, renders in the staging site as a paragraph of raw `| a | b |` text, not as a `<table>`.\n\n**Cause:** `cat-harness/scripts/build-document-site.ts` runs `remark().use(remarkHtml)` without GitHub-flavoured Markdown, so pipe tables, strikethrough and task lists are not p",
+      "file": "beans/defs/folio-assistant-fz39--document-site-markdown-tables-render-as-raw-pipe-t.md"
     },
     {
       "id": "folio-assistant-g196",
@@ -5895,7 +5937,7 @@
     {
       "id": "folio-assistant-ojcx",
       "title": "FOLIO STAGING: a folio in its own repository gets no STAGING build — feature-staging is not reusable and init-folio never writes it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
@@ -6187,6 +6229,20 @@
       "updatedAt": "2026-09-22T09:34:57Z",
       "preview": "## What — owner, 2026-09-21\n\n> bean, we also need a processes/ visualization as it is controlled.... its\n> basically a bpmn searcher tool or so. with various filters.\n\n## THE TITLE SAYS 58 AND THE NUMBER IS 61\n\nNot a typo worth quietly fixing — it is this repository's own rule catching\nits author mid-sentence. `bpmn-processes` says *\"Count the directory rather\nthan quoting a number from this parag",
       "file": "beans/defs/folio-assistant-prhr--processes-visualiser-58-bpmn-diagrams-and-no-viewe.md"
+    },
+    {
+      "id": "folio-assistant-pv51",
+      "title": "BOOTSTRAP README: one-voice rewrite — repetitive and not condensed (owner)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:58:25Z",
+      "updatedAt": "2026-09-23T17:58:25Z",
+      "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *\"bootstrap/README need propeor one voice revieqw. not condensed very repetative.\"*\n\n`bootstrap/README.md` is 252 lines. The owner reads it as repetitive and not condensed. This is repetition INSIDE one page. That is a different measurement from the one parent `88mg` made, which compared `docs/` with `skills/` and found little overlap.\n\n## Done",
+      "file": "beans/defs/folio-assistant-pv51--bootstrap-readme-one-voice-rewrite-repetitive-and.md"
     },
     {
       "id": "folio-assistant-pv6g",
@@ -7339,6 +7395,20 @@
       "updatedAt": "2026-09-22T09:29:41Z",
       "preview": "Found 2026-09-22 when CI went red on a test that had passed locally an hour\nearlier: `funp` landed while the branch was mid-merge, and the first thing\nthe glass met was the unverified-translation notice.\n\n## The measurement\n\n`.fa-glass-handle` is `position: fixed; top: 0; left: 50%;\ntransform: translateX(-50%)`, measured at **71 x 44 px** at the top centre of\nthe viewport. It is on EVERY page as o",
       "file": "beans/defs/folio-assistant-tr1m--glass-handle-overlaps-content-a-fixed-71x44-tab-si.md"
+    },
+    {
+      "id": "folio-assistant-tw61",
+      "title": "INIT QA: a new folio gets proper QA from its first commit — sweep command, CI step, verdicts at the root (owner)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:58:25Z",
+      "updatedAt": "2026-09-23T17:58:25Z",
+      "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *\"setup proper QA on init.\"*\n\n`init-folio` / `folio_init` scaffolds a folio, but it does not set up QA so that the folio is checked from its first commit. Measure first what a new folio gets today:\n- a QA sweep command, or a `package.json` script for one;\n- a CI workflow that runs the sweep;\n- the verdict location (see `s3p2`, fixed in #1094);\n",
+      "file": "beans/defs/folio-assistant-tw61--init-qa-a-new-folio-gets-proper-qa-from-its-first.md"
     },
     {
       "id": "folio-assistant-txut",
@@ -8815,6 +8885,20 @@
       "updatedAt": "2026-09-23T08:48:57Z",
       "preview": "## What is wrong\n\n`CONTENT_CONTEXT` in `cat-harness/schemas/jsonld.ts` (served as `ns/content/v1.jsonld`) declares the prefix `fac` but writes 20 terms as `folio:…`. No `folio` prefix is declared, so a JSON-LD processor reads `folio` as a URI SCHEME: `\"@type\": \"folio:Definition\"` expands to the absolute IRI `folio:Definition`. Verified 2026-09-23 with `jsonld.expand`. 1,737 committed `.jsonld` fil",
       "file": "beans/defs/folio-assistant-zaqn--json-ld-prefix-stub-the-content-context-uses-an-un.md"
+    },
+    {
+      "id": "folio-assistant-zdfa",
+      "title": "INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio's workflow lands where GitHub never reads it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:06:56Z",
+      "updatedAt": "2026-09-23T18:06:56Z",
+      "preview": "Found by ojcx's real run, 2026-09-23. `init-folio --link sibling --assistant ../platform` writes `platform_dir: ../platform` into `.github/workflows/staging.yml`. In Actions, that path is outside the checkout, so the reusable workflow's \"Check out the platform\" step cannot place the platform there. A sibling checkout exists on the author's machine, never in CI. The folio-test run worked only becau",
+      "file": "beans/defs/folio-assistant-zdfa--init-sibling-link-stagingyml-gets-platform-dir-pla.md"
     },
     {
       "id": "folio-assistant-zgba",

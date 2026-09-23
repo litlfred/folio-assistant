@@ -108,7 +108,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "folio", schema: t("RepoPath"), required: true, arg: { flag: "--folio" }, description: "The folio's `folio` graph directory." },
           { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write `block-qa.json`." },
-          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio repository root, where verdicts are anchored. Default `.`." },
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio's instance root, where verdicts are anchored. Default: found from `folio` exactly as the QA sweep finds it." },
         ],
         outputs: [
           { name: "block-qa", schema: t("RepoPath"), description: "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr." },
@@ -118,7 +118,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       selection: {
         when: "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
         limits:
-          "Reports the LAST sweep. A folio never swept reads unaudited throughout. Reads verdicts at the instance root and at the folio directory, because the sweep currently anchors at the swept directory (bean s3p2).",
+          "Reports the LAST sweep: in a staging build, the sweep the job ran just before it (bean tw61); otherwise the committed verdicts. A folio never swept reads unaudited throughout. The instance root is found from --folio exactly as the sweep finds it, so a folio in a subfolder is read at its own root; the folio directory is read second, for folios swept before bean s3p2's fix.",
         cost: "One text walk of the folio and one read per sidecar. No network.",
       },
       requires: { runtime: ["bun"], network: false },
