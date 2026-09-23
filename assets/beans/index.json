@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 631,
+      "count": 632,
       "unit": "beans"
     }
   },
@@ -433,14 +433,14 @@
     {
       "id": "folio-assistant-1le7",
       "title": "Action-icon tiles: one QR-sized tile template, expandable, for settings / languages / KG viewer / src",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:23:01Z",
-      "updatedAt": "2026-09-19T01:29:12Z",
+      "updatedAt": "2026-09-23T14:55:36Z",
       "preview": "_2026-09-19T00:23:32Z_ — OWNER, 2026-09-19, verbatim: 'how do you get to there? maybe an icon of a net in top navbar? should also link to the renderd jsopn-ld on staging/main appropraialy on the viewer. that navbar is getting crowded. will need to make expandable set of icon tiles that build out to the size of the QR code. use that as kind of the template size for action icons, settins opens into ",
       "file": "beans/defs/folio-assistant-1le7--action-icon-tiles-one-qr-sized-tile-template-expan.md"
     },
@@ -2229,7 +2229,7 @@
     {
       "id": "folio-assistant-87ln",
       "title": "QOU QA MOVE: move qou's 3,653 sibling block-QA verdicts into test/results/block-qa/ (s3p2 option 2)",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-q4jm",
@@ -5683,6 +5683,20 @@
       "file": "beans/defs/folio-assistant-o3xy--ui-accessibility-the-rendered-site-is-the-artefact.md"
     },
     {
+      "id": "folio-assistant-o5qj",
+      "title": "BEAN-STORE HEALTH: the duplicate-title finding cannot be cleared by following its own action — scrapped beans stay in the group",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T14:57:56Z",
+      "updatedAt": "2026-09-23T15:06:02Z",
+      "preview": "`bean-store`'s `bean-duplicate-title-groups` finding is `major` with a\ndeliberately zero tolerance — *\"Any duplicate at all is the leading edge of\nthat, so there is no tolerance band.\"* Its action is precise:\n\n> Keep the earliest, and set each of the others to `scrapped` with a note\n> naming the one that survives. **Never `beans delete`** — a scrapped bean\n> records a considered rejection, a delet",
+      "file": "beans/defs/folio-assistant-o5qj--bean-store-health-the-duplicate-title-finding-cann.md"
+    },
+    {
       "id": "folio-assistant-o6vj",
       "title": "OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes",
       "status": "completed",
@@ -8721,14 +8735,14 @@
     {
       "id": "folio-assistant-zkgs",
       "title": "findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T13:54:01Z",
-      "updatedAt": "2026-09-20T13:54:01Z",
+      "updatedAt": "2026-09-23T14:52:07Z",
       "preview": "## What was measured\n\nFound while fencing `detangler-archimedean-wall` behind `folioOptionalAxes()`.\nThe fence verified OFF immediately and could not be verified ON from anywhere\nin this checkout, whatever the cwd. Every number below was observed.\n\n`findContentRepoRoot()` walks up from `process.cwd()` and stops at the nearest\nancestor holding the declared folio directory. `cat-harness/harness.json",
       "file": "beans/defs/folio-assistant-zkgs--findcontentreporoot-stops-at-cat-harness-so-this-r.md"
     },
