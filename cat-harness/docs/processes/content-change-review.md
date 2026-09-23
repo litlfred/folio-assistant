@@ -77,6 +77,6 @@ Every one of the 6 decision(s) is documented.
 | **A finding disputed?**<br>`GW_Disputed` | Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed. | **Yes** → Adjudicate the disagreement<br>**No** → Every changed block reviewed? |
 | **Every changed block reviewed?**<br>`GW_Covered` | Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved. | **no** → Slice the change and assign reviewers<br>**yes** → Review impact assessment |
 | **Changes approved?**<br>`GW_Approved` | The committee's decision on the impact assessment. `No` requests changes; `Yes` approves. | **No** → Request changes<br>**Yes** → Approve |
-| **PR merged?**<br>`GW_Merged` | Was the PR merged? `Yes` removes the STAGING/<slug>/ preview; `No (iterate)` ends the pipeline and leaves the preview in place for the next round. | **Yes** → Remove STAGING/<slug>/<br>**No (iterate)** → Deployment complete |
+| **PR merged?**<br>`GW_Merged` | Was the PR merged? `Yes` removes the STAGING/<slug>/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run. | **Yes** → Remove STAGING/<slug>/<br>**No** → Not merged: preview kept |
 
 {% endraw %}

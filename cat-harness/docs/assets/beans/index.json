@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 635,
+      "count": 636,
       "unit": "beans"
     }
   },
@@ -3621,6 +3621,20 @@
       "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
     },
     {
+      "id": "folio-assistant-eeqw",
+      "title": "content-change-review GW_Merged: 'No (iterate)' ends at 'Deployment complete'",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:04:00Z",
+      "updatedAt": "2026-09-23T17:04:00Z",
+      "preview": "Found while documenting gateways (t3ad, #1127). The lane note says a 'No' 'ends the pipeline quietly instead of looping back into review', so the route is intended, but its label says 'iterate' (no loop exists) and its end event is named 'Deployment complete' although nothing deployed and the preview is kept. Same pass: methodology-from-source GW_Decision 'changes' → A_Render was checked and is co",
+      "file": "beans/defs/folio-assistant-eeqw--content-change-review-gw-merged-no-iterate-ends-at.md"
+    },
+    {
       "id": "folio-assistant-eief",
       "title": "CSVW skill + ingestion tools: tabular metadata as far as it can be determined",
       "status": "todo",
@@ -7075,14 +7089,14 @@
     {
       "id": "folio-assistant-t3ad",
       "title": "Document the 70 gateways that gateway-documented fails on",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T16:26:05Z",
-      "updatedAt": "2026-09-23T16:46:55Z",
+      "updatedAt": "2026-09-23T16:57:25Z",
       "preview": "Reported by `gateway-documented` (#1051, bean 6hq4), measured on main 2026-09-23: 70 exclusive/inclusive gateways across the processes/ corpus have no <documentation> saying what question they decide or what answers it. Count from the kg-qa sidecars (test/results/kg-qa/**), not from this text: re-run `bun run kg:audit` and count before starting.\n\nIssue #1044 (closed): the criterion landed and this",
       "file": "beans/defs/folio-assistant-t3ad--document-the-70-gateways-that-gateway-documented-f.md"
     },

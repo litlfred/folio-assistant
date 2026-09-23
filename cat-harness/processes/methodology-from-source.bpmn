@@ -64,7 +64,7 @@
       <bpmn:extensionElements><folio:no-skill reason="The owner's judgement over the rendered method, its refusals and its placement."/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Decision" name="Adopted?">
-      <bpmn:documentation>The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to rendering the method, adopted against refused.</bpmn:documentation>
+      <bpmn:documentation>The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to A_Render, the step that writes the adopted-against-refused table, so the agent re-runs render, placement, integration and tools and the owner reviews the result again. Only the owner accepts an adoption.</bpmn:documentation>
     </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Adopted" name="Adopted"/>
     <bpmn:endEvent id="End_Declined" name="Declined, with the reason recorded"/>
