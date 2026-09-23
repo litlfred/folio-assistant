@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 638,
+      "count": 639,
       "unit": "beans"
     }
   },
@@ -3633,6 +3633,20 @@
       "updatedAt": "2026-09-23T13:30:28Z",
       "preview": "Owner, 2026-09-23, naming three pages and then the rule:\n\n> navbar should be on sub pages like\n> https://litlfred.github.io/folio-assistant/cat-harness/catalogue/who-iris/\n>\n> or https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n> or library\n>\n> etc... **common fixture unless explicty removed in harness visualtion.**\n\nThe last line is the requirement, and i",
       "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
+    },
+    {
+      "id": "folio-assistant-eeqw",
+      "title": "content-change-review GW_Merged: 'No (iterate)' ends at 'Deployment complete'",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:04:00Z",
+      "updatedAt": "2026-09-23T17:13:40Z",
+      "preview": "Found while documenting gateways (t3ad, #1127). The lane note says a 'No' 'ends the pipeline quietly instead of looping back into review', so the route is intended, but its label says 'iterate' (no loop exists) and its end event is named 'Deployment complete' although nothing deployed and the preview is kept. Same pass: methodology-from-source GW_Decision 'changes' → A_Render was checked and is co",
+      "file": "beans/defs/folio-assistant-eeqw--content-change-review-gw-merged-no-iterate-ends-at.md"
     },
     {
       "id": "folio-assistant-eief",
