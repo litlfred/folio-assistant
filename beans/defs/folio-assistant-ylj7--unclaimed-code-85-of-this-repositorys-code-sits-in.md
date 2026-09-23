@@ -1,7 +1,7 @@
 ---
 # folio-assistant-ylj7
 title: 'UNCLAIMED CODE: 85% of this repository''s code sits in no declared directory — declare them, do not move them'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-22T19:40:16Z
@@ -86,8 +86,8 @@ most costly form.
 
 ## Done when
 - [ ] a `code` graph kind is registered, with `holds` and `renderable` decided
-- [ ] every instance's code directories are declared
-- [ ] a QA axis reports the two questions SEPARATELY, never as one number
+- [x] every instance's code directories are declared — bar `content/`, whose reason is below
+- [x] a QA axis reports the two questions SEPARATELY, never as one number
 - [ ] `<stub>/src` is written down as the convention for new instances
 
 ## Round 1 shipped, 2026-09-22 — 15% → 73%
@@ -178,3 +178,86 @@ test's title is *"lists every kind the instance declares"*, so a list that
 cannot grow was an assertion about 2026-09-22 rather than about the
 declaration. `code` appears in the navbar declared-and-unlinked, which is the
 state `harness-tiles` keeps visible rather than hides.
+
+
+## Round 3, 2026-09-23 — the reporter, and the convention where it is looked for
+
+`bun run check:code-accounting`. Advisory: both questions have open beans, and
+a gate that fails on a backlog is a gate somebody switches off.
+
+```
+Code accounting — 1260 .ts file(s). TWO questions, reported apart.
+
+  1. DECLARED
+       949 in any declared directory   75%
+       740 in one declared `code`      59%
+       311 accounted for by nothing
+            304  cat-harness/content
+              2  cat-harness/types
+              1  folio-assistant-sci/content   ... and four more singletons
+
+  2. REACHABLE
+        70 Tool node(s) naming a command
+        41 distinct .ts entry point(s) they resolve to
+       138 file(s) reachable from one        11%
+```
+
+### Question 1 has TWO readings, and conflating them reads an improvement as a regression
+
+*In any declared directory* (75%) is wider than *in one declared `code`*
+(59%). `cat-harness/schemas/` holds 142 `.ts` and is declared — as `schemas`,
+correctly, since adding `code` would give one directory two kinds.
+
+Round 1 reported **73%** on the wide reading. Measuring the narrow one after
+round 2 gave **59%**, and for a moment that looked like a regression caused by
+round 2 — which had in fact moved the wide number to **75%**. Both are printed
+for exactly this reason. The bean's own warning, *"re-derive rather than
+quoting; the numbers move"*, turns out to be about the DEFINITION as much as
+the value.
+
+### The residue is one directory, and its reason was already recorded
+
+304 of the 311 are `cat-harness/content` — deferred pending the partition
+split, as this bean already said. The other seven are singletons. So question
+1 is finished to the extent it can be without that decision.
+
+### Question 2 is a CLOSURE, and 11% is the honest number
+
+Counting the 41 entry points would have reported ~3% on a corpus where most
+modules are genuinely reachable. The walk follows static relative imports and
+reports **138 of 1260**. It is a FLOOR — a bare specifier, a dynamic
+`import()` or a runtime path is not followed, so it under-claims rather than
+over-claims, which is the safe direction for a coverage figure.
+
+`d308` and `ce65` own that 11%. This bean's job was to make it VISIBLE and to
+stop it being averaged into question 1.
+
+### The gate caught a real defect in this very script, within minutes
+
+`toolEntryPoints` composed `join(root, "tools", "index.ts")`.
+`check:declared-paths` refused the literal, and asking `directoriesForGraph`
+instead changed the count **64 → 70**: the hardcoded path was silently missing
+six Tool nodes. Not a style nit — a measurement that was wrong, in a script
+written to produce correct measurements.
+
+### The convention was written, and written where nobody looks
+
+`<stub>/src` was already in the `code` row of `directory-conventions.md` — a
+table cell answering *"what is this kind?"*. Someone starting an instance
+reads **The conventional layout**, so it now says so there too, with why the
+existing instances are the exception: `schemas/` is a declared graph of its
+own kind, `content/pipeline/` is core's subject, and `scripts/` are entry
+points named by path from `package.json` and CI, so moving them is a large
+invocation surface for nothing the declaration does not already buy.
+
+The row's stale **85%** is gone, replaced by a pointer to the reporter — a
+number in prose is a claim the next round falsifies.
+
+## Summary of Changes
+
+- `cat-harness/scripts/check-code-accounting.ts` + `check:code-accounting`,
+  wired into `code-quality-gates.yml`, classified in the partition.
+- 9 tests over throwaway trees, including the two that matter: a file can be
+  declared and unreachable, and reachable while declared by nothing.
+- `directory-conventions.md`: `<stub>/src` in the layout section; the stale
+  percentage replaced by the reporter.

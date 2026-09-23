@@ -1,0 +1,84 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "skill-authoring-best-practices---claude-platform-docs",
+  "images": [
+    {
+      "id": "img-p007-1",
+      "file": "images/img-p007-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the SKILL.md anatomy diagram — YAML frontmatter above, Markdown body below",
+        "page": 7
+      },
+      "narrative": {
+        "text": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p024-1",
+      "file": "images/img-p024-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "page": 24
+      },
+      "narrative": {
+        "text": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    }
+  ]
+}

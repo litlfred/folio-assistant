@@ -100,3 +100,18 @@
 .fa-uml-views:has(.fa-uml-pick-portrait:checked) .fa-figure-tools:has(+ .fa-uml-landscape),
 .fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-uml-portrait,
 .fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-figure-tools:has(+ .fa-uml-portrait) { display: none; }
+
+/* Formalization status — a paper's block graph (gen-content-graph-uml.ts)
+ * fills each block by its status from proof-objects.json. Declared here, like
+ * the families above, so every drawing reads one palette (graph-rendering
+ * rule 7). Light tints, strongest claim greenest; the same order the Lean
+ * dependency graph in CI used, re-tinted for the light card. */
+:is(.mermaid, .language-mermaid) {
+  --fa-uml-status-reviewed_human: #d9eed9;
+  --fa-uml-status-reviewed_agentic: #f3ecc9;
+  --fa-uml-status-proved: #eaf3de;
+  --fa-uml-status-mathlib_ok: #e3f0dc;
+  --fa-uml-status-has_sorry: #f6e2cc;
+  --fa-uml-status-stated: #f4eed8;
+  --fa-uml-status-not_started: #f4e2e2;
+}
