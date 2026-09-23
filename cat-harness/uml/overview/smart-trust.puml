@@ -52,6 +52,23 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     count [1] : integer
     artifacts [0..*] : Artifact[]
   }
+  class "Item" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string
+  }
+  class "Group" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [0..1] : string
+    items [0..*] : Item[]
+  }
+  class "folio-ig-menu/v1" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 <<json: IgMenuSchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-menu/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    version [0..1] : string
+    source [1] : object
+    groups [0..*] : Group[]
+  }
   class "COSE Headers (DRAFT)" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_COSEHeader_schema_json_COSE_Headers__DRAFT_ <<schema: dak/StructureDefinition-COSEHeader.schema.json>> #f4f4f1 {
     1 [0..1] : string
     4 [0..1] : string
@@ -168,4 +185,6 @@ package "smart-trust/smart-trust-docs" as pkg_smart_trust_smart_trust_docs <<doc
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
+smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
+smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
 @enduml
