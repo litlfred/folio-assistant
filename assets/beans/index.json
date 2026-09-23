@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 637,
+      "count": 638,
       "unit": "beans"
     }
   },
@@ -4267,7 +4267,7 @@
     {
       "id": "folio-assistant-hn0l",
       "title": "pdf-structure/v1: the text origin is spelled two ways (source.text_source embedded|ocr vs text_source text-layer|ocr)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-slw1",
@@ -7283,6 +7283,20 @@
       "updatedAt": "2026-09-23T14:44:38Z",
       "preview": "An SSRN preprint was uploaded 2026-09-23 and ingested to `library/dusengumuremyi-2026-ai-mediated-raci/` (rung `pdf-ocr+pdf-pages`, 6 pages, no text layer, sha256 cc0ba9bc…). On the owner's ruling the same day it IS cited as `evidence` on `methodologies/raci.md` — but for ONE paragraph only, its §2.1 rendering of the four roles. Every empirical claim in it is rejected, for the reasons below. This ",
       "file": "beans/defs/folio-assistant-thb1--source-assessed-not-evidence-the-ai-mediated-raci.md"
+    },
+    {
+      "id": "folio-assistant-thux",
+      "title": "QUIET CLAIMS: a bean worked through its children is quiet by design — the check reads the parent's own file only",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T16:39:21Z",
+      "updatedAt": "2026-09-23T16:39:48Z",
+      "preview": "`bean-quiet-claims` reads one signal: `updated_at` on the bean's own file. For a\ntask that is the right signal. For a bean worked **through its children** it is\nthe wrong one — nothing touches the parent's file while the children move, so\nthe parent accrues quiet hours for doing exactly what it is for.\n\nAnd the finding then names no action a person can take. Its action says:\n\n> Check for a livenes",
+      "file": "beans/defs/folio-assistant-thux--quiet-claims-a-bean-worked-through-its-children-is.md"
     },
     {
       "id": "folio-assistant-tis1",
