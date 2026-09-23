@@ -6753,14 +6753,14 @@
     {
       "id": "folio-assistant-rtrg",
       "title": "BPMN targetNamespace drifted three ways across the workflow corpus",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T14:56:52Z",
-      "updatedAt": "2026-09-23T17:57:23Z",
+      "updatedAt": "2026-09-23T18:20:53Z",
       "preview": "Split out of `0d99` when that one was fixed, and **measured, not assumed** —\n`grep -rho 'targetNamespace=\"[^\"]*\"'` over `processes/`, 2026-09-20:\n\n| targetNamespace | diagrams |\n|---|---|\n| `https://litlfred.github.io/folio-assistant/workflows` | 30 |\n| `https://folio-assistant.dev/workflows` | 4 |\n| `http://folio-assistant.dev/bpmn/<diagram-name>` | 8 |\n\nThree shapes, two of them on a domain this",
       "file": "beans/defs/folio-assistant-rtrg--bpmn-targetnamespace-drifted-three-ways-across-the.md"
     },
