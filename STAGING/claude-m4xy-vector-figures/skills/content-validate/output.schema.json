@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/skills/content-validate/output.schema.json",
+  "title": "Content Validate Output",
+  "description": "Output schema for content validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "results"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "status"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/m4xy-vector-figures",
+    "sha": "95fd22b4c9b0822d9d1e74a23e5d76f8441bdadd",
+    "pr": "1012/merge",
+    "run": "35831512880"
+  }
+}
