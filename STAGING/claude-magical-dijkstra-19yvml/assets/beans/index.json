@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 617,
+      "count": 624,
       "unit": "beans"
     }
   },
@@ -121,6 +121,20 @@
       "updatedAt": "2026-09-20T08:18:18Z",
       "preview": "The relocation `mhh9` implied and `fvnw`/`mgdg` deliberately deferred:\nrelocating a directory as a side effect of adding a classification is the\nshape #395 refused and bean `auap` did as its own change.\n\n## Summary of Changes\n\n- `cat-harness/skills/memory/` -> `memory/`, 37 nodes, declared with\n  `\"scope\": \"repository\"` and `graphs: [\"memory\"]`.\n- **Repository scope, like `beans/`**: these are fac",
       "file": "beans/defs/folio-assistant-07xs--move-skillsmemory-out-to-a-declared-memory-directo.md"
+    },
+    {
+      "id": "folio-assistant-0818",
+      "title": "SMART-TRUST LHS NAV: the IG harvest dropped the menu AND the narrative pages — 0 of 12 menu labels resolve against 674 artefacts",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:59:25Z",
+      "updatedAt": "2026-09-23T10:59:25Z",
+      "preview": "Owner, 2026-09-23, with a screenshot of the published IG's top bar open on\n*Data Models and Exchange*:\n\n> https://litlfred.github.io/folio-assistant/smart-trust/ shoukd mirror stylin\n> of https://worldhealthorganization.github.io/smart-trust/ except navar menu\n> is now on LHS. … smart-guideline/base need harness\n\n## What the harvest kept, and what it dropped — MEASURED\n\n`smart-trust/fhir-artifact-",
+      "file": "beans/defs/folio-assistant-0818--smart-trust-lhs-nav-the-ig-harvest-dropped-the-men.md"
     },
     {
       "id": "folio-assistant-0bzg",
@@ -331,6 +345,20 @@
       "updatedAt": "2026-09-21T07:36:38Z",
       "preview": "FOUND 2026-09-21 while sweeping `a6kl`.\n\n`cat-harness/schemas/cat-harness.ts:2495` exports:\n\n    /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */\n    export function instanceRootFor(start: string): string\n\n`cat-harness/scripts/check-l1-complete.ts:718` declares its own:\n\n    export function instanceRootFor(cwd: string): string | undefined\n\nThey are genuinely different f",
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
+    },
+    {
+      "id": "folio-assistant-19cc",
+      "title": "UML generators as Tool nodes, with a uml-overview skill",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:57:43Z",
+      "updatedAt": "2026-09-23T11:49:48Z",
+      "preview": "Owner, 2026-09-23: 'make sure tools/skills are updated'. gen-uml-overview.ts and gen-object-model-uml.ts shipped in #991 as scripts only: no Tool node exercises them and no skill says when to run them or how to read the output.\n\n## Todo\n- [x] skill uml-overview in skills/folio-core, in the package manifest\n- [x] Tool nodes uml-overview and uml-object-model satisfying it\n- [ ] gates green, PR",
+      "file": "beans/defs/folio-assistant-19cc--uml-generators-as-tool-nodes-with-a-uml-overview-s.md"
     },
     {
       "id": "folio-assistant-1dfh",
@@ -897,14 +925,14 @@
     {
       "id": "folio-assistant-3psh",
       "title": "check:l1-complete cannot see an ORPHAN directory inside a library entry",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:28:09Z",
-      "updatedAt": "2026-09-20T15:28:22Z",
+      "updatedAt": "2026-09-23T11:16:11Z",
       "preview": "Found 2026-09-20 by causing it, then fixing the cause and finding the\nartefact still there.\n\n`pdf-images.py` derived the doc id differently from `pdf-structure.py`, so for\nthree arXiv papers it wrote `images.json` into a SIBLING directory of the entry\nit belonged to. That is fixed. But the same shape can arrive by any arm taking\n`-o <library-root>` with a doc id the entry does not have, and **noth",
       "file": "beans/defs/folio-assistant-3psh--checkl1-complete-cannot-see-an-orphan-directory-in.md"
     },
@@ -1287,6 +1315,20 @@
       "file": "beans/defs/folio-assistant-57n3--viewer-backticks-straybacktick-cannot-see-past-an.md"
     },
     {
+      "id": "folio-assistant-589f",
+      "title": "TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:57:40Z",
+      "updatedAt": "2026-09-23T11:57:40Z",
+      "preview": "Found by `yh6u` while declaring `file` (2026-09-23).\n\n## What is wrong\n\n`CONTENT_CONTEXT` declares `text: {\"@id\": \"folio-assistant-core:text\", \"@type\": \"@id\"}`. Prose blocks write `text: \"../sections/sec-001-introduction.md\"` — a path RELATIVE TO THE BLOCK. Under `@id` coercion a JSON-LD processor resolves it against the context's `@base` (`https://litlfred.github.io/folio/`), giving `https://litl",
+      "file": "beans/defs/folio-assistant-589f--text-links-resolve-wrong-text-is-coerced-to-id-so.md"
+    },
+    {
       "id": "folio-assistant-5a3l",
       "title": "DEPLOYMENT: topologies and operating modes are two axes, not one list of modes",
       "status": "in-progress",
@@ -1581,6 +1623,20 @@
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
     {
+      "id": "folio-assistant-6hq4",
+      "title": "QA: gateway documentation-completeness criteria (decisions and their branches)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:56:25Z",
+      "updatedAt": "2026-09-23T10:40:00Z",
+      "preview": "Extend the documentation-completeness QA control (issue #1007, bean `ooq3`)\npast activities, to the decision points of a diagram. Issue #1044, PR #1051,\nbranch `claude/magical-archimedes-4qkfxp-gateways`.\n\n## Measurement (2026-09-23, all 62 diagrams `kg-audit` loads, 0 load failures)\n\n- Gateways: 123 — 111 exclusive (102 diverging, 9 converging), 12 parallel\n  (6 fork, 6 join), 0 inclusive (the mo",
+      "file": "beans/defs/folio-assistant-6hq4--qa-gateway-documentation-completeness-criteria-dec.md"
+    },
+    {
       "id": "folio-assistant-6lb8",
       "title": "FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars",
       "status": "in-progress",
@@ -1865,14 +1921,14 @@
     {
       "id": "folio-assistant-7m6g",
       "title": "VISUALISER FILTER: by document, library, graph — and one per thing in the folio working space",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:02:31Z",
-      "updatedAt": "2026-09-21T21:02:31Z",
+      "updatedAt": "2026-09-23T12:26:57Z",
       "preview": "Owner, 2026-09-21: \"visualizer filter by document, library, graph, and one each thing in folio (working space. see beans/siblings)\"\n\n## What is asked\n\nThe visualiser gains a filter with at least these axes:\n\n- **document** — the authored content object\n- **library** — the STATIC graph (issue #764 section 3 F2: a folio's subjects are\n  the library and the working documents/assets/artefacts)\n- **gra",
       "file": "beans/defs/folio-assistant-7m6g--visualiser-filter-by-document-library-graph-and-on.md"
     },
@@ -3041,15 +3097,15 @@
     {
       "id": "folio-assistant-ca4a",
       "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
-      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [ ] stage B merged\n- [ ] claim shapes extended and run over each declared pair kind\n- [ ] not-parsed count reported per run; tests pin each shape",
+      "updatedAt": "2026-09-23T11:21:05Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape",
       "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
     },
     {
@@ -3227,14 +3283,14 @@
     {
       "id": "folio-assistant-cuxx",
       "title": "flbx stage B: flag declared prose/code pairs where one side changed and the other did not",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T11:21:05Z",
       "preview": "Issue #1042, R1 R2 R6 R7. Declared pairs only: <folio:implements workflow> (+ <folio:job>) on BPMN, co-located skill .md/.ts, block .md/lean.ref. Hash each side; a one-sided change since the pair was last reviewed is a minor, advisory finding ('prose not re-reviewed'), recorded as a sidecar in an existing QA family. Asserts nothing about truth, so it cannot cry wolf.\n\n## Done when\n- [x] pair disco",
       "file": "beans/defs/folio-assistant-cuxx--flbx-stage-b-flag-declared-prosecode-pairs-where-o.md"
     },
@@ -3539,14 +3595,14 @@
     {
       "id": "folio-assistant-en2d",
       "title": "PROCESS: large-document-review.bpmn composing staging, review-task, adjudication and a coverage gate — and whether editor already is the coordinator",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:55Z",
-      "updatedAt": "2026-09-22T21:04:31Z",
+      "updatedAt": "2026-09-23T11:42:28Z",
       "preview": "Owner: *\"process, roels ... integrate into current processes\"*.\n\n**Roles, measured 2026-09-22.** `roles.json` already declares reviewer,\neditor, narrative-reviewer, qc-reviewer, clinical-sme, adjudicator,\nfeedback-provider and stakeholder. `.claude/skills/actors/` adds\ntechnical-officer and content-reviewer. **No new review role is obviously\nneeded.** The candidate is a **review coordinator**: som",
       "file": "beans/defs/folio-assistant-en2d--process-large-document-reviewbpmn-composing-stagin.md"
     },
@@ -4307,6 +4363,20 @@
       "file": "beans/defs/folio-assistant-ie9l--readmes-every-instance-kind-needs-its-own-starting.md"
     },
     {
+      "id": "folio-assistant-iiop",
+      "title": "GLASS POLISH: the cover fills its card, the browser-only note is dismissable and names the missing save tool, and the tile strip is four tiles plus More",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T12:26:57Z",
+      "updatedAt": "2026-09-23T12:26:57Z",
+      "preview": "Owner, 2026-09-23, with screenshots of the glass over a schemas page:\n\n> artefact avatar should cover sheet\n\n> need to be able to dismiss: Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else. should also say (no \"save\" tool is currently enabled)\n\n> too many tiles!\n\nOffered shapes, the owner chose **\"Fills the card\"** for the avatar and **\"Few + a More tile\"",
+      "file": "beans/defs/folio-assistant-iiop--glass-polish-the-cover-fills-its-card-the-browser.md"
+    },
+    {
       "id": "folio-assistant-imen",
       "title": "GEN-LIBRARY-JSONLD: a figure on a section boundary is written four times to one path",
       "status": "completed",
@@ -4351,14 +4421,14 @@
     {
       "id": "folio-assistant-iumj",
       "title": "e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:17:56Z",
-      "updatedAt": "2026-09-19T01:34:39Z",
+      "updatedAt": "2026-09-23T09:58:54Z",
       "preview": "## What happened\n\n`main` went red at `78a399ee5` on `End-to-end + accessibility (hard)` — two\nspecs in `tests/qa-panel.e2e.ts`. Fixed on `claude/ecstatic-goldberg-eroyaz`\n(PR #314); this bean is the general defect that fix does not close.\n\nA composition failure. #317 added the e2e job, green against the corpus as it\nthen stood. #302 adjudicated all 26 `voice-*` findings to zero — correctly —\nand w",
       "file": "beans/defs/folio-assistant-iumj--e2e-fixtures-read-the-live-qa-corpus-so-adjudicati.md"
     },
@@ -5977,6 +6047,20 @@
       "updatedAt": "2026-09-20T04:03:21Z",
       "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of bootstrap. Th",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
+    },
+    {
+      "id": "folio-assistant-px0t",
+      "title": "REVIEW VERDICTS: record a per-block reviewer verdict so GW_Covered's uncoveredBlocks is computed, not supplied",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:41:17Z",
+      "updatedAt": "2026-09-23T11:41:17Z",
+      "preview": "Found while doing en2d (2026-09-23). `content-change-review.bpmn` now has a\ncoverage gate, `GW_Covered`, backed by `decisions/review-coverage-gate.dmn`.\nIt reads two facts: `uncoveredBlocks` and `openDefects`.\n\n`openDefects` can already be counted from `review-comments.json`.\n**`uncoveredBlocks` cannot**, because nothing records a reviewer's per-block\nVERDICT. A verdict means \"I read this block, a",
+      "file": "beans/defs/folio-assistant-px0t--review-verdicts-record-a-per-block-reviewer-verdic.md"
     },
     {
       "id": "folio-assistant-py74",
@@ -8147,14 +8231,14 @@
     {
       "id": "folio-assistant-xwi8",
       "title": "91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:30:19Z",
-      "updatedAt": "2026-09-23T07:34:11Z",
+      "updatedAt": "2026-09-23T11:48:23Z",
       "preview": "Found by bean `zaqn`. `gen-library-jsonld` reports 91 orphaned block files (\"referenced by no section … Remove with --prune, once you have looked\"):\n\n| document | files |\n|---|---|\n| smart-base/library/9789240093362-eng | 47 |\n| agent-skills/library/arxiv-2608.08453v1 | 20 |\n| agent-skills/library/arxiv-2607.25032v1 | 12 |\n| cat-harness/library/arxiv-2508.05192v2 | 12 |\n\nAbout 364 KB total; last t",
       "file": "beans/defs/folio-assistant-xwi8--91-orphaned-library-block-files-committed-jsonld-n.md"
     },
@@ -8255,6 +8339,20 @@
       "updatedAt": "2026-09-22T19:30:00Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
+    },
+    {
+      "id": "folio-assistant-yh6u",
+      "title": "RECORDS ARE REAL JSON-LD: tabular.jsonld and contents.jsonld carry no @context, and 392 figure narratives use undeclared keys",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:55:23Z",
+      "updatedAt": "2026-09-23T12:13:09Z",
+      "preview": "Found while closing `792y`.\n\n## What is wrong\n\n- `folio-tabular-records/v1` (`tabular.jsonld`, written by `tabular-records.py`) and `folio-archive-contents/v1` (`contents.jsonld`, written by `archive-contents.py`) are named `.jsonld` and carry an `@id`, but have NO `@context`. A JSON-LD processor drops every key.\n- Measured 2026-09-23 over the 2,926 committed content-context documents: 8 keys are ",
+      "file": "beans/defs/folio-assistant-yh6u--records-are-real-json-ld-tabularjsonld-and-content.md"
     },
     {
       "id": "folio-assistant-yhcq",
