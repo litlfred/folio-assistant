@@ -414,23 +414,13 @@ editor)", "Review Committee"); three of *the work plan*. Nothing joined any of
 them to anything, so "which skills does this task's performer have" had no
 answer and an undefined lane was a silence rather than a finding.
 
-A role therefore declares the lane names it **binds**:
-
-```jsonc
-{
-  "id": "reviewer",
-  "name": "Reviewer / SME",
-  "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane.",
-  "actorKind": "person",
-  "lanes": ["Reviewer / SME", "Reviewer (SME or editor)", "Review Committee"],
-  "skills": ["content-review", "content-feedback"],
-  "inherits": ["viewer"]
-}
-```
-
-That resolved the whole existing corpus without editing a single `.bpmn`.
-
-**A new diagram should not add a name here.** Bind the lane explicitly:
+The first fix had each role declare the lane names it bound, a `lanes[]` of
+exact strings. That resolved the corpus without editing a `.bpmn`, but it put
+the pointer on the wrong node: a role is the general node, a lane the dependent
+one, and a general node never names its users (`data-modelling` step 8; owner,
+2026-09-23, #1168). So every one of the ~140 lanes that bound by name was given
+an explicit reference, and `lanes[]` was removed. **A lane binds its role
+itself, and only this way:**
 
 ```xml
 <bpmn:lane id="Lane_Reviewer" name="Reviewer">
@@ -605,8 +595,10 @@ uniquely was had no picture.
    > instruction type-checks, parses, and silently loses the field. That is
    > bean `zdrf`'s failure class, and it happened — the three roles added in
    > #453 each carry a `summary` that reaches no graph.
-2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
-   existing name you are not renaming.
+2. Bind its lanes: each lane that this role plays carries
+   `<folio:role ref="<role id>">`. The role lists no lanes, since a role is the
+   general node and a lane the dependent one (`data-modelling` step 8, #1168).
+   A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
 4. `bun run kg:audit` and commit the sidecars.

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: repository-health-watch\n"
-"POT-Creation-Date: 2026-09-23T10:12:45.816Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.199Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,57 +14,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/repository-health-watch.bpmn:70
+#: processes/repository-health-watch.bpmn:71
 #. Diagram label
 msgid "Any&#10;findings?"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:54
+#: processes/repository-health-watch.bpmn:55
 #. Diagram element documentation
 msgid "Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:71
+#: processes/repository-health-watch.bpmn:72
 #. Diagram element documentation
 msgid "Asked of the same `verdict`. `clean` is verdict == 'clean': the `repo-health` tracking issue is closed. `not clean` is verdict == 'findings': the one tracking issue is opened or edited in place with the report. A finding does not fail the job; only `unknown` does."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:103
+#: processes/repository-health-watch.bpmn:104
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:77
+#: processes/repository-health-watch.bpmn:78
 #. Diagram element documentation
 msgid "Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:76
+#: processes/repository-health-watch.bpmn:77
 #. Diagram label
 msgid "Close the&#10;tracking issue"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:53
+#: processes/repository-health-watch.bpmn:54
 #. Diagram label
 msgid "Could we&#10;tell?"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:63
+#: processes/repository-health-watch.bpmn:64
 #. Diagram element documentation
 msgid "Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:39
+#: processes/repository-health-watch.bpmn:40
 #. Diagram label
 msgid "Daily (06:41 UTC),&#10;or on dispatch"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:62
+#: processes/repository-health-watch.bpmn:63
 #. Diagram label
 msgid "Ensure the tracking&#10;label exists"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:88
+#: processes/repository-health-watch.bpmn:89
 #. Diagram element documentation
 msgid "Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on."
 msgstr ""
@@ -74,37 +74,37 @@ msgstr ""
 msgid "Is the repository itself healthy?"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:100
+#: processes/repository-health-watch.bpmn:101
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:105
+#: processes/repository-health-watch.bpmn:106
 #. Diagram label
 msgid "not clean"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:87
+#: processes/repository-health-watch.bpmn:88
 #. Diagram label
 msgid "Open or EDIT the one&#10;tracking issue"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:95
+#: processes/repository-health-watch.bpmn:96
 #. Diagram label
 msgid "Recorded &#8212; job stays GREEN"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:84
+#: processes/repository-health-watch.bpmn:85
 #. Diagram label
 msgid "Repository clean"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:46
+#: processes/repository-health-watch.bpmn:47
 #. Diagram element documentation
 msgid "Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:45
+#: processes/repository-health-watch.bpmn:46
 #. Diagram label
 msgid "Run the health checks,&#10;keeping the report either way"
 msgstr ""
@@ -124,12 +124,12 @@ msgstr ""
 msgid "THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY &#8212; how much of `gh-pages` the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.&#10;&#10;IT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding's action names something a PERSON does. That is `deletion-requires-confirmation` applied to the tool that most wants to break it: the skill's own worked example is bean `plj1`, a workflow whose shape deleted every open PR's preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.&#10;&#10;THE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (`if: always()`), which is why `Run the health checks` says \"keeping the report either way\". A sweep whose output survives only on success cannot be used to investigate the run that failed.&#10;&#10;The daily cron is at 06:41, OFF THE HOUR deliberately: GitHub's scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.&#10;&#10;THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.&#10;&#10;ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue &#8212; a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.&#10;&#10;`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label &#8212; the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job."
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:59
+#: processes/repository-health-watch.bpmn:60
 #. Diagram label
 msgid "Unknown &#8212; job RED,&#10;issue UNTOUCHED"
 msgstr ""
 
-#: processes/repository-health-watch.bpmn:101
+#: processes/repository-health-watch.bpmn:102
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -24,9 +24,9 @@ Owner, 2026-09-20: "also need to know about refreshing amterialed remote content
 
 | lane | role | what it does here |
 |---|---|---|
-| Contributor (human or agent) | — | Reached only when both upstream and local changed, which is the one case this process refuses to resolve by rule: which side wins depends on why the local edit was made, a fact only this lane has. |
-| Ingestion Engine (agent, runs unattended) | — | Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted. |
-| Corpus — L1 source knowledge graph | — | Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good. |
+| Contributor (human or agent) | `user` | Reached only when both upstream and local changed, which is the one case this process refuses to resolve by rule: which side wins depends on why the local edit was made, a fact only this lane has. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted. |
+| Corpus — L1 source knowledge graph | `corpus` | Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good. |
 
 ## Steps
 

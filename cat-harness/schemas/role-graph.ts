@@ -75,11 +75,13 @@
  * no tool could answer "which skills does this task's performer have" and no
  * check could find a lane nobody had defined.
  *
- * A role therefore declares the lane names it **binds** ({@link RoleDef.lanes},
- * exact match). That resolves the existing corpus without editing twenty BPMN
- * files, and it makes the *next* unbound lane a finding rather than a silence.
- * A diagram may also bind explicitly with `<folio:role ref="…"/>` on the lane,
- * which wins over name matching — see {@link laneRoleRef}.
+ * A LANE therefore names the role it binds, with `<folio:role ref="…"/>` —
+ * see {@link laneRoleRef}. The role does not list its lanes: a role is the
+ * general node and a lane the dependent one, and a general node never names its
+ * users (`data-modelling` step 8; owner, 2026-09-23, #1168). Until then roles
+ * carried a `lanes[]` of exact lane names, and about 140 lanes bound only by
+ * that name match; every one was migrated to an explicit ref, so an unbound
+ * lane is a finding rather than a silence.
  *
  * ## Three states
  *
@@ -229,7 +231,7 @@ export interface RoleDef {
   /** Stable id. Referenced by `<folio:role ref>` and by `inherits`. */
   id: string;
   /**
-   * Display text. Not used for matching — {@link RoleDef.lanes} is.
+   * Display text. Not used for matching: a lane binds by `<folio:role ref>`.
    *
    * `title` and `description` rather than `name` and `summary`: they are the
    * two labels EVERY knowledge-graph node carries (`schemas/kg-node.ts`), and a
@@ -260,15 +262,6 @@ export interface RoleDef {
    * the other loses a distinction the graph is built on.
    */
   actorKinds: ActorKind[];
-  /**
-   * Exact BPMN lane names this role binds, across every diagram.
-   *
-   * A list rather than one name because the corpus spells one position several
-   * ways and normalising sixty lane strings in twenty diagrams is a separate,
-   * riskier change than declaring the synonyms. New diagrams should use
-   * `<folio:role ref>` and need not add a name here.
-   */
-  lanes: string[];
   /**
    * Who this reader IS, in prose — the persona an author writes for and a QA
    * reviewer checks against.
@@ -380,7 +373,6 @@ export const RoleDefSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
-  lanes: z.array(z.string()).default([]),
   /**
    * Skills available to an actor in this role, before inheritance.
    *
@@ -739,19 +731,19 @@ export function resolveRoleStack(graph: RoleGraph, path: string[]): RoleStack {
 /**
  * The role a BPMN lane binds.
  *
- * `explicitRef` — the lane's own `<folio:role ref="…"/>` — wins when present,
- * because a diagram that has said which role it means must not be second-
- * guessed by a string table. Falling back to exact lane-name matching is what
- * lets the existing corpus resolve at all.
+ * Only the lane's own `<folio:role ref="…"/>` binds it. There is no fallback
+ * to matching the lane's display name against the roles: that fallback needed
+ * a `lanes[]` on every role, which is a general node naming its users
+ * (`data-modelling` step 8, #1168). `laneName` is kept for callers' sake and
+ * no longer consulted.
  */
 export function roleForLane(
   graph: RoleGraph,
   laneName: string | undefined,
   explicitRef?: string,
 ): RoleDef | undefined {
-  if (explicitRef) return findRole(graph, explicitRef);
-  if (!laneName) return undefined;
-  return graph.roles.find((r) => r.lanes.includes(laneName));
+  void laneName;
+  return explicitRef ? findRole(graph, explicitRef) : undefined;
 }
 
 /**
@@ -832,13 +824,6 @@ export function laneBinding(
   return { kind: "unbound" };
 }
 
-/** Every lane name any role binds — the denominator for a coverage report. */
-export function boundLaneNames(graph: RoleGraph): Set<string> {
-  const s = new Set<string>();
-  for (const r of graph.roles) for (const l of r.lanes) s.add(l);
-  return s;
-}
-
 // ── Graph projection ────────────────────────────────────────────
 
 /**
@@ -850,7 +835,6 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
     "@context": {
       ...NS_PREFIXES,
       skills: termIri("hasSkill"),
-      lanes: termIri("bindsLane"),
       inherits: termIri("isA"),
       roles: termIri("declaresRole"),
     },
@@ -862,7 +846,6 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
       title: r.title,
       description: r.description,
       actorKinds: r.actorKinds,
-      lanes: r.lanes,
       skills: r.skills,
       ...(r.inherits?.length ? { inherits: r.inherits.map((i) => ({ "@id": `#${i}` })) } : {}),
     })),
