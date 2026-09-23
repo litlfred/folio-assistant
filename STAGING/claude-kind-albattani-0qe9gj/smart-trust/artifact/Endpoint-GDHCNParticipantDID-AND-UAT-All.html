@@ -1,0 +1,1139 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GDHCNParticipantDID-AND-UAT-All — WHO SMART Trust artefact | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="GDHCNParticipantDID-AND-UAT-All — WHO SMART Trust artefact" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Endpoint/GDHCNParticipantDID-AND-UAT-All in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
+<meta property="og:description" content="Endpoint/GDHCNParticipantDID-AND-UAT-All in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars." />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GDHCNParticipantDID-AND-UAT-All — WHO SMART Trust artefact" />
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  The browser-tab icon, from the same declared mark the sidebar title
+  (`title.html`) renders — reused rather than looked up by its own
+  `browser-icon` role. There WAS a second role for exactly that, on
+  `mark-small` in `harness.json`, and it went unread: nothing in this
+  repo ever emitted a favicon at all, `rel="icon"` included. It also could
+  not have driven this lookup as declared — `imagesForRole()`
+  (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
+  mark entry carries, so a `browser-icon`-role lookup returns nothing. Reusing
+  the already-resolved `icon` (the same field `title.html` reads) sidesteps
+  that and, more importantly, is what was asked for: the sidebar mark and the
+  tab icon are meant to be the SAME glyph, so one declaration driving both is
+  correct, not just convenient — flip `icon` in `harness.json` and both
+  follow in one edit, no template change needed.
+
+  SVG-only. No PNG/ICO fallback exists in the repo and none is generated
+  here — every browser this matters for (evergreen Chrome/Firefox/Edge, and
+  Safari since 16) reads `type="image/svg+xml"` directly; a raster fallback
+  would need generating actual image files, which is out of scope for this
+  change.
+
+  `relative_url`, same as `title.html` and `landing.html` — a bare
+  `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
+  for.
+--><link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/icons/cat-mark.svg" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/icons/cat-mark-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" sizes="16x16" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/icons/cat-mark-small.svg"><!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+<!--
+  Site UI: a QR of the current page in the sidebar header, and zoom /
+  full-width controls on the figures.
+
+  Loaded as same-origin files with no inline script, so no script-src
+  relaxation is needed. The QR is generated in the browser from
+  window.location.href rather than baked per page at build time, so it is
+  right for anchors, query strings, and both the directory and .html forms of
+  the same page. The UTF-8 shim must come after the encoder: without it the
+  encoder's stringToBytes is single-byte and a non-ASCII character in a URL
+  silently encodes to mojibake.
+-->
+<!--
+  The configured colour scheme, published for docs/assets/js/docs-ui.js.
+
+  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
+  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
+  returns the string "default" on a fresh load, never "dark". The scheme
+  toggle needs to know what "default" MEANS here, and reading it from the
+  config is the one way that does not go stale when the config changes.
+-->
+<script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script>
+<!--
+  The TRANSLATION INDEX — which source page has a translation in which locale.
+
+  `mountNavLocale` in docs-ui.js reads this to decide what the left-hand navbar
+  shows: with the source language selected it does nothing, and with `fr`
+  selected it swaps each nav item that HAS a French page for that page, IN
+  PLACE OF the English one. An item with no translation is left exactly as it
+  is — that is the fallback, and it is the absence of a rewrite rather than a
+  code path of its own.
+
+  Generated into `docs/_data/translations.json` by
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
+
+  THREE STATES, and the third is the reason this is a JSON island rather than
+  a conditional. (The tag name is written inside {% raw %}
+  below because LIQUID PARSES TAGS INSIDE AN HTML COMMENT — the comment
+  wrapper means nothing to it — so naming a tag in prose is a syntax error at
+  build time, and the message points at the THEME's head.html because Liquid
+  attributes an include's line to the includer. This comment cost one red
+  deploy.
+
+  AND THEN IT COST A SECOND ONE, differently, which is why this paragraph now
+  describes the wrapper rather than spelling it. It used to SPELL both halves
+  as an example — and the closing half ENDED THIS COMMENT eighteen lines
+  early, so every line below it rendered as visible body text at the top of
+  EVERY PAGE on the site. Reported by the owner from the staging URL,
+  2026-09-19.
+
+  The asymmetry is the lesson: a Liquid tag has an escape, and the closing
+  comment delimiter has NONE. There is no way to write those three characters
+  inside a comment and have the comment survive them, because the parser is
+  not looking for an escape — it stops at the first match. So the rule is not
+  "escape it carefully", it is DO NOT WRITE IT: describe it, or name it one
+  character at a time. Guarded by
+  scripts/tests/html-comment-delimiters.test.ts, which fails on an opening
+  delimiter appearing inside an open comment — the one machine-detectable
+  signature of somebody trying.)
+  A {% if %} would have to choose between the second and
+  third rows below, and there is no expression that can:
+
+    1. the data file is there      -> `index` is an object; filter the nav.
+    2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
+                                      swap, so every item correctly falls back
+                                      to the source language.
+    3. the data file is ABSENT     -> `jsonify` emits `null`, and docs-ui.js
+                                      leaves the navbar EXACTLY as built.
+
+  A build that could not determine the translation set must never render as a
+  folio that has no translations. `null` is how that is said.
+
+  `baseurl` travels with it because the client has no other way to strip the
+  site prefix off a nav `href` before matching it.
+-->
+<script type="application/json" id="fa-translation-index">{
+  "baseurl": "/folio-assistant/STAGING/claude-kind-albattani-0qe9gj",
+  "index": {"$schema":"folio-translation-index/v1","sourceLocale":"en","locales":["ar","es","fr","ru","zh"],"pages":{"":{"sourceUrl":"/","sourceTitle":"Home","translations":{"ar":{"url":"/ar/index.html","title":"الصفحة الرئيسية (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/es/index.html","title":"Inicio (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/index.html","title":"Accueil (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/index.html","title":"Главная (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/index.html","title":"首页 (ZH)","status":"unverified","dir":"ltr"}}},"guides/agent-onboarding":{"sourceUrl":"/guides/agent-onboarding.html","sourceTitle":"Agent onboarding","translations":{"ar":{"url":"/guides/ar/agent-onboarding.html","title":"تأهيل الوكيل (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/guides/es/agent-onboarding.html","title":"Incorporación del agente (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/guides/fr/agent-onboarding.html","title":"Intégration de l'agent (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/guides/ru/agent-onboarding.html","title":"Введение для агента (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/guides/zh/agent-onboarding.html","title":"代理入门 (ZH)","status":"unverified","dir":"ltr"}}}}}
+}</script>
+<!--
+  Translation metadata for this page, consumed by docs-ui.js to auto-render
+  language coverage and QA badges. The translation pipeline stamps front matter;
+  this block publishes it to the client. No manual editing needed.
+-->
+<script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":null,
+  "sweep": {
+    "run": true,
+    "sweptAt": "2026-09-21T11:25:19.602Z",
+    "totalPages": 289,
+    "pagesWithTranslations": 8,
+    "complete": true
+  }
+}</script>
+<!--
+  Where the action tiles point.
+
+  RESOLVED, not composed. `scripts/sync-docs-harness.ts` writes
+  `docs/_data/harness.json` from the instance's own `cat-harness.json`,
+  through `siteLinks` in `scripts/site-links.ts` -- which computes every path
+  with `artefactStub` and `renderingPath`, the same functions the knowledge
+  graph exporter and the Pages workflow use. The tile therefore cannot
+  disagree with what is published.
+
+  This block previously wrote `/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/kg/` by hand. Nothing
+  has ever been published at `<base>/kg/` -- the renderings sit at the base,
+  named after the stub -- so the only entry point to the viewer anywhere on
+  this site was a 404 from the day it was added. See bean `udx8`, and the
+  identical defect AGENTS.md records against the README's chapter PDFs. A
+  path built by convention is a claim; `bun run site:links --site _site`
+  checks it against the tree that actually ships, and the Pages workflow runs
+  that check after the export.
+
+  `path` is site-ROOT-relative and gets `relative_url`, which is what makes it
+  right under this site's `/folio-assistant/` baseurl. `url` is off-site and
+  is printed as-is. `source` is no longer taken from `aux_links`: those were
+  removed so the forge link stops appearing as text at the top of the main
+  panel (the owner asked for it as an icon, not a header), and the URL is
+  resolved from the git remote instead of written down twice.
+-->
+<!--
+  THE NAVBAR ICON ROW — which icons this instance shows, and where each goes.
+
+  `null` when the instance has not decided, and that is NOT the same as an
+  empty list: `navbarIcons` absent means "inherit, and nothing up the chain has
+  said either", while `[]` means the instance chose to show none. docs-ui.js
+  reads the two apart, and `jsonify` emits `null` for the first exactly as the
+  translations block above relies on.
+
+  Resolved in `sync-docs-harness.ts`: the icon list walks `needs` with the site
+  owner as the floor, and the hrefs come from this instance's own declared
+  visualisations plus `siteLinks`. Nothing about the row is decided in Liquid
+  or in JavaScript.
+-->
+<script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","processes","kg","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/"},"notes":{},"folders":[{"kind":"beans","path":"/beans/"},{"kind":"cat-harness","path":"/cat-harness/schemas/cat-harness/"},{"kind":"code","note":"no viewer yet"},{"kind":"docs","path":"/cat-harness/docs-auto/index/docs/docs/"},{"kind":"external-schema","path":"/external-schemas/"},{"kind":"folio","path":"/cat-harness/folio/"},{"kind":"fsh-guts","path":"/fsh-guts/"},{"kind":"glossary","path":"/glossary/"},{"kind":"health","path":"/health/"},{"kind":"interaction","note":"no viewer yet"},{"kind":"issue-marks","path":"/issue-marks/"},{"kind":"library","path":"/cat-harness/library/cat-harness/"},{"kind":"memory","note":"no viewer yet"},{"kind":"methodology","path":"/methodologies/"},{"kind":"processes","path":"/processes/"},{"kind":"qa","path":"/qa/"},{"kind":"scenarios","note":"no viewer yet"},{"kind":"schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","path":"/cat-harness/docs-auto/index/skills/cat-harness/"},{"kind":"todos","path":"/todos/"},{"kind":"tools","path":"/tools/"},{"kind":"translation-sources","path":"/translation-status/"},{"kind":"uml","note":"no viewer yet"},{"kind":"uploads","path":"/uploads/"},{"kind":"waiver","note":"no viewer yet"}]}</script>
+
+<script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/","jsonld":"/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/todos/index.json">
+
+<!--
+  THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
+  becomes its avatar.
+
+  R2 of issue #602: *"The threshold SHALL be declared data, not a literal in
+  the renderer."* `gen-docs-pages.ts` publishes the folio's own
+  `semantic-zoom.json`, and publishes NOTHING when the folio has not declared
+  one. So this `<meta>` may point at a 404, and that is a real state rather
+  than a defect: `docs-ui.js` reports it could not determine a threshold and
+  leaves every card's words in place. A default in either file would be the
+  literal R2 forbids, one layer further from where anybody looks for it.
+
+  The pointer is emitted UNCONDITIONALLY because Liquid cannot see whether the
+  generator wrote the file, and a conditional that guessed would make "this
+  folio declares no threshold" and "the build did not run" the same page.
+-->
+<meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/semantic-zoom.json">
+
+<!--
+  THE DECLARED VISUALISATIONS, as tiles.
+
+  Owner, 2026-09-20: *"if harness declares visaluzers, those should have tile"*
+  — so the tile set is the `coverage.visualiser` obligation made reachable, not
+  a second registry. `graph-tiles.ts` derives it into `_data/harness.json`;
+  this hands it to `docs-ui.js` for BOTH surfaces, because a tile is declared
+  once and says where it shows.
+
+  INLINE rather than a second fetch, unlike the todo index above, and the two
+  are different for a reason worth stating: that index grows with the todo
+  corpus, while this one is bounded by the number of directories an instance
+  DECLARES — twelve here — and every page needs it before first paint or the
+  navbar would visibly grow tiles a moment after the reader arrives.
+
+  `jsonify` and not a hand-built string: a title carrying a quote would
+  otherwise close the attribute, and the quoting rule is Liquid's rather than
+  something this comment has to be right about.
+-->
+<meta name="fa-tiles" content="[{&quot;id&quot;:&quot;agent-skills-library&quot;,&quot;directory&quot;:&quot;agent-skills-library&quot;,&quot;title&quot;:&quot;agent-skills-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/agent-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/agent-skills/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:4,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;beans&quot;,&quot;ref&quot;:&quot;cat-harness/docs/beans/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/beans/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:606,&quot;unit&quot;:&quot;beans&quot;},{&quot;id&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;directory&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;title&quot;:&quot;bootstrap-tools-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/bootstrap-tools/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;cat-harness&quot;,&quot;directory&quot;:&quot;cat-harness&quot;,&quot;title&quot;:&quot;Skills — cat-harness&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/cat-harness/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;detangle-schemas&quot;,&quot;directory&quot;:&quot;detangle-schemas&quot;,&quot;title&quot;:&quot;detangle-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/detangle/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/detangle/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:2,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;docs&quot;,&quot;directory&quot;:&quot;docs&quot;,&quot;title&quot;:&quot;Docs — cat-harness&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/docs/docs/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;external-schemas&quot;,&quot;directory&quot;:&quot;external-schemas&quot;,&quot;title&quot;:&quot;External schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/external-schemas/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/external-schemas/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio&quot;,&quot;directory&quot;:&quot;folio&quot;,&quot;title&quot;:&quot;folio&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/folio/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/folio/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:5,&quot;unit&quot;:&quot;stickies&quot;},{&quot;id&quot;:&quot;folio-assist-core-schemas&quot;,&quot;directory&quot;:&quot;folio-assist-core-schemas&quot;,&quot;title&quot;:&quot;folio-assist-core-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:17,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;folio-assistant-sci-library&quot;,&quot;directory&quot;:&quot;folio-assistant-sci-library&quot;,&quot;title&quot;:&quot;folio-assistant-sci-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/folio-assistant-sci/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1,&quot;unit&quot;:&quot;entry&quot;},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;fsh-guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;glossary&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/glossary/glossary/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;kg-navigation&quot;,&quot;directory&quot;:&quot;kg-navigation&quot;,&quot;title&quot;:&quot;Skills — kg-navigation&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/kg-navigation/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;large-datasets-schemas&quot;,&quot;directory&quot;:&quot;large-datasets-schemas&quot;,&quot;title&quot;:&quot;large-datasets-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/large-datasets/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/large-datasets/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:2,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;large-datasets-skills&quot;,&quot;directory&quot;:&quot;large-datasets-skills&quot;,&quot;title&quot;:&quot;Skills — large-datasets&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/large-datasets-skills/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;library&quot;,&quot;directory&quot;:&quot;library&quot;,&quot;title&quot;:&quot;library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:4,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;methodologies&quot;,&quot;directory&quot;:&quot;methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;ref&quot;:&quot;cat-harness/docs/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;processes&quot;,&quot;directory&quot;:&quot;processes&quot;,&quot;title&quot;:&quot;processes&quot;,&quot;ref&quot;:&quot;cat-harness/docs/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/processes/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;schemas&quot;,&quot;directory&quot;:&quot;schemas&quot;,&quot;title&quot;:&quot;schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/cat-harness/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:135,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;},{&quot;id&quot;:&quot;tools&quot;,&quot;directory&quot;:&quot;tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;ref&quot;:&quot;cat-harness/docs/tools/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/tools/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;translation-sources&quot;,&quot;directory&quot;:&quot;translation-sources&quot;,&quot;title&quot;:&quot;translation-sources&quot;,&quot;ref&quot;:&quot;cat-harness/docs/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/translation-status/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:5,&quot;unit&quot;:&quot;locales&quot;},{&quot;id&quot;:&quot;uploads&quot;,&quot;directory&quot;:&quot;uploads&quot;,&quot;title&quot;:&quot;uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/uploads/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/uploads/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;,&quot;count&quot;:22,&quot;unit&quot;:&quot;waiting&quot;},{&quot;id&quot;:&quot;who-iris-library&quot;,&quot;directory&quot;:&quot;who-iris-library&quot;,&quot;title&quot;:&quot;who-iris-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/who-iris/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/who-iris/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;who-iris-skills&quot;,&quot;directory&quot;:&quot;who-iris-skills&quot;,&quot;title&quot;:&quot;Skills — who-iris&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/who-iris-skills/&quot;,&quot;hidden&quot;:false}]">
+
+<!--
+  THE SITE'S BASEURL, for the tiles above.
+
+  Every other site-root path on this page is composed by Liquid: `relative_url`
+  prepends `site.baseurl`, which is `/folio-assistant` on the canonical deploy
+  and `/folio-assistant/STAGING/<branch>` on a preview. The tiles cannot use
+  it, because they reach the client as JSON and are composed in `docs-ui.js`
+  after Liquid has finished — so the base has to travel with them.
+
+  IT SHIPPED WITHOUT ONE AND EVERY TILE 404ed (issue #801). `graph-tiles.ts`
+  stores `/beans/`, which is correct as data and is what `harness.links[].path`
+  stores too; written into an `href` unprefixed, a browser resolves it against
+  the ORIGIN, so the beans tile pointed at `litlfred.github.io/beans/`. The
+  owner found it by going looking for the board and landing there.
+
+  A meta of its own rather than reading `#fa-translation-index`, which already
+  carries a `baseurl`: that block is absent when `_data/translations.json` was
+  not built, and its reader returns `null` for it. Composing links out of an
+  optional block means the day it goes missing every tile silently points at
+  the origin again — which is this defect, with a second way to reach it.
+-->
+<meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj">
+
+<!--
+  WHETHER THIS IS A PREVIEW, for the tiles above.
+
+  `feature-staging.yml` writes `staging_slug` into `_data/build.yml`;
+  `docs-site.yml` writes the same file WITHOUT it. So a non-empty value here
+  means "a STAGING/<slug>/ preview", an empty one means the canonical deploy
+  or a local build.
+
+  It exists so a tile can vanish with its page. `compose-docs.ts` withholds a
+  `publish: "staging-only"` page from the canonical tree; a tile still pointing
+  at it would be a link to a 404 — `pb04`, a dead link being worse than no
+  link, and worse than usual here because the tile ALSO advertises content the
+  declaration is deliberately not publishing.
+
+  The filtering is client-side rather than baked into `harness.json` because
+  that file is generated once and committed, so it cannot know which deploy
+  will serve it. The page can be withheld at compose time because compose runs
+  per deploy; the data file cannot.
+
+  EMPTY IS THE SAFE VALUE, and it is what an absent `_data/build.yml` yields:
+  a build that cannot say it is a preview is treated as canonical and hides
+  the tile. That matches `compose-docs.ts`, which withholds unless positively
+  told `--staging` — one direction in both places, so the page and its tile
+  cannot disagree about which deploy they are on.
+-->
+<meta name="fa-staging" content="claude-kind-albattani-0qe9gj">
+
+<!--
+  WHICH SEARCH INDEX THIS PAGE IS SERVING.
+
+  `feature-staging.yml` fetches the PUBLISHED index before the build and
+  stamps what happened; `docs-site.yml` writes no such key, so the canonical
+  deploy leaves this empty and draws no warning. Bean `eof6`, on the owner's
+  ruling of 2026-09-22: *"staging uses last published index (w/ wanrnig)"*.
+
+  Three values, and the empty one is a real state rather than a fallback:
+
+    published    the preview serves the last published index. Results are
+                 about the MAIN SITE, not about this branch.
+    unavailable  the fetch failed; an empty index is served.
+    (empty)      not a staging build. No warning.
+
+  The bean this implements had first concluded that staging must disable
+  search outright, because a stale hit is "a wrong PASS, BELIEVED". The ruling
+  keeps search and attacks the belief instead — which is why the value is
+  emitted at all. An index swapped in with nothing on the page saying so would
+  be the unmarked staleness the bean was right to refuse.
+-->
+<meta name="fa-search-index" content="published">
+
+<!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/beans/index.json">
+
+<!--
+  The discarded-items document — `fsh-guts.jsonld`, published at the base by
+  `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
+  then some: it carries every node's BODY, which is 64 KB against a 5 KB
+  document without them. Inlining that into every page's <head> would be
+  absurd for content reached through one control inside Settings.
+
+  `.json` rather than `.jsonld`. Both are published and they are the same
+  bytes; Pages has no media type for `.jsonld` and serves it as
+  octet-stream. `fetch().json()` would parse it anyway, but every other
+  rendering here uses the alias and one that did not would be the odd case a
+  later reader has to work out.
+
+  The viewer fetches this WHEN SETTINGS OPENS, never on page load, and a
+  fetch that fails is reported rather than shown as an empty trashcan —
+  "nothing discarded" and "could not read the document" are opposite facts.
+-->
+<meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/fsh-guts.json">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/docs-ui.css?v=1790162760">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/work-plan.css?v=1790162760">
+<!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
+     `bun run themes:css`; `themes:css:check` fails the build when it is stale.
+     Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
+     roles that docs-ui.css consumes, and a custom property has to be set on a
+     matching element before the rule reading it takes effect. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/themes.css?v=1790162760">
+<!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
+     that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/uml.css?v=1790162760">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/avatars.css?v=1790162760">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
+<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/vendor/qrcode.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/vendor/qrcode_UTF8.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/docs-ui.js?v=1790162760" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/work-plan.js" defer></script>
+
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style>
+
+
+</head>
+
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/" class="site-title lh-tight"><span class="fa-site-mark fa-site-mark--avatar" aria-hidden="true">
+    <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-card.webp" alt=""
+         style="width: 200%; height: 200%;
+                left: 0%; top: -92%">
+  </span><span class="fa-site-title">C@T Harness</span>
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/agentic-harness.html" class="nav-list-link">Agentic harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/crdm-methodology.html" class="nav-list-link">CRDM methodology</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/beans-and-todos.html" class="nav-list-link">Beans and todos</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/getting-started.html" class="nav-list-link">/getting-started</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/interaction-modality.html" class="nav-list-link">/interaction-modality</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/local-language-trap-agent-audit.html" class="nav-list-link">/language-trap-agent-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/rendered-verification.html" class="nav-list-link">/rendered-verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/repo-conversion.html" class="nav-list-link">/repo-conversion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/confirmation-waiver.html" class="nav-list-link">A confirmation can be waived</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/decision-audit.html" class="nav-list-link">A decision is not a finding, and neither is a substitute for the other</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/retry-backoff.html" class="nav-list-link">A falling-off retry rate, on every error</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/readme-sections.html" class="nav-list-link">A folio's README</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/harness-tiles.html" class="nav-list-link">A tile is the harness's, not the node's</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/AGENTS.html" class="nav-list-link">AGENTS.md</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-acquisition.html" class="nav-list-link">Acquisition is the step before ingestion, and it had no home</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/activity-log.html" class="nav-list-link">Activity log</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/adjudication.html" class="nav-list-link">Adjudication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/adopt-methodology-from-source.html" class="nav-list-link">Adopt a methodology from a source document</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/methodology-adoption.html" class="nav-list-link">Adopting a methodology, and choosing between them</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/upstream-version-adoption.html" class="nav-list-link">Adopting an upstream version bump</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ui-accessibility.html" class="nav-list-link">All UI must follow accessibility guidelines</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/archiving-web-pages.html" class="nav-list-link">Archiving a web page</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/asset-extraction.html" class="nav-list-link">Asset extraction</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bean-blocking.html" class="nav-list-link">Blocking is a claim about the work, not a mood</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ci-health.html" class="nav-list-link">CI health</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/crdm-data-model.html" class="nav-list-link">CRDM</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/crdm-requirements-workflow.html" class="nav-list-link">CRDM requirements workflow</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/code-node-review.html" class="nav-list-link">Code node review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-profiles.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/content-context-and-state-graphs.html" class="nav-list-link">Content, context and state graphs</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-contrast.html" class="nav-list-link">Contrast: measured over the darkest thing that could be there</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/covered-is-not-reachable.html" class="nav-list-link">Covered is not reachable</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/create-sticky-note.html" class="nav-list-link">Create a sticky note</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/data-modelling.html" class="nav-list-link">Data modelling</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-declaration.html" class="nav-list-link">Declaring a theme</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/deletion-requires-confirmation.html" class="nav-list-link">Deletion requires explicit confirmation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/directory-conventions.html" class="nav-list-link">Directory conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/domain-fencing.html" class="nav-list-link">Domain fencing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/edge-kinds-and-blast-radius.html" class="nav-list-link">Edge kinds and blast radius</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bootstrap-graph-emission.html" class="nav-list-link">Emitting bootstrap's own graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/evidence-appraisal.html" class="nav-list-link">Evidence Appraisal</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/evidence-review.html" class="nav-list-link">Evidence review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/feature-staging.html" class="nav-list-link">Feature-branch staging</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/crdm-detect.html" class="nav-list-link">Feature-request detection (CRDM trigger)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/filing-dublin-core.html" class="nav-list-link">Filing a source: what Dublin Core carries, and what it does not</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/flushable-containers.html" class="nav-list-link">Flushable containers</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-generation.html" class="nav-list-link">Generating a theme's CSS</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/goal-review.html" class="nav-list-link">Goal review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/graph-detanglement.html" class="nav-list-link">Graph detanglement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/harness-requirements.html" class="nav-list-link">Harness requirements</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/iris-dspace.html" class="nav-list-link">IRIS, DSpace and Dublin Core</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/incremental-render.html" class="nav-list-link">Incremental render</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/instance-kinds.html" class="nav-list-link">Instance kinds</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/kg-export.html" class="nav-list-link">KG export</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/kg-to-portal.html" class="nav-list-link">KG → package → distribution → portal</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-cache-restore.html" class="nav-list-link">Lean cache: the authoring loop</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/library-ingestion.html" class="nav-list-link">Library ingestion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/literature-search.html" class="nav-list-link">Literature search</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/log-message.html" class="nav-list-link">Logging what you are doing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/mcp-assembly.html" class="nav-list-link">MCP assembly</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/mcp-contract.html" class="nav-list-link">MCP contract</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/mcp-projection.html" class="nav-list-link">MCP projection</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/schema-management.html" class="nav-list-link">Managing a schema</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/archiving-arxiv.html" class="nav-list-link">Materializing from arXiv</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/materialize-remote.html" class="nav-list-link">Materializing remote content</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/unverified-constraints.html" class="nav-list-link">Never encode a constraint you have not verified</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/kg-contribution-offer.html" class="nav-list-link">Offering the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/opening-brief.html" class="nav-list-link">Opening brief</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-artefacts.html" class="nav-list-link">Per-artefact specialisation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/placement.html" class="nav-list-link">Placement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/session-state-machine.html" class="nav-list-link">Playing a state machine</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-ui-review.html" class="nav-list-link">Post-MVP, because there is nothing to check before there is a render</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/prepare-merge.html" class="nav-list-link">Prepare-merge</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/process-state.html" class="nav-list-link">Process state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bpmn-processes.html" class="nav-list-link">Processes are BPMN, and the diagrams are executable</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bootstrap-graph-publication.html" class="nav-list-link">Publishing bootstrap's graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/qa-report-signing.html" class="nav-list-link">QA report signing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/qa-witness.html" class="nav-list-link">QA witnesses</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/raci.html" class="nav-list-link">RACI</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/github-state-inspection.html" class="nav-list-link">Reading GitHub state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bootstrap-kg-navigation.html" class="nav-list-link">Reading a knowledge graph before you have anything</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/kg-navigation.html" class="nav-list-link">Reading the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/related-work-coordination.html" class="nav-list-link">Related work: find it, sort it, ask</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/board-diagram-interchange.html" class="nav-list-link">Relationship first, visualisation later</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/render-logging.html" class="nav-list-link">Render logging</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/render-order.html" class="nav-list-link">Render order</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/kg-viewer.html" class="nav-list-link">Rendering the knowledge graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/review-comments.html" class="nav-list-link">Review comments</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/review-heatmap.html" class="nav-list-link">Review heat map</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/role-model.html" class="nav-list-link">Roles are swimlanes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/swot-analysis.html" class="nav-list-link">Running a SWOT scan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/serving-renderings.html" class="nav-list-link">Serving a rendering</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/session-context.html" class="nav-list-link">Session context</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/site-presentation-assets.html" class="nav-list-link">Site presentation assets</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/skills-and-tools.html" class="nav-list-link">Skills and Tools</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/staging-review.html" class="nav-list-link">Staging review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/board-windows.html" class="nav-list-link">Start in the avatar, open into a window</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/workflow-state.html" class="nav-list-link">State in a running process</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/agent-memory.html" class="nav-list-link">Subagent memory</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/surprise-to-corpus.html" class="nav-list-link">Surprise to corpus</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/swarm-management.html" class="nav-list-link">Swarm management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/swimlane-glossary.html" class="nav-list-link">Swimlane Glossary</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/tabular-metadata.html" class="nav-list-link">Tabular metadata</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/technical-documentation.html" class="nav-list-link">Technical documentation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/milnor-exposition-standard.html" class="nav-list-link">The Milnor exposition standard</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/decision-comparison.html" class="nav-list-link">The comparison goes BEFORE the question, not inside the options</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/deterministic-and-agentic.html" class="nav-list-link">The deterministic-to-agentic spectrum</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/communication-language.html" class="nav-list-link">The language you communicate in</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/platform-gates.html" class="nav-list-link">The platform's own gates</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/root-readme.html" class="nav-list-link">The root README, and the one fact it must carry</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theme-art-intake.html" class="nav-list-link">Theme art intake</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/theming.html" class="nav-list-link">Theming, split on the stage it fails at</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/translation-manager.html" class="nav-list-link">Translation manager</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/turn-reporting.html" class="nav-list-link">Turn reporting</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/untainted-verification.html" class="nav-list-link">Untainted verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/untrusted-input.html" class="nav-list-link">Untrusted input</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/vocabulary-authority.html" class="nav-list-link">Vocabulary authority</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/voice-authoring-guidance.html" class="nav-list-link">Voice authoring guidance</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/voice-editorial-review.html" class="nav-list-link">Voice editorial review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/voice-overlay-review.html" class="nav-list-link">Voice overlay review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/uploads-watch.html" class="nav-list-link">Watching the queue</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/where-a-proposal-goes.html" class="nav-list-link">Where a proposal goes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/where-does-this-go.html" class="nav-list-link">Where does this go?</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/confirm-harness.html" class="nav-list-link">Which harness, and where</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/wireframe-design-review.html" class="nav-list-link">Wireframe design review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/issue-working.html" class="nav-list-link">Working an issue</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/copy-out-materialized.html" class="nav-list-link">Working on materialized content</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-mathlibext-curator.html" class="nav-list-link">`MathlibExt` Curator</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/fsh-guts.html" class="nav-list-link">`fsh-guts/`</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/uses-editorial-review.html" class="nav-list-link">`uses[]` Editorial Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/local-bean-coordination.html" class="nav-list-link">bean-coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/bpmn-authoring.html" class="nav-list-link">bpmn-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/dak-postprocessing.html" class="nav-list-link">dak-postprocessing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/dak-preprocessing.html" class="nav-list-link">dak-preprocessing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/discussion.html" class="nav-list-link">discussion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/dmn-authoring.html" class="nav-list-link">dmn-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/docs-auto.html" class="nav-list-link">docs-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/document-authoring.html" class="nav-list-link">document-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/document-publishing.html" class="nav-list-link">document-publishing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/document-structure.html" class="nav-list-link">document-structure</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/fhir-client-operations.html" class="nav-list-link">fhir-client-operations</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/fhir-validation.html" class="nav-list-link">fhir-validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/hypothesis-generation.html" class="nav-list-link">hypothesis-generation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ig-artifact-ingestion.html" class="nav-list-link">ig-artifact-ingestion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/ig-publication.html" class="nav-list-link">ig-publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/l2-dak-authoring.html" class="nav-list-link">l2-dak-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/l3-fhir-authoring.html" class="nav-list-link">l3-fhir-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/latex-authoring.html" class="nav-list-link">latex-authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-formalization.html" class="nav-list-link">lean-formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/normative-statements.html" class="nav-list-link">normative-statements</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/proof-verification.html" class="nav-list-link">proof-verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/quality-control.html" class="nav-list-link">quality-control</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/scientific-critical-thinking.html" class="nav-list-link">scientific-critical-thinking</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/scientific-visualization.html" class="nav-list-link">scientific-visualization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/smart-base-tools.html" class="nav-list-link">smart-base Toolchain</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/smart-launch.html" class="nav-list-link">smart-launch</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/smart-stack-layering.html" class="nav-list-link">smart-stack-layering</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/terminology-management.html" class="nav-list-link">terminology-management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/local-todo-manager.html" class="nav-list-link">todo-manager</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skill-instructions/toolchain-ownership.html" class="nav-list-link">toolchain-ownership</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/document-ingestion.html" class="nav-list-link">Document ingestion</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/document-authoring.html" class="nav-list-link">Document Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/document-publishing.html" class="nav-list-link">Document Publishing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/document-structure.html" class="nav-list-link">Document Structure</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/normative-statements.html" class="nav-list-link">Normative Statement</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/evidence.html" class="nav-list-link">Evidence for a recommendation</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/harness-instances.html" class="nav-list-link">Harness instances</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/theming.html" class="nav-list-link">Theming</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/architecture/folio-board-requirements.html" class="nav-list-link">The folio board — requirements as agreed</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/managing-agent-context.html" class="nav-list-link">Managing agent context</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/kgraph.html" class="nav-list-link">The KGraph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/harness.html" class="nav-list-link">The Harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/ig-publisher.html" class="nav-list-link">The FHIR IG Publisher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/fhir-content.html" class="nav-list-link">FHIR content</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/swarm-management.html" class="nav-list-link">Swarm management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/subgraph-viewers.html" class="nav-list-link">Subgraph viewers</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tool-graph.html" class="nav-list-link">The tool graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/actor-facts-and-their-processes.html" class="nav-list-link">Actor facts and the processes that must read them</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/bean-archiving-in-bpmn.html" class="nav-list-link">Bean archiving in BPMN — the terminal state nothing draws</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/beans/intent.html" class="nav-list-link">Beans visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/catalogue/intent.html" class="nav-list-link">Catalogue visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/deployment-topologies.html" class="nav-list-link">Deployment topologies and operating modes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/docs-index/intent.html" class="nav-list-link">Docs index visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/external-schemas/" class="nav-list-link">External schemas</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/external-schemas/intent.html" class="nav-list-link">External schemas — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/folio/intent.html" class="nav-list-link">Folio visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/fsh-guts/intent.html" class="nav-list-link">Fsh-guts — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/glossary/intent.html" class="nav-list-link">Glossary visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/instance-versioning.html" class="nav-list-link">Instance versioning and dependency resolution, aligned to FHIR/SUSHI</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/kg-viewer/intent.html" class="nav-list-link">KG viewer — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/library/intent.html" class="nav-list-link">Library visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/methodologies/" class="nav-list-link">Methodologies</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/methodologies/intent.html" class="nav-list-link">Methodologies — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/agents-md-migration.html" class="nav-list-link">Migrating AGENTS.md into skills</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/navbar/intent.html" class="nav-list-link">Navbar — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/processes/intent.html" class="nav-list-link">Processes — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/" class="nav-list-link">Proposals</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/sdlc-process-audit.html" class="nav-list-link">SDLC process audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/schemas/intent.html" class="nav-list-link">Schemas visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/skills-index/intent.html" class="nav-list-link">Skills index visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/bootstrap.html" class="nav-list-link">The bootstrap graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/todos/intent.html" class="nav-list-link">Todos visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tools/" class="nav-list-link">Tools</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/tools/intent.html" class="nav-list-link">Tools — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/translation-status/intent.html" class="nav-list-link">Translation status visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/uploads/intent.html" class="nav-list-link">Uploads visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/wireframes/voices/intent.html" class="nav-list-link">Voices visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/smart-trust/" class="nav-list-link">WHO SMART Trust — artefact index</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/workflow-state-in-beans.html" class="nav-list-link">Workflow state in beans</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/proposals/zod-schemas-as-tools.html" class="nav-list-link">Zod schemas as Tools — audit and analysis</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/fsh-guts/" class="nav-list-link">fsh-guts — the trashcan that is kept</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">
+  <span aria-hidden="true">&times;</span>
+  <span class="fa-sr-only">Close navigation</span>
+</label><label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open">
+  <span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-sr-only">Keep navigation open</span>
+</label><div class="fa-nav-bottom__stack"><details class="fa-harness-tabs">
+  <summary class="fa-harness-tabs__heading">
+    Harnesses <span class="fa-harness-tabs__count">5</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tile-on: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-operations-card.webp" alt=""
+               style="width: 370.3704%; height: 370.3704%;
+                      left: -62.963%; top: -175.9259%">
+        </span><span class="fa-harness-tab__label">smart-trust</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/smart-trust-docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">fhir-artifact-index</span><span class="fa-harness-graph__note">no viewer yet</span></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 199; --fa-tile-on: 1; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/who-iris/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--initial"
+              aria-hidden="true">W</span><span class="fa-harness-tab__label">WHO IRIS</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/catalogue/who-iris/">catalogue</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/who-iris-docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/who-iris/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">skills</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">themes</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/who-iris/">uploads</a></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 236; --fa-tile-on: 1; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-engineer-card.webp" alt=""
+               style="width: 217.3913%; height: 217.3913%;
+                      left: 0%; top: -86.9565%">
+        </span><span class="fa-harness-tab__label">Folio Assistant</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 268; --fa-tile-on: 1; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-card.webp" alt=""
+               style="width: 200%; height: 200%;
+                      left: 0%; top: -92%">
+        </span><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/external-schemas/">external-schema</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/fsh-guts/">fsh-guts</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/glossary/">glossary</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/health/">health</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">interaction</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/issue-marks/">issue-marks</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/cat-harness/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">memory</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/methodologies/">methodology</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/processes/">processes</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/qa/">qa</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">scenarios</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/schemas/cat-harness/">schemas</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/skills/cat-harness/">skills</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/todos/">todos</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tools/">tools</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/translation-status/">translation-sources</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">uml</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/uploads/">uploads</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">waiver</span><span class="fa-harness-graph__note">no viewer yet</span></li></ul></li><li class="fa-harness-tab fa-harness-tab--floor"
+        style="--fa-tile-tone: 96; --fa-tile-on: 1; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/bootstrap/initialization.html"
+         data-fa-href-kind="handled"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-bootstrap-card.webp" alt=""
+               style="width: 416.6667%; height: 416.6667%;
+                      left: -112.5%; top: -256.25%">
+        </span><span class="fa-harness-tab__label">Bootstrap</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">glossary</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">models</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">processes</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">scenarios</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">schemas</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">skills</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">translation-sources</span><span class="fa-harness-graph__note">no viewer by design</span></li></ul></li></ul>
+</details></div><a class="fa-nav-home" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/">
+  <span class="fa-nav-home__mark" aria-hidden="true">&#8962;</span>
+  <span class="fa-nav-home__label">C@T Harness</span>
+</a>
+
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <style>
+.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+.st-held{color:#0d6e5e}
+.st-ref{color:#6b5b95}
+.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.st-stat span{font-size:.75rem;opacity:.75}
+</style>
+
+<p><a href="../">← all 674 artefacts</a></p>
+<h2 id="gdhcnparticipantdid-and-uat-all">
+  
+  
+    <a href="#gdhcnparticipantdid-and-uat-all" class="anchor-heading" aria-labelledby="gdhcnparticipantdid-and-uat-all"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> GDHCNParticipantDID-AND-UAT-All
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">Endpoint/GDHCNParticipantDID-AND-UAT-All</code></p>
+
+<p>Andorra Trustlist (DID v2) - UAT - All keys did:web:tng-cdn.who.int:v2:trustlist:-:AND resolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/AND/did.json</p>
+
+<div class="st-grid"><div class="st-stat"><b>Endpoint</b><span>resource type</span></div><div class="st-stat"><b>—</b><span>version</span></div><div class="st-stat"><b>Other</b><span>category</span></div></div>
+<h2 id="identity-and-bytes-are-different-questions">
+  
+  
+    <a href="#identity-and-bytes-are-different-questions" class="anchor-heading" aria-labelledby="identity-and-bytes-are-different-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Identity and bytes are different questions
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Canonical URL</td>
+      <td><em>none — examples and instances have no canonical URL</em></td>
+    </tr>
+    <tr>
+      <td>Published</td>
+      <td><a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-AND-UAT-All.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-AND-UAT-All.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-AND-UAT-All.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-AND-UAT-All.html">html</a></td>
+    </tr>
+    <tr>
+      <td>Materialization</td>
+      <td><span class="st-tag st-ref">referenced</span> — upstream, not held here</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="dak-api">
+  
+  
+    <a href="#dak-api" class="anchor-heading" aria-labelledby="dak-api"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DAK API
+  
+  
+</h2>
+    
+
+<p>No DAK API sidecar is published for this artefact. That is a fact about the IG,
+not a gap in this index — sidecars are published per artefact, and
+19 of 674 carry one.</p>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <!-- GENERATED by scripts/gen-docs-pages.ts. Do not hand-edit: `bun run cat-harness/scripts/gen-docs-pages.ts` rewrites it, and `--check` fails the build if it is stale. -->
+<section class="fa-todo-listing" id="fa-todo-listing" aria-labelledby="fa-todo-listing-heading" data-fa-todo-count="3">
+  <h2 class="fa-todo-listing-heading" id="fa-todo-listing-heading">Open notes (3)</h2>
+  <p class="fa-todo-listing-lead">Every note in this folio, in document order. This listing is the artefact; the board is an overlay over it.</p>
+  <ol class="fa-todo-listing-items">
+    <li class="fa-todo-listing-item" id="fa-todo-listing-human-todos-page-says-not-built-yet" data-fa-todo="human-todos-page-says-not-built-yet">
+      <h3 class="fa-todo-listing-summary">The human-todos page still says &#39;Not built yet&#39; — the store now exists</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>open</dd>
+        <dt>Priority</dt><dd>high</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/beans-and-todos.html#human-todos">beans-and-todos &rsaquo; human-todos</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`content/docs/beans-and-todos/human-todos.md` opens **&quot;Not built yet&quot;**, and
+that is no longer true. `todos/` is a declared graph with items on disk, a
+reader, a published JSON index and a board on the site.</p>
+        <p>This todo is attached to that block, so it renders beside the sentence it
+contradicts. That is the per-page assignment working on a real case rather
+than a demonstration — the page is genuinely stale and somebody has to decide
+what it should say now.</p>
+        <p>## What the page still gets RIGHT, and must not lose</p>
+        <p>Three of its four claims survive, and they are the valuable part:</p>
+        <p>- **&quot;Do not repurpose beans for it.&quot;** Still correct, and now structural:
+  `beans/` and `todos/` are separate declared graphs.
+- **When a todo is shown.** Still undecided. This PR answers it for the
+  navbar and the board; it does not answer whether an open item should
+  surface unasked, and the page&#39;s objection stands — surfacing every item on
+  every turn is noise, surfacing none is a list nobody reads.
+- **How one is retired.** Still undecided. `TodoStatus` carries `resolved`
+  and `wontfix`, but nothing retires one, and the page&#39;s point holds: a
+  person abandoning a reminder is ordinary and needs no ceremony, so the bean
+  rules do not transfer.</p>
+        <p>## What has changed and needs writing down</p>
+        <p>- **How a person creates one** is answered in the worst way: by an agent
+  writing a file. There is no human path at all yet.
+- The 2×2 the page is missing — memory against workflow management, human
+  against agent — with the empty quadrant named.</p>
+        <p>## Done when</p>
+        <p>The page says what is true. Cheapest correct move is an edit to that block,
+not a rewrite: strike &quot;Not built yet&quot;, keep the three open questions, add
+what now exists and who created it.</p>
+        <p>Every todo carries a pencil to exactly this file, so the edit is one click
+from where the stale sentence renders.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/human-todos-page-says-not-built-yet.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/human-todos-page-says-not-built-yet.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/336">PR: #336</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-subagent-roles-for-the-two-judgement-agents" data-fa-todo="subagent-roles-for-the-two-judgement-agents">
+      <h3 class="fa-todo-listing-summary">Decide which roles content-pipeline-navigator and platform-boundary-guard take on</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>blocked</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`ci-health-watcher` is settled: it is a mechanical participant in the CI
+process, so it takes `build-pipeline` and `validation-pipeline`, both
+`actorKind: &quot;system&quot;`. Declared, and `memoryForRoles` now discriminates
+because of it.</p>
+        <p>**The other two are not settled by that argument, and the reason is precise.**
+Both system roles are described as running a fixed program and exercising *no
+judgement*. That is exactly what makes them the right home for a watcher — and
+exactly why they are the wrong home for these two:</p>
+        <p>- **`platform-boundary-guard`** decides whether a literal naming one folio
+  belongs in platform code, and whether a new content type needs an adapter or
+  only a profile. Those are judgements; a wrong one is not a failed check.
+- **`content-pipeline-navigator`** is closer to mechanical — it knows which
+  stage owns which file — but it also answers &quot;should this be a block kind&quot;,
+  which is not.</p>
+        <p>## What differs depending on the answer</p>
+        <p>Nothing breaks either way today: memory is scoped by agent and the duplication
+is already fixed, because one node can reach several agents. What changes is
+whether a fact written for one of these two reaches an agent standing in that
+lane, or only the agent named in the file.</p>
+        <p>## Options</p>
+        <p>1. **Leave both agent-scoped, and say so in the role model.** Costs nothing,
+   and is honest — neither is a lane anyone else acts in. The cost is that the
+   role axis stays half-used, with one actor on it.
+2. **Give them a judgement-bearing existing role** — `editor` and
+   `code-reviewer` are the nearest. Cheap, and wrong if the fit is loose: a
+   forced edge is one every later audit trusts as true.
+3. **Add roles for them.** Honest edges. But `AGENTS.md` warns under
+   `skill-in-role-or-process` against &quot;inventing roles and activities to
+   absorb tools that do not want them&quot;, and a role with one actor describes
+   the tool rather than the work.</p>
+        <p>No recommendation. The `ci-health-watcher` case was settled by a property of
+the work (it exercises no judgement); neither option here has an equivalent,
+which is why it is a person&#39;s call and not an agent&#39;s.</p>
+        <p>## If nothing is decided</p>
+        <p>Option 1 is the status quo and nothing regresses.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-what-kick-off-means-for-a-ci-watcher" data-fa-todo="what-kick-off-means-for-a-ci-watcher">
+      <h3 class="fa-todo-listing-summary">Decide what &#39;kick off&#39; means mechanically for the two CI-watcher dispatch points</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>in_progress</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>Stated 2026-09-19: a CI watcher *&quot;should kick off during feature development
+once changes are made to feature branch. and when approved for final
+publication/merge to main.&quot;*</p>
+        <p>The two dispatch points are clear. **What performs the dispatch is not**, and
+the three candidates differ enough that guessing would be wasted work.</p>
+        <p>## ANSWERED, 2026-09-19</p>
+        <p>Owner: *&quot;kick off if like task or workflow initation or bean roast&quot;*.</p>
+        <p>**Option 2.** A dispatch point is a **task / workflow initiation**, and it
+opens a **bean** — not a GitHub Actions job. That is the answer the repo&#39;s own
+machinery is already shaped for: an activity carrying
+`&lt;folio:bean op=&quot;claim&quot;/&gt;` performs the bean operation when the step
+completes, so &quot;start the watcher&quot; and &quot;record that it is running&quot; are one
+declared step rather than two mechanisms that can disagree.</p>
+        <p>It also settles the cost I flagged against option 2 — that a BPMN activity
+only fires while somebody is working. With a bean opened at initiation, the
+work is *durable*: a later session sees the bean whether or not the session
+that opened it is still alive.</p>
+        <p>Remaining, and now narrow: which diagrams host the two steps, and whether the
+feature-branch one needs a process that does not yet exist.</p>
+        <p>## Options, with what each costs</p>
+        <p>1. **A GitHub Actions job.** Fires without anybody present, which is the whole
+   premise of `xom7` — the failure being guarded against is a quiet stretch
+   with nobody looking. Cost: it cannot read the session&#39;s memory, so the
+   &quot;dispatch an agent with a specific memory context&quot; half does not happen.
+2. **An activity in a BPMN process**, performed by a session. Gets the memory
+   context, and puts the dispatch where `workflow_next` can report it. Cost: it
+   only fires while somebody is working — precisely the stretch that is already
+   covered.
+3. **An MCP tool a workflow step calls.** Both, at the price of building the
+   tool and deciding who calls it.</p>
+        <p>## Where the two dispatch points already live</p>
+        <p>Both are steps in diagrams that exist, which is why this todo is tagged with
+them rather than describing them:</p>
+        <p>- **&quot;approved for final publication / merge to `main`&quot;** is
+  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries
+  *Authorise the release* and *Version, tag and publish*. The dispatch point
+  the owner named is that authorisation step.
+- **&quot;once changes are made to feature branch&quot;** is `Process_CodeReview`,
+  reached from `Process_Review`.</p>
+        <p>## What is already true, so this is not started from nothing</p>
+        <p>The two dispatch points are process events, so wherever they are performed they
+should be DRAWN in BPMN under `processes/`. The likely homes are
+`draft-to-publication` for the merge-to-main gate and a feature-branch process
+that may not exist yet — that needs checking rather than assuming.</p>
+        <p>## If nothing is decided</p>
+        <p>Nothing fires. `bun run check:ci-health` still runs in the session-start sweep
+and `ci-health.yml` still runs weekly, so the watcher is not silent — it is
+just not tied to the two moments named above.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li>process: Process_CodeReview</li>
+        <li>process: Process_Publication</li>
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+      </ul>
+    </li>
+  </ol>
+</section>
+<p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p>
+
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">
+  <span aria-hidden="true">&times;</span>
+  <span class="fa-sr-only">Close navigation</span>
+</label><label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open">
+  <span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>
+  <span class="fa-sr-only">Keep navigation open</span>
+</label><div class="fa-nav-bottom__stack"><details class="fa-harness-tabs">
+  <summary class="fa-harness-tabs__heading">
+    Harnesses <span class="fa-harness-tabs__count">5</span>
+  </summary>
+  <ul class="fa-harness-tabs__list"><li class="fa-harness-tab"
+        style="--fa-tile-tone: 0; --fa-tile-on: 0; --fa-tab-i: 0"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/smart-trust/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-operations-card.webp" alt=""
+               style="width: 370.3704%; height: 370.3704%;
+                      left: -62.963%; top: -175.9259%">
+        </span><span class="fa-harness-tab__label">smart-trust</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/smart-trust-docs/">docs</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">fhir-artifact-index</span><span class="fa-harness-graph__note">no viewer yet</span></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 199; --fa-tile-on: 1; --fa-tab-i: 1"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/who-iris/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--initial"
+              aria-hidden="true">W</span><span class="fa-harness-tab__label">WHO IRIS</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/catalogue/who-iris/">catalogue</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/who-iris-docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/who-iris/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">skills</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">themes</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/who-iris/">uploads</a></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 236; --fa-tile-on: 1; --fa-tab-i: 2"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-engineer-card.webp" alt=""
+               style="width: 217.3913%; height: 217.3913%;
+                      left: 0%; top: -86.9565%">
+        </span><span class="fa-harness-tab__label">Folio Assistant</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
+        style="--fa-tile-tone: 268; --fa-tile-on: 1; --fa-tab-i: 3"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/"
+         data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-card.webp" alt=""
+               style="width: 200%; height: 200%;
+                      left: 0%; top: -92%">
+        </span><span class="fa-harness-tab__label">C@T Harness</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/external-schemas/">external-schema</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/fsh-guts/">fsh-guts</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/glossary/">glossary</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/health/">health</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">interaction</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/issue-marks/">issue-marks</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/library/cat-harness/">library</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">memory</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/methodologies/">methodology</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/processes/">processes</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/qa/">qa</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">scenarios</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/schemas/cat-harness/">schemas</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness/docs-auto/index/skills/cat-harness/">skills</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/todos/">todos</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tools/">tools</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/translation-status/">translation-sources</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">uml</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/uploads/">uploads</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">waiver</span><span class="fa-harness-graph__note">no viewer yet</span></li></ul></li><li class="fa-harness-tab fa-harness-tab--floor"
+        style="--fa-tile-tone: 96; --fa-tile-on: 1; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/bootstrap/initialization.html"
+         data-fa-href-kind="handled"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
+          <img src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/img/harness/landing-bootstrap-card.webp" alt=""
+               style="width: 416.6667%; height: 416.6667%;
+                      left: -112.5%; top: -256.25%">
+        </span><span class="fa-harness-tab__label">Bootstrap</span></a><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">glossary</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">models</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">processes</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">scenarios</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">schemas</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">skills</span><span class="fa-harness-graph__note">no viewer by design</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">translation-sources</span><span class="fa-harness-graph__note">no viewer by design</span></li></ul></li></ul>
+</details></div><a class="fa-nav-home" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/">
+  <span class="fa-nav-home__mark" aria-hidden="true">&#8962;</span>
+  <span class="fa-nav-home__label">C@T Harness</span>
+</a>
+
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (docs/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+
