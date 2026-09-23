@@ -91,11 +91,17 @@ export interface ReviewTransition {
  *
  * Existing diagrams are used where they already hold the step: the editor's
  * "Accept, or send back" in `review-task.bpmn`, and the adjudicator's
- * recorded entry in `adjudication.bpmn`. Ingestion and withdrawal are the
- * reviewer and coordinator steps bean `en2d` added to
+ * recorded entry in `criterion-adjudication.bpmn`. Ingestion and withdrawal are
+ * the reviewer and coordinator steps bean `en2d` added to
  * `content-change-review.bpmn`, the process a change is reviewed in. A
  * separate large-document diagram was the plan until the owner ruled
  * (2026-09-23) to extend the existing one rather than fork it.
+ *
+ * The adjudicator's entry is in `criterion-adjudication.bpmn` rather than
+ * `adjudication.bpmn` since bean `bvuk` split the outcome half out the same
+ * day — see the `adjudicate` transition below for why it went with the
+ * outcome. Two independent moves, one docstring: `en2d` changed where
+ * ingestion comes FROM, `bvuk` changed where adjudication lands.
  */
 export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
   {
@@ -127,7 +133,17 @@ export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
     name: "adjudicate",
     from: ["open", "addressed"],
     to: "adjudicated",
-    by: { file: "adjudication.bpmn", process: "Process_Adjudication", task: "A_RecordEntry" },
+    // `criterion-adjudication.bpmn`, not `adjudication.bpmn`: bean `bvuk` split
+    // the outcome half out on 2026-09-23, because six diagrams called the
+    // shared process and only two asked a question its three outcomes answer.
+    // A_RecordEntry went with the outcome, which is where it belongs — the
+    // entry written depends on what was adjudicated. It is still
+    // `relaxable="false"` there.
+    by: {
+      file: "criterion-adjudication.bpmn",
+      process: "Process_CriterionAdjudication",
+      task: "A_RecordEntry",
+    },
     needsDecision: true,
   },
   {

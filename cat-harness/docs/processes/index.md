@@ -26,7 +26,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Log a message](log-message.html) | 2 | — |
 | [Agent activity log](activity-log.html) | 8 | — |
 | [Actor and role administration](actor-role-administration.html) | 6 | — |
-| [Adjudication](adjudication.html) | 6 | — |
+| [Adjudication](adjudication.html) | 3 | — |
 | [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | — |
 | [Authoring a document](authoring-a-document.html) | 9 | — |
 | [Authoring a paper](authoring-a-paper.html) | 9 | — |
@@ -49,6 +49,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | — |
 | [CRDM requirements](crdm-requirements.html) | 9 | — |
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
+| [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 5 | — |
 | [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 9 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
@@ -100,7 +101,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | skill | run by |
 |---|---|
 | `activity-log` | `activity-log.bpmn` |
-| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
+| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `criterion-adjudication.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
 | `adopt-methodology-from-source` | `methodology-from-source.bpmn` |
 | `bean-blocking` | `kg-to-portal.bpmn` |
 | `bean-coordination` | `bean-lifecycle.bpmn`, `code-change-review.bpmn` |
@@ -213,11 +214,11 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | Corpus — L1 source knowledge graph | 4 |
 | Publication manager | 4 |
 | Scheduled log sweep | 4 |
+| Adjudicator | 3 |
 | Authoring agent (system) | 3 |
 | Contributor (human or agent) | 3 |
 | Editors + authoring agents | 3 |
 | Reviewer / SME | 3 |
-| Adjudicator | 2 |
 | Administrator | 2 |
 | Agent (this session) | 2 |
 | Author (person) | 2 |

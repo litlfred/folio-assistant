@@ -9,8 +9,8 @@
  * below is a refusal, because a marker that only added a word to a diagram
  * would check nothing.
  *
- * The one worth reading is §"a mechanical actor may not judge": the constraint
- * existed on `adjudication.bpmn`'s judge step as a `folio:fulfilment` and
+ * The one worth reading is §"a mechanical actor may not adjudicate": the constraint
+ * existed on `adjudication.bpmn`'s adjudicator step as a `folio:fulfilment` and
  * nothing tied it to the judgement, so a NEW adjudication step could omit it
  * and no gate would notice.
  */
@@ -46,7 +46,7 @@ function fixture(activityExt: string, type = "task"): string {
 const JUDGE = '<folio:fulfilment kinds="person agent" reason="a judgement, never a program"/>';
 const THREE = '<folio:adjudication codes="stands scope dispensation"/>';
 
-describe("a mechanical actor may not judge", () => {
+describe("a mechanical actor may not adjudicate", () => {
   test("REFUSES an adjudication whose step a `system` actor could perform", async () => {
     // The owner: "ONLY agentic human actor". `system` is this repository's
     // mechanical kind. If a program can decide it, it is computable and
@@ -57,19 +57,19 @@ describe("a mechanical actor may not judge", () => {
           `${THREE}<folio:fulfilment kinds="person agent system" reason="whoever is free"/>`,
         ),
       ),
-    ).rejects.toThrow(/Only `person` and `agent` may judge/);
+    ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
   });
 
-  test("REFUSES `external` too — outside the instance is not a judge here", async () => {
+  test("REFUSES `external` too — outside the instance is not an adjudicator here", async () => {
     await expect(
       loadProcessModel(
         fixture(`${THREE}<folio:fulfilment kinds="person external" reason="anyone"/>`),
       ),
-    ).rejects.toThrow(/Only `person` and `agent` may judge/);
+    ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
   });
 
   test("REFUSES an adjudication with NO fulfilment, rather than defaulting one", async () => {
-    // The case the marker exists for. A step that has not said who may judge
+    // The case the marker exists for. A step that has not said who may adjudicate
     // has not restricted anybody, and defaulting to person+agent would let
     // silence read as a deliberate restriction.
     await expect(loadProcessModel(fixture(THREE))).rejects.toThrow(/no <folio:fulfilment/);
@@ -237,5 +237,294 @@ describe("absence stays absence", () => {
     const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn"));
     expect(files.length, "no diagrams found — this assertion would be vacuous").toBeGreaterThan(5);
     for (const f of files) await load(join(dir, f));
+  });
+});
+
+/**
+ * A caller and the judge it calls — bean `bvuk`.
+ *
+ * Two files, because a `callActivity` resolves `calledElement` against the
+ * SIBLING diagrams in its own directory, which is the mechanism these check.
+ */
+function caller(callerExt: string, judgeCodes = "a b"): string {
+  const dir = mkdtempSync(join(tmpdir(), "adjudication-call-"));
+  writeFileSync(
+    join(dir, "child.bpmn"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Child" name="Child" isExecutable="false">
+    <bpmn:startEvent id="Start_C" name="Start"/>
+    ${
+      judgeCodes === ""
+        ? '<bpmn:task id="A_C" name="Not a judgement"/>'
+        : `<bpmn:task id="A_C" name="Judge"><bpmn:extensionElements>` +
+          `<folio:adjudication codes="${judgeCodes}"/>${JUDGE}</bpmn:extensionElements></bpmn:task>`
+    }
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  const p = join(dir, "parent.bpmn");
+  writeFileSync(
+    p,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Parent" name="Parent" isExecutable="false">
+    <bpmn:startEvent id="Start_P" name="Start"/>
+    <bpmn:callActivity id="Call_P" name="Ask" calledElement="Process_Child">
+      <bpmn:extensionElements>${callerExt}</bpmn:extensionElements>
+    </bpmn:callActivity>
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  return p;
+}
+
+describe("a caller says what it can act on, and it is checked", () => {
+  test("accepts the matching case, and the list is on the node", async () => {
+    const m = await loadProcessModel(caller('<folio:adjudication accepts="a b"/>'));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["a", "b"]);
+  });
+
+  test("ORDER does not matter — a set, as on the judge side", async () => {
+    const m = await loadProcessModel(caller('<folio:adjudication accepts="b a"/>'));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["b", "a"]);
+  });
+
+  test("REFUSES a caller accepting an answer the judge cannot give", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a c"/>')),
+    ).rejects.toThrow(/accepts \(a, c\) but Process_Child's A_C may answer \(a, b\)/);
+  });
+
+  test("REFUSES a strict SUBSET — the unaccepted answers still arrive", async () => {
+    // Not a subset check by oversight: a caller that handles two of three
+    // answers receives the third and does something undefined with it.
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "a b c")),
+    ).rejects.toThrow(/may answer \(a, b, c\)/);
+  });
+
+  test("REFUSES `accepts` on a call into a process that adjudicates nothing", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "")),
+    ).rejects.toThrow(/contains no judgement/);
+  });
+
+  test("REFUSES `accepts` anywhere but a call activity", async () => {
+    // It states what a CALLER can act on; a plain task calls nothing.
+    await expect(
+      loadProcessModel(fixture('<folio:adjudication accepts="a b"/>')),
+    ).rejects.toThrow(/only meaningful on a call activity/);
+  });
+
+  test("REFUSES declaring both `codes` and `accepts` — it cannot be both", async () => {
+    await expect(
+      loadProcessModel(caller(`<folio:adjudication codes="a b" accepts="a b"/>`)),
+    ).rejects.toThrow(/declares both/);
+  });
+
+  test("REFUSES a single accepted answer", async () => {
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accepts="a"/>')),
+    ).rejects.toThrow(/names 1 code/);
+  });
+
+  test("a caller declaring NOTHING loads — absence is reported, not refused", async () => {
+    // Four of the six real callers are in this state and what each should
+    // accept is undecided. Refusing here would force a guess that looks
+    // checked; `check:workflow-refs` prints them instead.
+    const m = await loadProcessModel(caller("<folio:skill ref=\"adjudication\"/>"));
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toBeUndefined();
+    expect(m.children.get("Call_P")).toBeDefined();
+  });
+});
+
+describe("a misspelled attribute is refused, not ignored", () => {
+  test("REFUSES an attribute the engine does not read", async () => {
+    // The `folio:bean action="create"` failure, one element over: every one of
+    // this element's three attributes has a MEANINGFUL absence, so a typo
+    // parses as a deliberate abstention.
+    await expect(
+      loadProcessModel(caller('<folio:adjudication accept="a b"/>')),
+    ).rejects.toThrow(/carries "accept", which the engine does not read/);
+  });
+
+  test("REFUSES a judge whose codes are misspelled into nothing", async () => {
+    await expect(loadProcessModel(fixture(`<folio:adjudication code="a b"/>${JUDGE}`)))
+      .rejects.toThrow(/carries "code"/);
+  });
+});
+
+describe("the two real callers that fit", () => {
+  test("review-narrative and voice-review declare the three, and they match", async () => {
+    // The diagram's own claim, now checked: "The three outcomes are the ones
+    // `review-narrative` and `voice-review` already use". It was prose in a
+    // documentation element and nothing compared it to anything.
+    const dir = join(import.meta.dir, "../../processes");
+    for (const [f, id] of [
+      ["review-narrative.bpmn", "Task_AdjudicateVoice"],
+      ["voice-review.bpmn", "Task_Adjudicate"],
+    ] as const) {
+      const m = await loadProcessModel(join(dir, f));
+      expect(m.nodes.get(id)!.adjudicationAccepts, `${f} lost its accepts`).toEqual([
+        "stands",
+        "scope",
+        "dispensation",
+      ]);
+    }
+  });
+});
+
+/** A parent calling a child whose adjudicator DEFERS its enum. */
+function deferring(callerExt: string): string {
+  const dir = mkdtempSync(join(tmpdir(), "adjudication-defer-"));
+  writeFileSync(
+    join(dir, "child.bpmn"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Child" name="Child" isExecutable="false">
+    <bpmn:startEvent id="Start_C" name="Start"/>
+    <bpmn:task id="A_C" name="Adjudicate">
+      <bpmn:extensionElements><folio:adjudication defers="caller"/>${JUDGE}</bpmn:extensionElements>
+    </bpmn:task>
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  const p = join(dir, "parent.bpmn");
+  writeFileSync(
+    p,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_Parent" name="Parent" isExecutable="false">
+    <bpmn:startEvent id="Start_P" name="Start"/>
+    <bpmn:callActivity id="Call_P" name="Ask" calledElement="Process_Child">
+      <bpmn:extensionElements>${callerExt}</bpmn:extensionElements>
+    </bpmn:callActivity>
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  return p;
+}
+
+describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", () => {
+  test("the deferral is DECLARED, so it cannot be confused with a lost marker", async () => {
+    // The whole reason it is an attribute rather than an absent `codes`:
+    // `A_Adjudicate` dropping its enum by accident and deferring on purpose
+    // would otherwise parse identically.
+    const m = await loadProcessModel(deferring('<folio:skill ref="adjudication"/>'));
+    const child = m.children.get("Call_P")!;
+    expect(child.nodes.get("A_C")!.adjudicationDefers).toBe(true);
+    expect(child.nodes.get("A_C")!.adjudication).toBeUndefined();
+  });
+
+  test("it still carries the actor restriction — a `system` actor may not", async () => {
+    // The factored `requireAdjudicatorKinds`. Deferring the ENUM does not
+    // defer who may adjudicate; that is the one thing the shared process
+    // exists to hold.
+    await expect(
+      loadProcessModel(
+        fixture('<folio:adjudication defers="caller"/><folio:fulfilment kinds="person system" reason="x"/>'),
+      ),
+    ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
+  });
+
+  test("REFUSES a deferral with no fulfilment at all", async () => {
+    await expect(
+      loadProcessModel(fixture('<folio:adjudication defers="caller"/>')),
+    ).rejects.toThrow(/no <folio:fulfilment/);
+  });
+
+  test("REFUSES any value but `caller` — there is nowhere else an enum comes from", async () => {
+    await expect(
+      loadProcessModel(fixture(`<folio:adjudication defers="somewhere"/>${JUDGE}`)),
+    ).rejects.toThrow(/The only value is `caller`/);
+  });
+
+  test("REFUSES `accepts` against a deferring adjudicator, and says to use `codes`", async () => {
+    // The fix is the opposite of the usual one: there is no enum to have read.
+    await expect(
+      loadProcessModel(deferring('<folio:adjudication accepts="a b"/>')),
+    ).rejects.toThrow(/defers its enum to the caller[\s\S]*declare <folio:adjudication codes/);
+  });
+
+  test("a caller declaring nothing still loads — the four real ones do", async () => {
+    const m = await loadProcessModel(deferring('<folio:skill ref="adjudication"/>'));
+    expect(m.nodes.get("Call_P")!.adjudication).toBeUndefined();
+    expect(m.nodes.get("Call_P")!.adjudicationAccepts).toBeUndefined();
+  });
+});
+
+describe("the split — bean `bvuk`, the owner's shape", () => {
+  const dir = join(import.meta.dir, "../../processes");
+
+  test("Process_Adjudication ends AT the judgement and names no outcomes", async () => {
+    // What the split is. The three outcome tasks ran for every caller; four of
+    // six had no criterion to scope and no dispensation to grant.
+    const m = await loadProcessModel(join(dir, "adjudication.bpmn"));
+    expect(m.nodes.get("A_Adjudicate")!.adjudicationDefers).toBe(true);
+    for (const gone of ["GW_Outcome", "A_ScopeCriterion", "A_Dispensation", "A_RecordEntry"]) {
+      expect(m.nodes.get(gone), `${gone} is the caller's now`).toBeUndefined();
+    }
+  });
+
+  test("what must NOT vary stayed: entry condition, dispatch, actor kinds", async () => {
+    // The objection to separating per question kind was that
+    // `adjudicator_sees` and the actor restriction would be restated N times.
+    // They are not restated; they did not move.
+    const m = await loadProcessModel(join(dir, "adjudication.bpmn"));
+    expect(m.nodes.get("GW_Adjudicable")).toBeDefined();
+    expect(m.nodes.get("A_Dispatch")!.skills).toContain("untainted-verification");
+    expect(m.nodes.get("A_Adjudicate")!.fulfilment!.kinds.sort()).toEqual(["agent", "person"]);
+  });
+
+  test("criterion-adjudication owns the three outcomes and declares the enum", async () => {
+    const m = await loadProcessModel(join(dir, "criterion-adjudication.bpmn"));
+    expect(m.nodes.get("Call_Adjudicate")!.adjudication!.codes.sort()).toEqual([
+      "dispensation",
+      "scope",
+      "stands",
+    ]);
+    // Not relaxable, and it moved WITH the outcome rather than being dropped.
+    expect(m.nodes.get("A_RecordEntry")!.relaxable).toBe(false);
+    expect(m.nodes.get("A_Dispensation")!.relaxable).toBe(false);
+  });
+
+  test("the two QA callers now call the specialisation, not the shared half", async () => {
+    for (const [f, id] of [
+      ["review-narrative.bpmn", "Task_AdjudicateVoice"],
+      ["voice-review.bpmn", "Task_Adjudicate"],
+    ] as const) {
+      const m = await loadProcessModel(join(dir, f));
+      expect(m.nodes.get(id)!.calledElement, f).toBe("Process_CriterionAdjudication");
+    }
+  });
+
+  test("the other four call the shared half and reach NO outcome task", async () => {
+    // The defect this closes, asserted as reachability rather than as a name:
+    // before the split every one of these ran A_ScopeCriterion's gateway.
+    for (const [f, id] of [
+      ["refresh-materialized.bpmn", "Task_Adjudicate"],
+      ["translation-workflow.bpmn", "Task_Adjudicate"],
+      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift"],
+      ["wireframe-design-review.bpmn", "Call_Adjudicate"],
+    ] as const) {
+      const m = await loadProcessModel(join(dir, f));
+      expect(m.nodes.get(id)!.calledElement, f).toBe("Process_Adjudication");
+      const child = m.children.get(id)!;
+      expect([...child.nodes.keys()], f).not.toContain("A_ScopeCriterion");
+      expect([...child.nodes.keys()], f).not.toContain("A_Dispensation");
+    }
   });
 });

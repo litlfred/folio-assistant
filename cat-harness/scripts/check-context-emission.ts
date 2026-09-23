@@ -480,6 +480,77 @@ export function checkDeclaredKeys(
   };
 }
 
+// ── A PATH is never an `@id` — bean `589f` ────────────────────────────────
+//
+// A document-relative path under an `@id`-coerced term is resolved by a
+// JSON-LD processor against `@base`, not against the document, and so names a
+// location the file is not at. That was `text` on 1,323 prose blocks. The fix
+// was to declare `text` and `leanSource` literals; this is what stops the next
+// term — or the old one, re-coerced — from doing it again.
+
+/** A value that is a file path rather than an IRI or a node id. */
+export function looksLikePath(v: string): boolean {
+  return v.startsWith("../") || v.startsWith("./") || /\.(md|lean|tex|png|jpe?g|svg|pdf|csv|xlsx)$/i.test(v);
+}
+
+export function checkPathsAreNotLinks(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+): KeyDeclarationReport {
+  const idTerms = new Set(
+    Object.entries(context)
+      .filter(([k, v]) => !k.startsWith("@") && isRecord(v) && v["@type"] === "@id")
+      .map(([k]) => k),
+  );
+  const found = new Map<string, { count: number; example: string }>();
+  let documents = 0;
+  const walk = (o: unknown, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, where));
+    if (!isRecord(o)) return;
+    for (const [k, v] of Object.entries(o)) {
+      if (idTerms.has(k)) {
+        for (const x of Array.isArray(v) ? v : [v]) {
+          if (typeof x !== "string" || !looksLikePath(x)) continue;
+          const e = found.get(k);
+          if (e) e.count++;
+          else found.set(k, { count: 1, example: `${where}: ${x}` });
+        }
+      }
+      if (isRecord(context[k]) && (context[k] as Record<string, unknown>)["@type"] === "@json") continue;
+      walk(v, where);
+    }
+  };
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue;
+    }
+    const c = isRecord(doc) ? doc["@context"] : undefined;
+    if (!(c === contextUrl || (Array.isArray(c) && c.includes(contextUrl)))) continue;
+    documents++;
+    walk(doc, f.startsWith(repo) ? f.slice(repo.length + 1) : f);
+  }
+  return {
+    documents,
+    undeclared: [...found].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+  };
+}
+
+/** Print the path-under-`@id` half; return whether it failed. */
+function reportPaths(p: KeyDeclarationReport): boolean {
+  if (p.undeclared.length === 0) {
+    console.log("✓ no file path sits under an `@id`-coerced term");
+    return false;
+  }
+  console.error(`\n${p.undeclared.length} \`@id\` term(s) carry FILE PATHS — a processor resolves them against @base, to the wrong place:`);
+  for (const u of p.undeclared) console.error(`  ✗ ${u.prefix}  ×${u.count}  e.g. ${u.example}`);
+  console.error("\nDeclare the term a literal, or mint an absolute IRI for a file that is actually served (bean `589f`).");
+  return true;
+}
+
 /** Print the undeclared-key half; return whether it failed. */
 function reportKeys(k: KeyDeclarationReport): boolean {
   console.log(`\nKey declaration — ${k.documents} content-context document(s) read`);
@@ -526,14 +597,16 @@ if (import.meta.main) {
   const r = checkContextEmission();
   const d = checkPrefixDeclaration();
   const k = checkDeclaredKeys();
+  const p = checkPathsAreNotLinks();
   if (process.argv.includes("--json")) {
-    console.log(JSON.stringify({ emission: r, declaration: d, keys: k }, null, 2));
+    console.log(JSON.stringify({ emission: r, declaration: d, keys: k, paths: p }, null, 2));
     const declFailed = d.undeclared.length > 0 || d.misspelt.length > 0 || d.documents === 0;
     const keysFailed = k.undeclared.length > 0 || k.documents === 0;
-    process.exit(r.silent.length > 0 || r.documents === 0 || declFailed || keysFailed ? 1 : 0);
+    process.exit(r.silent.length > 0 || r.documents === 0 || declFailed || keysFailed || p.undeclared.length > 0 ? 1 : 0);
   }
   if (reportDeclaration(d)) process.exitCode = 1;
   if (reportKeys(k)) process.exitCode = 1;
+  if (reportPaths(p)) process.exitCode = 1;
 
   console.log(`Context emission — ${Object.keys(r.counts).length} bound prefix(es) over ${r.documents} document(s)`);
   for (const [p, n] of Object.entries(r.counts).sort((a, b) => b[1] - a[1])) {
