@@ -55,6 +55,29 @@ Look, do not guess. The corpus answers this and your memory does not.
 A fix designed from one example handles one example. A fix designed from the
 sweep handles the class, and the sweep is usually one command.
 
+### 1.2a A sweep must report its own coverage
+
+The sweep in 1.2 is a measurement, so it answers to the same rule every other
+measurement here does: **say what you covered, or a silent under-match reads as
+a clean corpus.**
+
+> Measured 2026-09-23, sweeping the health checks for more findings whose
+> action could not clear them. The first pass regex-matched `action:` followed
+> by string literals and reported **6 actions, all sound**. The file has
+> **15**. The nine it missed included a ternary, and the pass would have
+> concluded the class was closed after seeing 40 % of it — while looking for
+> exactly that kind of blind spot.
+>
+> The fix is one line of output: `parsed 15 of 15`. The count of subjects found
+> against the count that exist, printed beside the verdict.
+
+So a corpus sweep prints the denominator. `grep -c` for the crude marker, parse
+for the real one, and show both — if they disagree, the parse is the thing to
+fix before reading anything into the result. This is
+[`rendered-verification`](rendered-verification.md)'s "assert the conditions"
+rule with the browser taken out of it: **a check that cannot tell an empty walk
+from a clean one is not a check.**
+
 ### 1.3 Is the fix at the right layer?
 
 Walk outward from the symptom until you reach the thing that is actually
