@@ -44,6 +44,7 @@ import { z } from "zod";
 
 import { nodeKind } from "../../cat-harness/schemas/node-kind.js";
 import { TodoNodeKind } from "../../cat-harness/schemas/todo.js";
+import { ReviewVerdictSchema } from "./review-verdict.js";
 
 export const REVIEW_COMMENT_SCHEMA = "folio-review-comment/v1" as const;
 
@@ -267,7 +268,8 @@ export function transition(
  * the rest of the line, because labels contain colons. `kind` defaults to
  * `question`, the one that asserts least; `role` defaults to `reviewer`.
  * A comment without a `block:` line is not a review comment and is left
- * alone: a PR conversation is also where people talk.
+ * alone: a PR conversation is also where people talk. A tag with `verdict:`
+ * or `waive:` is a VERDICT (`review-verdict.ts`), and is left alone here too.
  */
 export interface ReviewTag {
   block: string;
@@ -283,10 +285,14 @@ export function parseReviewTag(body: string): ReviewTag | { error: string } | nu
   let i = 0;
   while (i < lines.length && lines[i].trim() === "") i++;
   for (; i < lines.length; i++) {
-    const m = /^\s*(block|kind|role):\s*(.*?)\s*$/i.exec(lines[i]);
+    const m = /^\s*(block|kind|role|verdict|waive):\s*(.*?)\s*$/i.exec(lines[i]);
     if (!m) break;
     header[m[1].toLowerCase()] = m[2];
   }
+  // A verdict (`verdict:` or `waive:`) is not a review comment. It is read by
+  // `parseVerdictTag`, which also refuses one that carries `kind:` too, so a
+  // comment is never counted under both meanings.
+  if ("verdict" in header || "waive" in header) return null;
   if (!("block" in header)) return null;
   if (!/^\S+$/.test(header.block)) return { error: `\`block:\` needs one label, got "${header.block}"` };
   const kind = (header.kind ?? "question").toLowerCase();
@@ -508,5 +514,11 @@ export const ReviewCommentsFileSchema = z.object({
   comments: z.array(ReviewCommentSchema),
   malformed: z.array(z.object({ commentId: z.number().int(), url: z.string(), error: z.string() })),
   untagged: z.number().int().nonnegative(),
+  /**
+   * Reviewers' per-block verdicts (`folio-review-verdict/v1`, bean `px0t`),
+   * ingested from the same PR comments. Default `[]`, so a file written
+   * before verdicts existed still reads.
+   */
+  verdicts: z.array(ReviewVerdictSchema).default([]),
 });
 export type ReviewCommentsFile = z.infer<typeof ReviewCommentsFileSchema>;

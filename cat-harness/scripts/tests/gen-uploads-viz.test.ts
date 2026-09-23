@@ -141,3 +141,67 @@ describe("a sidecar is not a queued document", () => {
     expect(src).toContain("!present.has(source)");
   });
 });
+
+/**
+ * ADDING TO THE QUEUE — bean `v1hw` item 3, owner ruling 2026-09-23:
+ * **a commit from a checkout.**
+ *
+ * The affordance is therefore a path and a command, not a control. A
+ * published page cannot write to somebody's working tree, and a button that
+ * looked like it could is `pb04` one layer up: a dead link invites a click
+ * and then reads as "this site is broken".
+ */
+describe("the upload affordance — `v1hw`", () => {
+  const src = readFileSync(join(import.meta.dir, "..", "gen-uploads-viz.ts"), "utf8");
+
+  test("it says the mechanism, in the owner's terms", () => {
+    expect(src).toContain("committing them from a checkout");
+  });
+
+  test("the command is built PER QUEUE, from the queue's own dir", () => {
+    // Three queues, three different paths. A single hardcoded "put it in
+    // uploads/" would be wrong for two of them — the same defect as
+    // `ingest`'s printed `-o`, which named one directory for two arms that
+    // wanted different ones (#1050). If this ever becomes a literal, that
+    // defect is back.
+    expect(src).toContain("qs.map(function(q){");
+    expect(src).toContain("q.dir");
+    expect(src).not.toMatch(/cp YOUR-FILE\.pdf uploads\//);
+  });
+
+  test("NO `--library` value is printed — a queue does not determine one", () => {
+    // Measured 2026-09-23, and it refuted the obvious sibling convention in
+    // all three queues: `uploads/` has landed files in agent-skills (5) AND
+    // smart-base (7); `cat-harness/uploads` in cat-harness (5) AND
+    // folio-assistant-sci (1); `who-iris/uploads` in none at all, where
+    // `<instance>/library` would have confidently said `who-iris/library`.
+    //
+    // So the page says what the tool says: the destination is chosen.
+    expect(src).toContain("chosen, never derived");
+    expect(src).toContain("--library &lt;destination&gt;");
+    // Never a concrete library in the emitted command.
+    expect(src).not.toMatch(/--library [a-z-]+\/library/);
+  });
+
+  test("no BACKTICK in the injected client comment — it lives in a template literal", () => {
+    // One backtick here ends the page string and turns the rest of the file
+    // into TypeScript, failing at a line far from the mistake. It happened on
+    // the first draft of this panel; the same warning is written twice
+    // elsewhere in this repository.
+    const client = src.slice(src.indexOf("ADDING TO THE QUEUE"), src.indexOf('$("add").innerHTML'));
+    expect(client).not.toContain("`");
+  });
+});
+
+test("the emitted command uses an ESCAPE for the newline, not a real one", () => {
+  // A literal newline inside a single-quoted JS string is a syntax error, and
+  // that is what the first draft shipped: the template literal collapsed the
+  // escape one level too far and the whole inline script failed to parse
+  // ("Unexpected EOF"). Caught by `generated-viewer-scripts`, which parses
+  // every inline script in every generated viewer — a gate doing exactly the
+  // job it exists for, on a page that otherwise looked fine.
+  const src = readFileSync(join(import.meta.dir, "..", "gen-uploads-viz.ts"), "utf8");
+  const panel = src.slice(src.indexOf('$("add").innerHTML'), src.indexOf('var rows = sorted();'));
+  expect(panel).toContain("\\\\n");
+  expect(panel).not.toMatch(/'[^']*\n[^']*' \+/);
+});

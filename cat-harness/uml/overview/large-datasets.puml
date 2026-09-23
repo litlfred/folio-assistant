@@ -38,4 +38,6 @@ package "large-datasets/large-datasets-skills" as pkg_large_datasets_large_datas
 }
 
 large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier : identifiers
+' grid: portrait, 2 column(s) — pkg_large_datasets_large_datasets_schemas pkg_large_datasets_large_datasets_sources pkg_large_datasets_large_datasets_skills
+pkg_large_datasets_large_datasets_schemas -[hidden]down- pkg_large_datasets_large_datasets_skills
 @enduml

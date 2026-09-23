@@ -75,3 +75,28 @@
   fill: var(--fa-uml-other) !important;
   stroke-dasharray: 5 4 !important;
 }
+
+/* Portrait / landscape views — every UML figure is rendered twice, and the
+ * page carries both with a radio switch (gen-uml-overview.ts, `views`).
+ * Owner, 2026-09-23: "can we have portrait and landscape views?". CSS only,
+ * so the switch works before docs-ui.js loads. Portrait is the default. */
+.fa-uml-view-pick {
+  border: 0;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.fa-uml-view-pick legend {
+  float: left;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+.fa-uml-view-pick label { margin-left: 0.25rem; }
+/* docs-ui.js puts each figure's zoom toolbar directly BEFORE the figure, so
+ * the hidden view's toolbar is hidden with it. */
+.fa-uml-views:has(.fa-uml-pick-portrait:checked) .fa-uml-landscape,
+.fa-uml-views:has(.fa-uml-pick-portrait:checked) .fa-figure-tools:has(+ .fa-uml-landscape),
+.fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-uml-portrait,
+.fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-figure-tools:has(+ .fa-uml-portrait) { display: none; }

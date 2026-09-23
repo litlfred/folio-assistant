@@ -13,9 +13,19 @@ Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read fr
 
 **Source:** [PlantUML](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-schemas.puml) · the full model, with Bean and Todo, is [below](#the-full-object-model).
 
-<figure class="bpmn-figure">
-  <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships.">
-</figure>
+<div class="fa-uml-views">
+  <fieldset class="fa-uml-view-pick">
+    <legend>Layout</legend>
+    <input type="radio" name="fa-uml-harness_schemas" id="fa-uml-harness_schemas-portrait" class="fa-uml-pick-portrait" checked><label for="fa-uml-harness_schemas-portrait">Portrait</label>
+    <input type="radio" name="fa-uml-harness_schemas" id="fa-uml-harness_schemas-landscape" class="fa-uml-pick-landscape"><label for="fa-uml-harness_schemas-landscape">Landscape</label>
+  </fieldset>
+  <figure class="bpmn-figure fa-uml-portrait">
+    <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships. Portrait layout.">
+  </figure>
+  <figure class="bpmn-figure fa-uml-landscape">
+    <img src="{{ '/assets/img/uml/harness-schemas.landscape.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships. Landscape layout.">
+  </figure>
+</div>
 
 ## The full object model
 
@@ -23,9 +33,19 @@ The same classes plus the state family, Todo and Bean, and the edges that reach 
 
 **Source:** [PlantUML](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-object-model.puml)
 
-<figure class="bpmn-figure">
-  <img src="{{ '/assets/img/uml/harness-object-model.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships.">
-</figure>
+<div class="fa-uml-views">
+  <fieldset class="fa-uml-view-pick">
+    <legend>Layout</legend>
+    <input type="radio" name="fa-uml-harness_object_model" id="fa-uml-harness_object_model-portrait" class="fa-uml-pick-portrait" checked><label for="fa-uml-harness_object_model-portrait">Portrait</label>
+    <input type="radio" name="fa-uml-harness_object_model" id="fa-uml-harness_object_model-landscape" class="fa-uml-pick-landscape"><label for="fa-uml-harness_object_model-landscape">Landscape</label>
+  </fieldset>
+  <figure class="bpmn-figure fa-uml-portrait">
+    <img src="{{ '/assets/img/uml/harness-object-model.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships. Portrait layout.">
+  </figure>
+  <figure class="bpmn-figure fa-uml-landscape">
+    <img src="{{ '/assets/img/uml/harness-object-model.landscape.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships. Landscape layout.">
+  </figure>
+</div>
 
 ## Per harness
 
