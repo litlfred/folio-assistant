@@ -14,6 +14,8 @@
       "pageEnd": 1,
       "target": "../sections/page-001.md",
       "narrative": null,
+      "content": "Agent Skill best practices\nCreate high-quality, reliable Agent Skills by following these established design principles and\npatterns.\nDesign for discovery\nThe most important part of a skill is its description. This is the only information the model has\nbefore activation.\nBe specific: Use keywords that are likely to appear in user prompts (for example, “audit,”\n“security,” “refactor,” “migration”).\nDefine the trigger: Clearly state when the skill should be used (for example, “Use this skill\nwhen the user asks to review a PR for performance regressions”).\nAvoid overlap: Ensure your skill descript",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -28,6 +30,8 @@
       "pageEnd": 2,
       "target": "../sections/page-002.md",
       "narrative": null,
+      "content": "Best practice: Keep the SKILL.md body focused on core procedural instructions. Move detailed\nreference material, schemas, and examples into separate files in a references/ directory.\nDegrees of freedom\nMatch the level of instruction specificity to the task’s fragility.\nHigh freedom (text-based instructions): Use when multiple approaches are valid or\ndecisions depend heavily on context.\nMedium freedom (pseudocode or scripts with parameters): Use when a preferred pattern\nexists but some variation is acceptable.\nLow freedom (specific scripts, few parameters): Use when operations are fragile and\ne",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -42,6 +46,8 @@
       "pageEnd": 3,
       "target": "../sections/page-003.md",
       "narrative": null,
+      "content": "Security and privacy\nDesign your skills with security in mind to protect your workspace and data.\nAvoid hardcoded secrets: Never include API keys or passwords in your skill’s scripts or\ndocumentation.\nReview third-party skills: Inspect the SKILL.md and scripts of any skill before installing it\nfrom an untrusted source.\nLimit scope: Design skills to be as focused as possible to minimize the potential impact of\nerrors.\nLast updated: Apr 30, 2026\nTerms |\nPrivacy\nThis website uses cookies from Google to deliver and enhance the quality of its services and\nto analyze traffic.\n9/20/26, 4:44 PM\nAgent",
+      "truncated": true,
       "provenance": "ingested"
     }
   ]
