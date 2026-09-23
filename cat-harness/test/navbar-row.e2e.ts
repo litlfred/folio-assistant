@@ -132,12 +132,24 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
   .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
   .site-title { flex: 1; }
   .site-nav { width: 100%; overflow-y: auto; }
+  /* THE THEME'S OWN NAV LINK, copied from a real build rather than written
+     from memory: padding 4px 32px, line-height 24px, so 32px tall. The theme
+     sizes this element, not us, and a fixture that left it as a bare anchor
+     measured 17px and reported the THEME as failing the target floor. Same
+     rule action-tiles.e2e.ts states for its search markup.
+     NO BACKTICKS HERE -- this comment is inside the page template literal, and
+     one ends the string. It did, and the suite reported "No tests found"
+     rather than a syntax error (bean bmr0). */
+  .site-nav a { display: block; padding: 4px 32px; font-size: 14px; line-height: 24px; }
   ${CSS}
 </style></head><body>
   ${script}
   <div class="side-bar">
     <div class="site-header"><a class="site-title"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
+    <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+    <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
+    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -181,7 +193,16 @@ async function load(
   const logs: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
   p.on("console", (m) => logs.push(m.type() + ": " + m.text()));
-  await p.setContent(page(row, main));
+  // SERVED FROM AN ORIGIN, not `setContent`. A document set that way has an
+  // opaque origin and `localStorage` THROWS a SecurityError on it — which
+  // quietly made the whole fixture the private-window case, so the stay-closed
+  // preference's persistence would have gone untested while a test named for
+  // it passed. `route` + `goto` gives a real `http://` origin and costs one
+  // handler.
+  await p.route("http://navbar.fixture/**", (r) =>
+    r.fulfill({ contentType: "text/html", body: page(row, main) }),
+  );
+  await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
   return { errors, console: logs };
 }
 
@@ -471,8 +492,13 @@ test.describe("the document index — the fixed top, about the page rather than 
     // deliberately not restated here: two specs asserting one placement are
     // two answers free to disagree.
     await load(page, CUSTOM);
+    // THE CONTROLS ARE FILTERED TOO, for the same reason the panels are: the
+    // checkbox is off-screen and both labels are `position: absolute`, so
+    // none of them is a region in the column's flow. Where a label is PAINTED
+    // is free of where it sits in the markup — the argument `.fa-nav-toggle`
+    // already makes in the stylesheet.
     const order = await page
-      .locator(".side-bar > *:not(.fa-panel-in-sidebar)")
+      .locator(".side-bar > *:not(.fa-panel-in-sidebar):not(.fa-nav-open):not(.fa-nav-toggle):not(.fa-nav-close)")
       .evaluateAll((ns) => ns.map((n) => n.className || n.tagName.toLowerCase()));
     expect(order).toEqual([
       expect.stringContaining("site-header"),
@@ -663,5 +689,213 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.hover(".side-bar");
     await page.waitForTimeout(250);
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
+  });
+});
+
+/**
+ * THE TARGET FLOOR, over the whole navbar.
+ *
+ * `ui-accessibility`: *"Targets are at least 24x24 CSS px (SC 2.5.8), and aim
+ * higher: 32px for rows in a list … Density is cheaper than a missed target."*
+ * This instance's declared interaction profile is low-dexterity, so it is a
+ * binding constraint rather than a nicety.
+ *
+ * ## Why this test did not exist, and what its absence cost
+ *
+ * The repository already holds this floor in two places — the KG viewer's
+ * `a11y.e2e.ts` and the language bar — and the NAVBAR was in neither. Three
+ * rows had drifted under it unnoticed, measured at 1400x900 on a built site:
+ * `.fa-doc-index__link` and `.fa-nav-folders__link` at **23px** (one pixel
+ * short, from a padding rule copied between them) and `.fa-harness-graph__link`
+ * at **26x13** — an inline `<a>`, so its box was exactly its text.
+ *
+ * So the assertion is a SWEEP rather than three named selectors. Naming them
+ * would pass the day a fourth row is added, which is exactly how these three
+ * got here.
+ */
+test.describe("every row in the navbar is a target", () => {
+  test("nothing interactive in the sidebar is under 24px", async ({ page }) => {
+    await load(page, CUSTOM);
+    // Opened and every disclosure expanded: a row inside a closed `<details>`
+    // has no box to measure, and a sweep that skipped them would report clean
+    // over the rows most likely to be wrong.
+    await page.hover(".side-bar");
+    for (const heading of [".fa-doc-index__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
+      const h = page.locator(".side-bar " + heading);
+      if (await h.count()) await h.click();
+    }
+    await page.waitForTimeout(300);
+
+    const small = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const e of Array.from(
+        document.querySelectorAll('.side-bar a[href], .side-bar button, .side-bar summary, .side-bar [role="button"]'),
+      )) {
+        const r = e.getBoundingClientRect();
+        // A zero box is hidden, not small — the theme's skip link is 1x1 until
+        // it takes focus, and reporting it would be reporting a control that
+        // is correct.
+        if (r.width === 0 || r.height === 0) continue;
+        if (r.height < 24 || r.width < 24) {
+          out.push(`${(e.className || e.tagName).toString().split(" ")[0]} ${Math.round(r.width)}x${Math.round(r.height)}`);
+        }
+      }
+      return out;
+    });
+    expect(small).toEqual([]);
+  });
+
+  test("...and the sweep actually found something to measure", async ({ page }) => {
+    // `dh4f` in a test: a selector that matched nothing would make the
+    // assertion above pass over an empty set, which is indistinguishable from
+    // a navbar with no defects.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const n = await page
+      .locator('.side-bar a[href], .side-bar button, .side-bar summary')
+      .evaluateAll((ns) => ns.filter((e) => e.getBoundingClientRect().height > 0).length);
+    expect(n).toBeGreaterThan(5);
+  });
+});
+
+/**
+ * A GLYPH PAINTS WITH `currentColor`, OR IT PAINTS BLACK.
+ *
+ * Owner, 2026-09-23, with a screenshot of the dark-mode navbar: *"exploding
+ * icon hard to see in dark mode"*. It was not hard to see — it was black. An
+ * SVG shape with no `fill` takes the initial value, which is black, and the
+ * element's `color` never reaches it.
+ *
+ * ## Why no contrast check would have caught it
+ *
+ * The icon's own computed `color` is a perfectly good `rgb(230,225,232)` and
+ * its effective opacity is 0.8, so a contrast check that reads the ELEMENT
+ * reports **7.99:1** — on an icon rendering at about **1.4:1**. The only way
+ * it shows is to walk the painted shapes, which is what this does.
+ *
+ * Two of the five glyphs were wrong and the other three were fine for a reason
+ * worth keeping: the three are strokes, wrapped in `fill="none"
+ * stroke="currentColor"`, and only the two FILLED ones had nothing saying what
+ * colour to fill with. So this is a sweep rather than two named glyphs — the
+ * next filled glyph added is the next one to get this wrong.
+ */
+test.describe("every glyph in the navbar paints with the text colour", () => {
+  test("no shape falls back to the initial black", async ({ page }) => {
+    await load(page, LIVE);
+    const black = await page.evaluate(() => {
+      const out: string[] = [];
+      const shapes = ".fa-nav-icons svg rect, .fa-nav-icons svg circle, .fa-nav-icons svg ellipse, " +
+        ".fa-nav-icons svg path, .fa-nav-icons svg polygon, .fa-nav-icons svg polyline, .fa-nav-icons svg line";
+      for (const sh of Array.from(document.querySelectorAll(shapes))) {
+        const cs = getComputedStyle(sh);
+        // Black fill AND no stroke: nothing else is carrying the colour, so
+        // this shape is painted with the initial value on whatever is behind
+        // it. A black fill WITH a stroke is a filled-and-outlined shape and is
+        // a judgement, not a fallback.
+        if (cs.fill === "rgb(0, 0, 0)" && (cs.stroke === "none" || cs.stroke === "")) {
+          out.push((sh.closest("[aria-label]")?.getAttribute("aria-label") ?? "?") + " <" + sh.tagName + ">");
+        }
+      }
+      return out;
+    });
+    expect(black).toEqual([]);
+  });
+
+  test("...and the sweep found shapes to look at", async ({ page }) => {
+    // `dh4f`: a selector that matched nothing would pass the assertion above
+    // over an empty set, which is what a navbar with no icons also looks like.
+    await load(page, LIVE);
+    const n = await page.locator(".fa-nav-icons svg *").count();
+    expect(n).toBeGreaterThan(5);
+  });
+});
+
+/**
+ * STAY CLOSED, REMEMBERED — the owner's choice of three.
+ *
+ * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/ all
+ * pages)"*, with a screenshot of the bar open and nothing to press. The bar
+ * had ONE state bit — pinned or not — and also opened on hover, with `[x]`
+ * shown only while pinned. So a bar opened by a pointer had no control, and a
+ * touch reader, with no pointer to move away, had no way at all.
+ *
+ * Asked rather than guessed, because the three answers build differently. The
+ * owner chose the three-state one: `[x]` whenever the bar is open, and
+ * pressing it remembers a stay-closed preference across pages.
+ */
+test.describe("the navbar can be closed, and it stays closed", () => {
+  test("[x] is offered whenever the bar is OPEN, not only while pinned", async ({ page }) => {
+    await load(page, CUSTOM);
+    // At rest it is not offered: an [x] alone in a 3.5rem strip reads as a
+    // close button for the page.
+    await expect(page.locator(".fa-nav-close")).toBeHidden();
+    await page.hover(".side-bar");
+    await expect(page.locator(".fa-nav-close")).toBeVisible();
+  });
+
+  test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
+    // The defect this intercepts. `[x]` is a `<label for="fa-nav-open">` and a
+    // label TOGGLES; with the bar open by hover the checkbox is already clear,
+    // so the same click would CHECK it and pin the bar open — the opposite of
+    // what the control says.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
+  });
+
+  test("...and the preference is REMEMBERED for the next page", async ({ page }) => {
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
+    expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBe("closed");
+  });
+
+  test("closed means the POINTER stops opening it — and only the pointer", async ({ page }) => {
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(250);
+    const strip = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
+    expect(strip).toBeLessThan(100);
+
+    // A KEYBOARD READER IS NOT TRAPPED. Focus still opens it — suppressing
+    // that would leave them tabbing through links they cannot see, which is a
+    // worse defect than the one being fixed.
+    await page.locator(".side-bar .site-nav a").first().focus();
+    await page.waitForTimeout(250);
+    const focused = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
+    expect(focused).toBeGreaterThan(200);
+  });
+
+  test("the hamburger LIFTS it — an action whose inverse is unreachable is not a toggle", async ({ page }) => {
+    // `l4zi`. Without this the bar could be closed once and never peek again.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(200);
+    await page.locator(".fa-nav-toggle").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBeNull();
+    expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBeNull();
+  });
+
+  test("a browser that refuses localStorage still gets the close", async ({ page }) => {
+    // The preference is a convenience, not state anything else needs, so a
+    // throwing `localStorage` degrades to "closed for this page" rather than
+    // to a broken navbar.
+    // Now that the fixture has a real origin, this has to CREATE the condition
+    // rather than inherit it — which is the point: before, every test here ran
+    // with storage denied and this one passed for the wrong reason.
+    await page.addInitScript(() => {
+      Object.defineProperty(window, "localStorage", {
+        get() { throw new Error("denied"); },
+      });
+    });
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
   });
 });
