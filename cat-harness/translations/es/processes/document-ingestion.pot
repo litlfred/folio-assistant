@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.868Z\n"
+"POT-Creation-Date: 2026-09-23T19:45:54.299Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "A file lands in uploads/"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:167
+#: processes/document-ingestion.bpmn:170
 #. Diagram element documentation
 msgid "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes."
 msgstr ""
@@ -34,7 +34,7 @@ msgstr ""
 msgid "A theme source? (author&#39;s judgement)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:184
+#: processes/document-ingestion.bpmn:187
 #. Diagram label
 msgid "Available to cite as an L1 source"
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Build the L1 knowledge graph [document-intake]"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:206
+#: processes/document-ingestion.bpmn:209
 #. Diagram label
 msgid "complete"
 msgstr ""
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Document ingestion — uploads/ to the L1 source knowledge graph"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:186
+#: processes/document-ingestion.bpmn:189
 #. Diagram element documentation
 msgid "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn."
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:204
+#: processes/document-ingestion.bpmn:207
 #. Diagram label
 msgid "gap"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Ingest the theme [theme-art-intake]"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:195
+#: processes/document-ingestion.bpmn:198
 #. Diagram label
 msgid "Ingested"
 msgstr ""
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:159
+#: processes/document-ingestion.bpmn:162
 #. Diagram label
 msgid "L1 complete?"
 msgstr ""
@@ -119,7 +119,7 @@ msgstr ""
 msgid "L1 completeness gate"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:175
+#: processes/document-ingestion.bpmn:178
 #. Diagram label
 msgid "Move into library/<bib-slug>/"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "ONE OF TWO ENTRY POINTS, and this said \"the only\" one until 2026-09-20. A drop during an editing session triggers ingestion in the background; the contributor does not wait for it. THE OTHER is materialization: an asset listed in a remote graph that this instance, or one of its dependencies, declares in `remoteGraphs`. Owner, 2026-09-20: \"things can enter library through uploads/ -> library/ document ingestion or through retrieval / materialization of asset known through listed external KG in one of the dependent harnesses.\" That path runs materialize-remote.bpmn FIRST -- purpose, then the five gates -- and re-enters this process at \"Extract structure\" with a file that already carries its provenance and its fixity. It does NOT pass through uploads/, and that is deliberate: uploads/ is a queue for things somebody dropped, and a materialized asset was never dropped. Recording it as an upload would lose the one fact that distinguishes the two, which is that somebody decided it could be held."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:165
+#: processes/document-ingestion.bpmn:168
 #. Diagram label
 msgid "Record the gap as a bean"
 msgstr ""
@@ -161,7 +161,7 @@ msgstr ""
 
 #: processes/document-ingestion.bpmn:148
 #. Diagram element documentation
-msgid "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written."
+msgid "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
 msgstr ""
 
 #: processes/document-ingestion.bpmn:125
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:177
+#: processes/document-ingestion.bpmn:180
 #. Diagram element documentation
 msgid "The folder name IS the bibliography citation key, so a citation and a directory are the same string."
 msgstr ""
@@ -184,7 +184,7 @@ msgstr ""
 msgid "The terminal state the whole diagram exists to reach: once Task_Promote lands material in library/<bib-slug>/, this lane is where that fact is recorded as available, and it is the boundary this diagram stops at — everything that depends on the source afterward, such as authoring-a-document.bpmn's citations, starts from here rather than being drawn into this process."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:160
+#: processes/document-ingestion.bpmn:163
 #. Diagram element documentation
 msgid "The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/<bib-slug>/."
 msgstr ""
