@@ -167,6 +167,7 @@ package test {
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
+    pair_attestations [0..*] : {kind, prose, code, prose_hash, code_hash, by, reason}[]
   }
 }
 
