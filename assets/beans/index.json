@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 570,
+      "count": 571,
       "unit": "beans"
     }
   },
@@ -3343,15 +3343,15 @@
     {
       "id": "folio-assistant-f2ho",
       "title": "DOC COMPLETENESS follow-up: write <bpmn:documentation> for the steps activity-documented reports",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:40:08Z",
-      "updatedAt": "2026-09-23T07:40:08Z",
-      "preview": "Follows bean ooq3 / PR #1008 (issue #1007). Owner 2026-09-23 chose a SEPARATE PR, after #1008 merges.\n\nactivity-documented (kg-qa, minor, not gated) reported 95 undocumented steps across the cat-harness diagrams when it landed — read the current count from the sidecars, never from this line.\n\n## Done when\n- [ ] #1008 merged\n- [ ] the processes with the most undocumented steps done first (worst at ",
+      "updatedAt": "2026-09-23T09:05:55Z",
+      "preview": "Follows bean ooq3 / PR #1008 (issue #1007). Owner 2026-09-23 chose a SEPARATE PR, after #1008 merges.\n\nactivity-documented (kg-qa, minor, not gated) reported 95 undocumented steps across the cat-harness diagrams when it landed — read the current count from the sidecars, never from this line.\n\n## Done when\n- [x] #1008 merged\n- [x] the processes with the most undocumented steps done first (worst at ",
       "file": "beans/defs/folio-assistant-f2ho--doc-completeness-follow-up-write-bpmndocumentation.md"
     },
     {
@@ -3913,6 +3913,20 @@
       "updatedAt": "2026-09-22T06:54:12Z",
       "preview": "_2026-09-22T07:00:00Z_ — FOUND BY BREAKING IT, 2026-09-22, while closing bean `gjli`. A four-paragraph closing note was too long to pass as an inline string, so I reached for `beans update <id> --body-file <f>`. It **replaced** the body: the owner's 2026-09-19 verbatim note ('ALL UI MUST FOLLOW ACCESSIBATILITY GUIDELIENS', stated in caps and load-bearing — it is what makes the rule STANDING rather",
       "file": "beans/defs/folio-assistant-i9xp--beans-update-body-file-replaces-the-body-silently.md"
+    },
+    {
+      "id": "folio-assistant-idl1",
+      "title": "ADJUDICATION IS DRAWN INLINE: review-narrative and voice-review each redraw it instead of calling Process_Adjudication",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T08:35:04Z",
+      "updatedAt": "2026-09-23T08:35:04Z",
+      "preview": "The shared adjudication process exists and is now expressed against the typed contract, but the two processes that PRODUCE disagreements draw their own adjudicate steps rather than calling it. Owner's prompt 2026-09-23: 'make sure the provide feedback process is defined which would create things to adjudicate.'\n\n## The question the owner asked, and the answer\n\n> also make sure the \"provide feedbac",
+      "file": "beans/defs/folio-assistant-idl1--adjudication-is-drawn-inline-review-narrative-and.md"
     },
     {
       "id": "folio-assistant-ie9l",
@@ -5181,14 +5195,14 @@
     {
       "id": "folio-assistant-ooq3",
       "title": "DOC COMPLETENESS: a QA control over process documentation — 45 of 62 diagrams are shown on no page, 95 of 456 steps undocumented, adjudication callers do not call it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T06:49:40Z",
-      "updatedAt": "2026-09-23T06:58:44Z",
+      "updatedAt": "2026-09-23T08:22:51Z",
       "preview": "Owner 2026-09-23 (session_01SiFEMuTciyB681XP5WfcbB): asked whether the adjudication process (7pdi) is rendered; it is rendered (adjudication.svg fresh) but shown on no page. Owner: 'add skills/bpmn/sub-process to surface it. show documentation' then 'make this a QA control on documentation completion - lots of issues were found'.\n\n## Measured 2026-09-23 over 62 cat-harness diagrams\n- process-level",
       "file": "beans/defs/folio-assistant-ooq3--doc-completeness-a-qa-control-over-process-documen.md"
     },
@@ -5463,14 +5477,14 @@
     {
       "id": "folio-assistant-pv6g",
       "title": "GLASS: the fixed layer exists as a bottom-right dock, not a surface a note is placed on",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:39Z",
-      "updatedAt": "2026-09-21T17:31:42Z",
+      "updatedAt": "2026-09-23T08:30:36Z",
       "preview": "Owner, 2026-09-21: \"stickies can detach from the panel and placed on the 'display window/glass' and dont scroll when the folio/document/page scrolls. when closed tehy returned to their home display panel.\"\n\nCORPUS CHECK. The layer EXISTS and is already fixed — docs-ui.css:2263, '.fa-sticky-layer { position: fixed; inset: auto 1rem 1rem auto; width: min(22rem, calc(100vw - 2rem)) }'. So 'does not s",
       "file": "beans/defs/folio-assistant-pv6g--glass-the-fixed-layer-exists-as-a-bottom-right-doc.md"
     },
@@ -7825,14 +7839,14 @@
     {
       "id": "folio-assistant-zaqn",
       "title": "JSON-LD PREFIX = STUB: the content context uses an undeclared `folio:` prefix, so every content term expands to a meaningless IRI",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:22:19Z",
-      "updatedAt": "2026-09-23T07:34:10Z",
+      "updatedAt": "2026-09-23T08:48:57Z",
       "preview": "## What is wrong\n\n`CONTENT_CONTEXT` in `cat-harness/schemas/jsonld.ts` (served as `ns/content/v1.jsonld`) declares the prefix `fac` but writes 20 terms as `folio:…`. No `folio` prefix is declared, so a JSON-LD processor reads `folio` as a URI SCHEME: `\"@type\": \"folio:Definition\"` expands to the absolute IRI `folio:Definition`. Verified 2026-09-23 with `jsonld.expand`. 1,737 committed `.jsonld` fil",
       "file": "beans/defs/folio-assistant-zaqn--json-ld-prefix-stub-the-content-context-uses-an-un.md"
     },
