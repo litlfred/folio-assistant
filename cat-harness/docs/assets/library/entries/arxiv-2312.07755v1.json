@@ -14,6 +14,8 @@
       "pageEnd": 1,
       "target": "../images/img-p001-1.png",
       "narrative": "draft",
+      "content": "Figure 1 — Overview diagram of WireGen: at left a cartoon designer at a drawing tablet with a thought cloud reading \"How to design a recipe page in food app?\" (labelled \"Design Intent\"); a \"Prompt\" arrow leads to a central block where a stack of UI screenshots is used for \"Fine-tuning\" a grey \"Large Language Models\" bar into a colourful \"Fine-tuned Large Language Models\" box with a \"UI-specific\" flowchart icon (labelled \"WireGen\"); a \"Beautify\" arrow leads to an illustration of a phone with gear, ruler and compass under \"Design Guidelines & UI Rules\", and an \"Output\" arrow leads to stacked grey mobile wireframes of a \"FOODS / Top recipe picks\" screen with image tiles (Eggless Desserts, Condiment Special, Indo-Chinese, Sweet Tooth), labelled \"Mid-Fidelity Wireframes\".",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -28,6 +30,8 @@
       "pageEnd": 3,
       "target": "../sections/sec-000-1-introduction.md",
       "narrative": null,
+      "content": "User Interface (UI) plays a crucial role in today’s desktop software, mobile applications, and online websites. It serves as\na visual bridge between a software application and end-users through which they can interact with each other [30, 33].\nGood UI designs are essential to the success of a software application and can gain loyalty from the software users [19].\nHowever, designing a good UI can be challenging, even for experienced designers. On the one hand, designers need to\nstrive for creative ideas and follow many design rules and principles, such as fluent interactivity, universal usabili",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -42,6 +46,8 @@
       "pageEnd": 1,
       "target": "../sections/sec-front-matter.md",
       "narrative": null,
+      "content": "Designing with Language: Wireframing UI Design Intent with Generative Large\nLanguage Models\nSIDONG FENG, Monash University, Australia\nMINGYUE YUAN, University of New South Wales, Australia\nJIESHAN CHEN, CSIRO’s Data61, Australia\nZHENCHANG XING, CSIRO’s Data61 & Australian National University, Australia\nCHUNYANG CHEN, Monash University, Australia\nFig. 1. The overview of WireGen to streamline UI design process with automated mid-fidelity wireframe generation. We leverage the\npower of the generative Large Language Models (LLMs), fine-tuning it with thousands of UI data to endow its understanding",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -56,6 +62,8 @@
       "pageEnd": 3,
       "target": "../images/img-p003-1.png",
       "narrative": "draft",
+      "content": "Figure 2 — Three phone mockups side by side, numbered 1-3: \"Low Fidelity Wireframe\" (grey sketch lines, boxes and circles), \"Mid Fidelity Wireframe\" (greyscale deals screen with \"Explore Featured Deals\", category circles such as coffee and pizza, and list items Starbucks, Tea Leaf, Espresso), and \"Final UI\" (a full-colour deals app with featured-deal banners, illustrated category icons and a Starbucks / The Coffee Bean & Tea Leaf / BARISTA Coffee list).",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -70,6 +78,8 @@
       "pageEnd": 3,
       "target": "../sections/sec-001-2-related-work.md",
       "narrative": null,
+      "content": "We aim to facilitate the design of mobile mid-fidelity UI wireframes by simply prompting the design descriptions using",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -84,6 +94,8 @@
       "pageEnd": 3,
       "target": "../sections/sec-002-21-mobile-ui-wireframe.md",
       "narrative": null,
+      "content": "",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -98,6 +110,8 @@
       "pageEnd": 3,
       "target": "../sections/sec-003-22-designing-with-natural-language.md",
       "narrative": null,
+      "content": "2.1\nMobile UI Wireframe\nWireframing plays a pivotal role in many types of creative activities because of its highly visual nature and its flexibility\nfor creation and manipulation: designers can create and imagine any kind of visual content, and continuously revise\nit without being constrained by unnecessary details [36, 49, 79]. Subsequently, mobile UI wireframing is well-suited",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -112,6 +126,8 @@
       "pageEnd": 4,
       "target": "../sections/sec-004-abstract.md",
       "narrative": null,
+      "content": "and rapidly compare alternatives [54, 77]. SILK [48] is the first system that allows designers to create interactive UI\nprototypes by wireframing. With the essential of UI wireframe as a profession in the UI design process, many academic\nresearch [44, 57] and commercial graphic tools including Adobe PhotoShop [2], Sketch [10], and Figma [6] are developed\nto allow designers to sketch the UI wireframes at multiple detail levels from low-fidelity to mid-fidelity and final UI\n(as shown in Fig. 2). Low-fidelity wireframes serve as the design’s starting point that tends to be fairly rough, created\nw",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -126,6 +142,8 @@
       "pageEnd": 5,
       "target": "../sections/sec-005-3-approach.md",
       "narrative": null,
+      "content": "modal information such as the textual content, visual design, hierarchy layout patterns, and app meta-data. Similarly,\nScreen2Words [75] proposes a screen summarization approach to describe the functionalities of the UI screenshots.\nSome research specifically generates semantically alt-text labels for UI elements [16, 17, 20, 27, 31, 32, 32, 34, 78]. These\nstudies attempt to learn the latent representation of UIs to generate natural language understanding. On the contrary,\nour work focuses on interpreting natural language descriptions into UIs.\nThe interest in involving natural language as a f",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -140,6 +158,8 @@
       "pageEnd": 5,
       "target": "../images/img-p005-1.png",
       "narrative": "draft",
+      "content": "Figure 3 — Three-phase pipeline diagram. \"Data Preparation (Sec 3.1)\": Rico UI screens (a dark settings screen) are converted into \"UI-specific language\" as HTML code and a style sheet, paired with a Screen2Words description (\"settings page to enable options and notification\"). \"Model Fine-tuning (Sec 3.2)\": icons for training data selection, model selection and hyperparameter configuration feed fine-tuning of a transformer block (masked multi self attention, layer normalization, feed forward, layer normalization) labelled \"Large Language Models\". \"Output Beautification (Sec 3.3)\": a phone illustration surrounded by clouds reading \"Add semantic icons\", \"Adjust text typography\" and \"Follow UI guidelines\".",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -154,6 +174,8 @@
       "pageEnd": 8,
       "target": "../sections/sec-006-31-prepare-dataset-of-ui-wireframes-and-descript.md",
       "narrative": null,
+      "content": "3.1.1\nMid-fidelity Wireframes and Descriptions. While there are many low-fidelity wireframe datasets available [15,\n25, 51, 68, 69], none of the prior work studies on mid-fidelity wireframes. This is because mid-fidelity wireframes go\nbeyond the shape, placeholders, and “lorem ipsum” text of low-fidelity wireframes to include real content, semantic\nicons, interactive elements, etc. However, manual labeling of wireframes can be prohibitively expensive. To that end,\n5\nFeng et al.\nwe propose a novel approach to automatically collect a set of representations of mid-fidelity wireframes. As shown in",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -168,6 +190,8 @@
       "pageEnd": 7,
       "target": "../images/img-p007-1.png",
       "narrative": "draft",
+      "content": "Figure 4 — Three panels: a hotel/flight/car booking app screenshot (\"bookit\", \"Search for Hotel\", Destination, Check In/Check Out, Rooms/Adults/Children counters, green Search button, bottom bar with Search, Members, Call, More), the corresponding \"HTML code\" with red-boxed snippets (search_car radio input, search_location text input, check-in date, children counter buttons, more_icon image), and a \"Style Sheet\" giving absolute top/left/width/height values for body, .search_car and .search_location; red arrows link each boxed UI element to its code.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -182,6 +206,8 @@
       "pageEnd": 9,
       "target": "../sections/sec-007-32-fine-tune-large-language-models-with-best-pra.md",
       "narrative": null,
+      "content": "Since the LLMs are not specifically designed to understand the UI design patterns, we fine-tune the LLMs with the natural\nlanguage description as the input and the UI wireframe in HTML syntax as the output (the same learning objective as\nthe pre-trained model). The implementation of fine-tuning process is not a trivial task [50], which can significantly\ninfluence the performance of LLMs. To that end, we summarize three highly sensitive aspects in fine-tuning LLMs,\ndenoting training data selection, model selection, and hyperparameter configuration, and detail our implementation\ninformed by the",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -196,6 +222,8 @@
       "pageEnd": 9,
       "target": "../images/img-p009-1.png",
       "narrative": "draft",
+      "content": "Figure 5 — Before/after comparison of a fitness app wireframe: the left \"Raw Generation\" screen has text-only buttons (return, settings, more options), overlapping \"Healthy\"/\"Get Started\" text, a duplicated \"see more\" button and an off-screen text block, marked with blue letters A-F; the centre lists \"Semantic Icons\", \"Text Typography\" and \"UI Guidelines\" with small icons; the right \"Post Processing\" screen shows a back arrow, gear and three-dot icons, resized text and corrected layout.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -210,6 +238,8 @@
       "pageEnd": 11,
       "target": "../sections/sec-008-33-transform-raw-generation-into-beautiful-ui-wi.md",
       "narrative": null,
+      "content": "After fine-tuning process, we prompt the LLMs with a simple description of design intent to generate a HTML syntax of\nmid-fidelity wireframes. However, programming languages like HTML and CSS are not easy for designers to understand.\nWe wish to hide the programming hardships under-the-hood to reduce the designer’s burden. Besides, the LLMs may\nnot fully capture the intricacies of the design knowledge behind the UI designs. To this goal, we propose post-processing\nmethods to transform the raw HTML syntax generation into intuitive, fluent, and interactive UI wireframes. An example\nof the post-pr",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -224,6 +254,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-1.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -238,6 +270,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-10.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -252,6 +286,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-11.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -266,6 +302,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-12.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -280,6 +318,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-13.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -294,6 +334,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-14.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -308,6 +350,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-15.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -322,6 +366,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-16.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -336,6 +382,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-17.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a vertical three-dot icon (three filled circles stacked vertically); one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -350,6 +398,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-18.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the three-dot \"more\" icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -364,6 +414,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-19.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -378,6 +430,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-2.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -392,6 +446,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-20.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -406,6 +462,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-21.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -420,6 +478,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-22.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -434,6 +494,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-23.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -448,6 +510,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-24.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -462,6 +526,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-25.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -476,6 +542,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-26.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an information icon: a lowercase \"i\" inside a circle outline; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -490,6 +558,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-27.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the information (\"i\") icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -504,6 +574,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-28.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -518,6 +590,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-29.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -532,6 +606,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-3.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -546,6 +622,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-30.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -560,6 +638,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-31.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -574,6 +654,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-32.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -588,6 +670,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-33.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -602,6 +686,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-34.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -616,6 +702,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-35.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline person icon: a circle for the head above a half-oval for the shoulders; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -630,6 +718,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-36.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the person/profile avatar icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -644,6 +734,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-37.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -658,6 +750,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-38.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -672,6 +766,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-39.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -686,6 +782,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-4.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -700,6 +798,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-40.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -714,6 +814,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-41.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -728,6 +830,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-42.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -742,6 +846,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-43.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -756,6 +862,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-44.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a close icon: a large \"X\" of two crossed strokes; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -770,6 +878,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-45.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the close (\"X\") icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -784,6 +894,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-46.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline magnifying-glass (search) icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -798,6 +910,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-47.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the search magnifier icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -812,6 +926,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-48.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -826,6 +942,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-49.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -840,6 +958,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-5.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -854,6 +974,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-50.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -868,6 +990,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-51.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -882,6 +1006,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-52.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -896,6 +1022,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-53.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -910,6 +1038,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-54.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -924,6 +1054,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-55.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a share icon: three outline circles joined by two lines forming a \"<\" shape; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -938,6 +1070,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-56.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the share (three connected nodes) icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -952,6 +1086,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-57.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline heart icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -966,6 +1102,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-58.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the heart/favourite icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -980,6 +1118,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-59.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -994,6 +1134,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-6.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1008,6 +1150,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-60.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1022,6 +1166,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-61.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1036,6 +1182,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-62.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1050,6 +1198,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-63.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1064,6 +1214,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-64.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1078,6 +1230,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-65.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1092,6 +1246,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-66.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a left-pointing arrow icon; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1106,6 +1262,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-67.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the back/return arrow icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1120,6 +1278,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-68.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1134,6 +1294,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-69.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1148,6 +1310,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-7.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1162,6 +1326,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-70.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1176,6 +1342,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-71.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1190,6 +1358,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-72.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1204,6 +1374,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-73.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1218,6 +1390,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-74.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1232,6 +1406,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-75.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing a menu icon: three horizontal bars with rounded ends; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1246,6 +1422,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-76.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the menu (horizontal bars) icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1260,6 +1438,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-8.png",
       "narrative": "draft",
+      "content": "A black glyph on a transparent background showing an outline gear (cog) icon with a ring at its centre; one of the example icons in Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1274,6 +1454,8 @@
       "pageEnd": 10,
       "target": "../images/img-p010-9.png",
       "narrative": "draft",
+      "content": "A horizontal strip of nine small cropped app-screenshot icons, all variants of the gear/settings icon in different colours and styles; one row of the \"Examples\" column of Table 2 (the 10 most common icon semantics) on page 10.",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1288,6 +1470,8 @@
       "pageEnd": 11,
       "target": "../sections/sec-009-4-evaluation.md",
       "narrative": null,
+      "content": "In this section, we conduct experiments to demonstrate the effectiveness of our fine-tuned LLMs in generating mid-\nfidelity UI wireframes.\n4.1",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1302,6 +1486,8 @@
       "pageEnd": 11,
       "target": "../sections/sec-010-41-research-questions.md",
       "narrative": null,
+      "content": "RQ1: (Performance of Fine-tuning) Does the optimization of fine-tuning correlate with better UI wireframe\ngenerations? For RQ1, we evaluate the effectiveness of fine-tuning the LLMs, compared with widely-used in-context\nlearning baseline approaches (e.g., zero-shot and few-shot).\nRQ2: (Performance of Variations) Do the variations of the LLMs result in better UI wireframes? For RQ2, we\npresent the comparison among the variations of GPT models (e.g., Curie, Babbage, Ada) to demonstrate the performance\nof using Turbo as the model.\n4.2",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1316,6 +1502,8 @@
       "pageEnd": 12,
       "target": "../sections/sec-011-42-testing-data.md",
       "narrative": null,
+      "content": "We collect the data as discussed in Section 3.1 as our experimental dataset. Since we leverage 1,000 sample data to\nfine-tune the LLMs, we first remove these data to avoid potential bias. To evaluate the LLMs’ generalizability and\ndiversity, we randomly select 2 apps from each category. In total, we collect 100 UI textual descriptions as the input\nprompts to generate UI wireframes. Note that we do not use the corresponding UI screens as the ground-truth because\nthe generative LLMs may create reasonable UI wireframes but deviate from the ground-truth.\n11\nFeng et al.\nFig. 6. Examples of promptin",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1330,6 +1518,8 @@
       "pageEnd": 12,
       "target": "../images/img-p012-1.png",
       "narrative": "draft",
+      "content": "Figure 6 — Grid of grey mobile wireframes comparing \"Zero-shot\", \"Few-shot\" and \"WireGen\" (columns) for two prompts (rows): \"search option for different flights\" (a bare list of boxed labels; a Book Flight form with Destination, Departure Date, Return Date; and a fuller Flights screen with ONE WAY/RETURN tabs, Departure/Arrival fields, date picker, passengers dropdown, \"Only direct flights\" checkbox and Search Flights button) and \"page of music list\" (boxed artist/song/genre cells; an empty \"No Music\" screen with Add Music; and a Music List with image rows for Artists, Songs, Genres, Moods, Festivals, Alarms, Favorites, a See More button and a bottom tab bar).",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1344,6 +1534,8 @@
       "pageEnd": 12,
       "target": "../sections/sec-012-43-annotation-methodology.md",
       "narrative": null,
+      "content": "We recruit two people who had backgrounds in UI/UX design and art practice to rate the UI wireframe designs generated\nby our LLMs. At the beginning of the experiment, we first give them an introduction to our study and ask them to\nread UI/UX design books for 30 minutes to deepen the design principles. Given the natural language descriptions and\na grid of UI wireframe designs, annotators are then asked to independently rate which designs in the grid are either\nsignificantly better generations or significantly worse generations. Note that we randomly shuffle the designs in the\ngrid, so that the",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1358,6 +1550,8 @@
       "pageEnd": 14,
       "target": "../sections/sec-013-44-rq1-performance-of-fine-tuning.md",
       "narrative": null,
+      "content": "4.4.1\nBaselines. To demonstrate the advantage of fine-tuning to master the domain-specific task of UI wireframe\ngeneration, we compare it with two widely-used in-context learning methods as baselines, including zero-shot learning\nand few-shot learning. Note that all the experiment settings (e.g., model, hyperparameter, etc.) are the same.\nZero-shot learning: It predicts the results without any training samples. The general idea behind zero-shot learning\nis the LLMs train on a wide collection of different databases and workloads and can thus generalize to a completely\nnew task and workload with",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1372,6 +1566,8 @@
       "pageEnd": 13,
       "target": "../images/img-p013-1.png",
       "narrative": "draft",
+      "content": "Figure 7 — Grid of grey mobile wireframes comparing models \"Ada\", \"Babbage\", \"Curie\" and \"WireGen\" (columns) on two prompts (rows): \"general settings page\" (ranging from a sparse Add Location screen, a plain Settings list, and a Settings/More Apps tabbed screen with checkboxes, to WireGen's General Settings with Backup/Restore, Appearance, Notify Me, Send Feedback and About Us items with descriptions) and \"welcome page\" (from a title with an image placeholder to WireGen's Welcome screen with image, Twitter/Facebook buttons and Sign In/Sign Up buttons).",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1386,6 +1582,8 @@
       "pageEnd": 14,
       "target": "../sections/sec-014-45-rq2-performance-of-variations.md",
       "narrative": null,
+      "content": "4.5.1\nBaselines. As our implementation of LLMs GPT offers different models to support different levels of tasks, we set\nup the other models, including Curie, Babbage, and Ada, as the baselines to compare with our model. To guarantee\nthe fairness of the experiment, we fine-tune these models on the training dataset using the same training settings as\ndiscussed in Section 3.2.\n4.5.2",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1400,6 +1598,8 @@
       "pageEnd": 14,
       "target": "../sections/sec-015-53-results.md",
       "narrative": null,
+      "content": "baseline models, e.g., 76.5% vs 11.5%, 10.5%, 1.5% for Curie, Babbage, and Ada, respectively. Both Curie and Babbage\nshow the tendency to generate average UI wireframes (78% and 82.5%), while Ada underperforms with 81.5% of UI\nwireframes rated to be significantly worse. We report the inter-rater reliability score of 0.28 in Cohen’s kappa, which\nrepresents a fair agreement, which we think is valid considering the highly subjective nature of the task (picking “better”\nor “worse” UI wireframe designs).\nFig. 7 shows some examples generated by our model (Turbo) and the baselines (Curie, Babbage, an",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1414,6 +1614,8 @@
       "pageEnd": 14,
       "target": "../sections/sec-016-5-user-study.md",
       "narrative": null,
+      "content": "In language, there are many ways to say the same thing in different words. We conduct a user study to gain insights\ninto the usefulness of our model in assisting designers with UI wireframe generation with real-world descriptions.\n5.1",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1428,6 +1630,8 @@
       "pageEnd": 14,
       "target": "../sections/sec-017-51-participants.md",
       "narrative": null,
+      "content": "We invite five UI/UX designers to participate in our experiments by word-of-mouth and through online advertisements\non social media and design communities.\n• P1: Visual designer, 6 years of working experience, now working at a large multinational company, responsible\nfor international app design and design innovation.\n• P2: Interaction designer/product designer from a medium-sized company, with 4 years of working experience.\nHer work mainly focuses on smart devices.\n• P3: Designer from a large IT company for 2 years with a focus on mobile advertising user experience design.\n• P4: Visual design",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1442,6 +1646,8 @@
       "pageEnd": 17,
       "target": "../sections/sec-018-52-procedure.md",
       "narrative": null,
+      "content": "The user studies were conducted online via the Zoom platform. Each participant took about one hour to complete. Each\nstudy session began with a short interview in which the participants were asked about their professional background\n14\nWireframing UI Design Intent with Generative Large Language Models\nand their experience in designing UI/UX examples. We then gave them an introduction to our study and also an example\nto try. After the introduction, we asked participants to use WireGen in two tasks. First, they were given a common\nwireframe design prompt (i.e., a login page) and were allowed to",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1456,6 +1662,8 @@
       "pageEnd": 16,
       "target": "../images/img-p016-1.png",
       "narrative": "draft",
+      "content": "Figure 8 — Comparison grid for three wireframe prompts (rows: \"login page\", \"search page on a job searching app\", \"display food recipes\") across six columns: \"LayoutTransformer\" (coloured-block layouts with a legend for Button, Icon, Image, Input, Text, Toolbar), \"DALLE\", \"Stable Diffusion\" and \"MidJourney\" (colour phone mockups whose text is garbled and illegible), and \"WireGen\" (grey wireframes: a Welcome login screen with email/password and Google/Facebook buttons, a JOB SEARCHING screen with search fields and SEARCH button, and a FOODS recipe screen with image tiles and a bottom tab bar).",
+      "truncated": false,
       "provenance": "ingested"
     },
     {
@@ -1470,6 +1678,8 @@
       "pageEnd": 18,
       "target": "../sections/sec-019-6-discussion.md",
       "narrative": null,
+      "content": "In Section 4 and Section 5, we evaluate and examine WireGen ’s effectiveness and usefulness for automatically generating\nmid-fidelity UI wireframes from natural language descriptions. We see several opportunities to improve the performance\nof our LLMs. For example, we see that training on a large dataset can deliver better results. However, due to budget\nconstraints, we only use 1,000 data for training. Once we have enough budget, we can improve the performance of the\nLLMs by incorporating more data.\nThe LLMs are obviously not omnipotent, and still, fail to provide ready-to-use outputs in many",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1484,6 +1694,8 @@
       "pageEnd": 18,
       "target": "../sections/sec-020-7-conclusion.md",
       "narrative": null,
+      "content": "This paper introduces WireGen, a new method for exploring human-AI collaboration in mid-fidelity UI wireframe\ncreation. Inspired by the success of generative Large Language Models in creating innovative ideas, we purpose to\ninherit LLMs’ in-context ability from billions of web resources to create mid-fidelity UI wireframes. Since LLMs are\nnot designed for UI understanding and creation, we fine-tune it with thousands of UI data, including screens and view\nhierarchies, to help the LLMs master UI design knowledge. With the fine-tuned LLMs, we prompt a simple description\nof design intent to genera",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -1498,6 +1710,8 @@
       "pageEnd": 21,
       "target": "../sections/sec-021-references.md",
       "narrative": null,
+      "content": "[1] 2023. Absolute, Relative, Fixed Positioning: How Do They Differ? https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/.\n[2] 2023. Adobe Photoshop | Photo and design software. https://www.adobe.com/products/photoshop.html.\n[3] 2023. ChatGPT: Optimizing Language Models for Dialogue. https://openai.com/blog/chatgpt/.\n[4] 2023. DALLE 2, Explained: The Promise and Limitations of a Revolutionary AI. https://towardsdatascience.com/dall-e-2-explained-the-promise-\nand-limitations-of-a-revolutionary-ai-3faf691be220.\n[5] 2023. Dribbble. https://dribbble.com/.\n[6] 2023. Figma",
+      "truncated": true,
       "provenance": "ingested"
     }
   ]

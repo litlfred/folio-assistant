@@ -2,8 +2,8 @@
 name: confirm-harness
 description: >
   Narrow the harnesses and locations this could be, then have the Requestor
-  settle it. Takes a list; returns at most ONE harness. The only step of
-  initialize-harness that needs a person.
+  settle it. Takes a list; returns at most ONE harness. It needs a person:
+  the Requestor settles it, never the agent.
 ---
 
 # Which harness, and where

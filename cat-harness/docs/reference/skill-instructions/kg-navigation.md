@@ -5,13 +5,13 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/kg-navigation/kg-navigation.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg-navigation/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
-> lives at `bootstrap/skills` and is published as
+> is published as
 > [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
 > Edit this page's source, never the stub.
 

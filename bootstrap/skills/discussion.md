@@ -28,7 +28,7 @@ Each clause does work here:
 | **judgement** | which question to put, to whom, and when one answer is enough |
 | **using tools** | the `discuss` tool: put a question to a participant, receive an answer |
 | **output schema** | `discussion.output.schema.json` — the harness and repositories, **determined** |
-| **in a process** | `workflows/discussion.bpmn`, and never outside one |
+| **in a process** | always inside one: the process's task points at this skill, never the reverse |
 
 The distinction the table makes is the one worth holding: **the tool does not
 decide.** It carries a question out and an answer back. Judgement chooses what
@@ -94,13 +94,13 @@ half of it decides nothing and the whole of it decides everything:
 
 > logging is optional, **unless indicated on tasks**.
 
-`log-message` is in `bootstrap/` for precisely that reason — the tasks in
-`initialize-harness` indicate it, and drawing the call is how a task says so.
+`log-message` is in `bootstrap/` for precisely that reason — bootstrap's own
+tasks indicate it, and drawing the call is how a task says so.
 "Optional" is a property of the blanket feature, not of a step whose
 instructions require it.
 
 `discussion` earns its place on a different footing, and a narrower one: an
 agent that cannot determine which harness and which repositories are involved
-cannot take the first step of `initialize-harness` at all, and no amount of
+cannot take the first step of installing a harness at all, and no amount of
 reading will supply it. Not indicated by a task — presupposed by every one of
 them.
