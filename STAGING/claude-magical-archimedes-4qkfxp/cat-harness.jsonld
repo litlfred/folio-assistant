@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:47:52.281Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9a0d0022fc0c1195b2e46c28f3061eeb4beef029",
-  "sourceCommitSha": "9a0d0022fc0c1195b2e46c28f3061eeb4beef029",
-  "sourceCommitAt": "2026-09-23T07:45:10Z",
+  "generatedAt": "2026-09-23T08:17:11.603Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e6e7ce34ad1e3caf50d17cc11b587f52bcb40442",
+  "sourceCommitSha": "e6e7ce34ad1e3caf50d17cc11b587f52bcb40442",
+  "sourceCommitAt": "2026-09-23T08:14:38Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 241,
@@ -280,7 +280,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 69,
-    "Schema": 96,
+    "Schema": 97,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -35439,6 +35439,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#schema/review-comment",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "review-comment",
+      "title": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "module": "../folio-assistant-core/schemas/review-comment.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-comment"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/cat-harness.jsonld#schema/artifact-store",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "artifact-store",
@@ -37276,8 +37285,8 @@
   ],
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp",
-    "sha": "aef9d1e459190f0010c44e384a67f50b78cd053d",
+    "sha": "b7e88c7c639551bbfdd12af9ab7e187c597de6ca",
     "pr": "1008/merge",
-    "run": "35833378051"
+    "run": "35836029300"
   }
 }
