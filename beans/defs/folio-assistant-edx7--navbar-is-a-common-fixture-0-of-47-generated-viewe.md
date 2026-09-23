@@ -99,7 +99,38 @@ and the opt-out requirement rather than racing them to it.
 - [x] distinguished from `hw9g` — `injectRail` has one non-test caller
 - [x] counted the generators, so "one fix" is not assumed
 - [x] the owner's opt-out rule written down verbatim
-- [ ] a shared viewer shell — **NOT started**: `sjic` is claimed, and racing it
-      would produce two answers to one question
-- [ ] an explicit per-visualisation opt-out
-- [ ] a gate so the count cannot return to 0
+- [x] a shared viewer shell — done as a shared **`emit`** rather than a shell,
+      and it does NOT race `sjic`: it composes a MODEL and hands it to
+      `injectRail`, exactly as `mount-instance-docs.ts` does. Two callers, one
+      component. When `sjic` changes `lib/navbar.ts` these pages change with it
+      and nothing in `scripts/viewer-page.ts` moves.
+- [x] an explicit per-visualisation opt-out — `<meta name="folio-navbar"
+      content="none">`, read off the page rather than listed in a script.
+      **No user in the committed tree**, stated rather than hidden: the owner
+      named `catalogue/who-iris/` as a page that SHOULD carry the rail, and the
+      IRIS replica is not a generated viewer page at all.
+- [x] a gate so the count cannot return to 0 — `check:viewer-nav`, and it gates
+      **regressions only**. The audit walks the whole docs tree, so staleness
+      would redden on somebody else's merge — the `library:viz` ruling
+      (2026-09-20). A rail LOST is the author of the diff, every time, and that
+      is what "cannot return to 0" means. `viewer:nav:strict` carries staleness
+      and the unwired pages.
+
+## Measured after, 2026-09-23 — 45 railed, 0 declined, 1 missing of 46
+
+The count was **46, not 47**: `main` moved between the morning measurement and
+the work. A count carried across a tree is a claim.
+
+The one missing is **not this bean's and not an agent's to delete**:
+`cat-harness/docs/cat-harness/schemas/detangle/index.html`. `gen-schema-viz.ts`
+prunes it as an orphan — its subject stopped being an instance when `detangle`
+became a directory of this harness (`byql`) — and `schema:viz:check` was
+already failing on clean `main` for it, ungated so nothing said so. Restored,
+recorded in the sidecar with its reason, and **the owner's call**.
+
+A defect the repository's own test caught: the first version marked the current
+row and kept its link, so `/beans/` carried `href="../beans/"`.
+`state-visualizer.test.ts` already holds the rule. The current row now loses its
+href.
+
+Issue #1196, PR #1197.
