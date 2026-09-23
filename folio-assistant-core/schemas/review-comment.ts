@@ -421,3 +421,74 @@ export function reanchor(comments: readonly ReviewComment[], changes: readonly A
   }
   return out;
 }
+
+/** One block as the head has it: its content hash and the labels it used to have. */
+export interface BlockAnchor {
+  hash: string;
+  renamedFrom: readonly string[];
+}
+
+/**
+ * Re-anchor every comment against the blocks the head has NOW.
+ *
+ * This is what the ingestion Tool uses, rather than {@link reanchor} over a
+ * ChangeSet. A ChangeSet compares against `main`. A block ADDED in the pull
+ * request and then renamed inside it is "added" both times, and a comment on
+ * its first label would be orphaned. The block's own `renamedFrom` (bean
+ * `5xzc`) says where it came from whatever the base.
+ *
+ * - The label is present: anchored, and `orphaned` is cleared if a block came
+ *   back.
+ * - A block lists the label in `renamedFrom`: the comment follows it.
+ * - Neither: `orphaned: true`. Kept, never dropped.
+ *
+ * Returns EVERY comment, changed or not, in input order. Status is never
+ * touched.
+ */
+export function reanchorToBlocks(
+  comments: readonly ReviewComment[],
+  blocks: ReadonlyMap<string, BlockAnchor>,
+): ReviewComment[] {
+  const renamedTo = new Map<string, string>();
+  for (const [label, b] of blocks) for (const old of b.renamedFrom) renamedTo.set(old, label);
+  return comments.map((c) => {
+    if (blocks.has(c.targetLabel)) {
+      return c.review.orphaned ? { ...c, review: { ...c.review, orphaned: false } } : c;
+    }
+    const to = renamedTo.get(c.targetLabel);
+    if (to) {
+      return {
+        ...c,
+        targetLabel: to,
+        review: { ...c.review, anchoredFrom: [...c.review.anchoredFrom, c.targetLabel], orphaned: false },
+      };
+    }
+    return c.review.orphaned ? c : { ...c, review: { ...c.review, orphaned: true } };
+  });
+}
+
+// ── The published file ──────────────────────────────────────────
+
+export const REVIEW_COMMENTS_FILE_SCHEMA = "folio-review-comments/v1" as const;
+
+/**
+ * `review-comments.json`, published beside `changeset.json` in a preview.
+ *
+ * **`comments` IS the todo kind**: each entry is a `folio-review-comment/v1`
+ * node and is validated as one, so there is no second format to drift from
+ * it. The envelope carries only what a single node cannot: where the
+ * comments came from, and what was NOT ingested and why. A reader must be
+ * able to tell "no comments" from "comments nobody could parse".
+ */
+export const ReviewCommentsFileSchema = z.object({
+  $schema: z.literal(REVIEW_COMMENTS_FILE_SCHEMA),
+  repo: z.string(),
+  pr: z.number().int().positive(),
+  /** The head commit whose blocks the comments were anchored against. */
+  commit: z.string(),
+  generatedAt: z.string(),
+  comments: z.array(ReviewCommentSchema),
+  malformed: z.array(z.object({ commentId: z.number().int(), url: z.string(), error: z.string() })),
+  untagged: z.number().int().nonnegative(),
+});
+export type ReviewCommentsFile = z.infer<typeof ReviewCommentsFileSchema>;

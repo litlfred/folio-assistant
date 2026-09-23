@@ -165,6 +165,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
+| [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Capability: `review` · Package: `folio-core` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |

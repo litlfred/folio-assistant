@@ -150,10 +150,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-0 of 2 published.
+1 of 2 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/methodologies/' | relative_url }})
 - SMART Base — *declared, not published*
 
 ### `models`
