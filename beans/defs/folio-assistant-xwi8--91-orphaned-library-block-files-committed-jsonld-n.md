@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xwi8
 title: '91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T07:30:19Z
-updated_at: 2026-09-23T11:16:01Z
+updated_at: 2026-09-23T11:48:23Z
 parent: folio-assistant-slw1
 ---
 
@@ -48,8 +48,18 @@ copy of every prose block.
 - [x] test runs BOTH writers on one staged entry and asks the generator's own `orphanedBlocks()`; falsified against the old writer (3/3 fail)
 - [x] bun run gates green (135/135); issue #1066; PR opened
 - [x] owner decided (2026-09-23): delete the 91 in #1067. Deleted with `git rm` from a computed list — NOT `--prune`, which by then would have removed 113 (see below). Each file re-checked identical to its twin immediately before deletion; the four documents now report 0 orphans; gates 135/135.
-- [ ] owner decides: the 22 further duplicates in `cat-harness/library/arxiv-2312.07755v1`, which appeared on main after the 91 were measured — same pattern, all identical twins, NOT covered by the approval
+- [x] owner decided (2026-09-23): delete the 22 further duplicates in `cat-harness/library/arxiv-2312.07755v1` too (they appeared on main after the 91 were measured). Same procedure; the WHOLE repository now reports 0 orphaned blocks.
 
 ## Done when
 
 `gen-library-jsonld` reports 0 orphaned block files.
+
+## Summary of Changes
+
+PR #1067, issue #1066.
+
+- **Root cause fixed:** `scripts/l1-blocks.ts` now uses the generator's own `blockId()` + `sectionKey()` for block ids and for its manifest's section refs — one naming rule, so the two writers cannot drift apart again.
+- **Test:** `scripts/tests/l1-blocks.test.ts` runs BOTH writers on one staged entry and asks the generator's `orphanedBlocks()`; all 3 tests fail against the old writer.
+- **113 duplicates deleted, each on the owner's word:** first the 91 measured in four documents, then 22 more in `arxiv-2312.07755v1` that appeared on main meanwhile. Removed with `git rm` from computed lists, never `--prune` (which deletes whatever it reports, approved or not). Each re-checked identical to its referenced twin and referenced nowhere, immediately before deletion.
+- The repository reports **0 orphaned blocks**.
+- Also regenerated two `kg:audit` sidecars (`content-graph`, `review-heatmap`) that main left stale in #1060 — `kg:audit:check` was red on main itself.
