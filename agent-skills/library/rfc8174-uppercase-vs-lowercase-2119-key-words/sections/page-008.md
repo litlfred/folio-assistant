@@ -7,7 +7,7 @@ pages: 8-8
 pdf_page: 8
 source_pdf: rfc8174-uppercase-vs-lowercase-2119-key-words.pdf
 source_sha256: ce9339e636af66e5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Leiba                     Best Current Practice                 [Page 4]

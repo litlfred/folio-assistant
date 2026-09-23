@@ -7,7 +7,7 @@ pages: 1-1
 pdf_page: 1
 source_pdf: sammut-bonnici-galea-2015-swot-analysis.pdf
 source_sha256: 013951cbb83c3d65
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 See discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/272353031
