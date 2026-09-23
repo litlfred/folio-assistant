@@ -1051,6 +1051,28 @@
      where it sits in the markup, so neither control needs the theme's
      `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
+  /* SHOWN WHENEVER THE BAR IS OPEN, not only while pinned — and only when the
+   * script is here to make it mean something.
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## Why `.fa-nav-js` guards it
+   *
+   * This control is a `<label for="fa-nav-open">`, and a label TOGGLES. While
+   * pinned that is exactly right: it unchecks and the bar closes, with no
+   * script at all, which is the property this file has protected twice. While
+   * the bar is open because a POINTER is on it the checkbox is already clear,
+   * so the same click would CHECK it — pinning the bar open, the opposite of
+   * what the control says.
+   *
+   * `mountNavPreference` intercepts that case and records a stay-closed
+   * preference instead. So the control is offered in the hover case only when
+   * that handler exists; with no script the pinned behaviour is unchanged and
+   * nothing new appears that would do the wrong thing.
+   */
+  .side-bar.fa-nav-js:hover .fa-nav-close,
+  .side-bar.fa-nav-js:focus-within .fa-nav-close,
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
     /* IN THE ICON ROW, not floating over the bar — owner, 2026-09-22: *"[x]
      * should be on the navbar w/ other icons"*.
@@ -1085,6 +1107,58 @@
     opacity: 0.75;
   }
   .fa-nav-close:hover { opacity: 1; }
+
+  /* STAY CLOSED — the second state bit, and the owner's choice of three.
+   *
+   * *"[x] appears whenever the bar is open. Pressing it sets a remembered
+   * 'stay closed' preference that stops the bar peeking on hover, on every
+   * page in that browser."*
+   *
+   * ## It re-asserts the rest state rather than guarding every open rule
+   *
+   * The bar opens through several rules — its width, the `--fa-nav-text` flag,
+   * the icon row's width and wrap. Adding a `:not([data-fa-nav="closed"])` to
+   * each would be four places to keep in step and one to forget. This block
+   * instead re-states the CLOSED geometry at a specificity that wins, in one
+   * place, so a new open rule is covered by whichever of these it fights.
+   *
+   * ## `:focus-within` IS DELIBERATELY NOT SUPPRESSED
+   *
+   * A keyboard reader tabs into `.site-nav` whether or not the bar looks open.
+   * Suppressing focus-opening would leave them moving through links they
+   * cannot see — a trap, and a worse defect than the one this fixes. Only the
+   * POINTER peek is withheld, which is the thing a reader asked to stop.
+   *
+   * The pinned checkbox is not suppressed either: `☰` is how the preference is
+   * lifted, and a control that did nothing would be the `l4zi` defect — an
+   * action whose inverse is not reachable is not a toggle. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+    padding-top: 2rem;
+  }
+  /* AND `[x]` GOES AWAY WITH THE OPEN STATE, because otherwise it lands ON
+   * the hamburger.
+   *
+   * Found by the test rather than by looking: Playwright reported *"`<span
+   * aria-hidden="true">x</span>` from `.fa-nav-close` subtree intercepts
+   * pointer events"* while trying to press `☰` — the control that LIFTS this
+   * preference was underneath the one that sets it.
+   *
+   * The arithmetic, once it was pointed at: `.fa-nav-close` is `right: 0.5rem`
+   * with a 1.75rem box and a 0.5rem margin, so in a 3.5rem strip it occupies
+   * roughly x 12-40 — inside the hamburger's full-width 0-56 band. It never
+   * collided before because it was only ever shown while PINNED, where the bar
+   * is 15.5rem wide and `☰` is hidden anyway. Showing it whenever the bar is
+   * open is what brought the two together, and only in this state, where the
+   * bar is hovered and still a strip. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
 }
 
 /* The control itself is never seen -- the two labels are the interface. A real

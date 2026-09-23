@@ -7737,6 +7737,96 @@
     middle.appendChild(nav);
   }
 
+  /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## The bar had ONE state bit and needed two
+   *
+   * `#fa-nav-open` is checked (pinned open) or clear (default). It ALSO opens
+   * on hover and on focus, and `[x]` was shown only while pinned — so a bar
+   * opened by a pointer had no control, and a touch reader, who has no
+   * pointer to move away, had no way at all. Nothing persisted either: every
+   * navigation started over.
+   *
+   * The owner chose the three-state answer over the two smaller ones:
+   * pinned-open, default peek, and STAY CLOSED — remembered across pages.
+   *
+   * ## `[x]` cannot just be a label in the hover case
+   *
+   * It is a `<label for="fa-nav-open">` and a label TOGGLES. Pinned, that is
+   * right and works with no script — a property this file protects. Open by
+   * hover the checkbox is already clear, so the same click would CHECK it and
+   * pin the bar open: the opposite of what the control says. So that click is
+   * intercepted here, and the stylesheet only offers `[x]` in the hover case
+   * when `.fa-nav-js` says this ran.
+   *
+   * ## What is stored, and what happens when it cannot be
+   *
+   * One key, one of two values, per browser. `localStorage` throws in a
+   * private window and in previews, so every read and write is guarded and a
+   * failure degrades to the previous behaviour rather than to a broken
+   * navbar — the preference is a convenience, not state anything else needs.
+   */
+  var NAV_PREF_KEY = "fa-nav";
+
+  function readNavPref() {
+    try {
+      return window.localStorage.getItem(NAV_PREF_KEY);
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function writeNavPref(value) {
+    try {
+      if (value === null) window.localStorage.removeItem(NAV_PREF_KEY);
+      else window.localStorage.setItem(NAV_PREF_KEY, value);
+    } catch (_e) {
+      // A reader in a private window still gets the close, for this page.
+    }
+  }
+
+  function applyNavPref(value) {
+    if (value === "closed") document.documentElement.setAttribute("data-fa-nav", "closed");
+    else document.documentElement.removeAttribute("data-fa-nav");
+  }
+
+  function mountNavPreference() {
+    var bar = document.querySelector(".side-bar");
+    if (!bar) return;
+    // The class the stylesheet keys the hover-case `[x]` on. Set FIRST, so a
+    // control that needs this handler never appears without it.
+    bar.classList.add("fa-nav-js");
+    applyNavPref(readNavPref());
+
+    var box = document.getElementById("fa-nav-open");
+    var close = document.querySelector(".fa-nav-close");
+    var open = document.querySelector(".fa-nav-toggle");
+
+    if (close) {
+      close.addEventListener("click", function (e) {
+        // Pinned: let the label do its own work — that is the no-script path
+        // and it is already correct. Not pinned: the label would CHECK the box
+        // and pin the bar open, so the default is refused.
+        if (box && !box.checked) e.preventDefault();
+        writeNavPref("closed");
+        applyNavPref("closed");
+      });
+    }
+
+    if (open) {
+      // `☰` is how the preference is LIFTED. A control whose inverse is not
+      // reachable is not a toggle (`l4zi`), and without this the bar could be
+      // closed and never peek again.
+      open.addEventListener("click", function () {
+        writeNavPref(null);
+        applyNavPref(null);
+      });
+    }
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -7748,6 +7838,10 @@
       document.documentElement.setAttribute("lang", pageLang);
     }
 
+    // BEFORE the tiles and the rows: it adds the class the stylesheet keys the
+    // close control on, and a control offered before its handler exists is a
+    // control that does the wrong thing if pressed in that window.
+    mountNavPreference();
     mountActionTiles();
     // AFTER the tiles: the row's launcher proxies that panel's button, so the
     // button has to exist before anything can click it.

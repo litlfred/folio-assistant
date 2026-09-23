@@ -147,6 +147,9 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
   <div class="side-bar">
     <div class="site-header"><a class="site-title"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
+    <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
+    <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
+    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -190,7 +193,16 @@ async function load(
   const logs: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
   p.on("console", (m) => logs.push(m.type() + ": " + m.text()));
-  await p.setContent(page(row, main));
+  // SERVED FROM AN ORIGIN, not `setContent`. A document set that way has an
+  // opaque origin and `localStorage` THROWS a SecurityError on it — which
+  // quietly made the whole fixture the private-window case, so the stay-closed
+  // preference's persistence would have gone untested while a test named for
+  // it passed. `route` + `goto` gives a real `http://` origin and costs one
+  // handler.
+  await p.route("http://navbar.fixture/**", (r) =>
+    r.fulfill({ contentType: "text/html", body: page(row, main) }),
+  );
+  await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
   return { errors, console: logs };
 }
 
@@ -480,8 +492,13 @@ test.describe("the document index — the fixed top, about the page rather than 
     // deliberately not restated here: two specs asserting one placement are
     // two answers free to disagree.
     await load(page, CUSTOM);
+    // THE CONTROLS ARE FILTERED TOO, for the same reason the panels are: the
+    // checkbox is off-screen and both labels are `position: absolute`, so
+    // none of them is a region in the column's flow. Where a label is PAINTED
+    // is free of where it sits in the markup — the argument `.fa-nav-toggle`
+    // already makes in the stylesheet.
     const order = await page
-      .locator(".side-bar > *:not(.fa-panel-in-sidebar)")
+      .locator(".side-bar > *:not(.fa-panel-in-sidebar):not(.fa-nav-open):not(.fa-nav-toggle):not(.fa-nav-close)")
       .evaluateAll((ns) => ns.map((n) => n.className || n.tagName.toLowerCase()));
     expect(order).toEqual([
       expect.stringContaining("site-header"),
@@ -790,5 +807,95 @@ test.describe("every glyph in the navbar paints with the text colour", () => {
     await load(page, LIVE);
     const n = await page.locator(".fa-nav-icons svg *").count();
     expect(n).toBeGreaterThan(5);
+  });
+});
+
+/**
+ * STAY CLOSED, REMEMBERED — the owner's choice of three.
+ *
+ * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/ all
+ * pages)"*, with a screenshot of the bar open and nothing to press. The bar
+ * had ONE state bit — pinned or not — and also opened on hover, with `[x]`
+ * shown only while pinned. So a bar opened by a pointer had no control, and a
+ * touch reader, with no pointer to move away, had no way at all.
+ *
+ * Asked rather than guessed, because the three answers build differently. The
+ * owner chose the three-state one: `[x]` whenever the bar is open, and
+ * pressing it remembers a stay-closed preference across pages.
+ */
+test.describe("the navbar can be closed, and it stays closed", () => {
+  test("[x] is offered whenever the bar is OPEN, not only while pinned", async ({ page }) => {
+    await load(page, CUSTOM);
+    // At rest it is not offered: an [x] alone in a 3.5rem strip reads as a
+    // close button for the page.
+    await expect(page.locator(".fa-nav-close")).toBeHidden();
+    await page.hover(".side-bar");
+    await expect(page.locator(".fa-nav-close")).toBeVisible();
+  });
+
+  test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
+    // The defect this intercepts. `[x]` is a `<label for="fa-nav-open">` and a
+    // label TOGGLES; with the bar open by hover the checkbox is already clear,
+    // so the same click would CHECK it and pin the bar open — the opposite of
+    // what the control says.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
+  });
+
+  test("...and the preference is REMEMBERED for the next page", async ({ page }) => {
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
+    expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBe("closed");
+  });
+
+  test("closed means the POINTER stops opening it — and only the pointer", async ({ page }) => {
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(250);
+    const strip = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
+    expect(strip).toBeLessThan(100);
+
+    // A KEYBOARD READER IS NOT TRAPPED. Focus still opens it — suppressing
+    // that would leave them tabbing through links they cannot see, which is a
+    // worse defect than the one being fixed.
+    await page.locator(".side-bar .site-nav a").first().focus();
+    await page.waitForTimeout(250);
+    const focused = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
+    expect(focused).toBeGreaterThan(200);
+  });
+
+  test("the hamburger LIFTS it — an action whose inverse is unreachable is not a toggle", async ({ page }) => {
+    // `l4zi`. Without this the bar could be closed once and never peek again.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(200);
+    await page.locator(".fa-nav-toggle").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBeNull();
+    expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBeNull();
+  });
+
+  test("a browser that refuses localStorage still gets the close", async ({ page }) => {
+    // The preference is a convenience, not state anything else needs, so a
+    // throwing `localStorage` degrades to "closed for this page" rather than
+    // to a broken navbar.
+    // Now that the fixture has a real origin, this has to CREATE the condition
+    // rather than inherit it — which is the point: before, every test here ran
+    // with storage denied and this one passed for the wrong reason.
+    await page.addInitScript(() => {
+      Object.defineProperty(window, "localStorage", {
+        get() { throw new Error("denied"); },
+      });
+    });
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
   });
 });
