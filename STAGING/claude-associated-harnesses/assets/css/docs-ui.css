@@ -214,7 +214,42 @@
    breakpoint. If pinning should instead happen at some screen width, the
    change is the media query on these two rules -- the mechanism is the same. */
 @media (min-width: 50rem) {
-  :root.fa-has-fullwidth .side-bar { z-index: auto; }
+  /* WAS `z-index: auto`, AND THAT BROKE THE NAV ON EVERY PAGE WITH A WIDE
+     FIGURE -- bean `vfr8`, owner's screenshot of `/document-ingestion.html`.
+
+     Removing the stacking context also removed the sidebar's own ability to
+     paint above `.main`, and it did so IN EVERY STATE rather than only where
+     the conflict was. The open-nav rule below already says what that looks
+     like, in as many words: "Without this the sidebar opens BEHIND the page
+     content and reads as a rendering bug rather than as a nav." It loses the
+     cascade to this rule -- `:root.fa-has-fullwidth .side-bar` is (0,3,0)
+     against `.side-bar:hover`'s (0,2,0) -- so on such a page the nav opened
+     behind the page whether or not anything was actually in full-width mode.
+
+     MEASURED on `/document-ingestion.html`, which auto-expands 4 of its 5
+     figures: with the nav open, `elementFromPoint` inside the opened column
+     returned page content (`SPAN.fa-qa-glyph`, `P`, `A`) at x=120, and the
+     nav only within the original 56px strip.
+
+     AND `auto` DID NOT ACHIEVE ITS OWN PURPOSE. Synthesising the beneficiary
+     these rules describe -- a `.fa-qr-panel.fa-qr-in-sidebar[data-open]` on a
+     full-width page -- the panel was NOT visible at its own centre under
+     `auto`: `DIV.main-content-wrap` painted over it, despite the panel's
+     `z-index: 1200`. Under `100` it is visible. So this value is better than
+     `auto` on BOTH counts, not a trade.
+
+     100 rather than something larger because it is measured as sufficient:
+     100, 1300 and 10001 all give an identical, correct hit-test, and 100 is
+     the number the open-nav rule below already uses. A second, larger
+     constant would be two answers to one question.
+
+     ONE THING A READER SHOULD KNOW: nothing in this repository sets
+     `fa-qr-in-sidebar`. It occurs 4 times, all in this file. The three rules
+     keyed on it cannot currently match, so the escape they describe is not
+     reachable today -- which is why the only live effect of the old value was
+     the defect. The rules are left alone rather than removed: whether that
+     class is still wanted is the owner's call, not this fix's. */
+  :root.fa-has-fullwidth .side-bar { z-index: 100; }
 
   :root.fa-has-fullwidth .fa-qr-panel.fa-qr-in-sidebar[data-open="true"] {
     position: fixed;
@@ -6579,7 +6614,35 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
-.fa-search-home[data-place="navbar"] .fa-search-peek { display: none; }
+
+/* THE FIELD FILLS THE DISPLAY PANEL. Owner, 2026-09-23: *"it should start open
+   full top of display panel"*.
+
+   `width: 100%` on `.fa-search-home` was never the constraint. MEASURED at
+   1280px, walking the box chain up from the input: `.fa-search-home` 1224,
+   `.fa-search-holder` 1190, `.search` 1190 -- and then the theme's own
+   `.search-input-wrap` at **536px with `max-width: 536px`**, sized for the
+   header just-the-docs renders it in rather than for a panel this wide. So the
+   field was 44% of the space it was given, and every declaration above it was
+   already correct. */
+.fa-search-home[data-place="navbar"] .search-input-wrap {
+  max-width: none;
+  width: 100%;
+}
+
+/* THE GLYPH IS ALWAYS THERE. Owner, same message: *"maginfyingglass
+   avatar/braadning should be visibile always."*
+
+   It used to be `display: none` in this state, on the reasoning that the field
+   is present so the control that reveals it is redundant. That is true of it
+   AS A REVEAL and misses what the owner is asking for: a fixed mark that says
+   "search is here", in the same place in both states, so the eye has one
+   target rather than two.
+
+   It keeps a real job rather than becoming decoration -- clicking it focuses
+   the field. A visible glyph that did nothing would be `gjli`: an inert thing
+   that reads as a control. */
+.fa-search-home[data-place="navbar"] .fa-search-peek { display: inline-flex; }
 
 /* CORNER — fixed, upper right.
  *
@@ -6682,6 +6745,27 @@ a.fa-harness-tab__body:focus-visible {
  * the field is not quietly smaller in its new home than in its old one. The
  * test holds the legal 24 so this comfort can be spent deliberately rather
  * than by accident. */
+/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`,
+   found by driving the REAL CI build rather than the local one.
+
+   `.search` is `position: relative` and its only child `.search-input-wrap` is
+   `position: absolute`, so `.search` computes to **height 0** while the input
+   inside it is 36px. Anything that follows the field in normal flow is
+   therefore painted UNDER it. Measured on the staging preview at 1280px:
+   `.search` h=0, `.fa-search-home` h=34 — the whole control's height was the
+   NOTICE, and a hit test at the field's centre returned `P.fa-search-notice`,
+   not the input. The field was not clickable where a reader would click it.
+
+   Reserving the field's own height puts the notice below it: `.search` h=36,
+   the control h=70, and the hit test reaches the input.
+
+   ONLY EVER VISIBLE ON A PREVIEW, since `.fa-search-notice` is rendered only
+   when the build stamped a non-canonical index — but a preview is what a
+   reviewer looks at, and a zero-height box around a 36px control is wrong
+   whether or not anything currently sits under it. 2.25rem is the field's own
+   height, one declaration below. */
+.fa-search-home .search { min-height: 2.25rem; }
+
 .fa-search-home .search-input {
   box-sizing: border-box;
   width: 100%;
@@ -7249,6 +7333,7 @@ a.fa-harness-tab__body:focus-visible {
   .fa-hc-table thead { display: none; }
   .fa-hc-table tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 0.25rem 0; border-bottom: 1px solid var(--fa-glass-edge); }
   .fa-hc-table th, .fa-hc-table td { border: 0; padding: 0.1rem 0.25rem; }
+}
 
 
 /* ── Arranging tiles between the strip and More — bean `b8eq` ────────────

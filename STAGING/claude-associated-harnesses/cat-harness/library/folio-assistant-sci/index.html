@@ -149,6 +149,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <main>
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
+  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
   <h2>Uploads — the queue feeding this</h2>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
@@ -401,6 +402,66 @@ function honourAnchor(){
     row.setAttribute("data-fa-anchored", "1");
     row.scrollIntoView({ block: "center" });
   }
+  /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
+     anchor rather than a click so a shared URL lands on the same view. */
+  loadBlocks(known.id);
+}
+
+/* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
+   Bean 7nvr.
+
+   The index carries a COUNT of blocks; this is what they are. It is a
+   separate fetch because the corpus holds 1715 blocks over about a megabyte
+   of JSON-LD against a 44 KB index, so inlining would multiply the cost of
+   the page that answers "what is in here" to serve a question asked about
+   one entry at a time.
+
+   THREE OUTCOMES, like honourAnchor above. The file loads and the blocks are
+   listed; the file loads and the entry genuinely has none, which is a
+   determined answer and says so; or the fetch fails, which is reported as a
+   failure rather than rendered as an empty document. An entry with no blocks
+   and an entry we could not read must never look the same. */
+function blocksHref(id){
+  var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
+  return dir + "entries/" + encodeURIComponent(id) + ".json";
+}
+function renderBlocks(id, data, err){
+  var el = $("blocks");
+  el.hidden = false;
+  if (err) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">Could not read the block graph for ' +
+      esc(id) + ' — ' + esc(err) + '. This is a failure to read, not an empty document.</p>';
+    return;
+  }
+  var bs = (data && data.blocks) || [];
+  if (!bs.length) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">' + esc(id) +
+      ' has no blocks. Nothing failed — the entry carries none.</p>';
+    return;
+  }
+  el.innerHTML = '<h2>Blocks — ' + esc(id) + ' <span class="note">(' + bs.length +
+    ', in page order)</span></h2><table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative</th></tr></thead><tbody>' +
+    bs.map(function(b){
+      /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
+         something without knowing our vocabulary, and showing only ours
+         would hide the half this project did not invent. */
+      var pages = b.pageStart == null ? '—'
+        : (b.pageEnd != null && b.pageEnd !== b.pageStart ? b.pageStart + '–' + b.pageEnd : String(b.pageStart));
+      /* A narrative state is three-valued and none of them is an error:
+         not-authored means nobody has written one, which is a fact rather
+         than a gap. Rendered as plain text for that reason. */
+      var nar = b.narrative == null ? '—' : esc(b.narrative);
+      return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td>' + esc(b.title || '—') +
+        '</td><td>' + nar + '</td></tr>';
+    }).join("") + '</tbody></table>';
+}
+function loadBlocks(id){
+  fetch(blocksHref(id), {cache: "no-store"})
+    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function(d){ renderBlocks(id, d, null); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
 }
 
 function setView(v){
