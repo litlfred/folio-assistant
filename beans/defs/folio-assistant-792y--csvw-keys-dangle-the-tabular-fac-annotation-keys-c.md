@@ -3,8 +3,10 @@
 title: 'CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-23T07:30:19Z
-updated_at: 2026-09-23T07:30:19Z
+updated_at: 2026-09-23T07:34:10Z
+parent: folio-assistant-0lmb
 ---
 
 Found by bean `zaqn` (prefix = stub).

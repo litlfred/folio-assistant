@@ -3,8 +3,10 @@
 title: '91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-23T07:30:19Z
-updated_at: 2026-09-23T07:30:19Z
+updated_at: 2026-09-23T07:34:11Z
+parent: folio-assistant-slw1
 ---
 
 Found by bean `zaqn`. `gen-library-jsonld` reports 91 orphaned block files ("referenced by no section … Remove with --prune, once you have looked"):
