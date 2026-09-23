@@ -110,5 +110,13 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
 - [x] #955 shipped or held with a stated reason — **shipped**, marked ready
       for review 2026-09-22, reasons on the PR. Round 1 is requirement 2's
       prerequisite rather than half of it. Not merged: that is the owner's
-- [ ] The six owner-blocked beans asked as questions the owner can answer by
-      selecting, with a preview URL where one is needed
+- [~] The six owner-blocked beans asked as questions the owner can answer by
+      selecting, with a preview URL where one is needed — **the six are two
+      and a half**: `h32d`, `g196`, and half of `yj32`. Four were already
+      answered elsewhere (`6lb8` via `db7g`; `jbx2`, `rptk` `completed`;
+      `v1hw` + `yj32`'s write-path inside `yj32` itself). **One asked and
+      answered 2026-09-22** — a declared graph with no viewer is SHOWN, inert
+      and labelled; recorded on `603s` and `yj32`. Six decisions remain queued,
+      each to be put in full when it is next, per `interaction-modality`
+      §"More than one decision pending". `alox`/`o3xy` still need a PAGE link,
+      not the site root
