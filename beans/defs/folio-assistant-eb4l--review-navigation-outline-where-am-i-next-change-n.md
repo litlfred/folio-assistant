@@ -1,11 +1,11 @@
 ---
 # folio-assistant-eb4l
 title: 'REVIEW NAVIGATION: outline, where-am-I, next change / next unreviewed, minimap — one key or one click each'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:26:45Z
+updated_at: 2026-09-23T11:20:14Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -30,8 +30,8 @@ switch access and a screen reader, and never depend on a drag or a hover.
 o3xy's rules apply.
 
 ## Done when
-- [ ] outline, breadcrumb, next/prev and minimap on the review page
-- [ ] every action is reachable by keyboard alone, verified by a Playwright test that uses no mouse
+- [x] outline, breadcrumb, next/prev and minimap on the review page
+- [x] every action is reachable by keyboard alone, verified by a Playwright test that uses no mouse
 - [x] the TOC ruling is checked with the owner (ruling below)
 
 
@@ -50,3 +50,24 @@ The owner was asked with three options side by side (review page only / every pa
 The docs-auto "no toc" ruling for normal pages **stands unchanged**. A folio with no single order (a paper graph, a multi-document folio) gets no outline; it falls back to the minimap and next/previous.
 
 - [x] the TOC ruling is checked with the owner, and the answer is recorded here
+
+## Built 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE)
+
+- **`outline.json`**, written by `build-document-site`: each document's
+  chapters and sections in manifest order, with block labels. The section
+  keys are the ChangeSet's own (`<chapter dir>::<label ?? title>`), and a
+  test holds them equal on a scaffolded folio. Section REFERENCES are
+  skipped, as the Markdown build skips them.
+- **`cat-harness/scripts/review-nav.ts`** (`crumbFor`, `renderOutline`,
+  `renderMinimap`), embedded by `toString()`:
+  - the outline is a `<nav>` with word badges; sections with something to
+    review are buttons that jump to it;
+  - the minimap is ONE tab stop with roving tabindex (arrows, Home/End,
+    Enter), labelled in words and marked with glyphs;
+  - the breadcrumb goes into the one live status line.
+- **Keys** `n`/`p` for next/previous with open comments, with button twins.
+- **Not offered:** "next unreviewed". There is no verdict data yet (en2d).
+  Saying so beats a guess that skips unread blocks.
+- **Tests:** 5 keyboard-only Playwright tests (no mouse in the file), and
+  the outline/ChangeSet key-equality test. Checked in Chromium, light and
+  dark, on the scaffolded folio with real comments and QA.

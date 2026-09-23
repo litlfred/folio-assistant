@@ -28,7 +28,7 @@
  *
  * - `folio-tabular-records/v1` (`tabular.jsonld`) — what `tabular-records.py`
  *   writes today, and the only one anything actually produces;
- * - `folio-tabular-csvw/v1` (`tabular.csvw.jsonld`) — CSVW, from `eief`, whose
+ * - `folio-tabular-csvw/v1` (`tabular.csvw.json` — JSON, not JSON-LD; bean `792y`) — CSVW, from `eief`, whose
  *   extractors are **stubbed on purpose**, so nothing writes it yet.
  *
  * {@link tabularShapeOf} reduces either to the little that a manifest needs.

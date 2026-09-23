@@ -4677,8 +4677,7 @@
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
       handle.setAttribute("aria-expanded", open ? "true" : "false");
-      handle.setAttribute("aria-label", open ? "Put your folio away" : "Pull down your folio");
-      handle.title = handle.getAttribute("aria-label");
+      labelHandle();
       // The EMPTY LINE is about the glass's contents, not about the sheet:
       // the sheet is chrome and is always present. `slots` are the cards the
       // board floats here, so the count is taken from them rather than from
@@ -4725,11 +4724,35 @@
      * something. A data attribute the stylesheet prints, so the handle's text
      * and accessible name are unchanged on every other screen. Counted from
      * the DOM because a board sticky floats without touching the folio store. */
+    var waiting = 0;
     function countWaiting() {
       var n = layer.querySelectorAll(".fa-sticky-floating").length +
         Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      waiting = n;
       if (n > 0) handle.setAttribute("data-fa-count", String(n));
       else handle.removeAttribute("data-fa-count");
+      labelHandle();
+    }
+
+    /* THE COUNT IS SPOKEN TOO — owner, 2026-09-23: *"do the spoken count on
+     * phone next"*. The `· N` above is drawn by `::after`, and a screen
+     * reader reads the handle's `aria-label`, which REPLACES its content, so
+     * the number was visible and silent. It now rides the accessible name
+     * while the glass is closed, which is when the question "is anything
+     * waiting?" is asked.
+     *
+     * ON EVERY SCREEN, not only a phone. A media query can hide a drawn
+     * `::after`, but a spoken name has no breakpoint — and one name on every
+     * device is the thing a reader who switches devices can rely on. Open, the
+     * count is redundant: the cards are what the reader is now looking at. */
+    function labelHandle() {
+      var open = layer.getAttribute("data-fa-glass") === "open";
+      var label = open ? "Put your folio away" : "Pull down your folio";
+      if (!open && waiting > 0) {
+        label += " \u2014 " + waiting + (waiting === 1 ? " item" : " items") + " on it";
+      }
+      handle.setAttribute("aria-label", label);
+      handle.title = label;
     }
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);

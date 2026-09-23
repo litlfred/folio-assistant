@@ -37,10 +37,33 @@
  * start at A1, headers that are not row 1, and several tables on one sheet.
  * The owner asked for exactly this — *"location on sheet, row, col"*.
  *
- * So {@link SheetAnchorSchema} and friends are `fac:` annotations **on** a
- * valid CSVW document. A CSVW-only reader ignores them and still gets a
- * correct table description, which is the whole point of adopting a standard
- * and is asserted by a test rather than claimed here.
+ * So {@link SheetAnchorSchema} and friends are annotations on the CSVW
+ * shape, carried in a record that is **plain JSON** — `tabular.csvw.json`,
+ * not `.jsonld` — and {@link toCsvw} derives the genuine CSVW metadata
+ * document from it. A CSVW reader is handed that, and only that.
+ *
+ * ## Why the record is JSON and not JSON-LD — bean `792y`
+ *
+ * It was named `tabular.csvw.jsonld` and claimed to BE a valid CSVW document
+ * carrying `fac:` annotations a standard reader would ignore. Neither half was
+ * true. It had no `@context`, so a CSVW parser rejects it outright and a
+ * JSON-LD processor keeps only the `fac:` keys — read as IRIs in a URI scheme
+ * called `fac`, the `zaqn` defect. And no spelling of the prefix can fix that
+ * inside CSVW: its metadata documents may put only `@language` and `@base` in
+ * a local context, so a prefix of ours can never be bound there.
+ *
+ * The owner chose, 2026-09-23, between that and full-IRI annotation terms: the
+ * record is JSON, and the CSVW is DERIVED. Two reasons carried it. Nothing
+ * reads these annotations as linked data — the graph projection
+ * (`content/pipeline/tabular-nodes.ts`) reads `anchor.sheet` from the JSON —
+ * and `directory-conventions` says to generate as many renderings as have a
+ * consumer and no more. And JSON-LD DROPS `null`, while the three-state rule
+ * below depends on a DETERMINED null: a CSV's sheet is `null` because a CSV
+ * has none, which RDF could not tell from "never recorded".
+ *
+ * The `fac:` spelling of the keys is kept as a plain JSON name marking our
+ * fields apart from CSVW's. In a JSON file it is a name, not a compact IRI —
+ * which is the whole reason the extension had to change.
  *
  * ## "As best as can" is the three-state rule
  *
@@ -132,6 +155,16 @@ export type TabularStub = z.infer<typeof TabularStubSchema>;
 export const TABULAR_CSVW_SCHEMA_ID = "folio-tabular-csvw/v1";
 
 /**
+ * The record's filename. `.json`, deliberately — see "Why the record is JSON
+ * and not JSON-LD" above. One constant, because the reader, the rung table
+ * and the stub check each named it separately and a rename touched all three.
+ */
+export const TABULAR_CSVW_FILENAME = "tabular.csvw.json";
+
+/** The context every CSVW metadata document carries (W3C CSVW Metadata §5.2). */
+export const CSVW_CONTEXT = "http://www.w3.org/ns/csvw";
+
+/**
  * One table. CSVW keys are unprefixed as CSVW itself writes them; ours carry
  * `fac:` so the boundary is visible in the file, not only in this module.
  */
@@ -166,14 +199,46 @@ export function stubsIn(doc: TabularCsvw): TabularStub[] {
 }
 
 /**
- * The document a CSVW-only reader sees: ours stripped out.
+ * The keys {@link toCsvw} may emit — CSVW's own vocabulary and nothing else.
  *
- * Exported so the "a standard reader still parses this" claim is exercised
- * rather than asserted — the single property that justifies annotating a
- * standard instead of inventing a schema.
+ * Exported so the test can hold the export to it at EVERY level. A key outside
+ * this set is either ours leaking into a document a standard reader parses, or
+ * a CSVW term used here without being added to the list on purpose.
  */
-export function csvwOnly(table: z.infer<typeof CsvwTableSchema>): Record<string, unknown> {
-  return Object.fromEntries(
-    Object.entries(table).filter(([k]) => !k.startsWith("fac:")),
-  );
+export const CSVW_KEYS: ReadonlySet<string> = new Set([
+  "@context",
+  "tables",
+  "url",
+  "tableSchema",
+  "columns",
+  "name",
+  "titles",
+  "datatype",
+]);
+
+/**
+ * One table, as CSVW: every annotation of ours dropped, at every level —
+ * `datatypeSource` on a column included, which the helper this replaced
+ * (`csvwOnly`) left in.
+ */
+export function csvwTable(table: z.infer<typeof CsvwTableSchema>): Record<string, unknown> {
+  return {
+    url: table.url,
+    tableSchema: {
+      columns: table.tableSchema.columns.map((c) => ({ name: c.name, titles: c.titles, datatype: c.datatype })),
+    },
+  };
+}
+
+/**
+ * The CSVW metadata document for a record — a `TableGroup` with the CSVW
+ * `@context`, which is what makes it CSVW at all, and no key of ours.
+ *
+ * What it cannot carry, by construction, is WHERE each table sits — the
+ * annotations exist because CSVW has no vocabulary for that. A reader that
+ * needs placement reads the JSON record; a reader that needs a standard table
+ * description reads this. Neither is handed the other's document.
+ */
+export function toCsvw(doc: TabularCsvw): Record<string, unknown> {
+  return { "@context": CSVW_CONTEXT, tables: doc.tables.map(csvwTable) };
 }

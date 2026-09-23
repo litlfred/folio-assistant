@@ -78,12 +78,26 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
+    "pass": 11,
     "fail": 0,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/docs-site-publish.bpmn",
+      "code": ".github/workflows/docs-site.yml",
+      "prose_hash": "f7c95b60249c",
+      "code_hash": "771f7cf73311",
+      "by": "baseline"
+    }
+  ]
 }
