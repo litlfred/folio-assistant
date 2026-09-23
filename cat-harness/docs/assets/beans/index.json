@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 647,
+      "count": 648,
       "unit": "beans"
     }
   },
@@ -2883,6 +2883,20 @@
       "updatedAt": "2026-09-20T09:54:45Z",
       "preview": "Found 2026-09-20 while wiring `options-analysis` into `upstream-version-adoption`\n(bean `u4hs`). Not caused by that change — the change is only what put the object\nin a diff where the defect was legible. **Both halves are fixed in the same\ncommit**; this bean is the record of what was wrong and why nothing caught it.\n\n`processHierarchy()` in `cat-harness/scripts/gen-docs-pages.ts` publishes the\nBP",
       "file": "beans/defs/folio-assistant-b798--process-hierarchy-the-published-call-graph-was-wro.md"
+    },
+    {
+      "id": "folio-assistant-b8eq",
+      "title": "GLASS NAVIGATION: zoom (slider + pinch), pan, snap home; sticky-note todo avatar; tiles drag between strip and More; strip slides away by button",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:51:18Z",
+      "updatedAt": "2026-09-23T19:13:09Z",
+      "preview": "## The ask, owner 2026-09-23 (verbatim)\n\n> need to be able to zoom in and out of folio and move it around (plus snap back to home). slider and two finger. todos should have stick note avatar. should be able to drag and drop \"more\" tiles between it and bottom. bottom flip panel should be togglebe to stay open, but should slide away\n\nOwner's choices when asked:\n- the strip slides away **only by a bu",
+      "file": "beans/defs/folio-assistant-b8eq--glass-navigation-zoom-slider-pinch-pan-snap-home-s.md"
     },
     {
       "id": "folio-assistant-b963",
@@ -5769,15 +5783,15 @@
     {
       "id": "folio-assistant-o3p3",
       "title": "Apply graph-rendering to paper block graphs (uses[] editorial vs formal, chapters as groups)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-2sns",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:22Z",
-      "updatedAt": "2026-09-23T18:09:22Z",
-      "preview": "Replace or wrap content-graph-analysis.py with a renderer built on buildContentGraph: groups = chapters, editorial and formal edges drawn distinctly, portrait/landscape, stamped staleness check. Folio content lives in separate repos (qou): ask the owner before any PR there. Issue #1137.",
+      "updatedAt": "2026-09-23T18:52:18Z",
+      "preview": "Replace or wrap content-graph-analysis.py with a renderer built on buildContentGraph: groups = chapters, editorial and formal edges drawn distinctly, portrait/landscape, stamped staleness check. Folio content lives in separate repos (qou): ask the owner before any PR there. Issue #1137.\n\n## Done when\n- [x] a platform renderer draws it under the graph-rendering rules: `gen-content-graph-uml.ts` (To",
       "file": "beans/defs/folio-assistant-o3p3--apply-graph-rendering-to-paper-block-graphs-uses-e.md"
     },
     {
@@ -7595,15 +7609,15 @@
     {
       "id": "folio-assistant-ukfw",
       "title": "Apply graph-rendering to Lean proof dependency graphs (stale check, status colours)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-2sns",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:22Z",
-      "updatedAt": "2026-09-23T18:09:22Z",
-      "preview": "generate_dependency_graph.py draws proof-object dependencies with dot and has no staleness check. Bring it under the graph-rendering rules: one source, stamped output, status colour declared once, portrait/landscape. Math repos: ask the owner before any PR. Issue #1137.",
+      "updatedAt": "2026-09-23T18:52:18Z",
+      "preview": "generate_dependency_graph.py draws proof-object dependencies with dot and has no staleness check. Bring it under the graph-rendering rules: one source, stamped output, status colour declared once, portrait/landscape. Math repos: ask the owner before any PR. Issue #1137.\n\n## Done when\n- [x] a platform renderer draws it under the graph-rendering rules: `gen-content-graph-uml.ts` (Tool `content-graph",
       "file": "beans/defs/folio-assistant-ukfw--apply-graph-rendering-to-lean-proof-dependency-gra.md"
     },
     {
@@ -7949,15 +7963,15 @@
     {
       "id": "folio-assistant-vorg",
       "title": "graph-rendering skill + cross-links + detangle numbers on UML pages",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-2sns",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:09:22Z",
-      "updatedAt": "2026-09-23T18:09:22Z",
-      "preview": "## Done when\n- [x] skills/graph-management/graph-rendering.md states the general rules and inventories every renderer\n- [x] graph-detanglement, uml-overview, content-graph link to it\n- [x] UML pages show size / cohesion / in / out per sub-graph from detangle/results\n- [ ] gates green, PR open",
+      "updatedAt": "2026-09-23T18:52:18Z",
+      "preview": "## Done when\n- [x] skills/graph-management/graph-rendering.md states the general rules and inventories every renderer\n- [x] graph-detanglement, uml-overview, content-graph link to it\n- [x] UML pages show size / cohesion / in / out per sub-graph from detangle/results\n- [x] gates green, PR open\n\n## Summary of Changes\n\nMerged in #1143 (8d84190): graph-rendering skill (ten rules, layout-engine table, ",
       "file": "beans/defs/folio-assistant-vorg--graph-rendering-skill-cross-links-detangle-numbers.md"
     },
     {
@@ -8707,7 +8721,7 @@
     {
       "id": "folio-assistant-ylj7",
       "title": "UNCLAIMED CODE: 85% of this repository's code sits in no declared directory — declare them, do not move them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
