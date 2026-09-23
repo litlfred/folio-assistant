@@ -450,28 +450,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/docs-ui.css?v=1790160702">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/docs-ui.css?v=1790161616">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/work-plan.css?v=1790160702">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/work-plan.css?v=1790161616">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/themes.css?v=1790160702">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/themes.css?v=1790161616">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/uml.css?v=1790160702">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/uml.css?v=1790161616">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/avatars.css?v=1790160702">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/css/avatars.css?v=1790161616">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -488,7 +488,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/docs-ui.js?v=1790160702" defer></script>
+<script src="/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/assets/js/docs-ui.js?v=1790161616" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -844,9 +844,9 @@ about a REVIEW.</p>
     </tr>
     <tr>
       <td><strong>QA</strong></td>
-      <td><strong>not published yet</strong></td>
-      <td>—</td>
-      <td>a pass. The folio’s QA results exist in its repository, but the staging build does not copy them into the preview yet. The owner asked for that next (bean <code class="language-plaintext highlighter-rouge">qbfi</code>, option 2).</td>
+      <td>the section’s blocks whose latest QA verdicts FAIL (with the worst severity), and those whose verdicts are STALE or that were never audited</td>
+      <td><code class="language-plaintext highlighter-rouge">block-qa.json</code>, published by the <code class="language-plaintext highlighter-rouge">folio-block-qa-summary</code> Tool from the folio’s committed verdicts</td>
+      <td>a pass. A block counts as failing only on a verdict NEWER than the block; an older verdict makes it stale, and stale outranks passing. A section gets a row for QA alone only if something there fails or is stale.</td>
     </tr>
   </tbody>
 </table></div>
@@ -859,6 +859,34 @@ what is not known.</p>
 <p>Orphaned comments (their block is gone) have no section. They are counted
 in a last row, “(listed in no section)”, because an open comment is still
 open.</p>
+<h2 id="where-the-qa-columns-data-comes-from">
+  
+  
+    <a href="#where-the-qa-columns-data-comes-from" class="anchor-heading" aria-labelledby="where-the-qa-columns-data-comes-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the QA column’s data comes from
+  
+  
+</h2>
+    
+
+<p>The staging workflow runs the <code class="language-plaintext highlighter-rouge">folio-block-qa-summary</code> Tool
+(<code class="language-plaintext highlighter-rouge">cat-harness/scripts/publish-block-qa.ts</code>) over the folio. It reads each
+block’s committed <code class="language-plaintext highlighter-rouge">block-qa/v1</code> verdicts, runs no checker, and writes
+<code class="language-plaintext highlighter-rouge">block-qa.json</code>. Each block is one of:</p>
+
+<ul>
+  <li><strong>failing</strong>: a fresh verdict failed;</li>
+  <li><strong>stale</strong>: nothing fresh failed, but some verdict predates the block’s
+files;</li>
+  <li><strong>passing</strong>: every latest verdict is fresh and none failed;</li>
+  <li><strong>unaudited</strong>: no verdict at all.</li>
+</ul>
+
+<p>Freshness is the QA sweep’s own rule, including the <code class="language-plaintext highlighter-rouge">uses</code>-graph hash that
+graph-scoped criteria depend on. Leaving that hash out made every
+detangler criterion read stale straight after a sweep.</p>
+
+<p>The QA sweep currently writes verdicts under the directory it was run on,
+not the instance root (bean <code class="language-plaintext highlighter-rouge">s3p2</code>), so the summary reads both.</p>
 <h2 id="how-the-colour-was-chosen">
   
   

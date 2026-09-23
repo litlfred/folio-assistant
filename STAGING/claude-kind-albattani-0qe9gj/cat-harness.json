@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T10:53:18.948Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a22452fb0ab521d1ff2d82db1f9b9af8b8901ee1",
-  "sourceCommitSha": "a22452fb0ab521d1ff2d82db1f9b9af8b8901ee1",
-  "sourceCommitAt": "2026-09-23T10:50:07Z",
+  "generatedAt": "2026-09-23T11:08:35.612Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/86ff34d0ca85c9fa0cd65bd674000095967892f5",
+  "sourceCommitSha": "86ff34d0ca85c9fa0cd65bd674000095967892f5",
+  "sourceCommitAt": "2026-09-23T11:05:47Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -288,7 +288,7 @@
     "SequenceFlow": 823,
     "Role": 144,
     "ProcessNode": 784,
-    "Tool": 71,
+    "Tool": 72,
     "Schema": 102,
     "GraphKind": 30,
     "Directory": 40,
@@ -1730,7 +1730,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/review-heatmap.md",
-      "instructionLines": 82,
+      "instructionLines": 102,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -31828,6 +31828,67 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness.jsonld#tool/folio-block-qa-summary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "folio-block-qa-summary",
+      "title": "Folio block QA summary",
+      "description": "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/publish-block-qa.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "folio",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's `folio` graph directory.",
+            "required": true,
+            "arg": {
+              "flag": "--folio"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write `block-qa.json`.",
+            "required": true,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio repository root, where verdicts are anchored. Default `.`.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "block-qa",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness.jsonld#skill/review-heatmap"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/folio-block-qa-summary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/cat-harness.jsonld#tool/discuss",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "discuss",
@@ -38507,8 +38568,8 @@
   ],
   "staging": {
     "branch": "claude/kind-albattani-0qe9gj",
-    "sha": "1d23845412b2bd9d21203ced7dd318321a01b627",
+    "sha": "09ac7fbe0f020979ca42defea5ea6fec919f8491",
     "pr": "1060/merge",
-    "run": "35851078701"
+    "run": "35852555360"
   }
 }

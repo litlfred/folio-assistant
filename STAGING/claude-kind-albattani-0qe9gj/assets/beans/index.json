@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 582,
+      "count": 583,
       "unit": "beans"
     }
   },
@@ -6133,6 +6133,20 @@
       "updatedAt": "2026-09-21T19:49:34Z",
       "preview": "Owner, 2026-09-21: \"also i want the search restored back to the top display navbar, with option to slide out to the UR corner as an icon.\"\n\n## Summary of Changes\n\nREVERSES the 2026-09-19 decision recorded in docs-ui.js, where search was adopted OUT of the main panel into a Settings tile on the owner's earlier \"keep main display panel uncluttered\", and where a comment refused a header magnifier out",
       "file": "beans/defs/folio-assistant-rx6k--search-home-back-in-the-top-display-navbar-slidabl.md"
+    },
+    {
+      "id": "folio-assistant-s3p2",
+      "title": "qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:52:44Z",
+      "updatedAt": "2026-09-23T10:52:44Z",
+      "preview": "Measured 2026-09-23 on a folio scaffolded by init-folio. Running `qa-sweep.ts folio` wrote `folio/test/results/block-qa/handbook/introduction/overview.qa.json`. That is INSIDE the content graph directory, not `<repo>/test/results/block-qa/…`, which is where `blockQaPath` documents verdicts as living (relative to the instance root).\n\nCause: `findContentRepoRoot(startAbs)` in `cat-harness/content/pi",
+      "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
     },
     {
       "id": "folio-assistant-s8mo",
