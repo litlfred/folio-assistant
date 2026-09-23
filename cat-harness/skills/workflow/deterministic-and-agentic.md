@@ -2,8 +2,9 @@
 name: deterministic-and-agentic
 description: >
   Workflow processing is a SPECTRUM, not a switch. The four mechanisms this
-  repository already uses to sit at different points on it, what is measured
-  today, and the three research questions — which are open, and marked as open.
+  repository already uses to sit at different points on it, the four axes an
+  answer has to name, what is measured today, and the three research questions
+  — which are open, and marked as open.
 consulted: true
 ---
 
@@ -40,11 +41,19 @@ wrong. **At least three questions are being conflated:**
 2. **What happens if the decision is wrong** — refused, noted, or nothing?
 3. **Who enforces** — the agent asking, or a gate that does not care whether
    anyone asked?
+4. **What the output IS** — the result, or a rule that is validated and then
+   executed. Added 2026-09-23; see §"A fourth axis" for why it does not reduce
+   to (1).
 
 A step can be agentic on (1) and fully deterministic on (3). The commit
 boundary is exactly that: an agent decides freely, and a hook refuses the write
 regardless. **Any answer to "how much needs to be deterministic" that does not
-say WHICH of the three it means is not an answer.**
+say WHICH of these it means is not an answer.**
+
+**It said "at least three" and listed three until 2026-09-23, and the hedge
+turned out to be doing real work** — a fourth arrived from outside the
+repository. The hedge stays for the same reason: this list is what has been
+noticed, not what exists.
 
 ## What is measured today
 
@@ -66,6 +75,63 @@ considerably more than ten. A count in prose is a claim nothing checks.
 the release authorisation, the publish. Somebody has already judged those
 non-negotiable, and that list is a second, differently-derived sample of "must
 not be agentic".
+
+## A fourth axis — what the model's output IS
+
+**Added 2026-09-23** (bean `kacl`), from the one methodology in this graph
+whose primary is actually held: `methodologies/hybrid-llm-deterministic.md`,
+rendering Neubauer, Pleiss & Uekermann (arXiv:2508.05192v2).
+
+The first three axes above are about the DECISION. This one is about the
+ARTEFACT, and it is not reducible to them:
+
+> **Does the model emit the RESULT, or a RULE that is then validated and
+> executed?**
+
+**The reason it is a separate axis, tested against this page's own worked
+case.** The commit boundary is agentic on *who decides* and deterministic on
+*who enforces* — and what the agent produces there is a **result**, a commit,
+checked after the fact. The source's schema-mapping design gives the same two
+answers, and produces a **rule**: an expression, checked for syntax, then run.
+Two designs, identical on all three of the decision axes, and their failure
+profiles are not comparable. A bad result must be caught by inspecting every item; a bad
+rule is caught once, before it runs at any volume.
+
+**Hypothesis**, offered because it is testable and cheap to test here:
+
+> Judgement is admissible at a point the recoverability criterion (§1) would
+> refuse, WHEN the output is a rule — because validation happens before
+> execution rather than after.
+
+The `relaxable="false"` five are already proposed as §1's test sample. They can
+test this at the same time: ask of each whether its output is a result or a
+rule.
+
+**What it does not settle.** Which of the four axes dominates, whether "rule"
+is even well-defined for the judgements this repository makes (a `folio:raci`
+annotation is not obviously either), and whether the distinction survives
+contact with a step whose output is prose. **Open.**
+
+## Why the guarding is needed at all — cited, not assumed
+
+This page argued from the repository's own incidents. Three measurements from
+outside it now support the premise, **second-hand**: cited by the ingested
+source, not themselves ingested, so each is an attribution to check rather than
+a result this repository holds (`literature-search` §"Never fill the gap with
+recall"). Provenance for all three is
+[`hybrid-llm-deterministic`](../../methodologies/hybrid-llm-deterministic.md):
+
+- LLMs **can be distracted by irrelevant context** — Shi et al., ICML 2023.
+- Accuracy **drops on low-probability inputs even for deterministic tasks** —
+  McCoy et al., arXiv:2309.13638.
+- Reasoning **degrades as input length increases, before the context window is
+  reached** — Levy et al., arXiv:2402.14848.
+
+**The source itself is a tool paper reporting no baseline, no accuracy measure
+and no comparison**, so nothing here rests on a claim about how well its
+approach performs, and its node says so. The three findings above are evidence
+for the PREMISE — that model output needs guarding — and not for any particular
+guard.
 
 ## The three questions, open
 
@@ -93,9 +159,14 @@ not, the criterion is wrong or incomplete, and finding that out is the point.
 **Open, and probably malformed as stated** — see the three-way conflation
 above. A better-formed version, and even this is a guess at the right question:
 
-> For each of *who decides*, *what happens when it is wrong*, and *who
-> enforces*, what is the cheapest mechanism that still refuses the failure
-> that matters?
+> For each of *who decides*, *what happens when it is wrong*, *who enforces*,
+> and *what the output is*, what is the cheapest mechanism that still refuses
+> the failure that matters?
+
+**The fourth clause was added 2026-09-23** and it changes the question rather
+than lengthening it: for a step whose output is a rule, the cheapest mechanism
+that refuses the failure may be a validator costing nothing per item, which the
+other three axes cannot express.
 
 **Decided** and worth carrying into it: this repository's answer at the commit
 boundary is *refuse by default, and refuse when you cannot tell*. A gate that
@@ -119,6 +190,18 @@ needed, stated so the gap is visible rather than implied:
   overlay deliberately.
 - **A comparison that is not the agent's own report.** A model grading its own
   run is the failure mode this repository already names for QA verdicts.
+
+**A confound this question did not know it had.** Second-hand via
+`hybrid-llm-deterministic`: Levy et al. report that reasoning degrades with
+input LENGTH, *before* the context window is reached. So "the same task with
+and without this memory entry" varies two things at once — the entry's content
+and the prompt's length — and an overlay comparison that does not hold length
+constant cannot say which produced the difference. The overlay bullet above
+treats context as something to hold or release; length is a third thing, and it
+moves whenever the other two do.
+
+**Not a reason to abandon the question**, and not a design for the experiment
+either. It is one variable now named, where before it was absent.
 
 **No experiment has been run.** Anyone reading this as a finding is reading it
 wrong.

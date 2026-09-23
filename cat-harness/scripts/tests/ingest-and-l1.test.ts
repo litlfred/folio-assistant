@@ -36,6 +36,7 @@ import {
   mayPromote,
   planFor,
   usableOutlineEntries,
+  withDerivedArms,
 } from "../ingest-document.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -597,6 +598,43 @@ describe("refuse to promote — the gate between the arms and the library", () =
     expect(src).toContain('ingestMode(argv) === "promote" ? [] : plan.steps');
   });
 
+  test("the derived arms run for a PDF rung and NOT for archive or tabular", () => {
+    // `l1-blocks`' own header records what the missing sequence cost: "a
+    // pipeline that cannot terminate, and it was invisible because both ends
+    // looked healthy". Staging exits 0 and says `✓ staged`, while `mayPromote`
+    // requires every requirement met — so nothing could ever cross into
+    // `library/`. Verified end to end 2026-09-23: one document now goes
+    // uploads/ -> library/ in two commands.
+    const base = { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] };
+    const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug");
+    expect(armed.steps).toHaveLength(3);
+    expect(armed.steps[1]).toEqual(["python3", expect.stringContaining("pdf-images.py"), "-o", "/stage", "/tmp/x.pdf"]);
+    expect(armed.steps[2]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
+
+    // NOT for the other kinds, and this is stated rather than assumed.
+    // `check-l1-complete`'s `PAGED_ONLY` list exists because not every
+    // requirement applies to every kind, and neither archive nor tabular was
+    // measured here. "More arms cannot hurt" is how a gate starts reporting a
+    // requirement over content it was never about.
+    for (const rung of ["archive", "tabular", "undetermined"] as const) {
+      expect(withDerivedArms({ ...base, rung }, "/tmp/x.pdf", "/stage", "/stage/slug").steps).toHaveLength(1);
+    }
+  });
+
+  test("the PDF is passed in, never read back off the rung's argv", () => {
+    // The rung's last argument happens to be the PDF today. A sequencer that
+    // depended on that breaks silently the first time a rung grows a trailing
+    // flag — and silently is the operative word: `pdf-images.py` would be
+    // handed a flag as its source and fail, or worse, succeed over nothing.
+    const armed = withDerivedArms(
+      { rung: "pdf-structure", why: "", steps: [["python3", "pdf-structure.py", "-o", "/stage", "/real.pdf", "--ocr"]] },
+      "/real.pdf",
+      "/stage",
+      "/stage/slug",
+    );
+    expect(armed.steps[1]?.at(-1)).toBe("/real.pdf");
+  });
+
   test("the arms are pointed at STAGING, never at the library", () => {
     // The whole mechanism is which directory `-o` receives. If a step is ever
     // handed the library again, the document is filed before anything can
@@ -624,8 +662,20 @@ describe("refuse to promote — the gate between the arms and the library", () =
     //
     // A fixed code path does not fix the prose beside it. They are two
     // surfaces and only one of them was asserted.
-    expect(src).toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), stagingRoot)}");
-    expect(src).not.toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)}");
+    // THE SENTENCE IS GONE ENTIRELY, and that is the fix rather than the
+    // wording. It gave ONE `-o` for arms that take opposite conventions —
+    // `pdf-images.py` wants the library ROOT, `l1-blocks.ts` wants the ENTRY
+    // directory and throws "no structure.json" otherwise — so no value was
+    // correct for both, and #1035's correction made it right for one arm and
+    // wrong for the other in the same stroke. `withDerivedArms` hands each the
+    // directory it wants, so there is no instruction left to get wrong.
+    expect(src).not.toContain("run the remaining arms");
+
+    // AND THE TWO ARMS GET DIFFERENT DIRECTORIES, which is the whole reason
+    // the sentence could not be saved. If these ever collapse to one value,
+    // one of the arms is silently broken again.
+    expect(src).toContain('["python3", pyHelper("pdf-images.py"), "-o", stagingRoot, pdf]');
+    expect(src).toContain('["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]');
     expect(src).toContain('const staging = join(stagingRoot, slug);');
   });
 
