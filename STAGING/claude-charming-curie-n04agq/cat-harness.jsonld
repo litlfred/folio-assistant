@@ -33,6 +33,14 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
       "@type": "@id"
@@ -264,13 +272,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:56:48.048Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fcfe6f98980e245be61ee26ee319a57fa3dd3795",
-  "sourceCommitSha": "fcfe6f98980e245be61ee26ee319a57fa3dd3795",
-  "sourceCommitAt": "2026-09-23T07:54:31Z",
+  "generatedAt": "2026-09-23T08:34:59.691Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f26c6f51bbe9d492d727047be74a7fdb6f4c61d3",
+  "sourceCommitSha": "f26c6f51bbe9d492d727047be74a7fdb6f4c61d3",
+  "sourceCommitAt": "2026-09-23T08:28:46Z",
   "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 241,
+    "Skill": 242,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -280,7 +289,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 70,
-    "Schema": 97,
+    "Schema": 99,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -1574,6 +1583,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compute-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/review-comments",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "review-comments",
+      "title": "Review comments — from a PR comment to a structured todo",
+      "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/review-comments.md",
+      "instructionLines": 231,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/one-voice-style-guide",
@@ -5817,6 +5843,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/swimlane-glossary",
@@ -9618,7 +9645,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the voice findings",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_NarrativeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -11454,7 +11481,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the conflict",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
       "implementedBy": [
@@ -17627,7 +17654,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate flagged passage (human reviewer)",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_Translation",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "implementedBy": [
@@ -19669,7 +19696,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate: prose, scope, or exception",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_VoiceReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -25406,7 +25433,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the flagged passage",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
       "implementedBy": [
@@ -34864,6 +34891,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/depends-on",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "depends-on",
+      "title": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "module": "schemas/depends-on.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -35351,6 +35387,15 @@
       "module": "schemas/types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/version-bump",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "version-bump",
+      "title": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "module": "schemas/version-bump.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/vocabulary",
@@ -37328,8 +37373,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "a70e094dce5b8f1dbe0572485b790eb405ca4056",
+    "sha": "de9983c673a5822bb732ae4fd7baef82e19d0163",
     "pr": "1016/merge",
-    "run": "35834208256"
+    "run": "35837756183"
   }
 }
