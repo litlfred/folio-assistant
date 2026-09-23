@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 618,
+      "count": 619,
       "unit": "beans"
     }
   },
@@ -1593,6 +1593,20 @@
       "updatedAt": "2026-09-20T19:59:52Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
+    },
+    {
+      "id": "folio-assistant-6hq4",
+      "title": "QA: gateway documentation-completeness criteria (decisions and their branches)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:56:25Z",
+      "updatedAt": "2026-09-23T10:40:00Z",
+      "preview": "Extend the documentation-completeness QA control (issue #1007, bean `ooq3`)\npast activities, to the decision points of a diagram. Issue #1044, PR #1051,\nbranch `claude/magical-archimedes-4qkfxp-gateways`.\n\n## Measurement (2026-09-23, all 62 diagrams `kg-audit` loads, 0 load failures)\n\n- Gateways: 123 — 111 exclusive (102 diverging, 9 converging), 12 parallel\n  (6 fork, 6 join), 0 inclusive (the mo",
+      "file": "beans/defs/folio-assistant-6hq4--qa-gateway-documentation-completeness-criteria-dec.md"
     },
     {
       "id": "folio-assistant-6lb8",
