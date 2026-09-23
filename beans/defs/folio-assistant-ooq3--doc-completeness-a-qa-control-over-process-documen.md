@@ -33,3 +33,10 @@ Owner 2026-09-23 (session_01SiFEMuTciyB681XP5WfcbB): asked whether the adjudicat
   `docs-site-publish` · `Task_Restore`, `upstream-version-adoption` · `Task_Mvp`
   (all → `feature-staging`) and `ingest-theme` · `Task_Review` → `theme-ui-review`.
 - `activity-documented`: the backlog stands (minor, not gated) — 95 steps.
+
+## Settled — 2026-09-23, owner chose "declare reasons"
+
+The 4 remaining `activity-calls-skill-process` findings were compared against
+what a call would actually run (the engine enters `startNodes[0]` and runs to
+the end): none fits. They now carry `<folio:no-call reason="…"/>` —
+reason required at load, same rule as `no-skill` — and the criterion is 0.

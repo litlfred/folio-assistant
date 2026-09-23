@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Deliver",
     "path": "processes/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:b3519ddbc9e1d93d7ff3d404620fe5e065975ca5b8fd7288e8bb5f7100837b22",
+  "source_hash": "sha256:b916eac99d8a5439ea0c5d6a9056351675c13171861e08d3d76f89f59a5b07ff",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -76,18 +76,13 @@
       "findings": []
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_DeployStaging",
-          "detail": "\"Deploy the MVP to staging\" names skill \"feature-staging\", which owns feature-staging.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

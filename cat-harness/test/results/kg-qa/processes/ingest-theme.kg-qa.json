@@ -5,7 +5,7 @@
     "id": "Process_IngestTheme",
     "path": "processes/ingest-theme.bpmn"
   },
-  "source_hash": "sha256:3bb3d3ebd6e649a8c2fa292ea291d8eda5636c27a9721d7c8202ec71fd0f0c40",
+  "source_hash": "sha256:105eac8d3e4a5d7322dd7e40157d049d99cef7bd50768f8f9580de5964bc7f94",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,18 +97,13 @@
       "findings": []
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Review",
-          "detail": "\"Review contrast and non-colour signal\" names skill \"theme-ui-review\", which owns theme-ui-review.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
+    "pass": 10,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

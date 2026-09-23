@@ -388,12 +388,15 @@ async function auditProcess(
   }
   const shouldCall: KgFinding[] = [];
   for (const [ref, ns] of namers) {
-    if (ns.length !== 1 || ns[0].calledElement !== undefined) continue;
+    // A declared `<folio:no-call reason>` is the recorded judgement that this
+    // step uses the skill without being its process — `n/a` for that step.
+    if (ns.length !== 1 || ns[0].calledElement !== undefined || ns[0].noCallReason !== undefined) continue;
     shouldCall.push({
       where: ns[0].id,
       detail:
         `"${ns[0].name}" names skill "${ref}", which owns ${ref}.bpmn, but is a plain task. Make it a ` +
-        `<bpmn:callActivity calledElement="…"> so the diagram descends into that process rather than restating it.`,
+        `<bpmn:callActivity calledElement="…"> so the diagram descends into that process, or declare ` +
+        `<folio:no-call reason="…"/> saying why it only uses the skill.`,
     });
   }
 

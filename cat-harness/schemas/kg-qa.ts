@@ -632,7 +632,8 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A single step names a skill that has its own process of the same name, but is a plain task rather than a " +
       "call activity — so the diagram re-describes the procedure instead of descending into it, and the called " +
-      "process's page cannot say who calls it.",
+      "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
+      "records that it uses the skill for one slice rather than running its whole process.",
   },
   {
     id: "role-skills-resolve",

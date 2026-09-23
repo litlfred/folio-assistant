@@ -134,6 +134,18 @@ export interface ProcessNode {
    */
   noSkillReason?: string;
   /**
+   * `<folio:no-call reason="…"/>` — this step names a skill that owns a
+   * same-named process, and is deliberately NOT a call activity of it.
+   *
+   * A call activity runs the called process from its first start event to its
+   * end. A step that uses a skill's know-how for one slice of that process —
+   * one check out of a review, one deploy out of a three-entry lifecycle, a
+   * loop over many previews — would be misdrawn as a call. Same rule as
+   * {@link noSkillReason}: the reason is required at load time, so silencing
+   * `activity-calls-skill-process` costs a sentence somebody can review.
+   */
+  noCallReason?: string;
+  /**
    * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
    * call, on purpose, and this is why.
    *
@@ -470,6 +482,20 @@ function noSkillReasonOf(
   return reason;
 }
 
+/** `<folio:no-call reason="…"/>` — same load-time rule as {@link noSkillReasonOf}. */
+function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:no-call");
+  if (!decl) return undefined;
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${id}: <folio:no-call/> carries no reason. Say why this step uses the skill's know-how ` +
+        `rather than calling its process.`,
+    );
+  }
+  return reason;
+}
+
 /**
  * `<folio:judgement reason="…"/>`, with the reason enforced at LOAD time.
  *
@@ -777,6 +803,7 @@ export async function loadProcessModel(
         activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
       }),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      noCallReason: noCallReasonOf(ext, el.id),
       judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
