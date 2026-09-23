@@ -328,6 +328,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_NonMechanical",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_1",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review"
@@ -404,6 +405,15 @@
       "label": "Reviewer (SME or editor)",
       "scopeNote": "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right.",
       "source": "cat-harness/processes/ingest-l1-completeness-gate.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeCodeReview",
+      "label": "Reviewer",
+      "scopeNote": "The generic reviewer, taking this lane for the call path only: it reads what the pair checks left open and settles each item one of three ways. It can attest and raise findings but cannot overrule a checker on its own say-so — that is what the call into adjudication is for.",
+      "source": "cat-harness/processes/narrative-code-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
