@@ -28,6 +28,15 @@ describe("buildReviewComments", () => {
     expect(f.malformed).toHaveLength(1);
   });
 
+  it("ingests verdicts from the same comments, and does not count them as untagged (px0t)", () => {
+    const f = buildReviewComments({ ...base, comments: [pc(1, "block: prose:overview\nverdict: ok"), pc(2, "thanks")] });
+    expect(f.comments).toEqual([]);
+    expect(f.verdicts.map((v) => [v.targetLabel, v.verdict, v.blockHash])).toEqual([["prose:overview", "ok", "h1"]]);
+    expect(f.untagged).toBe(1);
+    // ...and keeps them on the next build.
+    expect(buildReviewComments({ ...base, comments: [], existing: f }).verdicts).toHaveLength(1);
+  });
+
   it("is idempotent over its own output, and keeps a status the process set", () => {
     const first = buildReviewComments({ ...base, comments: [pc(1, "block: prose:overview\nWhy?")] });
     const moved = { ...first, comments: [{ ...first.comments[0]!, status: "addressed" as const }] };

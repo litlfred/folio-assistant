@@ -242,6 +242,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
   },
+  "review-verdicts": {
+    glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
+    tone: 200,
+    reads: "a page with a tick — somebody read this version and judged it",
+  },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
     tone: 250,
