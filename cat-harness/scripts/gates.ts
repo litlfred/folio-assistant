@@ -427,6 +427,13 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes `--site ./_site`: it resolves links in the BUILT site, which Jekyll produces in CI",
   },
   {
+    match: "publish-verify.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
+      "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",

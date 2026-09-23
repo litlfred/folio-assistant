@@ -922,6 +922,13 @@ jobs:
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
+      # The same pre-deploy verification the deploy runs (bean `vigi`,
+      # `processes/publish-verification.bpmn`), so a preview is never greener
+      # than the release it previews. A failure fails THIS PR's check; it does
+      # not alert the publication manager, because a preview is not a release.
+      - name: Verify the export before deploying the preview
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site
+
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
