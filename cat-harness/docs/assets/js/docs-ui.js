@@ -7113,7 +7113,21 @@
       //
       // `undefined` falls through to the non-link branch below, which is
       // already the right rendering for a destination the row cannot use.
-      var at = safeHref(hrefs[id]);
+      //
+      // THROUGH `withBase` FIRST, and it was not until the owner found the
+      // links live, 2026-09-23: *"beans and todos links wrong ...
+      // https://litlfred.github.io/beans/"*. The hrefs in `#fa-navbar-row` are
+      // site-root-relative (`/beans/`), and this site publishes under
+      // `/folio-assistant/`, so writing one unprefixed sends the reader to
+      // another repository's Pages root — a 404 that looks like a live site
+      // rather than like a broken link. `mountInstanceGraphs` two functions
+      // down has always done this for the folder list; only this row did not.
+      //
+      // `safeHref` AFTER `withBase`, so what is checked is the href actually
+      // written. That order is stated on the folder list too, for the same
+      // reason: checking the bare path clears a value the baseurl could still
+      // turn into something else.
+      var at = safeHref(withBase(hrefs[id]));
       if (at) {
         var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
         a.innerHTML = rowGlyph(id);
@@ -7182,7 +7196,20 @@
 
     var middle = el("div", { class: "fa-nav-middle" });
     if (graphs.length > 0) {
-      var box = el("details", { class: "fa-nav-folders", open: "" });
+      // CLOSED ON ARRIVAL. Owner, 2026-09-23: *"any indices/toc should be
+      // closed."* It arrived open, on the argument that the graphs are what
+      // the navbar is FOR — but the thing a reader meets first is then a
+      // 24-row list above the navigation they came for, and in the collapsed
+      // strip it was 24 clipped words. The count on the summary still says
+      // how many there are, so nothing is hidden, only folded.
+      //
+      // THE RAIL'S EQUIVALENT GROUP STAYS OPEN, and that is not drift. On a
+      // mounted page `navbar.ts`'s `graphs` IS the middle — closing it leaves
+      // the region genuinely empty, which is the argument `harness-rail.ts`
+      // records against its own `open: true`. Here the block sits ABOVE the
+      // theme's `.site-nav`, so folding it uncovers the navigation rather
+      // than emptying the column. Same rule, different content below it.
+      var box = el("details", { class: "fa-nav-folders" });
       var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
       var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
       sum.appendChild(count);

@@ -10,8 +10,8 @@ import {
   HarnessConfigSchema,
   readHarnessConfig,
   resolveDependencyPath,
-  resolveDependencyTree,
-  flattenDependencies,
+  resolveInstanceGraph,
+  orderedDependencies,
   resolveSkillDirs,
   resolveTranslationDirs,
   materialiseDeclaredDirectories,
@@ -160,49 +160,83 @@ describe("resolveDependencyPath", () => {
   });
 });
 
-describe("resolveDependencyTree", () => {
-  it("resolves direct dependencies", () => {
-    const tree = resolveDependencyTree(TMP);
-    expect(tree).toHaveLength(1);
-    expect(tree[0].dependency.name).toBe("dep-a");
+describe("resolveInstanceGraph", () => {
+  it("resolves direct and transitive dependencies, deepest first", () => {
+    const g = resolveInstanceGraph(TMP);
+    expect(g.problems).toEqual([]);
+    // dep-b (transitive) comes before dep-a (direct); the root is not listed.
+    expect(g.order.map((d) => d.dependency.name)).toEqual(["dep-b", "dep-a"]);
+    expect(g.order[1].needs).toEqual([join(TMP, "dep-b")]);
   });
 
-  it("resolves transitive dependencies", () => {
-    const tree = resolveDependencyTree(TMP);
-    expect(tree[0].transitive).toHaveLength(1);
-    expect(tree[0].transitive[0].dependency.name).toBe("dep-b");
-  });
-
-  it("detects cycles", () => {
-    // Create a cycle: dep-b depends on root
+  it("reports a cycle, names every instance in it, and orderedDependencies throws", () => {
     const depB = join(TMP, "dep-b");
-    const origConfig = JSON.parse(
-      readFileSync(instanceConfigPathIn(depB), "utf-8"),
-    );
+    const origConfig = JSON.parse(readFileSync(instanceConfigPathIn(depB), "utf-8"));
     writeInstanceConfig(depB, JSON.stringify({
       ...origConfig,
-      dependencies: {
-        folioAssistant: [{ name: "root", path: TMP }],
-      },
+      dependencies: { folioAssistant: [{ name: "root", path: TMP }] },
     }));
-
-    // Should not infinite loop
-    const tree = resolveDependencyTree(TMP);
-    expect(tree).toHaveLength(1);
-
-    // Restore original
-    writeInstanceConfig(depB, JSON.stringify(origConfig));
+    try {
+      const g = resolveInstanceGraph(TMP);
+      expect(g.order).toEqual([]);
+      const cycle = g.problems.find((p) => p.kind === "cycle");
+      expect(cycle && cycle.kind === "cycle" && cycle.roots.length).toBe(3);
+      expect(() => orderedDependencies(TMP)).toThrow(/dependency cycle/);
+    } finally {
+      writeInstanceConfig(depB, JSON.stringify(origConfig));
+    }
   });
 });
 
-describe("flattenDependencies", () => {
-  it("returns depth-first order", () => {
-    const tree = resolveDependencyTree(TMP);
-    const flat = flattenDependencies(tree);
-    // dep-b (transitive) should come before dep-a (direct)
-    expect(flat).toHaveLength(2);
-    expect(flat[0].dependency.name).toBe("dep-b");
-    expect(flat[1].dependency.name).toBe("dep-a");
+/**
+ * Bean a1lq. No instance in this repository needs two others, so the corpus
+ * has no diamond to test against; each case here builds its own.
+ */
+describe("multiple inheritance of instances (bean a1lq)", () => {
+  let dir: string;
+  beforeAll(() => {
+    dir = mkdtempSync(join(tmpdir(), "a1lq-"));
+    const mk = (name: string, deps: string[]) => {
+      const root = join(dir, name);
+      mkdirSync(join(root, "skills"), { recursive: true });
+      writeInstanceConfig(root, JSON.stringify({
+        dependencies: { folioAssistant: deps.map((d) => ({ name: d, path: join(dir, d) })) },
+      }));
+    };
+    // root needs a and c; both need d. `ghost` is not in the checkout.
+    mk("d", []);
+    mk("a", ["d"]);
+    mk("c", ["d"]);
+    mk("root", ["a", "c"]);
+    mk("partial", ["d", "ghost"]);
+  });
+  afterAll(() => rmSync(dir, { recursive: true, force: true }));
+
+  it("a diamond resolves ONCE, below both branches — not dropped as a cycle", () => {
+    const g = resolveInstanceGraph(join(dir, "root"));
+    expect(g.problems).toEqual([]);
+    expect(g.order.map((d) => d.dependency.name)).toEqual(["d", "a", "c"]);
+  });
+
+  it("a missing dependency is REPORTED; the overlay warns and continues without it", () => {
+    const g = resolveInstanceGraph(join(dir, "partial"));
+    expect(g.problems).toHaveLength(1);
+    expect(g.problems[0]).toMatchObject({ kind: "missing", name: "ghost" });
+    const warn = console.warn;
+    const said: string[] = [];
+    console.warn = (m: string) => void said.push(m);
+    try {
+      expect(orderedDependencies(join(dir, "partial")).map((d) => d.dependency.name)).toEqual(["d"]);
+    } finally {
+      console.warn = warn;
+    }
+    expect(said.join("\n")).toContain("ghost");
+  });
+
+  it("skill directories list the shared layer once", () => {
+    const dirs = resolveSkillDirs(join(dir, "root"));
+    expect(dirs.filter((d) => d === join(dir, "d", "skills"))).toHaveLength(1);
+    expect(dirs[dirs.length - 1]).toBe(join(dir, "root", "skills"));
   });
 });
 

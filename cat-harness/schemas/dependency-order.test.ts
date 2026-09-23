@@ -6,10 +6,12 @@
 import { describe, expect, it } from "bun:test";
 
 import {
+  ancestorsOf,
+  findConflicts,
   flattenDependencies,
   runInOrder,
   type OrderedStep,
-} from "../dependency-order";
+} from "./dependency-order";
 
 const step = (id: string, needs: string[] = [], fatal = false): OrderedStep => ({ id, needs, fatal });
 
@@ -110,5 +112,34 @@ describe("fatal is per step", () => {
   it("a skipped step names the step that BROKE, not the chain that carried it", () => {
     const { records } = runInOrder(order, (s) => (s.id === "viewer" ? "no renderer" : undefined));
     expect(records.find((r) => r.step.id === "tiles")!.blockedBy).toBe("viewer");
+  });
+});
+
+describe("multiple inheritance — ancestors and conflicts (bean a1lq)", () => {
+  // root needs A and B; B needs D. A and D are unrelated at DIFFERENT depths.
+  const graph = () => flattenDependencies([step("D"), step("A"), step("B", ["D"]), step("root", ["A", "B"])]).order;
+
+  it("a diamond resolves once, below both branches", () => {
+    const r = flattenDependencies([step("D"), step("B", ["D"]), step("C", ["D"]), step("A", ["B", "C"])]);
+    expect(r.problems).toEqual([]);
+    expect(r.order.map((s) => s.id)).toEqual(["D", "B", "C", "A"]);
+    expect([...ancestorsOf(r.order).get("A")!].sort()).toEqual(["B", "C", "D"]);
+  });
+
+  it("an override by a layer that reaches the other is not a conflict", () => {
+    const keys: Record<string, string[]> = { D: ["k"], B: ["k"] };
+    expect(findConflicts(graph(), (id) => keys[id] ?? [])).toEqual([]);
+  });
+
+  it("two unrelated layers at DIFFERENT depths conflict — incomparable, not same-depth", () => {
+    const keys: Record<string, string[]> = { A: ["k"], D: ["k"] };
+    const c = findConflicts(graph(), (id) => keys[id] ?? []);
+    expect(c).toHaveLength(1);
+    expect(c[0].ids.sort()).toEqual(["A", "D"]);
+  });
+
+  it("the child that reaches both settles the conflict by redefining the key", () => {
+    const keys: Record<string, string[]> = { A: ["k"], D: ["k"], root: ["k"] };
+    expect(findConflicts(graph(), (id) => keys[id] ?? [])).toEqual([]);
   });
 });

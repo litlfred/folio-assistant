@@ -3203,7 +3203,7 @@ export interface ResolvedDirectory extends ContentDirectory {
  *
  * `chain` runs deepest dependency first and the root last, so a root
  * redeclaring an inherited id wins. Callers usually get this from
- * `flattenDependencies(resolveDependencyTree(root))` plus the root itself;
+ * `orderedDependencies(root)` plus the root itself;
  * it is taken as a parameter rather than walked here so this module does not
  * depend on the dependency resolver, and so tests can state a chain directly.
  */

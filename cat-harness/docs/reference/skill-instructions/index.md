@@ -273,7 +273,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [RACI](raci.html) | `raci` | — | **R is already declared.** A BPMN lane says who performs an activity; that |
+| [RACI](raci.html) | `raci` | — | **The method is not in this file.** It is the `raci` node in the `methodology` |
 
 ## Declared but not implemented here (stubs)
 
