@@ -28,6 +28,8 @@ import {
   sidecarDocument,
   sourceBlockOf,
   staleSidecars,
+  ENTRY_DIRECTORIES,
+  ENTRY_SIDECARS,
 } from "../check-l1-complete.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
 import {
@@ -36,6 +38,7 @@ import {
   mayPromote,
   planFor,
   usableOutlineEntries,
+  withDerivedArms,
 } from "../ingest-document.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -216,8 +219,11 @@ function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown
     JSON.stringify(
       over.structure ?? {
         _schema: "pdf-structure/v1",
+        doc_id: "doc",
         toc_source: "none",
-        sections: [1, 2],
+        // Real section objects, not `[1, 2]`: `structure` is checked against
+        // pdf-structure/v1 (issue #1112), for the reason the blocks comment below gives.
+        sections: [1, 2].map((n) => ({ id: `s${n}`, number: null, title: `S${n}`, level: 1, page_start: n, page_end: n, n_chars: 1, n_words: 1 })),
         // Bean `nso8`: technical metadata is a CHECKED requirement, so a
         // fixture that stands for "every derivable requirement satisfied" has
         // to carry it. It was `not-derivable` until `_tech_meta.py` existed.
@@ -597,6 +603,43 @@ describe("refuse to promote — the gate between the arms and the library", () =
     expect(src).toContain('ingestMode(argv) === "promote" ? [] : plan.steps');
   });
 
+  test("the derived arms run for a PDF rung and NOT for archive or tabular", () => {
+    // `l1-blocks`' own header records what the missing sequence cost: "a
+    // pipeline that cannot terminate, and it was invisible because both ends
+    // looked healthy". Staging exits 0 and says `✓ staged`, while `mayPromote`
+    // requires every requirement met — so nothing could ever cross into
+    // `library/`. Verified end to end 2026-09-23: one document now goes
+    // uploads/ -> library/ in two commands.
+    const base = { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] };
+    const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug");
+    expect(armed.steps).toHaveLength(3);
+    expect(armed.steps[1]).toEqual(["python3", expect.stringContaining("pdf-images.py"), "-o", "/stage", "/tmp/x.pdf"]);
+    expect(armed.steps[2]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
+
+    // NOT for the other kinds, and this is stated rather than assumed.
+    // `check-l1-complete`'s `PAGED_ONLY` list exists because not every
+    // requirement applies to every kind, and neither archive nor tabular was
+    // measured here. "More arms cannot hurt" is how a gate starts reporting a
+    // requirement over content it was never about.
+    for (const rung of ["archive", "tabular", "undetermined"] as const) {
+      expect(withDerivedArms({ ...base, rung }, "/tmp/x.pdf", "/stage", "/stage/slug").steps).toHaveLength(1);
+    }
+  });
+
+  test("the PDF is passed in, never read back off the rung's argv", () => {
+    // The rung's last argument happens to be the PDF today. A sequencer that
+    // depended on that breaks silently the first time a rung grows a trailing
+    // flag — and silently is the operative word: `pdf-images.py` would be
+    // handed a flag as its source and fail, or worse, succeed over nothing.
+    const armed = withDerivedArms(
+      { rung: "pdf-structure", why: "", steps: [["python3", "pdf-structure.py", "-o", "/stage", "/real.pdf", "--ocr"]] },
+      "/real.pdf",
+      "/stage",
+      "/stage/slug",
+    );
+    expect(armed.steps[1]?.at(-1)).toBe("/real.pdf");
+  });
+
   test("the arms are pointed at STAGING, never at the library", () => {
     // The whole mechanism is which directory `-o` receives. If a step is ever
     // handed the library again, the document is filed before anything can
@@ -613,6 +656,31 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // hand straight into the entry directory).
     expect(src).toContain("planFor(pdf, undefined, stagingRoot)");
     expect(src).not.toContain("const plan = planFor(pdf);");
+
+    // AND THE SAME FOR THE SENTENCE IT PRINTS, which this test did not cover
+    // until 2026-09-23 — so the code path was fixed in #495 while the
+    // INSTRUCTION went on telling an agent to do the wrong thing for four
+    // days. Measured by following it: `pdf-images.py -o ingest-staging/<slug>`
+    // wrote `ingest-staging/<slug>/<slug>/images.json`, and the entry's own
+    // `images.json` stayed absent — reproducing by hand exactly the defect the
+    // comment above describes.
+    //
+    // A fixed code path does not fix the prose beside it. They are two
+    // surfaces and only one of them was asserted.
+    // THE SENTENCE IS GONE ENTIRELY, and that is the fix rather than the
+    // wording. It gave ONE `-o` for arms that take opposite conventions —
+    // `pdf-images.py` wants the library ROOT, `l1-blocks.ts` wants the ENTRY
+    // directory and throws "no structure.json" otherwise — so no value was
+    // correct for both, and #1035's correction made it right for one arm and
+    // wrong for the other in the same stroke. `withDerivedArms` hands each the
+    // directory it wants, so there is no instruction left to get wrong.
+    expect(src).not.toContain("run the remaining arms");
+
+    // AND THE TWO ARMS GET DIFFERENT DIRECTORIES, which is the whole reason
+    // the sentence could not be saved. If these ever collapse to one value,
+    // one of the arms is silently broken again.
+    expect(src).toContain('["python3", pyHelper("pdf-images.py"), "-o", stagingRoot, pdf]');
+    expect(src).toContain('["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]');
     expect(src).toContain('const staging = join(stagingRoot, slug);');
   });
 
@@ -916,5 +984,85 @@ describe("a document's figures can be VECTOR, and the gate no longer passes over
     expect(r.state).toBe("met");
     expect(r.detail).toContain("declares at least 1 captioned figure");
     expect(r.detail).toContain("NOT established");
+  });
+});
+
+/**
+ * WHAT AN ENTRY MAY NOT CONTAIN — bean `3psh`.
+ *
+ * THE CORPUS CANNOT TEST THIS. Measured 2026-09-23: 5 libraries, 21 entries,
+ * **zero** orphans and zero unexpected children. So a green corpus run proves
+ * nothing about this requirement, and these fixtures are not belt-and-braces
+ * — they are the only thing that will ever execute the branch. `1xhc`: a gate
+ * that does not fire is indistinguishable from one that passed.
+ *
+ * What the defect looked like before, measured on a real complete entry: it
+ * passed clean, passed again with a nested orphan holding an `images.json`
+ * under the WRONG `doc_id`, and passed a third time with a wholly unexpected
+ * loose file — because no requirement said what an entry may not contain.
+ */
+describe("an entry's contents are a CLOSED set — `3psh`", () => {
+  const entry = (children: Record<string, string | null>): string => {
+    const dir = mkdtempSync(join(tmpdir(), "l1-contents-"));
+    for (const [name, body] of Object.entries(children)) {
+      if (body === null) mkdirSync(join(dir, name), { recursive: true });
+      else writeFileSync(join(dir, name), body);
+    }
+    return dir;
+  };
+  const contents = (dir: string) => checkEntry(dir).requirements.find((r) => r.name === "contents");
+
+  const PAGED = {
+    "structure.json": '{"$schema":"pdf-structure/v1","doc_id":"d","sections":[]}',
+    "manifest.jsonld": "{}",
+    "images.json": '{"$schema":"folio-document-images/v1","doc_id":"d","images":[]}',
+    sections: null,
+    blocks: null,
+  };
+
+  test("a clean entry is MET, and says how many children it accounted for", () => {
+    const r = contents(entry(PAGED));
+    expect(r?.state).toBe("met");
+    expect(r?.detail).toContain("5 child(ren)");
+  });
+
+  test("`images/` and `ocr/` are allowed — they are arms' output, not strays", () => {
+    // Measured on the corpus: `images/` on 13 of 21 entries and `ocr/` on 2.
+    // A closed set that excluded them would fail 13 entries on its first run,
+    // which is how a new gate gets weakened back out again.
+    expect(contents(entry({ ...PAGED, images: null, ocr: null }))?.state).toBe("met");
+  });
+
+  test("a NESTED ORPHAN is unmet and is NAMED", () => {
+    // The original incident: `pdf-images.py` derived the doc id differently
+    // from `pdf-structure.py` and wrote into a sibling; after a rename the
+    // sibling ended up INSIDE the entry. Both duplicates were byte-identical
+    // apart from `doc_id` and both were committed unnoticed.
+    const r = contents(entry({ ...PAGED, "260725032v1": null }));
+    expect(r?.state).toBe("unmet");
+    expect(r?.detail).toContain("260725032v1");
+    // NAMED, NOT REMOVED — `deletion-requires-confirmation`. An orphan is
+    // evidence of which arm misfiled it; deleting it destroys that.
+    expect(r?.detail).toContain("Reported, not removed");
+  });
+
+  test("an unexpected loose FILE is unmet too — not only directories", () => {
+    const r = contents(entry({ ...PAGED, "notes.txt": "x" }));
+    expect(r?.state).toBe("unmet");
+    expect(r?.detail).toContain("notes.txt");
+  });
+
+  test("a dotfile is NOT a stray", () => {
+    // `.DS_Store` and friends are the environment's, not an arm's. Flagging
+    // them would train a reader to ignore this finding, which is worse than
+    // not having it.
+    expect(contents(entry({ ...PAGED, ".DS_Store": "x" }))?.state).toBe("met");
+  });
+
+  test("the allowed set is the DECLARED one, not a literal repeated here", () => {
+    // If these drift apart, the requirement and its documentation disagree
+    // and only one of them is executable.
+    for (const d of ENTRY_DIRECTORIES) expect(contents(entry({ ...PAGED, [d]: null }))?.state).toBe("met");
+    for (const f of ENTRY_SIDECARS) expect(contents(entry({ ...PAGED, [f]: "{}" }))?.state).toBe("met");
   });
 });

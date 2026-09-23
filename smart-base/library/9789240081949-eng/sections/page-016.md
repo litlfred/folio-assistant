@@ -7,7 +7,7 @@ pages: 16-16
 pdf_page: 16
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 The Health System Challenge framework provides an overview of needs and challenges 

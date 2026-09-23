@@ -311,3 +311,48 @@ describe("the real corpus", () => {
     }
   });
 });
+
+// ── The record is real JSON-LD — bean `yh6u` ───────────────────────────────
+//
+// It was named `.jsonld` with an `@id` and no `@context`, so a JSON-LD
+// processor dropped every key. The two assertions that matter: the writer
+// emits the PUBLISHED context, and every key it writes is a declared term —
+// checked by the same function the CI gate runs, over the arm's real output.
+
+import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld.ts";
+import { checkDeclaredKeys } from "../check-context-emission.ts";
+
+describe("the tabular record is JSON-LD a processor keeps whole", () => {
+  test("the arm emits the published content context", () => {
+    const d = tmp();
+    const out = join(d, "lib");
+    extract(xlsx(d), out);
+    const raw = JSON.parse(readFileSync(join(out, "book", "tabular.jsonld"), "utf-8"));
+    expect(raw["@context"]).toBe(CONTENT_CONTEXT_URL);
+  });
+
+  test("every key the arm writes is a declared term — nested data rides in `@json`", () => {
+    const d = tmp();
+    const out = join(d, "lib");
+    extract(xlsx(d), out);
+    const k = checkDeclaredKeys(out);
+    expect(k.documents).toBe(1); // not vacuous: the record was read as content
+    expect(k.undeclared).toEqual([]);
+  });
+
+  test("the Python constant IS the TypeScript one — one URL, not two", () => {
+    const py = readFileSync(join(ROOT, "scripts", "_content_context.py"), "utf-8");
+    expect(/CONTENT_CONTEXT_URL = "([^"]+)"/.exec(py)?.[1]).toBe(CONTENT_CONTEXT_URL);
+  });
+
+  test("a record written before the arm emitted `@context` still validates", () => {
+    // Folio repositories hold those. The field is optional for exactly that.
+    const d = tmp();
+    const out = join(d, "lib");
+    extract(xlsx(d), out);
+    const raw = JSON.parse(readFileSync(join(out, "book", "tabular.jsonld"), "utf-8"));
+    delete raw["@context"];
+    expect(TabularRecordsSchema.safeParse(raw).success).toBe(true);
+    expect(TabularRecordsSchema.safeParse({ ...raw, "@context": "https://elsewhere.example/ctx" }).success).toBe(false);
+  });
+});

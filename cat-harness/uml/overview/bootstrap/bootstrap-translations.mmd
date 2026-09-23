@@ -1,0 +1,13 @@
+classDiagram
+  direction TB
+  namespace bootstrap__bootstrap_translations {
+    class bootstrap_bootstrap_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  cssClass "bootstrap_bootstrap_translations_TranslationConfig" fa_uml_kind_translation_sources

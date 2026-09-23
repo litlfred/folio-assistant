@@ -159,6 +159,17 @@ theme's `backdrop` is sticky-scoped today, and making it the docs page ground is
 a different CSS surface and possibly a different crop set, since a sticky's crop
 is chosen for a CARD.
 
+**One of this milestone's open questions was asked and answered 2026-09-22.**
+*"Which subgraphs are 'display' subgraphs?"* — open on both `603s` and `yj32` —
+shrank to one real decision once the existing mechanism was measured
+(`coverage.visualiser`, `visualisationsOf`, and `showsOn(v, "navbar" | "board")`
+already decide which graphs display and where). **The owner ruled: a declared
+graph with NO viewer is SHOWN, inert and labelled**, over omitting it and over
+linking it to a generic listing. Recorded on `603s` and `yj32`; the
+accessibility obligation it carries (`gjli` — an inert row must not read as a
+control, and the label must distinguish `flh4`'s two cases) is recorded with
+it.
+
 **Withdrawn from this list:**
 
 | withdrawn | why |

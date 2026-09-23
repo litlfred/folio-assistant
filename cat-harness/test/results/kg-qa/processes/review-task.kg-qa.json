@@ -5,7 +5,7 @@
     "id": "Process_Review",
     "path": "processes/review-task.bpmn"
   },
-  "source_hash": "sha256:0e91ee2a3f06bd0dd743928c4c77a72cc8e91b2e2b443ad03ffe5a9399c3b37f",
+  "source_hash": "sha256:60a47a2d24a73986abb2b35723179cf733122c3d7d4e41875a84d0c1a91149e3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,28 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 13,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

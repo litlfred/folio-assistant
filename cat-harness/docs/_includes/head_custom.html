@@ -480,6 +480,9 @@
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
 <link rel="stylesheet" href="{{ '/assets/css/themes.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
+     that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
+<link rel="stylesheet" href="{{ '/assets/css/uml.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,

@@ -74,6 +74,7 @@
       <bpmn:outgoing>G2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Declared" name="Declared&amp;#10;in place?">
+      <bpmn:documentation>Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (`readable`), an entry present for the sub-graph, and every declared path exists. Unparseable goes to `unknown`, a fault rather than 'not yet', and stops the process. No entry, or a declared path that does not exist (bean `dh4f`), goes to `not yet`, back to Declare. Otherwise `declared`, on to Measure.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate"/>
       </bpmn:extensionElements>
@@ -93,6 +94,7 @@
       <bpmn:outgoing>G6</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Detangled" name="Detangled?">
+      <bpmn:documentation>Computed from `check:partition`'s counts by decisions/detanglement-gate.dmn (hit policy FIRST). `unassignedEdges &gt; 0` answers `unknown` BEFORE the cross-edge rule is reached, because a zero cross-edge count over an unjudged corpus is not a pass; that stops the process. `crossEdges &gt; 0` answers `keep detangling`: prune, merge, factor, or reclassify, then re-measure. Zero of both is `detangled`, on to Isolate.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/detanglement-gate.dmn#Decision_DetanglementGate"/>
       </bpmn:extensionElements>
@@ -120,6 +122,7 @@
       <bpmn:outgoing>G10</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Isolated" name="Stands&amp;#10;alone?">
+      <bpmn:documentation>Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers `not yet`, back to Isolate. All three answer `isolated`, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/isolation-gate.dmn#Decision_IsolationGate"/>
       </bpmn:extensionElements>

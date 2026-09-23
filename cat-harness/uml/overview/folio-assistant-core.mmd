@@ -1,0 +1,107 @@
+classDiagram
+  direction LR
+  namespace folio_assistant_core__core_schemas {
+    class n_folio_assistant_core_core_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_core__folios {
+    class n_folio_assistant_core_folios_folio["folio: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_core__voices {
+    class folio_assistant_core_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      kgRef [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_core_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_core_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_core_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class folio_assistant_core_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] string[]
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace folio_assistant_core__core_tools {
+    class folio_assistant_core_core_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class folio_assistant_core_core_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      alternativeTo [0..*] string[]
+      selection [0..1] object
+      requires [0..1] object
+      maintains [0..*] Maintain[]
+    }
+  }
+  namespace folio_assistant_core__core_scripts {
+    class n_folio_assistant_core_core_scripts_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_undetermined
+  cssClass "n_folio_assistant_core_folios_folio" fa_uml_kind_folio
+  cssClass "n_folio_assistant_core_folios_folio" fa_uml_undetermined
+  folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
+  folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
+  folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
+  folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
+  cssClass "folio_assistant_core_voices_Source" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Pattern" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Terminology" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Rule" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_VoiceProfile" fa_uml_kind_voices
+  folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+  cssClass "folio_assistant_core_core_tools_Maintain" fa_uml_kind_tools
+  cssClass "folio_assistant_core_core_tools_ToolDefinition" fa_uml_kind_tools
+  cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_undetermined

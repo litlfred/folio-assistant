@@ -82,7 +82,7 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   doco: "document STRUCTURE — a paper's chapters, sections and figures, via BLOCK_KIND_TO_DOCO_TYPE. This instance is the platform and holds no folio, so no block is exported here. A folio emits it on its first `gen-block-jsonld` run.",
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
-  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype, and `csvwOnly()` emits CSVW-NATIVE KEYS that resolve through this context rather than `csvw:`-prefixed values — so this prefix may be spoken by alias already, and the count below says only that no literal CURIE carries it.",
+  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype; its record is plain JSON (`tabular.csvw.json`, bean `792y`) and `toCsvw()` derives a CSVW document carrying CSVW's OWN context, not this one. So nothing in this graph speaks `csvw:` yet — a folio whose table blocks link their CSVW description is what would.",
   skos: "the glossary — `lqo9` slice 1 shipped 135 `skos:Concept` nodes, but into the NAMESPACE document (`ns-export.ts`), which carries its own context rather than this one. A folio's glossary blocks are what emit it HERE.",
   // NO `fhir` ENTRY, and its removal is the check doing its job.
   //
@@ -406,6 +406,168 @@ export function checkPrefixDeclaration(
   };
 }
 
+// ── Every plain KEY is a declared term — bean `yh6u` ─────────────────────
+//
+// `kg-export` rule 5 applied to CONTENT: a key that is neither a declared term
+// nor a compact/absolute IRI is not a property, and a JSON-LD processor DROPS
+// it without a word. Measured 2026-09-23 before this check existed: 8 such keys
+// across 392 committed figure blocks — every agent-drafted figure narrative.
+// The prefix check above could not see them, because they have no prefix.
+//
+// It does not descend into a `@json`-typed value: that is a JSON LITERAL by
+// declaration, its inner keys are data rather than properties, and reading them
+// as undeclared terms would condemn exactly the choice that keeps their nulls.
+
+export interface KeyDeclarationReport {
+  /** Documents that reference the published content context. */
+  readonly documents: number;
+  /** Plain keys that are not declared terms, with a count and an example. */
+  readonly undeclared: PrefixFinding[];
+}
+
+export function checkDeclaredKeys(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+): KeyDeclarationReport {
+  const terms = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  const isJson = (k: string): boolean => {
+    const d = context[k];
+    return isRecord(d) && d["@type"] === "@json";
+  };
+  const found = new Map<string, { count: number; example: string }>();
+  let documents = 0;
+
+  const walk = (o: unknown, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, where));
+    if (!isRecord(o)) return;
+    for (const [k, v] of Object.entries(o)) {
+      if (k === "@context") continue;
+      if (k.startsWith("@")) {
+        walk(v, where);
+        continue;
+      }
+      // A compact or absolute IRI is the prefix check's business, not this one's.
+      if (k.includes(":")) {
+        walk(v, where);
+        continue;
+      }
+      if (!terms.has(k)) {
+        const e = found.get(k);
+        if (e) e.count++;
+        else found.set(k, { count: 1, example: where });
+      }
+      if (!isJson(k)) walk(v, where);
+    }
+  };
+
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue;
+    }
+    const c = isRecord(doc) ? doc["@context"] : undefined;
+    const usesContent = c === contextUrl || (Array.isArray(c) && c.includes(contextUrl));
+    if (!usesContent) continue;
+    documents++;
+    walk(doc, f.startsWith(repo) ? f.slice(repo.length + 1) : f);
+  }
+  return {
+    documents,
+    undeclared: [...found].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+  };
+}
+
+// ── A PATH is never an `@id` — bean `589f` ────────────────────────────────
+//
+// A document-relative path under an `@id`-coerced term is resolved by a
+// JSON-LD processor against `@base`, not against the document, and so names a
+// location the file is not at. That was `text` on 1,323 prose blocks. The fix
+// was to declare `text` and `leanSource` literals; this is what stops the next
+// term — or the old one, re-coerced — from doing it again.
+
+/** A value that is a file path rather than an IRI or a node id. */
+export function looksLikePath(v: string): boolean {
+  return v.startsWith("../") || v.startsWith("./") || /\.(md|lean|tex|png|jpe?g|svg|pdf|csv|xlsx)$/i.test(v);
+}
+
+export function checkPathsAreNotLinks(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+): KeyDeclarationReport {
+  const idTerms = new Set(
+    Object.entries(context)
+      .filter(([k, v]) => !k.startsWith("@") && isRecord(v) && v["@type"] === "@id")
+      .map(([k]) => k),
+  );
+  const found = new Map<string, { count: number; example: string }>();
+  let documents = 0;
+  const walk = (o: unknown, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, where));
+    if (!isRecord(o)) return;
+    for (const [k, v] of Object.entries(o)) {
+      if (idTerms.has(k)) {
+        for (const x of Array.isArray(v) ? v : [v]) {
+          if (typeof x !== "string" || !looksLikePath(x)) continue;
+          const e = found.get(k);
+          if (e) e.count++;
+          else found.set(k, { count: 1, example: `${where}: ${x}` });
+        }
+      }
+      if (isRecord(context[k]) && (context[k] as Record<string, unknown>)["@type"] === "@json") continue;
+      walk(v, where);
+    }
+  };
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue;
+    }
+    const c = isRecord(doc) ? doc["@context"] : undefined;
+    if (!(c === contextUrl || (Array.isArray(c) && c.includes(contextUrl)))) continue;
+    documents++;
+    walk(doc, f.startsWith(repo) ? f.slice(repo.length + 1) : f);
+  }
+  return {
+    documents,
+    undeclared: [...found].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+  };
+}
+
+/** Print the path-under-`@id` half; return whether it failed. */
+function reportPaths(p: KeyDeclarationReport): boolean {
+  if (p.undeclared.length === 0) {
+    console.log("✓ no file path sits under an `@id`-coerced term");
+    return false;
+  }
+  console.error(`\n${p.undeclared.length} \`@id\` term(s) carry FILE PATHS — a processor resolves them against @base, to the wrong place:`);
+  for (const u of p.undeclared) console.error(`  ✗ ${u.prefix}  ×${u.count}  e.g. ${u.example}`);
+  console.error("\nDeclare the term a literal, or mint an absolute IRI for a file that is actually served (bean `589f`).");
+  return true;
+}
+
+/** Print the undeclared-key half; return whether it failed. */
+function reportKeys(k: KeyDeclarationReport): boolean {
+  console.log(`\nKey declaration — ${k.documents} content-context document(s) read`);
+  if (k.documents === 0) {
+    console.error("::error::key declaration: no content-context document read — a clean run over nothing is not clean");
+    return true;
+  }
+  if (k.undeclared.length > 0) {
+    console.error(`\n${k.undeclared.length} key(s) are not declared terms — a JSON-LD processor DROPS them:`);
+    for (const u of k.undeclared) console.error(`  ✗ ${u.prefix}  ×${u.count}  e.g. ${u.example}`);
+    console.error("\nDeclare each in CONTENT_CONTEXT (schemas/jsonld.ts), or nest it under an `@json` term if it is data rather than a property.");
+    return true;
+  }
+  console.log("✓ every key in every content-context document is a declared term");
+  return false;
+}
+
 /** Print the spoken-but-unbound half; return whether it failed. */
 function reportDeclaration(d: PrefixDeclarationReport): boolean {
   console.log(`\nPrefix declaration — ${d.documents} document(s) read, ${d.unresolved.count} with a context this check cannot resolve`);
@@ -434,12 +596,17 @@ function reportDeclaration(d: PrefixDeclarationReport): boolean {
 if (import.meta.main) {
   const r = checkContextEmission();
   const d = checkPrefixDeclaration();
+  const k = checkDeclaredKeys();
+  const p = checkPathsAreNotLinks();
   if (process.argv.includes("--json")) {
-    console.log(JSON.stringify({ emission: r, declaration: d }, null, 2));
+    console.log(JSON.stringify({ emission: r, declaration: d, keys: k, paths: p }, null, 2));
     const declFailed = d.undeclared.length > 0 || d.misspelt.length > 0 || d.documents === 0;
-    process.exit(r.silent.length > 0 || r.documents === 0 || declFailed ? 1 : 0);
+    const keysFailed = k.undeclared.length > 0 || k.documents === 0;
+    process.exit(r.silent.length > 0 || r.documents === 0 || declFailed || keysFailed || p.undeclared.length > 0 ? 1 : 0);
   }
   if (reportDeclaration(d)) process.exitCode = 1;
+  if (reportKeys(k)) process.exitCode = 1;
+  if (reportPaths(p)) process.exitCode = 1;
 
   console.log(`Context emission — ${Object.keys(r.counts).length} bound prefix(es) over ${r.documents} document(s)`);
   for (const [p, n] of Object.entries(r.counts).sort((a, b) => b[1] - a[1])) {

@@ -116,6 +116,7 @@
         "decision-audit",
         "document-intake",
         "milnor-exposition-standard",
+        "narrative-asserts-code",
         "rendering-auditor",
         "semantic-review-scoping",
         "staging-review",
@@ -128,6 +129,30 @@
         "See what changed since they last looked",
         "Judge whether a finding is real without re-running the check",
         "Find the one thing in a large diff that needs their judgement"
+      ]
+    },
+    {
+      "id": "review-coordinator",
+      "title": "Review coordinator",
+      "description": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "lanes": [
+        "Review Coordinator"
+      ],
+      "skills": [
+        "review-comments",
+        "review-heatmap",
+        "staging-review"
+      ],
+      "persona": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves.",
+      "voice": "Counts, with what each count is and is not. 'Four changed blocks in 3.2 have no verdict' is actionable; 'most of it is reviewed' is not.",
+      "useCases": [
+        "Split a large change into slices a reviewer can finish",
+        "Find the sections nobody has read yet",
+        "Tell the committee the review is complete, and show why"
       ]
     },
     {
@@ -493,7 +518,8 @@
       ],
       "skills": [
         "content-feedback",
-        "todo-review"
+        "todo-review",
+        "wireframe-design-review"
       ],
       "persona": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below.",
       "voice": "The finding, then the evidence it rests on. A finding that does not show what it read is an opinion, and the author is entitled to disagree with it on those terms.",
@@ -539,9 +565,11 @@
         "Agent (playing the machine)"
       ],
       "skills": [
+        "adopt-methodology-from-source",
         "bean-coordination",
         "bpmn-authoring",
         "ci-health",
+        "confirmation-waiver",
         "content-author",
         "content-graph",
         "content-plan",
@@ -550,7 +578,6 @@
         "crdm-requirements-workflow",
         "decision-audit",
         "deletion-requires-confirmation",
-        "confirmation-waiver",
         "delivery-summary",
         "document-authoring",
         "document-structure",
@@ -559,12 +586,14 @@
         "graph-detanglement",
         "issue-working",
         "library-ingestion",
+        "methodology-adoption",
         "normative-statements",
         "opening-brief",
         "placement",
         "platform-gates",
         "prepare-merge",
         "prepare-merge-auto",
+        "related-work-coordination",
         "semantic-review-scoping",
         "session-context",
         "session-state-machine",
@@ -573,6 +602,7 @@
         "upstream-version-adoption",
         "voice-authoring-guidance",
         "watch",
+        "wireframe-design-review",
         "workflow-state"
       ],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code.",

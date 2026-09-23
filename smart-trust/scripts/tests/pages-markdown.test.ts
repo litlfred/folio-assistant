@@ -292,3 +292,69 @@ describe("materialization state is stated, never implied by styling", () => {
     });
   }
 });
+
+/**
+ * The LEFT-HAND NAV, and the conflation that emptied it.
+ *
+ * `shell` took `depth = 0 | 1`, and one number carried two different facts: a
+ * CATEGORY page and an ARTEFACT page both passed `1`, so the `nav_exclude`
+ * written for the 674 leaves swept out the category pages with them. The
+ * sidebar showed exactly ONE smart-trust row — the index — and the structure
+ * the index is grouped by was invisible in the one place a reader navigates
+ * from.
+ *
+ * Asserted on the RENDERED front matter rather than on the `NavRole` values,
+ * for the reason the two defects above are: just-the-docs reads the page, not
+ * the generator, and `parent` matches `title` BY STRING. A test on the type
+ * would pass while the sidebar flattened.
+ */
+describe("left-hand nav — three roles, one per page kind", () => {
+  const fm = (page: string): string => page.slice(0, page.indexOf("\n---", 4) + 4);
+  const readDoc = (rel: string): string => readFileSync(join(DOCS, rel), "utf-8");
+
+  it("the index CARRIES children", () => {
+    const f = fm(indexSrc);
+    expect(f).toContain("has_children: true");
+    expect(f).not.toContain("nav_exclude");
+    expect(f).not.toContain("parent:");
+  });
+
+  it("a category page is a LISTED child, named against the index's exact title", () => {
+    const name = categoryFiles[0];
+    expect(name).toBeDefined();
+    const f = fm(readDoc(join("category", name!)));
+    // The parent string must be the index's own `title`, byte for byte —
+    // just-the-docs matches a child to its parent by that string, so a
+    // re-titled index orphans every section and the sidebar quietly flattens.
+    const indexTitle = /title: (.+)/.exec(fm(indexSrc))![1]!;
+    expect(f).toContain(`parent: ${indexTitle}`);
+    expect(f).toMatch(/nav_order: \d+/);
+    // The whole point: a section is NOT excluded.
+    expect(f).not.toContain("nav_exclude");
+  });
+
+  it("an artefact page stays EXCLUDED — 674 leaves would bury the sidebar", () => {
+    const f = fm(readFileSync(join(ARTIFACTS, "CodeSystem-Actors.md"), "utf-8"));
+    expect(f).toContain("nav_exclude: true");
+    expect(f).not.toContain("has_children");
+    expect(f).not.toContain("parent:");
+  });
+
+  /**
+   * Falsifies the fix in the other direction: if `nav_exclude` ever returns to
+   * the category pages, this fails rather than the sidebar silently emptying —
+   * which is how the original defect survived, since an empty sidebar section
+   * looks exactly like a folio that has none.
+   */
+  it("no category page is nav-excluded, and every artefact page is", () => {
+    expect(categoryFiles.length).toBeGreaterThan(0);
+    for (const c of categoryFiles) {
+      expect(fm(readFileSync(join(CATEGORIES, c), "utf-8"))).not.toContain("nav_exclude");
+    }
+    const leaves = artifactFiles.slice(0, 25);
+    expect(leaves.length).toBeGreaterThan(0);
+    for (const a of leaves) {
+      expect(fm(readFileSync(join(ARTIFACTS, a), "utf-8"))).toContain("nav_exclude: true");
+    }
+  });
+});

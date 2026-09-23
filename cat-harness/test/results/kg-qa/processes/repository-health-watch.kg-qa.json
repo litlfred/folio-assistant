@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "processes/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:a81280594a5382fbf5847e0d640e3a2c36f06f453f9d484b514ae509227b2048",
+  "source_hash": "sha256:c14317d9c6d48d85b338c2554adfe5705a4d1e8ada05626ddf792588f95235b9",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -95,12 +95,38 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 13,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/repository-health-watch.bpmn",
+      "code": ".github/workflows/health-check.yml",
+      "prose_hash": "c14317d9c6d4",
+      "code_hash": "a2658837ae85",
+      "by": "baseline"
+    }
+  ]
 }

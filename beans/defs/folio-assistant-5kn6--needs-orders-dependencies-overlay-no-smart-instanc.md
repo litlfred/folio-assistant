@@ -1,7 +1,7 @@
 ---
 # folio-assistant-5kn6
 title: 'NEEDS ORDERS, DEPENDENCIES OVERLAY: no smart-* instance declares config dependencies, so no skill overlay composes in the stack'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-22T21:51:54Z
@@ -159,3 +159,44 @@ staging tier, and §3.1 settles that most instances are not publishable.
 - [ ] `publishable`, `id` and `version` are *accepted* by the schema; no
       instance declares them yet, and §4's computed bump is unbuilt
 - [ ] a check that an authored dependency does not contradict `needs`
+
+
+## CLOSED on evidence, 2026-09-23 — the premise is falsified
+
+Not by authorship. Re-measured on `main` at `80c18ac`, the overlay composes
+down the `needs` chain:
+
+| instance | this bean recorded | measured now |
+|---|---|---|
+| `smart-trust` | **0** | **6** |
+| `smart-ig` | **0** | **6** |
+
+```
+smart-trust  (6)
+  bootstrap/skills
+  bootstrap/tools
+  cat-harness/skills
+  folio-assistant-core/skills
+  fhir-harness/skills
+  smart-base/skills
+```
+
+Commit `75c60b92` — *"needs drives the overlay"* — is what closed it:
+`resolveInstanceGraph` now derives dependencies from `needs` and merges them
+UNDER the authored config, so a `smart-*` instance inherits without a
+hand-authored `dependencies.folioAssistant`. That matters, because a
+hand-authored copy of `needs` would be the same fact in two places.
+
+**`smart-trust` and `smart-base` resolve the same six, and that is correct.**
+`smart-ig` contributes nothing because it declares no `skills/` directory — by
+design, following the `folio-assistant-core` precedent. Nothing is missing.
+
+## What the re-measurement DID find
+
+Two defects, both in the same machinery and neither this bean's: bean `fuve`,
+[#1037](https://github.com/litlfred/folio-assistant/issues/1037),
+[#1038](https://github.com/litlfred/folio-assistant/pull/1038). An unresolvable
+`needs` name was dropped silently with `check:instance-graph` asserting the
+opposite, and `repoRootFor` climbed out of the checkout for the one instance
+declared at the repository root. They are filed separately rather than folded
+in here — widening a closed bean into the findings that closed it loses both.

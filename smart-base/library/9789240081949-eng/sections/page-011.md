@@ -7,7 +7,7 @@ pages: 11-11
 pdf_page: 11
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 to assist program planners to express what they 

@@ -253,3 +253,21 @@ describe("the real corpus", () => {
     }
   });
 });
+
+// ── The record is real JSON-LD — bean `yh6u` ───────────────────────────────
+
+import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld.ts";
+import { checkDeclaredKeys } from "../check-context-emission.ts";
+
+describe("the archive record is JSON-LD a processor keeps whole", () => {
+  test("the arm emits the published context, and every key is a declared term", () => {
+    const f = fixtures();
+    const out = join(f.dir, "lib");
+    listed(f.zip, out);
+    const raw = JSON.parse(readFileSync(join(out, "t", "contents.jsonld"), "utf-8"));
+    expect(raw["@context"]).toBe(CONTENT_CONTEXT_URL);
+    const k = checkDeclaredKeys(out);
+    expect(k.documents).toBe(1);
+    expect(k.undeclared).toEqual([]);
+  });
+});

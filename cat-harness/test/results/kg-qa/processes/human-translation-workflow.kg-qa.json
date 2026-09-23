@@ -5,7 +5,7 @@
     "id": "Process_HumanTranslation",
     "path": "processes/human-translation-workflow.bpmn"
   },
-  "source_hash": "sha256:c68a71e175f9f279ba726359e81e775f40b278e71c4d48dd00b43dca42b7eb35",
+  "source_hash": "sha256:f125f616a7020ac1afb084ed68ee8812cc0cf8d1df870064ef3bde81ac22867c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,37 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Complete",
+          "detail": "\"Complete enough?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "Gateway_Accurate",
+          "detail": "\"Translation accurate?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 0,
-    "n/a": 7,
+    "pass": 12,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }

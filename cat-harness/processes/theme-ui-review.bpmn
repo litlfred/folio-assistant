@@ -32,7 +32,7 @@
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_TUR" name="MVP accepted"/>
     <bpmn:task id="A_Inventory" name="Inventory what&#10;actually renders">
-      <bpmn:documentation>Which themes are in use, on which surfaces, in which locales — read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong.</bpmn:documentation>
+      <bpmn:documentation>Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Accessibility" name="Accessibility:&#10;measure, do not assert">
@@ -48,7 +48,7 @@
       <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="R_Judge" name="Judge the rendered&#10;result">
-      <bpmn:documentation>A person looks at it. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</bpmn:documentation>
+      <bpmn:documentation>A person looks at it, at BOTH a web and a mobile width. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="A person exercising judgement over a rendered artefact. The skill governs what the agent PREPARES and measures for them, which is the four steps before this one."/>
       </bpmn:extensionElements>

@@ -157,6 +157,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="review-verdicts"] {
+  /* a page with a tick — somebody read this version and judged it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h14v16H5zM8 12l3 3 5-6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="tools"] {
   /* a spanner — a Tool definition, the thing that does the work */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -195,6 +202,13 @@
 .fa-avatar[data-fa-kind="external-schema"] {
   /* two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h7v12H4zM13 6h7v12h-7zM11 9h2M11 12h2M11 15h2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="uml"] {
+  /* a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -358,12 +372,14 @@
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
+  .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 46% 34%); }
   .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 46% 34%); }
+  .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
@@ -405,12 +421,14 @@
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
+    .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 46% 34%); }
     .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 46% 34%); }
+    .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
@@ -453,12 +471,14 @@
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
+  .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
   .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 42% 72%); }
   .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 42% 72%); }
+  .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
@@ -500,12 +520,14 @@
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
+    .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
     .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="models"] { background-color: hsl(300 42% 72%); }
     .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 42% 72%); }
+    .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
@@ -550,12 +572,14 @@
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
+  .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 16% 52%); }
   .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 16% 52%); }
+  .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
@@ -596,12 +620,14 @@
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
+    .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 16% 52%); }
     .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 16% 52%); }
+    .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
@@ -642,12 +668,14 @@
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }
+  .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
   .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 14% 56%); }
   .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 14% 56%); }
+  .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
@@ -688,12 +716,14 @@
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }
+    .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
     .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="models"][data-fa-trash="true"] { background-color: hsl(300 14% 56%); }
     .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 14% 56%); }
+    .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }

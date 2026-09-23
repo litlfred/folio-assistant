@@ -96,6 +96,7 @@
     "todos",
     "tools",
     "translation-sources",
+    "uml",
     "uploads",
     "waiver"
   ],
@@ -144,21 +145,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 565,
+      "count": 638,
       "unit": "beans"
-    },
-    {
-      "id": "bootstrap-render",
-      "directory": "bootstrap-render",
-      "title": "Skills — bootstrap rendering",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/bootstrap-render/",
-      "hidden": false
     },
     {
       "id": "bootstrap-tools-schemas",
@@ -172,7 +160,7 @@
       ],
       "href": "/cat-harness/schemas/bootstrap-tools/",
       "hidden": false,
-      "count": 2,
+      "count": 3,
       "unit": "modules"
     },
     {
@@ -256,7 +244,7 @@
       ],
       "href": "/cat-harness/schemas/folio-assistant-core/",
       "hidden": false,
-      "count": 11,
+      "count": 17,
       "unit": "modules"
     },
     {
@@ -396,7 +384,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 122,
+      "count": 136,
       "unit": "modules"
     },
     {
@@ -540,12 +528,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -554,6 +542,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
@@ -565,7 +557,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -699,12 +691,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -718,6 +710,10 @@
           "path": "/cat-harness/schemas/detangle/"
         },
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet"
         },
@@ -727,7 +723,7 @@
         }
       ],
       "findings": [
-        "detangle: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "detangle: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "detangle: no avatar declared for this instance — showing the generic mark.",
         "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
         "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -919,12 +915,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -937,6 +933,10 @@
           "kind": "catalogue",
           "path": "/cat-harness/catalogue/who-iris/",
           "readOnly": true
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "docs",
@@ -961,7 +961,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 3 graph(s) with no published viewer — code, skills, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
@@ -1221,7 +1221,7 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
-      "instantiated": false,
+      "instantiated": true,
       "href": "/cat-harness/library/smart-base/",
       "hrefKind": "viewer",
       "stats": [
@@ -1472,12 +1472,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -1489,6 +1489,10 @@
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "folio",
@@ -1508,7 +1512,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 2 graph(s) with no published viewer — folio, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 3 graph(s) with no published viewer — code, folio, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1580,7 +1584,7 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 26
         },
         {
           "id": "views",
@@ -1615,7 +1619,8 @@
         },
         {
           "kind": "fsh-guts",
-          "path": "/fsh-guts/"
+          "path": "/fsh-guts/",
+          "stagingOnly": true
         },
         {
           "kind": "glossary",
@@ -1667,7 +1672,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/bootstrap-render/"
+          "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
         },
         {
           "kind": "todos",
@@ -1682,6 +1687,10 @@
           "path": "/translation-status/"
         },
         {
+          "kind": "uml",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "uploads",
           "path": "/uploads/"
         },
@@ -1691,7 +1700,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — code, interaction, memory, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1752,7 +1761,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 8
+          "value": 7
         },
         {
           "id": "kinds",
@@ -1796,7 +1805,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` — the exact path its `@id` names. Governed by `tools/bootstrap-graph-emission.md` and `tools/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`.",
+        "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own graph, emitted as `.jsonld` with a `.json` alias and published at `<base>/bootstrap/bootstrap.jsonld` — the exact path its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`, generated by `cat-harness/scripts/gen-bootstrap-graph.ts`, published by `.github/workflows/docs-site.yml`, and asserted in `cat-harness/scripts/tests/bootstrap-graph.test.ts`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
@@ -1824,6 +1833,7 @@
       "processes": "/processes/",
       "kg": "/cat-harness/"
     },
+    "notes": {},
     "folders": [
       {
         "kind": "beans",
@@ -1834,7 +1844,8 @@
         "path": "/cat-harness/schemas/cat-harness/"
       },
       {
-        "kind": "code"
+        "kind": "code",
+        "note": "no viewer yet"
       },
       {
         "kind": "docs",
@@ -1850,7 +1861,8 @@
       },
       {
         "kind": "fsh-guts",
-        "path": "/fsh-guts/"
+        "path": "/fsh-guts/",
+        "stagingOnly": true
       },
       {
         "kind": "glossary",
@@ -1861,7 +1873,8 @@
         "path": "/health/"
       },
       {
-        "kind": "interaction"
+        "kind": "interaction",
+        "note": "no viewer yet"
       },
       {
         "kind": "issue-marks",
@@ -1872,7 +1885,8 @@
         "path": "/cat-harness/library/cat-harness/"
       },
       {
-        "kind": "memory"
+        "kind": "memory",
+        "note": "no viewer yet"
       },
       {
         "kind": "methodology",
@@ -1887,7 +1901,8 @@
         "path": "/qa/"
       },
       {
-        "kind": "scenarios"
+        "kind": "scenarios",
+        "note": "no viewer yet"
       },
       {
         "kind": "schemas",
@@ -1899,7 +1914,7 @@
       },
       {
         "kind": "skills",
-        "path": "/cat-harness/docs-auto/index/skills/bootstrap-render/"
+        "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
       },
       {
         "kind": "todos",
@@ -1914,11 +1929,16 @@
         "path": "/translation-status/"
       },
       {
+        "kind": "uml",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "uploads",
         "path": "/uploads/"
       },
       {
-        "kind": "waiver"
+        "kind": "waiver",
+        "note": "no viewer yet"
       }
     ]
   }

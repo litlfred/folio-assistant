@@ -95,20 +95,21 @@ only along a row of `REVIEW_TRANSITIONS`. Anything else throws.
 
 | move | from | to | by (BPMN task) | needs a Decision |
 |---|---|---|---|---|
-| ingest | — | open | `Process_LargeDocumentReview#Task_IngestComments` *(awaits `en2d`)* | |
+| ingest | — | open | `Process_ContentChangeReview#Task_IngestComments` | |
 | address | open | addressed | `Process_Review#Task_EditorDecides` | |
 | send back | addressed | open | `Process_Review#Task_EditorDecides` | |
 | resolve | addressed | resolved | `Process_Review#Task_EditorDecides` | yes |
 | adjudicate | open, addressed | adjudicated | `Process_Adjudication#A_RecordEntry` | yes |
-| withdraw | open, addressed | withdrawn | `Process_LargeDocumentReview#Task_WithdrawComment` *(awaits `en2d`)* | |
+| withdraw | open, addressed | withdrawn | `Process_ContentChangeReview#Task_WithdrawComment` | |
 
 **Why so strict.** A comment's status is what the coverage gate will count.
 A comment closed by hand, outside the process, would count as reviewed when
 nobody in a review lane decided anything.
 
-Two rows name a diagram bean `en2d` has not authored yet, and say so in
-`awaits` rather than pointing at a task that is not there. A test holds
-every other row to a task that exists in its `.bpmn`.
+A test holds every row to a task that exists in its `.bpmn`. Ingestion is
+the review coordinator's first step in `content-change-review.bpmn`.
+Withdrawal is the reviewer's step after the slices come back. Bean `en2d`
+added both there, rather than in a separate large-document diagram.
 
 ## Ingestion: the Tool
 
@@ -168,6 +169,9 @@ bun run folio-assistant-core/scripts/review-comment-move.ts \
 - **The move goes through `transition()`**, so `--process` and `--task` must
   be a task allowed to make it, and `resolved` / `adjudicated` need
   `--decision`. The command is not a back door around the table above.
+- **A new folio already has the directory.** `init-folio` writes
+  `todos/todos.json` declaring `items` and `feedback` (`todo-feedback`), and
+  creates both. An older folio that lacks it gets an error naming the remedy.
 - **The file goes where the graph says.** That is the todos graph's
   directory of kind `todo-feedback` ("todos raised against a specific block,
   carrying the submitter's identity"), read from `todos/todos.json`. A graph
@@ -193,6 +197,49 @@ between the two.
 
 **What it costs.** One extra commit on the edit-set's branch per decision,
 and a PR from a fork cannot be written to by anyone but its author.
+
+## Verdicts: "I read this version" (bean `px0t`)
+
+A comment asks for something. A **verdict** records that a reviewer read a
+block, and what they judged. The coverage gate needs verdicts, because
+comments cannot say whether a block with none was read.
+
+The owner chose the channel (2026-09-23, option 1 of 3): **the same tagged
+PR comment**, with a `verdict:` or `waive:` line instead of `kind:`.
+
+```
+block: prose:dose prose:schedule
+verdict: ok
+role: clinical-sme
+```
+
+| line | means |
+|---|---|
+| `verdict: ok` | read, no objection |
+| `verdict: changes` | read, and it needs changing. The reasons go in review COMMENTS; the verdict only records the reading |
+| `waive: <reason>` | the block needs no review (a pure rename, say). The reason is required and kept |
+
+- `block:` may name **several labels**, so one comment can close a slice.
+  One verdict is recorded per label.
+- **A comment is a verdict or a review comment, never both.** A tag with
+  `kind:` as well is refused and shown as malformed, so nothing is counted
+  twice under two meanings. The comment parser passes every verdict tag over.
+- **A verdict is pinned to the block's hash.** It counts only while the block
+  is at that version. An edit after review reopens exactly the blocks it
+  touched. The old verdict is kept and shown as "on an earlier version".
+- A verdict on a label the head does not carry is malformed, not recorded.
+
+The `folio-review-comments` Tool ingests verdicts into the same
+`review-comments.json`, as its `verdicts` array
+(`folio-review-verdict/v1`, `folio-assistant-core/schemas/review-verdict.ts`).
+
+**Coverage.** The `folio-review-coverage` Tool computes the two facts
+`GW_Covered` reads (`uncoveredBlocks`, `openDefects`) and prints them as JSON
+on stdout, ready for `workflow_complete`. With `--todos <root> --commit` it
+writes the verdicts into the todos graph's declared `review-verdicts`
+directory and commits them to the **feature branch**, as comment statuses
+are, and it refuses the base branch and a detached HEAD. `init-folio`
+declares that directory (`todos/verdicts/`) for every new folio.
 
 ## Publication: where the file comes from, and when
 
@@ -260,12 +307,16 @@ of change goes:
   decision is recorded with `folio-review-comment-move` in the editor's
   session. A page button would need a write path from a static page, which
   is the problem this whole design avoids.
-- **A new folio's todos graph.** `init-folio` does not yet write a
-  `todos/todos.json` with a `todo-feedback` directory, so a new folio has to
-  declare one before its first decision is recorded. The error says so.
 - **A reviewer who edits a comment after ingest.** The edit is not re-read, so
   a record an editor has already acted on is not silently rewritten. Whether
   an edit should reopen the comment is open.
 - **Line review comments** are not read, by the owner's ruling. A reviewer
   who uses one gets no todo.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Ingest tagged review comments; Review each slice (calls a sub-process); Withdraw a review comment |
+

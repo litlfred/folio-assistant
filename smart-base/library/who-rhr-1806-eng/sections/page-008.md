@@ -7,7 +7,7 @@ pages: 8-8
 pdf_page: 8
 source_pdf: WHO-RHR-18.06-eng.pdf
 source_sha256: 44be3640bb1730da
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 page 8

@@ -46,6 +46,8 @@ import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -83,7 +85,7 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
-import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
@@ -522,6 +524,28 @@ async function auditProcess(
     }
   }
 
+  // DECISIONS — diverging exclusive gateways. Merges, forks and joins decide
+  // nothing, so `isDecision` leaves them out; see the criteria's notes in
+  // `schemas/kg-qa.ts` for the measurement behind both.
+  const decisions = [...m.nodes.values()].filter(isDecision);
+  const undocumentedDecision: KgFinding[] = decisions
+    .filter((n) => !n.documentation)
+    .map((n) => ({
+      where: n.id,
+      detail:
+        `"${n.name}" carries no <bpmn:documentation>, so its page shows the question and not what answers it ` +
+        `— who decides, from what evidence, and what each branch commits the process to.`,
+    }));
+  const indistinct: KgFinding[] = decisions.flatMap((n) =>
+    indistinctBranches(m, n).map((b) => ({
+      where: b.flowId,
+      detail:
+        b.problem === "unnamed"
+          ? `a branch out of "${n.name}" (${n.id}) has no name, so a reader cannot tell which answer takes it.`
+          : `a branch out of "${n.name}" (${n.id}) is labelled "${b.label}", as is a sibling — the two cannot be told apart.`,
+    })),
+  );
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -630,6 +654,10 @@ async function auditProcess(
     "process-diagram-published": published,
     "activity-documented": entry(undocumented, activities.length > 0),
     "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
+    // `n/a` for a diagram with no decision — a linear process has nothing to
+    // document here, which is not the same as having documented it.
+    "gateway-documented": entry(undocumentedDecision, decisions.length > 0),
+    "gateway-branches-named": entry(indistinct, decisions.length > 0),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -1824,6 +1852,27 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+  }
+}
+
+// ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
+//
+// Evaluated here rather than inside auditProcess/auditSkills because it is the
+// one criterion that READS the previous sidecar: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. Done before the write loop so
+// `--check` regenerates the same text the writer would.
+{
+  const repoRoot = resolve(root, "..");
+  const scripts = rootScripts(repoRoot);
+  for (const r of reports) {
+    if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
+    const pairs = discoverPairs(r.subject, root, repoRoot);
+    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    r.criteria[PAIR_CRITERION] = e;
+    // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
+    r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
+    r.totals = tally(r.criteria);
+    if (attestations.length) r.pair_attestations = attestations;
   }
 }
 

@@ -78,12 +78,33 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Confirmed",
+          "detail": "\"Confirmed by the reader?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 0,
-    "n/a": 8,
+    "pass": 11,
+    "fail": 1,
+    "n/a": 10,
     "unknown": 0
   }
 }

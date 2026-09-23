@@ -5,7 +5,7 @@
     "id": "Process_IgIncremental",
     "path": "processes/ig-incremental-build.bpmn"
   },
-  "source_hash": "sha256:6958f0eb580bdfab17a5b875c9128a9a4e1bbeeff2ee113d3f7502a931c69e47",
+  "source_hash": "sha256:ece5149cc2bf230f03e5a65395b596d4af90e5ba09bca979e93dfa624ca2a306",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,28 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 13,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

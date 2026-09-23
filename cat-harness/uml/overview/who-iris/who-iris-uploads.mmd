@@ -1,0 +1,41 @@
+classDiagram
+  direction TB
+  namespace who_iris__who_iris_uploads {
+    class who_iris_who_iris_uploads_folio_extraction_v1_Asset["Asset"] {
+      <<json: ExtractionSchema>>
+      path [1] string
+      bytes [1] integer
+      mediaType [0..1] string
+      modifiedAt [0..1] string
+      sha256 [0..1] string
+      localPath [0..1] string
+      extractedBecause [0..1] string
+    }
+    class who_iris_who_iris_uploads_folio_extraction_v1_Omitted["Omitted"] {
+      <<json: ExtractionSchema>>
+      pattern [1] string
+      reason [1] string
+      count [1] integer
+    }
+    class who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1["folio-extraction/v1"] {
+      <<json: ExtractionSchema>>
+      $schema [1] 'folio-extraction/v1'
+      container [1] string
+      method [1] zip | pdf | saved-webpage | tarball
+      capturedAt [0..1] string
+      producer [0..1] string
+      readAt [1] string
+      assets [0..*] Asset[]
+      omitted [0..*] Omitted[]
+    }
+    class who_iris_who_iris_uploads_folio_intake_v1["folio-intake/v1"] {
+      <<untyped: written by scripts/library-graph.ts>>
+      no schema declared, shape is whatever scripts/library-graph.ts writes
+    }
+  }
+  who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
+  who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
+  cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_intake_v1" fa_uml_kind_uploads

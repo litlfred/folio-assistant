@@ -1162,8 +1162,22 @@
   // A three-by-three of rounded squares: the launcher. It says "there are
   // several things here" without naming one of them, which the gear and the
   // globe both did while standing for the whole row.
+  // `fill="currentColor"` ON THE GROUP, and its absence was a live defect.
+  //
+  // Owner, 2026-09-23, with a screenshot of the dark-mode navbar: *"exploding
+  // icon hard to see in dark mode"*. It was not hard to see — it was BLACK.
+  // An SVG shape with no `fill` paints with the initial value, which is black,
+  // and `color` never reaches it. On this panel (rgb(39,38,43)) that is about
+  // **1.4:1** — measured by walking the rendered shapes, which is the only way
+  // it shows: the element's own `color` computes to a perfectly good
+  // rgb(230,225,232) and a contrast check that reads THAT reports 7.99:1 on an
+  // invisible icon.
+  //
+  // The siblings escaped because they are strokes: every other glyph in this
+  // row wraps its shapes in `fill="none" stroke="currentColor"`. These two are
+  // the only FILLED ones, which is why they were the only two wrong.
   var TILES_GLYPH =
-    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">' +
     '<rect x="3" y="3" width="6" height="6" rx="1.4"/>' +
     '<rect x="15" y="3" width="6" height="6" rx="1.4"/>' +
     '<rect x="3" y="15" width="6" height="6" rx="1.4"/>' +
@@ -1178,9 +1192,13 @@
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
     '<path d="M12 4.5 5 9.5M12 4.5l7 5M5 9.5l3.5 8M19 9.5l-3.5 8M8.5 17.5h7M5 9.5h14" ' +
     'fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    // FILLED NODES, so they need the colour said explicitly — the edges above
+    // are strokes and already carry it. See TILES_GLYPH for what their absence
+    // looked like: five black dots on a dark panel.
+    '<g fill="currentColor">' +
     '<circle cx="12" cy="4.5" r="2.1"/><circle cx="5" cy="9.5" r="2.1"/>' +
     '<circle cx="19" cy="9.5" r="2.1"/><circle cx="8.5" cy="17.5" r="2.1"/>' +
-    '<circle cx="15.5" cy="17.5" r="2.1"/>' +
+    '<circle cx="15.5" cy="17.5" r="2.1"/></g>' +
     "</svg>";
 
   // Angle brackets and a slash: the source.
@@ -2763,20 +2781,47 @@
     });
 
     /* THE ACCELERATOR, over the top of the path above rather than instead of
-     * it. Everything it can do, the keyboard can already do. */
+     * it. Everything it can do, the keyboard can already do.
+     *
+     * POINTER EVENTS, not mouse events — bean `c132`, owner 2026-09-23: *"tablet
+     * should be like laptops"*. `mousedown` never fires for a finger drag, so on
+     * a touch tablet the surface could not be arranged at all. One listener
+     * set now serves mouse, pen and touch.
+     *
+     * A FINGER MUST STILL SCROLL. A touch that starts on a card's text is the
+     * reader scrolling that text, and taking it for a drag would make long
+     * notes unreadable on a tablet. So a non-mouse pointer drags only from a
+     * declared GRIP (`[data-fa-grip]` — the glass card's face, a sticky's
+     * head) or while the card is in move mode. The CSS gives exactly those
+     * `touch-action: none`, which is what stops the browser claiming the
+     * gesture as a scroll first. */
     var from = null;
-    handle.addEventListener("mousedown", function (e) {
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
       // Not on a control: a drag that started on `[x]` would fight the click
-      // that closes the panel.
-      // Nor on a LINK: a drag that started on an asset's name would swallow
-      // the press a reader meant as "open it".
+      // that closes the panel. Nor on a LINK: a drag that started on an
+      // asset's name would swallow the press a reader meant as "open it".
       if (e.target.closest("[data-fa-control]") || e.target.closest("button") ||
           e.target.closest("a")) return;
-      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
-      e.preventDefault();
+      if (e.pointerType !== "mouse" && panel.getAttribute("data-fa-moving") !== "true" &&
+          !e.target.closest("[data-fa-grip]")) return;
+      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel), id: e.pointerId };
+      // NOT for a mouse. `preventDefault` on `pointerdown` suppresses the
+      // compatibility `mousedown` that follows it, and the board windows RAISE
+      // on `mousedown` — the switch to pointer events broke "selecting any part
+      // raises it" until `board-windows.e2e.ts` said so. A mouse drag's text
+      // selection is stopped on that `mousedown` instead, below, as it was
+      // before. A touch drag is stopped here, where it has no mousedown.
+      if (e.pointerType !== "mouse") {
+        try { handle.setPointerCapture(e.pointerId); } catch (_e) { /* not capturable; document listeners still see it */ }
+        e.preventDefault();
+      }
     });
-    document.addEventListener("mousemove", function (e) {
-      if (!from) return;
+    handle.addEventListener("mousedown", function (e) {
+      if (from) e.preventDefault();
+    });
+    document.addEventListener("pointermove", function (e) {
+      if (!from || e.pointerId !== from.id) return;
       applyGeometry(panel, {
         left: Math.max(0, from.g.left + (e.clientX - from.x)),
         top: Math.max(0, from.g.top + (e.clientY - from.y)),
@@ -2784,10 +2829,13 @@
         height: from.g.height,
       });
     });
-    document.addEventListener("mouseup", function () {
-      if (from) settle();
+    function end(e) {
+      if (!from || (e && e.pointerId !== from.id)) return;
+      settle();
       from = null;
-    });
+    }
+    document.addEventListener("pointerup", end);
+    document.addEventListener("pointercancel", end);
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -4230,11 +4278,17 @@
       var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
       var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
       var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
+      // A BOOK IS PORTRAIT. The cover fills the card (owner, 2026-09-23:
+      // *"artefact avatar should cover sheet"*), and a landscape card would
+      // show a cover's middle band. 4:3 upright, which every rendered cover
+      // here is near. Rows are laid out at the tallest card's height.
+      var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
+        ? Math.round(w * 4 / 3) : GLASS_CARD_H;
       return {
         left: (i % cols) * (w + GLASS_GAP),
-        top: Math.floor(i / cols) * (GLASS_CARD_H + GLASS_GAP),
+        top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
         width: w,
-        height: GLASS_CARD_H,
+        height: h,
       };
     }
 
@@ -4264,7 +4318,7 @@
         tabindex: "-1",
       });
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-      var face = el("div", { class: "fa-glass-asset-face" });
+      var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
       if (ava) face.appendChild(ava);
       // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
@@ -4398,11 +4452,43 @@
       // Saved in THIS BROWSER, said in words wherever the reader's own items
       // appear: a reader who thinks their folio follows them to another
       // machine has been misled by the control.
-      if (keys.length > 0 || shelved.length > 0) {
-        notes.appendChild(el("p", { class: "fa-glass-local-note" },
-          "Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else."));
+      //
+      // DISMISSABLE — owner, 2026-09-23: *"need to be able to dismiss"*, and
+      // *"should also say (no 'save' tool is currently enabled)"*. Said once
+      // is enough; said on every open is noise the reader learns to skip. The
+      // dismissal is itself a per-browser preference, and Settings offers the
+      // way back ("Show the browser-only note again") — a close with no
+      // reachable inverse is not a toggle.
+      if ((keys.length > 0 || shelved.length > 0) && !localNoteDismissed()) {
+        var localNote = el("p", { class: "fa-glass-local-note" },
+          "Your folio is saved in this browser only \u2014 not sent anywhere, and not visible to anyone else. " +
+          "(No \u201Csave\u201D tool is currently enabled.)");
+        var dismissNote = el("button", {
+          type: "button",
+          class: "fa-glass-note-dismiss",
+          "aria-label": "Dismiss this note \u2014 you can show it again from Settings",
+          title: "Dismiss (Settings can show it again)",
+        }, "\u00d7");
+        dismissNote.addEventListener("click", function () {
+          setLocalNoteDismissed(true);
+          if (localNote.parentNode) localNote.parentNode.removeChild(localNote);
+          handle.focus();
+        });
+        localNote.appendChild(dismissNote);
+        notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    var NOTE_KEY = "fa-glass-local-note-dismissed";
+    function localNoteDismissed() {
+      try { return localStorage.getItem(NOTE_KEY) === "1"; } catch (_e) { return false; }
+    }
+    function setLocalNoteDismissed(on) {
+      try {
+        if (on) localStorage.setItem(NOTE_KEY, "1");
+        else localStorage.removeItem(NOTE_KEY);
+      } catch (_e) { /* a note that comes back next page is the safe failure */ }
     }
 
     /* ── THE PANEL a tile opens, above the strip ──────────────────────────
@@ -4596,7 +4682,18 @@
         buildSettings(body);
       });
       body.appendChild(reset);
-      body.appendChild(el("p", { class: "fa-glass-local-note" },
+      // THE WAY BACK for the dismissed browser-only note.
+      if (localNoteDismissed()) {
+        var showNote = el("button", { type: "button", class: "fa-glass-reset fa-glass-note-restore" },
+          "Show the browser-only note again");
+        showNote.addEventListener("click", function () {
+          setLocalNoteDismissed(false);
+          renderShelf();
+          showNote.parentNode.removeChild(showNote);
+        });
+        body.appendChild(showNote);
+      }
+      body.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
         "Saved in this browser only."));
     }
 
@@ -4636,19 +4733,190 @@
       return b;
     }
     chromeTile("glass-todos", "Todos", "☑", "Todos — pull one onto your glass", buildTodos);
+    /* ── THE FILTER — bean `7m6g`, issue #1075 ─────────────────────────────
+     *
+     * Owner, 2026-09-21: *"visualizer filter by document, library, graph, and
+     * one each thing in folio (working space)"*. Owner, 2026-09-23, choosing
+     * its shape: **"Kind + From + items"** — a Kind select, a From select, and
+     * a checkbox per item, which keeps WHAT a thing is apart from WHERE it
+     * came from. #764's finding was three axes conflated into one; this does
+     * not repeat it one level down.
+     *
+     * THE READER'S, AND IT COMMITS NOTHING. Same rule as `reader-filter.ts`
+     * on the board: session state, no store, no event anybody persists. Same
+     * logic too — AND across axes, and a hidden item is simply not shown.
+     *
+     * OPTIONS COME FROM THE GLASS, never from a list: a Kind or a From that
+     * nothing on the glass carries is not offered, so no choice can match
+     * nothing (the board filter's `propertyValues` rule). */
+    var glassFilter = { kind: "", from: "", hidden: {} };
+
+    /** Every item on the glass, described by its two axes. */
+    function glassItems() {
+      var out = [];
+      Array.prototype.forEach.call(layer.querySelectorAll(".fa-glass-asset"), function (c) {
+        var key = c.getAttribute("data-fa-asset") || "";
+        var todo = c.getAttribute("data-fa-asset-kind") === "todos";
+        out.push({
+          el: c,
+          key: key,
+          title: c.getAttribute("aria-label") || key,
+          kind: todo ? "todo" : "book",
+          from: todo ? "Todo board" : key.split("/")[0] + " library",
+        });
+      });
+      Array.prototype.forEach.call(layer.querySelectorAll(".fa-sticky-floating"), function (c) {
+        var key = c.getAttribute("data-fa-pin") || "";
+        var panel = key.split("/")[0];
+        var pin = pinnedStickies()[key];
+        var todo = panel === "todos";
+        var title = (pin && pin.title) || c.getAttribute("aria-label") ||
+          ((c.querySelector(".fa-sticky-summary, h3") || {}).textContent || key);
+        out.push({
+          el: c,
+          key: key,
+          title: String(title).trim(),
+          kind: todo ? "todo" : "sticky",
+          from: todo ? "Todo board" : ((pin && pin.label) || "Home page"),
+        });
+      });
+      return out;
+    }
+
+    var KIND_LABELS = { book: "Books", todo: "Todos", sticky: "Stickies" };
+
+    /** Show or hide each item; say so when a filter hides everything. */
+    function applyGlassFilter() {
+      var items = glassItems();
+      var shown = 0;
+      items.forEach(function (it) {
+        var keep = (!glassFilter.kind || it.kind === glassFilter.kind) &&
+          (!glassFilter.from || it.from === glassFilter.from) &&
+          !glassFilter.hidden[it.key];
+        if (keep) { it.el.removeAttribute("data-fa-filtered-out"); shown++; }
+        else it.el.setAttribute("data-fa-filtered-out", "");
+      });
+      layer.setAttribute("data-fa-glass-shown", String(shown));
+      var note = sheet.querySelector(".fa-glass-filtered-note");
+      var active = glassFilter.kind || glassFilter.from || Object.keys(glassFilter.hidden).length;
+      // A DETERMINED empty, and it says which: "nothing matches" and "nothing
+      // is on your glass" are opposite facts about the same blank glass.
+      if (active && items.length > 0 && shown === 0) {
+        if (!note) {
+          note = el("p", { class: "fa-glass-filtered-note", role: "status" },
+            "Nothing on your glass matches this filter. Clearing it brings everything back.");
+          sheet.insertBefore(note, shelf);
+        }
+      } else if (note) {
+        note.parentNode.removeChild(note);
+      }
+      var status = panel.querySelector(".fa-glass-filter-status");
+      if (status) status.textContent = "Showing " + shown + " of " + items.length + ".";
+      return shown;
+    }
+
+    function buildFilter(body) {
+      var items = glassItems();
+      if (items.length === 0) {
+        body.appendChild(el("p", { class: "fa-glass-panel-status" },
+          "Nothing is on your glass yet, so there is nothing to filter."));
+        return;
+      }
+      function selectFor(label, axis, values, labelOf) {
+        var fs = el("fieldset", { class: "fa-glass-setting" });
+        fs.appendChild(el("legend", {}, label));
+        var sel = el("select", { class: "fa-glass-filter-select", id: "fa-glass-filter-" + axis,
+                                 "aria-label": label });
+        sel.appendChild(el("option", { value: "" }, "Any"));
+        values.forEach(function (v) {
+          var o = el("option", { value: v }, labelOf ? labelOf(v) : v);
+          if (glassFilter[axis] === v) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener("change", function () { glassFilter[axis] = sel.value; applyGlassFilter(); });
+        fs.appendChild(sel);
+        return fs;
+      }
+      function uniq(key) {
+        var seen = {};
+        return items.map(function (i) { return i[key]; })
+          .filter(function (v) { if (seen[v]) return false; seen[v] = true; return true; })
+          .sort();
+      }
+      body.appendChild(selectFor("Kind", "kind", uniq("kind"), function (v) { return KIND_LABELS[v] || v; }));
+      body.appendChild(selectFor("From", "from", uniq("from")));
+
+      var fs = el("fieldset", { class: "fa-glass-setting" });
+      fs.appendChild(el("legend", {}, "Items"));
+      items.forEach(function (it) {
+        var id = "fa-glass-item-" + it.key.replace(/[^A-Za-z0-9_-]/g, "_");
+        var lab = el("label", { class: "fa-glass-choice", for: id });
+        var box = el("input", { type: "checkbox", id: id, "data-fa-filter-item": it.key });
+        box.checked = !glassFilter.hidden[it.key];
+        box.addEventListener("change", function () {
+          if (box.checked) delete glassFilter.hidden[it.key];
+          else glassFilter.hidden[it.key] = true;
+          applyGlassFilter();
+        });
+        lab.appendChild(box);
+        lab.appendChild(el("span", { class: "fa-glass-choice-label" }, it.title));
+        lab.appendChild(el("span", { class: "fa-glass-choice-hint" },
+          (KIND_LABELS[it.kind] || it.kind).replace(/s$/, "") + " \u00b7 " + it.from));
+        fs.appendChild(lab);
+      });
+      body.appendChild(fs);
+
+      body.appendChild(el("p", { class: "fa-glass-filter-status", role: "status" }, ""));
+      var clear = el("button", { type: "button", class: "fa-glass-reset fa-glass-filter-clear" },
+        "Clear the filter \u2014 show everything");
+      clear.addEventListener("click", function () {
+        glassFilter = { kind: "", from: "", hidden: {} };
+        applyGlassFilter();
+        while (body.firstChild) body.removeChild(body.firstChild);
+        buildFilter(body);
+      });
+      body.appendChild(clear);
+      body.appendChild(el("p", { class: "fa-glass-local-note" },
+        "This filter changes only your view, for now — nothing is saved or removed."));
+      applyGlassFilter();
+    }
+    chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
+
     chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings);
 
-    glassTileList(function (tiles) {
-      if (!tiles) return;
-      var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
-      renderGraphTiles(declared, "glass", strip, readerShownTiles());
-    });
+    /* ── MORE, not twenty tiles — owner, 2026-09-23: *"too many tiles!"* ──
+     *
+     * The strip held every declared visualisation — twenty-one on this site —
+     * which ran off the edge of a laptop screen. Offered three shapes, the
+     * owner chose **"Few + a More tile"**: the glass's own tiles (Todos,
+     * Filter, Settings) stay on the strip, and ONE More tile opens a panel
+     * listing every declared visualisation.
+     *
+     * The list is the SAME declaration filtered to the `glass` surface and
+     * drawn by the same `renderGraphTiles`: moving the tiles into a panel
+     * changes where they are, not what they are. */
+    function buildMore(body) {
+      var status = el("p", { class: "fa-glass-panel-status" }, "Loading\u2026");
+      body.appendChild(status);
+      var grid = el("div", { class: "fa-glass-more", role: "group", "aria-label": "Visualisations" });
+      body.appendChild(grid);
+      glassTileList(function (tiles) {
+        if (!tiles) {
+          status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
+          return;
+        }
+        var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
+        var n = renderGraphTiles(declared, "glass", grid, readerShownTiles());
+        status.textContent = n === 0 ? "No visualisations are declared for the glass."
+          : n + (n === 1 ? " visualisation" : " visualisations") + ".";
+      });
+    }
+    chromeTile("glass-more", "More", "\u22EF", "More \u2014 every visualisation this folio declares", buildMore);
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
       handle.setAttribute("aria-expanded", open ? "true" : "false");
-      handle.setAttribute("aria-label", open ? "Put your folio away" : "Pull down your folio");
-      handle.title = handle.getAttribute("aria-label");
+      labelHandle();
       // The EMPTY LINE is about the glass's contents, not about the sheet:
       // the sheet is chrome and is always present. `slots` are the cards the
       // board floats here, so the count is taken from them rather than from
@@ -4657,6 +4925,7 @@
       // An asset the reader pulled out counts too — a glass holding one asset
       // and no sticky must not read "Nothing on your folio glass".
       empty.hidden = floating + renderShelf() > 0;
+      applyGlassFilter();
       if (!open) closePanel();
     }
 
@@ -4688,6 +4957,51 @@
       setOpen(false);
       handle.focus();
     });
+
+    /* HOW MANY ARE WAITING, on the handle — bean `c132`. On a phone a closed
+     * glass shows nothing over the page (there is no room for a floating card
+     * there), so the handle is where a reader learns their folio holds
+     * something. A data attribute the stylesheet prints, so the handle's text
+     * and accessible name are unchanged on every other screen. Counted from
+     * the DOM because a board sticky floats without touching the folio store. */
+    var waiting = 0;
+    function countWaiting() {
+      var n = layer.querySelectorAll(".fa-sticky-floating").length +
+        Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      waiting = n;
+      if (n > 0) handle.setAttribute("data-fa-count", String(n));
+      else handle.removeAttribute("data-fa-count");
+      labelHandle();
+    }
+
+    /* THE COUNT IS SPOKEN TOO — owner, 2026-09-23: *"do the spoken count on
+     * phone next"*. The `· N` above is drawn by `::after`, and a screen
+     * reader reads the handle's `aria-label`, which REPLACES its content, so
+     * the number was visible and silent. It now rides the accessible name
+     * while the glass is closed, which is when the question "is anything
+     * waiting?" is asked.
+     *
+     * ON EVERY SCREEN, not only a phone. A media query can hide a drawn
+     * `::after`, but a spoken name has no breakpoint — and one name on every
+     * device is the thing a reader who switches devices can rely on. Open, the
+     * count is redundant: the cards are what the reader is now looking at. */
+    function labelHandle() {
+      var open = layer.getAttribute("data-fa-glass") === "open";
+      var label = open ? "Put your folio away" : "Pull down your folio";
+      if (!open && waiting > 0) {
+        label += " \u2014 " + waiting + (waiting === 1 ? " item" : " items") + " on it";
+      }
+      handle.setAttribute("aria-label", label);
+      handle.title = label;
+    }
+    countWaiting();
+    document.addEventListener("fa:folio-changed", countWaiting);
+    if (typeof MutationObserver === "function") {
+      new MutationObserver(function () {
+        countWaiting();
+        applyGlassFilter();
+      }).observe(layer, { childList: true });
+    }
 
     layer.__faSetGlassOpen = setOpen;
     return layer;
@@ -4852,7 +5166,7 @@
       tabindex: "-1",
     });
     var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-    card.appendChild(el("h3", { class: "fa-sticky-away-title" }, e.title));
+    card.appendChild(el("h3", { class: "fa-sticky-away-title", "data-fa-grip": "" }, e.title));
     if (e.text) card.appendChild(el("p", { class: "fa-sticky-away-text" }, e.text));
     var href = safeHref(e.href);
     var where = e.label ? "its home panel on “" + e.label + "”" : "its home panel";
@@ -4921,12 +5235,152 @@
         floatLanding(slot, true);
       });
       cell.appendChild(pin);
+      tileLandingCell(panel, cell, slot, title, art, pin);
     });
     // Restore every landing pin whose slot is on this page.
     Object.keys(pinnedStickies()).forEach(function (k) {
       var e = pinnedStickies()[k];
       if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
     });
+  }
+
+  /* ═══ LANDING STICKIES START AS TILES — bean `z1ug` ═════════════════════
+   *
+   * Owner, 2026-09-21: *"they should be closed/tiled to start"*; 2026-09-20:
+   * *"start everyrting in avatar"*. And 2026-09-23, choosing what a tile does:
+   * **"Opens as a window"** — *"Same as the todo avatars next to it: the full
+   * card opens as a movable window with × to close. 'Pin to glass' stays on
+   * the tile."*
+   *
+   * ONE WINDOW MECHANISM. The window is the todo board's own: the same
+   * `.fa-board-windows` layer class, the same `.fa-board-window` chrome, the
+   * same stack (`openWindowFor` / `zIndexFor`, keyed `landing:<slot>` so a
+   * landing window and a todo window raise over each other correctly) and
+   * the same `wireMove`. Two window implementations on one panel would be two
+   * notions of "on top" waiting to disagree.
+   *
+   * THE CARD STAYS IN ITS SLOT, hidden by the tile class rather than removed,
+   * because it is still the sticky's home (`pv6g`): Pin clones it, and a page
+   * with no script shows it whole — the tile is JS-built, so no-JS keeps the
+   * full cards, which is R4's floor. */
+  var landingWindows = null;
+  var landingWindowEls = {};
+
+  function landingWindowLayer(panel) {
+    if (landingWindows && landingWindows.isConnected) return landingWindows;
+    landingWindows = el("div", { class: "fa-board-windows fa-landing-windows", role: "group",
+                                 "aria-label": "Open stickies" });
+    panel.appendChild(landingWindows);
+    return landingWindows;
+  }
+
+  function renderLandingStack() {
+    Object.keys(landingWindowEls).forEach(function (id) {
+      var z = zIndexFor(id);
+      landingWindowEls[id].style.zIndex = z === undefined ? "" : String(z);
+      landingWindowEls[id].setAttribute("data-fa-z", z === undefined ? "" : String(z));
+    });
+  }
+
+  function tileLandingCell(panel, cell, slot, title, art, pin) {
+    if (cell.querySelector(".fa-landing-tile")) return;
+    cell.classList.add("fa-sticky-cell--tile");
+    var tile = el("button", {
+      type: "button",
+      class: "fa-sticky-avatar fa-landing-tile",
+      // THE STICKY'S OWN THEME, so its surface, ink and edge are the ones the
+      // card uses — a tile with no theme drew pale words on a pale surface.
+      "data-fa-sticky-theme": art.getAttribute("data-fa-sticky-theme") || undefined,
+      "data-fa-opens": "landing:" + slot,
+      "aria-label": "Open " + title,
+      title: title,
+    });
+    // The card's own art, as the tile's picture. `currentSrc` is the crop the
+    // browser actually chose for this viewport; the `src` fallback covers an
+    // image that has not decided yet.
+    var img = art.querySelector("img.fa-sticky-art");
+    var src = img && safeHref(img.currentSrc || img.getAttribute("src") || "");
+    if (src) tile.appendChild(el("img", { class: "fa-landing-tile-art", src: src, alt: "", loading: "lazy" }));
+    tile.appendChild(el("span", { class: "fa-landing-tile-title" }, title));
+    tile.addEventListener("click", function () { openLandingWindow(panel, cell, slot, title, art, pin); });
+    cell.insertBefore(tile, cell.firstChild);
+  }
+
+  function closeLandingWindow(slot) {
+    var id = "landing:" + slot;
+    closeWindowFor(id);
+    var w = landingWindowEls[id];
+    if (w && w.parentNode) w.parentNode.removeChild(w);
+    delete landingWindowEls[id];
+    renderLandingStack();
+    // Focus returns to the tile that opened it — the tile IS the way back (`l4zi`).
+    var t = document.querySelector('.fa-landing-tile[data-fa-opens="' + id.replace(/"/g, '\\"') + '"]');
+    if (t) t.focus();
+  }
+
+  function openLandingWindow(panel, cell, slot, title, art, pin) {
+    var id = "landing:" + slot;
+    openWindowFor(id);
+    if (landingWindowEls[id]) { renderLandingStack(); landingWindowEls[id].focus(); return; }
+    var win = el("div", {
+      class: "fa-board-window fa-landing-window",
+      tabindex: "-1",
+      role: "group",
+      "aria-label": title,
+      "data-fa-window": id,
+      // The sticky's theme, so the window's bar is the card's colours rather
+      // than the page's — the same pairing the tile takes.
+      "data-fa-sticky-theme": art.getAttribute("data-fa-sticky-theme") || undefined,
+    });
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    win.appendChild(live);
+    var bar = el("div", { class: "fa-board-window-bar" });
+    bar.appendChild(el("span", { class: "fa-board-window-title" }, title));
+    var move = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "move",
+      "aria-label": "Move " + title, "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = win.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(win, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var pinIt = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "pin",
+      "aria-label": "Pin " + title + " to your glass",
+    }, "Pin to glass");
+    pinIt.addEventListener("click", function () {
+      closeLandingWindow(slot);
+      pin.click();
+    });
+    var close = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "close",
+      "aria-label": "Close " + title,
+    }, CONTROL_GLYPHS.close);
+    close.addEventListener("click", function () { closeLandingWindow(slot); });
+    bar.appendChild(move);
+    bar.appendChild(pinIt);
+    bar.appendChild(close);
+    win.appendChild(bar);
+    // A COPY of the card, ids stripped — the original stays home in its slot.
+    var copy = art.cloneNode(true);
+    Array.prototype.forEach.call(copy.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    copy.removeAttribute("aria-labelledby");
+    copy.removeAttribute("hidden");
+    win.appendChild(copy);
+    win.addEventListener("mousedown", function () { openWindowFor(id); renderLandingStack(); });
+    win.addEventListener("focusin", function () { openWindowFor(id); renderLandingStack(); });
+    win.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && win.getAttribute("data-fa-moving") !== "true") {
+        ev.preventDefault();
+        closeLandingWindow(slot);
+      }
+    });
+    wireMove(win, bar, live);
+    landingWindowLayer(panel).appendChild(win);
+    landingWindowEls[id] = win;
+    renderLandingStack();
+    win.focus();
   }
 
   function floatLanding(slot, focus) {
@@ -5288,6 +5742,9 @@
       });
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
+      // Its PIN KEY, the same one the store uses, so the glass's filter can
+      // tell a pinned todo from a pinned landing sticky (bean `7m6g`).
+      card.setAttribute("data-fa-pin", "todos/" + todo.id);
       // Focusable so the move mode has somewhere to put focus and the arrow
       // keys have a target. `-1`: it is reached BY the Move control, not by
       // tabbing past every pinned note on the way to the page.
@@ -5329,7 +5786,9 @@
         tools.appendChild(moveBtn);
       }
 
-      wireMove(card, card.querySelector(".fa-sticky-head") || card, live, function (g) {
+      var grip = card.querySelector(".fa-sticky-head");
+      if (grip) grip.setAttribute("data-fa-grip", "");
+      wireMove(card, grip || card, live, function (g) {
         pinGeom("todos", todo.id, g);
       });
       layer.appendChild(card);
@@ -7421,6 +7880,10 @@
     }
     var icons = Array.isArray(row.icons) ? row.icons : [];
     var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
+    // WHY a slot has no href — a separate map, because a slot has exactly one
+    // of the two and merging them would make "absent" mean both "resolved to
+    // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
+    var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
@@ -7502,9 +7965,23 @@
         // `pb04`: a dead link invites a click and then reads as a broken site,
         // while a silent omission answers "where is beans" with nothing. The
         // same choice the graph list in the harness tabs already makes.
+        //
+        // THE REASON IS IN THE ACCESSIBLE NAME, not only in a tooltip. This
+        // row is glyphs with no words at all, so `aria-label` is the ONLY
+        // channel a screen reader has -- and until now it said "Beans" for a
+        // slot that goes nowhere, which is a working control described to
+        // somebody who cannot see that it is grey. `title` carries the same
+        // string for a pointer user; neither is a substitute for the other.
+        //
+        // The wording is `row.notes`', carried from `harness-tiles.ts` where
+        // the four inert states are told apart, exactly as the folder list
+        // below does. The hardcoded "declared, with no published viewer" it
+        // replaced was one wording for four states.
+        var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";
         var dead = el("span", {
-          class: "fa-nav-icon fa-nav-icon--dead", "aria-label": label,
-          title: label + " — declared, with no published viewer"
+          class: "fa-nav-icon fa-nav-icon--dead",
+          "aria-label": label + " — " + why,
+          title: label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -7580,10 +8057,69 @@
       sum.appendChild(count);
       box.appendChild(sum);
       var list = el("ul", { class: "fa-nav-folders__list" });
+      /* AN INERT ROW IS SHOWN, AND IT SAYS WHICH CASE IT IS.
+       *
+       * Owner ruling, recorded on #1036: a declared graph with no viewer is
+       * shown rather than omitted, because a reader cannot otherwise tell "no
+       * viewer yet" from "no such graph". Two obligations come with it:
+       *
+       * - `gjli` — it must not read as a CONTROL. A `<span>`, never an `<a>`
+       *   or a `<button>`, and nothing that takes focus: a greyed thing that
+       *   accepts a tab and then does nothing costs a keyboard user an
+       *   interaction to discover it is dead.
+       * - The state is in TEXT. This row carried it as `opacity: 0.35`, a
+       *   strikethrough and a `title` tooltip — a channel a keyboard or
+       *   screen-reader user never reaches, and a hover a touch user cannot
+       *   produce.
+       *
+       * AND THE WORDING IS CARRIED, NOT COMPOSED. `note` comes from
+       * `harness-tiles.ts`, which computes it where the FOUR inert states are
+       * already told apart — staging-only, exempt by declaration, built but
+       * unreachable, nobody built it. The single string this used to write was
+       * one wording for four states and wrong for two of them, which is the
+       * defect `HarnessVisualisation.note`'s own docstring names. The harness
+       * tabs and the rail have rendered this note as text all along; only this
+       * row did not.
+       */
+      var inert = function (label, note) {
+        var span = el("span", { class: "fa-nav-folders__link fa-nav-folders__link--dead" }, label);
+        // A REAL SPACE, in the DOM. `margin-left` separates the two visually
+        // and does nothing to the text content, so the accessible name came
+        // out as "codeno viewer yet" — measured in a browser. A screen reader
+        // reads the string, not the gap.
+        // ABSENT `note` IS NOT A DETERMINED STATE. It means this page's data
+        // predates the note being carried, and saying "no viewer yet" for it
+        // would be inventing the answer the whole rule is about. Say that
+        // instead of guessing.
+        span.appendChild(document.createTextNode(" "));
+        span.appendChild(el("span", { class: "fa-nav-folders__note" }, note || "reason not recorded"));
+        return span;
+      };
+
       for (var j = 0; j < graphs.length; j++) {
         var g = graphs[j];
         var li = el("li", { class: "fa-nav-folders__item" });
-        if (g && g.path) {
+        if (g && g.path && g.stagingOnly && !isStagingPreview()) {
+          /* WITHHELD FROM THIS DEPLOY — a path that resolves and a page that
+           * is not there.
+           *
+           * `compose-docs.ts` lays a `publish: "staging-only"` page into the
+           * site only under `--staging`, and `path` is resolved against the
+           * SOURCE tree, so on the canonical build it is present, correct and
+           * dead. The graph TILE has skipped such a page since it was written
+           * — *"Conflating them would let 'show hidden' resurrect a link to a
+           * 404"* — and this list linked it. Measured on a canonical-shaped
+           * local build: `fsh-guts`, 1 of 387 sidebar links.
+           *
+           * SHOWN, not skipped, unlike the tile. The owner's ruling on #1036
+           * is that a graph a reader cannot open is rendered inert and
+           * labelled, and this list is the one surface that enumerates every
+           * declared kind — dropping a row here would answer "what is in this
+           * KG" with a shorter and wronger list. `inertNote`'s own
+           * `staging-only` wording says which case it is; until now that
+           * bucket had no live case at all. */
+          li.appendChild(inert(g.kind, "staging only"));
+        } else if (g && g.path) {
           // `safeHref` for the same reason as the icon row above, and applied
           // AFTER `withBase` so what is checked is the href that is actually
           // written -- checking the bare path would clear a value the baseurl
@@ -7592,16 +8128,15 @@
           if (at) {
             li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, g.kind));
           } else {
-            li.appendChild(el("span", {
-              class: "fa-nav-folders__link fa-nav-folders__link--dead",
-              title: "declared, and its path is not one this page may link to"
-            }, g.kind));
+            // A DIFFERENT CASE from "no viewer declared", and it stays
+            // different: the graph HAS a published path and this page refused
+            // it. That is a defect in the declaration, not a gap in the
+            // corpus, and `flh4` is about exactly this distinction surviving
+            // to the last step.
+            li.appendChild(inert(g.kind, "path refused by this page"));
           }
         } else {
-          li.appendChild(el("span", {
-            class: "fa-nav-folders__link fa-nav-folders__link--dead",
-            title: "declared, with no published viewer"
-          }, (g && g.kind) || "?"));
+          li.appendChild(inert((g && g.kind) || "?", g && g.note));
         }
         list.appendChild(li);
       }
@@ -7611,6 +8146,96 @@
 
     bar.insertBefore(middle, nav);
     middle.appendChild(nav);
+  }
+
+  /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## The bar had ONE state bit and needed two
+   *
+   * `#fa-nav-open` is checked (pinned open) or clear (default). It ALSO opens
+   * on hover and on focus, and `[x]` was shown only while pinned — so a bar
+   * opened by a pointer had no control, and a touch reader, who has no
+   * pointer to move away, had no way at all. Nothing persisted either: every
+   * navigation started over.
+   *
+   * The owner chose the three-state answer over the two smaller ones:
+   * pinned-open, default peek, and STAY CLOSED — remembered across pages.
+   *
+   * ## `[x]` cannot just be a label in the hover case
+   *
+   * It is a `<label for="fa-nav-open">` and a label TOGGLES. Pinned, that is
+   * right and works with no script — a property this file protects. Open by
+   * hover the checkbox is already clear, so the same click would CHECK it and
+   * pin the bar open: the opposite of what the control says. So that click is
+   * intercepted here, and the stylesheet only offers `[x]` in the hover case
+   * when `.fa-nav-js` says this ran.
+   *
+   * ## What is stored, and what happens when it cannot be
+   *
+   * One key, one of two values, per browser. `localStorage` throws in a
+   * private window and in previews, so every read and write is guarded and a
+   * failure degrades to the previous behaviour rather than to a broken
+   * navbar — the preference is a convenience, not state anything else needs.
+   */
+  var NAV_PREF_KEY = "fa-nav";
+
+  function readNavPref() {
+    try {
+      return window.localStorage.getItem(NAV_PREF_KEY);
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function writeNavPref(value) {
+    try {
+      if (value === null) window.localStorage.removeItem(NAV_PREF_KEY);
+      else window.localStorage.setItem(NAV_PREF_KEY, value);
+    } catch (_e) {
+      // A reader in a private window still gets the close, for this page.
+    }
+  }
+
+  function applyNavPref(value) {
+    if (value === "closed") document.documentElement.setAttribute("data-fa-nav", "closed");
+    else document.documentElement.removeAttribute("data-fa-nav");
+  }
+
+  function mountNavPreference() {
+    var bar = document.querySelector(".side-bar");
+    if (!bar) return;
+    // The class the stylesheet keys the hover-case `[x]` on. Set FIRST, so a
+    // control that needs this handler never appears without it.
+    bar.classList.add("fa-nav-js");
+    applyNavPref(readNavPref());
+
+    var box = document.getElementById("fa-nav-open");
+    var close = document.querySelector(".fa-nav-close");
+    var open = document.querySelector(".fa-nav-toggle");
+
+    if (close) {
+      close.addEventListener("click", function (e) {
+        // Pinned: let the label do its own work — that is the no-script path
+        // and it is already correct. Not pinned: the label would CHECK the box
+        // and pin the bar open, so the default is refused.
+        if (box && !box.checked) e.preventDefault();
+        writeNavPref("closed");
+        applyNavPref("closed");
+      });
+    }
+
+    if (open) {
+      // `☰` is how the preference is LIFTED. A control whose inverse is not
+      // reachable is not a toggle (`l4zi`), and without this the bar could be
+      // closed and never peek again.
+      open.addEventListener("click", function () {
+        writeNavPref(null);
+        applyNavPref(null);
+      });
+    }
   }
 
   function init() {
@@ -7624,6 +8249,10 @@
       document.documentElement.setAttribute("lang", pageLang);
     }
 
+    // BEFORE the tiles and the rows: it adds the class the stylesheet keys the
+    // close control on, and a control offered before its handler exists is a
+    // control that does the wrong thing if pressed in that window.
+    mountNavPreference();
     mountActionTiles();
     // AFTER the tiles: the row's launcher proxies that panel's button, so the
     // button has to exist before anything can click it.

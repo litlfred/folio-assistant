@@ -37,6 +37,18 @@
       },
       "composed": true,
       "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's."
+    },
+    {
+      "id": "smart-trust-scripts",
+      "path": "scripts/",
+      "dependents": "skip",
+      "description": "`gen-smart-trust-pages.ts` and its tests -- the generator that turns the artefact index into this instance's 681 pages, and as of bean `0818` renders the IG's own menu into the left-hand nav. Undeclared until now while BOTH the index it reads and the docs it writes were declared, so the only undeclared thing in this instance was the transformation between two declared graphs.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
     }
   ],
   "assets": [

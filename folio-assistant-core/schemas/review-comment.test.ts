@@ -22,7 +22,9 @@ import {
 
 const PROCESSES = resolve(import.meta.dir, "../../cat-harness/processes");
 const EDITOR = { process: "Process_Review", task: "Task_EditorDecides" };
-const ADJUDICATOR = { process: "Process_Adjudication", task: "A_RecordEntry" };
+// `Process_CriterionAdjudication` since bean `bvuk` split the outcome half
+// out of the shared judgement — A_RecordEntry went with the outcome.
+const ADJUDICATOR = { process: "Process_CriterionAdjudication", task: "A_RecordEntry" };
 
 const pc = (id: number, body: string): PrComment => ({
   id,
@@ -81,12 +83,8 @@ describe("the lifecycle is closed, and only process tasks move it", () => {
     expect(ReviewCommentSchema.safeParse({ ...c, status: "resolved" }).success).toBe(false);
   });
 
-  it("every transition names a BPMN task that exists — or the bean that will author it", () => {
+  it("every transition names a BPMN task that exists", () => {
     for (const t of REVIEW_TRANSITIONS) {
-      if (t.by.awaits) {
-        expect(t.by.awaits).toBe("en2d");
-        continue;
-      }
       const xml = readFileSync(join(PROCESSES, t.by.file), "utf-8");
       expect(xml).toContain(`<bpmn:process id="${t.by.process}"`);
       expect(xml).toMatch(new RegExp(`<bpmn:\\w+ id="${t.by.task}"`));

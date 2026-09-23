@@ -39,4 +39,12 @@ Every one of the 5 step(s) is documented.
 | **Drop its positions and sweep orphans**<br>`A_UpdateLayer` | Board renderer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | Only after the content has moved: drop its positions from the layout layer and sweep any position whose note is now gone. Sweeping first would make the board authoritative over the folio for one step. |
 | **Say what moved and where it went**<br>`A_ReportMove` | Board renderer | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Tell the reader what moved and where it went, so the content can be found in the trashcan rather than inferred missing from a card that disappeared. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Confirmed by the reader?**<br>`GW_Confirmed` | — | **yes, move it** → Relocate the content to the trashcan<br>**no** → Leave the content exactly where it is |
+
 {% endraw %}

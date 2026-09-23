@@ -17,6 +17,7 @@ import { tmpdir } from "os";
 
 import { initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
+import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
 
 /**
  * The scaffold names its config after the folio's SLUG, not after the temp
@@ -123,6 +124,16 @@ describe("what gets written", () => {
     expect(wf).toContain("issues: read");
     expect(r.notes.join(" ")).not.toContain("wired but OFF");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
+  });
+
+  test("a new folio declares a todos graph with a feedback directory, so a review decision has somewhere to go (423d)", () => {
+    const d = tmp();
+    initFolio(opts(d, { contentType: "document" }));
+    const g = parseTodoGraph(JSON.parse(readFileSync(join(d, "todos", "todos.json"), "utf-8")));
+    const fb = nodeOfKind(g, "todo-feedback");
+    expect(fb?.path).toBe("feedback");
+    // Declared AND present: a declared-but-absent directory is the dh4f defect.
+    for (const n of g.directories) expect(existsSync(join(d, "todos", n.path))).toBe(true);
   });
 
   test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {

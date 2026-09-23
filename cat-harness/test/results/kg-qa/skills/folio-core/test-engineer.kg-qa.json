@@ -5,7 +5,7 @@
     "id": "test-engineer",
     "path": "skills/folio-core/test-engineer.md"
   },
-  "source_hash": "6c61887bc343",
+  "source_hash": "5445766bfe8f",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -22,12 +22,30 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 6,
     "fail": 0,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-core/test-engineer.md",
+      "code": "cat-harness/skills/folio-core/test-engineer.ts",
+      "prose_hash": "5445766bfe8f",
+      "code_hash": "3b740ac68d0d",
+      "by": "baseline"
+    }
+  ]
 }

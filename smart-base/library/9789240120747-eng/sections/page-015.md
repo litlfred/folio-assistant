@@ -7,7 +7,7 @@ pages: 15-15
 pdf_page: 15
 source_pdf: 9789240120747-eng.pdf
 source_sha256: c710f7cf4a432221
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 3

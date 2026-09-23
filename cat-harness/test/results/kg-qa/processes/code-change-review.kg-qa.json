@@ -78,12 +78,37 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_CIGreen",
+          "detail": "\"CI green?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_ReviewClear",
+          "detail": "\"Review clear?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 0,
-    "n/a": 7,
+    "pass": 12,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }

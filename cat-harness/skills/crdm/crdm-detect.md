@@ -224,3 +224,7 @@ have to live with it.
 Nor does it mean stopping work to do paperwork first. `continual-progress`
 still holds — branch, commit, push, open the PR from commit #1. The point is
 that the *record* is collaborative, not that the *work* pauses.
+
+## Related work first
+
+When a requirement is **initiated or updated** in chat, find the related work before anything else. That means beans, issues and open PRs, each categorized and summarized, followed by one question to the user about whether and how to coordinate. The procedure is [`related-work-coordination`](../folio-core/related-work-coordination.md), and `crdm-issue-linking.bpmn` calls it as `Process_RelatedWork` (issue #1023).

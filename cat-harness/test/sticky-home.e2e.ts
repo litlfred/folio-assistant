@@ -123,7 +123,10 @@ test.describe("a landing sticky has a home, and closing returns it there", () =>
     await page.locator(`${alphaCell} .fa-home-pin`).click();
     await page.locator(`${layer} [data-fa-pin="landing/alpha"] .fa-sticky-sendhome`).click();
     await expect(page.locator(`${layer} [data-fa-pin="landing/alpha"]`)).toHaveCount(0);
-    await expect(page.locator(`${alphaCell} > .fa-sticky`)).toBeVisible();
+    // HOME, which since `z1ug` is drawn as a TILE: the card is back in its
+    // slot (no longer marked away) and its tile is on show.
+    await expect(page.locator(`${alphaCell} > .fa-sticky`)).not.toHaveAttribute("hidden", /.*/);
+    await expect(page.locator(`${alphaCell} .fa-landing-tile`)).toBeVisible();
     await expect(page.locator(`${alphaCell} .fa-home-pin`)).toBeFocused();
     expect(await pinned(page)).toEqual({});
   });
@@ -133,7 +136,10 @@ test.describe("a landing sticky has a home, and closing returns it there", () =>
     await page.locator(`${alphaCell} .fa-home-pin`).click();
     await page.locator(`${alphaCell} .fa-sticky-recall`).click();
     await expect(page.locator(`${layer} [data-fa-pin="landing/alpha"]`)).toHaveCount(0);
-    await expect(page.locator(`${alphaCell} > .fa-sticky`)).toBeVisible();
+    // HOME, which since `z1ug` is drawn as a TILE: the card is back in its
+    // slot (no longer marked away) and its tile is on show.
+    await expect(page.locator(`${alphaCell} > .fa-sticky`)).not.toHaveAttribute("hidden", /.*/);
+    await expect(page.locator(`${alphaCell} .fa-landing-tile`)).toBeVisible();
   });
 
   test("a pin, and where it was moved to, survive a reload", async ({ page }) => {
@@ -175,7 +181,10 @@ test.describe("away from home, a pinned sticky says where home is", () => {
     await expect(page.locator(".fa-home-live")).toContainText("sent home");
     await go(page, "landing");
     await expect(page.locator(`${layer} [data-fa-pin="landing/alpha"]`)).toHaveCount(0);
-    await expect(page.locator(`${alphaCell} > .fa-sticky`)).toBeVisible();
+    // HOME, which since `z1ug` is drawn as a TILE: the card is back in its
+    // slot (no longer marked away) and its tile is on show.
+    await expect(page.locator(`${alphaCell} > .fa-sticky`)).not.toHaveAttribute("hidden", /.*/);
+    await expect(page.locator(`${alphaCell} .fa-landing-tile`)).toBeVisible();
   });
 
   test("stored text is rendered as TEXT, never as markup", async ({ page }) => {
@@ -242,5 +251,74 @@ test.describe("the todo board is a home too", () => {
     await expect(page.locator('[data-fa-home-panel="todos"] [data-fa-home-slot="t-one"]')).toHaveCount(1);
     await expect(page.locator(".fa-home-pin")).toHaveCount(2);
     await expect(page.locator('[data-fa-home-slot="t-one"] .fa-home-pin')).toHaveCount(0);
+  });
+});
+
+test.describe("landing stickies start as TILES, and a tile opens a window — bean z1ug", () => {
+  // Owner: "they should be closed/tiled to start"; 2026-09-23, "Opens as a
+  // window" — same as the todo avatars, × to close, Pin to glass stays.
+  test("each landing sticky is a tile; the full card is not drawn in the panel", async ({ page }) => {
+    await go(page, "landing");
+    await expect(page.locator(".fa-landing-tile")).toHaveCount(2);
+    await expect(page.locator(`${alphaCell} > .fa-sticky`)).toBeHidden();
+    await expect(page.locator(`${alphaCell} .fa-home-pin`)).toBeVisible();
+  });
+
+  test("pressing a tile opens the full card as a board window", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    const win = page.locator('.fa-board-window[data-fa-window="landing:alpha"]');
+    await expect(win).toBeVisible();
+    await expect(win).toContainText("The alpha body text.");
+    await expect(win.locator(".fa-board-window-title")).toHaveText("Alpha note");
+    await expect(win).toBeFocused();
+    // A COPY — one id, one element.
+    expect(await page.locator("#fa-sticky-alpha-summary").count()).toBe(1);
+  });
+
+  test("× closes it and focus returns to the tile — the way back", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    await page.locator('.fa-board-window[data-fa-window="landing:alpha"] [data-fa-control="close"]').click();
+    await expect(page.locator('.fa-board-window[data-fa-window="landing:alpha"]')).toHaveCount(0);
+    await expect(page.locator(`${alphaCell} .fa-landing-tile`)).toBeFocused();
+  });
+
+  test("Escape closes it too", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    await page.keyboard.press("Escape");
+    await expect(page.locator('.fa-board-window[data-fa-window="landing:alpha"]')).toHaveCount(0);
+  });
+
+  test("two windows stack — selecting one raises it", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    await page.locator('[data-fa-home-slot="beta"] .fa-landing-tile').click();
+    const a = page.locator('.fa-board-window[data-fa-window="landing:alpha"]');
+    const b = page.locator('.fa-board-window[data-fa-window="landing:beta"]');
+    await expect(b).toHaveAttribute("data-fa-z", "2");
+    await a.locator(".fa-board-window-title").click();
+    await expect(a).toHaveAttribute("data-fa-z", "2");
+    await expect(b).toHaveAttribute("data-fa-z", "1");
+  });
+
+  test("an open window does NOT cover the other tiles — they stay clickable", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    const beta = (await page.locator('[data-fa-home-slot="beta"] .fa-landing-tile').boundingBox())!;
+    const hit = await page.evaluate(([x, y]) => {
+      const e = document.elementFromPoint(x, y);
+      return !!(e && e.closest(".fa-landing-tile"));
+    }, [beta.x + beta.width / 2, beta.y + beta.height / 2]);
+    expect(hit).toBe(true);
+  });
+
+  test("Pin to glass from the window pins it and closes the window", async ({ page }) => {
+    await go(page, "landing");
+    await page.locator(`${alphaCell} .fa-landing-tile`).click();
+    await page.locator('.fa-board-window[data-fa-window="landing:alpha"] [data-fa-control="pin"]').click();
+    await expect(page.locator('.fa-board-window[data-fa-window="landing:alpha"]')).toHaveCount(0);
+    await expect(page.locator(`${layer} [data-fa-pin="landing/alpha"]`)).toBeVisible();
   });
 });

@@ -55,6 +55,7 @@ import { dirname, resolve } from "node:path";
 
 import { snapshot } from "../schemas/changeset.js";
 import { feedbackDir, readCommitted } from "./review-comment-move.js";
+import { readCommittedVerdicts, verdictsDir } from "./review-coverage.js";
 import {
   REVIEW_COMMENTS_FILE_SCHEMA,
   ReviewCommentsFileSchema,
@@ -65,6 +66,7 @@ import {
   type ReviewComment,
   type ReviewCommentsFile,
 } from "../schemas/review-comment.js";
+import { ingestVerdicts, parseVerdictTag, type ReviewVerdict } from "../schemas/review-verdict.js";
 
 /** `blocks.json`: label → the content hash and former labels. */
 export type BlocksFile = Record<string, BlockAnchor>;
@@ -73,7 +75,7 @@ export type BlocksFile = Record<string, BlockAnchor>;
 export function blocksOf(folioDir: string): BlocksFile {
   const out: BlocksFile = {};
   for (const [label, s] of snapshot(folioDir)) {
-    out[label] = { hash: s.proseHash ?? s.manifestHash, renamedFrom: s.renamedFrom };
+    out[label] = { hash: s.proseHash ?? s.manifestHash, renamedFrom: s.renamedFrom, ...(s.section ? { section: s.section } : {}) };
   }
   return out;
 }
@@ -114,6 +116,8 @@ export interface RunOptions {
   existing?: ReviewCommentsFile;
   /** Review comments committed on the feature branch, by id. They win over `existing`. */
   committed?: ReadonlyMap<string, ReviewComment>;
+  /** Verdicts committed on the feature branch, by id. They win over `existing`. */
+  committedVerdicts?: ReadonlyMap<string, ReviewVerdict>;
   now?: string;
 }
 
@@ -125,6 +129,16 @@ export function buildReviewComments(o: RunOptions): ReviewCommentsFile {
   const hashes = new Map(Object.entries(o.blocks).map(([label, b]) => [label, b.hash]));
   const r = ingestPrComments({ repo: o.repo, pr: o.pr, commit: o.commit, comments: o.comments, existing: previous, blocks: hashes });
   const all = reanchorToBlocks([...previous, ...r.created], new Map(Object.entries(o.blocks)));
+  // Verdicts: the same merge as comments (committed wins, nothing dropped),
+  // then the PR's new ones. A verdict is never re-anchored: it is about the
+  // version it names, and `computeCoverage` stops counting it once that
+  // version is gone.
+  const cv = o.committedVerdicts ?? new Map<string, ReviewVerdict>();
+  const prevVerdicts: ReviewVerdict[] = (o.existing?.verdicts ?? []).map((v) => cv.get(v.id) ?? v);
+  for (const [id, v] of cv) if (!prevVerdicts.some((p) => p.id === id)) prevVerdicts.push(v);
+  const vr = ingestVerdicts({ repo: o.repo, pr: o.pr, commit: o.commit, comments: o.comments, existing: prevVerdicts, blocks: hashes });
+  // `parseReviewTag` passes a verdict tag over, so it counted as untagged there. It is not.
+  const verdictTagged = o.comments.filter((c) => parseVerdictTag(c.body) !== null).length;
   return ReviewCommentsFileSchema.parse({
     $schema: REVIEW_COMMENTS_FILE_SCHEMA,
     repo: o.repo,
@@ -132,8 +146,9 @@ export function buildReviewComments(o: RunOptions): ReviewCommentsFile {
     commit: o.commit,
     generatedAt: o.now ?? new Date().toISOString(),
     comments: all,
-    malformed: r.malformed,
-    untagged: r.untagged,
+    malformed: [...r.malformed, ...vr.malformed],
+    untagged: r.untagged - verdictTagged,
+    verdicts: [...prevVerdicts, ...vr.created],
   });
 }
 
@@ -206,11 +221,19 @@ if (import.meta.main) {
       console.error(`⚠ no committed review statuses read: ${(e as Error).message}`);
     }
   }
-  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing, committed });
+  let committedVerdicts: Map<string, ReviewVerdict> | undefined;
+  if (opt("todos")) {
+    try {
+      committedVerdicts = readCommittedVerdicts(verdictsDir(opt("todos")!));
+    } catch (e) {
+      console.error(`⚠ no committed verdicts read: ${(e as Error).message}`);
+    }
+  }
+  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing, committed, committedVerdicts });
   writeJson(out, file);
   const orphaned = file.comments.filter((c) => c.review.orphaned).length;
   console.error(
-    `✓ ${file.comments.length} review comment(s) (${orphaned} orphaned) → ${out}; ` +
+    `✓ ${file.comments.length} review comment(s) (${orphaned} orphaned), ${file.verdicts.length} verdict(s) → ${out}; ` +
       `${file.untagged} untagged, ${file.malformed.length} malformed`,
   );
   for (const m of file.malformed) console.error(`  ✗ ${m.url}: ${m.error}`);

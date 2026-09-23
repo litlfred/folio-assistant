@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>70</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>49</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>52</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>75</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>54</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>57</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 52 |
+| <span class="tg-tag tg-shell">shell</span> | 57 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 65 |
+| `none` | 70 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **49** skills named across **70** tools resolve to a
+Yes — all **54** skills named across **75** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -68,18 +68,20 @@ tool advertising a capability the graph cannot locate.
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
 | `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
-| `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
+| `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | `feature-staging` | 3 in / 1 out |
+| `folio-block-qa-summary`<br>Folio block QA summary | Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict. | <span class="tg-tag tg-shell">shell</span> | `review-heatmap` | 3 in / 1 out |
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `getting-started`<br>`repo-conversion` | 9 in / 1 out |
 | `fsh-cone`<br>FSH dependency cone | Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything. | <span class="tg-tag tg-shell">shell</span> | `fhir-validation` | 4 in / 1 out |
 | `gates`<br>The platform's quality gates | Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces. | <span class="tg-tag tg-shell">shell</span> | `continual-progress`<br>`platform-gates`<br>`prepare-merge` | 2 in / 1 out |
+| `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | `prepare-merge` | 1 in / 1 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`pickup`<br>`prepare-merge-auto`<br>`watch` | 3 in / 1 out |
 | `glossary-build`<br>Glossary build | Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change. | <span class="tg-tag tg-shell">shell</span> | `document-intake` | 2 in / 1 out |
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `kg-audit`<br>Knowledge-graph audit | Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes "unbound since it was drawn" distinguishable from "broken in the commit under review". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 2 in / 2 out |
-| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 2 out |
+| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `bootstrap-graph-emission`<br>`bootstrap-graph-publication`<br>`kg-export` | 2 in / 2 out |
 | `kg-validate`<br>Validate a node in the graph | Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest. | <span class="tg-tag tg-shell">shell</span> | `kg-navigation` | 2 in / 1 out |
 | `l1-complete-check`<br>L1 source completeness | Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 1 in / 1 out |
 | `latex-overfull`<br>LaTeX overfull-box report | Turn a pdflatex log's Overfull \hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 4 in / 1 out |
@@ -121,6 +123,9 @@ tool advertising a capability the graph cannot locate.
 | `translation-signoff`<br>Sign off a translation | Record a translation as official — who signed off, when, and the hash of the source it was signed against, so a later source edit is detectable. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `decision-audit`<br>`translation-manager` | 4 in / 1 out |
 | `translation-status`<br>Translation coverage | Per-locale translation coverage, computed from the .po files under the translations directory. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 1 in / 1 out |
 | `translation-validate`<br>Validate a translation | Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
+| `uml-object-model`<br>Harness object model as PlantUML | Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
+| `uml-overview`<br>UML overview per named sub-graph | Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
+| `wireframe-check`<br>Wireframe check at web and mobile viewports | Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail. | <span class="tg-tag tg-shell">shell</span> | `wireframe-design-review` | 2 in / 1 out |
 | `work-plan-prime`<br>Prime the work plan | Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `bean-coordination`<br>`pending-show`<br>`session-intent`<br>`todo-manager` | 0 in / 1 out |
 | `workflow-complete`<br>Complete a step | Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `bean-coordination`<br>`process-state` | 6 in / 1 out |
 | `workflow-gate`<br>May this step be performed? | Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `process-state` | 2 in / 1 out |

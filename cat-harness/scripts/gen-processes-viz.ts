@@ -73,8 +73,16 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
-import { workflowFiles } from "./known-skills.js";
-import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
+import { workflowFiles, kgRoots } from "./known-skills.js";
+import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
+import {
+  laneBinding,
+  readRoleGraph,
+  resolveRoleSkills,
+  type LaneBinding,
+  type RoleGraph,
+  type SkillProvenance,
+} from "../schemas/role-graph.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -124,10 +132,81 @@ export interface ProcessRow {
   stem: string;
   /** `<bpmn:documentation>` on the process element. */
   documentation?: string;
-  /** Lanes with their role and documentation, in document order. */
-  laneDetails: { id: string; name: string; roleRef?: string; documentation?: string }[];
+  /** Lanes with their role, that role's skills, and documentation, in document order. */
+  laneDetails: LaneDetail[];
   /** Every activity, in document order — what the per-process page lists. */
   steps: ProcessStep[];
+  /**
+   * Every DECISION (an exclusive gateway with more than one way out), in
+   * document order. Merges, forks and joins decide nothing and are omitted —
+   * the same line `gateway-documented` draws.
+   */
+  decisions: ProcessDecision[];
+}
+
+/** One decision, as its process page shows it. */
+export interface ProcessDecision {
+  id: string;
+  name: string;
+  documentation?: string;
+  /** Each way out: its label (absent when unnamed) and the step it leads to. */
+  branches: { label?: string; to: string }[];
+}
+
+/**
+ * Why a lane shows the skills it shows — or shows none.
+ *
+ * Bean `zw4a`. **The five kinds are `laneBinding`'s, not this viewer's**, and
+ * that is the point: `role-graph.ts` already separates them and says why, for
+ * *"the consumer that has to JUDGE the binding rather than use it"* — which is
+ * exactly what a viewer is.
+ *
+ * This file first grew its own four-state enum. It was a worse second answer:
+ * it missed `variable` (a lane whose performer varies BY DESIGN, bean `ug4r` —
+ * reporting it as a defect for ever is the failure that flag exists to
+ * prevent) and `contradictory` (a lane declaring both a ref and `variable`).
+ * A viewer disagreeing with `kg:audit` about whether a lane is bound would be
+ * two answers to one question, which is the thing this repository spends most
+ * of its length preventing.
+ *
+ * Only the KIND is carried, not the whole `RoleDef`: this is JSON a web page
+ * loads, and embedding a role per lane would ship the role graph once per
+ * swimlane.
+ */
+export interface LaneDetail {
+  id: string;
+  name: string;
+  roleRef?: string;
+  documentation?: string;
+  /** `laneBinding`'s verdict — bound / dangling / variable / contradictory / unbound. */
+  binding: LaneBinding["kind"];
+  /** The role actually resolved, which may have come from lane-NAME matching rather than a ref. */
+  roleId?: string;
+  /**
+   * What the ROLE carries, closed over `inherits`, with provenance.
+   *
+   * From `resolveRoleSkills` rather than by reading `RoleDef.skills`. That
+   * field is documented "before inheritance", so reading it directly
+   * UNDER-REPORTS every role that inherits — measured here, not assumed: the
+   * `Adjudicator` lane in `adjudication.bpmn` resolves 14 skills, of which
+   * `content-block-review` and `content-feedback` arrive via `reviewer`.
+   * `via` is kept so a reader can see which ancestor supplied each one.
+   */
+  roleSkills: SkillProvenance[];
+  /**
+   * What the ACTIVITIES IN THIS LANE name, via `<folio:skill ref>`.
+   *
+   * **A separate list on purpose — the bean's fourth done-when.** A lane's
+   * skills are not the union of its activities' skills in either direction: a
+   * role carries skills it may not use in this diagram, and an activity may
+   * name one its lane's role does not list. Same measurement as above makes it
+   * concrete — `Adjudicator` has 14 role skills and its activities name 2.
+   * Folding them into one list would assert an agreement nothing checks.
+   *
+   * WHICH they are is `kg:audit`'s question. This renders both and grades
+   * neither.
+   */
+  activitySkills: string[];
 }
 
 /** One activity, as its process page shows it. */
@@ -181,6 +260,7 @@ function instanceRoots(repo: string): string[] {
 
 export async function processRows(repo = REPO): Promise<ProcessRow[]> {
   const rows: ProcessRow[] = [];
+  const roleGraph = loadRoleGraph(repo);
   const seen = new Set<string>();
   const files = instanceRoots(repo)
     .flatMap((r) => workflowFiles(r))
@@ -240,12 +320,7 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
         ...(svg ? { svg } : {}),
         stem: basename(abs, ".bpmn"),
         ...(m.documentation ? { documentation: m.documentation } : {}),
-        laneDetails: m.lanes.map((l) => ({
-          id: l.id,
-          name: (l.name ?? l.id).replace(/\s+/g, " ").trim(),
-          ...(l.roleRef ? { roleRef: l.roleRef } : {}),
-          ...(l.documentation ? { documentation: l.documentation } : {}),
-        })),
+        laneDetails: m.lanes.map((l) => laneDetail(l, acts, roleGraph)),
         steps: acts.map((n) => ({
           id: n.id,
           name: n.name.replace(/\s+/g, " ").trim() || n.id,
@@ -254,6 +329,15 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
           skills: n.skills,
           ...(n.calledElement ? { calledElement: n.calledElement } : {}),
           ...(n.documentation ? { documentation: n.documentation } : {}),
+        })),
+        decisions: [...m.nodes.values()].filter(isDecision).map((n) => ({
+          id: n.id,
+          name: n.name.replace(/\s+/g, " ").trim() || n.id,
+          ...(n.documentation ? { documentation: n.documentation } : {}),
+          branches: branchesOf(m, n).map((b) => ({
+            ...(b.label ? { label: b.label.replace(/\s+/g, " ").trim() } : {}),
+            to: (m.nodes.get(b.to)?.name ?? b.to).replace(/\s+/g, " ").trim() || b.to,
+          })),
         })),
       });
     } catch (e) {
@@ -274,11 +358,82 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
         stem: basename(abs, ".bpmn"),
         laneDetails: [],
         steps: [],
+        decisions: [],
         loadError: e instanceof Error ? e.message : String(e),
       });
     }
   }
   return rows.sort((a, b) => a.file.localeCompare(b.file, "en"));
+}
+
+/**
+ * The role graph, merged across every declared `kg` directory.
+ *
+ * Read ONCE per run rather than per lane: `readRoleGraph` parses a file, and a
+ * viewer over 60+ diagrams would otherwise re-read it for every swimlane.
+ */
+function loadRoleGraph(repo: string): RoleGraph | undefined {
+  const roles = [];
+  // Per INSTANCE root, not per repo root. `kgRoots` resolves an instance's own
+  // declared `kg` directories, so handing it the repository returns nothing —
+  // and nothing here is the same shape as "no role is declared anywhere",
+  // which would have rendered every bound lane in the corpus as a dangling
+  // reference. Caught by checking the output against the corpus rather than
+  // by the types, which were happy.
+  for (const inst of instanceRoots(repo)) {
+    for (const kgRoot of kgRoots(inst)) roles.push(...(readRoleGraph(kgRoot)?.roles ?? []));
+  }
+  // `name` is required on the type and unused here; the merged graph is not
+  // any one declared graph, so it is named for what it is rather than borrowing
+  // the name of whichever directory happened to be read first.
+  return roles.length > 0 ? { name: "merged across declared kg directories", roles } : undefined;
+}
+
+/**
+ * One lane, with its role and that role's skills.
+ *
+ * The join AGENTS.md states in a sentence — *"An actor performs a task in a
+ * process as a role, using that role's skills"* — which the graph could
+ * already answer and the viewer did not show. Bean `zw4a`.
+ *
+ * Every resolution here is borrowed: `laneBinding` for the verdict (which
+ * consults `roleForLane`, so a lane bound by NAME rather than by an explicit
+ * ref resolves too) and `resolveRoleSkills` for the closure. Nothing about
+ * roles is decided in this file.
+ */
+export function laneDetail(
+  lane: { id: string; name?: string; roleRef?: string; performerVaries?: boolean; documentation?: string },
+  activities: { lane?: string; skills: string[] }[],
+  roleGraph: RoleGraph | undefined,
+): LaneDetail {
+  const name = (lane.name ?? lane.id).replace(/\s+/g, " ").trim();
+  // Activities are matched on the lane NAME the model already resolved onto
+  // them, which is how every other consumer in this file scopes them.
+  const activitySkills = uniq(
+    activities
+      .filter((a) => (a.lane ?? "").replace(/\s+/g, " ").trim() === name)
+      .flatMap((a) => a.skills),
+  ).sort((a, b) => a.localeCompare(b, "en"));
+
+  const b = laneBinding(roleGraph, { name, roleRef: lane.roleRef, performerVaries: lane.performerVaries });
+  const role = b.kind === "bound" ? b.role : undefined;
+  return {
+    id: lane.id,
+    name,
+    ...(lane.roleRef ? { roleRef: lane.roleRef } : {}),
+    ...(lane.documentation ? { documentation: lane.documentation } : {}),
+    binding: b.kind,
+    ...(role ? { roleId: role.id } : {}),
+    // `laneBinding`'s verdict is taken VERBATIM, including the case where the
+    // graph could not be read at all: it then reports every ref-bearing lane
+    // as `dangling`, because from its side a ref that resolves to nothing is a
+    // ref that resolves to nothing. That is arguably the `dh4f` shape — one
+    // missing file rendering as a corpus of defects — but it is `kg:audit`'s
+    // resolver too, and a viewer quietly disagreeing with the audit about
+    // whether a lane is bound would be worse than the shape. Bean `7go7`.
+    roleSkills: role && roleGraph ? resolveRoleSkills(roleGraph, role.id) : [],
+    activitySkills,
+  };
 }
 
 /** skill → the diagrams that run it. The join nothing else exposes. */
@@ -557,6 +712,27 @@ export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillP
     L.push(`| **${esc(st.name)}**<br>\`${st.id}\` | ${cell(st.lane)} | ${how} | ${cell(st.documentation)} |`);
   }
   L.push("");
+
+  // Only when there is one: a linear process has no decision to show, and an
+  // empty table would read as a section somebody forgot to fill.
+  if (row.decisions.length > 0) {
+    L.push("## Decisions");
+    L.push("");
+    const undocDec = row.decisions.filter((d) => !d.documentation).length;
+    L.push(
+      undocDec === 0
+        ? `Every one of the ${row.decisions.length} decision(s) is documented.`
+        : `**${undocDec}** of ${row.decisions.length} decision(s) carry no documentation — \`gateway-documented\` lists them.`,
+    );
+    L.push("");
+    L.push("| decision | what decides it | branches |");
+    L.push("|---|---|---|");
+    for (const d of row.decisions) {
+      const branches = d.branches.map((b) => `${b.label ? `**${esc(b.label)}**` : "_(unnamed)_"} → ${esc(b.to)}`).join("<br>");
+      L.push(`| **${esc(d.name)}**<br>\`${d.id}\` | ${cell(d.documentation)} | ${branches} |`);
+    }
+    L.push("");
+  }
   L.push("{% endraw %}");
   return `${L.join("\n")}\n`;
 }

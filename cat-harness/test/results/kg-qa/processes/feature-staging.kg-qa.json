@@ -120,12 +120,43 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/feature-staging.yml",
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
+    "pass": 12,
+    "fail": 3,
     "n/a": 7,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "ab2a96ba1dee",
+      "code_hash": "ac0e77b5bf5f",
+      "by": "baseline"
+    }
+  ]
 }

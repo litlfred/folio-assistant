@@ -17,7 +17,7 @@ folio-assistant — Document ingestion — uploads/ to the L1 source knowledge g
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Adopt a methodology from a source document](methodology-from-source.html)
 - **Calls:** [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html), [Ingestion subprocess — derive content from the assets](ingest-derive-content.html), [Ingestion subprocess — extract structure](ingest-extract-structure.html), [Ingestion subprocess — ingest a theme](ingest-theme.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
 
 ## Lanes — who acts
@@ -44,5 +44,14 @@ Every one of the 9 step(s) is documented.
 | **Record the gap as a bean**<br>`Task_OpenBean` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes. |
 | **Move into library/<bib-slug>/**<br>`Task_Promote` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | The folder name IS the bibliography citation key, so a citation and a directory are the same string. |
 | **Available to cite as an L1 source**<br>`Task_Citeable` | Corpus — L1 source knowledge graph | [`document-intake`](../reference/skill-instructions/document-intake.html)<br>[`document-intake`](../reference/skill-instructions/document-intake.html)<br>[`document-intake`](../reference/skill-instructions/document-intake.html) | Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn. |
+
+## Decisions
+
+**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **A theme source? (author's judgement)**<br>`Gateway_ThemeSource` | Wired 2026-09-23 on the owner's ruling for bean `j66n`, choosing "human/agentic judgement at the gateway" over a declared predicate. THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable rule — a captured web deployment, or a document that STATES palette and typography rules — and it was refused for the reason the owner had already given when withdrawing `xffc`/`d3yq`: "no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement." So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not. WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. `ingest-theme.bpmn` starts at "Theme source in hand" and can refuse as incomplete. Routing every document into it would make "this is not a theme" and "this theme is malformed" the same refusal, and the second is a defect while the first is the normal case. | **yes** → Ingest the theme<br>**no** → Build the L1 knowledge graph |
+| **L1 complete?**<br>`Gateway_Complete` | — | **gap** → Record the gap as a bean<br>**complete** → Move into library/<bib-slug>/ |
 
 {% endraw %}

@@ -1,0 +1,38 @@
+classDiagram
+  direction TB
+  namespace bootstrap__scenarios {
+    class bootstrap_scenarios_Role["Role"] {
+      <<json: RoleGraphSchema>>
+      persona [0..1] string
+      voice [0..1] string
+      useCases [0..*] string[]
+      id [1] string
+      title [1] string
+      description [1] string
+      actorKinds [1..*] list~person | agent | system | external~
+      lanes [0..*] string[]
+      skills [0..*] string[]
+      inherits [0..*] string[]
+      actedUpon [0..1] boolean
+      judgementOnly [0..1] boolean
+    }
+    class bootstrap_scenarios_Actor["Actor"] {
+      <<json: RoleGraphSchema>>
+      id [1] string
+      title [1] string
+      kind [1] person | agent | system | external
+      description [0..1] string
+      roles [0..*] string[]
+    }
+    class bootstrap_scenarios_RoleGraph["RoleGraph"] {
+      <<json: RoleGraphSchema>>
+      name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
+    }
+  }
+  bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
+  bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+  cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
+  cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
