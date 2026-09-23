@@ -115,6 +115,33 @@ export type HarnessVisualisation = {
    * `false`.
    */
   readOnly?: boolean;
+  /**
+   * WHY this row is inert, in the words a reader sees — absent when
+   * {@link path} is present, because a row that opens owes no explanation.
+   *
+   * ## Why the note is DATA and not a word the navbar picks
+   *
+   * "No viewer" is four states, and this function already separates them a
+   * few dozen lines down in order to word four different findings:
+   * `stagingOnly` and a declared `renderExemption` are INTENDED, `undiscovered`
+   * is built-and-unreachable, `unbuilt` is nobody-built-it. Until now that
+   * classification reached the reader only as prose inside a collapsed
+   * `<details>` of "gaps", while the navbar row it describes said nothing at
+   * all on one surface and `title="declared, with no published viewer"` on
+   * the other — one wording for four states, and wrong for two of them.
+   *
+   * That is the mistake this file has already paid for twice, in the two
+   * comments above about `staging-only` and `renderExemption`: **an intended
+   * state reported as a defect is the same disease as a real gap hidden.** A
+   * navbar that labelled a staging-only row "no viewer yet" would be making
+   * it a third time, on the surface a reader is actually looking at.
+   *
+   * So the note is computed HERE, where the four states are already told
+   * apart, and both navbars render what they are given. Neither composes it,
+   * which is what keeps them one navbar rather than two that agree by
+   * maintenance.
+   */
+  note?: string;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -376,6 +403,41 @@ function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   return out;
 }
 
+/**
+ * The words an inert navbar row shows — one per bucket, and nothing else.
+ *
+ * ## Why this is a separate exported function
+ *
+ * TWO OF ITS FOUR ANSWERS NEVER OCCUR IN THIS REPOSITORY. Measured 2026-09-23
+ * over all 31 unlinked kinds in `docs/_data/harness.json`: 24 are `unbuilt`,
+ * 7 are `unbuilt` under `bootstrap`'s declared exemption, and `staging-only`
+ * and `undiscovered` occur **not at all** — `harnessTiles` emits no finding
+ * of either shape here either.
+ *
+ * Of those two, `undiscovered` is at least reached by a fixture: the `flh4`
+ * test for a viewer that resolves outside the site directory. `staging-only`
+ * is reached by NOTHING — not the corpus, not a fixture — so before this
+ * function existed its wording would have been a line that no test and no
+ * deploy ever ran. That is how the read-only mark came to ship live CSS and
+ * live JS rendering on 0 of 3 deployed pages (the comment further down
+ * records it, found by reading a deploy rather than a diff), and `1xhc` is
+ * the general form: a gate that does not fire is indistinguishable from one
+ * that passed. Lifting the decision out makes all four answers assertable
+ * directly, with no declaration to construct.
+ *
+ * `exempt` narrows `unbuilt` ONLY. A staging-only viewer is withheld by its
+ * own `publish` setting and a declared-but-unreachable one exists, so neither
+ * is anything a `renderExemption` has a view about.
+ *
+ * @param bucket which of the three reasons a kind has no published viewer
+ * @param exempt the instance declares `renderExemption.of: ["visualiser"]`
+ */
+export function inertNote(bucket: "staging-only" | "undiscovered" | "unbuilt", exempt: boolean): string {
+  if (bucket === "staging-only") return "staging only";
+  if (bucket === "undiscovered") return "viewer not published";
+  return exempt ? "no viewer by design" : "no viewer yet";
+}
+
 function tileFor(
   decl: CatHarnessDeclaration,
   handler: string,
@@ -545,6 +607,30 @@ function tileFor(
   const rest = unlinked.filter((k) => !stagingOnly.includes(k));
   const undiscovered = rest.filter((k) => declaredFor(k, false) !== undefined);
   const unbuilt = rest.filter((k) => declaredFor(k, false) === undefined);
+
+  /* THE SAME CLASSIFICATION, ONTO THE ROW — see `HarnessVisualisation.note`.
+   *
+   * Four buckets are already in hand and were, until now, spent entirely on
+   * `findings`: prose, inside a `<details>` a reader opens on purpose. The
+   * navbar row that each bucket is ABOUT carried none of it. This loop is the
+   * whole of the fix, and it invents no state — every branch below reads a
+   * variable computed above.
+   *
+   * `renderExemption` splits `unbuilt`, and only `unbuilt`: `isExemptFrom` is
+   * the same predicate the finding twenty lines down calls, so a render-exempt
+   * instance cannot be told "no viewer yet" by one surface and "not a gap" by
+   * the other.
+   */
+  const exempt = isExemptFrom(decl, "visualiser");
+  for (const v of visualisations) {
+    if (v.path !== undefined) continue;
+    const bucket = stagingOnly.includes(v.kind)
+      ? "staging-only"
+      : undiscovered.includes(v.kind)
+        ? "undiscovered"
+        : "unbuilt";
+    v.note = inertNote(bucket, exempt);
+  }
 
   if (stagingOnly.length > 0) {
     findings.push(

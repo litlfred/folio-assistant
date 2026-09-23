@@ -14,10 +14,11 @@
       "description": "`unsettled` is a real outcome, not an error: a participant may decline, and the process has an end for it. What an `unsettled` result must never contain is a guess."
     },
     "harness": {
-      "type": "string",
-      "description": "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open."
+      "description": "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open.",
+      "type": "string"
     },
     "repositories": {
+      "description": "The repositories involved, each with the part it plays. Recorded as pairs rather than a flat list: read-from and written-to may be one repository or two, and which is which is the answer.",
       "type": "array",
       "items": {
         "type": "object",
@@ -43,20 +44,19 @@
           "role"
         ],
         "additionalProperties": false
-      },
-      "description": "The repositories involved, each with the part it plays. Recorded as pairs rather than a flat list: read-from and written-to may be one repository or two, and which is which is the answer."
+      }
     },
     "determinedBy": {
+      "description": "`asked` means a participant said so. `assumed` is permitted only for a default the README itself states, and then `assumption` must say which. An agent that reaches for `assumed` because nobody answered has produced an `unsettled` result, not an assumed one.",
       "type": "string",
       "enum": [
         "asked",
         "assumed"
-      ],
-      "description": "`asked` means a participant said so. `assumed` is permitted only for a default the README itself states, and then `assumption` must say which. An agent that reaches for `assumed` because nobody answered has produced an `unsettled` result, not an assumed one."
+      ]
     },
     "assumption": {
-      "type": "string",
-      "description": "Required when `determinedBy` is `assumed`: the documented default relied on, and where it is stated."
+      "description": "Required when `determinedBy` is `assumed`: the documented default relied on, and where it is stated.",
+      "type": "string"
     },
     "answeredBy": {
       "type": "object",
@@ -69,8 +69,8 @@
           ]
         },
         "id": {
-          "type": "string",
-          "description": "Session id, handle or name, where one is known. Absent is normal for a person."
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
         }
       },
       "required": [
@@ -80,6 +80,7 @@
       "description": "Who settled it. An answer from a sibling agent is evidence of a different weight from the person who wants the harness — both are admissible, neither is conflated with the other."
     },
     "exchange": {
+      "minItems": 1,
       "type": "array",
       "items": {
         "type": "object",
@@ -89,12 +90,13 @@
             "description": "The question as put, with its candidates named. A question a reader must go and research is not ready."
           },
           "answered": {
-            "type": "string",
-            "description": "The reply as received. Absent means the question was put and nothing came back, which is one route to `unsettled`."
+            "description": "The reply as received. Absent means the question was put and nothing came back, which is one route to `unsettled`.",
+            "type": "string"
           },
           "at": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
           }
         },
         "required": [
@@ -102,10 +104,10 @@
         ],
         "additionalProperties": false
       },
-      "minItems": 1,
       "description": "What was actually put and what came back, in order. One entry is the expected case — the skill's rule is to ask the fewest questions that settle it."
     },
     "stillOpen": {
+      "description": "Required in substance when `outcome` is `unsettled`: what remains undetermined, so the next actor resumes rather than restarts.",
       "type": "array",
       "items": {
         "type": "string",
@@ -113,8 +115,7 @@
           "harness",
           "repositories"
         ]
-      },
-      "description": "Required in substance when `outcome` is `unsettled`: what remains undetermined, so the next actor resumes rather than restarts."
+      }
     }
   },
   "required": [
