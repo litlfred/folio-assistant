@@ -34,8 +34,8 @@
  * contract forbids.
  *
  * Usage:
- *   bun run scripts/measure-logic-layer-edges.ts <ig-root> <artifact-index.json>
- *   bun run scripts/measure-logic-layer-edges.ts --help
+ *   bun run cat-harness/scripts/measure-logic-layer-edges.ts <ig-root> <artifact-index.json>
+ *   bun run cat-harness/scripts/measure-logic-layer-edges.ts --help
  *
  * @module scripts/measure-logic-layer-edges
  */
@@ -365,7 +365,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   if (args.length < 2 || args.includes("--help") || args.includes("-h")) {
     console.log(
-      "Usage: bun run scripts/measure-logic-layer-edges.ts <ig-root> <artifact-index.json>\n\n" +
+      "Usage: bun run cat-harness/scripts/measure-logic-layer-edges.ts <ig-root> <artifact-index.json>\n\n" +
       "  <ig-root>              a checkout of the IG (the directory holding sushi-config.yaml)\n" +
       "  <artifact-index.json>  the Publisher's fhir-artifact-index/index.json for that IG\n",
     );
