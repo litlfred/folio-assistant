@@ -8645,9 +8645,32 @@
         return span;
       };
 
-      for (var j = 0; j < graphs.length; j++) {
-        var g = graphs[j];
+      /* SUB-GRAPHS NEST, FOLDED — owner, 2026-09-23 (issue #1164): a
+       * sub-graph such as `docs/proposals/` *"starts closed in navbar,
+       * general behavior"*. GENERAL: any folder whose kind declares `within`
+       * is drawn inside its parent's row, under a `<details>` with no `open`,
+       * so the parent reads as one row until the reader opens it. Parents are
+       * drawn first so a child always finds its row; a child whose parent is
+       * not listed stands on its own rather than disappearing. */
+      var rowOf = {};
+      var nestOf = function (parentKind) {
+        var row = rowOf[parentKind];
+        if (!row) return null;
+        var sub = row.querySelector(":scope > .fa-nav-folders__sub > ul");
+        if (sub) return sub;
+        var d = el("details", { class: "fa-nav-folders__sub" });
+        d.appendChild(el("summary", { class: "fa-nav-folders__sub-heading" }, "Sub-graphs of " + parentKind));
+        var ul = el("ul", { class: "fa-nav-folders__list fa-nav-folders__list--sub" });
+        d.appendChild(ul);
+        row.appendChild(d);
+        return ul;
+      };
+      var ordered = graphs.filter(function (x) { return !(x && x.within); })
+        .concat(graphs.filter(function (x) { return x && x.within; }));
+      for (var j = 0; j < ordered.length; j++) {
+        var g = ordered[j];
         var li = el("li", { class: "fa-nav-folders__item" });
+        if (g && g.kind) rowOf[g.kind] = li;
         if (g && g.path && g.stagingOnly && !isStagingPreview()) {
           /* WITHHELD FROM THIS DEPLOY — a path that resolves and a page that
            * is not there.
@@ -8687,7 +8710,8 @@
         } else {
           li.appendChild(inert((g && g.kind) || "?", g && g.note));
         }
-        list.appendChild(li);
+        var into = (g && g.within && nestOf(g.within)) || list;
+        into.appendChild(li);
       }
       box.appendChild(list);
       middle.appendChild(box);

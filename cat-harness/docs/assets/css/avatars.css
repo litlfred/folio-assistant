@@ -297,6 +297,20 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="proposals"] {
+  /* a lightbulb — an idea being argued, not yet a promise */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a5 5 0 00-3 9v2h6v-2a5 5 0 00-3-9zM10 17h4M10.5 20h3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="requirements"] {
+  /* a page of ticked lines — what the harness promises, each checkable */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h12v18H6zM9 8l1.5 1.5L13 7M9 14l1.5 1.5L13 13M15 8h1M15 14h1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="interaction"] {
   /* a spoken preference, already recorded — do not ask again */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4v-4a2 2 0 01-1-2zM8.5 10l2 2 4-4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -385,6 +399,8 @@
   .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
+  .fa-avatar[data-fa-kind="proposals"] { background-color: hsl(38 46% 34%); }
+  .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 46% 34%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
@@ -433,6 +449,8 @@
     .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
+    .fa-avatar[data-fa-kind="proposals"] { background-color: hsl(38 46% 34%); }
+    .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 46% 34%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
@@ -482,6 +500,8 @@
   .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
+  .fa-avatar[data-fa-kind="proposals"] { background-color: hsl(38 42% 72%); }
+  .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 42% 72%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
@@ -530,6 +550,8 @@
     .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
+    .fa-avatar[data-fa-kind="proposals"] { background-color: hsl(38 42% 72%); }
+    .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 42% 72%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
@@ -581,6 +603,8 @@
   .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
+  .fa-avatar[data-fa-kind="proposals"][data-fa-trash="true"] { background-color: hsl(38 16% 52%); }
+  .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 16% 52%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
@@ -628,6 +652,8 @@
     .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
+    .fa-avatar[data-fa-kind="proposals"][data-fa-trash="true"] { background-color: hsl(38 16% 52%); }
+    .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 16% 52%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
@@ -675,6 +701,8 @@
   .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
+  .fa-avatar[data-fa-kind="proposals"][data-fa-trash="true"] { background-color: hsl(38 14% 56%); }
+  .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 14% 56%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
@@ -722,6 +750,8 @@
     .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
+    .fa-avatar[data-fa-kind="proposals"][data-fa-trash="true"] { background-color: hsl(38 14% 56%); }
+    .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 14% 56%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }

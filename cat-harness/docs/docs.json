@@ -1,0 +1,18 @@
+{
+  "_comment": "The docs graph's SUB-GRAPHS, declared from within (issue #1164; the owner's #980 ruling that nesting is sanctioned when a node inside the outer directory labels what it holds). Same shape as `beans/beans.json` and an instance's `<instance>.json` — `ContentDirectorySchema` entries, paths relative to THIS file's directory. Each kind here declares `within: \"docs\"` in the registry, which is what folds it under Docs in every list of kinds.",
+  "name": "cat-harness",
+  "directories": [
+    {
+      "id": "proposals",
+      "path": "proposals",
+      "graphKinds": ["proposals"],
+      "description": "Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built."
+    },
+    {
+      "id": "requirements",
+      "path": "requirements",
+      "graphKinds": ["requirements"],
+      "description": "What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.ts`), checked by `check:requirements`."
+    }
+  ]
+}

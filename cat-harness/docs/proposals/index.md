@@ -4,7 +4,7 @@ kind: proposal
 movedOn: 2026-09-19
 movedFrom: "docs/folio-assistant/proposals/index.md"
 summary: >-
-  Index of design proposals. Retained for its prose about what a proposal is for; the proposals themselves belong on their issues.
+  Proposals for the harness's own features, argued before anything is agreed. A sub-graph of docs; when a feature ships, its proposal moves to Requirements.
 ---
 
 # Proposals
@@ -17,6 +17,14 @@ the option eventually chosen survives the session that produced it.
 A proposal says what would **decide** the question, not only what the author
 prefers. If it cannot say what evidence would change its mind, it is an opinion
 wearing a heading.
+
+**This is where a harness feature's proposal lives, and where it is updated.**
+That covers initial analysis, the MVP, the options, and what was agreed
+(owner, 2026-09-23, issue #1164). When the feature **ships**, its proposal is
+**moved** to [Requirements]({{ '/requirements/' | relative_url }}) and filed
+against the `Requirement` schema. It is never copied: `check:requirements`
+refuses a name that is in both. The steps are in the
+[CRDM requirements workflow]({{ '/reference/skill-instructions/crdm-requirements-workflow.html' | relative_url }}).
 
 | proposal | question |
 |---|---|

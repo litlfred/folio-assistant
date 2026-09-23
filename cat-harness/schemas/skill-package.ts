@@ -33,6 +33,13 @@
  */
 
 import { z } from "zod";
+import {
+  RequirementFields,
+  RequirementLevelSchema,
+  RequirementStatementFields,
+  refineRequirement,
+  refineStatement,
+} from "../../bootstrap/schemas/requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -57,7 +64,8 @@ import { NETWORK_REACHES } from "./cat-harness";
  */
 export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
 export const ActorKindSchema = z.enum(ACTOR_KINDS);
-export const ConformanceSchema = z.enum(["SHALL", "SHOULD", "MAY", "SHALL NOT"]);
+/** The requirement level — the bootstrap base's, so a harness cannot drift from it. */
+export const ConformanceSchema = RequirementLevelSchema;
 export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallback"]);
 export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
 export const ScriptPhaseSchema = z.enum(["pre", "execute", "validate", "post"]);
@@ -251,25 +259,22 @@ export const SatisfiedByRefSchema = z.object({
   ref: z.string(),
 });
 
-export const RequirementStatementSchema = z.object({
-  key: z.string().min(1),
-  label: z.string(),
-  conformance: ConformanceSchema,
-  requirement: z.string(),
-  actors: z.array(z.string()).optional(),
+/*
+ * BUILT ON THE BOOTSTRAP BASE (issue #1164, owner: "1 + 2"). The base in
+ * `bootstrap/schemas/requirement.ts` is what every harness gets — the
+ * statement, its level, the functional and non-functional fields. This
+ * harness narrows ONE thing: what may satisfy a statement, which here is a
+ * closed vocabulary (`SatisfiedByKindSchema`) rather than any string. The
+ * base's refinements are re-applied, because a refined schema cannot be
+ * extended and the rules must not be lost in the narrowing.
+ */
+export const RequirementStatementSchema = RequirementStatementFields.extend({
   satisfiedBy: z.array(SatisfiedByRefSchema).optional(),
-  dependsOn: z.array(z.string()).optional(),
-});
+}).superRefine(refineStatement);
 
-export const RequirementSchema = z.object({
-  id: z.string().min(1),
-  title: z.string(),
-  description: z.string(),
-  derivedFrom: z.array(z.string()).optional(),
-  actors: z.array(z.string()),
-  statements: z.array(RequirementStatementSchema),
-  tags: z.array(z.string()).optional(),
-});
+export const RequirementSchema = RequirementFields.extend({
+  statements: z.array(RequirementStatementSchema).min(1),
+}).superRefine(refineRequirement);
 
 // ─── Registry ────────────────────────────────────────────────────────────────
 
@@ -419,7 +424,7 @@ export const RemotePackageRefSchema = z.object({
 /** Actor classification: human user or automated system. */
 export type ActorKind = z.infer<typeof ActorKindSchema>;
 
-/** FHIR R5 conformance verbs for requirement statements. */
+/** How strongly a requirement statement binds. */
 export type Conformance = z.infer<typeof ConformanceSchema>;
 
 /** Behavior when a required capability is absent at runtime. */
@@ -494,10 +499,7 @@ export type SatisfiedByRef = z.infer<typeof SatisfiedByRefSchema>;
 
 export type RequirementStatement = z.infer<typeof RequirementStatementSchema>;
 
-/**
- * Models workflow rules agents must follow.
- * Maps to FHIR R5 `Requirements` resource.
- */
+/** Models workflow rules agents must follow — the bootstrap `Requirement`, narrowed. */
 export type Requirement = z.infer<typeof RequirementSchema>;
 
 export type SkillPackageRef = z.infer<typeof SkillPackageRefSchema>;

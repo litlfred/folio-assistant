@@ -174,12 +174,26 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/processes/' | relative_url }})
 - SMART Base — *declared, not published*
 
+### `proposals`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/proposals/' | relative_url }})
+
 ### `qa`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
+
+### `requirements`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/requirements/' | relative_url }})
 
 ### `scenarios`
 

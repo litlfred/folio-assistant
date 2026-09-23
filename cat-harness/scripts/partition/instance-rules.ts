@@ -890,6 +890,12 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
+      // Issue #1164: bootstrap schemas name no outside concept, and a filed
+      // requirement is a valid one with no name used twice. Harness
+      // machinery over the harness's own declarations; neither imports the
+      // content vocabulary.
+      "scripts/check-bootstrap-concepts.ts",
+      "scripts/check-requirements.ts",
       "scripts/kg-audit.ts",
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.

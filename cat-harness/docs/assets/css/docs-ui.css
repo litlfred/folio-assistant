@@ -7233,3 +7233,14 @@ a.fa-harness-tab__body:focus-visible {
   outline: 3px dashed var(--fa-glass-accent);
   outline-offset: -3px;
 }
+
+/* ── A sub-graph's row, folded under its parent (issue #1164) ─────────── */
+.fa-nav-folders__sub { margin: 0.1rem 0 0.2rem 0.75rem; }
+.fa-nav-folders__sub-heading {
+  cursor: pointer;
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.8em;
+}
+.fa-nav-folders__list--sub { margin: 0; padding-left: 0.5rem; }

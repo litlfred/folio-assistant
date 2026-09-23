@@ -84,6 +84,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { RequirementRefSchema } from "../../bootstrap/schemas/requirement.ts";
+
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
 
@@ -120,6 +122,19 @@ export const TestRunSchema = z.object({
   process: HashBasisSchema,
   /** The measurements themselves, in whatever shape the runner records. */
   outcome: z.record(z.string(), z.unknown()),
+  /**
+   * WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164):
+   * *"put requirements in Test schema as array"*, as REFERENCES
+   * (`req:<slug>` or `req:<slug>#<statement-key>`), never copies: the
+   * requirement's text lives in one place, and a copy in every run is a copy
+   * free to disagree with it.
+   *
+   * The test points at the requirement, not the reverse (see
+   * `bootstrap/schemas/requirement.ts`). Optional so that a run recorded
+   * before the field existed still parses; a new run should say what it is
+   * evidence FOR.
+   */
+  requirements: z.array(RequirementRefSchema).optional(),
   /**
    * ISO-8601 UTC. Deliberately NOT part of either hash: when a run happened
    * is not what makes it reproducible, and including it would make every
