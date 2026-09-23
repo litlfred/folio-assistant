@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/skills/fhir-validation/input.schema.json",
+  "title": "FHIR Validation Input",
+  "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+  "type": "object",
+  "required": [
+    "igRoot"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "validationLevel": {
+      "type": "string",
+      "enum": [
+        "sushi-only",
+        "publisher-qa",
+        "full"
+      ],
+      "default": "full",
+      "description": "Level of validation to perform."
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+    }
+  },
+  "staging": {
+    "branch": "claude/zhg2-reference-direction",
+    "sha": "7cf7163e8032045e1b8209125a8105b4d3f3dca2",
+    "pr": "1222/merge",
+    "run": "35931020134"
+  }
+}
