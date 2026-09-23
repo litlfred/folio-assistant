@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j2if
 title: 'FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset''s THREE states'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-21T21:40:00Z
-updated_at: 2026-09-22T08:55:33Z
+updated_at: 2026-09-23T17:59:08Z
 parent: folio-assistant-6lb8
 ---
 
@@ -81,7 +81,7 @@ requirement is worse than no spec.
       the-harness rule; `harness-tiles` carries the strip and square rules
 - [x] **R30's three states are BUILT** — the glass's half and the
       library's half; see "Stage 2" below
-- [ ] **R24-R29 are RECORDED, NOT BUILT** — see below
+- [x] **R24-R29 are RECORDED, NOT BUILT** — moved to `95sk` under the split epic `vke6`, 2026-09-23
 
 ## Not done, and why
 
@@ -172,3 +172,15 @@ the next increment and it is deliberately separate: wiring a generator is a
 different change from establishing the state model, and shipping them
 together would have made the three-state specs hostage to a generator's
 markup.
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner went through the last open item when asked to "go through beans", and chose **"Move to split, close"**.
+
+R24–R29 now live in **`folio-assistant-95sk`**, under the split epic `vke6`, where the blocker is. They were re-measured on the way over rather than copied:
+
+- **R25 is met.** It is the pull-down glass (#1010, #1030, #1039, #1095).
+- **R26 is met.** `folio/` is declared and on disk (`8mbk`).
+- **R24, R27, R28 and R29 are open** in `95sk`, each with its own done-when.
+
+What this bean delivered: R18–R23 and R30–R32, including R30's three asset states in both the glass half and the library half. R19's second clause, tile versus avatar, stays open on #796.

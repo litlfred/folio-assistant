@@ -288,3 +288,7 @@ to make. Both are bigger than anything in #959 and neither is blocked.
 **Everything the owner asked for on 2026-09-21 and 2026-09-22 is built and
 green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
 "the same navbar" and "one navbar", and it is stated rather than closed.
+
+## Note, 2026-09-23 — left to stream 2, by the owner's choice
+
+While going through beans, the owner chose **"Leave to stream 2"**. The one open item, switching the Jekyll sidebar to the renderer, follows `603s`, which is in #1133 (`claude/stream-2-goal2-surface`). This bean unblocks when #1133 merges. It is not claimed from here.
