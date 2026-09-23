@@ -47,7 +47,10 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     source [1] : object
     provenance [1] : object
     dakApi [1] : unknown | absent | present
+    contexts [0..*] : Context[]
+    dakUnbound [0..*] : DakUnbound[]
     count [1] : integer
+    artifacts [0..*] : Artifact[]
   }
   class "Item" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item <<json: IgMenuSchema>> #f4f4f1 {
     label [1] : string
@@ -56,6 +59,7 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
   class "Group" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group <<json: IgMenuSchema>> #f4f4f1 {
     label [1] : string
     href [0..1] : string
+    items [0..*] : Item[]
   }
   class "folio-ig-menu/v1" as smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 <<json: IgMenuSchema>> #f4f4f1 {
     $schema [1] : 'folio-ig-menu/v1'
@@ -63,8 +67,115 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     canonical [1] : string<uri>
     version [0..1] : string
     source [1] : object
+    groups [0..*] : Group[]
   }
-  class "JSON Schema 2020-12" as smart_trust_smart_trust_artifact_index_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> #f4f4f1 {
+  class "COSE Headers (DRAFT)" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_COSEHeader_schema_json_COSE_Headers__DRAFT_ <<schema: dak/StructureDefinition-COSEHeader.schema.json>> #f4f4f1 {
+    1 [0..1] : string
+    4 [0..1] : string
+    resourceType [1] : 'COSEHeader'
+  }
+  class "CBOR Web Token (CWT) Claim" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_CWT_schema_json_CBOR_Web_Token__CWT__Claim <<schema: dak/StructureDefinition-CWT.schema.json>> #f4f4f1 {
+    resourceType [1] : 'CWT'
+    header [1] : any
+    payload [1] : any
+    signature [1] : string
+  }
+  class "CBOR Web Token (CWT) Payload (Common)" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_CWTPayload_schema_json_CBOR_Web_Token__CWT__Payload__Common_ <<schema: dak/StructureDefinition-CWTPayload.schema.json>> #f4f4f1 {
+    1 [0..1] : object
+    4 [0..1] : string<date-time>
+    6 [0..1] : string<date-time>
+    resourceType [1] : 'CWTPayload'
+    -260 [0..1] : any
+  }
+  class "Health Certificate" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_HCert_schema_json_Health_Certificate <<schema: dak/StructureDefinition-HCert.schema.json>> #f4f4f1 {
+    1 [0..1] : any
+    3 [0..1] : any
+    4 [0..1] : any
+    5 [0..1] : string
+    resourceType [1] : 'HCert'
+    -6 [0..1] : any
+    -7 [0..1] : any
+  }
+  class "Scheme Information" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_SchemeInformation_schema_json_Scheme_Information <<schema: dak/StructureDefinition-SchemeInformation.schema.json>> #f4f4f1 {
+    resourceType [1] : 'SchemeInformation'
+    versionIdentifier [1] : integer
+    sequenceNumber [1] : integer
+    type [1] : string<uri>
+    operatorName [1] : string
+    operatorAddress [1..*] : object[]
+    id [0..1] : object
+    modifierExtension [0..*] : object[]
+    operatorPostalAddress [1..*] : object[]
+    operatorElectronicAddress [0..*] : object[]
+    name [1] : string
+    informationURI [1] : string<uri>
+    statusDeterminiationApproach [1] : string<uri>
+    schemeType [1] : string<uri>
+    territory [1] : string
+    policy [1] : string<uri>
+    historicalInformationPeriod [1] : integer
+    otherTSL [0..*] : string[]
+    issDateTime [1] : string<date-time>
+    nextUpdate [1] : string<date-time>
+    distributionPoints [0..*] : string<uri>[]
+  }
+  class "WHO GDHCN Actor ValueSet of actor codes Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Actors_displays_json_WHO_GDHCN_Actor_ValueSet_of_actor_codes_Display_Values <<schema: dak/ValueSet-Actors.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Connection Types Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_ConnectionTypes_displays_json_WHO_GDHCN_Connection_Types_Display_Values <<schema: dak/ValueSet-ConnectionTypes.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Domains - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_DEV_displays_json_WHO_GDHCN_Trust_Domains___DEV_Display_Values <<schema: dak/ValueSet-Domains-DEV.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Domains - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_UAT_displays_json_WHO_GDHCN_Trust_Domains___UAT_Display_Values <<schema: dak/ValueSet-Domains-UAT.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Domains Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_displays_json_WHO_GDHCN_Trust_Domains_Display_Values <<schema: dak/ValueSet-Domains.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN  Key Usage ValueSet - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_DEV_displays_json_WHO_GDHCN__Key_Usage_ValueSet___DEV_Display_Values <<schema: dak/ValueSet-KeyUsage-DEV.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN  Key Usage ValueSet - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_UAT_displays_json_WHO_GDHCN__Key_Usage_ValueSet___UAT_Display_Values <<schema: dak/ValueSet-KeyUsage-UAT.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN  Key Usage ValueSet Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_displays_json_WHO_GDHCN__Key_Usage_ValueSet_Display_Values <<schema: dak/ValueSet-KeyUsage.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Network Participant - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_DEV_displays_json_WHO_GDHCN_Trust_Network_Participant___DEV_Display_Values <<schema: dak/ValueSet-Participants-DEV.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Network Participant - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_UAT_displays_json_WHO_GDHCN_Trust_Network_Participant___UAT_Display_Values <<schema: dak/ValueSet-Participants-UAT.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Network Participant Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_displays_json_WHO_GDHCN_Trust_Network_Participant_Display_Values <<schema: dak/ValueSet-Participants.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Payload Types Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_PayloadTypes_displays_json_WHO_GDHCN_Payload_Types_Display_Values <<schema: dak/ValueSet-PayloadTypes.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO GDHCN Transaction Codes Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Transactions_displays_json_WHO_GDHCN_Transaction_Codes_Display_Values <<schema: dak/ValueSet-Transactions.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "WHO Regional Offices Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_WHORegionalOffices_displays_json_WHO_Regional_Offices_Display_Values <<schema: dak/ValueSet-WHORegionalOffices.displays.json>> #f4f4f1 {
+    fhir:displays [1] : object
+  }
+  class "14 schema(s) with no properties" as smart_trust_smart_trust_artifact_index_https___json_schema_org_draft_2020_12_schema_listed <<ext: JSON Schema 2020-12>> #f4f4f1 {
+    dak/ValueSet-Actors [1] : enum(5) of string
+    dak/ValueSet-ConnectionTypes [1] : enum(2) of string
+    dak/ValueSet-Domains-DEV [1] : enum(4) of string
+    dak/ValueSet-Domains-UAT [1] : enum(4) of string
+    dak/ValueSet-Domains [1] : enum(4) of string
+    dak/ValueSet-KeyUsage-DEV [1] : enum(10) of string
+    dak/ValueSet-KeyUsage-UAT [1] : enum(10) of string
+    dak/ValueSet-KeyUsage [1] : enum(10) of string
+    dak/ValueSet-Participants-DEV [1] : enum(60) of string
+    dak/ValueSet-Participants-UAT [1] : enum(57) of string
+    dak/ValueSet-Participants [1] : enum(34) of string
+    dak/ValueSet-PayloadTypes [1] : enum(1) of string
+    dak/ValueSet-Transactions [1] : enum(3) of string
+    dak/ValueSet-WHORegionalOffices [1] : enum(7) of string
   }
 }
 package "smart-trust/smart-trust-docs" as pkg_smart_trust_smart_trust_docs <<docs>> {

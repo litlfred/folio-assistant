@@ -25,6 +25,7 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     alternativeTo [0..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    maintains [0..*] : Maintain[]
   }
 }
 

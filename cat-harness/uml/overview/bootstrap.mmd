@@ -6,8 +6,42 @@ classDiagram
     }
   }
   namespace bootstrap__schemas {
-    class bootstrap_schemas_http___json_schema_org_draft_07_schema_["JSON Schema draft-07"] {
-      <<ext: JSON Schema draft-07>>
+    class bootstrap_schemas_discussion_input_schema_json_KnownRepository["KnownRepository"] {
+      <<schema: discussion.input.schema.json>>
+      url [1] string
+      role [1] read-from | written-to
+      note [0..1] string
+    }
+    class bootstrap_schemas_discussion_input_schema_json_Discussion_Input["Discussion Input"] {
+      <<schema: discussion.input.schema.json>>
+      open [1..*] list~harness | repositories~
+      askedOf [1] object
+      candidates [0..*] string[]
+      knownRepositories [0..*] KnownRepository[]
+      context [0..1] string
+    }
+    class bootstrap_schemas_discussion_output_schema_json_Repository["Repository"] {
+      <<schema: discussion.output.schema.json>>
+      url [1] string
+      role [1] read-from | written-to
+      note [0..1] string
+    }
+    class bootstrap_schemas_discussion_output_schema_json_Exchange["Exchange"] {
+      <<schema: discussion.output.schema.json>>
+      asked [1] string
+      answered [0..1] string
+      at [0..1] string~date-time~
+    }
+    class bootstrap_schemas_discussion_output_schema_json_Discussion_Output["Discussion Output"] {
+      <<schema: discussion.output.schema.json>>
+      outcome [1] settled | unsettled
+      harness [0..1] string
+      repositories [0..*] Repository[]
+      determinedBy [0..1] asked | assumed
+      assumption [0..1] string
+      answeredBy [1] object
+      exchange [1..*] Exchange[]
+      stillOpen [0..*] list~harness | repositories~
     }
   }
   namespace bootstrap__scenarios {
@@ -37,6 +71,8 @@ classDiagram
     class bootstrap_scenarios_RoleGraph["RoleGraph"] {
       <<json: RoleGraphSchema>>
       name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
     }
   }
   namespace bootstrap__processes {
@@ -80,6 +116,7 @@ classDiagram
     class bootstrap_models_ModelRegistry["ModelRegistry"] {
       <<json: ModelRegistrySchema>>
       $schema [1] 'folio-model-registry/v1'
+      models [0..*] Model[]
     }
   }
   namespace bootstrap__glossary {
@@ -102,7 +139,14 @@ classDiagram
   }
   cssClass "n_bootstrap_cat_harness_skills" fa_uml_kind_skills
   cssClass "n_bootstrap_cat_harness_skills" fa_uml_undetermined
-  cssClass "bootstrap_schemas_http___json_schema_org_draft_07_schema_" fa_uml_kind_schemas
+  bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
+  bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "0..*" bootstrap_schemas_discussion_output_schema_json_Repository : repositories
+  bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" bootstrap_schemas_discussion_output_schema_json_Exchange : exchange
+  cssClass "bootstrap_schemas_discussion_input_schema_json_KnownRepository" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_discussion_input_schema_json_Discussion_Input" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_discussion_output_schema_json_Repository" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_discussion_output_schema_json_Exchange" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_discussion_output_schema_json_Discussion_Output" fa_uml_kind_schemas
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
   cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios

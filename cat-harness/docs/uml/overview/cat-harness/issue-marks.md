@@ -32,6 +32,7 @@ classDiagram
   namespace cat_harness__issue_marks {
     class cat_harness_issue_marks_issue_marks_shape["issue-marks"] {
       <<schema: src/issue-watch/seen-comments.ts>>
+      fields not machine-readable: src/issue-watch/seen-comments.ts names no exported schema
     }
   }
   cssClass "cat_harness_issue_marks_issue_marks_shape" fa_uml_kind_issue_marks
