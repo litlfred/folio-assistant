@@ -84,6 +84,7 @@
         "uploads"
       ],
       "coverage": {
+        "_visualiser_comment": "SHARED WITH THE `library` ENTRY, AND THAT IS DELIBERATE — recorded 2026-09-23 (issue #1009) because it was not. The library viewer carries an uploads SECTION scoped to the same subject (`G.uploads.filter(inScope)` in `gen-library-viz.ts`), so one page answers both graphs for this instance and there is no `uploads/who-iris/` page to point at. An unavoidable duplicate is fine; an UNCHECKED one is not, which is the rule the sibling `catalogue` entry's own ref comment exists to satisfy. The visible cost of the silence: the harness rail shows `library` and `uploads` as two entries resolving to one URL, and nothing said why. If an `uploads/<instance>/` viewer is ever generated for who-iris — `folio-assistant` already has one — this should point at it instead.",
         "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "library-ingestion"
