@@ -78,12 +78,26 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
+    "pass": 11,
     "fail": 0,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/jsonld-drift-check.bpmn",
+      "code": ".github/workflows/jsonld-gen-check.yml",
+      "prose_hash": "0f1462a45c48",
+      "code_hash": "6b2acbbf2868",
+      "by": "baseline"
+    }
+  ]
 }

@@ -117,6 +117,15 @@ package "cat-harness/methodologies" as pkg_cat_harness_methodologies <<methodolo
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodologies_methodology
 }
 package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
+  class "Pair_attestation" as cat_harness_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
+    kind [1] : implements | co-located
+    prose [1] : string
+    code [1] : string
+    prose_hash [1] : string
+    code_hash [1] : string
+    by [1] : baseline | agent | human
+    reason [0..1] : string
+  }
   class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
@@ -503,6 +512,7 @@ cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintai
 cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
+cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
