@@ -9,65 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
-  class "Relation" as who_iris_who_iris_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
-    axis [1] : string
-    label [1] : string
-    href [0..1] : string
-  }
-  class "Item" as who_iris_who_iris_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
-    id [1] : string
-    summary [1] : string
-    comment [1] : string
-    status [1] : string
-    priority [1] : string
-    origin [0..1] : string
-    createdAt [1] : string
-    targetLabel [0..1] : string
-    target [0..1] : object
-    theme [0..1] : string
-    tags [1] : object
-    viewHref [0..1] : string
-    editHref [0..1] : string
-  }
-  class "folio-todo-index/v1" as who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
-    $schema [1] : 'folio-todo-index/v1'
-    tile [0..1] : map<object>
-    repoWeb [1] : string
-    processes [1] : map<string[]>
-    themeArt [1] : map<map<string>>
-  }
-  class "folio-semantic-zoom/v1" as who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
-    $schema [1] : 'folio-semantic-zoom/v1'
-    belowPx [1] : number
-    byKind [0..1] : map<object>
-  }
-  class "folio-qa-graph/v1" as who_iris_who_iris_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
-    $schema [1] : typeof QA_GRAPH_INDEX_SCHEMA
-    files [1] : number
-    families [1] : QaFamily[]
-    unclassified [1] : number
-    unreadable [1] : number
-  }
-  class "folio-translation-index/v1" as who_iris_who_iris_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
-    $schema [1] : string
-    sourceLocale [1] : string
-    locales [1] : string[]
-    pages [1] : Record<string, IndexedPage>
-  }
-  class "folio-bean-index/v1" as who_iris_who_iris_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
-  }
-  class "folio-translation-status/v1" as who_iris_who_iris_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
-  }
-  class "folio-schema-graph/v1" as who_iris_who_iris_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
-  }
-  class "folio-library-index/v1" as who_iris_who_iris_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
-  }
-  class "folio-voices-index/v1" as who_iris_who_iris_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
-  }
-  class "folio-graph-projection/v1" as who_iris_who_iris_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
-  }
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (10 named): could not determine)" as n_who_iris_who_iris_docs_docs
 }
 
-who_iris_who_iris_docs_folio_todo_index_v1_Item *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Relation : relations
-who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Item : items
 @enduml

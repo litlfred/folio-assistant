@@ -15,11 +15,6 @@ package "smart-base/library" as pkg_smart_base_library <<library>> {
     images [1] : object[] | null
     undetermined_reason [0..1] : string
   }
-  class "folio-image-verdicts/v1" as smart_base_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
-    inspected_by [1] : unknown
-    inspected_at [1] : string
-    verdicts [1] : Record<string, Record<string, Verdict>>
-  }
 }
 
 @enduml

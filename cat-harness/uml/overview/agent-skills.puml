@@ -11,8 +11,6 @@ hide empty methods
 package "agent-skills/library" as pkg_agent_skills_library <<library>> {
   class "folio-document-images/v1" as agent_skills_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
   }
-  class "folio-image-verdicts/v1" as agent_skills_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
-  }
 }
 package "agent-skills/voices" as pkg_agent_skills_voices <<voices>> {
   class "Source" as agent_skills_voices_Source <<json: VoiceProfileSchema>> {

@@ -20,20 +20,13 @@ classDiagram
       images [1] object[] | null
       undetermined_reason [0..1] string
     }
-    class smart_base_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
-      <<ts: VerdictFile>>
-      inspected_by [1] unknown
-      inspected_at [1] string
-      verdicts [1] Record~string, Record~string, Verdict~~
-    }
   }
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
-  cssClass "smart_base_library_folio_image_verdicts_v1" fa_uml_kind_library
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `smart-base/library` | `smart-base/library` | library | `ImagesSidecarSchema`; `ts: VerdictFile` |
+| `smart-base/library` | `smart-base/library` | library | `ImagesSidecarSchema` |
 
 ## Sub-graphs
 

@@ -9,32 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
-  class "Asset" as cat_harness_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> {
-    path [1] : string
-    bytes [1] : integer
-    mediaType [0..1] : string
-    modifiedAt [0..1] : string
-    sha256 [0..1] : string
-    localPath [0..1] : string
-    extractedBecause [0..1] : string
-  }
-  class "Omitted" as cat_harness_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> {
-    pattern [1] : string
-    reason [1] : string
-    count [1] : integer
-  }
-  class "folio-extraction/v1" as cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> {
-    $schema [1] : 'folio-extraction/v1'
-    container [1] : string
-    method [1] : zip | pdf | saved-webpage | tarball
-    capturedAt [0..1] : string
-    producer [0..1] : string
-    readAt [1] : string
-  }
-  class "folio-intake/v1" as cat_harness_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> {
-  }
+  note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (2 named): could not determine)" as n_cat_harness_uploads_uploads
 }
 
-cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" cat_harness_uploads_folio_extraction_v1_Asset : assets
-cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" cat_harness_uploads_folio_extraction_v1_Omitted : omitted
 @enduml

@@ -206,6 +206,33 @@ function drawFamily(
   }
 }
 
+/** Every `$schema` tag carried by a JSON file under `dir`. */
+function tagsUnder(dir: string): Set<string> {
+  const out = new Set<string>();
+  const walkDir = (d: string): void => {
+    let entries: string[];
+    try {
+      entries = readdirSync(d);
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const p = join(d, e);
+      if (statSync(p).isDirectory()) walkDir(p);
+      else if (p.endsWith(".json")) {
+        try {
+          const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
+          if (typeof tag === "string") out.add(tag);
+        } catch {
+          // not a node
+        }
+      }
+    }
+  };
+  walkDir(dir);
+  return out;
+}
+
 // ── Reading the harnesses ─────────────────────────────────────────────────
 
 /**
@@ -274,7 +301,18 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
       // class per family — seven for `qa` — rather than as one kind-level box.
       const families = await resolveNodeSchemas(kind, HARNESS);
       if (families.length) {
-        for (const f of families) drawFamily(f, kind, prefix, acc, section);
+        // Only the families THIS sub-graph holds. The map is the kind's, across
+        // every harness; drawing all of it put cat-harness's voice schemas in
+        // bootstrap/skills, which holds none of them.
+        const here = tagsUnder(join(REPO, section.path));
+        const present = families.filter((f) => here.has(f.tag));
+        for (const f of present) drawFamily(f, kind, prefix, acc, section);
+        if (present.length === 0) {
+          section.undetermined.push({
+            kind,
+            reason: `no node here carries a $schema family ${kind} names (${families.length} named)`,
+          });
+        }
         continue;
       }
       let v = await resolveKindValidator(kind, instanceRoot);

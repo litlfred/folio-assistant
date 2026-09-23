@@ -9,37 +9,10 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/cat-harness" as pkg_bootstrap_cat_harness <<skills>> {
-  class "Source" as bootstrap_cat_harness_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
-  }
-  class "Pattern" as bootstrap_cat_harness_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
-  }
-  class "Terminology" as bootstrap_cat_harness_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
-  }
-  class "Rule" as bootstrap_cat_harness_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
-  }
-  class "folio-voice/v1" as bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
-  }
-  class "Source" as bootstrap_cat_harness_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
-  }
-  class "Pattern" as bootstrap_cat_harness_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
-  }
-  class "Terminology" as bootstrap_cat_harness_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
-  }
-  class "Rule" as bootstrap_cat_harness_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
-  }
-  class "folio-voice-skill/v1" as bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
-  }
-  class "kg-qa-manifest/v1" as bootstrap_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
-  }
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_cat_harness_skills
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "JSON Schema draft-07" as bootstrap_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
-  }
-  class "JSON Schema 2020-12" as bootstrap_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
-  }
-  class "Identifier" as bootstrap_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
-  }
-  class "folio-source-descriptor/v1" as bootstrap_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
   }
 }
 package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
@@ -69,15 +42,6 @@ package "bootstrap/bootstrap-translations" as pkg_bootstrap_bootstrap_translatio
   }
 }
 
-bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_v1_Source : sources
-bootstrap_cat_harness_folio_voice_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_v1_Pattern : patterns
-bootstrap_cat_harness_folio_voice_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_v1_Terminology : terminology
-bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_v1_Rule : rules
-bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Source : sources
-bootstrap_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Pattern : patterns
-bootstrap_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Terminology : terminology
-bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_skill_v1_Rule : rules
-bootstrap_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" bootstrap_schemas_folio_source_descriptor_v1_Identifier : identifiers
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models

@@ -58,38 +58,8 @@ classDiagram
     }
   }
   namespace who_iris__who_iris_skills {
-    class who_iris_who_iris_skills_folio_voice_v1_Source["Source"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_v1_Pattern["Pattern"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_v1_Terminology["Terminology"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_v1_Rule["Rule"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_skill_v1_Source["Source"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_skill_v1_Pattern["Pattern"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_skill_v1_Terminology["Terminology"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_skill_v1_Rule["Rule"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class who_iris_who_iris_skills_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
-      <<json: KgQaManifestSchema>>
+    class n_who_iris_who_iris_skills_skills["skills: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace who_iris__who_iris_themes {
@@ -101,41 +71,8 @@ classDiagram
     }
   }
   namespace who_iris__who_iris_docs {
-    class who_iris_who_iris_docs_folio_todo_index_v1_Relation["Relation"] {
-      <<json: TodoIndexSchema>>
-    }
-    class who_iris_who_iris_docs_folio_todo_index_v1_Item["Item"] {
-      <<json: TodoIndexSchema>>
-    }
-    class who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1["folio-todo-index/v1"] {
-      <<json: TodoIndexSchema>>
-    }
-    class who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1["folio-semantic-zoom/v1"] {
-      <<json: SemanticZoomSchema>>
-    }
-    class who_iris_who_iris_docs_folio_qa_graph_v1["folio-qa-graph/v1"] {
-      <<ts: QaGraphIndex>>
-    }
-    class who_iris_who_iris_docs_folio_translation_index_v1["folio-translation-index/v1"] {
-      <<ts: TranslationIndex>>
-    }
-    class who_iris_who_iris_docs_folio_bean_index_v1["folio-bean-index/v1"] {
-      <<untyped: written by scripts/gen-docs-pages.ts>>
-    }
-    class who_iris_who_iris_docs_folio_translation_status_v1["folio-translation-status/v1"] {
-      <<untyped: written by scripts/gen-translation-status.ts>>
-    }
-    class who_iris_who_iris_docs_folio_schema_graph_v1["folio-schema-graph/v1"] {
-      <<untyped: written by scripts/gen-schema-viz.ts>>
-    }
-    class who_iris_who_iris_docs_folio_library_index_v1["folio-library-index/v1"] {
-      <<untyped: written by scripts/gen-library-viz.ts>>
-    }
-    class who_iris_who_iris_docs_folio_voices_index_v1["folio-voices-index/v1"] {
-      <<untyped: written by scripts/gen-voices-viz.ts>>
-    }
-    class who_iris_who_iris_docs_folio_graph_projection_v1["folio-graph-projection/v1"] {
-      <<untyped: written by scripts/gen-folio-viz.ts>>
+    class n_who_iris_who_iris_docs_docs["docs: no node schema"] {
+      <<could not determine>>
     }
   }
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
@@ -157,42 +94,13 @@ classDiagram
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_intake_v1" fa_uml_kind_uploads
-  who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_v1_Source : sources
-  who_iris_who_iris_skills_folio_voice_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_v1_Pattern : patterns
-  who_iris_who_iris_skills_folio_voice_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_v1_Terminology : terminology
-  who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_v1_Rule : rules
-  who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Source : sources
-  who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Pattern : patterns
-  who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Terminology : terminology
-  who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_skill_v1_Rule : rules
-  cssClass "who_iris_who_iris_skills_folio_voice_v1_Source" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_v1_Pattern" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_v1_Terminology" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_v1_Rule" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_skill_v1_Source" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_skill_v1_Rule" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
-  cssClass "who_iris_who_iris_skills_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
+  cssClass "n_who_iris_who_iris_skills_skills" fa_uml_kind_skills
+  cssClass "n_who_iris_who_iris_skills_skills" fa_uml_undetermined
   who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
   cssClass "who_iris_who_iris_themes_Override" fa_uml_kind_themes
   cssClass "who_iris_who_iris_themes_Theme" fa_uml_kind_themes
-  who_iris_who_iris_docs_folio_todo_index_v1_Item *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Relation : relations
-  who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Item : items
-  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_Relation" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_Item" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_qa_graph_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_translation_index_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_bean_index_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_translation_status_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_schema_graph_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_library_index_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_voices_index_v1" fa_uml_kind_docs
-  cssClass "who_iris_who_iris_docs_folio_graph_projection_v1" fa_uml_kind_docs
+  cssClass "n_who_iris_who_iris_docs_docs" fa_uml_kind_docs
+  cssClass "n_who_iris_who_iris_docs_docs" fa_uml_undetermined
 ```
 
 | sub-graph | directory | graph kinds | node schema |
@@ -200,9 +108,9 @@ classDiagram
 | `who-iris/library` | `who-iris/library` | library | `ImagesSidecarSchema`; `ts: VerdictFile` |
 | `who-iris/who-iris-catalogue` | `who-iris/catalogue` | catalogue | `DublinCoreRecordSchema`; `CatalogueNodeSchema`; `CatalogueSchema` |
 | `who-iris/who-iris-uploads` | `who-iris/uploads` | uploads | `ExtractionSchema`; `untyped: written by scripts/library-graph.ts` |
-| `who-iris/who-iris-skills` | `who-iris/skills` | skills | `VoiceProfileSchema`; `VoiceSkillSchema`; `KgQaManifestSchema` |
+| `who-iris/who-iris-skills` | `who-iris/skills` | skills | skills: *could not determine* |
 | `who-iris/who-iris-themes` | `who-iris/themes` | themes | `ThemeSchema` |
-| `who-iris/who-iris-docs` | `who-iris/docs` | docs | `TodoIndexSchema`; `SemanticZoomSchema`; `ts: QaGraphIndex`; `ts: TranslationIndex`; `untyped: written by scripts/gen-docs-pages.ts`; `untyped: written by scripts/gen-translation-status.ts`; `untyped: written by scripts/gen-schema-viz.ts`; `untyped: written by scripts/gen-library-viz.ts`; `untyped: written by scripts/gen-voices-viz.ts`; `untyped: written by scripts/gen-folio-viz.ts` |
+| `who-iris/who-iris-docs` | `who-iris/docs` | docs | docs: *could not determine* |
 
 ## Sub-graphs
 

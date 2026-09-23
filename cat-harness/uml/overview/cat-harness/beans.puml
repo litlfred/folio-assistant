@@ -9,21 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/beans" as pkg_cat_harness_beans <<beans>> {
-  class "folio-workflow-instance/v1" as cat_harness_beans_folio_workflow_instance_v1 <<ts: InstanceState>> {
-    $schema [0..1] : string
-    id [1] : string
-    processId [1] : string
-    source [1] : string
-    subject [1] : string
-    bean [0..1] : string
-    tokens [1] : string[]
-    arrivals [1] : Record<string, string[]>
-    history [1] : HistoryEntry[]
-    status [1] : 'running' | 'completed'
-    startedAt [1] : string
-    updatedAt [1] : string
-    children [0..1] : Record<string, InstanceState>
-  }
+  note "beans: no node schema declared\n(no node here carries a $schema family beans names (1 named): could not determine)" as n_cat_harness_beans_beans
 }
 
 @enduml

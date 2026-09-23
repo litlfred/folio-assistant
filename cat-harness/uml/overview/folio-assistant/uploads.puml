@@ -31,8 +31,6 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     producer [0..1] : string
     readAt [1] : string
   }
-  class "folio-intake/v1" as folio_assistant_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> {
-  }
 }
 
 folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets

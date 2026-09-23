@@ -1,21 +1,9 @@
 classDiagram
   direction TB
   namespace cat_harness__beans {
-    class cat_harness_beans_folio_workflow_instance_v1["folio-workflow-instance/v1"] {
-      <<ts: InstanceState>>
-      $schema [0..1] string
-      id [1] string
-      processId [1] string
-      source [1] string
-      subject [1] string
-      bean [0..1] string
-      tokens [1] string[]
-      arrivals [1] Record~string, string[]~
-      history [1] HistoryEntry[]
-      status [1] 'running' | 'completed'
-      startedAt [1] string
-      updatedAt [1] string
-      children [0..1] Record~string, InstanceState~
+    class n_cat_harness_beans_beans["beans: no node schema"] {
+      <<could not determine>>
     }
   }
-  cssClass "cat_harness_beans_folio_workflow_instance_v1" fa_uml_kind_beans
+  cssClass "n_cat_harness_beans_beans" fa_uml_kind_beans
+  cssClass "n_cat_harness_beans_beans" fa_uml_undetermined

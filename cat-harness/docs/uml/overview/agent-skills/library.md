@@ -20,20 +20,13 @@ classDiagram
       images [1] object[] | null
       undetermined_reason [0..1] string
     }
-    class agent_skills_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
-      <<ts: VerdictFile>>
-      inspected_by [1] unknown
-      inspected_at [1] string
-      verdicts [1] Record~string, Record~string, Verdict~~
-    }
   }
   cssClass "agent_skills_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
-  cssClass "agent_skills_library_folio_image_verdicts_v1" fa_uml_kind_library
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `agent-skills/library` | `agent-skills/library` | library | `ImagesSidecarSchema`; `ts: VerdictFile` |
+| `agent-skills/library` | `agent-skills/library` | library | `ImagesSidecarSchema` |
 
 ## Sub-graphs
 

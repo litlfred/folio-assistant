@@ -21,35 +21,10 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
   }
 }
 package "smart-trust/smart-trust-docs" as pkg_smart_trust_smart_trust_docs <<docs>> {
-  class "Relation" as smart_trust_smart_trust_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
-  }
-  class "Item" as smart_trust_smart_trust_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
-  }
-  class "folio-todo-index/v1" as smart_trust_smart_trust_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
-  }
-  class "folio-semantic-zoom/v1" as smart_trust_smart_trust_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
-  }
-  class "folio-qa-graph/v1" as smart_trust_smart_trust_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
-  }
-  class "folio-translation-index/v1" as smart_trust_smart_trust_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
-  }
-  class "folio-bean-index/v1" as smart_trust_smart_trust_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
-  }
-  class "folio-translation-status/v1" as smart_trust_smart_trust_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
-  }
-  class "folio-schema-graph/v1" as smart_trust_smart_trust_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
-  }
-  class "folio-library-index/v1" as smart_trust_smart_trust_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
-  }
-  class "folio-voices-index/v1" as smart_trust_smart_trust_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
-  }
-  class "folio-graph-projection/v1" as smart_trust_smart_trust_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
-  }
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (10 named): could not determine)" as n_smart_trust_smart_trust_docs_docs
 }
 
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
-smart_trust_smart_trust_docs_folio_todo_index_v1_Item *-- "0..*" smart_trust_smart_trust_docs_folio_todo_index_v1_Relation : relations
-smart_trust_smart_trust_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" smart_trust_smart_trust_docs_folio_todo_index_v1_Item : items
 @enduml

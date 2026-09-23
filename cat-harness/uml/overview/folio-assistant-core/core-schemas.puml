@@ -9,30 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_schemas <<schemas, cat-harness>> {
-  class "JSON Schema draft-07" as folio_assistant_core_core_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
-  }
-  class "JSON Schema 2020-12" as folio_assistant_core_core_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
-  }
-  class "Identifier" as folio_assistant_core_core_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
-    name [1] : string
-    authoritative [1] : boolean
-    example [0..1] : string
-    note [0..1] : string
-  }
-  class "folio-source-descriptor/v1" as folio_assistant_core_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
-    $schema [1] : 'folio-source-descriptor/v1'
-    id [1] : string
-    title [1] : string
-    system [0..1] : string
-    baseUrl [0..1] : string<uri>
-    nodeKind [1] : string
-    subsetStrategies [1..*] : list<container | identifier | facet | range | closure>
-    subsetIsSelfContained [1] : boolean
-    enumeration [1] : object
-    termsUrl [0..1] : string<uri>
-    character [1] : object
-  }
+  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_folio_assistant_core_core_schemas_schemas
 }
 
-folio_assistant_core_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_core_core_schemas_folio_source_descriptor_v1_Identifier : identifiers
 @enduml

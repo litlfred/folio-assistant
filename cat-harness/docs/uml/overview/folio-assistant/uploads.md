@@ -38,21 +38,17 @@ classDiagram
       producer [0..1] string
       readAt [1] string
     }
-    class folio_assistant_uploads_folio_intake_v1["folio-intake/v1"] {
-      <<untyped: written by scripts/library-graph.ts>>
-    }
   }
   folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
   folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
   cssClass "folio_assistant_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
-  cssClass "folio_assistant_uploads_folio_intake_v1" fa_uml_kind_uploads
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `folio-assistant/uploads` | `uploads` | uploads | `ExtractionSchema`; `untyped: written by scripts/library-graph.ts` |
+| `folio-assistant/uploads` | `uploads` | uploads | `ExtractionSchema` |
 
 ## Sub-graphs
 

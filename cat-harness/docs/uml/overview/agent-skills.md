@@ -16,9 +16,6 @@ classDiagram
     class agent_skills_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
     }
-    class agent_skills_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
-      <<ts: VerdictFile>>
-    }
   }
   namespace agent_skills__voices {
     class agent_skills_voices_Source["Source"] {
@@ -38,7 +35,6 @@ classDiagram
     }
   }
   cssClass "agent_skills_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
-  cssClass "agent_skills_library_folio_image_verdicts_v1" fa_uml_kind_library
   agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Source : sources
   agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Pattern : patterns
   agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Terminology : terminology
@@ -52,7 +48,7 @@ classDiagram
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `agent-skills/library` | `agent-skills/library` | library | `ImagesSidecarSchema`; `ts: VerdictFile` |
+| `agent-skills/library` | `agent-skills/library` | library | `ImagesSidecarSchema` |
 | `agent-skills/voices` | `agent-skills/skills/voices` | voices | `VoiceProfileSchema` |
 
 ## Sub-graphs

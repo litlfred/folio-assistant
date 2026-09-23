@@ -16,9 +16,6 @@ classDiagram
     class smart_base_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
     }
-    class smart_base_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
-      <<ts: VerdictFile>>
-    }
   }
   namespace smart_base__methodologies {
     class n_smart_base_methodologies_methodology["methodology: no node schema"] {
@@ -73,7 +70,6 @@ classDiagram
     }
   }
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
-  cssClass "smart_base_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "n_smart_base_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_smart_base_methodologies_methodology" fa_uml_undetermined
   smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
@@ -101,7 +97,7 @@ classDiagram
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `smart-base/library` | `smart-base/library` | library | `ImagesSidecarSchema`; `ts: VerdictFile` |
+| `smart-base/library` | `smart-base/library` | library | `ImagesSidecarSchema` |
 | `smart-base/methodologies` | `smart-base/methodologies` | methodology | methodology: *could not determine* |
 | `smart-base/voices` | `smart-base/skills/voices` | voices | `VoiceProfileSchema` |
 | `smart-base/processes` | `smart-base/methodologies/processes` | processes | `ext: omg-bpmn-2.0` |
