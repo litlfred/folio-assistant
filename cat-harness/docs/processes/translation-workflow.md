@@ -44,4 +44,14 @@ Every one of the 9 step(s) is documented.
 | **Write status.json (official)**<br>`Task_WriteOfficial` | Agent / platform (automated) | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | Records the sign-off with the SHA-256 of the source .md, enabling staleness detection on future source changes. |
 | **Check staleness (source hash)**<br>`Task_StalenessCheck` | Agent / platform (automated) | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | On source content change: computes sha256(source.md) and compares to each translation's status.json sourceHash. If they differ, sets stale: true. The translation remains visible with a "stale — needs re-adjudication" indicator. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Drift or bad terminology?**<br>`Gateway_Drift` | — | **Drift detected** → Adjudicate flagged passage (human reviewer)<br>**Clean** → Write status.json (unofficial) |
+| **QA passed?**<br>`Gateway_PostQA` | — | **Re-translate** → Produce translation (PO file)<br>**Accepted** → Write status.json (unofficial) |
+| **Human sign-off?**<br>`Gateway_Signoff` | — | **Yes** → Sign off translation (human adjudicator)<br>**Not now** → Translation complete |
+
 {% endraw %}

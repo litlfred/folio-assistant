@@ -43,4 +43,13 @@ Every one of the 7 step(s) is documented.
 | **Write what changed**<br>`A_UpdateSession` | Agent (playing the machine) | [`session-context`](../reference/skill-instructions/session-context.html) | An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim. |
 | **Close the session**<br>`A_CloseSession` | Agent (playing the machine) | [`session-context`](../reference/skill-instructions/session-context.html) | Records that the actor stopped. It does NOT resolve beans or complete instances: those outlive the session by design, and a machine that closed them on the way out would be asserting work finished because somebody went away. |
 
+## Decisions
+
+**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Actor established?**<br>`Gateway_ActorKnown` | — | **no** → Ask who is acting<br>**yes** → Open the session record |
+| **What did the turn change?**<br>`Gateway_TurnEffect` | THE non-deterministic point, and the reason this process exists. Three branches, and the agent chooses. | **nothing changed** → Refresh `updatedAt` only<br>**state changed** → Write what changed<br>**the session is ending** → Close the session |
+
 {% endraw %}

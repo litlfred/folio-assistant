@@ -50,4 +50,13 @@ Every one of the 11 step(s) is documented.
 | **Version, tag and publish**<br>`Task_PublishRelease` | Publication manager | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. |
 | **Close the release beans**<br>`Task_CloseReleaseBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | What shipped is resolved; what slipped stays open and carries into the next cycle. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Draft QA green?**<br>`Gateway_QaGreen` | — | **no** → Editing and HCI validation<br>**yes** → Circulate the draft |
+| **Approved?**<br>`Gateway_ReviewOutcome` | — | **no** → Open beans for the change requests<br>**yes** → Authorise the release |
+
 {% endraw %}

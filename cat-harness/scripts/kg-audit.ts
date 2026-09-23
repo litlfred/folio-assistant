@@ -84,7 +84,7 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
-import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
@@ -523,6 +523,28 @@ async function auditProcess(
     }
   }
 
+  // DECISIONS — diverging exclusive gateways. Merges, forks and joins decide
+  // nothing, so `isDecision` leaves them out; see the criteria's notes in
+  // `schemas/kg-qa.ts` for the measurement behind both.
+  const decisions = [...m.nodes.values()].filter(isDecision);
+  const undocumentedDecision: KgFinding[] = decisions
+    .filter((n) => !n.documentation)
+    .map((n) => ({
+      where: n.id,
+      detail:
+        `"${n.name}" carries no <bpmn:documentation>, so its page shows the question and not what answers it ` +
+        `— who decides, from what evidence, and what each branch commits the process to.`,
+    }));
+  const indistinct: KgFinding[] = decisions.flatMap((n) =>
+    indistinctBranches(m, n).map((b) => ({
+      where: b.flowId,
+      detail:
+        b.problem === "unnamed"
+          ? `a branch out of "${n.name}" (${n.id}) has no name, so a reader cannot tell which answer takes it.`
+          : `a branch out of "${n.name}" (${n.id}) is labelled "${b.label}", as is a sibling — the two cannot be told apart.`,
+    })),
+  );
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -631,6 +653,10 @@ async function auditProcess(
     "process-diagram-published": published,
     "activity-documented": entry(undocumented, activities.length > 0),
     "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
+    // `n/a` for a diagram with no decision — a linear process has nothing to
+    // document here, which is not the same as having documented it.
+    "gateway-documented": entry(undocumentedDecision, decisions.length > 0),
+    "gateway-branches-named": entry(indistinct, decisions.length > 0),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.

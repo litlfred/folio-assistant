@@ -56,4 +56,13 @@ Every one of the 17 step(s) is documented.
 | **Commit into the corpus**<br>`Task_Commit` | Corpus (versioned store) | — | Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement. |
 | **Resolve or re-open the bean**<br>`Task_ResolveBean` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Resolved when the change landed clean; left open with the residue when it did not. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Judgement call?**<br>`Gateway_ReviewerKind` | — | **no** → Agent review of the change<br>**yes** → Human / SME review |
+| **Accept, revise or discard?**<br>`Gateway_EditorDecision` | — | **revise** → Revise the proposed change<br>**discard** → Change discarded<br>**accept** → Commit into the corpus |
+
 {% endraw %}
