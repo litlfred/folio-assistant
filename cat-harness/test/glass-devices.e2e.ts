@@ -157,3 +157,38 @@ test.describe("a TABLET is a laptop, and a finger can drag", () => {
     expect(after === "none" || after === "normal").toBe(true);
   });
 });
+
+test.describe("the count is SPOKEN, not only drawn", () => {
+  // Owner, 2026-09-23: "do the spoken count on phone next". The `· N` is an
+  // `::after`; the handle's aria-label replaces its content, so the number was
+  // visible and silent until it joined the accessible name.
+  test("on a phone, the handle's accessible name says how many are waiting", async ({ page }) => {
+    await setup(page, PHONE);
+    await expect(page.getByRole("button", { name: "Pull down your folio — 2 items on it" })).toBeVisible();
+  });
+
+  test("it follows the count — one item is singular", async ({ page }) => {
+    await setup(page, PHONE);
+    await page.locator('[data-fa-home-slot="a"] .fa-sticky-recall').click();
+    await expect(page.locator(".fa-glass-handle")).toHaveAttribute("aria-label", "Pull down your folio — 1 item on it");
+  });
+
+  test("open, the name is the plain inverse — the cards are in front of the reader", async ({ page }) => {
+    await setup(page, PHONE);
+    await openGlass(page);
+    await expect(page.locator(".fa-glass-handle")).toHaveAttribute("aria-label", "Put your folio away");
+  });
+
+  test("with nothing waiting there is no count to speak", async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await page.route("http://dev.test/**", (r) => r.fulfill({ contentType: "text/html", body: PAGE }));
+    await page.goto("http://dev.test/p.html");
+    await page.waitForSelector(".fa-glass-handle", { state: "attached" });
+    await expect(page.locator(".fa-glass-handle")).toHaveAttribute("aria-label", "Pull down your folio");
+  });
+
+  test("one name on every screen — a tablet speaks the same count", async ({ page }) => {
+    await setup(page, TABLET);
+    await expect(page.locator(".fa-glass-handle")).toHaveAttribute("aria-label", "Pull down your folio — 2 items on it");
+  });
+});
