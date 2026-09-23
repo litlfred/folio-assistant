@@ -309,7 +309,7 @@ export function buildDocumentNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": docIri(docId, "manifest"),
-      "@type": ["folio:SourceDocument"],
+      "@type": ["folio-assistant-core:SourceDocument"],
       title: structure.metadata?.title ?? docId,
       contains: sectionIris,
       provenance: "ingested",

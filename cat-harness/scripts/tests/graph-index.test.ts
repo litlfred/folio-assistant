@@ -48,7 +48,7 @@ beforeAll(() => {
 
   node(CONTENT, "def-widget", {
     "@id": "papers/qou/blocks/def-widget",
-    "@type": ["folio:Definition", "doco:Section"],
+    "@type": ["folio-assistant-core:Definition", "doco:Section"],
     label: "def:widget",
     kind: "definition",
     title: "A widget",
@@ -60,7 +60,7 @@ beforeAll(() => {
 
   node(CONTENT, "thm-main", {
     "@id": "papers/qou/blocks/thm-main",
-    "@type": ["folio:Theorem", "doco:Section"],
+    "@type": ["folio-assistant-core:Theorem", "doco:Section"],
     label: "thm:main",
     kind: "theorem",
     title: "Main theorem",
@@ -70,7 +70,7 @@ beforeAll(() => {
 
   node(CONTENT, "cor-easy", {
     "@id": "papers/qou/blocks/cor-easy",
-    "@type": ["folio:Corollary"],
+    "@type": ["folio-assistant-core:Corollary"],
     label: "cor:easy",
     kind: "corollary",
     uses: ["papers/qou/blocks/thm-main"],
@@ -80,20 +80,20 @@ beforeAll(() => {
   // Ingested population — written directly, no .ts anywhere.
   node(LIBRARY, "rec-007", {
     "@id": "library/who-anc-2016/nodes/rec-007",
-    "@type": ["folio:Recommendation", "doco:Section"],
+    "@type": ["folio-assistant-core:Recommendation", "doco:Section"],
     title: "Recommendation A.1.2 on widget screening",
     contains: ["library/who-anc-2016/nodes/rem-014"],
     provenance: "ingested",
   });
   node(LIBRARY, "rem-014", {
     "@id": "library/who-anc-2016/nodes/rem-014",
-    "@type": ["folio:Remark"],
+    "@type": ["folio-assistant-core:Remark"],
     title: "Remarks",
     provenance: "ingested",
   });
 
   // Not a node: no @id. Must be skipped without erroring.
-  node(LIBRARY, "manifest", { "@type": ["folio:Manifest"], title: "no id here" });
+  node(LIBRARY, "manifest", { "@type": ["folio-assistant-core:Manifest"], title: "no id here" });
 
   index = loadGraphIndex(defaultRoots(ROOT));
 });
@@ -273,9 +273,9 @@ describe("parseNode", () => {
   test("accepts a single string where a set is allowed", () => {
     const n = parseNode(
       "/x.jsonld",
-      JSON.stringify({ "@id": "a", uses: "b", "@type": "folio:Theorem" }),
+      JSON.stringify({ "@id": "a", uses: "b", "@type": "folio-assistant-core:Theorem" }),
     )!;
     expect(n.edges.uses).toEqual(["b"]);
-    expect(n.types).toEqual(["folio:Theorem"]);
+    expect(n.types).toEqual(["folio-assistant-core:Theorem"]);
   });
 });

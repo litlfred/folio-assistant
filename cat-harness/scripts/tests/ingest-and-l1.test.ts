@@ -227,7 +227,7 @@ function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown
   );
   writeFileSync(
     join(dir, "manifest.jsonld"),
-    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio:SourceDocument"], contains: ["a"], provenance: {} }),
+    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio-assistant-core:SourceDocument"], contains: ["a"], provenance: {} }),
   );
   // Bean `d5f1` shipped, so `image-descriptions` is CHECKED rather than
   // not-derivable, and a fixture standing for "every derivable requirement

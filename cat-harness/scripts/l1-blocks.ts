@@ -112,7 +112,7 @@ export function buildL1(dir: string, write = true): BuildResult {
     const node = {
       "@context": CONTEXT,
       "@id": `${base}/blocks/prose-${s.id}`,
-      "@type": ["folio:Prose", "doco:Section"],
+      "@type": ["folio-assistant-core:Prose", "doco:Section"],
       kind: "prose",
       title: s.title ?? s.id,
       ...(s.page_start != null ? { pageStart: s.page_start } : {}),
@@ -130,7 +130,7 @@ export function buildL1(dir: string, write = true): BuildResult {
   const manifest = {
     "@context": CONTEXT,
     "@id": `${base}/manifest`,
-    "@type": ["folio:SourceDocument"],
+    "@type": ["folio-assistant-core:SourceDocument"],
     title: st.doc_id,
     contains: declared.map((s) => `${base}/sections/${s.id}`),
     provenance: "ingested",
