@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790169931">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790169931">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790169931">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790169931">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790169931">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790167762" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790169931" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -798,9 +798,9 @@ about a REVIEW.</p>
     </tr>
     <tr>
       <td><strong>Review coverage</strong></td>
-      <td><strong>not measured yet</strong></td>
-      <td>—</td>
-      <td>“every comment is resolved”. Coverage needs a per-block reviewer VERDICT, which nothing records yet. The process now has the gate that needs it (<code class="language-plaintext highlighter-rouge">GW_Covered</code>, bean <code class="language-plaintext highlighter-rouge">en2d</code>), and recording verdicts is bean <code class="language-plaintext highlighter-rouge">px0t</code>. <strong>Resolved comments are not approval</strong>, so none is shown rather than a number built from them.</td>
+      <td>“3 of 5 reviewed”: the section’s added or changed blocks, and how many have a reviewer VERDICT on their <strong>current</strong> version. Shaded by what is still unreviewed.</td>
+      <td><code class="language-plaintext highlighter-rouge">review-comments.json</code>’s <code class="language-plaintext highlighter-rouge">verdicts</code> + <code class="language-plaintext highlighter-rouge">blocks.json</code> (bean <code class="language-plaintext highlighter-rouge">px0t</code>)</td>
+      <td>“every comment is resolved”. <strong>Resolved comments are not a verdict</strong>: a question answered is not a block judged. A verdict on an earlier version is shown on the block and does NOT count, so an edit after review reopens exactly the blocks it touched. A file written before verdicts existed has no <code class="language-plaintext highlighter-rouge">verdicts</code> field and reads “no data”, never “0 reviewed”.</td>
     </tr>
     <tr>
       <td><strong>QA</strong></td>
@@ -811,8 +811,8 @@ about a REVIEW.</p>
   </tbody>
 </table></div>
 
-<p><strong>A column with no data says so in every row</strong> (“not measured yet”, “not
-published yet”, or “no data” when a build lacks the file). It is never 0 and
+<p><strong>A column with no data says so in every row</strong> (“not published”, or “no
+data” when a build lacks the file). It is never 0 and
 never blank: zero reads as “measured, and nothing there”, which is exactly
 what is not known.</p>
 
@@ -1119,7 +1119,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35862769820"><code>f59325a</code></a> &middot; 2026-09-23T12:49:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35866839245"><code>9a2dc8b</code></a> &middot; 2026-09-23T13:25:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

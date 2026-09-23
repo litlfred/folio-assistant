@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790169931">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790169931">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790169931">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790169931">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790167762">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790169931">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790167762" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790169931" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1074,6 +1074,73 @@ between the two.</p>
 
 <p><strong>What it costs.</strong> One extra commit on the edit-set’s branch per decision,
 and a PR from a fork cannot be written to by anyone but its author.</p>
+<h2 id="verdicts-i-read-this-version-bean-px0t">
+  
+  
+    <a href="#verdicts-i-read-this-version-bean-px0t" class="anchor-heading" aria-labelledby="verdicts-i-read-this-version-bean-px0t"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verdicts: “I read this version” (bean <code class="language-plaintext highlighter-rouge">px0t</code>)
+  
+  
+</h2>
+    
+
+<p>A comment asks for something. A <strong>verdict</strong> records that a reviewer read a
+block, and what they judged. The coverage gate needs verdicts, because
+comments cannot say whether a block with none was read.</p>
+
+<p>The owner chose the channel (2026-09-23, option 1 of 3): <strong>the same tagged
+PR comment</strong>, with a <code class="language-plaintext highlighter-rouge">verdict:</code> or <code class="language-plaintext highlighter-rouge">waive:</code> line instead of <code class="language-plaintext highlighter-rouge">kind:</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>block: prose:dose prose:schedule
+verdict: ok
+role: clinical-sme
+</code></pre></div></div>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>line</th>
+      <th>means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">verdict: ok</code></td>
+      <td>read, no objection</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">verdict: changes</code></td>
+      <td>read, and it needs changing. The reasons go in review COMMENTS; the verdict only records the reading</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">waive: &lt;reason&gt;</code></td>
+      <td>the block needs no review (a pure rename, say). The reason is required and kept</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">block:</code> may name <strong>several labels</strong>, so one comment can close a slice.
+One verdict is recorded per label.</li>
+  <li><strong>A comment is a verdict or a review comment, never both.</strong> A tag with
+<code class="language-plaintext highlighter-rouge">kind:</code> as well is refused and shown as malformed, so nothing is counted
+twice under two meanings. The comment parser passes every verdict tag over.</li>
+  <li><strong>A verdict is pinned to the block’s hash.</strong> It counts only while the block
+is at that version. An edit after review reopens exactly the blocks it
+touched. The old verdict is kept and shown as “on an earlier version”.</li>
+  <li>A verdict on a label the head does not carry is malformed, not recorded.</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">folio-review-comments</code> Tool ingests verdicts into the same
+<code class="language-plaintext highlighter-rouge">review-comments.json</code>, as its <code class="language-plaintext highlighter-rouge">verdicts</code> array
+(<code class="language-plaintext highlighter-rouge">folio-review-verdict/v1</code>, <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/review-verdict.ts</code>).</p>
+
+<p><strong>Coverage.</strong> The <code class="language-plaintext highlighter-rouge">folio-review-coverage</code> Tool computes the two facts
+<code class="language-plaintext highlighter-rouge">GW_Covered</code> reads (<code class="language-plaintext highlighter-rouge">uncoveredBlocks</code>, <code class="language-plaintext highlighter-rouge">openDefects</code>) and prints them as JSON
+on stdout, ready for <code class="language-plaintext highlighter-rouge">workflow_complete</code>. With <code class="language-plaintext highlighter-rouge">--todos &lt;root&gt; --commit</code> it
+writes the verdicts into the todos graph’s declared <code class="language-plaintext highlighter-rouge">review-verdicts</code>
+directory and commits them to the <strong>feature branch</strong>, as comment statuses
+are, and it refuses the base branch and a detached HEAD. <code class="language-plaintext highlighter-rouge">init-folio</code>
+declares that directory (<code class="language-plaintext highlighter-rouge">todos/verdicts/</code>) for every new folio.</p>
 <h2 id="publication-where-the-file-comes-from-and-when">
   
   
@@ -1443,7 +1510,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35862769820"><code>f59325a</code></a> &middot; 2026-09-23T12:49:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35866839245"><code>9a2dc8b</code></a> &middot; 2026-09-23T13:25:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

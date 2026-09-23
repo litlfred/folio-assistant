@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 17,
+      "count": 19,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -1327,6 +1327,21 @@
       "name": "review-comment",
       "graphNode": "schema",
       "summary": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-verdict.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-verdict.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-verdict",
+      "graphNode": "schema",
+      "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "isTest": false
     },
     {
@@ -34326,12 +34341,20 @@
           "type": "z.number().int().nonnegative()",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "verdicts",
+          "type": "z.array(ReviewVerdictSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Reviewers' per-block verdicts (`folio-review-verdict/v1`, bean `px0t`),"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema"
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+        "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema"
       ],
       "unresolved": [],
       "external": [
@@ -34551,6 +34574,264 @@
       "refs": [
         "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
         "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#Coverage",
+      "name": "Coverage",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "uncoveredBlocks",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`GW_Covered`'s fact: changed blocks with no CURRENT verdict."
+        },
+        {
+          "name": "openDefects",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`GW_Covered`'s fact: review comments of kind `defect` still open or addressed."
+        },
+        {
+          "name": "changed",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "The changed blocks that need review, in ChangeSet order."
+        },
+        {
+          "name": "uncovered",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Of those, the ones with no current verdict."
+        },
+        {
+          "name": "stale",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Verdicts on an OLDER version of a block, which therefore do not count."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdict",
+      "name": "ReviewVerdict",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema",
+      "name": "ReviewVerdictSchema",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(REVIEW_VERDICT_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "`verdict-pr<n>-c<comment id>-<label>`: derived, so a re-run finds it rather than adding one."
+        },
+        {
+          "name": "targetLabel",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "z.enum(REVIEW_VERDICTS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Required for `waived`: why this block needs no review."
+        },
+        {
+          "name": "blockHash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's content hash when the verdict was given. The verdict counts only while it is current."
+        },
+        {
+          "name": "reviewer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub login."
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The lane they reviewed in: a role id from `roles.json`."
+        },
+        {
+          "name": "repo",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commentId",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commentUrl",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commit",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The head commit the verdict was ingested against."
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "REVIEW_VERDICTS",
+        "REVIEW_VERDICT_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue",
+      "name": "ReviewVerdictValue",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#VerdictIngestResult",
+      "name": "VerdictIngestResult",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "created",
+          "type": "ReviewVerdict[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unchanged",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "malformed",
+          "type": "Array<{ commentId: number; url: string; error: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "Said, not dropped, so the reviewer can fix it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#VerdictTag",
+      "name": "VerdictTag",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "blocks",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "verdict",
+          "type": "ReviewVerdictValue",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue"
       ],
       "unresolved": [],
       "external": [],
@@ -39702,6 +39983,14 @@
       "array": true
     },
     {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema",
+      "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema",
+      "via": "verdicts",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTag",
       "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName",
       "via": "kind",
@@ -39729,6 +40018,22 @@
       "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
       "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
       "via": "to",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-verdict.ts#VerdictIngestResult",
+      "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdict",
+      "via": "created",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-verdict.ts#VerdictTag",
+      "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue",
+      "via": "verdict",
       "kind": "field",
       "optional": false,
       "array": false
