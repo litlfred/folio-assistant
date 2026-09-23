@@ -39,11 +39,13 @@
               },
               "width": {
                 "type": "integer",
-                "exclusiveMinimum": 0
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "height": {
                 "type": "integer",
-                "exclusiveMinimum": 0
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "textRegion": {
                 "type": "object",
@@ -74,8 +76,7 @@
                   "y",
                   "w",
                   "h"
-                ],
-                "additionalProperties": false
+                ]
               },
               "avatarRegion": {
                 "type": "object",
@@ -106,8 +107,7 @@
                   "y",
                   "w",
                   "h"
-                ],
-                "additionalProperties": false
+                ]
               },
               "title": {
                 "type": "string",
@@ -121,8 +121,7 @@
             "required": [
               "id",
               "src"
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "assets": {
@@ -161,8 +160,7 @@
                 "required": [
                   "instance",
                   "path"
-                ],
-                "additionalProperties": false
+                ]
               },
               "scope": {
                 "type": "string",
@@ -183,8 +181,7 @@
             "required": [
               "id",
               "src"
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "icon": {
@@ -192,6 +189,7 @@
           "minLength": 1
         },
         "navbarIcons": {
+          "maxItems": 6,
           "type": "array",
           "items": {
             "type": "string",
@@ -203,8 +201,7 @@
               "kg",
               "launcher"
             ]
-          },
-          "maxItems": 6
+          }
         },
         "stub": {
           "type": "string",
@@ -233,8 +230,7 @@
           },
           "required": [
             "host"
-          ],
-          "additionalProperties": false
+          ]
         },
         "topology": {
           "type": "object",
@@ -267,8 +263,7 @@
             "outwardFacing": {
               "type": "boolean"
             }
-          },
-          "additionalProperties": false
+          }
         },
         "directories": {
           "type": "array",
@@ -291,12 +286,12 @@
                 ]
               },
               "graphKinds": {
+                "minItems": 1,
                 "type": "array",
                 "items": {
                   "type": "string",
                   "minLength": 1
-                },
-                "minItems": 1
+                }
               },
               "absent": {
                 "type": "object",
@@ -308,8 +303,7 @@
                 },
                 "required": [
                   "reason"
-                ],
-                "additionalProperties": false
+                ]
               },
               "title": {
                 "type": "string",
@@ -336,6 +330,7 @@
                         "minLength": 1
                       },
                       {
+                        "minItems": 1,
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -349,6 +344,7 @@
                               "minLength": 1
                             },
                             "surfaces": {
+                              "minItems": 1,
                               "type": "array",
                               "items": {
                                 "type": "string",
@@ -356,8 +352,7 @@
                                   "navbar",
                                   "board"
                                 ]
-                              },
-                              "minItems": 1
+                              }
                             },
                             "hidden": {
                               "type": "boolean"
@@ -379,10 +374,8 @@
                           },
                           "required": [
                             "ref"
-                          ],
-                          "additionalProperties": false
-                        },
-                        "minItems": 1
+                          ]
+                        }
                       }
                     ]
                   },
@@ -413,11 +406,9 @@
                         "type": "string",
                         "minLength": 1
                       }
-                    },
-                    "additionalProperties": false
+                    }
                   }
-                },
-                "additionalProperties": false
+                }
               },
               "visualisedAs": {
                 "type": "string",
@@ -448,12 +439,11 @@
               "path",
               "graphKinds",
               "dependents"
-            ],
-            "additionalProperties": false
-          },
-          "default": []
+            ]
+          }
         },
         "remoteGraphs": {
+          "default": [],
           "type": "array",
           "items": {
             "type": "object",
@@ -467,12 +457,12 @@
                 "format": "uri"
               },
               "graphKinds": {
+                "minItems": 1,
                 "type": "array",
                 "items": {
                   "type": "string",
                   "minLength": 1
-                },
-                "minItems": 1
+                }
               },
               "title": {
                 "type": "string",
@@ -489,8 +479,7 @@
               "graphKinds"
             ],
             "additionalProperties": false
-          },
-          "default": []
+          }
         },
         "stickies": {
           "type": "array",
@@ -502,7 +491,9 @@
                 "pattern": "^[a-z][a-z0-9-]*$"
               },
               "order": {
-                "type": "integer"
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
               },
               "theme": {
                 "type": "string",
@@ -527,6 +518,7 @@
                 "minLength": 1
               },
               "links": {
+                "default": [],
                 "type": "array",
                 "items": {
                   "type": "object",
@@ -549,8 +541,7 @@
                     "href"
                   ],
                   "additionalProperties": false
-                },
-                "default": []
+                }
               },
               "onboardingLinks": {
                 "type": "boolean"
@@ -630,6 +621,7 @@
           "type": "object",
           "properties": {
             "of": {
+              "minItems": 1,
               "type": "array",
               "items": {
                 "type": "string",
@@ -638,8 +630,7 @@
                   "workflow-visualiser",
                   "own-docs"
                 ]
-              },
-              "minItems": 1
+              }
             },
             "reason": {
               "type": "string",
@@ -658,8 +649,7 @@
             "of",
             "reason",
             "owes"
-          ],
-          "additionalProperties": false
+          ]
         },
         "needs": {
           "type": "array",
@@ -671,19 +661,17 @@
       },
       "required": [
         "name"
-      ],
-      "additionalProperties": false
+      ]
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "title": "CatHarness declaration",
   "description": "The root declaration every instance carries as `<name>.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "c1b53308013e20c16e3116715cf3d3b7932a1759",
+    "sha": "8eb0cfe2a27ef1379bd2bd54ff38f62f4fb3fe05",
     "pr": "main",
-    "run": "35822589839"
+    "run": "35823288052"
   }
 }

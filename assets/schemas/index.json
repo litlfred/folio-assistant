@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 126,
+      "count": 127,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -898,6 +898,15 @@
       "name": "tile-count",
       "graphNode": "schema",
       "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/to-json-schema.ts",
+      "instance": "cat-harness",
+      "name": "to-json-schema",
+      "graphNode": "none",
+      "reason": "a function library. It defines no schema of its own; it",
+      "summary": "JSON Schema conversion — one wrapper, because the converter changed under us.",
       "isTest": false
     },
     {
@@ -19152,7 +19161,7 @@
         },
         {
           "name": "meta",
-          "type": "z.record(z.unknown()).optional()",
+          "type": "z.record(z.string(), z.unknown()).optional()",
           "optional": true,
           "array": false
         }
@@ -19452,13 +19461,13 @@
         },
         {
           "name": "env",
-          "type": "z.record(z.string()).optional()",
+          "type": "z.record(z.string(), z.string()).optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "labels",
-          "type": "z.record(z.string()).optional()",
+          "type": "z.record(z.string(), z.string()).optional()",
           "optional": true,
           "array": false
         }
