@@ -6970,3 +6970,77 @@ a.fa-harness-tab__body:focus-visible {
   position: relative;
 }
 .fa-glass-more .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+
+/* ── Landing stickies as TILES — bean `z1ug` ───────────────────────────────
+ *
+ * Owner: *"they should be closed/tiled to start"*, and on 2026-09-23,
+ * **"Opens as a window"**. The card stays in its slot (it is the sticky's
+ * home, and Pin clones it) but is not drawn while the cell is a tile; the tile
+ * opens a copy of it as a board window. The class is added by the script, so
+ * with no script the full cards show — the linear floor. */
+.fa-sticky-cell--tile > .fa-sticky { display: none; }
+.fa-landing-board { position: relative; }
+.fa-landing-board:has(> .fa-sticky-cell--tile) {
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+}
+.fa-landing-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
+  border-radius: var(--fa-folio-radius, 0);
+  /* The theme's surface AND ink, together, never one without the other: a
+     themed surface under an inherited foreground is `23bc` again. With no
+     theme, the page's own Canvas and CanvasText pair. */
+  background: var(--fa-sticky-surface, Canvas);
+  color: var(--fa-sticky-ink, CanvasText);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.fa-landing-tile-art {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.fa-landing-tile-title {
+  padding: 0.3rem 0.45rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.fa-landing-tile:focus-visible { outline: 3px solid var(--link-color, #7253ed); outline-offset: 2px; }
+/* The copy inside a window is shaped to the window, not to the square dock. */
+.fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
+/* THE LANDING WINDOWS OPEN BELOW THE TILES, not over them. On the todo board
+ * an open window covers the grid (the limit `le8b` records); in a panel of a
+ * few tiles that would bury every other tile under the first window a reader
+ * opened — measured, the second tile could not be clicked. So the layer is
+ * anchored to the board's BOTTOM edge with no height of its own, and the
+ * windows (and their cascade) hang beneath the tile row, over the page. */
+.fa-landing-windows {
+  top: 100%;
+  bottom: auto;
+  height: 0;
+  overflow: visible;
+  z-index: 20;
+}
+.fa-landing-windows .fa-board-window { top: 0.5rem; max-height: 70vh; }
+.fa-landing-windows .fa-board-window[data-fa-z="2"] { top: 3.5rem; }
+.fa-landing-windows .fa-board-window[data-fa-z="3"] { top: 6.5rem; }
+.fa-landing-windows .fa-board-window[data-fa-z="4"] { top: 9.5rem; }
+/* A landing window wears its sticky's surface and ink — both, together. */
+.fa-landing-window {
+  background: var(--fa-sticky-surface, Canvas);
+  color: var(--fa-sticky-ink, CanvasText);
+  border-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.5));
+}
+.fa-landing-window .fa-board-window-control { color: inherit; border-color: currentColor; }

@@ -5235,12 +5235,152 @@
         floatLanding(slot, true);
       });
       cell.appendChild(pin);
+      tileLandingCell(panel, cell, slot, title, art, pin);
     });
     // Restore every landing pin whose slot is on this page.
     Object.keys(pinnedStickies()).forEach(function (k) {
       var e = pinnedStickies()[k];
       if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
     });
+  }
+
+  /* ═══ LANDING STICKIES START AS TILES — bean `z1ug` ═════════════════════
+   *
+   * Owner, 2026-09-21: *"they should be closed/tiled to start"*; 2026-09-20:
+   * *"start everyrting in avatar"*. And 2026-09-23, choosing what a tile does:
+   * **"Opens as a window"** — *"Same as the todo avatars next to it: the full
+   * card opens as a movable window with × to close. 'Pin to glass' stays on
+   * the tile."*
+   *
+   * ONE WINDOW MECHANISM. The window is the todo board's own: the same
+   * `.fa-board-windows` layer class, the same `.fa-board-window` chrome, the
+   * same stack (`openWindowFor` / `zIndexFor`, keyed `landing:<slot>` so a
+   * landing window and a todo window raise over each other correctly) and
+   * the same `wireMove`. Two window implementations on one panel would be two
+   * notions of "on top" waiting to disagree.
+   *
+   * THE CARD STAYS IN ITS SLOT, hidden by the tile class rather than removed,
+   * because it is still the sticky's home (`pv6g`): Pin clones it, and a page
+   * with no script shows it whole — the tile is JS-built, so no-JS keeps the
+   * full cards, which is R4's floor. */
+  var landingWindows = null;
+  var landingWindowEls = {};
+
+  function landingWindowLayer(panel) {
+    if (landingWindows && landingWindows.isConnected) return landingWindows;
+    landingWindows = el("div", { class: "fa-board-windows fa-landing-windows", role: "group",
+                                 "aria-label": "Open stickies" });
+    panel.appendChild(landingWindows);
+    return landingWindows;
+  }
+
+  function renderLandingStack() {
+    Object.keys(landingWindowEls).forEach(function (id) {
+      var z = zIndexFor(id);
+      landingWindowEls[id].style.zIndex = z === undefined ? "" : String(z);
+      landingWindowEls[id].setAttribute("data-fa-z", z === undefined ? "" : String(z));
+    });
+  }
+
+  function tileLandingCell(panel, cell, slot, title, art, pin) {
+    if (cell.querySelector(".fa-landing-tile")) return;
+    cell.classList.add("fa-sticky-cell--tile");
+    var tile = el("button", {
+      type: "button",
+      class: "fa-sticky-avatar fa-landing-tile",
+      // THE STICKY'S OWN THEME, so its surface, ink and edge are the ones the
+      // card uses — a tile with no theme drew pale words on a pale surface.
+      "data-fa-sticky-theme": art.getAttribute("data-fa-sticky-theme") || undefined,
+      "data-fa-opens": "landing:" + slot,
+      "aria-label": "Open " + title,
+      title: title,
+    });
+    // The card's own art, as the tile's picture. `currentSrc` is the crop the
+    // browser actually chose for this viewport; the `src` fallback covers an
+    // image that has not decided yet.
+    var img = art.querySelector("img.fa-sticky-art");
+    var src = img && safeHref(img.currentSrc || img.getAttribute("src") || "");
+    if (src) tile.appendChild(el("img", { class: "fa-landing-tile-art", src: src, alt: "", loading: "lazy" }));
+    tile.appendChild(el("span", { class: "fa-landing-tile-title" }, title));
+    tile.addEventListener("click", function () { openLandingWindow(panel, cell, slot, title, art, pin); });
+    cell.insertBefore(tile, cell.firstChild);
+  }
+
+  function closeLandingWindow(slot) {
+    var id = "landing:" + slot;
+    closeWindowFor(id);
+    var w = landingWindowEls[id];
+    if (w && w.parentNode) w.parentNode.removeChild(w);
+    delete landingWindowEls[id];
+    renderLandingStack();
+    // Focus returns to the tile that opened it — the tile IS the way back (`l4zi`).
+    var t = document.querySelector('.fa-landing-tile[data-fa-opens="' + id.replace(/"/g, '\\"') + '"]');
+    if (t) t.focus();
+  }
+
+  function openLandingWindow(panel, cell, slot, title, art, pin) {
+    var id = "landing:" + slot;
+    openWindowFor(id);
+    if (landingWindowEls[id]) { renderLandingStack(); landingWindowEls[id].focus(); return; }
+    var win = el("div", {
+      class: "fa-board-window fa-landing-window",
+      tabindex: "-1",
+      role: "group",
+      "aria-label": title,
+      "data-fa-window": id,
+      // The sticky's theme, so the window's bar is the card's colours rather
+      // than the page's — the same pairing the tile takes.
+      "data-fa-sticky-theme": art.getAttribute("data-fa-sticky-theme") || undefined,
+    });
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    win.appendChild(live);
+    var bar = el("div", { class: "fa-board-window-bar" });
+    bar.appendChild(el("span", { class: "fa-board-window-title" }, title));
+    var move = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "move",
+      "aria-label": "Move " + title, "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = win.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(win, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var pinIt = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "pin",
+      "aria-label": "Pin " + title + " to your glass",
+    }, "Pin to glass");
+    pinIt.addEventListener("click", function () {
+      closeLandingWindow(slot);
+      pin.click();
+    });
+    var close = el("button", {
+      type: "button", class: "fa-board-window-control", "data-fa-control": "close",
+      "aria-label": "Close " + title,
+    }, CONTROL_GLYPHS.close);
+    close.addEventListener("click", function () { closeLandingWindow(slot); });
+    bar.appendChild(move);
+    bar.appendChild(pinIt);
+    bar.appendChild(close);
+    win.appendChild(bar);
+    // A COPY of the card, ids stripped — the original stays home in its slot.
+    var copy = art.cloneNode(true);
+    Array.prototype.forEach.call(copy.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    copy.removeAttribute("aria-labelledby");
+    copy.removeAttribute("hidden");
+    win.appendChild(copy);
+    win.addEventListener("mousedown", function () { openWindowFor(id); renderLandingStack(); });
+    win.addEventListener("focusin", function () { openWindowFor(id); renderLandingStack(); });
+    win.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && win.getAttribute("data-fa-moving") !== "true") {
+        ev.preventDefault();
+        closeLandingWindow(slot);
+      }
+    });
+    wireMove(win, bar, live);
+    landingWindowLayer(panel).appendChild(win);
+    landingWindowEls[id] = win;
+    renderLandingStack();
+    win.focus();
   }
 
   function floatLanding(slot, focus) {
