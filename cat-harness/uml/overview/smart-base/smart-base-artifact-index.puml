@@ -52,6 +52,54 @@ package "smart-base/smart-base-artifact-index" as pkg_smart_base_smart_base_arti
     count [1] : integer
     artifacts [0..*] : Artifact[]
   }
+  class "Layer" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Layer <<json: IgChromeSchema>> #f4f4f1 {
+    package [1] : string
+    version [1] : string
+    of [1] : string<uri>
+    ref [1] : string
+    path [1] : string
+    readAt [1] : string
+  }
+  class "Override" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Override <<json: IgChromeSchema>> #f4f4f1 {
+    package [1] : string
+    value [1] : string
+  }
+  class "Token" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token <<json: IgChromeSchema>> #f4f4f1 {
+    name [1] : string
+    value [1] : string
+    from [1] : string
+    overrides [0..*] : Override[]
+  }
+  class "Declaration" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Declaration <<json: IgChromeSchema>> #f4f4f1 {
+    property [1] : string
+    value [1] : string
+  }
+  class "Rule" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule <<json: IgChromeSchema>> #f4f4f1 {
+    selector [1] : string
+    from [1] : string
+    declarations [1..*] : Declaration[]
+  }
+  class "Site" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Site <<json: IgChromeSchema>> #f4f4f1 {
+    package [1] : string
+    value [1] : string
+  }
+  class "Conflict" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict <<json: IgChromeSchema>> #f4f4f1 {
+    token [1] : string
+    kind [1] : shape | malformed
+    detail [1] : string
+    sites [1..*] : Site[]
+  }
+  class "folio-ig-chrome/v1" as smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 <<json: IgChromeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-chrome/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    status [1] : string
+    version [0..1] : string
+    layers [1..*] : Layer[]
+    tokens [0..*] : Token[]
+    rules [0..*] : Rule[]
+    conflicts [0..*] : Conflict[]
+  }
   class "Business Process Workflow (DAK)" as smart_base_smart_base_artifact_index_dak_StructureDefinition_BusinessProcessWorkflow_schema_json_Business_Process_Workflow__DAK_ <<schema: dak/StructureDefinition-BusinessProcessWorkflow.schema.json>> #f4f4f1 {
     resourceType [1] : 'BusinessProcessWorkflow'
     id [1] : object
@@ -400,4 +448,11 @@ package "smart-base/smart-base-artifact-index" as pkg_smart_base_smart_base_arti
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Layer : layers
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Override : overrides
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token : tokens
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Declaration : declarations
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule : rules
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Site : sites
+smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict : conflicts
 @enduml
