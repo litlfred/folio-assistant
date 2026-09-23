@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790186282">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790186709">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790186282">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790186709">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790186282">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790186709">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790186282">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790186709">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790186282">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790186709">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790186282" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790186709" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -785,6 +785,84 @@ question a reader is asking.</p>
 <p>Dependencies keep a group of their own rather than disappearing. Making the
 distinction a <strong>disappearance</strong> would answer <em>“where did who-iris go”</em> with
 silence.</p>
+<h2 id="harness-carries-two-senses-and-only-one-of-them-is-this-rule">
+  
+  
+    <a href="#harness-carries-two-senses-and-only-one-of-them-is-this-rule" class="anchor-heading" aria-labelledby="harness-carries-two-senses-and-only-one-of-them-is-this-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “Harness” carries TWO senses, and only one of them is this rule
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-23</strong> (bean <code class="language-plaintext highlighter-rouge">ogit</code>, <a href="https://github.com/litlfred/folio-assistant/issues/1109">#1109</a>), after the owner asked <em>“why is detangle a harness? review all things labeled are harnesses – are they?”</em></p>
+
+<p>The rule above is a rule about <strong>sense 1</strong>. The word is also used, correctly
+and by the owner, for something else:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>sense</th>
+      <th>what it means</th>
+      <th>how you tell</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1 — instantiated here</strong></td>
+      <td>this checkout runs it</td>
+      <td>a <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> at the <strong>repository</strong> root — <code class="language-plaintext highlighter-rouge">ls *.config.json</code>, not a number quoted here</td>
+    </tr>
+    <tr>
+      <td><strong>2 — a layer others instantiate</strong></td>
+      <td>a base a <em>downstream</em> repo stands up</td>
+      <td>nothing in this checkout. It is a statement about the layer’s role in the stack</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>No count is given for either sense, on purpose.</strong> The first draft of this
+section said “5 of 19” and was stale within the hour: <code class="language-plaintext highlighter-rouge">smart-base</code> was
+instantiated by #1129 while this page sat in review, making it 6. That is the
+rule this corpus states everywhere and keeps paying for — <em>a count in prose is
+a claim nothing checks</em> — caught here only because the merge that broke it
+happened to land in the same session. Ask the filesystem.</p>
+
+<p>Sense 2 is not loose talk. <code class="language-plaintext highlighter-rouge">smart-stack-layering</code> says <em>“the DAK harness every
+smart-* DAK repo instantiates”</em>; <code class="language-plaintext highlighter-rouge">fhir-harness</code>’s own description says <em>“what
+a non-WHO implementation guide instantiates”</em>; the owner’s bean titles use it —
+<code class="language-plaintext highlighter-rouge">2yyh</code> <strong>SMART-BASE HARNESS</strong>, <code class="language-plaintext highlighter-rouge">wm63</code> <strong>FHIR-HARNESS</strong>.</p>
+
+<p><strong>So a thing can carry the word and not satisfy this page’s rule, and be
+right.</strong> <code class="language-plaintext highlighter-rouge">fhir-harness</code> is the clearest case: declared, not instantiated, and
+it declares no visualiser either, so by the rule above it owes no tile and gets
+none — while being exactly what a downstream IG instantiates.</p>
+<h3 id="do-not-write-a-checker-for-this">
+  
+  
+    <a href="#do-not-write-a-checker-for-this" class="anchor-heading" aria-labelledby="do-not-write-a-checker-for-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not write a checker for this
+  
+  
+</h3>
+    
+
+<p>One was built and withdrawn, and the measurement is the argument. Anchored on
+declared instance names beside the word: <strong>246 findings</strong> first, then <strong>31</strong>
+after excluding names that contain “harness” — and <strong>none of the 31 was the
+defect being hunted</strong>. Ten came from one generator template, four from the
+retired declaration filename that <code class="language-plaintext highlighter-rouge">check:declaration-filename</code> already counts
+(not written out here — that gate flagged this very paragraph for naming it,
+which is the gate working), the rest from directory listings, hyphenated ids,
+and the check flagging its own docstring.</p>
+
+<p>A predicate that cannot separate its two senses is not a check. It is an
+<strong>adjudication</strong>, and this corpus already says what that means: if a mechanism
+could decide it, the process would not have been entered
+(<a href="/folio-assistant/reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a>).</p>
+
+<p><strong>What to do instead when the word is load-bearing:</strong> say which sense, or say
+the fact. <em>“instantiated here”</em> and <em>“a layer downstream repos instantiate”</em>
+are both shorter than the ambiguity is expensive.</p>
 <h2 id="a-tile-opens-the-instance-not-a-kind-handlers-view-of-it">
   
   
@@ -1485,7 +1563,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35899097705"><code>413dae6</code></a> &middot; 2026-09-23T17:57:59Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35899907986"><code>7f848ef</code></a> &middot; 2026-09-23T18:05:05Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
