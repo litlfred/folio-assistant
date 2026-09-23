@@ -493,6 +493,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:PolicyGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "PolicyGraph",
+      "comment": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
+      "prefLabel": "PolicyGraph",
+      "definition": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
+      "notation": "cat-harness:PolicyGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:ProcessGraph",
       "@type": [
         "rdfs:Class",
@@ -1153,16 +1168,16 @@
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:bindsLane",
+      "@id": "cat-harness:bindsRole",
       "@type": [
         "rdf:Property",
         "skos:Concept"
       ],
-      "label": "bindsLane",
-      "comment": "A BPMN lane this role is bound to.",
-      "prefLabel": "bindsLane",
-      "definition": "A BPMN lane this role is bound to.",
-      "notation": "cat-harness:bindsLane",
+      "label": "bindsRole",
+      "comment": "The role a BPMN lane binds: the lane's own <folio:role ref>. On the lane, never on the role (#1168).",
+      "prefLabel": "bindsRole",
+      "definition": "The role a BPMN lane binds: the lane's own <folio:role ref>. On the lane, never on the role (#1168).",
+      "notation": "cat-harness:bindsRole",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

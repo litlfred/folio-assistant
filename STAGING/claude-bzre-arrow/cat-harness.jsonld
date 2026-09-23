@@ -85,8 +85,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasSkill",
       "@type": "@id"
     },
-    "bindsLane": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsLane",
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
       "@type": "@id"
     },
     "maintains": {
@@ -272,14 +272,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T21:16:26.569Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a00ba0821667dcfd068c60a73db8861997e474a6",
-  "sourceCommitSha": "a00ba0821667dcfd068c60a73db8861997e474a6",
-  "sourceCommitAt": "2026-09-23T21:09:36Z",
+  "generatedAt": "2026-09-23T22:12:47.860Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3963de747e5332ebfeaf77d0a8c9a94ee6e1d575",
+  "sourceCommitSha": "3963de747e5332ebfeaf77d0a8c9a94ee6e1d575",
+  "sourceCommitAt": "2026-09-23T22:05:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 251,
+    "Skill": 252,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -289,9 +289,9 @@
     "Role": 146,
     "ProcessNode": 833,
     "Tool": 77,
-    "Schema": 108,
-    "GraphKind": 30,
-    "Directory": 38,
+    "Schema": 110,
+    "GraphKind": 31,
+    "Directory": 39,
     "Asset": 3
   },
   "@graph": [
@@ -742,7 +742,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 209,
+      "instructionLines": 219,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2136,7 +2136,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1058,
+      "instructionLines": 1059,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2204,7 +2204,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 585,
+      "instructionLines": 608,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2322,7 +2322,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/getting-started.md",
-      "instructionLines": 214,
+      "instructionLines": 221,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2607,7 +2607,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 153,
+      "instructionLines": 173,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4362,7 +4362,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/lean-cache-restore.md",
-      "instructionLines": 121,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4498,12 +4498,29 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/raci"
       ],
       "instructionsPath": "skills/raci/raci.md",
-      "instructionLines": 122,
+      "instructionLines": 124,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/materialize-on-demand",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "materialize-on-demand",
+      "title": "Materialize on demand",
+      "description": "After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/materialize-on-demand.md",
+      "instructionLines": 70,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/copy-out-materialized",
@@ -4685,7 +4702,6 @@
         "qc-reviewer",
         "feedback-provider"
       ],
-      "permissionName": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-checker"
     },
     {
@@ -5102,7 +5118,6 @@
       "roleName": [
         "board-renderer"
       ],
-      "permissionName": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/board-renderer"
     },
     {
@@ -5127,7 +5142,7 @@
       "localId": "admin",
       "actorKind": "person",
       "title": "Administrator",
-      "description": "Full administrative access. The three fields say three different things: `roles` is what it may act AS, `permissions` what it may DO in any lane, `capabilities` what its machine has.",
+      "description": "Full administrative access. `roles` is what it may act AS and `capabilities` what its machine has. What it may DO is no longer written here: it is an ODRL rule in cat-harness/policies/folio-defaults.jsonld (issue #1180).",
       "hasCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#capability/git-push"
       ],
@@ -6265,6 +6280,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Ingestion Engine (agent, runs unattended)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/ingestion-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)"
     },
     {
@@ -6949,6 +6965,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Content Author",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Content%20Author"
     },
     {
@@ -6956,6 +6973,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Folio-Assistant Agent",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Folio-Assistant%20Agent"
     },
     {
@@ -6963,6 +6981,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Review Committee",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20Committee"
     },
     {
@@ -6970,6 +6989,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "CI/CD Pipeline",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/CI/CD%20Pipeline"
     },
     {
@@ -6977,6 +6997,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Review Coordinator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/review-coordinator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20Coordinator"
     },
     {
@@ -8082,6 +8103,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Agent",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Agent"
     },
     {
@@ -8089,6 +8111,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reviewer / SME",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reviewer%20/%20SME"
     },
     {
@@ -8096,6 +8119,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Publication manager",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publication-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Publication%20manager"
     },
     {
@@ -8455,6 +8479,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "BA / Feature Requestor",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/business-analyst",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/BA%20/%20Feature%20Requestor"
     },
     {
@@ -8462,6 +8487,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Stakeholders",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/stakeholder",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Stakeholders"
     },
     {
@@ -8678,6 +8704,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Scheduled log sweep",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Scheduled%20log%20sweep"
     },
     {
@@ -9053,6 +9080,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Author (person)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Author%20(person)"
     },
     {
@@ -9060,6 +9088,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Work plan — beans (shared by humans and agents)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/work-plan",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)"
     },
     {
@@ -9067,6 +9096,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Authoring agent (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Authoring%20agent%20(system)"
     },
     {
@@ -9074,6 +9104,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Lean toolchain (lean-mcp)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/lean-toolchain",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Lean%20toolchain%20(lean-mcp)"
     },
     {
@@ -9081,6 +9112,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Build pipeline — validate · render · publish",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish"
     },
     {
@@ -9567,6 +9599,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Editors + authoring agents",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/editor",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Editors%20+%20authoring%20agents"
     },
     {
@@ -9574,6 +9607,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Corpus + build pipeline (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20+%20build%20pipeline%20(system)"
     },
     {
@@ -9581,6 +9615,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Review team (content · QC · technical officer)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20team%20(content%20·%20QC%20·%20technical%20officer)"
     },
     {
@@ -9588,6 +9623,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Clinical / scientific SMEs",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/clinical-sme",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Clinical%20/%20scientific%20SMEs"
     },
     {
@@ -9595,6 +9631,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Programme manager (release authority)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/programme-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Programme%20manager%20(release%20authority)"
     },
     {
@@ -10100,6 +10137,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Narrative reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/narrative-reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Narrative%20reviewer"
     },
     {
@@ -10455,6 +10493,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Designer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Designer"
     },
     {
@@ -10462,6 +10501,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Feedback providers",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/feedback-provider",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Feedback%20providers"
     },
     {
@@ -10469,6 +10509,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Adjudicator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/adjudicator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Adjudicator"
     },
     {
@@ -10774,6 +10815,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Corpus — L1 source knowledge graph",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/corpus",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph"
     },
     {
@@ -11135,6 +11177,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Translation Coordinator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/translation-coordinator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Translation%20Coordinator"
     },
     {
@@ -11142,6 +11185,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Human Translator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/translator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Human%20Translator"
     },
     {
@@ -11149,6 +11193,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Subject-Matter Expert / Reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer"
     },
     {
@@ -11156,6 +11201,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Automated Pipeline",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Automated%20Pipeline"
     },
     {
@@ -12264,6 +12310,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Contributor (human or agent)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)"
     },
     {
@@ -12680,6 +12727,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Business analyst",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/business-analyst",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Business%20analyst"
     },
     {
@@ -12687,6 +12735,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Stakeholder",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/stakeholder",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Stakeholder"
     },
     {
@@ -13436,6 +13485,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "User (person)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/User%20(person)"
     },
     {
@@ -13443,6 +13493,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Onboarding agent (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/onboarding-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Onboarding%20agent%20(system)"
     },
     {
@@ -13450,6 +13501,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Work plan (beans)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/work-plan",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Work%20plan%20(beans)"
     },
     {
@@ -13457,6 +13509,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Publish — GitHub Pages",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publish-target",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Publish%20—%20GitHub%20Pages"
     },
     {
@@ -14030,6 +14083,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Human actor",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Human%20actor"
     },
     {
@@ -15223,6 +15277,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Agent (this session)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Agent%20(this%20session)"
     },
     {
@@ -15230,6 +15285,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Activity log",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/log",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Activity%20log"
     },
     {
@@ -15237,6 +15293,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Log operator (human)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Log%20operator%20(human)"
     },
     {
@@ -15760,6 +15817,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Programme manager / technical officer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/programme-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Programme%20manager%20/%20technical%20officer"
     },
     {
@@ -15767,6 +15825,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Terminologist",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/terminologist",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Terminologist"
     },
     {
@@ -15774,6 +15833,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Clinical SME",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/clinical-sme",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Clinical%20SME"
     },
     {
@@ -16276,6 +16336,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Administrator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/administrator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Administrator"
     },
     {
@@ -16283,6 +16344,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Graph audit (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Graph%20audit%20(system)"
     },
     {
@@ -16693,6 +16755,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Sibling session or human (not yours to close)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/sibling-session",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Sibling%20session%20or%20human%20(not%20yours%20to%20close)"
     },
     {
@@ -17089,6 +17152,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reader",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader"
     },
     {
@@ -17096,6 +17160,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Board renderer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/board-renderer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Board%20renderer"
     },
     {
@@ -17358,6 +17423,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Feedback provider",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/feedback-provider",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Feedback%20provider"
     },
     {
@@ -18020,6 +18086,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Contributor",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor"
     },
     {
@@ -18397,6 +18464,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Author (source content)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Author%20(source%20content)"
     },
     {
@@ -18404,6 +18472,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Agent / platform (automated)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Agent%20/%20platform%20(automated)"
     },
     {
@@ -18411,6 +18480,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Human reviewer / adjudicator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/translation-adjudicator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator"
     },
     {
@@ -18857,6 +18927,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reviewer"
     },
     {
@@ -19225,6 +19296,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Editorial",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/editor",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Editorial"
     },
     {
@@ -19232,6 +19304,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Deployment owner",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publication-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Deployment%20owner"
     },
     {
@@ -19239,6 +19312,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Build pipeline",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Build%20pipeline"
     },
     {
@@ -19246,6 +19320,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Attestation (GDHCN / WHO SMART Trust)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/attestation-service",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)"
     },
     {
@@ -19253,6 +19328,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Publish target",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publish-target",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Publish%20target"
     },
     {
@@ -19260,6 +19336,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Portal (external consumer)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/external-registry",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Portal%20(external%20consumer)"
     },
     {
@@ -20432,6 +20509,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Owner",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Owner"
     },
     {
@@ -21429,6 +21507,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Validation and QA (mechanical + agents)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/validation-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
     },
     {
@@ -21436,6 +21515,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Attestation service (API)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/attestation-service",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Attestation%20service%20(API)"
     },
     {
@@ -21443,6 +21523,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Human signer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publication-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Human%20signer"
     },
     {
@@ -22383,6 +22464,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Code reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/code-reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Code%20reviewer"
     },
     {
@@ -22850,6 +22932,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Editor / author (person)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Editor%20/%20author%20(person)"
     },
     {
@@ -22857,6 +22940,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "HCI validation pipeline (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/validation-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/HCI%20validation%20pipeline%20(system)"
     },
     {
@@ -22864,6 +22948,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Mechanical validation (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/validation-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Mechanical%20validation%20(system)"
     },
     {
@@ -22871,6 +22956,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Non-mechanical validation (review agent or SME)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Non-mechanical%20validation%20(review%20agent%20or%20SME)"
     },
     {
@@ -22878,6 +22964,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Corpus (versioned store)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/corpus",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Corpus%20(versioned%20store)"
     },
     {
@@ -23578,6 +23665,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "FHIR modeller",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/fhir-modeller",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/FHIR%20modeller"
     },
     {
@@ -23585,6 +23673,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Build pipeline — SUSHI · validator · IG Publisher",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Build%20pipeline%20—%20SUSHI%20·%20validator%20·%20IG%20Publisher"
     },
     {
@@ -23592,6 +23681,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "QC reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/qc-reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/QC%20reviewer"
     },
     {
@@ -24830,6 +24920,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Author / guideline developer (person)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Author%20/%20guideline%20developer%20(person)"
     },
     {
@@ -24837,6 +24928,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Evidence agent (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/evidence-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Evidence%20agent%20(system)"
     },
     {
@@ -24844,6 +24936,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Trusted registries and observatories (external)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/external-registry",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Trusted%20registries%20and%20observatories%20(external)"
     },
     {
@@ -24851,6 +24944,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Work plan — beans (shared)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/work-plan",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared)"
     },
     {
@@ -25291,6 +25385,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "User",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/User"
     },
     {
@@ -26254,6 +26349,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Programme manager",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/programme-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Programme%20manager"
     },
     {
@@ -26261,6 +26357,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Review team and SMEs",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20team%20and%20SMEs"
     },
     {
@@ -26918,6 +27015,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reviewer (SME or editor)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)"
     },
     {
@@ -27778,6 +27876,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Agent (playing the machine)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Agent%20(playing%20the%20machine)"
     },
     {
@@ -27785,6 +27884,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Session record",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/session-record",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Session%20record"
     },
     {
@@ -28748,6 +28848,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reader (any actor)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/user",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reader%20(any%20actor)"
     },
     {
@@ -28755,6 +28856,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Source graph — read-only",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/corpus",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Source%20graph%20—%20read-only"
     },
     {
@@ -28762,6 +28864,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Copier's own folio/",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Copier's%20own%20folio/"
     },
     {
@@ -28769,6 +28872,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Verification",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/validation-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Verification"
     },
     {
@@ -29106,6 +29210,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Reviewer / subject-matter expert",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Reviewer%20/%20subject-matter%20expert"
     },
     {
@@ -29555,6 +29660,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Authoring agent",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/authoring-agent",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Authoring%20agent"
     },
     {
@@ -29562,6 +29668,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "CI/CD pipeline",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/CI/CD%20pipeline"
     },
     {
@@ -30421,6 +30528,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Author",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/author",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Author"
     },
     {
@@ -30428,6 +30536,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Layout layer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/corpus",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Layout%20layer"
     },
     {
@@ -32478,6 +32587,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "FHIR modeller / PR author (person + authoring agent)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/fhir-modeller",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/FHIR%20modeller%20/%20PR%20author%20(person%20+%20authoring%20agent)"
     },
     {
@@ -32485,6 +32595,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Incremental build (system)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/build-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Incremental%20build%20(system)"
     },
     {
@@ -32492,6 +32603,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Publisher + validator services (JVM)",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/ig-publisher-service",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Publisher%20+%20validator%20services%20(JVM)"
     },
     {
@@ -32499,6 +32611,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "PR reviewer / QC reviewer",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/qc-reviewer",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/PR%20reviewer%20/%20QC%20reviewer"
     },
     {
@@ -32506,6 +32619,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Publication manager — deploy and seed",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/publication-manager",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed"
     },
     {
@@ -38286,6 +38400,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#schema/odrl",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "odrl",
+      "title": "W3C ODRL 2.2 policies: what an Actor may do, scoped by Process, Task and Role.",
+      "module": "schemas/odrl.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/odrl"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#schema/panel-chrome",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "panel-chrome",
@@ -38320,6 +38443,15 @@
       "module": "schemas/property-skills.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/property-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#schema/prov",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "prov",
+      "title": "W3C PROV-O: the record of a task being performed. Issue #1180.",
+      "module": "schemas/prov.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#schema/python-deps",
@@ -38878,6 +39010,14 @@
       "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/policies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "policies",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#PolicyGraph",
+      "renderable": false,
+      "summary": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "methodology",
@@ -39095,12 +39235,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/materialize-remote",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/repo-conversion"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/User%20(person)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Log%20operator%20(human)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Human%20actor"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user"
     },
     {
@@ -39123,13 +39257,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/voice-authoring-guidance"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Author%20(person)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Author%20(source%20content)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Author%20/%20guideline%20developer%20(person)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Content%20Author",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Editor%20/%20author%20(person)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author"
     },
     {
@@ -39146,9 +39273,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/content-validate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/voice-authoring-guidance"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Editors%20+%20authoring%20agents"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor"
     },
@@ -39180,16 +39304,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/voice-overlay-review"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Reviewer%20/%20SME",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Reviewer%20/%20subject-matter%20expert",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Review%20team%20and%20SMEs",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Review%20team%20(content%20·%20QC%20·%20technical%20officer)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Review%20Committee",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Non-mechanical%20validation%20(review%20agent%20or%20SME)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/reviewer"
     },
     {
@@ -39208,9 +39322,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/review-heatmap",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/visual-diff"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Review%20Coordinator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator"
     },
@@ -39234,9 +39345,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/voice-overlay-review"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Narrative%20reviewer"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/narrative-reviewer"
     },
     {
@@ -39258,9 +39366,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/test-engineer"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Code%20reviewer"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer"
     },
     {
@@ -39279,10 +39384,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/untainted-verification"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/QC%20reviewer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/PR%20reviewer%20/%20QC%20reviewer"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer"
     },
     {
@@ -39296,10 +39397,6 @@
         "person"
       ],
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Clinical%20SME",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Clinical%20/%20scientific%20SMEs"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/clinical-sme"
     },
     {
@@ -39316,9 +39413,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/confirmation-waiver"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Administrator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator"
     },
@@ -39339,11 +39433,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/methodology-adoption"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Programme%20manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Programme%20manager%20(release%20authority)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Programme%20manager%20/%20technical%20officer"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager"
     },
     {
@@ -39362,11 +39451,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/qa-report-signing"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Publication%20manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Human%20signer"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager"
     },
@@ -39390,10 +39474,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/opening-brief"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Business%20analyst",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/BA%20/%20Feature%20Requestor"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst"
     },
     {
@@ -39408,9 +39488,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/terminology-management"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Terminologist"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/terminologist"
     },
@@ -39427,10 +39504,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/l3-fhir-authoring"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/FHIR%20modeller",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/FHIR%20modeller%20/%20PR%20author%20(person%20+%20authoring%20agent)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/fhir-modeller"
     },
     {
@@ -39445,9 +39518,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/translation-manager"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Translation%20Coordinator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translation-coordinator"
     },
@@ -39464,9 +39534,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/translation-manager"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Human%20Translator"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translator"
     },
     {
@@ -39481,9 +39548,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/translation-manager"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translation-adjudicator"
     },
@@ -39502,9 +39566,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/untainted-verification"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Adjudicator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/adjudicator"
     },
@@ -39525,9 +39586,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/wireframe-design-review"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Feedback%20provider"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider"
     },
     {
@@ -39542,9 +39600,6 @@
       ],
       "judgementOnly": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Stakeholders"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/stakeholder"
     },
     {
@@ -39598,14 +39653,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/wireframe-design-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/workflow-state"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Authoring%20agent%20(system)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Folio-Assistant%20Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Agent%20(this%20session)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Agent%20/%20platform%20(automated)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Agent%20(playing%20the%20machine)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent"
     },
     {
@@ -39623,9 +39670,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/document-intake"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Onboarding%20agent%20(system)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/onboarding-agent"
     },
@@ -39645,9 +39689,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/materialize-remote",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/paper-importer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/proof-status-tracking"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent"
     },
@@ -39669,10 +39710,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/library-ingestion"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Contributor",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Agent"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/librarian"
     },
     {
@@ -39688,9 +39725,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/document-intake"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Evidence%20agent%20(system)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/evidence-agent"
     },
     {
@@ -39705,9 +39739,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/bean-coordination"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Sibling%20session%20or%20human%20(not%20yours%20to%20close)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/sibling-session"
     },
@@ -39742,15 +39773,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/latex-validation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/smart-base-tools"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Build%20pipeline%20—%20SUSHI%20·%20validator%20·%20IG%20Publisher",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Corpus%20+%20build%20pipeline%20(system)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Incremental%20build%20(system)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/CI/CD%20Pipeline",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Automated%20Pipeline",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Scheduled%20log%20sweep"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline"
     },
     {
@@ -39769,9 +39791,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/harness-tiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/deletion-requires-confirmation"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Board%20renderer"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/board-renderer"
     },
     {
@@ -39787,11 +39806,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/content-test",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/content-validate"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/HCI%20validation%20pipeline%20(system)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Mechanical%20validation%20(system)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/validation-pipeline"
     },
@@ -39809,9 +39823,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/getting-started"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Publish%20—%20GitHub%20Pages"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publish-target"
     },
     {
@@ -39827,9 +39838,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/proof-verification"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Lean%20toolchain%20(lean-mcp)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/lean-toolchain"
     },
@@ -39847,9 +39855,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/fhir-validation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/ig-publication"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Publisher%20+%20validator%20services%20(JVM)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ig-publisher-service"
     },
     {
@@ -39864,9 +39869,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/qa-report-signing"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Attestation%20service%20(API)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service"
     },
@@ -39885,11 +39887,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/content-feedback"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Work%20plan%20(beans)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan"
     },
     {
@@ -39907,10 +39904,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/materialize-remote"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Corpus%20(versioned%20store)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus"
     },
     {
@@ -39925,9 +39918,6 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Trusted%20registries%20and%20observatories%20(external)"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry"
     },
     {
@@ -39944,9 +39934,6 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/activity-log"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Activity%20log"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/log"
     },
     {
@@ -39962,9 +39949,6 @@
       "actedUpon": true,
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/session-context"
-      ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#role/Session%20record"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-record"
     },
@@ -39993,7 +39977,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/bib-human-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/bib-qa"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editorial-authoring-agent"
     },
     {
@@ -40015,7 +39998,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/editor"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/docs-authoring-agent"
     },
     {
@@ -40036,7 +40018,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/domain-fencing"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent"
     },
     {
@@ -40060,7 +40041,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/corpus-grep",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/process-state"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator"
     },
     {
@@ -40086,7 +40066,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/proof-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/q-usage-watcher"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/integration-watcher"
     },
     {
@@ -40113,7 +40092,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/category-theory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/groebner-basis"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/lean-authoring-agent"
     },
     {
@@ -40141,7 +40119,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/proposition-consolidation-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/critical-path-analysis"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/proof-review-agent"
     },
     {
@@ -40164,7 +40141,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/simulator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#skill/simulator-math-audit"
       ],
-      "bindsLane": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/compute-authoring-agent"
     },
     {
@@ -40239,6 +40215,18 @@
       "description": "Scenarios — the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/scenarios",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/scenarios"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/policies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "policies",
+      "path": "policies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/policies"
+      ],
+      "description": "What an Actor may DO, as W3C ODRL 2.2 policies (issue #1180, owner 2026-09-23). `folio-defaults.jsonld` is the instance's odrl:Set: the permissions each actor file used to list, migrated one rule per (actor, action), plus the owner's floor for an unauthenticated reader (visualize and render only). Actions are the folio ODRL profile in `skills/permissions/permissions.json`; roles stay in `scenarios/`, and identity (which login is which actor) stays in the data store, never here. `dependents: skip` because a downstream instance writes its own policies and inherits these through ODRL's `inheritFrom`, rather than getting a copy.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/policies",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/policies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/cat-harness.jsonld#directory/processes",
@@ -40645,8 +40633,8 @@
   ],
   "staging": {
     "branch": "claude/bzre-arrow",
-    "sha": "96ff9832d727d304541ecd17c33ba6023743d71f",
+    "sha": "af68f09211a4dba244c5eb1a614517588a24154a",
     "pr": "1186/merge",
-    "run": "35921217475"
+    "run": "35926894785"
   }
 }

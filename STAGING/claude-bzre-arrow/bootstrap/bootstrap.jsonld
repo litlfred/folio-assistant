@@ -85,8 +85,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasSkill",
       "@type": "@id"
     },
-    "bindsLane": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsLane",
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
       "@type": "@id"
     },
     "maintains": {
@@ -278,10 +278,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T21:16:27.329Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a00ba0821667dcfd068c60a73db8861997e474a6",
-  "sourceCommitSha": "a00ba0821667dcfd068c60a73db8861997e474a6",
-  "sourceCommitAt": "2026-09-23T21:09:36Z",
+  "generatedAt": "2026-09-23T22:12:48.452Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3963de747e5332ebfeaf77d0a8c9a94ee6e1d575",
+  "sourceCommitSha": "3963de747e5332ebfeaf77d0a8c9a94ee6e1d575",
+  "sourceCommitAt": "2026-09-23T22:05:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -561,6 +561,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Initiator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/initiator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
     },
     {
@@ -568,6 +569,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Requestor",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/requestor",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
     },
     {
@@ -575,6 +577,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Knowledge Graph Data Store",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
     },
     {
@@ -1250,6 +1253,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Logger",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/logger",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Logger"
     },
     {
@@ -1444,9 +1448,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#skill/log-message",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/Initiator"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/initiator"
     },
     {
@@ -1461,9 +1462,6 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store"
     },
     {
@@ -1478,9 +1476,6 @@
       ],
       "judgementOnly": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/Requestor"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/requestor"
     },
     {
@@ -1495,9 +1490,6 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bzre-arrow/bootstrap/bootstrap.jsonld#role/Logger"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/logger"
     },
     {
@@ -1606,8 +1598,8 @@
   ],
   "staging": {
     "branch": "claude/bzre-arrow",
-    "sha": "96ff9832d727d304541ecd17c33ba6023743d71f",
+    "sha": "af68f09211a4dba244c5eb1a614517588a24154a",
     "pr": "1186/merge",
-    "run": "35921217475"
+    "run": "35926894785"
   }
 }
