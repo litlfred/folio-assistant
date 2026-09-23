@@ -40,4 +40,13 @@ Every one of the 5 step(s) is documented.
 | **Adjudicate the conflict**<br>`Task_Adjudicate` | Contributor (human or agent) | calls [Adjudication](adjudication.html)<br>[`materialize-remote`](../reference/skill-instructions/materialize-remote.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it. |
 | **Re-materialize, re-asking the five gates — and record the new fixity**<br>`Task_Apply` | Corpus — L1 source knowledge graph | [`materialize-remote`](../reference/skill-instructions/materialize-remote.html) | The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to. AND THE NEW FIXITY IS RECORDED IN THE SAME CHANGE. This step rewrites bytes that a materialization record describes, so leaving the old digest behind would make a CORRECT run of this process fail check:materialized-fixity as a mismatch — the gate reading "somebody edited held content without saying so" about the one process whose job is to replace it. Measured 2026-09-22 (bean 10s1): this task named no fixity write at all. This is the owner's publication exception, stated as a rule rather than as a carve-out. The exception is NOT "these actors may skip the rule"; it is "say what you did". A writer that updates the digest alongside the bytes passes, and the record then describes what is actually there. A writer that does not fails, correctly, because it has forked upstream silently. A list of permitted writers would go stale the first time somebody added a sixth one; this does not. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **working, or archival?**<br>`Gateway_Purpose` | — | **archival** → ARCHIVAL verify fixity — never re-fetch<br>**working** → WORKING what changed upstream |
+| **Both changed?**<br>`Gateway_Both` | — | **yes** → Adjudicate the conflict<br>**no** → Re-materialize, re-asking the five gates — and record the new fixity |
+
 {% endraw %}

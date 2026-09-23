@@ -40,4 +40,12 @@ Every one of the 6 step(s) is documented.
 | **Choose a destination, or none**<br>`BA_ChooseKg` | BA / Feature Requestor | [`kg-contribution-offer`](../reference/skill-instructions/kg-contribution-offer.html) | A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement "is really a skill" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent. |
 | **Run placement, and raise a bean for the authoring**<br>`A_RecordKg` | Agent | [`placement`](../reference/skill-instructions/placement.html) | The offer produces a DECISION, not a node. `placement` then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. `op="note"` and not `create`, for the reason `A_CreateBeans` above states: the engine has no `create` op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with `beans create`, running the exact-title existence check first, and what this step records is a note that the decision was taken. |
 
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **A destination?**<br>`GW_KgChosen` | Drawn as a branch rather than folded into the task above, because `none` being a real outcome is the property worth being able to see. A diagram where every path ends in a created node is a diagram of a ritual. | **a graph** → Run placement, and raise a bean for the authoring<br>**none — recorded as an answer** → Announce the branch on the issue |
+
 {% endraw %}

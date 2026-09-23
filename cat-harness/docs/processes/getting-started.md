@@ -49,4 +49,13 @@ Every one of the 12 step(s) is documented.
 | **Say where it will be**<br>`Task_ReportPending` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live. |
 | **Say it could not be confirmed**<br>`Task_ReportUnknown` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | No URL, no probe, or a failed request. Reported as "could not check", never as "not yet" and never as "live". |
 
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **What is the user asking for?**<br>`Gateway_Intent` | Computed, not chosen. decisions/folio-intent.dmn returns one of five branches from statedIntent, isFolio and repoHasContent. Non-relaxable: this gateway IS the fix. | **ask** → Choose from the offered options<br>**overlay** → Scan the repo for content worth importing<br>**new-repo** → Create the repository<br>**new-content** → Handed to content authoring<br>**add-folio** → Scaffold the folio (folio_init) |
+| **Is the site answering?**<br>`Gateway_Live` | Computed from decisions/pages-live-gate.dmn. Three outcomes, and `unknown` is not a softer `not-yet`. | **live** → Hand over the live link<br>**not-yet** → Say where it will be<br>**unknown** → Say it could not be confirmed |
+
 {% endraw %}

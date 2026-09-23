@@ -37,4 +37,12 @@ Every one of the 2 step(s) is documented.
 | **Compose the message**<br>`A_Compose` | Actor | [`log-message`](../reference/skill-instructions/log-message.html) | Five required strings — timestamp, actor, process, task, message — and one optional markdown body. The five are required because each answers a question a reader of the log will otherwise have to guess, and a guessed answer in a log is worse than a missing one. |
 | **Record it where a person can read it**<br>`A_Record` | Logger | [`log-message`](../reference/skill-instructions/log-message.html) | Performed by the Logger, which records and decides nothing. In bootstrap the one available destination is the discussion the human actor is already in. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **All five present?**<br>`GW_Complete` | — | **no** → Not recorded — say so<br>**yes** → Record it where a person can read it |
+
 {% endraw %}

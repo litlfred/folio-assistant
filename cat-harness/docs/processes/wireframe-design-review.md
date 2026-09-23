@@ -42,4 +42,14 @@ Every one of the 6 step(s) is documented.
 | **Adjudication**<br>`Call_Adjudicate` | Adjudicator | calls [Adjudication](adjudication.html) | folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. |
 | **Choose a candidate**<br>`Call_Choose` | Adjudicator | calls [Options analysis](options-analysis.html) | A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Checks pass?**<br>`GW_Checks` | — | **yes** → Blind review per criterion<br>**no** → Produce >= 2 candidates, web + mobile |
+| **Entries agree?**<br>`GW_Agree` | — | **no** → Adjudication<br>**yes** → Choose a candidate |
+| **Revise the intent?**<br>`GW_Iterate` | — | **yes** → Write the design intent<br>**no** → Wireframe accepted |
+
 {% endraw %}

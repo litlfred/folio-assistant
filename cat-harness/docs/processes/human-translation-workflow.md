@@ -52,4 +52,14 @@ Every one of the 16 step(s) is documented.
 | **Append WHO disclaimer (if DAK)**<br>`Task_AppendDisclaimer` | Automated Pipeline | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | For WHO SMART Guidelines content, automatically appends the WHO legal disclaimer: - Translation not created by WHO - English edition is authoritative original - WHO not responsible for translation accuracy Only applies when folio contentType includes WHO/DAK content. |
 | **Write status.json (official)**<br>`Task_WriteStatus` | Automated Pipeline | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | Writes translations/<locale>/status.json with the official sign-off metadata and source hash for staleness detection. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Complete enough?**<br>`Gateway_Complete` | — | **Incomplete** → Request completion of remaining strings<br>**Complete** → Inject PO → translated Markdown |
+| **Translation accurate?**<br>`Gateway_Accurate` | — | **Needs correction** → Return for correction with annotations<br>**Accurate** → Append WHO disclaimer (if DAK) |
+| **Drift detected?**<br>`Gateway_Drift` | — | **Drift found** → Review translation for accuracy<br>**Clean** → Review translation for accuracy |
+
 {% endraw %}

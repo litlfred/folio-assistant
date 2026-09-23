@@ -104,19 +104,32 @@
       "result": "pass",
       "findings": []
     },
-    "prose-reviewed-since-code-changed": {
-      "result": "n/a",
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_What",
+          "detail": "\"What is happening?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Live",
+          "detail": "\"Any liveness signal fired?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
       "findings": []
     },
-    "prose-claims-resolve": {
+    "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
-    "n/a": 10,
+    "pass": 10,
+    "fail": 2,
+    "n/a": 9,
     "unknown": 0
   }
 }
