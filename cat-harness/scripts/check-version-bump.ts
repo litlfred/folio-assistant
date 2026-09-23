@@ -179,7 +179,10 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
     } catch {
       continue; // `check:publishable` is the census; this gate is about versions
     }
-    if (decl?.publishable !== true || decl.version === undefined) continue;
+    // EVERY instance now carries a version — owner's ruling, 2026-09-23 —
+    // so this no longer filters on publishability. The only skip left is a
+    // declaration that did not parse, handled above.
+    if (decl === undefined) continue;
     publishable.push({ root, name: decl.name, version: decl.version });
   }
 
@@ -187,8 +190,8 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
     return {
       rows,
       note:
-        "no instance declares `publishable: true`, so there is no declared version to hold to a floor. " +
-        "That is §6 Q1 open, not a clean run — see `bun run check:publishable` for the census",
+        "no instance declaration parsed, so there is no version to hold to a floor. " +
+        "That is a broken checkout rather than a clean run — see `bun run check:publishable` for the census",
     };
   }
 

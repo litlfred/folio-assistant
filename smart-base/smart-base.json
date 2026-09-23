@@ -1,6 +1,8 @@
 {
   "_comment": "The WHO SMART Base layer, staged as a top-level directory ahead of becoming its own repository — the same path `who-iris`, `smart-trust` and `smart-immunizations` are already on. The owner settled the location 2026-09-22: \"same as other smart-* now in corpus... we are migrating. want KG assets here, can break apart later. OK to reference smart-* github sources (e.g markdown) per the smart-* harnessing insutrctiots. needs smart-base harness\". Bean `nsbb` had already called for this harness from the other direction — it rules that a per-IG harness should not exist because it adds no new functionality, and that the DAK/IG pipeline belongs in an IG base under a NEW `smart-base` harness. This is that harness. It holds KG ASSETS first — the ingested WHO digital-health corpus, the methodologies read out of it, and the voices derived from it — and takes no position on the pipeline layering, which is `nsbb`'s to settle. THE UPSTREAM TOOLCHAIN IS NOT VENDORED HERE: `WorldHealthOrganization/smart-base` stays the authoritative home of the ~54 Python scripts, and `smart-base-tools` states why — a copy here would be a second, drifting toolchain.",
   "name": "smart-base",
+  "id": "io.github.litlfred.folio-assistant.smart-base",
+  "version": "0.1.0",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against it. Bean `t3n8`.",
   "title": "SMART Base",
   "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",

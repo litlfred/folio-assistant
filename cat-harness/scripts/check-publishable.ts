@@ -52,8 +52,15 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.js";
 
-/** What a declaration said about being published. `unknown` is about THIS RUN. */
-export type Publishability = "published" | "internal" | "undecided" | "unknown";
+/**
+ * The publication state. `unknown` is about THIS RUN, not about the instance.
+ *
+ * `draft` is the only state a declaration can be in today — `"published"`
+ * fails to PARSE, so it can never appear here. `unknown` means this run could
+ * not read the declaration, which is a different fact and stays separate:
+ * "everything is draft" and "we could not look" must not render alike.
+ */
+export type Publishability = "draft" | "unknown";
 
 export interface InstanceRow {
   /** Repo-relative instance root, `.` for the repository root itself. */
@@ -79,10 +86,16 @@ export interface PublishableReport {
   findings: PublishableFinding[];
 }
 
+/**
+ * The publication state, which today is `draft` for everything.
+ *
+ * Absent means `draft` — the field exists to reserve the axis, not to be
+ * typed out 17 times. `"published"` cannot reach here: it fails to PARSE, so
+ * a declaration claiming it never becomes a `CatHarnessDeclaration` at all.
+ * `skills/folio-core/instance-publication.md`.
+ */
 function stateOf(d: CatHarnessDeclaration): Publishability {
-  if (d.publishable === true) return "published";
-  if (d.publishable === false) return "internal";
-  return "undecided";
+  return d.publication?.state ?? "draft";
 }
 
 export function auditPublishable(repoRoot: string): PublishableReport {
@@ -148,39 +161,41 @@ export function auditPublishable(repoRoot: string): PublishableReport {
 export function formatReport(report: PublishableReport): string {
   const { rows, findings } = report;
   const count = (s: Publishability) => rows.filter((r) => r.state === s).length;
-  const out: string[] = ["Publishability — declared, never inferred (instance-versioning.md §3.1)", ""];
+  const out: string[] = [
+    "Publication state — every asset carries an id and a version, and sits in DRAFT",
+    "(skills/folio-core/instance-publication.md)",
+    "",
+  ];
 
   for (const row of rows) {
-    const mark = { published: "●", internal: "○", undecided: "?", unknown: "✗" }[row.state];
+    const mark = { draft: "◐", unknown: "✗" }[row.state];
+    // The identity is printed for EVERY row now, because every instance has
+    // one. Under the old model it was printed only for the published, which
+    // made an id look like a badge rather than a fact.
     const identity =
-      row.state === "published"
-        ? `  ${row.id ?? "(no id)"} @ ${row.version ?? "(no version)"}`
-        : row.problem !== undefined
-          ? `  ${row.problem}`
-          : "";
+      row.problem !== undefined ? `  ${row.problem}` : `  ${row.id ?? "(no id)"} @ ${row.version ?? "(no version)"}`;
     out.push(`  ${mark} ${row.where.padEnd(24)} ${row.name.padEnd(22)} ${row.state}${identity}`);
   }
 
   out.push("");
-  out.push(
-    `${rows.length} instance(s): ${count("published")} published, ${count("internal")} internal, ` +
-      `${count("undecided")} undecided, ${count("unknown")} unknown.`,
-  );
+  out.push(`${rows.length} instance(s): ${count("draft")} draft, ${count("unknown")} unknown.`);
 
   if (count("unknown") > 0) {
     out.push("");
     out.push(
-      "UNKNOWN is not undecided. Undecided is a fact about this repository; unknown is a fact about this run — " +
-        "those instances were not assessed at all.",
+      "UNKNOWN is not draft. Draft is a fact about the repository; unknown is a fact about THIS RUN — " +
+        "those instances were not assessed at all, and a report that rendered them as draft would be claiming " +
+        "something it never looked at.",
     );
   }
 
-  if (count("undecided") === rows.length && rows.length > 0) {
+  if (count("draft") === rows.length && rows.length > 0) {
     out.push("");
-    out.push("EVERY INSTANCE IS UNDECIDED, and that is the expected state, not a pass.");
+    out.push("EVERY INSTANCE IS DRAFT, and that is now a DECIDED state rather than a worklist.");
     out.push(
-      "§6 Q1 is open — “the rest are unclear and should be declared rather than inferred” — so nothing here guesses. " +
-        "The list above is the owner's worklist.",
+      "§6 Q1 is ANSWERED (owner, 2026-09-23): all assets carry an id and a version and sit in draft, and formal " +
+        "publication is a process that needs defining, tooling, and a per-instance answer. Nothing here is awaiting " +
+        "a decision; it is awaiting that process.",
     );
   }
 
@@ -194,7 +209,8 @@ export function formatReport(report: PublishableReport): string {
   out.push("");
   out.push(
     `${findings.length} finding(s), ${findings.filter((f) => f.severity === "major").length} major. ` +
-      "Per-declaration rules (id/version/canonicalUrl matching `publishable`, and no range versions) are enforced by the schema, not here.",
+      "Per-declaration rules (a required id and version, no range versions, and `publication.state` accepting only " +
+      "`draft`) are enforced by the SCHEMA rather than here — a refusal that parses cannot be switched off the way a gate can.",
   );
   return out.join("\n");
 }

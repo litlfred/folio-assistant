@@ -1,6 +1,8 @@
 {
   "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THIS INSTANCE HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING. Everything under it was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit here is a defect, because the next check will either overwrite it or fail. If something is wrong in this index, the fix is in the pipeline or in the upstream IG, never in these files.",
   "name": "smart-trust",
+  "id": "io.github.litlfred.folio-assistant.smart-trust",
+  "version": "0.1.0",
   "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
   "directories": [
     {

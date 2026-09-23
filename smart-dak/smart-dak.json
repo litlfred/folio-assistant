@@ -1,12 +1,28 @@
 {
   "_comment": "SMART DAK — the L2 layer, and the harness every `smart-*` Digital Adaptation Kit instantiates. Created 2026-09-22 (issue #975) on the owner's stack ruling. It holds the DAK components — personas, business processes, decision logic, data elements — and the authoring transforms over them. DECLARES NO DIRECTORIES, per the `folio-assistant-core` precedent: declaring a directory that is not there is the `dh4f` defect. OPEN, AND NOT DECIDED HERE: `smart-base/tools/` holds nine Tool nodes for the DAK pre/post pipeline, several of which are L2-shaped by the placement question in `smart-stack-layering`. They are there because the owner said so explicitly — 'the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo' — given before this directory existed. Moving them on an inference would override a direct instruction; issue #975 records the question instead.",
   "name": "smart-dak",
+  "id": "io.github.litlfred.folio-assistant.smart-dak",
+  "version": "0.1.0",
   "title": "SMART DAK",
   "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
   "directories": [],
   "assets": [
-    { "id": "agent-instructions", "src": "AGENTS.md", "role": "agent-instructions", "title": "AGENTS.md — smart-dak", "description": "Cold start for this layer, and the tools question it does not answer." },
-    { "id": "instance-readme", "src": "README.md", "role": "instance-readme", "title": "smart-dak", "description": "The layer's scope, in and out, and what is deliberately still elsewhere." }
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — smart-dak",
+      "description": "Cold start for this layer, and the tools question it does not answer."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "smart-dak",
+      "description": "The layer's scope, in and out, and what is deliberately still elsewhere."
+    }
   ],
-  "needs": ["smart-base"]
+  "needs": [
+    "smart-base"
+  ]
 }
