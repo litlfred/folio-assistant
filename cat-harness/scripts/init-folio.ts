@@ -476,6 +476,7 @@ function claudeSettings(assistant: string): string {
 function gitignore(o: InitFolioOptions): string {
   return `# Build output
 build/
+_site/
 .folio-feedback/
 node_modules/
 
@@ -493,36 +494,52 @@ ${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n" : ""
  * `folio-staging.yml` (bean `ojcx`). Without it a folio in its own repository
  * gets no STAGING build, and a reviewer has no "after" to compare.
  *
- * **Written dispatch-only, with a build step that refuses.** The platform does
- * not define how a folio builds its site; that is the folio's, as
- * `builder_image` is in `publish.yml`. A guessed command would publish a
- * preview built by something the author never chose, and a pull-request
- * trigger with no build would turn every PR red on day one. So the PR trigger
- * is written commented out, beside the one line to set, and `result.notes`
- * says so.
+ * **A document folio gets it ON**, building with the platform's
+ * `build-document-site.ts` (bean `fyu2`). That command was rehearsed end to
+ * end on a folio this function scaffolds: site, ChangeSet and banner.
+ *
+ * **A paper folio gets it OFF**: dispatch-only, with a build step that
+ * refuses. A paper builds through `publish.yml` (LaTeX, a folio-supplied
+ * builder image), and the site a reviewer should see from that is the
+ * folio's to name. A guessed command would publish a preview built by
+ * something the author never chose.
  */
-function stagingWorkflow(assistant: string): string {
+function stagingWorkflow(assistant: string, contentType: InitFolioOptions["contentType"]): string {
+  const on = contentType === "document";
+  const build = on
+    ? `bun run ${assistant}/cat-harness/scripts/build-document-site.ts --out _site`
+    : `echo "::error::set build_command in .github/workflows/staging.yml to build this folio''s site" && exit 1`;
+  const header = on
+    ? `# The site is built by the platform's build-document-site.ts: one page per
+# document, with an anchor on every labelled block.`
+    : `# TO ENABLE (a paper folio builds through publish.yml, so its site is yours
+# to name):
+#   1. Set build_command below to the command that builds this folio's site.
+#   2. Uncomment the pull_request trigger.
+# Until then it runs only when dispatched, and the build step refuses.`;
+  const trigger = on
+    ? `  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:`
+    : `  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]`;
   return `name: Staging preview
 
 # A before/after preview of this folio for every pull request, published to
 # STAGING/<branch>/ on gh-pages, with the ChangeSet (what changed, block by
 # block) beside it. The mechanics live in the platform's reusable workflow.
 #
-# TO ENABLE:
-#   1. Set build_command below to the command that builds this folio's site.
-#   2. Uncomment the pull_request trigger.
-# Until then it runs only when dispatched, and the build step refuses.
+${header}
 
 on:
-  workflow_dispatch:
-  # pull_request:
-  #   types: [opened, synchronize, reopened]
+${trigger}
 
 jobs:
   staging:
     uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main
     with:
-      build_command: 'echo "::error::set build_command in .github/workflows/staging.yml to build this folio''s site" && exit 1'
+      build_command: '${build}'
       site_dir: _site
       folio_dir: folio
       platform_dir: ${assistant}
@@ -670,11 +687,13 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
-  write(".github/workflows/staging.yml", stagingWorkflow(assistant));
-  result.notes.push(
-    "Staging previews are wired but OFF: set build_command in .github/workflows/staging.yml " +
-      "and uncomment its pull_request trigger. Until then there is no STAGING build to review.",
-  );
+  write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
+  if (o.contentType !== "document") {
+    result.notes.push(
+      "Staging previews are wired but OFF: set build_command in .github/workflows/staging.yml " +
+        "and uncomment its pull_request trigger. Until then there is no STAGING build to review.",
+    );
+  }
   // declared-path-literal: the scaffolder CREATES the layout. There is no
   // declaration to read in a repo that does not exist yet — this is the
   // write that makes one possible.

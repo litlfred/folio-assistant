@@ -111,12 +111,21 @@ describe("required inputs", () => {
 });
 
 describe("what gets written", () => {
-  test("the staging caller is written OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
+  test("a DOCUMENT folio's staging caller is ON and builds with build-document-site (fyu2)", () => {
     const d = tmp();
-    const r = initFolio(opts(d));
+    const r = initFolio(opts(d, { contentType: "document" }));
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf).toContain("uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main");
-    // No live pull_request trigger: every uncommented line naming it is absent.
+    expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(true);
+    expect(wf).toContain("cat-harness/scripts/build-document-site.ts --out _site");
+    expect(r.notes.join(" ")).not.toContain("wired but OFF");
+    expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
+  });
+
+  test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
+    const d = tmp();
+    const r = initFolio(opts(d, { contentType: "paper" }));
+    const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
     expect(wf).toContain("exit 1");
     expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");

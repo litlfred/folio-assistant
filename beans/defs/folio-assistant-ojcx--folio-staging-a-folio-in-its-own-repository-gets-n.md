@@ -44,3 +44,7 @@ The ChangeSet CLI exists (#981): `bun run folio-assistant-core/schemas/changeset
 **Removal is deliberately absent.** Previews stay when a PR closes. Deletion is `deletion-requires-confirmation` / `plj1` territory, and the platform's own cleanup is guarded three ways. A folio's cleanup needs the same design, and has none yet.
 
 **Owed:** a real run from a folio repository. This repo holds no folio, so the reusable workflow has not executed end to end.
+
+## From fyu2 (2026-09-23)
+
+The workflow's steps were rehearsed locally on an init-folio-scaffolded document folio: build, ChangeSet and banner all pass. What remains unexercised is the gh-pages push and a real GitHub Actions run, which needs a folio repository.
