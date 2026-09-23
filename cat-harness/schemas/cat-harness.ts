@@ -934,19 +934,32 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
  */
+/**
+ * The surfaces a tile can appear on.
+ *
+ * `glass` joined 2026-09-23 (bean `zrvt`, issue #1006) on the owner's words:
+ * *"where are the todo, fsh guts etc tiles on bottom of glass?"* That
+ * overrides `v0jv`'s earlier *"the tiles must NOT be projected onto the
+ * glass"*, and it is a SURFACE on the one declaration rather than a second
+ * list of glass tiles — `harness-tiles`: one declaration, per-surface
+ * visibility, never two registries.
+ */
+export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
+export type TileSurface = (typeof TILE_SURFACES)[number];
+
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
   /** What a tile calls it. Absent falls back to the directory's id. */
   title: z.string().min(1).optional(),
   /**
-   * Where its tile appears. Absent means BOTH.
+   * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
    *
    * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
    * declared once and says where it shows — never two registries free to
    * disagree about what a tile is.
    */
-  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  surfaces: z.array(z.enum(TILE_SURFACES)).nonempty().optional(),
   /**
    * Whether this tile starts out of frame. Absent means shown.
    *
@@ -1061,8 +1074,8 @@ export function visualisationsOf(
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
 }
 
-/** Does this visualisation's tile appear on this surface? Absent means both. */
-export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+/** Does this visualisation's tile appear on this surface? Absent means every surface. */
+export function showsOn(v: Visualisation, surface: TileSurface): boolean {
   return v.surfaces === undefined || v.surfaces.includes(surface);
 }
 
