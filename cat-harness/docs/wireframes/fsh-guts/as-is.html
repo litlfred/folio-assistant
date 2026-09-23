@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: fsh-guts — page and dead-fish viewer</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  /* just-the-docs chrome, as docs-ui.css shapes it: a 56px strip at rest (>= 800px),
+     the theme's top bar with a Menu button below 800px. */
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0; background: var(--fill); }
+  .strip .mk { width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--bg); }
+  .strip .ic { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--bg); font-size: 17px; }
+  .strip .ic.dim { color: var(--mute); border-style: dashed; }
+  .strip .sep { width: 32px; border-top: 1px solid var(--line); margin: 4px 0; }
+  .strip .grow { flex: 1; }
+  .strip .tab { width: 40px; height: 32px; border: 1px solid var(--ink); border-left-width: 5px; display: grid; place-items: center; font-weight: 700; background: var(--bg); font-size: 13px; }
+  .main { min-width: 0; position: relative; }
+  .mhead { display: flex; align-items: center; gap: 8px; padding: 8px 24px; border-bottom: 1px solid var(--line); }
+  .search { flex: 1; max-width: 520px; border: 1px solid var(--line); padding: 10px 12px; color: var(--mute); min-height: 44px; }
+  .handle { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); font-weight: 700; padding: 12px 24px; min-height: 44px; z-index: 3; border: 0; font: inherit; font-weight: 700; }
+  .content { padding: 24px 32px 40px; max-width: 800px; }
+  h1 { font-size: 30px; margin: 32px 0 12px; }
+  h2 { font-size: 21px; margin: 28px 0 10px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .stat { flex: 1 1 8rem; border: 1px solid var(--line); padding: 8px 10px; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { font-size: 12px; color: var(--mute); }
+  .tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; font-weight: 600; margin: 0 2px 2px 0; white-space: nowrap; }
+  .tw { overflow-x: auto; margin: 8px 0 16px; border: 1px solid var(--line); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  th { background: var(--fill); white-space: nowrap; }
+  .foot { border-top: 1px solid var(--line); margin-top: 32px; padding-top: 12px; font-size: 13px; color: var(--mute); }
+  .foot summary { color: var(--ink); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+  .mbar { display: none; }
+  @media (max-width: 799.98px) {
+    .page { display: block; }
+    .strip { display: none; }
+    .mbar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--fill); }
+    .mbar .t { font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; }
+    .mbar .mk { width: 32px; height: 32px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; background: var(--bg); }
+    .mbar .b { min-width: 44px; min-height: 44px; border: 1px solid var(--line); background: var(--bg); display: grid; place-items: center; font-size: 17px; }
+    .mhead { padding: 8px 12px; }
+    .search { max-width: none; }
+    .content { padding: 12px 16px 32px; }
+    h1 { font-size: 26px; margin-top: 56px; }
+    .handle { top: 0; }
+    .wide table { min-width: 760px; }
+  }
+
+  .screen { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; border: 1px dashed var(--ink); padding: 4px 8px; display: inline-block; }
+  .cut { border: 0; border-top: 3px double var(--ink); margin: 40px 0 16px; }
+  .tag.gap { border-width: 2px; }
+  .panel { border: 2px solid var(--ink); max-width: 360px; padding: 10px; background: var(--bg); }
+  .phead { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .tiles { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+  .tile { position: relative; border: 1px solid var(--ink); width: 96px; min-height: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 18px; }
+  .tile small { font-size: 12px; margin-top: 4px; }
+  .count { position: absolute; top: -8px; right: -8px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 12px; font-size: 12px; padding: 0 7px; }
+  .prefs label { display: block; padding: 6px 0; border-bottom: 1px solid var(--line); min-height: 44px; }
+  .prefs small { display: block; color: var(--mute); }
+  .arrow { color: var(--mute); margin: 8px 0; }
+  .dlist { list-style: none; padding: 0; margin: 0; }
+  .dlist li { border: 1px solid var(--line); padding: 8px; margin: 4px 0; display: flex; justify-content: space-between; gap: 8px; min-height: 44px; font-size: 14px; }
+  .dlist em { color: var(--mute); font-style: normal; font-size: 12px; white-space: nowrap; }
+  .detail { border-top: 1px dashed var(--ink); margin-top: 10px; padding-top: 10px; }
+  .detail dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; font-size: 13px; }
+  .body { white-space: pre-wrap; font-size: 12px; background: var(--fill); padding: 8px; overflow-wrap: anywhere; }
+  .detail dt { color: var(--mute); }
+  .detail dd { margin: 0; overflow-wrap: anywhere; }
+  @media (max-width: 799.98px) {
+    .w3 { min-width: 560px; }
+    .panel { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · fsh-guts · covers: cat-harness/docs/fsh-guts/index.md, the Settings → Discarded viewer in cat-harness/docs/assets/js/docs-ui.js</div>
+<div class="page">
+  <nav class="strip" aria-label="Site navigation, collapsed">
+    <span class="mk" title="C@T Harness">@</span>
+    <span class="ic" aria-label="Keep navigation open">☰</span>
+    <span class="ic" aria-label="Todos">▤</span>
+    <span class="ic" aria-label="Beans">◍</span>
+    <span class="ic" aria-label="Processes">⇶</span>
+    <span class="ic" aria-label="Knowledge graph">⌘</span>
+    <span class="ic" aria-label="More actions">▦</span>
+    <span class="grow"></span>
+    <span class="tab" aria-label="smart-trust">S</span>
+    <span class="tab" aria-label="WHO IRIS">W</span>
+    <span class="tab" aria-label="Folio Assistant">F</span>
+    <span class="tab" aria-label="C@T Harness">C</span>
+    <span class="tab" aria-label="Bootstrap">B</span>
+    <span class="sep"></span>
+    <span class="ic" aria-label="Home">⌂</span>
+  </nav>
+  <div class="main">
+    <div class="mbar">
+      <span class="t"><span class="mk">@</span>C@T Harness</span>
+      <span class="b" aria-label="Colour scheme">◐</span>
+      <span class="b" aria-label="Language">⊕</span>
+      <span class="b" aria-label="Actions">▦</span>
+      <span class="b" aria-label="Menu">☰</span>
+    </div>
+    <button class="handle" type="button" aria-label="Pull down your folio">▾ Folio</button>
+    <div class="mhead"><span class="search">⌕ Search folio-assistant</span></div>
+        <main class="content">
+      <p class="screen">Screen 1 of 2 · <code>/fsh-guts/</code> · staging and local builds only</p>
+      <h1>fsh-guts — the trashcan that is kept</h1>
+      <p>This page is <b>not on the published site</b>. It is declared <code>publish: "staging-only"</code>, so <code>compose-docs.ts</code> withholds it from the canonical deploy and includes it in a local build or a <code>STAGING/&lt;slug&gt;/</code> preview.</p>
+      <p><code>fsh-guts</code> holds content that was <b>relocated rather than deleted</b>. Delete here means relocate, and relocate is reversible.</p>
+      <p><b>19 file(s)</b> across 2 group(s). Each links to the file itself — this page indexes what is kept, it does not republish it.</p>
+      <h2>Does each file declare itself?</h2>
+      <div class="tw"><table>
+        <tr><th>state</th><th>files</th><th>what it means</th></tr>
+        <tr><td><span class="tag">declared</span></td><td>9</td><td>carries the tag itself</td></tr>
+        <tr><td><span class="tag">via sidecar</span></td><td>4</td><td>a script, described by a tagged <code>.md</code> sibling</td></tr>
+        <tr><td><span class="tag gap">undeclared</span></td><td>6</td><td><b>neither</b> — a gap, not a format limit</td></tr>
+      </table></div>
+      <h2>retired</h2>
+      <p>3 file(s).</p>
+      <div class="tw"><table class="w3">
+        <tr><th>file</th><th>what it is</th><th>declares itself</th></tr>
+        <tr><td><a href="#p">skill-definition-roles.md</a> ↗</td><td><code>SkillDefinition.roles</code> — retired 2026-09-20</td><td><span class="tag">declared</span></td></tr>
+        <tr><td><a href="#p">skill-roles-front-matter.md</a> ↗</td><td><code>roles:</code> in skill front matter — the whole record</td><td><span class="tag">declared</span></td></tr>
+        <tr><td><a href="#p">translations-fr-agent-onboarding.md</a> ↗</td><td>Intégration de l'agent</td><td><span class="tag">declared</span></td></tr>
+      </table></div>
+      <h2>scripts</h2>
+      <p>16 file(s).</p>
+      <div class="tw"><table class="w3">
+        <tr><th>file</th><th>what it is</th><th>declares itself</th></tr>
+        <tr><td><a href="#p">computations-refactor-fixers.md</a> ↗</td><td>The six computations-refactor fixers</td><td><span class="tag">declared</span></td></tr>
+        <tr><td><a href="#p">extract-lean-blocks.py</a> ↗</td><td>Declaration start patterns</td><td><span class="tag">via sidecar</span></td></tr>
+        <tr><td><a href="#p">fix-cross-cluster-witness-loads.py</a> ↗</td><td>—</td><td><span class="tag gap">undeclared</span></td></tr>
+        <tr><td><a href="#p">fix-root-script-shim.py</a> ↗</td><td>Match a substrate import anywhere — including indented / lazy</td><td><span class="tag gap">undeclared</span></td></tr>
+        <tr><td><a href="#p">materialize_iw_queue.py</a> ↗</td><td>TWO ROOTS, because the two directories below belong to different ones.</td><td><span class="tag gap">undeclared</span></td></tr>
+        <tr><td><a href="#p">wire_stale_claims.py</a> ↗</td><td>Match a <code>kind(...)</code> builder call followed by a single object literal.</td><td><span class="tag gap">undeclared</span></td></tr>
+      </table></div>
+      <p class="wf-mute">6 of 16 rows. Every file link goes off-site to github.com/litlfred/folio-assistant/blob/main/fsh-guts/….</p>
+
+      <hr class="cut" id="p">
+      <p class="screen">Screen 2 of 2 · the dead-fish viewer · ▦ Actions → Settings → Discarded (every page)</p>
+      <div class="panel" role="region" aria-label="Actions">
+        <div class="phead"><span class="wf-btn">‹ Back</span><b>Settings</b></div>
+        <div class="tiles">
+          <span class="tile">☾<small>Dark</small></span>
+        </div>
+        <div class="prefs" role="group" aria-label="Reading preferences">
+          <label>☐ Larger text <small>Bigger body text and wider line spacing</small></label>
+          <label>☐ Higher contrast <small>Stronger text and a thicker focus ring</small></label>
+          <label>☐ Underline links <small>Never colour alone (WCAG 1.4.1)</small></label>
+          <label>☐ Reduce motion <small>Turn off transitions and animation</small></label>
+        </div>
+        <div class="tiles">
+          <span class="tile fish" aria-label="Discarded items — 9 items">&gt;&lt;✕&gt;<small>Discarded</small><span class="count">9</span></span>
+          <span class="tile">◧◧◧<small>Declared kinds</small></span>
+        </div>
+      </div>
+      <p class="arrow">↓ pressing Discarded swaps the panel to this view</p>
+      <div class="panel" role="region" aria-label="Discarded items">
+        <div class="phead"><span class="wf-btn">‹ Back</span><b>Discarded items</b></div>
+        <ul class="dlist">
+          <li><span>`SkillDefinition.roles` — retired</span><em>retired</em></li>
+          <li><span>The `roles:` field in SKILL front matter — 288 annotations, no reader, born dangling</span><em>retired-field</em></li>
+          <li><span>Agent onboarding — an English page in the French gettext directory</span><em>page</em></li>
+          <li><span>The six computations-refactor fixers</span><em>script-group</em></li>
+          <li><span>extract-lean-blocks.py</span><em>script</em></li>
+          <li><span>fix_env_injection.py</span><em>script</em></li>
+          <li><span>generate-docs.ts</span><em>script</em></li>
+          <li><span>migrate-cluster-phase.py</span><em>script</em></li>
+          <li><span>split-docs-page.py</span><em>script</em></li>
+        </ul>
+        <div class="detail">
+          <p class="wf-mute">Choosing an item hides the list above and shows this detail in its place; focus moves to the title.</p>
+          <span class="wf-btn">‹ All discarded items</span>
+          <h3>generate-docs.ts</h3>
+          <dl><dt>Was at</dt><dd>cat-harness/scripts/generate-docs.ts</dd><dt>Moved</dt><dd>2026-09-20</dd><dt>Kind</dt><dd>script</dd><dt>Issue</dt><dd>#223</dd></dl>
+          <p>A 908-line documentation generator that has been in this repository since its ROOT COMMIT and has never run once …</p>
+          <pre class="body"># `generate-docs.ts`
+
+**Never run.** Not "stopped being run" — *never*, in the whole history of the
+repository. Retired at the owner's word, 2026-09-20 …</pre>
+          <a href="#p">View the source of this item</a>
+        </div>
+      </div>
+      <div class="foot">
+        <details><summary>▸ Open notes (3)</summary></details>
+        <p>folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0.</p>
+        <p>deployed <code>dev</code></p>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

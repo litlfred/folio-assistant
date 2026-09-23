@@ -1,7 +1,7 @@
 ---
 $schema: folio-methodology/v1
 name: wiregen
-title: WireGen: wireframing from a written design intent
+title: "WireGen: wireframing from a written design intent"
 origin: >
   Sidong Feng, Mingyue Yuan, Jieshan Chen, Zhenchang Xing and Chunyang Chen,
   "Designing with Language: Wireframing UI Design Intent with Generative Large

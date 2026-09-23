@@ -38,12 +38,13 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { instanceRootsIn, readDeclaration, repoRootFor, visualisationsOf } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration, repoRootFor, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
-const WIREFRAMES = join(INSTANCE_ROOT, "docs", "wireframes");
+/** Wireframes live in the site, under `<site>/wireframes/`, so they publish with it. */
+const WIREFRAMES = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "wireframes");
 /** The two viewports every usability review needs (owner, 2026-09-23). */
 export const VIEWPORTS = ["web", "mobile"] as const;
 

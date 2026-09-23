@@ -16,7 +16,6 @@
         <bpmn:documentation>Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status.</bpmn:documentation>
         <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_MFS</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>O_Coordinate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>O_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Decision</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Adopted</bpmn:flowNodeRef>
@@ -26,7 +25,7 @@
         <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Origin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Ingest</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Relate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_RelatedWork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Render</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Place</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Integrate</bpmn:flowNodeRef>
@@ -40,22 +39,17 @@
       <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:callActivity id="Call_Ingest" name="Ingest into library/" calledElement="Process_Ingestion">
-      <bpmn:documentation>Document ingestion, which picks the rung mechanically (embedded outline, pages, OCR). The section text is written only when the licence allows it.</bpmn:documentation>
+      <bpmn:documentation>folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it.</bpmn:documentation>
     </bpmn:callActivity>
-    <bpmn:task id="A_Relate" name="Find related beans and issues; summarize">
-      <bpmn:documentation>Search beans and GitHub issues for work the method touches. Categorize each hit (duplicates, depends-on, affected-by, unrelated) with a one-line summary. Judgement decides the categories; the list is shown to the owner, not acted on. CRDM runs this same step when a requirement starts or changes in chat.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="O_Coordinate" name="Coordinate with related work?">
-      <bpmn:documentation>Asked as a structured question: coordinate (link, block, merge), note only, or ignore.</bpmn:documentation>
-      <bpmn:extensionElements><folio:no-skill reason="The owner decides whether and how to coordinate. The agent offers the options as a structured question."/></bpmn:extensionElements>
-    </bpmn:task>
+    <bpmn:callActivity id="Call_RelatedWork" name="Related work: find, sort, ask" calledElement="Process_RelatedWork">
+      <bpmn:documentation>Search beans, issues and open PRs for work the method touches, categorize and summarize them, and ask the owner whether and how to coordinate. CRDM calls the same sub-process.</bpmn:documentation>
+    </bpmn:callActivity>
     <bpmn:task id="A_Render" name="Render the method: adopted vs refused">
       <bpmn:documentation>What the source says, section by section, then a table of what this platform adopts and what it refuses, each with a reason. Extensions beyond the source (such as web plus mobile where the paper studied mobile) are stated as ours. Reported results are not imported as facts.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Place" name="Place by ownership; declare the directory">
-      <bpmn:documentation>A domain-neutral method belongs to the harness, and a domain method to the instance that owns the domain (methodology-adoption §4). Declare the directory.</bpmn:documentation>
+      <bpmn:documentation>A domain-neutral method belongs to the harness and a domain method to the folio that owns the domain. If the session cannot write where it belongs, draft it where it can, say so in the file, and open a bean to move it.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Integrate" name="Integrate: call existing processes">
@@ -63,7 +57,7 @@
       <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Tools" name="Every skill and tool used becomes a Tool">
-      <bpmn:documentation>Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill. check:tools gates it.</bpmn:documentation>
+      <bpmn:documentation>Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="O_Review" name="Review the adoption">
@@ -74,28 +68,27 @@
     <bpmn:endEvent id="End_Declined" name="Declined, with the reason recorded"/>
     <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_1" sourceRef="Start_MFS" targetRef="A_Origin"/>
     <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_2" sourceRef="A_Origin" targetRef="Call_Ingest"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_3" sourceRef="Call_Ingest" targetRef="A_Relate"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_4" sourceRef="A_Relate" targetRef="O_Coordinate"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_5" sourceRef="O_Coordinate" targetRef="A_Render"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_6" sourceRef="A_Render" targetRef="A_Place"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_7" sourceRef="A_Place" targetRef="A_Integrate"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_8" sourceRef="A_Integrate" targetRef="A_Tools"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_9" sourceRef="A_Tools" targetRef="O_Review"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_10" sourceRef="O_Review" targetRef="GW_Decision"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_11" name="yes" sourceRef="GW_Decision" targetRef="End_Adopted"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_12" name="no" sourceRef="GW_Decision" targetRef="End_Declined"/>
-    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_13" name="changes" sourceRef="GW_Decision" targetRef="A_Render"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_3" sourceRef="Call_Ingest" targetRef="Call_RelatedWork"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_4" sourceRef="Call_RelatedWork" targetRef="A_Render"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_5" sourceRef="A_Render" targetRef="A_Place"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_6" sourceRef="A_Place" targetRef="A_Integrate"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_7" sourceRef="A_Integrate" targetRef="A_Tools"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_8" sourceRef="A_Tools" targetRef="O_Review"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_9" sourceRef="O_Review" targetRef="GW_Decision"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_10" name="yes" sourceRef="GW_Decision" targetRef="End_Adopted"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_11" name="no" sourceRef="GW_Decision" targetRef="End_Declined"/>
+    <bpmn:sequenceFlow id="SF_Process_MethodologyFromSource_12" name="changes" sourceRef="GW_Decision" targetRef="A_Render"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_MethodologyFromSource">
     <bpmndi:BPMNPlane id="Plane_Process_MethodologyFromSource" bpmnElement="Collaboration_Process_MethodologyFromSource">
       <bpmndi:BPMNShape id="Shape_Participant_Process_MethodologyFromSource" bpmnElement="Participant_Process_MethodologyFromSource" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2460" height="340" />
+        <dc:Bounds x="160" y="80" width="2270" height="340" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Owner" bpmnElement="Lane_Owner" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2430" height="170" />
+        <dc:Bounds x="190" y="80" width="2240" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="190" y="250" width="2430" height="170" />
+        <dc:Bounds x="190" y="250" width="2240" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_MFS" bpmnElement="Start_MFS">
         <dc:Bounds x="302" y="147" width="36" height="36" />
@@ -106,35 +99,32 @@
       <bpmndi:BPMNShape id="Shape_Call_Ingest" bpmnElement="Call_Ingest">
         <dc:Bounds x="630" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Relate" bpmnElement="A_Relate">
+      <bpmndi:BPMNShape id="Shape_Call_RelatedWork" bpmnElement="Call_RelatedWork">
         <dc:Bounds x="820" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_O_Coordinate" bpmnElement="O_Coordinate">
-        <dc:Bounds x="1010" y="125" width="140" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Render" bpmnElement="A_Render">
-        <dc:Bounds x="1200" y="295" width="140" height="80" />
+        <dc:Bounds x="1010" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Place" bpmnElement="A_Place">
-        <dc:Bounds x="1390" y="295" width="140" height="80" />
+        <dc:Bounds x="1200" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Integrate" bpmnElement="A_Integrate">
-        <dc:Bounds x="1580" y="295" width="140" height="80" />
+        <dc:Bounds x="1390" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Tools" bpmnElement="A_Tools">
-        <dc:Bounds x="1770" y="295" width="140" height="80" />
+        <dc:Bounds x="1580" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_O_Review" bpmnElement="O_Review">
-        <dc:Bounds x="1960" y="125" width="140" height="80" />
+        <dc:Bounds x="1770" y="125" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Decision" bpmnElement="GW_Decision" isMarkerVisible="true">
-        <dc:Bounds x="2195" y="140" width="50" height="50" />
+        <dc:Bounds x="2005" y="140" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Adopted" bpmnElement="End_Adopted">
-        <dc:Bounds x="2392" y="147" width="36" height="36" />
+        <dc:Bounds x="2202" y="147" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Declined" bpmnElement="End_Declined">
-        <dc:Bounds x="2392" y="317" width="36" height="36" />
+        <dc:Bounds x="2202" y="317" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_1" bpmnElement="SF_Process_MethodologyFromSource_1">
         <di:waypoint x="338" y="165" />
@@ -152,14 +142,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_4" bpmnElement="SF_Process_MethodologyFromSource_4">
         <di:waypoint x="960" y="335" />
-        <di:waypoint x="985" y="335" />
-        <di:waypoint x="985" y="165" />
-        <di:waypoint x="1010" y="165" />
+        <di:waypoint x="1010" y="335" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_5" bpmnElement="SF_Process_MethodologyFromSource_5">
-        <di:waypoint x="1150" y="165" />
-        <di:waypoint x="1175" y="165" />
-        <di:waypoint x="1175" y="335" />
+        <di:waypoint x="1150" y="335" />
         <di:waypoint x="1200" y="335" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_6" bpmnElement="SF_Process_MethodologyFromSource_6">
@@ -172,33 +158,29 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_8" bpmnElement="SF_Process_MethodologyFromSource_8">
         <di:waypoint x="1720" y="335" />
-        <di:waypoint x="1770" y="335" />
+        <di:waypoint x="1745" y="335" />
+        <di:waypoint x="1745" y="165" />
+        <di:waypoint x="1770" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_9" bpmnElement="SF_Process_MethodologyFromSource_9">
-        <di:waypoint x="1910" y="335" />
-        <di:waypoint x="1935" y="335" />
-        <di:waypoint x="1935" y="165" />
-        <di:waypoint x="1960" y="165" />
+        <di:waypoint x="1910" y="165" />
+        <di:waypoint x="2005" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_10" bpmnElement="SF_Process_MethodologyFromSource_10">
-        <di:waypoint x="2100" y="165" />
-        <di:waypoint x="2195" y="165" />
+        <di:waypoint x="2055" y="165" />
+        <di:waypoint x="2202" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_11" bpmnElement="SF_Process_MethodologyFromSource_11">
-        <di:waypoint x="2245" y="165" />
-        <di:waypoint x="2392" y="165" />
+        <di:waypoint x="2055" y="165" />
+        <di:waypoint x="2177" y="165" />
+        <di:waypoint x="2177" y="335" />
+        <di:waypoint x="2202" y="335" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_12" bpmnElement="SF_Process_MethodologyFromSource_12">
-        <di:waypoint x="2245" y="165" />
-        <di:waypoint x="2367" y="165" />
-        <di:waypoint x="2367" y="335" />
-        <di:waypoint x="2392" y="335" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_MethodologyFromSource_13" bpmnElement="SF_Process_MethodologyFromSource_13">
-        <di:waypoint x="2220" y="190" />
-        <di:waypoint x="2220" y="408" />
-        <di:waypoint x="1270" y="408" />
-        <di:waypoint x="1270" y="375" />
+        <di:waypoint x="2030" y="190" />
+        <di:waypoint x="2030" y="408" />
+        <di:waypoint x="1080" y="408" />
+        <di:waypoint x="1080" y="375" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

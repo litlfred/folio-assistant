@@ -8,14 +8,19 @@
 // viewport it records a `script` entry per criterion (pass/fail, never a score):
 //   renders       - the page loads and has visible content
 //   no-overflow   - no horizontal scroll (the mobile failure that matters most)
-//   no-placeholder- no lorem ipsum / TODO / xxx text: mid-fidelity means real content
+//   no-placeholder- no lorem ipsum, no TODO/FIXME/XXX marker: mid-fidelity means real content
 // and writes a screenshot for the human and agent reviewers. Exit 1 on any fail.
 // Playwright is this repository's own dependency; Chromium from PLAYWRIGHT_BROWSERS_PATH.
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { basename, resolve } from "node:path";
 
 const VIEWPORTS = { web: { width: 1280, height: 800 }, mobile: { width: 390, height: 844 } };
-const PLACEHOLDER = /lorem ipsum|dolor sit amet|\bTODO\b|\bxxx+\b|placeholder text/i;
+// Filler prose is matched case-insensitively. Author markers (TODO, FIXME, XXX)
+// only in capitals: "todo" is real content in this repository (a bean status,
+// the todos/ graph), and a wireframe of those pages must be able to say it.
+const PLACEHOLDER_PROSE = /lorem ipsum|dolor sit amet|placeholder text/i;
+const PLACEHOLDER_MARKER = /\bTODO\b|\bFIXME\b|\bXXX+\b/;
+const placeholderIn = (text) => text.match(PLACEHOLDER_PROSE) ?? text.match(PLACEHOLDER_MARKER);
 
 const args = process.argv.slice(2);
 const outIdx = args.indexOf("--out");
@@ -50,7 +55,7 @@ for (const f of files) {
       }));
       entry("renders", m.text.trim().length > 0, `${m.text.trim().length} characters of visible text`);
       entry("no-overflow", m.scrollW <= m.clientW, `scrollWidth ${m.scrollW}, viewport ${m.clientW}`);
-      const hit = m.text.match(PLACEHOLDER);
+      const hit = placeholderIn(m.text);
       entry("no-placeholder", !hit, hit ? `found "${hit[0]}"` : "none found");
       const shot = resolve(out, `${basename(f, ".html")}.${vp}.png`);
       await page.screenshot({ path: shot, fullPage: true });
