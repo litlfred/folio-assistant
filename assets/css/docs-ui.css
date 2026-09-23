@@ -6858,3 +6858,115 @@ a.fa-harness-tab__body:focus-visible {
   .fa-glass-asset-tool[aria-label^="Make "],
   .fa-glass-tidy { display: none; }
 }
+
+/* ── The glass's filter (bean `7m6g`) ─────────────────────────────────────
+ *
+ * An attribute rather than `hidden`, because a pinned sticky and a shelf card
+ * already use `hidden` for their own states, and the reader's filter must
+ * never be confused with — or undo — one of those. `!important` because the
+ * phone column sets `display` on the same cards. */
+.fa-sticky-layer [data-fa-filtered-out] { display: none !important; }
+.fa-glass-filter-select {
+  min-height: 2.75rem;
+  min-width: 12rem;
+  padding: 0 0.5rem;
+  font: inherit;
+  color: var(--fa-glass-ink);
+  background: var(--fa-glass-card);
+  border: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-filtered-note {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  padding: 0.6rem 0.75rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px dashed var(--fa-glass-edge);
+}
+
+/* ── The avatar COVERS the card — owner, 2026-09-23 ──────────────────────
+ *
+ * *"artefact avatar should cover sheet"*; offered three shapes, the owner
+ * chose **"Fills the card"**: the cover (or the kind icon) is the whole card's
+ * background, like a sticky's picture, and the title and buttons sit over it
+ * on a readable strip. The avatar is positioned against the CARD (which is
+ * absolutely positioned, so it is the containing block), not the face. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) {
+  justify-content: space-between;
+  overflow: hidden;
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  z-index: 0;
+  background: rgba(var(--fa-glass-tint), 0.35);
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar img {
+  object-fit: cover;
+  object-position: center top;
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-glass-kind-avatar {
+  --fa-avatar-size: 45%;
+  width: 45%;
+  height: 45%;
+}
+/* The words and the controls ride ABOVE the picture, each on its own strip of
+   the card's colour, so they are legible over any cover at any opacity. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-face {
+  align-items: flex-start;
+  min-height: 0;
+}
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name,
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools {
+  position: relative;
+  z-index: 1;
+  background: var(--fa-glass-card);
+  padding: 0.35rem 0.5rem;
+}
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
+/* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
+/* On a phone the column gives a card no height of its own, so a covered card
+   keeps a book's shape. */
+@media (max-width: 37.49rem) {
+  .fa-glass-shelf > .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) { min-height: 16rem; }
+}
+
+/* The browser-only note's dismiss. */
+.fa-glass-local-note { position: relative; padding-right: 3.25rem !important; }
+.fa-glass-settings-note { padding-right: 0 !important; }
+.fa-glass-note-dismiss {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fa-glass-more { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.fa-glass-more .fa-tile {
+  width: 6.5rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 1px solid var(--fa-glass-edge);
+  color: var(--fa-glass-ink);
+  font-size: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+}
+.fa-glass-more .fa-tile svg { width: 1.6rem; height: 1.6rem; }

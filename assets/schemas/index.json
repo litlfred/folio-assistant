@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 137,
+      "count": 139,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -439,6 +439,22 @@
       "name": "health-report",
       "graphNode": "schema",
       "summary": "Repository health reports — what the daily sweep under `test/health/` wrote.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/ig-menu.test.ts",
+      "instance": "cat-harness",
+      "name": "ig-menu.test",
+      "graphNode": "undeclared",
+      "summary": "SUSHI's `menu:` is a nested MAP whose two shapes appear in one config, so a",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "instance": "cat-harness",
+      "name": "ig-menu",
+      "graphNode": "schema",
+      "summary": "ig-menu.ts — a FHIR IG's own navigation, as data.",
       "isTest": false
     },
     {
@@ -1884,6 +1900,13 @@
       "kind": "zod-object",
       "fields": [
         {
+          "name": "@context",
+          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
+        },
+        {
           "name": "$schema",
           "type": "z.literal(ARCHIVE_CONTENTS_SCHEMA_ID)",
           "optional": false,
@@ -1944,7 +1967,9 @@
       "refs": [
         "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema"
       ],
-      "unresolved": [],
+      "unresolved": [
+        "CONTENT_CONTEXT_URL"
+      ],
       "external": [
         "ARCHIVE_CONTENTS_SCHEMA_ID",
         "z"
@@ -14550,6 +14575,220 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenu",
+      "name": "IgMenu",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuGroup",
+      "name": "IgMenuGroup",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema",
+      "name": "IgMenuGroupSchema",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "zod-object",
+      "doc": "One top-level group — a dropdown in the IG's top bar.",
+      "fields": [
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the group itself is a page rather than only a container."
+        },
+        {
+          "name": "items",
+          "type": "z.array(IgMenuItemSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ig-menu.ts#IgMenuItemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuItem",
+      "name": "IgMenuItem",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuItemSchema",
+      "name": "IgMenuItemSchema",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "zod-object",
+      "doc": "One leaf: a label and the page it opens.",
+      "fields": [
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuSchema",
+      "name": "IgMenuSchema",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_MENU_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Its `canonical`, the base every `href` is relative to."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "IgMenuSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "groups",
+          "type": "z.array(IgMenuGroupSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema",
+        "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_MENU_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema",
+      "name": "IgMenuSourceSchema",
+      "module": "cat-harness/schemas/ig-menu.ts",
+      "kind": "zod-object",
+      "doc": "Where a menu was read from.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"sushi-config\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "The repository the config was read from."
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(7)",
+          "optional": false,
+          "array": false,
+          "doc": "The commit it was read at. Provenance."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The path within that repository."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(4)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/jsonld.ts#GraphEdgeTerm",
       "name": "GraphEdgeTerm",
       "module": "cat-harness/schemas/jsonld.ts",
@@ -23095,6 +23334,13 @@
       "kind": "zod-object",
       "fields": [
         {
+          "name": "@context",
+          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
+        },
+        {
           "name": "$schema",
           "type": "z.literal(TABULAR_RECORDS_SCHEMA_ID)",
           "optional": false,
@@ -23150,7 +23396,9 @@
         "cat-harness/schemas/narrative.ts#NarrativeSchema",
         "cat-harness/schemas/tabular-records.ts#TabularSheetSchema"
       ],
-      "unresolved": [],
+      "unresolved": [
+        "CONTENT_CONTEXT_URL"
+      ],
       "external": [
         "TABULAR_RECORDS_SCHEMA_ID",
         "z"
@@ -36860,6 +37108,30 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema",
+      "to": "cat-harness/schemas/ig-menu.ts#IgMenuItemSchema",
+      "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-menu.ts#IgMenuSchema",
+      "to": "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema",
+      "via": "groups",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-menu.ts#IgMenuSchema",
+      "to": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/kg-node.ts#KgAssetSchema",

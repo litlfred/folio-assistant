@@ -66,6 +66,63 @@
       "@id": "folio-assistant-core:meta",
       "@type": "@json"
     },
+    "$schema": {
+      "@id": "dcterms:conformsTo"
+    },
+    "format": {
+      "@id": "dcterms:format"
+    },
+    "narrative": {
+      "@id": "folio-assistant-core:narrative",
+      "@type": "@json"
+    },
+    "source": {
+      "@id": "folio-assistant-core:sourceTechnicalMetadata",
+      "@type": "@json"
+    },
+    "archive": {
+      "@id": "folio-assistant-core:archiveTechnicalMetadata",
+      "@type": "@json"
+    },
+    "sheets": {
+      "@id": "folio-assistant-core:sheets",
+      "@type": "@json"
+    },
+    "entries": {
+      "@id": "folio-assistant-core:archiveEntries",
+      "@type": "@json"
+    },
+    "n_sheets": {
+      "@id": "folio-assistant-core:sheetCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_entries": {
+      "@id": "folio-assistant-core:entryCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_files": {
+      "@id": "folio-assistant-core:fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "n_directories": {
+      "@id": "folio-assistant-core:directoryCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "uncompressed_bytes": {
+      "@id": "folio-assistant-core:uncompressedBytes",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "header_vocabulary": {
+      "@id": "folio-assistant-core:headerVocabulary",
+      "@container": "@set"
+    },
+    "headers": {
+      "@id": "folio-assistant-core:headers",
+      "@container": "@list"
+    },
+    "file": {
+      "@id": "folio-assistant-core:file"
+    },
     "contains": {
       "@id": "dcterms:hasPart",
       "@type": "@id",
