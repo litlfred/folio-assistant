@@ -34,7 +34,7 @@
  */
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
-import { sidecarFor, sidecarPathFor, staleFields } from "../schemas/detangle-sidecar.ts";
+import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../schemas/detangle-sidecar.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -47,7 +47,6 @@ import {
 } from "../schemas/detangle.js";
 import { allowedFromNeeds, directionOf, type LayerRule } from "../schemas/layer-direction.js";
 import { ancestorsOf, flattenDependencies } from "../schemas/dependency-order.js";
-import { resolveDirectories } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -323,19 +322,10 @@ const results = groups.map((g) => {
 // sidecar rather than on a bad number, so it cannot become the gate that
 // always passes. `detangle.ts` says the carve is an adjudication — that stays
 // a person's call, and nothing here grades it.
-// The declared `qa` directory, looked up BY ID as `kg-audit` does for its
-// own: a by-kind lookup works while one directory holds `qa` and throws the
-// day a second is declared — which is exactly what happened when this tree
-// was folded in with its own `detangle-results` entry (bean `byql`).
+// The declared `qa` directory's `detangle/`, resolved in ONE place so every
+// reader of the sidecars agrees with this writer (see `detangleResultsDir`).
 const HARNESS = join(ROOT, "cat-harness");
-const qaDir =
-  resolveDirectories([{ name: "(local)", root: HARNESS, own: true }]).find(
-    (d) => d.id === "qa" && d.own && d.scope !== "repository",
-  )?.absPath ??
-  // declared-path-literal: the convention fallback, at the call site — an
-  // instance declaring no `qa` directory still needs a home for the sidecars.
-  join(HARNESS, "test", "results");
-const RESULTS_DIR = join(qaDir, "detangle");
+const RESULTS_DIR = detangleResultsDir(HARNESS);
 
 function writeSidecars(): { written: string[]; stale: { path: string; fields: string[] }[] } {
   const written: string[] = [];
