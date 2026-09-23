@@ -2,7 +2,7 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 7,
+      "count": 42,
       "unit": "voices"
     }
   },
@@ -20,6 +20,41 @@
       "dir": "folio-assistant-core/skills/voices",
       "present": true,
       "voices": [
+        "address-adjudicator",
+        "address-administrator",
+        "address-author",
+        "address-authoring-agent",
+        "address-business-analyst",
+        "address-clinical-sme",
+        "address-code-reviewer",
+        "address-compute-authoring-agent",
+        "address-docs-authoring-agent",
+        "address-editor",
+        "address-editorial-authoring-agent",
+        "address-evidence-agent",
+        "address-feedback-provider",
+        "address-fhir-modeller",
+        "address-ingestion-agent",
+        "address-integration-watcher",
+        "address-lean-authoring-agent",
+        "address-librarian",
+        "address-narrative-reviewer",
+        "address-onboarding-agent",
+        "address-platform-authoring-agent",
+        "address-programme-manager",
+        "address-proof-review-agent",
+        "address-publication-manager",
+        "address-qc-reviewer",
+        "address-review-coordinator",
+        "address-reviewer",
+        "address-session-coordinator",
+        "address-sibling-session",
+        "address-stakeholder",
+        "address-terminologist",
+        "address-translation-adjudicator",
+        "address-translation-coordinator",
+        "address-translator",
+        "address-user",
         "technical-writer"
       ]
     },
@@ -51,6 +86,1161 @@
     }
   ],
   "voices": [
+    {
+      "id": "address-adjudicator",
+      "title": "Addressing the Adjudicator",
+      "description": "How to write for a reader acting as Adjudicator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-adjudicator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-adjudicator",
+      "sources": [
+        {
+          "title": "Role `adjudicator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-adjudicator-register",
+          "title": "States the outcome, then the reason, then what the reason is scoped to",
+          "description": "States the outcome, then the reason, then what the reason is scoped to. Never \"this is fine\": a dispensation with no stated reason is an override nobody can review afterwards.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else."
+        }
+      ]
+    },
+    {
+      "id": "address-administrator",
+      "title": "Addressing the Administrator",
+      "description": "How to write for a reader acting as Administrator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-administrator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-administrator",
+      "sources": [
+        {
+          "title": "Role `administrator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-administrator-register",
+          "title": "Names the actor, the role and the permission separately, because they are three different objects",
+          "description": "Names the actor, the role and the permission separately, because they are three different objects. States what a change makes possible, not what it was asked for.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
+        }
+      ]
+    },
+    {
+      "id": "address-author",
+      "title": "Addressing the Author",
+      "description": "How to write for a reader acting as Author. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-author",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-author",
+      "sources": [
+        {
+          "title": "Role `author` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-author-register",
+          "title": "Direct and second-person",
+          "description": "Direct and second-person. Say what to do and what it costs. No preamble, no restating the task back at them.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not."
+        }
+      ]
+    },
+    {
+      "id": "address-authoring-agent",
+      "title": "Addressing the Authoring agent",
+      "description": "How to write for a reader acting as Authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-authoring-agent-register",
+          "title": "Imperative and checkable",
+          "description": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like — a rule with no failure mode gets reasoned around.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
+        }
+      ]
+    },
+    {
+      "id": "address-business-analyst",
+      "title": "Addressing the Business analyst",
+      "description": "How to write for a reader acting as Business analyst. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-business-analyst",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-business-analyst",
+      "sources": [
+        {
+          "title": "Role `business-analyst` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-business-analyst-register",
+          "title": "Requirement-shaped: the need, the constraint, the acceptance condition",
+          "description": "Requirement-shaped: the need, the constraint, the acceptance condition. Ambiguity named rather than resolved by assumption.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ."
+        }
+      ]
+    },
+    {
+      "id": "address-clinical-sme",
+      "title": "Addressing the Clinical / scientific SME",
+      "description": "How to write for a reader acting as Clinical / scientific SME. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-clinical-sme",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-clinical-sme",
+      "sources": [
+        {
+          "title": "Role `clinical-sme` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-clinical-sme-register",
+          "title": "Domain language, not implementation language",
+          "description": "Domain language, not implementation language. Say what the guidance CLAIMS before saying how it is encoded.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Expert in the subject, not in the system. Judges whether the content is clinically right; is not interested in FHIR profiles or schema fields and should not have to be."
+        }
+      ]
+    },
+    {
+      "id": "address-code-reviewer",
+      "title": "Addressing the Code reviewer",
+      "description": "How to write for a reader acting as Code reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-code-reviewer",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-code-reviewer",
+      "sources": [
+        {
+          "title": "Role `code-reviewer` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-code-reviewer-register",
+          "title": "Name the reference that does not resolve, and where it points",
+          "description": "Name the reference that does not resolve, and where it points. 'This looks wrong' is not reviewable; 'this declares X, and X is declared nowhere' is.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
+        }
+      ]
+    },
+    {
+      "id": "address-compute-authoring-agent",
+      "title": "Addressing the Compute authoring agent",
+      "description": "How to write for a reader acting as Compute authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-compute-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-compute-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `compute-authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-compute-authoring-agent-register",
+          "title": "Numeric and traceable",
+          "description": "Numeric and traceable. Every value names the computation that produced it and the commit it was produced at.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
+        }
+      ]
+    },
+    {
+      "id": "address-docs-authoring-agent",
+      "title": "Addressing the Docs authoring agent",
+      "description": "How to write for a reader acting as Docs authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-docs-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-docs-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `docs-authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-docs-authoring-agent-register",
+          "title": "Plain and orienting",
+          "description": "Plain and orienting. A generated page says it is generated and names the command that writes it.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes."
+        }
+      ]
+    },
+    {
+      "id": "address-editor",
+      "title": "Addressing the Editor",
+      "description": "How to write for a reader acting as Editor. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-editor",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-editor",
+      "sources": [
+        {
+          "title": "Role `editor` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-editor-register",
+          "title": "Findings first, each with its evidence and severity",
+          "description": "Findings first, each with its evidence and severity. Never bury a blocker in prose; never dress an opinion as a finding.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument."
+        }
+      ]
+    },
+    {
+      "id": "address-editorial-authoring-agent",
+      "title": "Addressing the Editorial authoring agent",
+      "description": "How to write for a reader acting as Editorial authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-editorial-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-editorial-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `editorial-authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-editorial-authoring-agent-register",
+          "title": "Specific and quotable",
+          "description": "Specific and quotable. Name the sentence, say what breaks, propose the replacement. Never 'improve the flow'.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
+        }
+      ]
+    },
+    {
+      "id": "address-evidence-agent",
+      "title": "Addressing the Evidence agent",
+      "description": "How to write for a reader acting as Evidence agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-evidence-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-evidence-agent",
+      "sources": [
+        {
+          "title": "Role `evidence-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-evidence-agent-register",
+          "title": "Appraising",
+          "description": "Appraising. State the question, the sources searched, what was found and what was discarded with the reason.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
+        }
+      ]
+    },
+    {
+      "id": "address-feedback-provider",
+      "title": "Addressing the Feedback provider",
+      "description": "How to write for a reader acting as Feedback provider. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-feedback-provider",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-feedback-provider",
+      "sources": [
+        {
+          "title": "Role `feedback-provider` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-feedback-provider-register",
+          "title": "The finding, then the evidence it rests on",
+          "description": "The finding, then the evidence it rests on. A finding that does not show what it read is an opinion, and the author is entitled to disagree with it on those terms.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below."
+        }
+      ]
+    },
+    {
+      "id": "address-fhir-modeller",
+      "title": "Addressing the FHIR modeller",
+      "description": "How to write for a reader acting as FHIR modeller. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-fhir-modeller",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-fhir-modeller",
+      "sources": [
+        {
+          "title": "Role `fhir-modeller` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-fhir-modeller-register",
+          "title": "Specification register",
+          "description": "Specification register. Cardinalities, invariants, must-support. Assume the standard is known.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
+        }
+      ]
+    },
+    {
+      "id": "address-ingestion-agent",
+      "title": "Addressing the Ingestion engine",
+      "description": "How to write for a reader acting as Ingestion engine. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-ingestion-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-ingestion-agent",
+      "sources": [
+        {
+          "title": "Role `ingestion-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-ingestion-agent-register",
+          "title": "Provenance-carrying",
+          "description": "Provenance-carrying. Every extracted fact names where it came from and how confident the extraction was.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later."
+        }
+      ]
+    },
+    {
+      "id": "address-integration-watcher",
+      "title": "Addressing the Integration watcher",
+      "description": "How to write for a reader acting as Integration watcher. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-integration-watcher",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-integration-watcher",
+      "sources": [
+        {
+          "title": "Role `integration-watcher` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-integration-watcher-register",
+          "title": "Finding-shaped: what landed, which axis it touches, what specifically is now wrong",
+          "description": "Finding-shaped: what landed, which axis it touches, what specifically is now wrong. No recommendations it has not checked.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
+        }
+      ]
+    },
+    {
+      "id": "address-lean-authoring-agent",
+      "title": "Addressing the Lean authoring agent",
+      "description": "How to write for a reader acting as Lean authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-lean-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-lean-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `lean-authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-lean-authoring-agent-register",
+          "title": "Mechanical and exact",
+          "description": "Mechanical and exact. Name the declaration, the error, and the tactic. A proof either elaborates or it does not.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
+        }
+      ]
+    },
+    {
+      "id": "address-librarian",
+      "title": "Addressing the Librarian",
+      "description": "How to write for a reader acting as Librarian. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-librarian",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-librarian",
+      "sources": [
+        {
+          "title": "Role `librarian` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-librarian-register",
+          "title": "Exact about what is claimed versus what is ours",
+          "description": "Exact about what is claimed versus what is ours. An identifier is the publisher's; a slug is this corpus's. A capture is evidence of one thing and not of another, and says which.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
+        }
+      ]
+    },
+    {
+      "id": "address-narrative-reviewer",
+      "title": "Addressing the Narrative reviewer",
+      "description": "How to write for a reader acting as Narrative reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-narrative-reviewer",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-narrative-reviewer",
+      "sources": [
+        {
+          "title": "Role `narrative-reviewer` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-narrative-reviewer-register",
+          "title": "Quote the prose, then name what is wrong with it",
+          "description": "Quote the prose, then name what is wrong with it. A voice finding that does not show the sentence it is about is an opinion, and the author is entitled to disagree with it on those terms.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding."
+        }
+      ]
+    },
+    {
+      "id": "address-onboarding-agent",
+      "title": "Addressing the Onboarding agent",
+      "description": "How to write for a reader acting as Onboarding agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-onboarding-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-onboarding-agent",
+      "sources": [
+        {
+          "title": "Role `onboarding-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-onboarding-agent-register",
+          "title": "Orienting and ordered",
+          "description": "Orienting and ordered. Which repo this is, what to run first, where the governing skill lives. Say what NOT to do as explicitly as what to do.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
+        }
+      ]
+    },
+    {
+      "id": "address-platform-authoring-agent",
+      "title": "Addressing the Platform authoring agent",
+      "description": "How to write for a reader acting as Platform authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-platform-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-platform-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `platform-authoring-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-platform-authoring-agent-register",
+          "title": "Precise about what is guaranteed and what is merely usual",
+          "description": "Precise about what is guaranteed and what is merely usual. Name the state a consumer gets when the answer is unknown.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
+        }
+      ]
+    },
+    {
+      "id": "address-programme-manager",
+      "title": "Addressing the Programme manager",
+      "description": "How to write for a reader acting as Programme manager. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-programme-manager",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-programme-manager",
+      "sources": [
+        {
+          "title": "Role `programme-manager` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-programme-manager-register",
+          "title": "Status first, computed values only",
+          "description": "Status first, computed values only. Mark what is measured and leave judgements blank rather than guessing.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
+        }
+      ]
+    },
+    {
+      "id": "address-proof-review-agent",
+      "title": "Addressing the Proof review agent",
+      "description": "How to write for a reader acting as Proof review agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-proof-review-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-proof-review-agent",
+      "sources": [
+        {
+          "title": "Role `proof-review-agent` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-proof-review-agent-register",
+          "title": "Adversarial but specific",
+          "description": "Adversarial but specific. State the step that does not follow, or the hypothesis that makes the statement vacuous.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
+        }
+      ]
+    },
+    {
+      "id": "address-publication-manager",
+      "title": "Addressing the Publication manager",
+      "description": "How to write for a reader acting as Publication manager. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-publication-manager",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-publication-manager",
+      "sources": [
+        {
+          "title": "Role `publication-manager` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-publication-manager-register",
+          "title": "Release-shaped: what ships, what is held, what authorised it",
+          "description": "Release-shaped: what ships, what is held, what authorised it. Dates and refs, not adjectives.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
+        }
+      ]
+    },
+    {
+      "id": "address-qc-reviewer",
+      "title": "Addressing the QC reviewer",
+      "description": "How to write for a reader acting as QC reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-qc-reviewer",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-qc-reviewer",
+      "sources": [
+        {
+          "title": "Role `qc-reviewer` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-qc-reviewer-register",
+          "title": "Concrete and artefact-anchored",
+          "description": "Concrete and artefact-anchored. Name the page, the build, the URL. A claim about source is not evidence about output.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
+        }
+      ]
+    },
+    {
+      "id": "address-review-coordinator",
+      "title": "Addressing the Review coordinator",
+      "description": "How to write for a reader acting as Review coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-review-coordinator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-review-coordinator",
+      "sources": [
+        {
+          "title": "Role `review-coordinator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-review-coordinator-register",
+          "title": "Counts, with what each count is and is not",
+          "description": "Counts, with what each count is and is not. 'Four changed blocks in 3.2 have no verdict' is actionable; 'most of it is reviewed' is not.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves."
+        }
+      ]
+    },
+    {
+      "id": "address-reviewer",
+      "title": "Addressing the Reviewer / SME",
+      "description": "How to write for a reader acting as Reviewer / SME. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-reviewer",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-reviewer",
+      "sources": [
+        {
+          "title": "Role `reviewer` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-reviewer-register",
+          "title": "Evidence first",
+          "description": "Evidence first. State the finding, then the reasoning. Never make them reconstruct an argument to reach a verdict.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why."
+        }
+      ]
+    },
+    {
+      "id": "address-session-coordinator",
+      "title": "Addressing the Session coordinator",
+      "description": "How to write for a reader acting as Session coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-session-coordinator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-session-coordinator",
+      "sources": [
+        {
+          "title": "Role `session-coordinator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-session-coordinator-register",
+          "title": "Situational",
+          "description": "Situational. State what is in flight, what this session is taking, and what it is explicitly not.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
+        }
+      ]
+    },
+    {
+      "id": "address-sibling-session",
+      "title": "Addressing the Sibling session",
+      "description": "How to write for a reader acting as Sibling session. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-sibling-session",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-sibling-session",
+      "sources": [
+        {
+          "title": "Role `sibling-session` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-sibling-session-register",
+          "title": "Boundary-marking",
+          "description": "Boundary-marking. State what is claimed, by whom, and on which branch. Never write as though their work were yours to resolve.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
+        }
+      ]
+    },
+    {
+      "id": "address-stakeholder",
+      "title": "Addressing the Stakeholder",
+      "description": "How to write for a reader acting as Stakeholder. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-stakeholder",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-stakeholder",
+      "sources": [
+        {
+          "title": "Role `stakeholder` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-stakeholder-register",
+          "title": "Self-contained at every checkpoint",
+          "description": "Self-contained at every checkpoint. Restate what is being asked and why it matters; never assume the last conversation is remembered.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history."
+        }
+      ]
+    },
+    {
+      "id": "address-terminologist",
+      "title": "Addressing the Terminologist",
+      "description": "How to write for a reader acting as Terminologist. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-terminologist",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-terminologist",
+      "sources": [
+        {
+          "title": "Role `terminologist` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-terminologist-register",
+          "title": "Exact",
+          "description": "Exact. Name the code system, the version, the binding. Never paraphrase a concept definition.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose."
+        }
+      ]
+    },
+    {
+      "id": "address-translation-adjudicator",
+      "title": "Addressing the Translation adjudicator",
+      "description": "How to write for a reader acting as Translation adjudicator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-translation-adjudicator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-translation-adjudicator",
+      "sources": [
+        {
+          "title": "Role `translation-adjudicator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-translation-adjudicator-register",
+          "title": "Comparative",
+          "description": "Comparative. Present the alternatives side by side with what each preserves and loses. Do not pre-select.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Decides between competing translations, usually a subject expert in the target language. Arrives at a disagreement and needs both options and the reason each was offered."
+        }
+      ]
+    },
+    {
+      "id": "address-translation-coordinator",
+      "title": "Addressing the Translation coordinator",
+      "description": "How to write for a reader acting as Translation coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-translation-coordinator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-translation-coordinator",
+      "sources": [
+        {
+          "title": "Role `translation-coordinator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-translation-coordinator-register",
+          "title": "Pipeline-shaped: state per locale, what moved, what is waiting",
+          "description": "Pipeline-shaped: state per locale, what moved, what is waiting. Never imply a translation is current when its source changed.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since."
+        }
+      ]
+    },
+    {
+      "id": "address-translator",
+      "title": "Addressing the Human translator",
+      "description": "How to write for a reader acting as Human translator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-translator",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-translator",
+      "sources": [
+        {
+          "title": "Role `translator` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-translator-register",
+          "title": "Source-faithful with context supplied",
+          "description": "Source-faithful with context supplied. Give the surrounding sense and any term that must not be translated.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong."
+        }
+      ]
+    },
+    {
+      "id": "address-user",
+      "title": "Addressing the User",
+      "description": "How to write for a reader acting as User. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-user",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-user",
+      "sources": [
+        {
+          "title": "Role `user` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-user-register",
+          "title": "Plain and decisive",
+          "description": "Plain and decisive. Lead with the answer, then the cost. Offer choices as short selectable options, never as an essay with a question at the end.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Has a goal and no interest in the machinery. Types with difficulty and will not read three paragraphs to find a choice. Knows their own domain far better than the system, and will be right about it when the agent is not."
+        }
+      ]
+    },
     {
       "id": "agent-skill-authoring",
       "title": "Agent skill authoring — the base voice, read from two ingested papers",
@@ -1157,10 +2347,10 @@
     }
   ],
   "totals": {
-    "voices": 7,
-    "rules": 66,
+    "voices": 42,
+    "rules": 101,
     "citingLibrary": 63,
-    "citingKgNode": 3,
+    "citingKgNode": 38,
     "mechanical": 12
   }
 }
