@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 666,
+      "count": 668,
       "unit": "beans"
     }
   },
@@ -2535,6 +2535,20 @@
       "file": "beans/defs/folio-assistant-9791--qa-summary-passing-counts-only-script-checkable-cr.md"
     },
     {
+      "id": "folio-assistant-99zv",
+      "title": "RENDERED VERIFICATION: the skill says to read layout off the staging preview and never says how — plus a check that passed over a page with no stylesheets",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:47:12Z",
+      "updatedAt": "2026-09-23T20:12:24Z",
+      "preview": "Owner, 2026-09-23: *\"playright skills update to check intended UI (also need\nusabuility check)\"*.\n\n`rendered-verification` already existed and already covered the ground — build\nthe site, drive it with Playwright, measure computed style rather than reading\nthe stylesheet. So this **extends it** rather than adding a ninth skill beside\neight that overlap.\n\n## The gap\n\nThe skill said, correctly:\n\n> *",
+      "file": "beans/defs/folio-assistant-99zv--rendered-verification-the-skill-says-to-read-layou.md"
+    },
+    {
       "id": "folio-assistant-9c34",
       "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
       "status": "completed",
@@ -4715,14 +4729,14 @@
     {
       "id": "folio-assistant-iwtn",
       "title": "BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-88mg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:19:45Z",
-      "updatedAt": "2026-09-23T19:19:45Z",
+      "updatedAt": "2026-09-23T19:44:11Z",
       "preview": "Owner, 2026-09-23: *\"bootstrap = self definitional. no semantic leakage, no graph leakage.\"* The README, AGENTS.md and the new `schemas/graph.schema.json` now comply (pv51, with a test in `bootstrap-tools/schemas/graph.test.ts`). The rest of `bootstrap/` does not.\n\n**Measured 2026-09-23:** mentions of WHO, DAK, smart-guidelines, smart-base, cat-harness, folio or f-a-sci, or a `../` path, per file:",
       "file": "beans/defs/folio-assistant-iwtn--bootstrap-self-definitional-130-mentions-of-harnes.md"
     },
@@ -5189,7 +5203,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
       "updatedAt": "2026-09-22T19:54:07Z",
-      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\nOwner: *\"i want to slowly get rid of IG publisher in the publication/iteration\npahse… we can use this for iterative delta's (if we dont care about\nindexing/versioning so much in STAGING, we need full IG AST rereun)\"*, and on\nsmart-immunizations: *",
+      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\n## The plan is the SKILL. This bean is the work-plan entry.\n\n> [`fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md`](../../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md)\n\nRead it before starting any phase and before claiming ",
       "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
     },
     {
@@ -8127,6 +8141,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Issue #223 — cut this repo into layers that can depend on each other without\ncycles.\n\n`zlmp` is the gate: a lower layer importing from a higher one becomes a circular\ndependency BETWEEN REPOSITORIES the moment the cut happens, so that count has to\nreach zero before anything else here is safe. `x4a6` is a worked example of what\nblocks until it does — `docs/` cannot be declared because `folio` is co",
       "file": "beans/defs/folio-assistant-vke6--split-223-cut-this-repo-into-layers-that-can-depen.md"
+    },
+    {
+      "id": "folio-assistant-vkm0",
+      "title": "GENERALISE THE FIX, THEN ATTACK IT: a fix scoped to the wrong thing, and the adversarial pass that catches it",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:13:37Z",
+      "updatedAt": "2026-09-23T20:26:56Z",
+      "preview": "Owner, 2026-09-23: *\"schema modeling/paper writting/software big fixing skill\nupdate: try to generalize pattern of a fix. adversarty skill, did you\ngenrealize too much... are you picking up unindeneded things.\"*\n\n## One skill, not two\n\nThe adversary has **no subject until a generalisation exists** — \"did you\ngeneralise too much\" cannot be asked of nothing. So they are two moves in one\nfile, in ord",
+      "file": "beans/defs/folio-assistant-vkm0--generalise-the-fix-then-attack-it-a-fix-scoped-to.md"
     },
     {
       "id": "folio-assistant-vlhk",

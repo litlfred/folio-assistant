@@ -278,10 +278,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T20:55:54.026Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1caaf434e490f2ea3508267c4850de8c6da92b81",
-  "sourceCommitSha": "1caaf434e490f2ea3508267c4850de8c6da92b81",
-  "sourceCommitAt": "2026-09-23T20:53:40Z",
+  "generatedAt": "2026-09-23T21:11:01.309Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ae7316bd24c29b5be13488dc07a90ad6df7e4880",
+  "sourceCommitSha": "ae7316bd24c29b5be13488dc07a90ad6df7e4880",
+  "sourceCommitAt": "2026-09-23T21:08:52Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -299,10 +299,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-graph-emission",
-      "title": "Emitting bootstrap's own graph",
-      "description": "How bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
+      "title": "Writing out bootstrap's own Knowledge Graph",
+      "description": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all.",
       "instructionsPath": "skills/bootstrap-graph-emission.md",
-      "instructionLines": 129,
+      "instructionLines": 62,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -316,7 +316,7 @@
       "title": "Which harness, and where",
       "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
       "instructionsPath": "skills/confirm-harness.md",
-      "instructionLines": 59,
+      "instructionLines": 58,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -328,9 +328,9 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-kg-navigation",
       "title": "Reading a knowledge graph before you have anything",
-      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it.",
+      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed.",
       "instructionsPath": "skills/bootstrap-kg-navigation.md",
-      "instructionLines": 83,
+      "instructionLines": 77,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -369,10 +369,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "bootstrap-graph-publication",
-      "title": "Publishing bootstrap's graph",
-      "description": "Where bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
+      "title": "Publishing bootstrap's Knowledge Graph",
+      "description": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository.",
       "instructionsPath": "skills/bootstrap-graph-publication.md",
-      "instructionLines": 141,
+      "instructionLines": 49,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1436,7 +1436,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
       "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
@@ -1469,7 +1469,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "requestor",
       "title": "Requestor",
-      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
@@ -1511,7 +1511,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas"
       ],
-      "description": "The two JSON Schema documents the discussion process is checked against — `discussion.input.schema.json` (what is known before asking) and `discussion.output.schema.json` (what the exchange determined). MOVED OUT OF `skills/` on 2026-09-21: a schema is not an instruction body, and while they sat among the `.md` a consumer asking this instance for its schemas was told it has none. This directory was deliberately NOT created when the rest of the layout was split, because declaring a directory that does not exist is the `dh4f` defect — the files had to move first. Their published `$id`s are UNCHANGED and still read `/bootstrap/skills/discussion/`: `gen-bootstrap-schemas.ts` calls that half of a contract cited from five languages' catalogues, and ids are stable across a relocation while paths are not. `graphKinds: [\"schemas\"]` alone, matching `bootstrap-tools`'s self-declaration of its own `schemas/`; the `[\"schemas\", \"cat-harness\"]` pairing is how the ROOT declares somebody else's.",
+      "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/schemas"
     },
@@ -1523,7 +1523,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
       ],
-      "description": "CatBootstrap's three Roles — Initiator, Knowledge Graph Data Store, and the person asking. Declared as `scenarios` on 2026-09-21, matching `cat-harness/scenarios/`: before the split this inherited `skills` from the directory above it, so a consumer asking for the Scenarios got skill bodies and a consumer asking for Skills got a role registry. A lane name is a string the audit cannot bind to anything, which is why these Roles were declared at all rather than left implicit in the diagrams' lanes. RENAMED from `bootstrap-roles` on 2026-09-21: `DEFAULT_DIRECTORIES` carries `scenarios` as the convention, and overrides match on ID, so a qualified id did not override the default — it ADDED a second entry at the same path and this directory resolved TWICE. The same defect was fixed in `cat-harness/cat-harness.json` and missed here. The id had to differ from `cat-harness`, which `skills/` holds; `scenarios` was always free.",
+      "description": "bootstrap's four Roles: Initiator, Requestor, Knowledge Graph Data Store and Logger.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#directory/scenarios",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
@@ -1535,7 +1535,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
       ],
-      "description": "The bootstrap PROCESSES — `initialize-harness.bpmn`, the one an actor starts, and `log-message.bpmn`, an independent sub-process any step may call. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_CatBootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows. RENAMED from `bootstrap-processes` on 2026-09-21: `DEFAULT_DIRECTORIES` carries `processes` as the convention, and overrides match on ID, so a qualified id did not override the default — it ADDED a second entry at the same path and this directory resolved TWICE. The same defect was fixed in `cat-harness/cat-harness.json` and missed here. The id had to differ from `cat-harness`, which `skills/` holds; `processes` was always free.",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
@@ -1571,7 +1571,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
       ],
-      "description": "The gettext templates for THIS instance's workflow diagrams — one directory per target locale, holding the `.pot` extracted from each `.bpmn` here. Undeclared until 2026-09-22, and that was the `dh4f` defect: `j28g` moved these out of `cat-harness/translations/` correctly, because the templates belong beside the instance that owns the diagrams, and the declaration did not follow. Fifteen committed files a consumer scanning the declared set would report a clean run over. A SEPARATE id from cat-harness's `translation-sources`: overrides match on id, so reusing it would REPLACE that graph with this one rather than add to it. `reproduce` for the reason cat-harness's entry gives — a downstream instance translating this diagram set needs catalogues of its own, not a pointer to these. Bean `m9zz`.",
+      "description": "Translation templates (`.pot`) for bootstrap's Process diagrams, one directory per target language.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
     },
@@ -1598,8 +1598,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "ebaafc169c42d0f18b6e44a9984c6bceb49808c2",
+    "sha": "c5ac362fda576f24e3cc568eee3bab65a0eea2a6",
     "pr": "1182/merge",
-    "run": "35918986667"
+    "run": "35920609455"
   }
 }

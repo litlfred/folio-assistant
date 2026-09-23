@@ -482,6 +482,47 @@
             "additionalProperties": false
           }
         },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -682,8 +723,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld",
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "ebaafc169c42d0f18b6e44a9984c6bceb49808c2",
+    "sha": "c5ac362fda576f24e3cc568eee3bab65a0eea2a6",
     "pr": "1182/merge",
-    "run": "35918986667"
+    "run": "35920609455"
   }
 }
