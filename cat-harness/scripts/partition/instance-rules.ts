@@ -880,6 +880,8 @@ export const RULES: Rule[] = [
       // no wrong-direction edge — and leaving them unclassified would have made
       // `src/workflow/` and `src/tools/workflow.ts` read as harness → core.
       "schemas/role-graph.ts",
+      "schemas/odrl.ts",                     // W3C ODRL 2.2 policies: what an Actor may do (issue #1180)
+      "schemas/prov.ts",                     // W3C PROV-O task-run record (issue #1180)
       "schemas/kg-qa.ts",
       // Whether a path can be CHECKED OUT. It imports nothing at all, so it
       // sits at or below every consumer by construction — but it is harness by
