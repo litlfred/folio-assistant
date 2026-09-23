@@ -4715,6 +4715,21 @@ a.fa-harness-tab__body:focus-visible {
   object-fit: contain;
 }
 
+/* THE THEME AVATAR in a tab: the card art clipped to the cat. Same frame as
+ * the plain mark, same column, so a tab with art and a tab with an initial
+ * line their labels up. The four percentages come from the declaration via
+ * `harness-tiles.ts`; nothing here knows a box. */
+.fa-harness-tab__mark--art {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.1875rem;
+}
+
+.fa-harness-tab__mark--art img {
+  position: absolute;
+  max-width: none;
+}
+
 .fa-harness-tab__mark--initial {
   display: flex;
   align-items: center;

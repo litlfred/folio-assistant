@@ -716,7 +716,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Analyst",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst"
       ]
     },
     {
@@ -726,7 +727,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Close",
       "label": "BA / Feature Requestor",
       "scopeNote": "Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-close.bpmn"
+      "source": "cat-harness/processes/crdm-close.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA",
@@ -735,7 +736,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_DataModel",
       "label": "BA / Feature Requestor",
       "scopeNote": "Confirms naming only — are these the entities meant — and stops there: Lane_Stakeholders asks the separate, operational question about cardinality next, and the two are kept apart on purpose, because collapsing them into one review is how a wrong cardinality ships invisibly.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn"
+      "source": "cat-harness/processes/crdm-data-model.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA",
@@ -744,7 +745,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Deliver",
       "label": "BA / Feature Requestor",
       "scopeNote": "Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-deliver.bpmn"
+      "source": "cat-harness/processes/crdm-deliver.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA",
@@ -753,7 +754,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Needs",
       "label": "BA / Feature Requestor",
       "scopeNote": "The single review here is what GW_Needs is literally named for — \"BA approves?\" — even though Lane_Stakeholders' confirmation sits between this task and that gateway in the flow; the phase's own documentation makes clear the loop needs both, so reading the gate label alone would miss half of what it takes to exit it.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn"
+      "source": "cat-harness/processes/crdm-needs.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
@@ -762,7 +763,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "label": "BA / Feature Requestor",
       "scopeNote": "The one checkpoint between the agent's comparison and the stakeholders' sign-off: BA_ReviewReqs is where someone who can read the impact analysis on its own technical terms vouches for it, because Lane_Stakeholders reviews only at defined checkpoints and needs the requirement already in a form they can approve without re-deriving it.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn"
+      "source": "cat-harness/processes/crdm-requirements-definition.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
@@ -771,7 +772,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM",
       "label": "BA / Feature Requestor",
       "scopeNote": "The one activity in this diagram that is not a subprocess call: states the capability gap in its own words and, per its own documentation, does not need to know any of what follows is called CRDM. The six phases translate the need into that vocabulary, not the other way round.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn"
+      "source": "cat-harness/processes/crdm-requirements.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
@@ -780,7 +781,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Signoff",
       "label": "BA / Feature Requestor",
       "scopeNote": "Makes two decisions of different character here: BA_Signoff approves what was drafted, and BA_ChooseKg commits it — or explicitly does not — to a knowledge-graph destination, where NONE is a legitimate answer rather than a refusal to answer. Only this lane may decide that a requirement is fully carried by the code and becomes a commit and nothing else; an agent that decided so on its own would be placing a node in somebody else's graph.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn"
+      "source": "cat-harness/processes/crdm-signoff.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Analyst",
@@ -799,6 +800,15 @@
       "label": "Business analyst",
       "scopeNote": "This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell \"not needed\" from \"we chose X\" cannot audit either one.",
       "source": "cat-harness/processes/options-analysis.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/business-analyst",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_SwotAnalysis",
+      "label": "Business analyst",
+      "scopeNote": "Performs the scan and the crossing. This lane owns the analysis and owns nothing else: it does not authorise, and it does not choose between options. Its deliverable is four lists, the four matched strategies, and an explicit record of what could not be classified.",
+      "source": "cat-harness/processes/swot-analysis.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/terminologist",
@@ -964,7 +974,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder"
       ]
     },
     {
@@ -974,7 +985,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Close",
       "label": "Stakeholders",
       "scopeNote": "The first of three sequential checks this diagram exists to enforce in order — sign off, confirm, close, never any other sequence — and what is being signed off here is the delivered FEATURE on the issue, not the requirement model that crdm-requirements-definition.bpmn's Lane_Stakeholders approved earlier in the process.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-close.bpmn"
+      "source": "cat-harness/processes/crdm-close.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
@@ -983,7 +994,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_DataModel",
       "label": "Stakeholders",
       "scopeNote": "Answers the operational half the BA cannot — not what a thing is but how many of it there really is — because that is knowable only to the people who run the process day to day. It is also the step this process's STRICT policy exists for: skipped under time pressure, a model looks finished without it, which is exactly how a hole where the exceptions live would ship unnoticed.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn"
+      "source": "cat-harness/processes/crdm-data-model.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
@@ -992,7 +1003,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Deliver",
       "label": "Stakeholders",
       "scopeNote": "Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-deliver.bpmn"
+      "source": "cat-harness/processes/crdm-deliver.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
@@ -1001,7 +1012,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Needs",
       "label": "Stakeholders",
       "scopeNote": "The task itself carries no documentation of its own, so this lane's entry is the only place recording what \"confirm\" means in Phase 1: recognising the synthesised needs statement as actually theirs, immediately before the loop gate — not, as in the later data-model phase, judging a cardinality, because there is no model yet to have one.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn"
+      "source": "cat-harness/processes/crdm-needs.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
@@ -1010,7 +1021,16 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "label": "Stakeholders",
       "scopeNote": "The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn's final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn"
+      "source": "cat-harness/processes/crdm-requirements-definition.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/stakeholder",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_SwotAnalysis",
+      "label": "Stakeholder",
+      "scopeNote": "Consulted, in a lane of their own because the source names group discussion as a property of the method rather than as good practice around it: SWOT \"promotes group discussion about strategic issues\" and pools knowledge through participatory techniques. It is also the mitigation for the limitation the source states most sharply — that a list of strengths is \"bound up with aspirations, biases, and hope of the individuals involved\". A single analyst producing four lists alone has performed the technique's shape without the part that checks it.",
+      "source": "cat-harness/processes/swot-analysis.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
@@ -1028,6 +1048,12 @@
       "notation": "authoring-agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_DocumentAuthoring/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_PaperAuthoring/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_ContentChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
@@ -1036,12 +1062,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_DocumentAuthoring/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_PaperAuthoring/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_ContentChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
@@ -1050,78 +1070,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Close",
-      "label": "Agent",
-      "scopeNote": "Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-close.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_DataModel",
-      "label": "Agent",
-      "scopeNote": "Does the actual modelling — entities, relations, and the declaration that makes the model machine-readable rather than prose — and absorbs the entire cost of a revise: the gate loops back to A_Entities whichever confirmation failed, BA's or the stakeholders', so this lane cannot assume a cardinality objection leaves its entities untouched.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Deliver",
-      "label": "Agent",
-      "scopeNote": "Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-deliver.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Issue",
-      "label": "Agent",
-      "scopeNote": "The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Needs",
-      "label": "Agent",
-      "scopeNote": "Drafts the needs statement but never decides it is right — A_Synthesise is the sole target when GW_Needs loops back — and this process's own documentation calls an unconfirmed synthesis \"an agent's summary, not a requirement,\" which is exactly what this lane alone produces before the two lanes below it look at it.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Requirements",
-      "label": "Agent",
-      "scopeNote": "Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM",
-      "label": "Agent",
-      "scopeNote": "Holds the one gate whose \"no\" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Signoff",
-      "label": "Agent",
-      "scopeNote": "Turns Lane_BA's two decisions into durable artefacts: A_CreateBeans and A_RecordKg each mint their own bean directly with the CLI, since the engine's own vocabulary has no create, only claim, note and resolve on an instance's bean. A_AnnounceBranch then closes the phase on its one path to End with no loop of its own, so it fires exactly once — Phase 6's own loops re-enter implementation on the same branch without ever crossing back through this edge.",
-      "source": "cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
@@ -1176,6 +1124,78 @@
       "label": "Folio-Assistant Agent",
       "scopeNote": "Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path.",
       "source": "cat-harness/processes/content-change-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Close",
+      "label": "Agent",
+      "scopeNote": "Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread.",
+      "source": "cat-harness/processes/crdm-close.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_DataModel",
+      "label": "Agent",
+      "scopeNote": "Does the actual modelling — entities, relations, and the declaration that makes the model machine-readable rather than prose — and absorbs the entire cost of a revise: the gate loops back to A_Entities whichever confirmation failed, BA's or the stakeholders', so this lane cannot assume a cardinality objection leaves its entities untouched.",
+      "source": "cat-harness/processes/crdm-data-model.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Deliver",
+      "label": "Agent",
+      "scopeNote": "Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up.",
+      "source": "cat-harness/processes/crdm-deliver.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Issue",
+      "label": "Agent",
+      "scopeNote": "The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology.",
+      "source": "cat-harness/processes/crdm-issue-linking.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Needs",
+      "label": "Agent",
+      "scopeNote": "Drafts the needs statement but never decides it is right — A_Synthesise is the sole target when GW_Needs loops back — and this process's own documentation calls an unconfirmed synthesis \"an agent's summary, not a requirement,\" which is exactly what this lane alone produces before the two lanes below it look at it.",
+      "source": "cat-harness/processes/crdm-needs.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "label": "Agent",
+      "scopeNote": "Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves.",
+      "source": "cat-harness/processes/crdm-requirements-definition.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM",
+      "label": "Agent",
+      "scopeNote": "Holds the one gate whose \"no\" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own.",
+      "source": "cat-harness/processes/crdm-requirements.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "label": "Agent",
+      "scopeNote": "Turns Lane_BA's two decisions into durable artefacts: A_CreateBeans and A_RecordKg each mint their own bean directly with the CLI, since the engine's own vocabulary has no create, only claim, note and resolve on an instance's bean. A_AnnounceBranch then closes the phase on its one path to End with no loop of its own, so it fires exactly once — Phase 6's own loops re-enter implementation on the same branch without ever crossing back through this edge.",
+      "source": "cat-harness/processes/crdm-signoff.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zod-4-upgrade/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Agent",
