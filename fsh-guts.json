@@ -13,7 +13,14 @@
     "bean": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bean",
     "body": "schema:text",
     "nodeCount": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeCount",
-    "scans": "https://litlfred.github.io/folio-assistant/cat-harness/ns#scans"
+    "scans": "https://litlfred.github.io/folio-assistant/cat-harness/ns#scans",
+    "skipped": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#skipped",
+      "@context": {
+        "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
+        "reason": "rdfs:comment"
+      }
+    }
   },
   "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld",
   "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsGraph",

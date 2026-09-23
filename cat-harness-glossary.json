@@ -694,6 +694,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_PubMgr",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication"
       ]
@@ -742,6 +743,15 @@
       "label": "Publication manager",
       "scopeNote": "The last lane and the only one with no path back into the loop — reaching it means Task_IgPublisher already succeeded on Lane_Qc's clean verdict. It does not itself decide whether the release is authorised: that call is draft-to-publication.bpmn's, and Task_PublishIg only executes what that separate process has already cleared.",
       "source": "cat-harness/processes/l3-fhir-pipeline.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublishAlert",
+      "label": "Publication manager",
+      "scopeNote": "The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release.",
+      "source": "cat-harness/processes/publish-alert.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
@@ -1615,6 +1625,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
@@ -1773,6 +1785,24 @@
       "label": "Scheduled log sweep",
       "scopeNote": "Three exit states, and the job's own colour tracks none of them the way a reader would expect: a finding is fully recorded — issue tracked, PR commented — and the job still ends GREEN, because the finding is the repository's problem to see in the tracking issue, not this lane's to fail on. Only UNKNOWN turns the job itself RED, and one unreadable PR is enough to fail the whole sweep — this lane never reports a partial clean.",
       "source": "cat-harness/processes/pr-checks-present.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublishAlert",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.",
+      "source": "cat-harness/processes/publish-alert.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublishVerification",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
+      "source": "cat-harness/processes/publish-verification.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
