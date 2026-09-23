@@ -72,3 +72,10 @@ Sub-beans are also what make parallel work possible without a swarm — see
 - **Never block on something you have not actually asked for.** Asking is the
   work; waiting to be asked is not a dependency.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Record the decision as still open |
+

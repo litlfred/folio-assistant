@@ -460,6 +460,28 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "document — so a reader can tell 'this instance has no tools' from " +
       "'tools were never looked for'.",
   },
+  // ── Published dependency set (instance-versioning.md §3.4) ───────────
+  //
+  // `packageId`, `version` and `uri` are FHIR's own spellings, kept so a
+  // consumer that already reads `ImplementationGuide.dependsOn` reads this
+  // without translating.
+  dependsOn: { gloss: "The instances this publishable instance depends on, as FHIR-shaped {packageId, version, uri} records." },
+  packageId: { gloss: "A dependency's reverse-DNS id — the identity a consumer resolves." },
+  // A dependency's `version` reuses `schema:softwareVersion`, already declared
+  // in the export's term table, so it is deliberately not glossed here.
+  uri: { gloss: "A dependency's canonical URL, stable across its versions." },
+  dependsOnGaps: {
+    gloss:
+      "Dependency edges that could NOT become a record, each with which of the " +
+      "four reasons applies — so a reader can tell 'depends on nothing' from " +
+      "'depends on things none of which is publishable'.",
+  },
+  dependsOnUnavailable: {
+    gloss:
+      "Why there is no dependsOn block, when the reason is not an empty " +
+      "dependency set — never rendered as 'depends on nothing'.",
+  },
+
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
 };

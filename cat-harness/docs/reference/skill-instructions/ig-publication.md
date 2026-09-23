@@ -123,3 +123,12 @@ probe and `decisions/pages-live-gate.dmn` is the same logic as a table.
 `quality-control` runs the QC gates on what was built; the summary goes on the
 issue, not only the PR.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Version, tag and publish |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Restore derived state; Full publisher build; Compute the cone of the change (fsh-cone --changed); Restricted checkout of the backward cone; Load or reuse the warm context (fhir_context_load); Re-render the cone's records (fhir_narrative · skip lists); Merge restored and rebuilt records; Rebuild the meta-index (ig_metaindex_rebuild); Assemble the site (template · Jekyll); Deploy the site [content-publish]; Seed the cache from the green build (ig-cache seed · verify · promote) |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | IG Publisher build; Publish the IG site |
+

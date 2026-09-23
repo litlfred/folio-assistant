@@ -95,11 +95,56 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_LogStart",
+          "detail": "\"Log task-start\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_DoWork",
+          "detail": "\"Do the work\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_LogMessage",
+          "detail": "\"Log a message or an error\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_LogEnd",
+          "detail": "\"Log task-end\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_PersistLog",
+          "detail": "\"Persist the log to the data store\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_ReportCaptureState",
+          "detail": "\"Report the capture state\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_EmptyOne",
+          "detail": "\"Discard one entry by id\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "A_EmptyAll",
+          "detail": "\"Discard all entries, or a whole session\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

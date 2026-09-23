@@ -77,7 +77,7 @@ terminology?">
       <bpmn:outgoing>Flow_g4</bpmn:outgoing>
       <bpmn:outgoing>Flow_g6</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_FlagDrift" name="Adjudicate the
+    <bpmn:callActivity id="Task_FlagDrift" calledElement="Process_Adjudication" name="Adjudicate the
 flagged passage">
       <bpmn:extensionElements>
         <folio:skill ref="document-intake"/>
@@ -87,7 +87,7 @@ flagged passage">
       <bpmn:documentation>A machine can detect that two readings differ. Which one is right is a human call.</bpmn:documentation>
       <bpmn:incoming>Flow_g4</bpmn:incoming>
       <bpmn:outgoing>Flow_g5</bpmn:outgoing>
-    </bpmn:userTask>
+    </bpmn:callActivity>
     <bpmn:serviceTask id="Task_Verdict" name="Record the L1
 completeness verdict">
       <bpmn:extensionElements>

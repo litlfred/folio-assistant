@@ -66,11 +66,52 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_SeedBeans",
+          "detail": "\"Seed the work plan\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Personas",
+          "detail": "\"Personas and scenarios\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Bpmn",
+          "detail": "\"Business processes · BPMN 2.0\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Dmn",
+          "detail": "\"Decision logic · DMN tables\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_DataDict",
+          "detail": "\"Data dictionary and core data elements\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Indicators",
+          "detail": "\"Indicators and requirements\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_AssembleDak",
+          "detail": "\"Assemble and validate the DAK\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 10,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

@@ -120,6 +120,26 @@ export interface ProcessRow {
   svg?: string;
   /** Set when the diagram would not load at all. Reported, never silently dropped. */
   loadError?: string;
+  /** Basename without `.bpmn` — the page name and the SVG name. */
+  stem: string;
+  /** `<bpmn:documentation>` on the process element. */
+  documentation?: string;
+  /** Lanes with their role and documentation, in document order. */
+  laneDetails: { id: string; name: string; roleRef?: string; documentation?: string }[];
+  /** Every activity, in document order — what the per-process page lists. */
+  steps: ProcessStep[];
+}
+
+/** One activity, as its process page shows it. */
+export interface ProcessStep {
+  id: string;
+  name: string;
+  lane: string;
+  type: string;
+  skills: string[];
+  /** For a call activity: the process id it descends into. */
+  calledElement?: string;
+  documentation?: string;
 }
 
 const uniq = (xs: string[]): string[] => [...new Set(xs.filter((x) => x))].sort((a, b) => a.localeCompare(b, "en"));
@@ -218,6 +238,23 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
           }))
           .sort((a, b) => a.id.localeCompare(b.id, "en")),
         ...(svg ? { svg } : {}),
+        stem: basename(abs, ".bpmn"),
+        ...(m.documentation ? { documentation: m.documentation } : {}),
+        laneDetails: m.lanes.map((l) => ({
+          id: l.id,
+          name: (l.name ?? l.id).replace(/\s+/g, " ").trim(),
+          ...(l.roleRef ? { roleRef: l.roleRef } : {}),
+          ...(l.documentation ? { documentation: l.documentation } : {}),
+        })),
+        steps: acts.map((n) => ({
+          id: n.id,
+          name: n.name.replace(/\s+/g, " ").trim() || n.id,
+          lane: (n.lane ?? "").replace(/\s+/g, " ").trim(),
+          type: n.type,
+          skills: n.skills,
+          ...(n.calledElement ? { calledElement: n.calledElement } : {}),
+          ...(n.documentation ? { documentation: n.documentation } : {}),
+        })),
       });
     } catch (e) {
       rows.push({
@@ -234,6 +271,9 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
         activities: 0,
         activitiesWithoutSkill: [],
         ...(svg ? { svg } : {}),
+        stem: basename(abs, ".bpmn"),
+        laneDetails: [],
+        steps: [],
         loadError: e instanceof Error ? e.message : String(e),
       });
     }
@@ -283,6 +323,22 @@ export function page(rows: readonly ProcessRow[]): string {
   L.push("| where | diagrams |");
   L.push("|---|---|");
   for (const [g, n] of [...byGroup].sort((a, b) => b[1] - a[1])) L.push(`| \`${esc(g)}/\` | ${n} |`);
+  L.push("");
+
+  L.push("## Every process — one page each");
+  L.push("");
+  L.push(
+    "Each page shows the diagram, what it is for, who acts in it, every step with the skill it runs, and " +
+      "which processes call it. `kg:audit`'s `process-diagram-published` fails a diagram no page shows — " +
+      "45 of 62 were in that state before these pages existed (bean `ooq3`).",
+  );
+  L.push("");
+  L.push("| process | steps | undocumented steps |");
+  L.push("|---|---|---|");
+  for (const r of ok) {
+    const undoc = r.steps.filter((st) => !st.documentation).length;
+    L.push(`| [${esc(r.name)}](${r.stem}.html) | ${r.activities} | ${undoc || "—"} |`);
+  }
   L.push("");
 
   L.push("## What runs this skill?");
@@ -409,6 +465,102 @@ export function page(rows: readonly ProcessRow[]): string {
   return `${L.join("\n")}\n`;
 }
 
+/**
+ * One page per process — the surface `process-diagram-published` asks for.
+ *
+ * Everything on it is READ from the diagram, so it cannot say anything the
+ * diagram does not. The two relations a single file cannot show are computed
+ * over the whole corpus: who CALLS this process (a call activity naming its
+ * id), and who NAMES its skill without calling it — the second is what
+ * `activity-calls-skill-process` turns into a finding.
+ *
+ * `skillPages` is the set of skills with a generated instruction page; a skill
+ * without one is shown as code rather than as a link that 404s.
+ */
+export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillPages: ReadonlySet<string>): string {
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const skill = (s: string): string =>
+    skillPages.has(s) ? `[\`${s}\`](../reference/skill-instructions/${s}.html)` : `\`${s}\``;
+  const proc = (r: ProcessRow): string => `[${esc(r.name)}](${r.stem}.html)`;
+  const cell = (s: string | undefined): string => (s ? esc(s) : "—");
+  const callers = rows.filter((r) => r.stem !== row.stem && r.steps.some((st) => st.calledElement === row.id));
+  const namers = rows.filter(
+    (r) => r.stem !== row.stem && r.steps.some((st) => st.calledElement === undefined && st.skills.includes(row.stem)),
+  );
+  const callees = uniq(row.steps.flatMap((st) => (st.calledElement ? [st.calledElement] : [])));
+
+  const L: string[] = [];
+  L.push("---");
+  L.push(`title: '${row.name.replace(/'/g, "''")}'`);
+  L.push("nav_exclude: true");
+  L.push("---");
+  L.push("");
+  L.push("{: .note }");
+  L.push(`> Generated from \`${row.file}\` by \`gen-processes-viz.ts\` — do not edit here. [All processes](index.html)`);
+  L.push("");
+  L.push("{% raw %}");
+  L.push(`# ${row.name}`);
+  L.push("");
+  L.push(`\`${row.id}\` · ${row.enforcement}${row.enforcementDeclared ? "" : " (defaulted)"} · ${row.activities} step(s)`);
+  L.push("");
+  L.push(row.documentation ?? "_This process carries no `<bpmn:documentation>`._");
+  L.push("");
+  if (row.svg) {
+    L.push(`<img src="../assets/img/workflows/${row.stem}.svg" alt="BPMN diagram: ${esc(row.name).replace(/"/g, "&quot;")}" style="max-width:100%">`);
+  } else {
+    L.push("_No rendered diagram — run `bun run render:bpmn`._");
+  }
+  L.push("");
+
+  L.push("## How it connects");
+  L.push("");
+  L.push(`- **Called by:** ${callers.length ? callers.map(proc).join(", ") : "no call activity names this process"}`);
+  L.push(
+    `- **Calls:** ${callees.length ? callees.map((id) => (byId.get(id) ? proc(byId.get(id)!) : `\`${id}\` (not loadable here)`)).join(", ") : "none"}`,
+  );
+  if (namers.length) {
+    L.push(
+      `- **Names the \`${row.stem}\` skill without calling this process:** ${namers.map(proc).join(", ")} — ` +
+        "`activity-calls-skill-process` asks whether each should be a call activity.",
+    );
+  }
+  if (skillPages.has(row.stem)) L.push(`- **Skill:** ${skill(row.stem)}`);
+  L.push("");
+
+  L.push("## Lanes — who acts");
+  L.push("");
+  if (row.laneDetails.length === 0) {
+    L.push("_No lanes._");
+  } else {
+    L.push("| lane | role | what it does here |");
+    L.push("|---|---|---|");
+    for (const l of row.laneDetails) L.push(`| ${esc(l.name)} | ${l.roleRef ? `\`${l.roleRef}\`` : "—"} | ${cell(l.documentation)} |`);
+  }
+  L.push("");
+
+  L.push("## Steps");
+  L.push("");
+  const undoc = row.steps.filter((st) => !st.documentation).length;
+  L.push(
+    undoc === 0
+      ? `Every one of the ${row.steps.length} step(s) is documented.`
+      : `**${undoc}** of ${row.steps.length} step(s) carry no documentation — \`activity-documented\` lists them.`,
+  );
+  L.push("");
+  L.push("| step | lane | skill / sub-process | what it does |");
+  L.push("|---|---|---|---|");
+  for (const st of row.steps) {
+    const target = st.calledElement
+      ? `calls ${byId.get(st.calledElement) ? proc(byId.get(st.calledElement)!) : `\`${st.calledElement}\``}`
+      : "";
+    const how = [target, ...st.skills.map(skill)].filter(Boolean).join("<br>") || "—";
+    L.push(`| **${esc(st.name)}**<br>\`${st.id}\` | ${cell(st.lane)} | ${how} | ${cell(st.documentation)} |`);
+  }
+  L.push("");
+  L.push("{% endraw %}");
+  return `${L.join("\n")}\n`;
+}
+
 /** Where the declaration says this page goes. Never a literal — `site-dir-single-answer` refuses one. */
 export function pageRelPath(repo = REPO): string | undefined {
   const declPath = declarationPathIn(join(repo, "cat-harness"));
@@ -449,16 +601,31 @@ if (import.meta.main) {
     process.exit(1);
   }
   const html = page(rows);
+  const skillDir = join(baseDocs(REPO), "reference", "skill-instructions");
+  const skillPages = new Set(
+    existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
+  );
+  const pages = new Map<string, string>([[out, html]]);
+  for (const r of rows.filter((x) => x.loadError === undefined)) {
+    pages.set(join(dirname(out), `${r.stem}.md`), processPage(r, rows, skillPages));
+  }
+  // A page whose diagram is gone is REPORTED, never deleted — the
+  // deletion-requires-confirmation rule, applied to generated output too.
+  const orphans = readdirSync(dirname(out))
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => join(dirname(out), f))
+    .filter((f) => !pages.has(f));
+  for (const o of orphans) console.error(`! ${relative(REPO, o)} matches no diagram — remove it if the diagram is gone`);
   if (check) {
-    const cur = existsSync(out) ? readFileSync(out, "utf-8") : "";
-    if (cur !== html) {
-      console.error(`✗ ${rel} is stale — run \`bun run processes:viz\``);
+    const stale = [...pages].filter(([f, body]) => (existsSync(f) ? readFileSync(f, "utf-8") : "") !== body);
+    if (stale.length) {
+      for (const [f] of stale) console.error(`✗ ${relative(REPO, f)} is stale — run \`bun run processes:viz\``);
       process.exit(1);
     }
-    console.log(`✓ ${rel} is current (${rows.length} diagram(s))`);
+    console.log(`✓ ${rel} and ${pages.size - 1} process page(s) are current (${rows.length} diagram(s))`);
   } else {
     mkdirSync(dirname(out), { recursive: true });
-    writeFileSync(out, html);
-    console.log(`Wrote ${rel} — ${rows.length} diagram(s), ${skillToProcesses(rows).size} skill(s) joined`);
+    for (const [f, body] of pages) writeFileSync(f, body);
+    console.log(`Wrote ${rel} + ${pages.size - 1} process page(s) — ${skillToProcesses(rows).size} skill(s) joined`);
   }
 }

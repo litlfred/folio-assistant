@@ -357,3 +357,10 @@ publish.
 > It is also uncommitted and published nowhere. The two coexist; only one is
 > the graph.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Serialize to JSON-LD |
+
