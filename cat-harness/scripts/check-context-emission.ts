@@ -82,7 +82,7 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   doco: "document STRUCTURE — a paper's chapters, sections and figures, via BLOCK_KIND_TO_DOCO_TYPE. This instance is the platform and holds no folio, so no block is exported here. A folio emits it on its first `gen-block-jsonld` run.",
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
-  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype, and `csvwOnly()` emits CSVW-NATIVE KEYS that resolve through this context rather than `csvw:`-prefixed values — so this prefix may be spoken by alias already, and the count below says only that no literal CURIE carries it.",
+  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype; its record is plain JSON (`tabular.csvw.json`, bean `792y`) and `toCsvw()` derives a CSVW document carrying CSVW's OWN context, not this one. So nothing in this graph speaks `csvw:` yet — a folio whose table blocks link their CSVW description is what would.",
   skos: "the glossary — `lqo9` slice 1 shipped 135 `skos:Concept` nodes, but into the NAMESPACE document (`ns-export.ts`), which carries its own context rather than this one. A folio's glossary blocks are what emit it HERE.",
   // NO `fhir` ENTRY, and its removal is the check doing its job.
   //

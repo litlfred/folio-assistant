@@ -460,6 +460,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
   },
   {
+    // The same reason again (bean `qbfi`): the block QA summary reads a
+    // FOLIO's committed verdicts, in that folio's staging job. The platform
+    // has no folio. Its logic is covered by `publish-block-qa.test.ts` and
+    // the heat map's unit and Playwright tests, in the gate set.
+    match: "publish-block-qa.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's committed QA verdicts; the platform carries no folio. " +
+      "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
@@ -722,6 +733,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "same as `library:viz:check`, and NECESSARILY so: it renders that projection. The writer runs at deploy (`docs-site.yml`), and what it draws derives from the whole repository, so a red here means a sibling merged rather than that this diff forgot. Gating it would also be worse than gating its sibling, because this generator emits no projection of its own — it publishes a viewer over `assets/library/index.json` (bean `flh4`: one dataset, since two would be two answers to how many are queued), so its staleness is the library projection's staleness wearing a second name. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "wireframe:check",
+    kind: "covered-by",
+    reason:
+      "not a gate but the Tool `wireframe-check`: it takes the candidate files to render as arguments, and with none it has nothing to measure. What it writes, `checks/report.json` beside each wireframe, IS gated, by `check:wireframes`, which fails on a declared visualiser whose wireframe has no report, or a report missing a viewport or holding a fail (issue #1023). Run it by hand when a wireframe changes",
   },
   {
     script: "check:session-staleness",

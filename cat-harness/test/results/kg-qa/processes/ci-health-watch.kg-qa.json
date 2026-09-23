@@ -103,12 +103,26 @@
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 12,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/ci-health-watch.bpmn",
+      "code": ".github/workflows/ci-health.yml",
+      "prose_hash": "bfe3c0b4c66c",
+      "code_hash": "55357d35b4e7",
+      "by": "baseline"
+    }
+  ]
 }

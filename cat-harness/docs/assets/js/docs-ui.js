@@ -4677,8 +4677,7 @@
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
       handle.setAttribute("aria-expanded", open ? "true" : "false");
-      handle.setAttribute("aria-label", open ? "Put your folio away" : "Pull down your folio");
-      handle.title = handle.getAttribute("aria-label");
+      labelHandle();
       // The EMPTY LINE is about the glass's contents, not about the sheet:
       // the sheet is chrome and is always present. `slots` are the cards the
       // board floats here, so the count is taken from them rather than from
@@ -4725,11 +4724,35 @@
      * something. A data attribute the stylesheet prints, so the handle's text
      * and accessible name are unchanged on every other screen. Counted from
      * the DOM because a board sticky floats without touching the folio store. */
+    var waiting = 0;
     function countWaiting() {
       var n = layer.querySelectorAll(".fa-sticky-floating").length +
         Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      waiting = n;
       if (n > 0) handle.setAttribute("data-fa-count", String(n));
       else handle.removeAttribute("data-fa-count");
+      labelHandle();
+    }
+
+    /* THE COUNT IS SPOKEN TOO — owner, 2026-09-23: *"do the spoken count on
+     * phone next"*. The `· N` above is drawn by `::after`, and a screen
+     * reader reads the handle's `aria-label`, which REPLACES its content, so
+     * the number was visible and silent. It now rides the accessible name
+     * while the glass is closed, which is when the question "is anything
+     * waiting?" is asked.
+     *
+     * ON EVERY SCREEN, not only a phone. A media query can hide a drawn
+     * `::after`, but a spoken name has no breakpoint — and one name on every
+     * device is the thing a reader who switches devices can rely on. Open, the
+     * count is redundant: the cards are what the reader is now looking at. */
+    function labelHandle() {
+      var open = layer.getAttribute("data-fa-glass") === "open";
+      var label = open ? "Put your folio away" : "Pull down your folio";
+      if (!open && waiting > 0) {
+        label += " \u2014 " + waiting + (waiting === 1 ? " item" : " items") + " on it";
+      }
+      handle.setAttribute("aria-label", label);
+      handle.title = label;
     }
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);
@@ -7471,6 +7494,10 @@
     }
     var icons = Array.isArray(row.icons) ? row.icons : [];
     var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
+    // WHY a slot has no href — a separate map, because a slot has exactly one
+    // of the two and merging them would make "absent" mean both "resolved to
+    // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
+    var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
@@ -7552,9 +7579,23 @@
         // `pb04`: a dead link invites a click and then reads as a broken site,
         // while a silent omission answers "where is beans" with nothing. The
         // same choice the graph list in the harness tabs already makes.
+        //
+        // THE REASON IS IN THE ACCESSIBLE NAME, not only in a tooltip. This
+        // row is glyphs with no words at all, so `aria-label` is the ONLY
+        // channel a screen reader has -- and until now it said "Beans" for a
+        // slot that goes nowhere, which is a working control described to
+        // somebody who cannot see that it is grey. `title` carries the same
+        // string for a pointer user; neither is a substitute for the other.
+        //
+        // The wording is `row.notes`', carried from `harness-tiles.ts` where
+        // the four inert states are told apart, exactly as the folder list
+        // below does. The hardcoded "declared, with no published viewer" it
+        // replaced was one wording for four states.
+        var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";
         var dead = el("span", {
-          class: "fa-nav-icon fa-nav-icon--dead", "aria-label": label,
-          title: label + " — declared, with no published viewer"
+          class: "fa-nav-icon fa-nav-icon--dead",
+          "aria-label": label + " — " + why,
+          title: label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -7630,6 +7671,45 @@
       sum.appendChild(count);
       box.appendChild(sum);
       var list = el("ul", { class: "fa-nav-folders__list" });
+      /* AN INERT ROW IS SHOWN, AND IT SAYS WHICH CASE IT IS.
+       *
+       * Owner ruling, recorded on #1036: a declared graph with no viewer is
+       * shown rather than omitted, because a reader cannot otherwise tell "no
+       * viewer yet" from "no such graph". Two obligations come with it:
+       *
+       * - `gjli` — it must not read as a CONTROL. A `<span>`, never an `<a>`
+       *   or a `<button>`, and nothing that takes focus: a greyed thing that
+       *   accepts a tab and then does nothing costs a keyboard user an
+       *   interaction to discover it is dead.
+       * - The state is in TEXT. This row carried it as `opacity: 0.35`, a
+       *   strikethrough and a `title` tooltip — a channel a keyboard or
+       *   screen-reader user never reaches, and a hover a touch user cannot
+       *   produce.
+       *
+       * AND THE WORDING IS CARRIED, NOT COMPOSED. `note` comes from
+       * `harness-tiles.ts`, which computes it where the FOUR inert states are
+       * already told apart — staging-only, exempt by declaration, built but
+       * unreachable, nobody built it. The single string this used to write was
+       * one wording for four states and wrong for two of them, which is the
+       * defect `HarnessVisualisation.note`'s own docstring names. The harness
+       * tabs and the rail have rendered this note as text all along; only this
+       * row did not.
+       */
+      var inert = function (label, note) {
+        var span = el("span", { class: "fa-nav-folders__link fa-nav-folders__link--dead" }, label);
+        // A REAL SPACE, in the DOM. `margin-left` separates the two visually
+        // and does nothing to the text content, so the accessible name came
+        // out as "codeno viewer yet" — measured in a browser. A screen reader
+        // reads the string, not the gap.
+        // ABSENT `note` IS NOT A DETERMINED STATE. It means this page's data
+        // predates the note being carried, and saying "no viewer yet" for it
+        // would be inventing the answer the whole rule is about. Say that
+        // instead of guessing.
+        span.appendChild(document.createTextNode(" "));
+        span.appendChild(el("span", { class: "fa-nav-folders__note" }, note || "reason not recorded"));
+        return span;
+      };
+
       for (var j = 0; j < graphs.length; j++) {
         var g = graphs[j];
         var li = el("li", { class: "fa-nav-folders__item" });
@@ -7642,16 +7722,15 @@
           if (at) {
             li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, g.kind));
           } else {
-            li.appendChild(el("span", {
-              class: "fa-nav-folders__link fa-nav-folders__link--dead",
-              title: "declared, and its path is not one this page may link to"
-            }, g.kind));
+            // A DIFFERENT CASE from "no viewer declared", and it stays
+            // different: the graph HAS a published path and this page refused
+            // it. That is a defect in the declaration, not a gap in the
+            // corpus, and `flh4` is about exactly this distinction surviving
+            // to the last step.
+            li.appendChild(inert(g.kind, "path refused by this page"));
           }
         } else {
-          li.appendChild(el("span", {
-            class: "fa-nav-folders__link fa-nav-folders__link--dead",
-            title: "declared, with no published viewer"
-          }, (g && g.kind) || "?"));
+          li.appendChild(inert((g && g.kind) || "?", g && g.note));
         }
         list.appendChild(li);
       }

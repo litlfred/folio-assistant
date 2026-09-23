@@ -686,6 +686,19 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "takes it. Every branch of a decision needs a label distinct from the others on the same gateway.",
   },
   {
+    id: "prose-reviewed-since-code-changed",
+    applies: ["process", "skill"],
+    // `minor` and not gated (R7, issue #1042): it asserts nothing about
+    // whether the prose is TRUE, only that the code moved while the prose
+    // describing it stood still. Gating waits for a clean run to show it does
+    // not cry wolf — the lesson of bean `77ex`.
+    severity: "minor",
+    summary:
+      "A declared prose ↔ code pair — a diagram's <folio:implements workflow>, or a skill .md beside its same-stem .ts — " +
+      "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
+      "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
+  },
+  {
     id: "role-skills-resolve",
     applies: ["role"],
     severity: "critical",
@@ -1061,6 +1074,24 @@ export interface KgQaReport {
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
+  /**
+   * Declared prose ↔ code pairs and the state each was last accepted in —
+   * carried ACROSS runs, unlike everything above, because it is the baseline
+   * `prose-reviewed-since-code-changed` compares against. Written by
+   * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
+   */
+  pair_attestations?: KgPairAttestation[];
+}
+
+/** One declared pair's accepted state. Paths are repo-relative. */
+export interface KgPairAttestation {
+  kind: "implements" | "co-located";
+  prose: string;
+  code: string;
+  prose_hash: string;
+  code_hash: string;
+  by: "baseline" | "agent" | "human";
+  reason?: string;
 }
 
 export const KgFindingSchema = z.object({
@@ -1083,6 +1114,19 @@ export const KgQaReportSchema = z.object({
   source_hash: z.string().nullable(),
   criteria: z.record(z.string(), KgCriterionEntrySchema),
   totals: z.record(z.enum(KG_RESULTS), z.number()),
+  pair_attestations: z
+    .array(
+      z.object({
+        kind: z.enum(["implements", "co-located"]),
+        prose: z.string().min(1),
+        code: z.string().min(1),
+        prose_hash: z.string().min(1),
+        code_hash: z.string().min(1),
+        by: z.enum(["baseline", "agent", "human"]),
+        reason: z.string().min(1).optional(),
+      }),
+    )
+    .optional(),
 });
 
 export const KgQaManifestSchema = z.object({

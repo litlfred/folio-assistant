@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: processes — index and one process page</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  /* just-the-docs chrome, as docs-ui.css shapes it: a 56px strip at rest (>= 800px),
+     the theme's top bar with a Menu button below 800px. */
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0; background: var(--fill); }
+  .strip .mk { width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--bg); }
+  .strip .ic { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--bg); font-size: 17px; }
+  .strip .ic.dim { color: var(--mute); border-style: dashed; }
+  .strip .sep { width: 32px; border-top: 1px solid var(--line); margin: 4px 0; }
+  .strip .grow { flex: 1; }
+  .strip .tab { width: 40px; height: 32px; border: 1px solid var(--ink); border-left-width: 5px; display: grid; place-items: center; font-weight: 700; background: var(--bg); font-size: 13px; }
+  .main { min-width: 0; position: relative; }
+  .mhead { display: flex; align-items: center; gap: 8px; padding: 8px 24px; border-bottom: 1px solid var(--line); }
+  .search { flex: 1; max-width: 520px; border: 1px solid var(--line); padding: 10px 12px; color: var(--mute); min-height: 44px; }
+  .handle { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); font-weight: 700; padding: 12px 24px; min-height: 44px; z-index: 3; border: 0; font: inherit; font-weight: 700; }
+  .content { padding: 24px 32px 40px; max-width: 800px; }
+  h1 { font-size: 30px; margin: 32px 0 12px; }
+  h2 { font-size: 21px; margin: 28px 0 10px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .stat { flex: 1 1 8rem; border: 1px solid var(--line); padding: 8px 10px; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { font-size: 12px; color: var(--mute); }
+  .tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; font-weight: 600; margin: 0 2px 2px 0; white-space: nowrap; }
+  .tw { overflow-x: auto; margin: 8px 0 16px; border: 1px solid var(--line); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  th { background: var(--fill); white-space: nowrap; }
+  .foot { border-top: 1px solid var(--line); margin-top: 32px; padding-top: 12px; font-size: 13px; color: var(--mute); }
+  .foot summary { color: var(--ink); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+  .mbar { display: none; }
+  @media (max-width: 799.98px) {
+    .page { display: block; }
+    .strip { display: none; }
+    .mbar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--fill); }
+    .mbar .t { font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; }
+    .mbar .mk { width: 32px; height: 32px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; background: var(--bg); }
+    .mbar .b { min-width: 44px; min-height: 44px; border: 1px solid var(--line); background: var(--bg); display: grid; place-items: center; font-size: 17px; }
+    .mhead { padding: 8px 12px; }
+    .search { max-width: none; }
+    .content { padding: 12px 16px 32px; }
+    h1 { font-size: 26px; margin-top: 56px; }
+    .handle { top: 0; }
+    .wide table { min-width: 760px; }
+  }
+
+  h3 { font-size: 17px; margin: 20px 0 8px; }
+  .screen { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; border: 1px dashed var(--ink); padding: 4px 8px; display: inline-block; }
+  .cut { border: 0; border-top: 3px double var(--ink); margin: 40px 0 16px; }
+  .note { border-left: 4px solid var(--ink); background: var(--fill); padding: 8px 12px; font-size: 14px; margin: 12px 0; }
+  .fig { margin: 16px 0; border: 1px solid var(--line); padding: 8px; }
+  .figtools { display: flex; gap: 6px; align-items: center; justify-content: flex-end; font-size: 13px; margin-bottom: 6px; flex-wrap: wrap; }
+  .fb { border: 1px solid var(--ink); padding: 4px 8px; min-height: 32px; display: inline-flex; align-items: center; }
+  .bpmn { border: 1px solid var(--ink); font-size: 11px; }
+  .lane { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding: 10px 8px; min-height: 64px; }
+  .lane:last-child { border-bottom: 0; }
+  .ln { writing-mode: vertical-rl; transform: rotate(180deg); border-right: 1px solid var(--line); padding: 0 4px; font-weight: 600; font-size: 10px; }
+  .task { border: 1px solid var(--ink); border-radius: 6px; padding: 6px; width: 92px; text-align: center; background: var(--bg); }
+  .gw, .end { font-size: 20px; }
+  @media (max-width: 799.98px) {
+    .bpmn { font-size: 3px; }
+    .task { width: 26px; padding: 1px; border-radius: 2px; }
+    .lane { min-height: 20px; padding: 3px; gap: 2px; }
+    .ln { font-size: 3px; }
+    .gw, .end { font-size: 7px; }
+    .wide3 { min-width: 560px; }
+    .wide4 { min-width: 700px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · processes · covers: cat-harness/docs/processes/index.md, cat-harness/docs/processes/adjudication.md (one of 68 per-process pages)</div>
+<div class="page">
+  <nav class="strip" aria-label="Site navigation, collapsed">
+    <span class="mk" title="C@T Harness">@</span>
+    <span class="ic" aria-label="Keep navigation open">☰</span>
+    <span class="ic" aria-label="Todos">▤</span>
+    <span class="ic" aria-label="Beans">◍</span>
+    <span class="ic" aria-label="Processes">⇶</span>
+    <span class="ic" aria-label="Knowledge graph">⌘</span>
+    <span class="ic" aria-label="More actions">▦</span>
+    <span class="grow"></span>
+    <span class="tab" aria-label="smart-trust">S</span>
+    <span class="tab" aria-label="WHO IRIS">W</span>
+    <span class="tab" aria-label="Folio Assistant">F</span>
+    <span class="tab" aria-label="C@T Harness">C</span>
+    <span class="tab" aria-label="Bootstrap">B</span>
+    <span class="sep"></span>
+    <span class="ic" aria-label="Home">⌂</span>
+  </nav>
+  <div class="main">
+    <div class="mbar">
+      <span class="t"><span class="mk">@</span>C@T Harness</span>
+      <span class="b" aria-label="Colour scheme">◐</span>
+      <span class="b" aria-label="Language">⊕</span>
+      <span class="b" aria-label="Actions">▦</span>
+      <span class="b" aria-label="Menu">☰</span>
+    </div>
+    <button class="handle" type="button" aria-label="Pull down your folio">▾ Folio</button>
+    <div class="mhead"><span class="search">⌕ Search folio-assistant</span></div>
+        <main class="content">
+      <p class="screen">Screen 1 of 2 · <code>/processes/</code> · cat-harness/docs/processes/index.md</p>
+      <h1>Processes — every executable diagram, searchable</h1>
+      <p>Generated by <code>cat-harness/scripts/gen-processes-viz.ts</code>. <b>Every number here is counted from the directory</b>, never carried in prose.</p>
+      <p><b>68</b> diagram(s), <b>68</b> parsed, <b>0</b> that would not load.</p>
+      <div class="tw"><table>
+        <tr><th>where</th><th>diagrams</th></tr>
+        <tr><td><code>cat-harness/processes/</code></td><td>64</td></tr>
+        <tr><td><code>bootstrap/processes/</code></td><td>3</td></tr>
+        <tr><td><code>smart-base/methodologies/processes/</code></td><td>1</td></tr>
+      </table></div>
+      <h2>Every process — one page each</h2>
+      <p>Each page shows the diagram, what it is for, who acts in it, every step with the skill it runs, and which processes call it.</p>
+      <div class="tw"><table>
+        <tr><th>process</th><th>steps</th><th>undocumented steps</th></tr>
+        <tr><td><a href="#adj">Determine the harness and repositories</a></td><td>5</td><td>—</td></tr>
+        <tr><td><a href="#adj">Initialize a harness</a></td><td>9</td><td>—</td></tr>
+        <tr><td><a href="#adj">Agent activity log</a></td><td>8</td><td>—</td></tr>
+        <tr><td><a href="#adj">Adjudication</a></td><td>6</td><td>—</td></tr>
+        <tr><td><a href="#adj">Board: open and close content</a></td><td>7</td><td>—</td></tr>
+        <tr><td><a href="#adj">Content Change and Review</a></td><td>23</td><td>—</td></tr>
+        <tr><td><a href="#adj">Incremental IG build</a></td><td>18</td><td>—</td></tr>
+        <tr><td><a href="#adj">Adopt a methodology from a source document</a></td><td>8</td><td>1</td></tr>
+        <tr><td><a href="#adj">Wireframe design review</a></td><td>6</td><td>—</td></tr>
+      </table></div>
+      <p class="wf-mute">9 of 68 rows. Only two rows now show a number of undocumented steps: “Adopt a methodology from a source document” and “Related work: find, sort, summarize, ask to coordinate”, 1 each. The order follows the table above: the three bootstrap diagrams first, then cat-harness alphabetically by file, then smart-base; there is no filter or search control on the page.</p>
+      <h2>What runs this skill?</h2>
+      <p><b>92</b> distinct skill(s) are named by an activity.</p>
+      <div class="tw"><table>
+        <tr><th>skill</th><th>run by</th></tr>
+        <tr><td><code>adjudication</code></td><td><code>adjudication.bpmn</code>, <code>ingest-l1-completeness-gate.bpmn</code>, <code>refresh-materialized.bpmn</code>, <code>review-narrative.bpmn</code>, <code>translation-workflow.bpmn</code>, <code>voice-review.bpmn</code></td></tr>
+        <tr><td><code>content-review</code></td><td><code>authoring-a-document.bpmn</code>, <code>authoring-a-paper.bpmn</code>, <code>content-change-review.bpmn</code>, … 10 diagrams</td></tr>
+      </table></div>
+      <h2>Who appears in a process?</h2>
+      <p><b>103</b> distinct lane name(s).</p>
+      <div class="tw"><table>
+        <tr><th>lane</th><th>in</th></tr>
+        <tr><td>Agent</td><td>14</td></tr>
+        <tr><td>CI/CD Pipeline</td><td>9</td></tr>
+        <tr><td>Work plan — beans (shared by humans and agents)</td><td>9</td></tr>
+      </table></div>
+      <h2>Which steps touch the work plan?</h2>
+      <div class="tw"><table><tr><th>op</th><th>diagrams</th></tr><tr><td><code>note</code></td><td>21</td></tr><tr><td><code>claim</code></td><td>17</td></tr><tr><td><code>resolve</code></td><td>8</td></tr></table></div>
+      <h2>Strict, advisory — and nobody said</h2>
+      <div class="tw"><table><tr><th>enforcement</th><th>declared</th><th>defaulted</th></tr><tr><td><code>strict</code></td><td>22</td><td>28</td></tr><tr><td><code>advisory</code></td><td>18</td><td>0</td></tr></table></div>
+      <h2>Findings</h2>
+      <p>Every one of the <b>68</b> diagrams has a rendered SVG.</p>
+      <h3>Activities carrying no <code>&lt;folio:skill ref&gt;</code> — a census, not a gap list</h3>
+      <p><b>38</b> across <b>23</b> diagram(s) — 15 call activities, 23 listed by lane.</p>
+
+      <hr class="cut" id="adj">
+      <p class="screen">Screen 2 of 2 · <code>/processes/adjudication.html</code> · cat-harness/docs/processes/adjudication.md</p>
+      <div class="note">NOTE — Generated from <code>cat-harness/processes/adjudication.bpmn</code> by <code>gen-processes-viz.ts</code> — do not edit here. <a href="#top">All processes</a></div>
+      <h1 id="top">Adjudication</h1>
+      <p><code>Process_Adjudication</code> · advisory · 6 step(s)</p>
+      <p class="long">A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave. You are in this process when a sidecar holds two entries for ONE criterion that do not agree — a script failing what a reviewer passed, an agent and a person reading the same block differently. … <span class="wf-mute">(one paragraph of about 330 words)</span></p>
+      <figure class="fig">
+        <div class="figtools" role="group" aria-label="Figure view controls"><span class="fb">−</span><span>100%</span><span class="fb">+</span><span class="fb">Reset</span><span class="fb">Full width</span></div>
+        <div class="bpmn" role="img" aria-label="BPMN diagram: Adjudication">
+          <div class="lane"><span class="ln">Feedback provider</span><span class="task">State the finding and what it read</span></div>
+          <div class="lane"><span class="ln">Adjudicator</span><span class="task">Dispatch with adjudicator_sees</span><span class="gw">◇</span><span class="task">Judge the disagreement</span><span class="gw">◇</span><span class="task">Scope the criterion</span><span class="task">Grant a dispensation</span><span class="task">Write the entry that LEADS</span><span class="end">○</span></div>
+        </div>
+        <figcaption class="wf-mute">SVG viewBox 1330 × 530, scaled to the column (<code>max-width:100%</code>), inlined by docs-ui.js so subprocess links work.</figcaption>
+      </figure>
+      <h2>How it connects</h2>
+      <ul>
+        <li><b>Called by:</b> <a href="#adj">Ingestion subprocess — the L1 completeness gate</a>, <a href="#adj">Refresh materialized remote content</a>, <a href="#adj">Narrative review</a>, <a href="#adj">Translation Workflow</a>, <a href="#adj">Voice overlay review</a>, <a href="#adj">Wireframe design review</a></li>
+        <li><b>Calls:</b> none</li>
+        <li><b>Skill:</b> <a href="#adj"><code>adjudication</code></a></li>
+      </ul>
+      <h2>Lanes — who acts</h2>
+      <div class="tw"><table class="wide3">
+        <tr><th>lane</th><th>role</th><th>what it does here</th></tr>
+        <tr><td>Feedback provider</td><td><code>feedback-provider</code></td><td>Drawn once for any number of providers, because the process does not change with the count … <span class="wf-mute">(about 170 words)</span></td></tr>
+        <tr><td>Adjudicator</td><td><code>adjudicator</code></td><td>Every decision and every write is here, and that concentration is the accountability … <span class="wf-mute">(about 190 words)</span></td></tr>
+      </table></div>
+      <h2>Steps</h2>
+      <p>Every one of the 6 step(s) is documented.</p>
+      <div class="tw"><table class="wide4">
+        <tr><th>step</th><th>lane</th><th>skill / sub-process</th><th>what it does</th></tr>
+        <tr><td><b>State the finding and what it read</b><br><code>A_StateFinding</code></td><td>Feedback provider</td><td><a href="#adj"><code>content-feedback</code></a></td><td>Each provider says what it found and on what evidence.</td></tr>
+        <tr><td><b>Dispatch with adjudicator_sees — never the artefact</b><br><code>A_Dispatch</code></td><td>Adjudicator</td><td><a href="#adj"><code>untainted-verification</code></a></td><td><code>UntaintedDispatch</code> on the criterion declares what each party is given.</td></tr>
+        <tr><td><b>Judge the disagreement</b><br><code>A_Judge</code></td><td>Adjudicator</td><td><a href="#adj"><code>adjudication</code></a></td><td>The judgement itself, and the one step nothing here can check.</td></tr>
+        <tr><td><b>Write the entry that LEADS — keeping the checker's beneath it</b><br><code>A_RecordEntry</code></td><td>Adjudicator</td><td><a href="#adj"><code>adjudication</code></a></td><td>Not relaxable, and the one step here that is not.</td></tr>
+      </table></div>
+      <p class="wf-mute">4 of 6 steps shown; each "what it does" cell runs 40 to 120 words.</p>
+      <div class="foot">
+        <details><summary>▸ Open notes (3)</summary></details>
+        <p>folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0.</p>
+        <p>deployed <code>dev</code></p>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

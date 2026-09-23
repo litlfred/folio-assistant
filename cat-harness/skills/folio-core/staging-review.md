@@ -349,6 +349,72 @@ When an author has made content changes on a feature branch:
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
 
+### Finding your way on the review page (bean `eb4l`)
+
+A 300-page review needs to know where it is, and to move in one key or one
+click. The review page has a navigation pane, beside the list on a wide
+screen and above it on a narrow one:
+
+- **Outline.** Each document's chapters and sections, in manifest order,
+  from the `outline.json` the folio's site build writes.
+  - A section with something to review is a button that moves focus to it,
+    with word badges ("2 changed, 1 comment, QA failing").
+  - Any other section links to its published page.
+  - By the owner's ruling it is **on the review page only**. The "no toc"
+    ruling for normal pages stands.
+- **Minimap.** One cell per block, in order. It is **one tab stop**: Up and
+  Down move, Home and End jump to either end, and Enter opens the block.
+  Each cell is labelled in words and marked with glyphs (Δ changed, + added,
+  ● open comments, ! QA failing), so colour is never the only signal.
+- **Where am I.** Every move announces "document › chapter › section ›
+  block" in the page's one live status line.
+
+**Keys, each with a visible button twin:**
+
+| key | button | goes to |
+|---|---|---|
+| `j` | Next | the next item |
+| `k` | Previous | the previous item |
+| `n` | Next with comments | the next block with open comments |
+| `p` | Previous with comments | the previous block with open comments |
+
+**"Next unreviewed" is deliberately absent.** Nothing records a review
+verdict yet (bean `en2d`), and a guess would skip blocks nobody has read.
+Typing into a selector is never navigation.
+
+**Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
+keyboard alone. It uses no mouse, no click and no hover.
+
+### The review page, and choosing how to see a change
+
+A folio's preview carries `review/index.html`: every changed block, grouped by
+section, with its reviewer comments (the `review-comments` skill). Each
+changed block has a **"Show this change as"** selector (bean `d903`), and one
+at the top applies to every block:
+
+| renderer | shows | the default for | needs |
+|---|---|---|---|
+| **Word diff of the source** | the Markdown with removed words struck and added words marked: exactly what the author typed | any kind not listed below | the block's prose |
+| **Inline, as rendered** | the block as a reader sees it now, with the change marked in place | `prose`, `remark`, `definition`, `example` | the block's prose |
+| **Side by side** | `main` and the preview next to each other, each scrolled to the block | `table`, `figure`, `diagram`, `equation`, `simulator` | a page on either side |
+
+- **Where the data comes from.** The ChangeSet step's `--text-out` writes
+  `changeset-text.json`: the source and rendered prose of each listed block,
+  on each side that has it. With no such file, only side by side is
+  available, and the page says so.
+- **A renderer that cannot run on a block is listed, disabled, with the
+  reason.** For example, a manifest-only change has no prose to diff. If the
+  page-level choice cannot run on a block, that block falls back to one
+  that can.
+- **The page-level choice is remembered** for this viewer in
+  `localStorage`. A private window just gets the defaults.
+- **The renderers and the registry** are `cat-harness/scripts/review-renderers.ts`,
+  `cat-harness/scripts/word-diff.ts` (no diff library; about forty lines,
+  tested) and `cat-harness/schemas/diff-renderers.ts`. To add one, declare it
+  in the registry with what it needs and which kinds it defaults for, add its
+  function to `review-renderers.ts`, and add a case to the page's
+  `renderInto`.
+
 ## Staging retention
 
 **A MERGED pull request's preview goes away. Everything else is retained by

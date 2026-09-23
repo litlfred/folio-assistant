@@ -116,12 +116,31 @@
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/code-quality-gates.yml",
+          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 10,
-    "fail": 2,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/code-quality-gates.bpmn",
+      "code": ".github/workflows/code-quality-gates.yml",
+      "prose_hash": "af4c4a06c6be",
+      "code_hash": "e97855730413",
+      "by": "baseline"
+    }
+  ]
 }

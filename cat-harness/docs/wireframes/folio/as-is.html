@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: folio — the graph</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .wrap { max-width: 70rem; margin: 0 auto; padding: 8px 16px 48px; position: relative; }
+  h1 { font-size: 24px; margin: 20px 0 4px; }
+  .lede { color: var(--mute); margin: 0 0 16px; }
+  .badge { display: inline-block; border: 1px solid var(--line); background: var(--fill); padding: 3px 8px; margin: 0 6px 6px 0; font-size: 13px; }
+  .mount { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 2;
+           border: 2px solid var(--ink); background: var(--ink); color: var(--bg); font-weight: 700; padding: 12px 26px; min-height: 44px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { white-space: nowrap; }
+  .m { color: var(--mute); }
+  .clip { width: 100%; }
+  @media (max-width: 700px) {
+    .clip { overflow: hidden; border-right: 3px dashed var(--ink); }
+    .clip table { width: 769px; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · folio · covers: cat-harness/docs/cat-harness/folio/index.html</div>
+<div class="wrap">
+  <button class="mount" type="button" aria-label="Pull down your folio">▾ Folio</button>
+  <h1>folio — the graph</h1>
+  <p class="lede">Every node the folio graph holds: what it anchors to, the theme it claims, where it was declared, and the links it carries. The folio's <em>content</em> renders as the landing board; this is a view of the graph behind it.</p>
+  <div>
+    <span class="badge"><b>5</b> stickies</span>
+    <span class="badge"><b>1</b> declared directory</span>
+  </div>
+
+  <table aria-label="Declared directories">
+    <thead><tr><th>declared directory</th><th>state</th><th>stickies</th></tr></thead>
+    <tbody><tr><td><code>cat-harness/folio</code></td><td>present</td><td>5</td></tr></tbody>
+  </table>
+
+  <p class="wf-note wf-mobile-only">At 390 px the node table below is 769 px wide: the whole page scrolls sideways, and <b>declared in</b>, <b>links</b> and <b>prose</b> start off-screen (the dashed edge).</p>
+  <div class="clip">
+  <table aria-label="Folio graph nodes">
+    <thead><tr><th>id</th><th>summary</th><th>anchor</th><th>theme</th><th>declared in</th><th>links</th><th>prose</th></tr></thead>
+    <tbody>
+      <tr><td><code>bootstrap</code></td><td>Before you know what this repository is</td><td><code>page:index</code></td><td>bootstrap</td><td><code class="m">bootstrap/bootstrap.json</code></td><td>bootstrap, in the source<br>RTFM — the bootstrap docs</td><td class="m">308 chars</td></tr>
+      <tr><td><code>cat-harness</code></td><td>computable adjudication and agentic test harness</td><td><code>page:index</code></td><td>grumpy-cat</td><td><code class="m">cat-harness/cat-harness.json</code></td><td>cat-harness, in the source<br>RTFM — the cat-harness docs<br>The work plan is where you say what you are doing<br>Make your first folio<br>Know which kind of thing you are writing<br>The documentation you will never read</td><td class="m">409 chars</td></tr>
+      <tr><td><code>folio-assist-core</code></td><td>What a folio is</td><td><code>page:index</code></td><td>library</td><td><code class="m">folio-assistant-core/folio-assistant-core.json</code></td><td>Content<br>Skills<br>Processes<br>Tools<br>Acquisition<br>RTFM — folio-assist-core</td><td class="m">812 chars</td></tr>
+      <tr><td><code>folio-assistant</code></td><td>The repository, acting as an initialized instance</td><td><code>page:index</code></td><td>engineer</td><td><code class="m">folio-assistant.json</code></td><td class="m">none</td><td class="m">466 chars</td></tr>
+      <tr><td><code>smart-trust</code></td><td>A published IG, read back as a graph</td><td><code>page:index</code></td><td>operations</td><td><code class="m">smart-trust/smart-trust.json</code></td><td class="m">none</td><td class="m">134 chars</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="wf-note">Link labels in the <b>links</b> column are plain text: the projection carries an <code>href</code> for each, but the page does not render them as links.</p>
+  <p class="wf-note">The folio mount (docs-ui.js) floats the <b>▾ Folio</b> pull-down handle over the top centre of the page; it covers part of the heading at both widths.</p>
+</div>
+</body>
+</html>

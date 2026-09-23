@@ -86,12 +86,26 @@
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 15,
     "fail": 0,
     "n/a": 6,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/upstream-pin-watch.bpmn",
+      "code": ".github/workflows/upstream-pins.yml",
+      "prose_hash": "b46143d9eb07",
+      "code_hash": "148cf61b5493",
+      "by": "baseline"
+    }
+  ]
 }

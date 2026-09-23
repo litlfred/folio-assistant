@@ -107,12 +107,26 @@
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 12,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/pr-checks-present.bpmn",
+      "code": ".github/workflows/pr-checks-present.yml",
+      "prose_hash": "7735b8cefaf9",
+      "code_hash": "221e1fe18e43",
+      "by": "baseline"
+    }
+  ]
 }

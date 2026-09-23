@@ -240,6 +240,15 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                     pix = pymupdf.Pixmap(doc, xref)
                     if pix.n - pix.alpha >= 4:      # CMYK has no PNG encoding
                         pix = pymupdf.Pixmap(pymupdf.csRGB, pix)
+                    # A PDF image's transparency lives in a SEPARATE soft-mask
+                    # object, which `Pixmap(doc, xref)` does not apply. Without
+                    # it, a glyph drawn as colour-plus-mask comes out as a solid
+                    # square: arXiv:2312.07755 wrote 64 all-black 512x512 PNGs
+                    # for the icons in its Table 2 (issue #1023). Re-attach the
+                    # mask so the PNG carries the alpha the page renders with.
+                    smask = doc.extract_image(xref).get("smask", 0)
+                    if smask:
+                        pix = pymupdf.Pixmap(pix, pymupdf.Pixmap(doc, smask))
                     pix.save(target)
                 except Exception as exc:  # noqa: BLE001
                     # The ENTRY stands; only the file is missing. Reporting the

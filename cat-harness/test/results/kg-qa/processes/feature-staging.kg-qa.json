@@ -128,12 +128,26 @@
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 12,
     "fail": 2,
     "n/a": 7,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "ab2a96ba1dee",
+      "code_hash": "ac0e77b5bf5f",
+      "by": "baseline"
+    }
+  ]
 }

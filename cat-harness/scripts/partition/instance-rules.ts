@@ -143,8 +143,14 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
       // (bean txut; 7ofc's ruling for the folio visualiser). It imports
-      // nothing; build-document-site (core) calls it, core -> harness.
+      // only harness modules (the diff renderers and their registry, bean
+      // d903); build-document-site (core) calls it, core -> harness.
       "scripts/gen-review-page.ts",
+      "scripts/review-renderers.ts",     // the diff renderers the review page embeds (bean `d903`)
+      "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
+      "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
+      "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
+      "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -338,6 +344,7 @@ export const RULES: Rule[] = [
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
+      "schemas/diff-renderers.ts",           // the review page's diff renderers, declared as data (bean `d903`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
       // twenty lines up, and it arrived the same way: classified core first
       // because a badge is something a reader sees, and `check:partition`
@@ -426,6 +433,11 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Issue #1023. Both read every instance's declaration (visualisers) or
+      // every declared library (manifests), and hold no folio's content: the
+      // same reason as the layout norm above.
+      "scripts/check-source-licence.ts",
+      "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -874,6 +886,9 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // Its one cross-run criterion — declared prose ↔ code pairs and their
+      // attestations (bean `cuxx`). Same side as the auditor that calls it.
+      "scripts/prose-code-pairs.ts",
       "scripts/known-skills.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the

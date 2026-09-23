@@ -222,7 +222,21 @@ jobs:
           mkdir -p "$SITE_DIR"
           bun run "$PLATFORM_DIR/folio-assistant-core/schemas/changeset.ts" \
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
-            --out "$SITE_DIR/changeset.json"
+            --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
+
+      - name: Publish the folio's block QA summary
+        # What the folio's QA sweep last recorded, per block: failing, stale,
+        # passing or unaudited. The review page's heat map reads it (bean
+        # `qbfi`). It reads committed verdicts and runs no checker, so a
+        # folio that has never been swept publishes "unaudited", not a failure.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          FOLIO_DIR: ${{ inputs.folio_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          bun run "$PLATFORM_DIR/cat-harness/scripts/publish-block-qa.ts" \
+            --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
 
       - name: Inject staging banner
         env:
@@ -301,8 +315,9 @@ jobs:
           # build that exited 0 having written nothing would otherwise replace a
           # working preview with an empty one, which 404s exactly like a page
           # the author meant to delete. The data files the steps above write
-          # (changeset, blocks, review comments) are not a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|blocks\.json|review-comments\.json' || true)" ]; then
+          # (changeset and its text, blocks, block QA, review comments) are not
+          # a site on their own.
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi

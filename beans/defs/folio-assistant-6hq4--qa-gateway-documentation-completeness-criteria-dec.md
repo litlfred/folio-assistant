@@ -47,7 +47,10 @@ branch `claude/magical-archimedes-4qkfxp-gateways`.
   its own step, lane and start-event documentation (4); `bean-lifecycle` from
   `todo-manager` and `bean-coordination` (3).
 
-## Remaining backlog — `gateway-documented` 65 findings in 43 diagrams (2026-09-23)
+## Remaining backlog — `gateway-documented` 69 findings in 45 diagrams (2026-09-23)
+
+After merging main (PR #1065 era): 65 left by this bean, plus 4 in diagrams main
+added after it branched — wireframe-design-review (3), methodology-from-source (1).
 
 content-change-review (3), crdm-deliver (3), human-translation-workflow (3),
 translation-workflow (3), voice-review (3), activity-log (2),

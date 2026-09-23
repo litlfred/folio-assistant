@@ -154,11 +154,13 @@ whether or not it is bound. The evidence that closes a prefix defect is a
 document run through a JSON-LD processor, with **zero** expanded IRIs outside
 `http(s):`.
 
-**Where a prefix cannot be bound at all, the answer is an absolute IRI, not a
-different spelling.** CSVW metadata allows only `@language` and `@base` in
-its local context, so the `fac:` keys in
-[`tabular-metadata`](tabular-metadata.md) dangle under ANY prefix. Renaming
-them would move the defect, not fix it (bean `792y`).
+**Where a prefix cannot be bound at all, a different spelling is never the
+answer.** CSVW metadata allows only `@language` and `@base` in its local
+context, so the `fac:` keys in [`tabular-metadata`](tabular-metadata.md)
+dangled under ANY prefix. The two real answers are absolute IRIs, or not being
+JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
+the CSVW document is derived from it. **A file whose extension says `.jsonld`
+is making a claim** — a processor will read every colon-key in it as an IRI.
 
 ## `fsh-guts` NEVER reaches a published graph
 

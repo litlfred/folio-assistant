@@ -46,6 +46,7 @@ import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -1850,6 +1851,24 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+  }
+}
+
+// ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
+//
+// Evaluated here rather than inside auditProcess/auditSkills because it is the
+// one criterion that READS the previous sidecar: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. Done before the write loop so
+// `--check` regenerates the same text the writer would.
+{
+  const repoRoot = resolve(root, "..");
+  for (const r of reports) {
+    if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
+    const pairs = discoverPairs(r.subject, root, repoRoot);
+    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    r.criteria[PAIR_CRITERION] = e;
+    r.totals = tally(r.criteria);
+    if (attestations.length) r.pair_attestations = attestations;
   }
 }
 
