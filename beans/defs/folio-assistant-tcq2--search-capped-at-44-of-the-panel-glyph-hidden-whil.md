@@ -83,3 +83,54 @@ still have the header, and search in the wrong place beats search nowhere.
 - [x] Measured at three widths, before and after
 
 Parent `p5wm`.
+
+## Verified against the REAL CI build — and it found two more things
+
+The local `preview:site` build uses the just-the-docs GEM; CI uses the pinned
+`remote_theme`. The staging preview is committed to `gh-pages`, so it can be
+extracted and driven — see the recipe now in `preview-site.sh`. Driven that way
+(10 stylesheets, 0 failed requests), the three fixes hold:
+
+    1280px  home=main-content-wrap  input 1091/1160  peek ok  slide ok  wrapMax=none
+     900px  home=main-content-wrap  input  711/ 780  peek ok  slide ok  wrapMax=none
+     700px  home=main-content-wrap  input  583/ 668  peek ok  slide ok  wrapMax=none
+
+700px is the row that matters most: before this bean all three were 0x0 there.
+
+### Found by the real build, fixed here — the field was not clickable
+
+At 1280 and 900px a hit test at the input's CENTRE returned
+`P.fa-search-notice`, not the input.
+
+`.search` is `position: relative` and its only child `.search-input-wrap` is
+`position: absolute`, so `.search` computes to **height 0** while the input
+inside it is 36px tall. The notice, a normal-flow sibling, starts 6px into the
+field's box and paints over it. Measured: `.search` h=0, `.fa-search-home` h=34
+— the control's entire height was the notice.
+
+`min-height: 2.25rem` on `.search` reserves the field's own box: `.search` h=36,
+control h=70, hit test reaches the input.
+
+This is PRE-EXISTING, not caused by the re-home — but the wider field made it
+span the whole control instead of a 536px slice of it.
+
+### Found, NOT fixed — reported for the owner
+
+In the CORNER state the magnifier is covered. `elementsFromPoint` at its centre
+returns a `<div>` with no class, no id, `position: sticky`, **`z-index: 9999`**,
+a direct child of `<body>`: the staging banner. The corner panel is
+`position: fixed` at `z-index: 95`.
+
+That matters because in the corner state the magnifier is the ONLY way back to
+search — `l4zi`, an action whose inverse is not reachable is not a toggle.
+
+Not fixed here because the obvious repair is a trade the owner should make:
+raising the corner above `z-index: 9999` puts search over the staging banner,
+which the banner exists to prevent; moving the corner down below the banner
+costs it the top-right position it was designed for.
+
+BOTH findings are PREVIEW-ONLY. The notice renders only when the build stamped
+a non-canonical index, and the banner only on a staging build — so on the
+published site neither can occur. They are recorded because a preview is what a
+reviewer looks at, and because the zero-height box is wrong whether or not
+anything currently sits under it.

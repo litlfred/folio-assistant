@@ -6624,6 +6624,27 @@ a.fa-harness-tab__body:focus-visible {
  * the field is not quietly smaller in its new home than in its old one. The
  * test holds the legal 24 so this comfort can be spent deliberately rather
  * than by accident. */
+/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`,
+   found by driving the REAL CI build rather than the local one.
+
+   `.search` is `position: relative` and its only child `.search-input-wrap` is
+   `position: absolute`, so `.search` computes to **height 0** while the input
+   inside it is 36px. Anything that follows the field in normal flow is
+   therefore painted UNDER it. Measured on the staging preview at 1280px:
+   `.search` h=0, `.fa-search-home` h=34 — the whole control's height was the
+   NOTICE, and a hit test at the field's centre returned `P.fa-search-notice`,
+   not the input. The field was not clickable where a reader would click it.
+
+   Reserving the field's own height puts the notice below it: `.search` h=36,
+   the control h=70, and the hit test reaches the input.
+
+   ONLY EVER VISIBLE ON A PREVIEW, since `.fa-search-notice` is rendered only
+   when the build stamped a non-canonical index — but a preview is what a
+   reviewer looks at, and a zero-height box around a 36px control is wrong
+   whether or not anything currently sits under it. 2.25rem is the field's own
+   height, one declaration below. */
+.fa-search-home .search { min-height: 2.25rem; }
+
 .fa-search-home .search-input {
   box-sizing: border-box;
   width: 100%;
