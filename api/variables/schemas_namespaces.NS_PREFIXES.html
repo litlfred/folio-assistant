@@ -11,20 +11,34 @@
 <li><a href="../modules/schemas_namespaces.html">schemas/namespaces</a></li>
 <li><a href="" aria-current="page">NS_PREFIXES</a></li></ul>
 <h1>Variable NS_PREFIXES<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">NS_PREFIXES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><br/>    <span class="tsd-kind-property">bs</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/bootstrap/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-kind-property">cat</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/cat-harness/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-kind-property">fac</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>The prefixes those namespaces bind to in a <code>@context</code>.</p>
+<div class="tsd-signature"><span class="tsd-kind-variable">NS_PREFIXES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><br/>    <span class="tsd-kind-property">bootstrap</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/bootstrap/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-kind-property">&quot;cat-harness&quot;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/cat-harness/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-kind-property">&quot;folio-assistant-core&quot;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#&quot;</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The prefixes those namespaces bind to in a <code>@context</code> — and each prefix IS
+the declaring instance's stub.</p>
+<p>Owner, 2026-09-23: &quot;prefix -&gt; match stub&quot;. Each namespace above is already
+<code>&lt;canonical&gt;/&lt;stub&gt;/ns#</code>, so the path segment, the stub and the prefix are
+now ONE word in three places instead of three words that must agree. They
+were <code>bs</code>, <code>cat</code> and <code>fac</code> until then, and the cost of three spellings was
+measured rather than argued (bean <code>zaqn</code>): <code>CONTENT_CONTEXT</code> renamed its
+binding from <code>folio</code> to <code>fac</code> and kept writing twenty terms as <code>folio:…</code>,
+so every content term in 1,737 committed documents expanded to an IRI in a
+URI scheme called <code>folio</code> — well-formed, meaningless, and joined with
+nothing. An abbreviation is a second name, and a second name is where the
+two drift.</p>
+<p><code>check-context-emission.ts</code> enforces both halves: a prefix a document USES
+must be bound, and a binding onto one of our own namespaces must be spelt
+as that namespace's stub.</p>
 </div>
 <div class="tsd-type-declaration">
 <h4>Type Declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter">
-<h5 id="bs"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">bs</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/bootstrap/ns#&quot;</span></h5></li>
+<h5 id="bootstrap"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">bootstrap</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/bootstrap/ns#&quot;</span></h5></li>
 <li class="tsd-parameter">
-<h5 id="cat"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">cat</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/cat-harness/ns#&quot;</span></h5></li>
+<h5 id="cat-harness"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">cat-harness</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/cat-harness/ns#&quot;</span></h5></li>
 <li class="tsd-parameter">
-<h5 id="fac"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">fac</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#&quot;</span></h5></li></ul></div><aside class="tsd-sources">
+<h5 id="folio-assistant-core"><code class="tsd-tag">Readonly</code><span class="tsd-kind-property">folio-assistant-core</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#&quot;</span></h5></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/68268c521e889a083856782bc876077521c5cc50/cat-harness/schemas/namespaces.ts#L128">work/folio-assistant/folio-assistant/cat-harness/schemas/namespaces.ts:128</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/12a618670916a68087a67c6026429f8ad6c6721b/cat-harness/schemas/namespaces.ts#L146">work/folio-assistant/folio-assistant/cat-harness/schemas/namespaces.ts:146</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

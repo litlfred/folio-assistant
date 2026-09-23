@@ -6633,6 +6633,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#TileSurface",
+      "name": "TileSurface",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#Topology",
       "name": "Topology",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -6766,7 +6779,6 @@
       "name": "VisualisationSchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "ONE visualisation of a subgraph — where it is rendered, and what to call it.",
       "fields": [
         {
           "name": "ref",
@@ -6784,10 +6796,10 @@
         },
         {
           "name": "surfaces",
-          "type": "z.array(z.enum([\"navbar\", \"board\"])).nonempty().optional()",
+          "type": "z.array(z.enum(TILE_SURFACES)).nonempty().optional()",
           "optional": true,
           "array": true,
-          "doc": "Where its tile appears. Absent means BOTH."
+          "doc": "Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}."
         },
         {
           "name": "hidden",
@@ -6823,6 +6835,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "TILE_SURFACES",
         "z"
       ],
       "exported": true
@@ -16016,6 +16029,20 @@
         "METHODOLOGY_SCHEMA_TAG",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/namespaces.ts#NsPrefix",
+      "name": "NsPrefix",
+      "module": "cat-harness/schemas/namespaces.ts",
+      "kind": "type-alias",
+      "doc": "One of our own prefixes — each the stub of the instance declaring it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {

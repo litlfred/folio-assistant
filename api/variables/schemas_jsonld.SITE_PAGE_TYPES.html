@@ -11,25 +11,25 @@
 <li><a href="../modules/schemas_jsonld.html">schemas/jsonld</a></li>
 <li><a href="" aria-current="page">SITE_PAGE_TYPES</a></li></ul>
 <h1>Variable SITE_PAGE_TYPES<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">SITE_PAGE_TYPES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;folio:WebPage&quot;</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;doco:Section&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">SITE_PAGE_TYPES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;folio-assistant-core:WebPage&quot;</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;doco:Section&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>Types for the DOCS SITE's own graph.</p>
 <p>The site is not a folio — <code>gen-block-jsonld</code> declines to run here for
 exactly that reason (&quot;folio-assistant is the platform; papers live in the
 folio repo&quot;) — but its pages are still nodes, and a reader asking
 <code>corpus_search</code> where the ingestion pipeline is documented should find the
 page as readily as they find a block.</p>
-<p><code>folio:WebPage</code> is a NEW term rather than a borrowed one. <a href="http://schema.org">schema.org</a> has
+<p><code>folio-assistant-core:WebPage</code> is a NEW term rather than a borrowed one. <a href="http://schema.org">schema.org</a> has
 <code>schema:WebPage</code>, and this corpus has never used <a href="http://schema.org">schema.org</a> anywhere — the
 committed vocabularies are DCTERMS, SPAR (DoCO/DEO/CiTO) and one PROV term.
 Introducing a whole namespace for one class, when the house rule is
 &quot;generalising is sound; inventing is not&quot;, would be inventing by import. A
-<code>folio:</code> term for a folio-specific concept is what that rule allows.</p>
+<code>folio-assistant-core:</code> term for a folio-specific concept is what that rule allows.</p>
 <p>The DoCO half is borrowed and verified: a page is <code>doco:Section</code> (its own
 containment is <code>dcterms:hasPart</code>, per the note on <code>contains</code> below), an
 asset node is <code>doco:Figure</code> — the same class <code>diagram</code> blocks already get.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/68268c521e889a083856782bc876077521c5cc50/cat-harness/schemas/jsonld.ts#L184">work/folio-assistant/folio-assistant/cat-harness/schemas/jsonld.ts:184</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/12a618670916a68087a67c6026429f8ad6c6721b/cat-harness/schemas/jsonld.ts#L184">work/folio-assistant/folio-assistant/cat-harness/schemas/jsonld.ts:184</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

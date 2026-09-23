@@ -1,9 +1,9 @@
 {
   "@context": {
     "@version": 1.1,
-    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
-    "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "bootstrap": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "prov": "http://www.w3.org/ns/prov#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "schema": "https://schema.org/",
@@ -268,10 +268,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T08:39:50.534Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68268c521e889a083856782bc876077521c5cc50",
-  "sourceCommitSha": "68268c521e889a083856782bc876077521c5cc50",
-  "sourceCommitAt": "2026-09-23T10:37:05+02:00",
+  "generatedAt": "2026-09-23T08:50:36.273Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/12a618670916a68087a67c6026429f8ad6c6721b",
+  "sourceCommitSha": "12a618670916a68087a67c6026429f8ad6c6721b",
+  "sourceCommitAt": "2026-09-23T10:48:18+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -284,7 +284,7 @@
     "SequenceFlow": 791,
     "Role": 140,
     "ProcessNode": 753,
-    "Tool": 69,
+    "Tool": 70,
     "Schema": 100,
     "GraphKind": 29,
     "Directory": 40,
@@ -941,7 +941,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-detanglement.md",
-      "instructionLines": 284,
+      "instructionLines": 286,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1451,7 +1451,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/tabular-metadata.md",
-      "instructionLines": 169,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1913,7 +1913,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 945,
+      "instructionLines": 976,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2483,7 +2483,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 355,
+      "instructionLines": 414,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -30270,6 +30270,48 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/context-prefixes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "context-prefixes",
+      "title": "JSON-LD prefix check",
+      "description": "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run check:context-emission"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit both reports as JSON instead of the console summary.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "Console (or JSON) report; exit 1 on an unbound prefix, a misspelt own prefix, a silent binding, or an empty corpus."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/gates",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "gates",
@@ -35057,8 +35099,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "68268c521e889a083856782bc876077521c5cc50",
+    "sha": "12a618670916a68087a67c6026429f8ad6c6721b",
     "pr": "main",
-    "run": "35838143815"
+    "run": "35839215499"
   }
 }

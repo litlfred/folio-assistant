@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 566,
+      "count": 570,
       "unit": "beans"
     }
   },
@@ -1651,6 +1651,20 @@
       "updatedAt": "2026-09-20T12:29:02Z",
       "preview": "## The gap\n\nTwo checks already cover `AGENTS.md` and neither covers this:\n\n- `check:agents-xref` — citations **into** it resolve (a skill naming a section).\n- `check:declared-assets` — links **out** of it resolve (bean `v8gh`).\n\nNeither looks at what the prose ASSERTS about code. Measured 2026-09-20, two\nclaims had gone false with nothing noticing:\n\n1. *\"`resolveSkillDirs` … has **no caller** — so",
       "file": "beans/defs/folio-assistant-77ex--agentsmd-makes-claims-about-code-that-nothing-chec.md"
+    },
+    {
+      "id": "folio-assistant-792y",
+      "title": "CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T07:30:19Z",
+      "updatedAt": "2026-09-23T07:34:10Z",
+      "preview": "Found by bean `zaqn` (prefix = stub).\n\n## What is wrong\n\n`schemas/tabular-csvw.ts` writes four annotation keys as `fac:anchor`, `fac:headerRow`, `fac:extent`, `fac:stub`. A CSVW metadata document may put ONLY `@language` and `@base` in its local `@context` (W3C CSVW Metadata §5.2), so no prefix of ours can be bound there — `fac` expands as a URI scheme, the same defect `zaqn` fixed in the content ",
+      "file": "beans/defs/folio-assistant-792y--csvw-keys-dangle-the-tabular-fac-annotation-keys-c.md"
     },
     {
       "id": "folio-assistant-79t3",
@@ -5351,14 +5365,14 @@
     {
       "id": "folio-assistant-pk2s",
       "title": "NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:12:12Z",
-      "updatedAt": "2026-09-23T06:05:22Z",
+      "updatedAt": "2026-09-23T06:28:23Z",
       "preview": "Found while executing #956's empty-graph ruling (PR #996), by rendering the\nsite and running the mount step rather than by reading a diff. It is NOT that\nPR's defect and was deliberately not widened into it: that ruling is about a\nrow's LABEL, this is about a row's LINK.\n\n## Measured, 2026-09-23\n\nOn who-iris's mounted rail, four of six graph rows draw inert. Two of them —\n`catalogue` and `uploads`",
       "file": "beans/defs/folio-assistant-pk2s--navbar-the-rail-greys-rows-the-tile-generator-says.md"
     },
@@ -7487,6 +7501,20 @@
       "file": "beans/defs/folio-assistant-xtpc--doc-ingest-docx-and-pdf-handbooks-to-document-bloc.md"
     },
     {
+      "id": "folio-assistant-xwi8",
+      "title": "91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T07:30:19Z",
+      "updatedAt": "2026-09-23T07:34:11Z",
+      "preview": "Found by bean `zaqn`. `gen-library-jsonld` reports 91 orphaned block files (\"referenced by no section … Remove with --prune, once you have looked\"):\n\n| document | files |\n|---|---|\n| smart-base/library/9789240093362-eng | 47 |\n| agent-skills/library/arxiv-2608.08453v1 | 20 |\n| agent-skills/library/arxiv-2607.25032v1 | 12 |\n| cat-harness/library/arxiv-2508.05192v2 | 12 |\n\nAbout 364 KB total; last t",
+      "file": "beans/defs/folio-assistant-xwi8--91-orphaned-library-block-files-committed-jsonld-n.md"
+    },
+    {
       "id": "folio-assistant-xxku",
       "title": "Flushable containers: a named store with a buffer limit, an over-full badge, and three flush actions",
       "status": "todo",
@@ -7795,6 +7823,20 @@
       "file": "beans/defs/folio-assistant-zakj--secrets-no-leaked-token-or-credential-scanning-exi.md"
     },
     {
+      "id": "folio-assistant-zaqn",
+      "title": "JSON-LD PREFIX = STUB: the content context uses an undeclared `folio:` prefix, so every content term expands to a meaningless IRI",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T07:22:19Z",
+      "updatedAt": "2026-09-23T07:34:10Z",
+      "preview": "## What is wrong\n\n`CONTENT_CONTEXT` in `cat-harness/schemas/jsonld.ts` (served as `ns/content/v1.jsonld`) declares the prefix `fac` but writes 20 terms as `folio:…`. No `folio` prefix is declared, so a JSON-LD processor reads `folio` as a URI SCHEME: `\"@type\": \"folio:Definition\"` expands to the absolute IRI `folio:Definition`. Verified 2026-09-23 with `jsonld.expand`. 1,737 committed `.jsonld` fil",
+      "file": "beans/defs/folio-assistant-zaqn--json-ld-prefix-stub-the-content-context-uses-an-un.md"
+    },
+    {
       "id": "folio-assistant-zgba",
       "title": "WHO-IRIS ROUTING: the KG renders library-side, the documentation docs-side, and the replica navbar stops carrying docs",
       "status": "completed",
@@ -7905,6 +7947,20 @@
       "updatedAt": "2026-09-20T09:19:33Z",
       "preview": "Group 4 of 13 in `d308`. **27 files, 2 entry points** — the widest gap between size and\nreachability in the whole table.\n\n`qa-sweep`, `qa-agent-entry`, `qa-agent-drain-queue`, `qa-checker-discovery`,\n`qa-checkers-*` (cost, dak, extended, python, q-usage, render, triviality, uses,\nvacuity, voice), `qa-criteria-registry`, `qa-criterion-hash`, `qa-merge-findings`,\n`qa-staleness`, `qa-witness`, `witne",
       "file": "beans/defs/folio-assistant-zq4z--tool-413-task-test-qa-sweep-witnesses-27-files-2-e.md"
+    },
+    {
+      "id": "folio-assistant-zrvt",
+      "title": "GLASS: library and todos onto the glass, a tile strip on its bottom edge, book avatars, and a settings tile",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:47:06Z",
+      "updatedAt": "2026-09-23T06:47:06Z",
+      "preview": "Owner, 2026-09-23, looking at `/cat-harness/library/who-iris/` with the glass pulled down:\n\n> how do i get stuff from library onto glass? same w/ todos. where are the todo, fsh guts etc tiles on bottom of glass? check beans and finish feature implemenation. also tile to change folio settings (like background theme=now is glass theme, need usabiltiy themes some may want exisritng new avatars. shoul",
+      "file": "beans/defs/folio-assistant-zrvt--glass-library-and-todos-onto-the-glass-a-tile-stri.md"
     },
     {
       "id": "folio-assistant-zsah",
