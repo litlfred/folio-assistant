@@ -1,0 +1,33 @@
+# do not delete me
+#
+# Git tracks files, not directories, so this directory would vanish from
+# the next clone without a file in it. This is that file. It ignores
+# nothing on purpose — see `keepMarker` in schemas/cat-harness.ts.
+#
+# session-marks/
+# Whether anybody has LOOKED at the session listing — one file,
+# `session-listing.json`, carrying when it was read, by which session, how
+# many rows it carried and how many findings that run produced. Bean `rq8s`,
+# the owner's ruling 2026-09-23. `check:session-staleness` cannot fetch its
+# own input: probed from inside a session container,
+# `api.anthropic.com/v1/sessions` is 401 and `claude.ai/api/code/sessions`
+# is 403, so `list_sessions` is an MCP tool an AGENT holds and the
+# session-start sweep asks for the listing by name. That is a rule in prose,
+# and a session that skips it left NO TRACE — the next sweep could not tell
+# a skip from a clean run, which is `1xhc`'s "a gate that does not fire is
+# indistinguishable from one that passed" committed inside the fix for it.
+# This is the trace, so the sweep says never-checked, stale or fresh rather
+# than saying nothing three ways. A SIBLING of `issue-marks` rather than
+# part of it: that graph holds marks about ISSUES, and widening it would
+# rename a declared graph every consumer resolves against. Separate from the
+# `session-state` kind too, which is a session's OWN context (its actor, its
+# open instances, what it waits on) and has no directory yet by design —
+# this is repository-wide and says nothing about any session's position. THE
+# FINDING COUNT IS A SNAPSHOT: `rq8s` asserted a live-system reading as fact
+# and it was false four hours later, so a consumer rendering the number as a
+# current total has reproduced the defect. `state`, and SCOPE IS
+# `repository` for the reason `issue-marks` and `interaction` state: without
+# it the path resolves against the INSTANCE, and `harness:dirs` then creates
+# an empty instance-level directory to satisfy the declaration —
+# declared-but-absent turned into declared-and-empty, the `dh4f` false pass
+# wearing a tidier face.

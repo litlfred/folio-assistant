@@ -122,8 +122,11 @@ because sweeping is its job.
       claim is TRUE, 14 leaves an open PR names, 47 candidates. Nothing swept.
 - [x] `in-progress` means something again — `check:bean-rollup` judges a status
       against its own subtree and owns no clock
-- [ ] `rq8s` closed: a session blocked on the owner is visible to the owner —
-      the sweep fires, but one box remains and it is the owner's
+- [x] `rq8s` closed: a session blocked on the owner is visible to the owner.
+      The sweep fires, and the owner's remaining box was ruled on 2026-09-23 —
+      **the skip leaves a durable trace**, `session-marks/`, three states never
+      two. Only the `qou` items stay open, and they are the owner's: this
+      session has no access there.
 - [x] The 31 no-run workflows each judged — 30 dispatch-only, 1 path-filtered,
       0 auto-triggered, 0 undetermined, re-derived every run
 - [x] The two failures from this consolidation's own first commit written down

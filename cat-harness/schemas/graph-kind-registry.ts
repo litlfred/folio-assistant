@@ -1180,6 +1180,29 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // Two marks rather than one, because a comment EDITED after being read
   // keeps its id: the id alone would call it seen, and an edited requirement
   // is a changed requirement (`issue-working`).
+  // Whether anybody has LOOKED at the session listing — not what it said.
+  //
+  // `state`: the check writes one each time it runs. A SIBLING of `issue-marks`
+  // rather than a use of it — that kind is marks about ISSUES, and widening it
+  // would rename a declared graph every consumer resolves against.
+  //
+  // Separate from `session-state`, which is a session's OWN context (its actor,
+  // its open instances, what it waits on). This is repository-wide and says
+  // nothing about any session's position: one file, one question — did anybody
+  // look, and how long ago.
+  //
+  // It holds a count of findings and that count is a SNAPSHOT. `rq8s` asserted
+  // a live-system reading as fact and it was false four hours later, so a
+  // consumer rendering the number as a current total has reproduced the defect.
+  "session-marks": {
+    type: termIri("SessionMarkGraph"),
+    renderable: false,
+    holds: "state",
+    recordsWork: false, // a mark that somebody looked; nobody is partway through it
+    schema: "schemas/session-listing-mark.ts",
+    summary: "How recently an agent read the session listing — the time it looked, never what it saw.",
+  },
+
   "issue-marks": {
     type: termIri("IssueMarkGraph"),
     renderable: false,

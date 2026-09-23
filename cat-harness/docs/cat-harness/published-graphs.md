@@ -200,6 +200,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})
 
+### `session-marks`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/session-marks/' | relative_url }})
+
 ### `skills`
 
 1 of 6 published.

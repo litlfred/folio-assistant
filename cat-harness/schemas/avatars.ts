@@ -378,6 +378,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 224,
     reads: "a spoken preference, already recorded — do not ask again",
   },
+  "session-marks": {
+    // AN EYE OVER A LINE OF ROWS — somebody looked at the list. Deliberately
+    // not a clock and not a warning triangle: the file records that a look
+    // happened, and neither the time a session has been waiting nor whether
+    // anything was wrong. A warning glyph would promise a finding the mark
+    // does not carry.
+    glyph: "M2 12s3.5-5 10-5 10 5 10 5-3.5 5-10 5-10-5-10-5zM12 10a2 2 0 100 4 2 2 0 000-4",
+    tone: 196,
+    reads: "an eye over a list — somebody looked, and when",
+  },
   "issue-marks": {
     // A bookmark at a place in a list — how far this agent has read, and
     // nothing about what it read. Deliberately not a speech bubble: these

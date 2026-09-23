@@ -419,6 +419,45 @@ echo
 # sweep cannot decide it, so it makes sure the question is put.
 echo "## Sibling sessions waiting on a person"
 echo
+# THE TRACE, so that skipping this is visible. Bean `rq8s`, owner's ruling
+# 2026-09-23. The step below is a rule in prose asking an agent to make a tool
+# call, and until this record existed a session that skipped it left nothing --
+# the next sweep could not tell a skip from a clean run, which is the defect
+# this section exists to treat, one level up.
+#
+# THREE states, never two: absent is NEVER CHECKED and is not the same fact as
+# stale. And the mark answers "did anybody look", never "what is true now" --
+# `rq8s`'s own first write-up asserted a live reading as fact and it was false
+# four hours later, so the finding count is printed with its age attached and
+# never as a current total.
+MARK="$CHECKOUT_ROOT/session-marks/session-listing.json"
+if [ ! -f "$MARK" ]; then
+  echo "**NEVER CHECKED here.** No \`session-marks/session-listing.json\`. That is"
+  echo "\`unknown\`, not \"no sessions waiting\" — nobody has looked in this checkout."
+  echo
+elif command -v jq >/dev/null 2>&1; then
+  checked=$(jq -r '.checkedAt // "?"' "$MARK" 2>/dev/null)
+  found=$(jq -r '.findings // "?"' "$MARK" 2>/dev/null)
+  rows=$(jq -r '.sessionsRead // "?"' "$MARK" 2>/dev/null)
+  age_h="?"
+  if [ "$checked" != "?" ]; then
+    then_s=$(date -u -d "$checked" +%s 2>/dev/null || echo "")
+    [ -n "$then_s" ] && age_h=$(( ( $(date -u +%s) - then_s ) / 3600 ))
+  fi
+  if [ "$age_h" != "?" ] && [ "$age_h" -ge 24 ]; then
+    echo "**STALE — last read ${age_h}h ago** ($checked). Run it again below."
+  else
+    echo "Last read **${age_h}h ago** ($checked), over $rows session(s)."
+  fi
+  echo
+  echo "That run found **$found**. A SNAPSHOT of that moment, not a count of what is"
+  echo "waiting now — four sessions recorded as stopped once resumed on their own"
+  echo "within four hours (\`rq8s\`). Re-run rather than quoting it."
+  echo
+else
+  echo "A mark exists at \`session-marks/session-listing.json\`; jq is not installed, so read it by hand."
+  echo
+fi
 cat <<'SESSIONS'
 **Not checked by this script, and that is not "none".** The listing comes from
 an MCP tool only an agent holds (`list_sessions`), so a shell cannot fetch it:
@@ -466,7 +505,8 @@ cat <<'EOF'
    Escalate only if it surfaces something actionable against the work-plan.
 4. **Run the session-staleness check** described above — `list_sessions`, then
    `bun run check:session-staleness`. It is the only step here whose input this
-   script cannot produce, so it is the only one that silently reports nothing
-   when skipped. A session that has held a question for days is the cheapest
+   script cannot produce. Skipping it is now VISIBLE — the check writes
+   `session-marks/session-listing.json` and the section above reports its age —
+   so a skip no longer reads as a clean run. A session that has held a question for days is the cheapest
    thing in this sweep to fix and the only one nobody else will notice.
 EOF

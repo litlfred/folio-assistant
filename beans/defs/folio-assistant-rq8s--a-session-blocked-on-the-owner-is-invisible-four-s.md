@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-09-22T18:54:19Z
+updated_at: 2026-09-23T16:55:55Z
 parent: folio-assistant-ahvw
 ---
 
@@ -295,3 +295,102 @@ decision — **put to the owner rather than invented here.**
       surfaced on #956 2026-09-22.
 - [ ] **Owner decision:** whether the skip should leave a durable trace, which
       needs a new `state` artefact and a declaration. Not invented here.
+
+---
+
+## 2026-09-23 — the owner ruled: the skip leaves a durable trace. Last box closed.
+
+Put as four selectable options (a small `state` record / leave it as prose /
+a scheduled workflow over the record / drop it from the sweep). The ruling is
+**a small `state` record**.
+
+### `session-marks/` — a sibling of `issue-marks`, not a use of it
+
+One declared, repository-scoped `state` graph holding one file,
+`session-listing.json`, with a `$schema` tag so it declares what it is:
+
+```json
+{ "$schema": "folio-session-listing-mark/v1",
+  "checkedAt": "…", "by": "session_…", "sessionsRead": 100, "findings": 12 }
+```
+
+`issue-marks` is the precedent and the shape is deliberately the same — *how far
+an agent has read an issue* → *how recently an agent read the session listing*.
+Both hold a timestamp and what was accounted for; **neither holds the content**,
+and a kind named for the sessions would promise a reader the sessions.
+
+**A sibling rather than part of it.** Widening `issue-marks` would rename a
+declared graph every consumer resolves against, which this repository's own
+conventions call a cross-instance breaking change that fails *silently*.
+
+**Separate from the `session-state` kind**, which is registered with no
+directory by design (`3nfv`). That is a session's OWN context — its actor, its
+open instances, what it waits on. This is repository-wide and says nothing about
+any session's position: one file, one question, *did anybody look and how long
+ago*.
+
+### Three states, never two
+
+`freshness()` returns `never-checked`, `stale` or `fresh`, and the sweep prints
+each differently. **Absent is `never-checked`, not `stale`** — collapsing them is
+the `dh4f` shape, a consumer that scanned nothing reporting on it as though it
+had. So is an unparseable `checkedAt`: `Date.parse` gives `NaN` and every
+comparison against `NaN` is false, so a naive `<=` would have called a corrupt
+mark fresh forever, which is worse than no mark. Both are pinned by tests.
+
+**Only a `checked` run writes.** An `unknown` — no input, unreadable payload —
+is precisely the case that must not look like a look, so it leaves the previous
+mark alone. And the write never changes the exit code: a repository whose
+`session-marks/` cannot be written still has sessions waiting, and failing the
+check for the bookkeeping would hide the finding behind the record of it.
+
+### What the mark is NOT evidence of
+
+It answers *did anybody look*, and **never** *what is true now*. This bean's own
+first write-up asserted a live-system reading as fact and **it was false four
+hours later**. So `findings` is a snapshot, the sweep prints it with its age and
+says so in the same breath, and a consumer rendering it as *"12 sessions are
+waiting"* has reproduced the defect this bean exists for.
+
+**24 h**, and the basis is what the mark asserts — not that the listing is
+current, but that somebody looked. A day is the shortest window over which
+*"nobody has looked"* is a finding rather than noise, since the sweep runs at
+session start. Deliberately **not** a tighter version of `check:session-staleness`'s
+own 72 h: that one calibrates how long a person may legitimately take to answer
+(`BEAN_QUIET_HOURS`, `fgnw`); this one calibrates how long a repository may go
+unlooked-at.
+
+### Run at 100 rather than 50 — and the window was hiding most of it
+
+The 2026-09-22 run read **50** sessions and found 4. This one read **100** and
+found **12**, which settles the caveat that run recorded: the older failures
+were **outside the window**, not read by somebody.
+
+| class | n | worst |
+|---|---|---|
+| waiting on a person past 72 h | **1** | **212.4 h (8.9 days)**, with its question in `task_summary` |
+| `FAILED` + `unread` past 24 h | 7 | 1844.6 h (76.9 days) |
+| stopped, undeclared — waiting and abandoned indistinguishable | 4 | 1876.1 h (78.2 days) |
+
+All in `litlfred/qou`, which this session has no access to and opens nothing in.
+**The one waiting on a person is the expensive one** and is surfaced on #956.
+
+`sessionsRead` is in the mark for exactly this reason: a small window makes a
+clean report, and without the denominator nobody can tell which they are reading.
+
+## Done when
+
+- [x] A check reports sessions in `REQUIRES_ACTION` past an idle threshold, and
+      `FAILED` sessions carrying `unread`, with each threshold's **basis** stated
+- [x] The question in `task_summary` is printed with the finding
+- [x] **Could-not-determine is never rendered as clean**
+- [x] The five are surfaced to the owner, with links (2026-09-21); re-surfaced
+      2026-09-22 and again 2026-09-23 at the wider window
+- [x] The session-start sweep runs it — §"Sibling sessions waiting on a person"
+      names the call, the pipe and the three classes, and says that skipping it
+      is `unknown` rather than none
+- [x] **The skip leaves a durable trace** — `session-marks/`, owner's ruling
+      2026-09-23. Three states, never two; the finding count is a snapshot and
+      says so where it is printed.
+- [ ] The `qou` items are the owner's: this session works folio-assistant only
+      and has no `qou` access, so no bean could be left there. Surfaced on #956.
