@@ -178,27 +178,86 @@ export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
  * reader to infer from a bare integer.
  */
 export function declaredFigureLabels(sectionsDir: string): Set<string> {
-  const labels = new Set<string>();
+  return new Set(declaredFigureCaptions(sectionsDir).keys());
+}
+
+/**
+ * Every figure the text declares, with its CAPTION TEXT where it has one.
+ *
+ * ## Why this is the primitive and `declaredFigureLabels` is derived from it
+ *
+ * Two scanners over one corpus is the defect #1001 just took out of the
+ * navbar: they agree by maintenance, and the agreement has to be re-bought on
+ * every change. The label count and the caption text are two questions about
+ * the same lines, so they are answered by ONE regex here and
+ * `declaredFigureLabels` is `keys()`. Its semantics are unchanged — any
+ * line-start mention, the lower bound its own docstring describes.
+ *
+ * ## A caption is `Fig. N.` + text. A cross-reference is `Fig. N` + a sentence
+ *
+ * Measured on `9789240120747-eng`, 2026-09-23: NINE line-start matches for SIX
+ * declared figures. Three of the nine are cross-references that wrapped onto a
+ * new line —
+ *
+ * ```
+ * Fig. 1).                      the tail of "(see Fig. 1)."
+ * Fig. 5 illustrates the M&E    a cross-reference
+ * Fig. 6 further illustrates    a cross-reference
+ * Fig. 3. DIIG digital health   an actual caption
+ * ```
+ *
+ * — and only the `Set` dedupe hid them, because their labels happened to
+ * coincide with real captions. On a document where they did not, the count
+ * would be wrong and nothing would say so.
+ *
+ * So the period after the number is the discriminator, and it is a fact about
+ * the typesetting rather than a threshold somebody chose. That distinction is
+ * why this change needs no number: `m4xy` refuses to pick a coverage
+ * threshold, having found the distribution continuous across three orders of
+ * magnitude.
+ *
+ * ## `null` is a third state, not an empty caption
+ *
+ * A label maps to `null` when the line is a mention without a caption — a
+ * cross-reference, or a caption this lower bound could not read. It does NOT
+ * mean "declared with an empty caption". A consumer deciding whether the
+ * captions can stand in for the images must be able to tell "this figure has
+ * no caption text here" from "this figure has a caption and it is blank", and
+ * collapsing them is how a gate passes over content it never saw.
+ *
+ * A label seen BOTH ways keeps the caption: one real caption and three
+ * cross-references is a captioned figure, which is what `Fig. 5` is above.
+ */
+export function declaredFigureCaptions(sectionsDir: string): Map<string, string | null> {
+  const figures = new Map<string, string | null>();
   let files: string[];
   try {
     files = readdirSync(sectionsDir).filter((f) => f.endsWith(".md"));
   } catch {
     // No sections directory is "could not determine", not "declares none" —
     // the same third state the rest of this file keeps.
-    return labels;
+    return figures;
   }
-  for (const f of files) {
+  // ONE pattern, two captures. `(\.[ \t]+(\S.*))?` is the caption and is
+  // optional, which is what makes a mention and a caption the same match with
+  // different groups rather than two regexes that must be kept in step.
+  const FIGURE = /^[ \t]*(?:Fig\.|Figure)[ \t]*(\d+(?:\.\d+)*)(?:\.[ \t]+(\S.*))?/gm;
+  for (const f of files.sort()) {
     let body: string;
     try {
       body = readFileSync(join(sectionsDir, f), "utf-8");
     } catch {
       continue;
     }
-    for (const m of body.matchAll(/^[ \t]*(?:Fig\.|Figure)[ \t]*(\d+(?:\.\d+)*)/gm)) {
-      labels.add(m[1]!);
+    for (const m of body.matchAll(FIGURE)) {
+      const label = m[1]!;
+      const caption = m[2]?.trim();
+      // A caption never loses to a later bare mention -- see the docstring.
+      if (caption) figures.set(label, caption);
+      else if (!figures.has(label)) figures.set(label, null);
     }
   }
-  return labels;
+  return figures;
 }
 
 export function entryKind(has: (file: string) => boolean): EntryKind {
@@ -663,23 +722,59 @@ function derivableRequirements(dir: string): Requirement[] {
                 `${unjudged.length} with an undetermined role.${declaredNote}`,
             });
           } else if (parsed.images.length === 0 && declared.size > 0) {
-            // THE CASE THIS THIRD STATE EXISTS FOR. Zero images placed while
-            // the text declares figures: nothing could correspond, so no arm
-            // described them and none could. `met` here is the silence `m4xy`
-            // measured — true about raster, misleading about figures.
+            // ZERO IMAGES PLACED, AND THE TEXT DECLARES FIGURES — `m4xy`.
             //
-            // `not-derivable` rather than `unmet`: the document is not broken
-            // and no amount of describing would satisfy it. It is reported and
-            // does not block promotion, which is what makes it safe to be
-            // honest rather than a new permanent blocker — the `pn6j` failure.
-            out.push({
-              name: "image-descriptions",
-              state: "not-derivable",
-              detail:
-                `no raster image was placed, and the text declares at least ` +
-                `${declared.size} captioned figure(s) — they are drawn in vector ` +
-                `and no arm reads them (bean m4xy)`,
-            });
+            // The owner ruled 2026-09-23, over building a vector arm: **the
+            // CAPTION is the handle, and the arm is a later bean.** So the
+            // question here stopped being "did an arm read them" and became
+            // "does each declared figure carry text a reader can read instead".
+            //
+            // WHY THE CAPTION NEEDS NO NUMBER, which is most of why it won.
+            // The vector arm needs a coverage threshold to tell a figure from
+            // furniture, and `m4xy` refuses to propose one: pooled over 296
+            // figures the distribution runs continuously across three orders
+            // of magnitude, and "a threshold chosen after seeing this corpus
+            // is a number chosen to fit the answer". A caption either has text
+            // after `Fig. N.` or it does not.
+            //
+            // IT IS PER-FIGURE, and that is load-bearing rather than tidy.
+            // `m4xy` exists because an entry could be "L1-complete,
+            // gate-green, and missing every figure it declares, with nothing
+            // anywhere signalling a gap". Flipping this to `met` on a COUNT
+            // would rebuild that exactly. Measured 2026-09-23:
+            // `9789240093362-eng` declares 18 and only THREE are captions —
+            // the other fifteen are cross-references the lower bound counted.
+            // A blanket `met` there would pass over fifteen figures nothing
+            // describes.
+            const figures = declaredFigureCaptions(join(dir, "sections"));
+            const bare = [...figures].filter(([, c]) => c === null).map(([l]) => l);
+            if (bare.length === 0) {
+              out.push({
+                name: "image-descriptions",
+                state: "met",
+                detail:
+                  `no raster image was placed — the figures are drawn in vector — but ` +
+                  `all ${figures.size} declared figure(s) carry caption text, which is ` +
+                  `the reader's handle (owner ruling 2026-09-23, bean m4xy). ` +
+                  `Captions: ${[...figures].map(([l, c]) => `Fig. ${l} "${c}"`).join("; ")}`,
+              });
+            } else {
+              // `not-derivable` rather than `unmet`: the document is not
+              // broken and no amount of describing would satisfy it. It is
+              // reported and does not block promotion, which is what makes it
+              // safe to be honest rather than a new permanent blocker — the
+              // `pn6j` failure. The BARE LABELS are named, so a reader sees
+              // which figures are uncovered rather than a bare shortfall.
+              out.push({
+                name: "image-descriptions",
+                state: "not-derivable",
+                detail:
+                  `no raster image was placed, and ${bare.length} of ${figures.size} ` +
+                  `declared figure(s) carry no caption text either — Fig. ` +
+                  `${bare.join(", ")}. They are drawn in vector, no arm reads them, ` +
+                  `and the caption handle does not reach them (bean m4xy)`,
+              });
+            }
           } else {
             out.push({
               name: "image-descriptions",
