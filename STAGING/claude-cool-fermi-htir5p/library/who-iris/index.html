@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>who-iris — ingested IRIS replica</title>
+<meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
+<style>
+  :root {
+    /* Measured in who-iris/themes/themes.ts from the captured client-theme.css. */
+    --iris-accent: #008dc9;
+    --iris-ink: #212529;
+    --iris-edge: #ced4da;
+    --iris-surface: #ffffff;
+    --iris-dark: #005072;          /* --dark */
+    --iris-deep: #2B4E72;          /* --blue */
+    --iris-breadcrumb-bg: #e9ecef; /* --ds-breadcrumb-bg */
+    --iris-wash: #FAFAFA;          /* --ds-almost-white */
+    --iris-current: #d86422;       /* --warning */
+    --iris-muted: #6c757d;         /* --gray */
+    --iris-ingested: #006666;      /* --info */
+    --iris-col: 1140px;
+    --iris-pad: 1.5rem;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    /* The stack the captured stylesheet declares, verbatim. */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font-size: 1rem; font-weight: 400; line-height: 1.5;
+    color: var(--iris-ink); background: var(--iris-surface);
+  }
+  .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  a { color: var(--iris-accent); text-decoration: none; }
+  a:hover, a:focus { text-decoration: underline; }
+
+  /* ── The banner. Not decoration: it is requirement 1. ───────────────── */
+  .ingested {
+    background: var(--iris-ingested); color: #fff;
+    padding: 0.7rem var(--iris-pad); font-size: 0.95rem;
+  }
+  .ingested strong { letter-spacing: 0.02em; }
+  .ingested .wrap { padding: 0; }
+  .ingested a { color: #fff; text-decoration: underline; }
+
+  /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
+  header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
+  .mast .wrap { display: flex; align-items: center; gap: 1rem; padding-top: 1.1rem; padding-bottom: 1.1rem; }
+  .wordmark { display: flex; align-items: baseline; gap: 0.55rem; }
+  .wordmark .org {
+    font-size: 1.05rem; font-weight: 700; line-height: 1.15;
+    color: var(--iris-accent); max-width: 11rem;
+  }
+  .wordmark .bar { width: 1px; align-self: stretch; background: var(--iris-edge); }
+  .wordmark .stack { display: flex; flex-direction: column; }
+  .wordmark .iris { font-size: 2.1rem; font-weight: 700; color: var(--iris-accent); letter-spacing: -0.02em; line-height: 1; }
+  .wordmark .iris .dot { color: var(--iris-current); }
+  .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
+  .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  .nologo {
+    margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
+    text-align: right; max-width: 16rem;
+  }
+
+  /* ── Navbar. Solid accent, white links, as the source page. ─────────── */
+  nav.main { background: var(--iris-accent); }
+  nav.main .wrap { display: flex; flex-wrap: wrap; gap: 1.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  nav.main a, nav.main span { color: #fff; font-weight: 700; font-size: 0.98rem; }
+  nav.main span { opacity: 0.75; font-weight: 400; }
+
+  .crumbs { background: var(--iris-breadcrumb-bg); }
+  .crumbs .wrap { padding-top: 0.8rem; padding-bottom: 0.8rem; font-size: 0.98rem; }
+  .crumbs .sep { color: var(--iris-muted); margin: 0 0.55rem; }
+  .crumbs .here { color: var(--iris-current); }
+
+  main.wrap { padding-top: 2rem; padding-bottom: 3rem; }
+  h1 { font-size: 2.6rem; font-weight: 500; line-height: 1.2; margin: 0 0 1.6rem; }
+  h2 { font-size: 1.85rem; font-weight: 500; line-height: 1.2; margin: 2.4rem 0 0.9rem; }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+
+  ul.communities { list-style: none; margin: 0; padding: 0; }
+  ul.communities > li { padding: 0.55rem 0; }
+  .row { display: flex; align-items: baseline; gap: 0.7rem; }
+  .chev { color: var(--iris-ink); font-size: 1.05rem; line-height: 1; }
+  .row .title { font-size: 1.32rem; }
+  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0 1.9rem; }
+  .kids { margin: 0.35rem 0 0.5rem 1.9rem; padding: 0; list-style: none; }
+  .kids li { padding: 0.3rem 0; }
+
+  /* ── Materialisation state. A WORD, never a colour alone (SC 1.4.1). ── */
+  .state {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0.12rem 0.45rem; border-radius: 3px; border: 1px solid;
+    vertical-align: 0.12em;
+  }
+  .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
+  .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
+  .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  /* The KG view's tables. Deliberately plainer than the replica's furniture:
+     this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
+     it as IRIS would invite a reader to take its counts for IRIS's. */
+  .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th { font-weight: 600; white-space: nowrap; }
+  .dim { opacity: .65; font-size: .85em; }
+
+  table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
+  table.items th, table.items td {
+    text-align: left; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.items th { font-weight: 700; background: var(--iris-wash); }
+  /* Six columns on the held-items table; without a floor the title and
+     collection cells wrap to one word per line. */
+  table.items td:first-child, table.items th:first-child { min-width: 13rem; }
+  table.items td:nth-child(2) { min-width: 9rem; }
+  table.items code { font-size: 0.86rem; color: var(--iris-muted); }
+  .dl { white-space: nowrap; }
+
+  /* ── IRIS home replica ────────────────────────────────────────────────
+     Bands in the capture's order: hero, search, Recent Submissions. Measured
+     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+
+     The hero bleeds to the wrap's edges rather than to the viewport: 100vw
+     inside a centred column is the classic horizontal-scrollbar bug, and a
+     replica that scrolls sideways on a phone is a worse infidelity than a
+     hero 32px narrower than the original. */
+  .hero {
+    margin: 0 calc(-1 * var(--iris-pad)) 1.6rem;
+    padding: 3.2rem var(--iris-pad) 2.4rem;
+    /* Colour only. The real hero is a photograph of the Geneva headquarters
+       with the WHO emblem on the facade; see landingPage() for why neither is
+       here. Both stops are theme roles, not literals. */
+    background: linear-gradient(135deg, var(--iris-dark) 0%, var(--iris-accent) 55%, var(--iris-deep) 100%);
+    color: #fff;
+  }
+  .hero-in { max-width: 34rem; }
+  .hero h1 { font-size: 3.6rem; line-height: 1; margin: 0 0 1.2rem; color: #fff; font-weight: 400; }
+  .hero p { font-size: 1.06rem; line-height: 1.5; margin: 0; color: rgba(255,255,255,0.95); }
+  /* Two classes, not one: the rule .hero p is class+element and beat the bare
+     .hero-note, so the margin below was declared and never applied -- the
+     replica note sat flush against the last line of the hero paragraph and
+     read as part of it. */
+  .hero .hero-note {
+    margin: 1.6rem 0 0; font-size: 0.8rem; color: rgba(255,255,255,0.8);
+    border-top: 1px solid rgba(255,255,255,0.25); padding-top: 0.9rem;
+  }
+  .hero-note code { color: #fff; }
+
+  .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
+  .searchbar input {
+    flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
+    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    background: #fff; color: var(--iris-muted);
+  }
+  .searchbar button {
+    padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
+    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    background: var(--iris-accent); color: #fff;
+  }
+  /* The disabled attribute already communicates this to a pointer; the cursor
+     says it to a reader who hovers before clicking. */
+  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
+  .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
+
+  .subs { display: flex; flex-direction: column; gap: 1.8rem; }
+  .sub { display: flex; gap: 1.2rem; align-items: flex-start; }
+  /* A fixed column so a landscape cover and a portrait one start on the same
+     line. The IMAGE keeps its own aspect -- pixelWidth and pixelHeight are on
+     the tag, so the box is reserved before the bytes arrive and nothing
+     reflows. */
+  .sub-cover { flex: 0 0 104px; }
+  .sub-cover img { width: 104px; height: auto; display: block; border: 1px solid var(--iris-edge); }
+  /* Centred by FLEX, not by a line-height equal to the height: the withheld
+     placeholder is two lines, and a 140px line-height would put the first of
+     them below the box. */
+  .sub-cover .nocover {
+    display: flex; align-items: center; justify-content: center;
+    width: 104px; height: 140px; border: 1px dashed var(--iris-edge);
+    color: var(--iris-muted); font-size: 0.78rem; text-align: center; line-height: 1.3;
+  }
+  .sub-body { flex: 1; min-width: 0; }
+  .sub-title { font-size: 1.02rem; line-height: 1.35; text-decoration: underline; }
+  .sub-by { margin: 0.35rem 0 0.4rem; font-size: 0.9rem; color: var(--iris-ink); }
+  .sub-abs {
+    margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.5;
+    /* The capture truncates each abstract under a "Show more" control. This
+       clamps instead of shipping a disclosure widget -- the owner asked for a
+       replica of the look, not working functionality. */
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sub-abs.none { display: block; font-style: italic; color: var(--iris-muted); }
+  .sub-links { margin: 0; font-size: 0.88rem; }
+
+  p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
+
+  table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
+  table.reqs th, table.reqs td {
+    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
+  table.reqs th.rid {
+    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-accent);
+  }
+  table.reqs td.why { color: var(--iris-muted); }
+  table.reqs code { font-size: 0.87em; }
+  table.reqs td .why { font-size: 0.88em; color: var(--iris-muted); }
+
+  /* The architecture drawing, inlined. Authored at 1000x432 and scaled down on
+     a narrow screen: an auto height keeps its aspect, which a figure of
+     labelled boxes cannot survive losing.
+     NOTE FOR ANYONE EDITING THESE COMMENTS: this whole stylesheet is inside a
+     JS template literal, so a backtick here ends the string and the generator
+     stops parsing. It has happened four times. Write CSS identifiers plainly. */
+  figure.arch { margin: 1.6rem 0; }
+  figure.arch svg { width: 100%; height: auto; max-width: 1000px; display: block; border: 1px solid var(--iris-edge); border-radius: 6px; }
+  figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
+
+  .caveat {
+    border-left: 4px solid var(--iris-current); background: var(--iris-wash);
+    padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
+  }
+  .caveat p { margin: 0.4rem 0; }
+  .caveat p:first-child { margin-top: 0; }
+  .caveat p:last-child { margin-bottom: 0; }
+
+  footer.mast { background: var(--iris-accent); color: #fff; margin-top: 3rem; }
+  footer.mast .wrap { padding-top: 1.8rem; padding-bottom: 1.8rem; font-size: 0.93rem; }
+  footer.mast a { color: #fff; text-decoration: underline; }
+  footer.mast .rule { height: 1px; background: rgba(255,255,255,0.35); margin: 1rem 0; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 1.9rem; }
+    /* .none and .cdn are defined above and were duplicated in here; the
+       copies said nothing the base rules did not. A .nologo display:none was
+       in here too, which HID the "replica, not published under WHO" notice on
+       exactly the screens where a reader is least able to tell a replica from
+       the real site. It shrinks now; it does not disappear. */
+    .nologo { font-size: 0.72rem; max-width: none; }
+    .wordmark .iris { font-size: 1.7rem; }
+    table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
+    table.items thead { display: none; }
+    table.items td { border-bottom: none; padding: 0.25rem 0; }
+    table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
+    table.reqs thead { display: none; }
+    table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
+    table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    .hero h1 { font-size: 2.6rem; }
+    .searchbar { flex-direction: column; }
+    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar button { border-radius: 0 0 4px 4px; }
+    .sub { flex-direction: column; }
+  }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">who-iris</span></label><a href="../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">◆</span><span class="fa-nav-label">who-iris</span></a></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">catalogue</span></span><a href="../../cat-harness/docs-auto/index/docs/who-iris-docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../cat-harness/library/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">themes</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../who-iris/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop"><img src="../../docs/who-iris/assets/img/who-emblem.svg" alt="" title="WHO emblem" style="width:326.3708%;height:100%;left:0%;top:0%"></span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../bootstrap/initialization.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
+
+<div class="ingested"><div class="wrap">
+  <strong>INGESTED COPY — not WHO, and not live.</strong>
+  This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
+  from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
+  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
+  rendered covers are withheld from display for the same reason — they carry the
+  emblem printed on the publications.
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div class="wordmark">
+    <span class="org">World Health<br>Organization</span>
+    <span class="bar"></span>
+    <span class="stack">
+      <span class="iris">iris<span class="dot">.</span></span>
+      <span class="sub">Institutional Repository<br>for Information Sharing</span>
+    </span>
+  </div>
+  <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
+</div></header>
+
+<!--
+  THE DOCUMENTATION IS NOT IN THIS NAVBAR, and that is the owner's ruling of
+  2026-09-21: *"the docs/ should not be for the who-iris top navbar, instead,
+  f-a navbar should still be on the left, with who-iris and then link to docs
+  on side in navbar."*
+
+  This strip is the REPLICA's chrome -- it exists to look like the IRIS site,
+  and the IRIS site has no page about how this repository ingested it. The
+  ingestion notes and the portal proposal are reached from the folio-assistant
+  navbar on the left, through who-iris's own tile in harness-tiles.ts, which
+  is where a reader looking for documentation about this harness is standing.
+  Putting them here also meant linking across two mount points once the split
+  landed, which is a relative path that breaks the first time either route
+  moves.
+
+  (No backticks in this comment: it sits inside the page template literal, and
+  one here closes the string and turns the rest of the file into TypeScript,
+  failing at a line far from the mistake.)
+-->
+<nav class="main"><div class="wrap">
+  <a href="community-list.html">Communities &amp; Collections</a>
+  <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
+</div></nav>
+
+<div class="crumbs"><div class="wrap"><span class="here">Home</span></div></div>
+
+<main class="wrap">
+
+<section class="hero">
+  <div class="hero-in">
+    <h1>IRIS</h1>
+    <p>The primary objective of the Institutional Repository for Information Sharing
+    (IRIS) is to provide free digital access to the scientific and technical
+    publications of the World Health Organization (WHO), including contributions from
+    its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
+    encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
+    collaboration with its Member States.</p>
+  </div>
+  <p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
+  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
+</section>
+
+<div class="searchbar">
+  <input type="text" disabled
+    placeholder="Search through the repository&rsquo;s 273559 items"
+    aria-label="Search (disabled in this replica)">
+  <button type="button" disabled>Search</button>
+</div>
+<p class="searchnote">Disabled. <strong>273,559</strong> items across <strong>1,057,223</strong> files is what IRIS reports; this catalogue holds <strong>3</strong> of them by
+reference and <strong>3</strong> by value. There is no index behind the box,
+and a box that returned nothing quietly would be worse than one that says so.</p>
+
+<h2>Recent Submissions</h2>
+<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
+IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
+used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
+
+<div class="subs">
+<article class="sub">
+  <div class="sub-cover"><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html"><img src="wpr-rdo-2020-003-eng-cover.png" width="300" height="212"
+        alt="Cover of Publication and information products style guide, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div>
+  <div class="sub-body">
+    <a class="sub-title" href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a>
+    <p class="sub-by">World Health Organization. Regional Office for the Western Pacific (WPR/RDO/2020/003, Publication Date: 2020-05-12)</p>
+    <p class="sub-abs">This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also available. For more information on WPRO publications guidelines, please contact wpropuballstaff@who.int</p>
+    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code>2.68 MB</code></p>
+  </div>
+</article>
+<article class="sub">
+  <div class="sub-cover"><a href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html"><img src="9789241548960-eng-cover.png" width="300" height="450"
+        alt="Cover of WHO handbook for guideline development, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div>
+  <div class="sub-body">
+    <a class="sub-title" href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a>
+    <p class="sub-by">World Health Organization (Publication Date: 2014-12-18)</p>
+    <p class="sub-abs">This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet WHO standards.</p>
+    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">via CDN</a> &middot; <code>2.04 MB</code></p>
+  </div>
+</article>
+<article class="sub">
+  <div class="sub-cover"><a href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html"><img src="who-pub-tps-931-cover.png" width="300" height="424"
+        alt="Cover of WHO editorial style manual, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div>
+  <div class="sub-body">
+    <a class="sub-title" href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a>
+    <p class="sub-by">World Health Organization. Technical Publications Unit (WHO/PUB/TPS/93.1, Publication Date: 1993-12-31)</p>
+    <p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p>
+    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">via CDN</a> &middot; <code>3.14 MB</code></p>
+  </div>
+</article>
+</div>
+
+<h2>Browse</h2>
+<ul class="kids" style="margin-left:0">
+  <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
+      <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
+      (8 communities, 2 collections)</li>
+  <li><a href="collection-collection-hq-publications.html">Publications</a> &mdash; collection</li>
+  <li><a href="collection-collection-wpro-information-products.html">Information products</a> &mdash; collection</li>
+</ul>
+
+<div class="caveat">
+  <p><strong>This is the front door, not the library visualiser.</strong> The
+  full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
+  built separately. This page mocks the IRIS home page and links onward rather
+  than becoming a second answer to the same question.</p>
+  <p>Addressing follows the owner&rsquo;s rule &mdash;
+  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
+  instantiates a directory gets a visualiser mounted under that directory&rsquo;s
+  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
+</div>
+
+</main>
+
+<footer class="mast"><div class="wrap">
+  <p><strong>Ingested replica.</strong> Rendered from
+  <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
+  Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
+  figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <div class="rule"></div>
+  <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
+  This copy asserts no endorsement and carries no WHO mark.</p>
+</div></footer>
+<script data-fa-folio-mount>(function(){
+var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
+if(!m||m[1]==null)return;
+var r=m[1];
+var l=document.createElement('link');
+l.rel='stylesheet';l.href=r+'assets/css/docs-ui.css';
+document.head.appendChild(l);
+var s=document.createElement('script');
+s.src=r+'assets/js/docs-ui.js';s.defer=true;
+document.head.appendChild(s);
+})();</script>
+</body>
+</html>
