@@ -76,7 +76,7 @@ import { auditSchemaNodes } from "./schema-nodes.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { buildQaResult, checkQaResult, qaResultPath, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -2483,6 +2483,23 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
+  /**
+   * `--check`: verify the COMMITTED sidecar instead of writing anything.
+   *
+   * Bean `v556`. Without one, this generator was outside `regen-after-merge`'s
+   * verify/write pairs and outside `check:artefact-verification`'s inventory —
+   * that gate derives its list from `package.json` and counts an artefact as
+   * verified only when its script is invoked with `--check`, so a script with
+   * no `--check` could not be in the list it is judged against. The two
+   * committed sidecars were then free to drift, and on 2026-09-22 carried
+   * three different hashes for one script with nothing reporting it.
+   *
+   * The DOCUMENT is not checked, and that is deliberate rather than an
+   * omission: `_kg/*.jsonld` is a gitignored build output, so there is no
+   * committed copy for it to disagree with. Checking it would mean comparing a
+   * build to itself.
+   */
+  const checkOnly = process.argv.includes("--check");
   const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
@@ -2497,7 +2514,9 @@ if (import.meta.main) {
 const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   const data = await buildExport({ baseUrl, instanceRoot });
 
-  mkdirSync(dirname(out), { recursive: true });
+  // A check writes nothing — including the gitignored document, because a
+  // `--check` that touches the tree is not a check.
+  if (!checkOnly) mkdirSync(dirname(out), { recursive: true });
   // The staging stamp, from the same function `harness-schema-export` uses, so
   // the two documents a build publishes side by side cannot disagree about
   // which build they came from. It was an inline `bun -e` in
@@ -2505,9 +2524,13 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // The PROJECTION, not the computation — the QA findings are written to
   // `test/results/` below instead. See `publishedDocument`.
   const published = { ...publishedDocument(data), ...stagingFields() };
-  writeFileSync(out, JSON.stringify(published, null, 2) + "\n");
+  if (!checkOnly) writeFileSync(out, JSON.stringify(published, null, 2) + "\n");
 
-  console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
+  console.log(
+    checkOnly
+      ? `KG export (check) — not written\n  @id  ${data["@id"]}`
+      : `KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`,
+  );
   for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
   console.log(`  ${String(data["@graph"].length).padStart(5)}  total`);
 
@@ -2565,7 +2588,7 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // own stub.
   const hostStub = artefactStub(readDeclaration(ROOT)!);
   const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
-  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
+  const qaResult = buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
@@ -2595,8 +2618,29 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
         entries: data.problems,
       },
     },
-  }));
-  console.log(`QA result → ${relative(ROOT, resultPath)}`);
+  });
+  if (checkOnly) {
+    /* FOUR STATES, not two. `missing` and `unreadable` are reported as
+     * themselves rather than folded into `stale`, because a generator that
+     * never ran and one whose output moved need different answers — the
+     * `check-ci-health` rule that could-not-check is never rendered as a
+     * verdict. */
+    const verdict = checkQaResult(ROOT, qaStem, qaResult);
+    const where = relative(ROOT, qaResultPath(ROOT, qaStem));
+    if (verdict === "current") {
+      console.log(`QA result ✓ ${where} is current`);
+    } else {
+      const why = {
+        stale: "disagrees with this run",
+        missing: "is not committed — this generator has never been run here",
+        unreadable: "could not be parsed, so it cannot be compared",
+      }[verdict];
+      console.error(`QA result ✗ ${where} ${why}. Run \`bun run kg:export\` and commit it.`);
+      process.exit(1);
+    }
+  } else {
+    console.log(`QA result → ${relative(ROOT, writeQaResult(ROOT, qaStem, qaResult))}`);
+  }
 
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {

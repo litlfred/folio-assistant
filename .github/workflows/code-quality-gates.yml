@@ -847,6 +847,17 @@ jobs:
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
           bun run check:artefact-verification
+          # Bean `v556`: `kg:export` had NO `--check`, so it was outside
+          # `regen-after-merge`'s verify/write pairs and outside the inventory
+          # the gate above derives -- that gate counts an artefact as verified
+          # only when its script is invoked with `--check`, so a generator with
+          # none could not appear in the list it is judged against. Its two
+          # committed sidecars were then free to drift, and on 2026-09-22
+          # carried three different hashes for one script with nothing saying
+          # so. Verifying the COMMITTED sidecar only: `_kg/*.jsonld` is a
+          # gitignored build output, so checking it would compare a build to
+          # itself.
+          bun run kg:export:check
           bun run check:workflow-injection
           bun run check:secret-leaks
           bun run check:lockfile-pinning

@@ -164,6 +164,48 @@ function withoutTimestamp(r: QaResult): string {
  * So the timestamp answers "when were these findings established", not "when
  * did somebody last run the script". It moves when the findings move.
  */
+/**
+ * What a `--check` mode found for a committed result. Four states, not two.
+ *
+ * `missing` and `unreadable` are kept apart from `stale` for the reason
+ * `check-ci-health` keeps could-not-check apart from green: a consumer that
+ * renders "there is no file" and "the file disagrees" the same way cannot tell
+ * a generator that never ran from one whose output moved.
+ */
+export type QaResultCheck = "current" | "stale" | "missing" | "unreadable";
+
+/**
+ * Is the COMMITTED result the one this run would write?
+ *
+ * The verify half of {@link writeQaResult}, sharing its comparison key so the
+ * two cannot disagree about what "unchanged" means — a writer and a reader
+ * with different keys is the `nytj` family, where each is correct alone.
+ *
+ * Bean `v556`: `kg:export` had no `--check` at all, so it was outside
+ * `regen-after-merge`'s verify/write pairs AND outside
+ * `check:artefact-verification`'s inventory, which derives from `package.json`
+ * and counts a script as verified only when it is invoked with `--check`. Its
+ * two committed sidecars were then free to drift — measured 2026-09-22 at
+ * three different hashes for one script, and nothing reported it. They agree
+ * again today, by a regeneration rather than by anything checking, which is
+ * the state this function exists to stop being invisible.
+ */
+export function checkQaResult(root: string, stem: string, result: QaResult): QaResultCheck {
+  const out = join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+  if (!existsSync(out)) return "missing";
+  try {
+    const prior = JSON.parse(readFileSync(out, "utf-8")) as QaResult;
+    return withoutTimestamp(prior) === withoutTimestamp(result) ? "current" : "stale";
+  } catch {
+    return "unreadable";
+  }
+}
+
+/** Where a result for `stem` is committed — what a `--check` message must name. */
+export function qaResultPath(root: string, stem: string): string {
+  return join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+}
+
 export function writeQaResult(root: string, stem: string, result: QaResult): string {
   const out = join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
   mkdirSync(dirname(out), { recursive: true });

@@ -29,3 +29,42 @@ RESIDUE, deliberately not fixed here:
 - Whether `docs/assets/qa/` needs to be committed at all is a separate question: it is derived from the sidecars plus the manifest, and the docs site regenerates it at publish time. If it does not need committing, the residual 20 goes to 0 without touching the shared schema. Worth asking before touching the schema.
 
 DONE WHEN: an auditor-only edit changes one file. Currently 21; 1 after the residue above is resolved.
+
+---
+
+## 2026-09-23, stream 4 (`kpcl`) — re-derived, and the residue has its own bean now
+
+Re-measured with this bean's own probe rather than quoting its number: append
+one comment line to `scripts/kg-audit.ts`, then run.
+
+| run | files changed |
+|---|---|
+| `bun run kg:audit` | **2** — the probe itself and `skills/kg-qa.manifest.json` |
+| `bun run regen` (43 pairs) | **2** |
+| …then `gen-docs-pages.ts` | **24** |
+
+**21 files besides the edit — this bean's stated figure, confirmed.** The fix
+holds: 218 → 21, and the 218 are gone for good.
+
+The mechanism is now traced to two lines rather than described:
+`content/pipeline/qa-witness.ts:565` reads the auditor from the manifest, and
+:582 writes `scriptHash: auditor?.script_hash` into **every criterion of every
+kg witness**. So the manifest is already the single source and the 20 witnesses
+are 20 projections of it — this bean's own sentence, *"the per-file auditor hash
+never added precision the generator could deliver"*, proven a second time.
+
+**A trap worth carrying forward.** The same fact is spelled `script_hash` in the
+manifest and `scriptHash` in the witnesses. `grep -rl script_hash --include='*.kg.json'`
+returns **0**, and I read that as *the residue is already gone* and came close
+to closing this bean on it. `grep -rl scriptHash` returns **20**. A grep-and-stop
+reading here returns the opposite of the truth.
+
+**The residue now has the bean this one asked for: `mcdj`.** It carries the
+measurement, the two-line mechanism, the spelling trap, and the three options —
+stop committing the witnesses / omit `scriptHash` on the kg branch only / leave
+it — as the owner's choice, in the order this bean insisted on: *ask whether
+they need committing before touching the shared schema.*
+
+**Not closing this bean.** Its Done-when is *"an auditor-only edit changes one
+file. Currently 21; 1 after the residue above is resolved."* It is 21. `mcdj` is
+what takes it to 1, and this stays open until it does.

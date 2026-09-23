@@ -1,10 +1,20 @@
 /**
  * Currency is not validity — and 42 checks answer only the first question.
  *
- * Bean `jfr6`. Every generated artefact in this repository has a `--check`
- * mode, and every one of them asks: *would the generator write something
- * different from what is committed?* That is **currency**. It is not the
- * question a consumer asks, which is: *does this artefact work?*
+ * Bean `jfr6`. A generated artefact with a `--check` mode asks: *would the
+ * generator write something different from what is committed?* That is
+ * **currency**. It is not the question a consumer asks, which is: *does this
+ * artefact work?*
+ *
+ * **This said "EVERY generated artefact in this repository has a `--check`
+ * mode" until 2026-09-23, and it was false.** `kg:export` had none — bean
+ * `v556` — so its two committed sidecars were outside the verify/write pairs
+ * and outside this inventory, and drifted to three different hashes for one
+ * script with nothing reporting it. The sentence mattered because it is the
+ * premise the blind spot hid behind: if every generator has a check, then a
+ * list derived from checks is a list of every generator, and the derivation
+ * below is complete. It is not, and §"What this derives" now says so on every
+ * run rather than in prose here.
  *
  * ## The two are measurably different, and it has already cost six pages
  *
@@ -40,7 +50,9 @@
  * bean exists to find, and writing it here would be committing it.
  *
  * Measured 2026-09-22: **42** generated-artefact checks, **18** with no
- * parsing at all.
+ * parsing at all. 50 and 18 on 2026-09-23, after `kg:export:check` and the
+ * gates added since — **re-run it rather than quoting either pair**, which is
+ * why both carry their date.
  *
  * ## The declaration
  *
@@ -176,6 +188,29 @@ if (import.meta.main) {
   console.log(
     `Artefact verification (${checks.length} generated-artefact check(s); ` +
       `${noParse} contain no parsing at all, so cannot be validating their output)`,
+  );
+  /* THE INVENTORY'S OWN BOUND, printed rather than implied — bean `v556`.
+   *
+   * This list is derived from `package.json` entries that invoke a script with
+   * `--check`, and that is the whole of what it can see. A GENERATOR WITH NO
+   * `--check` AT ALL is therefore not an unverified entry here; it is not an
+   * entry. `kg:export` was exactly that until 2026-09-23: two committed
+   * sidecars free to drift, measured at three different hashes for one script,
+   * with this gate green over the state and `regen-after-merge` reporting
+   * "0 regenerated" — neither malfunctioning, both structurally unable to look.
+   *
+   * `v556` names the standard: *"Nobody has said" is its own stated finding;
+   * "cannot be asked" is worse.* Enumerating the generators that have no check
+   * needs a decision about what counts as one, and inventing that heuristic
+   * here would ship an inventory nobody measured — the defect this gate exists
+   * to report. So the BOUND is stated on every run, which is the half that can
+   * be done honestly today, and the enumeration is left as `v556`'s open box.
+   *
+   * This is the `check-ci-health` rule applied to a denominator rather than to
+   * a verdict: a coverage figure whose limits are unstated reads as coverage. */
+  console.log(
+    "  · derived from `--check` invocations in package.json: a generator with no `--check` " +
+      "cannot appear above, and is neither verified nor unverified here — see bean `v556`.",
   );
 
   let bad = false;
