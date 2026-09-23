@@ -130,6 +130,21 @@
       "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
     },
     {
+      "@id": "cat:LaneUsage",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "LaneUsage",
+      "comment": "One appearance of a glossary concept as a swimlane in one BPMN process — the process it is in, the label that process gave the lane, and that lane's own documentation. A usage is an occurrence, not a term: it is regenerated wholesale and never retired, while a concept is a term somebody may have cited.",
+      "prefLabel": "LaneUsage",
+      "definition": "One appearance of a glossary concept as a swimlane in one BPMN process — the process it is in, the label that process gave the lane, and that lane's own documentation. A usage is an occurrence, not a term: it is regenerated wholesale and never retired, while a concept is a term somebody may have cited.",
+      "notation": "cat:LaneUsage",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:SkillPackage",
       "@type": [
         "rdfs:Class",
@@ -298,6 +313,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:CodeGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "CodeGraph",
+      "comment": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "prefLabel": "CodeGraph",
+      "definition": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "notation": "cat:CodeGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:DocsGraph",
       "@type": [
         "rdfs:Class",
@@ -308,6 +338,21 @@
       "prefLabel": "DocsGraph",
       "definition": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
       "notation": "cat:DocsGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:ExternalSchemaGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ExternalSchemaGraph",
+      "comment": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "prefLabel": "ExternalSchemaGraph",
+      "definition": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "notation": "cat:ExternalSchemaGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -338,6 +383,21 @@
       "prefLabel": "FshGutsGraph",
       "definition": "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the rendered site. The destination for anything that would otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
       "notation": "cat:FshGutsGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:GlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "GlossaryGraph",
+      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "prefLabel": "GlossaryGraph",
+      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "notation": "cat:GlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -418,6 +478,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:ModelGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ModelGraph",
+      "comment": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+      "prefLabel": "ModelGraph",
+      "definition": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+      "notation": "cat:ModelGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:ProcessGraph",
       "@type": [
         "rdfs:Class",
@@ -443,6 +518,21 @@
       "prefLabel": "QaGraph",
       "definition": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited.",
       "notation": "cat:QaGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:QaReportGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "QaReportGraph",
+      "comment": "QA reports -- one `qa-report/v1` document per tool run, carrying the tool's own successes, warnings and errors, the files it processed, the files it EXPECTED and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. Generated by the run; never hand-edited.",
+      "prefLabel": "QaReportGraph",
+      "definition": "QA reports -- one `qa-report/v1` document per tool run, carrying the tool's own successes, warnings and errors, the files it processed, the files it EXPECTED and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. Generated by the run; never hand-edited.",
+      "notation": "cat:QaReportGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -1058,6 +1148,51 @@
       "prefLabel": "bindsLane",
       "definition": "A BPMN lane this role is bound to.",
       "notation": "cat:bindsLane",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:hasLaneUsage",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "hasLaneUsage",
+      "comment": "One appearance of this glossary concept as a swimlane in one process. The scope note lives on the usage rather than on the concept because a note answers what the lane is accountable for IN THIS PROCESS: measured 2026-09-21, all 26 lane names appearing in more than one diagram carry different documentation in each.",
+      "prefLabel": "hasLaneUsage",
+      "definition": "One appearance of this glossary concept as a swimlane in one process. The scope note lives on the usage rather than on the concept because a note answers what the lane is accountable for IN THIS PROCESS: measured 2026-09-21, all 26 lane names appearing in more than one diagram carry different documentation in each.",
+      "notation": "cat:hasLaneUsage",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:ofConcept",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "ofConcept",
+      "comment": "The glossary concept this lane usage is an appearance of.",
+      "prefLabel": "ofConcept",
+      "definition": "The glossary concept this lane usage is an appearance of.",
+      "notation": "cat:ofConcept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:inProcess",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "inProcess",
+      "comment": "The BPMN process this lane usage appears in.",
+      "prefLabel": "inProcess",
+      "definition": "The BPMN process this lane usage appears in.",
+      "notation": "cat:inProcess",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
