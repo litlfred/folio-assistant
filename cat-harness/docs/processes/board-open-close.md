@@ -43,10 +43,10 @@ Every one of the 7 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **What did the reader do?**<br>`GW_Act` | — | **open a card** → Project a window onto the board<br>**select a window** → Raise the window the reader selected<br>**[x]** → Close the window back to its avatar<br>**resize the board** → Resolve the kind's zoom threshold<br>**leave** → The reader leaves the board |
+| **What did the reader do?**<br>`GW_Act` | Waits on the reader's next action on the board. Opening a card projects a window; selecting a window raises it; `[x]` closes a window back to its avatar; resizing the board re-resolves each kind's zoom threshold; leaving ends. Every branch but `leave` comes back here, which is what makes open and close a toggle. | **open a card** → Project a window onto the board<br>**select a window** → Raise the window the reader selected<br>**[x]** → Close the window back to its avatar<br>**resize the board** → Resolve the kind's zoom threshold<br>**leave** → The reader leaves the board |
 
 {% endraw %}

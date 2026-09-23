@@ -48,10 +48,10 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **All five answered, none refused?**<br>`Gateway_Gates` | — | **yes** → Fetch, and record fixity<br>**no, or unknown** → Leave it `referenced`, record why |
+| **All five answered, none refused?**<br>`Gateway_Gates` | Have all five gates been answered, with none refusing? `yes` fetches the copy and records its fixity; `no, or unknown` leaves the source `referenced` and records why. An unanswered gate counts as a refusal. | **yes** → Fetch, and record fixity<br>**no, or unknown** → Leave it `referenced`, record why |
 
 {% endraw %}

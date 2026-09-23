@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Issue",
     "path": "processes/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:d97d2f19acfe660bf798b5c1a329b2c39403decd38d81030f14791f112594a3f",
+  "source_hash": "sha256:1b93d426be883690eb31a6aa927ee2f4b6bfc9ea7cac36053d8af1dbbd02f1ba",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,13 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Issue",
-          "detail": "\"Issue found?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

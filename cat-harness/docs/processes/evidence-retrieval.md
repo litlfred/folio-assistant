@@ -48,11 +48,11 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Authority confirmed?**<br>`Gateway_Authoritative` | — | **no** → Open a bean for the unverified citation<br>**yes** → Appraise and grade the body of evidence |
-| **Sufficient for a recommendation?**<br>`Gateway_Sufficient` | — | **no** → Record the evidence gap<br>**yes** → Attach the evidence to the recommendation |
+| **Authority confirmed?**<br>`Gateway_Authoritative` | Answered by checking the source against the observatory or registry API: is its authority confirmed? `no` opens a bean for the unverified citation; `yes` goes on to appraise and grade the evidence. | **no** → Open a bean for the unverified citation<br>**yes** → Appraise and grade the body of evidence |
+| **Sufficient for a recommendation?**<br>`Gateway_Sufficient` | Answered by the appraisal: is the graded evidence enough to support a recommendation? `no` records the evidence gap; `yes` attaches the evidence to the recommendation. | **no** → Record the evidence gap<br>**yes** → Attach the evidence to the recommendation |
 
 {% endraw %}

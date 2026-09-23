@@ -52,11 +52,11 @@ Every one of the 11 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Draft QA green?**<br>`Gateway_QaGreen` | — | **no** → Editing and HCI validation<br>**yes** → Circulate the draft |
-| **Approved?**<br>`Gateway_ReviewOutcome` | — | **no** → Open beans for the change requests<br>**yes** → Authorise the release |
+| **Draft QA green?**<br>`Gateway_QaGreen` | Answered by the publication QA gates. `no` returns to editing and HCI validation; `yes` circulates the draft. | **no** → Editing and HCI validation<br>**yes** → Circulate the draft |
+| **Approved?**<br>`Gateway_ReviewOutcome` | Asked once every reviewer has answered: is the draft approved? `no` opens beans for the change requests; `yes` goes to authorising the release. | **no** → Open beans for the change requests<br>**yes** → Authorise the release |
 
 {% endraw %}

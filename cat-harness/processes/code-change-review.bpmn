@@ -194,6 +194,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_CIGreen" name="CI green?">
+      <bpmn:documentation>Answered by the gates run against the merge of head into base. `green` goes to review; `red` goes to root-causing the failure first, since a red change is never waiting on review.</bpmn:documentation>
       <bpmn:incoming>f7</bpmn:incoming>
       <bpmn:outgoing>f8</bpmn:outgoing>
       <bpmn:outgoing>f9</bpmn:outgoing>
@@ -212,6 +213,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_ReviewClear" name="Review clear?">
+      <bpmn:documentation>The reviewer's result. `findings` go back to be addressed; `clear` goes to preparing the merge and watching it through.</bpmn:documentation>
       <bpmn:incoming>f12</bpmn:incoming>
       <bpmn:outgoing>f13</bpmn:outgoing>
       <bpmn:outgoing>f15</bpmn:outgoing>

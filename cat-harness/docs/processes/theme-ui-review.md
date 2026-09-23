@@ -44,10 +44,10 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Findings?**<br>`GW_Findings` | — | **yes** → Raise findings against the authoring<br>**none** → Reviewed |
+| **Findings?**<br>`GW_Findings` | The reviewer's judgement of the rendered result. `yes` raises findings against the authoring; `none` ends reviewed. | **yes** → Raise findings against the authoring<br>**none** → Reviewed |
 
 {% endraw %}

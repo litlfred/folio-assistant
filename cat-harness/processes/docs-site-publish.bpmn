@@ -68,6 +68,7 @@
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Complete" name="Is every maintained&amp;#10;artefact present?">
+      <bpmn:documentation>Answered by the export: is every maintained artefact present? `something is missing` refuses and publishes nothing, because a full replace would ship the gap; `complete` goes on to restore the open PRs' staging previews.</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
@@ -92,6 +93,7 @@
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Survived" name="Did the previews&amp;#10;survive?">
+      <bpmn:documentation>Asked after the full-replace publish: are the open PRs' previews still there? `yes` ends published; `no, or could not tell` fails the job, because a preview that cannot be confirmed is treated as deleted.</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>

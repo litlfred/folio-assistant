@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Requirements",
     "path": "processes/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:9acbd484e904e48ed58c8282c96e89356aa971950057e41bd13928e5376efc2a",
+  "source_hash": "sha256:7abfb9428d2d4b2e7b319a303051202944342c14ea8a8029ffa4e658de9e1725",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -85,13 +85,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Reqs",
-          "detail": "\"BA approves?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -107,8 +102,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 11,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

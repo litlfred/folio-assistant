@@ -46,12 +46,12 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Drift or bad terminology?**<br>`Gateway_Drift` | — | **Drift detected** → Adjudicate flagged passage (human reviewer)<br>**Clean** → Write status.json (unofficial) |
-| **QA passed?**<br>`Gateway_PostQA` | — | **Re-translate** → Produce translation (PO file)<br>**Accepted** → Write status.json (unofficial) |
-| **Human sign-off?**<br>`Gateway_Signoff` | — | **Yes** → Sign off translation (human adjudicator)<br>**Not now** → Translation complete |
+| **Drift or bad terminology?**<br>`Gateway_Drift` | Answered by the round-trip (back-translation) QA: did it flag drift or a terminology miss? `Drift detected` sends the passage to a human reviewer; `Clean` writes an unofficial status.json. | **Drift detected** → Adjudicate flagged passage (human reviewer)<br>**Clean** → Write status.json (unofficial) |
+| **QA passed?**<br>`Gateway_PostQA` | The human reviewer's result on the flagged passage. `Re-translate` returns to producing the PO file; `Accepted` writes an unofficial status.json. | **Re-translate** → Produce translation (PO file)<br>**Accepted** → Write status.json (unofficial) |
+| **Human sign-off?**<br>`Gateway_Signoff` | Is a human sign-off happening now? `Yes` goes to the adjudicator's sign-off, which makes the translation official; `Not now` ends with the translation complete but unofficial. | **Yes** → Sign off translation (human adjudicator)<br>**Not now** → Translation complete |
 
 {% endraw %}

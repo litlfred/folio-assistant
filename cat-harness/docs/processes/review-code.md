@@ -39,10 +39,10 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Which node kind?**<br>`GW_NodeKind` | — | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
+| **Which node kind?**<br>`GW_NodeKind` | What kind of node is under review? `Tool` goes to the Tool-node review; `schema` goes to the schema-definition review. | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
 
 {% endraw %}

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-09-23T08:48:43.910Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.862Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -13,6 +13,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: processes/docs-site-publish.bpmn:71
+#. Diagram element documentation
+msgid "Answered by the export: is every maintained artefact present? `something is missing` refuses and publishes nothing, because a full replace would ship the gap; `complete` goes on to restore the open PRs' staging previews."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:96
+#. Diagram element documentation
+msgid "Asked after the full-replace publish: are the open PRs' previews still there? `yes` ends published; `no, or could not tell` fails the job, because a preview that cannot be confirmed is treated as deleted."
+msgstr ""
 
 #: processes/docs-site-publish.bpmn:26
 #. Diagram element documentation
@@ -29,7 +39,7 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:110
+#: processes/docs-site-publish.bpmn:112
 #. Diagram label
 msgid "complete"
 msgstr ""
@@ -39,12 +49,12 @@ msgstr ""
 msgid "Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:79
+#: processes/docs-site-publish.bpmn:80
 #. Diagram element documentation
 msgid "Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:94
+#: processes/docs-site-publish.bpmn:95
 #. Diagram label
 msgid "Did the previews&#10;survive?"
 msgstr ""
@@ -64,22 +74,22 @@ msgstr ""
 msgid "Is every maintained&#10;artefact present?"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:102
+#: processes/docs-site-publish.bpmn:104
 #. Diagram label
 msgid "Job RED &#8212; a preview&#10;was deleted"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:114
+#: processes/docs-site-publish.bpmn:116
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:87
+#: processes/docs-site-publish.bpmn:88
 #. Diagram element documentation
 msgid "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:86
+#: processes/docs-site-publish.bpmn:87
 #. Diagram label
 msgid "Publish to gh-pages&#10;(FULL REPLACE)"
 msgstr ""
@@ -99,7 +109,7 @@ msgstr ""
 msgid "Push to main,&#10;or dispatch"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:75
+#: processes/docs-site-publish.bpmn:76
 #. Diagram label
 msgid "Refused &#8212;&#10;nothing published"
 msgstr ""
@@ -114,22 +124,22 @@ msgstr ""
 msgid "Regenerate every derived&#10;reference from its source"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:78
+#: processes/docs-site-publish.bpmn:79
 #. Diagram label
 msgid "Restore the OPEN PRs'&#10;staging previews"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:99
+#: processes/docs-site-publish.bpmn:101
 #. Diagram label
 msgid "Site published,&#10;previews intact"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:109
+#: processes/docs-site-publish.bpmn:111
 #. Diagram label
 msgid "something is missing"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:113
+#: processes/docs-site-publish.bpmn:115
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -40,10 +40,10 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Embedded text layer?**<br>`Gateway_HasText` | — | **yes** → Extract the text layer<br>**no — scanned** → OCR to ocr/page-*.txt |
+| **Embedded text layer?**<br>`Gateway_HasText` | Does the binary carry an embedded text layer? `yes` extracts it; `no — scanned` runs OCR into ocr/page-*.txt. | **yes** → Extract the text layer<br>**no — scanned** → OCR to ocr/page-*.txt |
 
 {% endraw %}

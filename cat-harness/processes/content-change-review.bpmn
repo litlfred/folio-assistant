@@ -110,6 +110,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_AuthorSatisfied" name="Satisfied with changes?">
+      <bpmn:documentation>The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee.</bpmn:documentation>
       <bpmn:incoming>f3</bpmn:incoming>
       <bpmn:outgoing>f4</bpmn:outgoing>
       <bpmn:outgoing>f6</bpmn:outgoing>
@@ -322,6 +323,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:callActivity>
 
     <bpmn:exclusiveGateway id="GW_Withdraw" name="A comment withdrawn?">
+      <bpmn:documentation>Asked after the slices are reviewed: did a reviewer withdraw a comment? `Yes` records the withdrawal first; either way the flow then asks whether a finding is disputed.</bpmn:documentation>
       <bpmn:incoming>c3</bpmn:incoming>
       <bpmn:outgoing>c4</bpmn:outgoing>
       <bpmn:outgoing>c5</bpmn:outgoing>
@@ -337,6 +339,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Disputed" name="A finding disputed?">
+      <bpmn:documentation>Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed.</bpmn:documentation>
       <bpmn:incoming>c5</bpmn:incoming>
       <bpmn:incoming>c6</bpmn:incoming>
       <bpmn:outgoing>c7</bpmn:outgoing>
@@ -379,6 +382,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Approved" name="Changes approved?">
+      <bpmn:documentation>The committee's decision on the impact assessment. `No` requests changes; `Yes` approves.</bpmn:documentation>
       <bpmn:incoming>r3</bpmn:incoming>
       <bpmn:outgoing>r4</bpmn:outgoing>
       <bpmn:outgoing>r6</bpmn:outgoing>
@@ -511,6 +515,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:outgoing>p4b</bpmn:outgoing>
     </bpmn:task>
 <bpmn:exclusiveGateway id="GW_Merged" name="PR merged?">
+  <bpmn:documentation>Was the PR merged? `Yes` removes the STAGING/&lt;slug&gt;/ preview; `No (iterate)` ends the pipeline and leaves the preview in place for the next round.</bpmn:documentation>
       <bpmn:incoming>flow_approve_to_pipeline</bpmn:incoming>
       <bpmn:outgoing>p5</bpmn:outgoing>
       <bpmn:outgoing>p8</bpmn:outgoing>
