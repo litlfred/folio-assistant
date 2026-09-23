@@ -1,11 +1,12 @@
 ---
 # folio-assistant-kacl
 title: 'DETERMINISTIC-AND-AGENTIC: open question 2 now has a cited answer to argue with'
-status: todo
-parent: folio-assistant-ahvw
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T06:15:42Z
-updated_at: 2026-09-23T06:15:42Z
+updated_at: 2026-09-23T10:10:16Z
+parent: folio-assistant-ahvw
 ---
 
 skills/workflow/deterministic-and-agentic.md marks 'how much needs to be deterministic?' as open and probably malformed. The newly ingested Neubauer et al. (arXiv:2508.05192v2) proposes a different decomposition that the skill's three questions do not cover.
@@ -79,10 +80,57 @@ each whether its output is a result or a rule.
 
 ## Done when
 
-- [ ] The rule/result distinction is in the skill as a fourth axis, not folded
+- [x] The rule/result distinction is in the skill as a fourth axis, not folded
       into the existing three.
-- [ ] The three cited failure modes appear as evidence for the premise, marked
+- [x] The three cited failure modes appear as evidence for the premise, marked
       second-hand, pointing at `hybrid-llm-deterministic` for provenance.
-- [ ] The context-length confound is noted against question 3.
-- [ ] Every addition carries measured / decided / hypothesis, and the open
+- [x] The context-length confound is noted against question 3.
+- [x] Every addition carries measured / decided / hypothesis, and the open
       questions are still open.
+
+## Summary of Changes — 2026-09-23
+
+### The falsifier was run before writing, and did not fire
+
+The bean proposed a fourth axis; the thing that would have killed it is the
+axis being a restatement of *who decides*. Tested against the page's **own**
+worked case rather than in the abstract:
+
+> The commit boundary is agentic on *who decides* and deterministic on *who
+> enforces*, and what the agent produces there is a **result** — a commit,
+> checked after the fact. The source's schema-mapping design gives the same two
+> answers and produces a **rule** — an expression, checked, then run.
+
+Same answers on all three decision axes; incomparable failure profiles. A bad
+result must be caught per item; a bad rule is caught once, before it runs at
+volume. So it is a fourth axis and does not fold in.
+
+### What changed
+
+- **The conflation list is four items**, not three. Its hedge — *"At least
+  three questions"* — turned out to have been doing real work, and the note now
+  says so: a fourth arrived from outside the repository, and the hedge stays
+  because the list is what has been noticed, not what exists.
+- **§"A fourth axis"**, carrying the falsifier test above, a testable
+  hypothesis (judgement is admissible where §1 would refuse it, WHEN the output
+  is a rule), and an explicit §"What it does not settle" — including that
+  "rule" may not even be well-defined for a `folio:raci` annotation.
+- **§"Why the guarding is needed at all — cited, not assumed"**: the three
+  findings (Shi, McCoy, Levy), each marked **second-hand** with
+  `hybrid-llm-deterministic` as provenance, and a statement that the source is
+  a tool paper with no baseline, so nothing rests on its performance.
+- **Question 2's better-formed version gained the fourth clause**, with the
+  reason it changes rather than lengthens the question.
+- **Question 3 gained a confound it did not know it had.** Levy et al. report
+  degradation with input LENGTH, so "the same task with and without this memory
+  entry" varies content *and* length at once. The overlay bullet treats context
+  as something to hold or release; length moves whenever either does.
+
+### What was deliberately NOT done
+
+**No question was closed, and none was rewritten as answered.** The page's own
+opening says a research note reading as settled is worse than none. One tool
+paper reporting no evaluation settles nothing, and the additions are an axis
+and an evidence base — not a result.
+
+`bun run gates` — 133/133.

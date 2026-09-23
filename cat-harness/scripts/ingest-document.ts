@@ -107,6 +107,18 @@ function pyHelper(name: string): string {
 }
 
 /**
+ * The same resolution for a TypeScript arm, under a name that does not lie.
+ *
+ * `pyHelper` is a path join and would work here verbatim — but a call reading
+ * `pyHelper("l1-blocks.ts")` tells the next reader this file shells out to
+ * Python for something it does not, and a helper named for the wrong language
+ * is the kind of small untruth that survives because it never fails.
+ */
+function tsHelper(name: string): string {
+  return pyHelper(name);
+}
+
+/**
  * Where L1 source content lives, READ from `harness.json` rather than written
  * out. Each rung takes it as `-o`, so the literal would otherwise appear four
  * times in this file alone -- and `check:declared-paths` caught exactly that
@@ -191,6 +203,58 @@ export interface Plan {
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
+}
+
+/**
+ * The rung produces `structure.json` and `sections/`. THESE produce the rest.
+ *
+ * ## Why this is here rather than in a printed instruction
+ *
+ * `ingest` staged a document and then told the agent to *"run the remaining
+ * arms"*. `l1-blocks`' own header records what that cost: *"a pipeline that
+ * cannot terminate, and it was invisible because both ends looked healthy"* —
+ * staging exits 0 and says `✓ staged`, while `mayPromote` requires every
+ * requirement met, so nothing could ever cross into `library/`.
+ *
+ * **AND THE INSTRUCTION COULD NOT BE MADE CORRECT.** The two arms take
+ * OPPOSITE `-o` conventions, measured 2026-09-23 by running both:
+ *
+ * | arm | `-o` wants | given the other |
+ * |---|---|---|
+ * | `pdf-images.py` | the library ROOT — *"the sidecar lands in `<out>/<doc-id>/`"* | writes `<slug>/<slug>/images.json`, and the entry's own stays absent |
+ * | `l1-blocks.ts` | the ENTRY directory | throws *"no structure.json — this is not a staged entry"* |
+ *
+ * So no single value of `-o` is right for both, and the one sentence #1035
+ * corrected became right for `pdf-images` and wrong for `l1-blocks` in the
+ * same stroke. A sequence in code has no such sentence to get wrong: each arm
+ * is handed the directory it actually wants, once, here.
+ *
+ * ## PDF rungs only, and that is stated rather than assumed
+ *
+ * `archive` and `tabular` produce a different shape — `check-l1-complete`'s
+ * `PAGED_ONLY` list exists because not every requirement applies to every
+ * kind — and neither was measured here. Adding them on the assumption that
+ * "more arms cannot hurt" is how a gate starts reporting a requirement over
+ * content it was never about. They keep the behaviour they had.
+ */
+export function withDerivedArms(plan: Plan, pdf: string, stagingRoot: string, staging: string): Plan {
+  const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
+  if (!PDF_RUNGS.includes(plan.rung)) return plan;
+  return {
+    ...plan,
+    steps: [
+      ...plan.steps,
+      // `pdf-images.py` reads the PDF, so it takes the SOURCE and the library
+      // ROOT. `pdf` is passed in rather than read back off `plan.steps[0]`:
+      // the rung's last argument happens to be the PDF today, and a sequencer
+      // that depends on that breaks silently the first time a rung grows a
+      // trailing flag.
+      ["python3", pyHelper("pdf-images.py"), "-o", stagingRoot, pdf],
+      // `l1-blocks.ts` reads what the rung already wrote, so it takes the
+      // ENTRY directory and no source at all. See the table above.
+      ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],
+    ],
+  };
 }
 
 /**
@@ -659,7 +723,7 @@ if (import.meta.main) {
   // directly into the entry directory.
   const stagingRoot = join(resolve(INSTANCE_ROOT), "ingest-staging");
   const staging = join(stagingRoot, slug);
-  const plan = planFor(pdf, undefined, stagingRoot);
+  const plan = withDerivedArms(planFor(pdf, undefined, stagingRoot), pdf, stagingRoot, staging);
   // Resolved ONCE, before anything is written: `libraryRoot()` refuses when
   // several libraries are declared and none was chosen (bean `a02m`/`frs5`),
   // and that refusal belongs before the arms run rather than after they have
@@ -710,24 +774,27 @@ if (import.meta.main) {
       console.log(`  ${pending.length} requirement(s) still to satisfy before it can be promoted:`);
       for (const r of pending) console.log(`    ${r.name.padEnd(22)} ${r.detail}`);
     }
-    // THE ROOT, NOT THE ENTRY DIRECTORY — and this line said the entry
-    // directory until 2026-09-23, which is the SAME defect the comment above
-    // `stagingRoot` records, surviving in the instruction rather than in the
-    // code. That comment fixed `planFor`'s argument and says what the wrong
-    // one costs: "`checkEntry` read an empty parent and reported EVERY
-    // requirement unmet — a refusal that looked exactly like a correct one."
+    // THE "RUN THE REMAINING ARMS" SENTENCE IS GONE, and deleting it is the
+    // point rather than a tidy-up.
     //
-    // An agent that followed this line got precisely that, by hand. Measured
-    // 2026-09-23 by doing it: `pdf-images.py -o ingest-staging/<slug>` wrote
-    // `ingest-staging/<slug>/<slug>/images.json`, while the entry's own
-    // `images.json` stayed absent. `pdf-images.py --help` is unambiguous —
-    // "library root; the sidecar lands in <out>/<doc-id>/" — so the arms were
-    // right and only this sentence was wrong.
+    // It told the agent one `-o` for arms that take OPPOSITE conventions:
+    // `pdf-images.py` wants the library ROOT ("the sidecar lands in
+    // <out>/<doc-id>/") and `l1-blocks.ts` wants the ENTRY directory, which it
+    // proves by throwing "no structure.json — this is not a staged entry".
+    // **No value of `-o` was correct for both**, so the correction shipped in
+    // #1035 made the line right for one arm and wrong for the other in the
+    // same stroke. `withDerivedArms` now hands each the directory it wants and
+    // there is no sentence left to get wrong.
     //
-    // A FIXED CODE PATH DOES NOT FIX THE PROSE BESIDE IT. The two are
-    // separate surfaces and only one of them had a test.
-    console.log(`\nNext: run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), stagingRoot)},`);
-    console.log(`then: bun run cat-harness/scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
+    // What remains is the honest report: `checkEntry` has just run over the
+    // fully-armed entry, so `pending` is what is ACTUALLY still missing, named
+    // per requirement. An empty `pending` is a document ready to promote and
+    // says so; it is never inferred from "the arms exited 0", because an arm
+    // can succeed and still leave a requirement unmet.
+    if (pending.length === 0) {
+      console.log(`  every requirement met — ready to promote.`);
+    }
+    console.log(`\nNext: bun run cat-harness/scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
     process.exit(0);
   }
 

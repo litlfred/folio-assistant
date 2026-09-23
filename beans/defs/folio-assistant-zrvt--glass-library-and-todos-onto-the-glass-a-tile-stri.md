@@ -1,10 +1,11 @@
 ---
 # folio-assistant-zrvt
 title: 'GLASS: library and todos onto the glass, a tile strip on its bottom edge, book avatars, and a settings tile'
-status: in-progress
+status: completed
 type: feature
+priority: normal
 created_at: 2026-09-23T06:47:06Z
-updated_at: 2026-09-23T06:47:06Z
+updated_at: 2026-09-23T09:54:09Z
 parent: folio-assistant-6lb8
 ---
 
@@ -75,3 +76,13 @@ Fix: `gen-library-viz` COPIES each avatar under the site (`assets/library/avatar
 
 - The "cats" avatar option. The existing art avatars are per-THEME sticky backdrops, not per-item pictures, and "Kind avatars" is the existing per-item set.
 - `pv6g`'s HOME PANEL for a detached page sticky. That is still open and still waits on `z1ug`. What moves here are the reader's folio ASSETS; the board's floating stickies were already movable.
+
+## Summary of Changes
+
+Merged in #1010 (issue #1006):
+- The pull-out control moved to a library row's first cell.
+- Book avatars: the cover, else a small figure, copied under the site with a byte check.
+- The glass defaults to 20% opacity with blur, and cards on it are solid.
+- A tile strip on the glass's bottom edge, from the one tile declaration (`glass` surface).
+- A Todos panel and a Settings tile (theme, avatars, opacity, blur).
+- Cards on the glass move, resize and zoom semantically.
