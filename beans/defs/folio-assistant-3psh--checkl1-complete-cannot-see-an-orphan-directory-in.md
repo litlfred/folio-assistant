@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3psh
 title: check:l1-complete cannot see an ORPHAN directory inside a library entry
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T15:28:09Z
-updated_at: 2026-09-23T11:16:11Z
+updated_at: 2026-09-23T12:23:44Z
 parent: folio-assistant-slw1
 ---
 
