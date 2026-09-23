@@ -817,6 +817,12 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The methodologies index renders the `methodology` graph across
+          # EVERY instance that declares one, so it goes stale when any of them
+          # adopts a method, ingests a source, or changes an `applies-when`.
+          # Gated for the reason every generated page here is: a stale viewer
+          # is a page that reports a corpus that no longer exists.
+          bun run methodologies:viz:check
           bun run processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact

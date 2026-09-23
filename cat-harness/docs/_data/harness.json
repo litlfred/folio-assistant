@@ -328,6 +328,19 @@
       "unit": "entries"
     },
     {
+      "id": "methodologies",
+      "directory": "methodologies",
+      "title": "Methodologies",
+      "ref": "cat-harness/docs/methodologies/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/methodologies/",
+      "hidden": false,
+      "theme": "analyst"
+    },
+    {
       "id": "processes",
       "directory": "processes",
       "title": "processes",
@@ -1553,7 +1566,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 17
+          "value": 18
         }
       ],
       "visualisations": [
@@ -1611,7 +1624,7 @@
         },
         {
           "kind": "methodology",
-          "note": "no viewer yet"
+          "path": "/methodologies/"
         },
         {
           "kind": "processes",
@@ -1655,7 +1668,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, external-schema, interaction, memory, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1838,7 +1851,8 @@
         "kind": "memory"
       },
       {
-        "kind": "methodology"
+        "kind": "methodology",
+        "path": "/methodologies/"
       },
       {
         "kind": "processes",

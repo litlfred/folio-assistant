@@ -564,6 +564,13 @@ export const RULES: Rule[] = [
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      // The methodology graph → projection + viewer. CORE by the same two
+      // counts as its siblings, and by a third: it renders the graph across
+      // EVERY instance that declares one, so it is the harness answering
+      // "what has this repository adopted", not one instance answering for
+      // itself. Its node list and its evidence join both come from
+      // `check-methodology-evidence.ts` rather than a second walk.
+      "scripts/gen-methodologies-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
