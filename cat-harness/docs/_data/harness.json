@@ -328,6 +328,19 @@
       "unit": "entries"
     },
     {
+      "id": "methodologies",
+      "directory": "methodologies",
+      "title": "Methodologies",
+      "ref": "cat-harness/docs/methodologies/index.md",
+      "surfaces": [
+        "navbar",
+        "board"
+      ],
+      "href": "/methodologies/",
+      "hidden": false,
+      "theme": "analyst"
+    },
+    {
       "id": "processes",
       "directory": "processes",
       "title": "processes",
@@ -856,29 +869,10 @@
       "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
-      "icon": {
-        "src": "/docs/who-iris/assets/img/who-emblem.svg",
-        "title": "WHO emblem",
-        "region": {
-          "x": 0,
-          "y": 0,
-          "w": 0.3064,
-          "h": 1
-        }
-      },
-      "mark": {
-        "src": "/docs/who-iris/assets/img/who-emblem.svg",
-        "title": "WHO emblem",
-        "crop": {
-          "width": 326.3708,
-          "height": 100,
-          "left": 0,
-          "top": 0
-        }
-      },
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "icon": null,
+      "tone": 199,
+      "reads": "an open book — a repository of published documents, in WHO blue",
+      "genericAvatar": false,
       "instantiated": true,
       "href": "/who-iris/",
       "hrefKind": "folio",
@@ -930,7 +924,6 @@
       "findings": [
         "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
-        "who-iris: no avatar declared for this instance — showing the generic mark.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
       "navbarIcons": [
@@ -1553,7 +1546,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 17
+          "value": 18
         }
       ],
       "visualisations": [
@@ -1611,7 +1604,7 @@
         },
         {
           "kind": "methodology",
-          "note": "no viewer yet"
+          "path": "/methodologies/"
         },
         {
           "kind": "processes",
@@ -1655,7 +1648,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, external-schema, interaction, memory, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1838,7 +1831,8 @@
         "kind": "memory"
       },
       {
-        "kind": "methodology"
+        "kind": "methodology",
+        "path": "/methodologies/"
       },
       {
         "kind": "processes",
