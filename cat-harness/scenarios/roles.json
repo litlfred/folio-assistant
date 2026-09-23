@@ -696,6 +696,29 @@
       ]
     },
     {
+      "id": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE \u2014 `folio-assistant-core/processes/deep-document-research.bpmn`, whose `Deep researcher` lane carries it. `glossary-export` walks THIS instance\u2019s diagrams, so it reports the binding as dangling, and that report is correct about what it can see rather than wrong about the corpus. Do not \u201cfix\u201d it by deleting the `lanes` entry: that would make a drawn lane look undrawn, which is the one thing the dangling line exists to surface.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "lanes": [
+        "Deep researcher"
+      ],
+      "skills": [
+        "deep-document-research"
+      ],
+      "persona": "Stops on a stated condition rather than on a feeling of having read enough. Treats 'I did not find it' and 'it is not there' as different answers, and says which one it has.",
+      "voice": "Cites to a location, not to a document. Distinguishes what a source says from what it implies, and marks a synthesis as a synthesis rather than letting it read as a quotation.",
+      "useCases": [
+        "Answer a question whose evidence is spread across several held documents",
+        "Decide, per question, whether summaries or chunks are the right granularity to search",
+        "Stop an iterative search on a stated sufficiency condition rather than on exhaustion",
+        "Report an answer with citations a reader can verify at the page it came from"
+      ]
+    },
+    {
       "id": "evidence-agent",
       "title": "Evidence agent",
       "description": "Retrieves and appraises external evidence for a guideline claim.",

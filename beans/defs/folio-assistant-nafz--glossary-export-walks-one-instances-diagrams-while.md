@@ -1,0 +1,63 @@
+---
+# folio-assistant-nafz
+title: glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too
+status: todo
+type: bug
+priority: normal
+created_at: 2026-09-23T21:14:17Z
+updated_at: 2026-09-23T21:15:20Z
+parent: folio-assistant-slw1
+---
+
+Found 2026-09-23 while ingesting the `doc-researcher` methodology (bean `ctp3`).
+A **reporting** inconsistency, not a wrong answer: both generators are internally
+right and they disagree about what "this corpus" means.
+
+## Measured
+
+`folio-assistant-core/processes/deep-document-research.bpmn` declares a lane
+`Deep researcher`, bound to the `deep-researcher` role.
+
+| generator | reaches that diagram? | consequence |
+|---|---|---|
+| `translate-bpmn --extract` | **yes** — `69 diagram(s)`, listing `../folio-assistant-core/processes/deep-document-research.bpmn` and `../smart-base/…` | 26 msgids extracted, five `.pot` written |
+| `glossary-export` | **no** — `readLanes(instanceRoot)` walks `cat-harness/` only | `DANGLING: role "deep-researcher" binds lane "Deep researcher", which no diagram contains` |
+
+So one generator treats a dependent instance's diagrams as part of the corpus and
+the other does not, and nothing says which is intended.
+
+## Why it is not simply a bug in `glossary-export`
+
+Scoping the glossary to one instance may well be right — a glossary is a published
+artefact OF an instance, and `buildGlossary` takes `instanceRoot` precisely so a
+dependent can build its own. The defect is that the reader cannot tell "scoped by
+design" from "missed it", because the DANGLING line says *"which no diagram
+contains"* rather than *"which no diagram IN THIS INSTANCE contains"*.
+
+That is the `dh4f` shape pointed the other way: not a clean report over something
+unlooked-at, but a finding phrased as a fact about the corpus when it is a fact
+about the walk.
+
+## Worked around, visibly
+
+`deep-researcher`'s description in `scenarios/roles.json` now names the diagram and
+says not to "fix" the dangling by deleting the `lanes` entry — which would make a
+drawn lane look undrawn. A comment is not a fix.
+
+## Options, NOT decided
+
+1. **Phrase the finding by scope.** Cheapest, and it makes the report true without
+   deciding the question. Does not help a reader who wants one glossary.
+2. **Walk the declared dependents.** Matches `translate-bpmn`. Changes what a
+   published glossary IS, and `kgRoots` already warns that taking one root is the
+   `dh4f` defect arriving through the helper written to prevent it.
+3. **Give core its own glossary.** Most correct if a glossary is per-instance, and
+   the most work: core has no visualiser wiring yet.
+
+## Done when
+
+- [ ] the intended scope of a glossary is stated somewhere a generator can be
+      checked against
+- [ ] the DANGLING wording says which corpus it walked
+- [ ] `translate-bpmn` and `glossary-export` agree, or the reason they differ is
+      written on both

@@ -305,6 +305,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // collision `todo-manager` and `bean-coordination` are listed for below, and
   // it is resolved the same way.
   "kg-navigation": "Knowledge-graph navigation (tooled)",
+  // folio-assistant-core’s own `skills/`, keyed by DECLARED ID for the same
+  // reason as the two below it: the directory moves when core splits out and
+  // the id does not. A LABEL is data, not a dependency — nothing here imports
+  // core, so naming its package does not invert the layer order that
+  // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
+  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
 };

@@ -1178,7 +1178,18 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // the methodology nodes, here and in `smart-kg` — which is the right
     // grain anyway, since `analyst` describes the methodologies rather than
     // the skills that apply them.
-    expect(themed.map((d) => d.id).sort()).toEqual(["methodologies", "smart-kg-methodologies"]);
+    //
+    // THREE since 2026-09-23. `folio-assistant-core-methodologies` joined when
+    // core got a methodologies graph of its own (`doc-researcher`), and it
+    // takes `analyst` for the same reason the other two do: the subject is a
+    // METHOD, and the theme describes methods rather than the layer that holds
+    // them. A second theme for core's copy would say the two graphs render
+    // differently, which nobody decided and which the pages do not do.
+    expect(themed.map((d) => d.id).sort()).toEqual([
+      "folio-assistant-core-methodologies",
+      "methodologies",
+      "smart-kg-methodologies",
+    ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });

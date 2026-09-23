@@ -1331,12 +1331,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 9
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 10
         },
         {
           "id": "views",
@@ -1358,8 +1358,24 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "library",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "methodology",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
         },
         {
           "kind": "tools",
@@ -1371,7 +1387,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 3 graph(s) with no published viewer — code, folio, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 7 graph(s) with no published viewer — code, folio, library, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1438,7 +1454,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 39
+          "value": 43
         },
         {
           "id": "kinds",
