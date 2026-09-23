@@ -1,11 +1,12 @@
 ---
 # folio-assistant-ka1p
 title: 'HARNESS THEME AVATARS: an instance''s mark is its theme art, cropped — and the supplier is not always the subject'
-status: in-progress
+status: completed
 type: task
-parent: folio-assistant-p5wm
+priority: normal
 created_at: 2026-09-22T22:30:48Z
-updated_at: 2026-09-22T22:30:48Z
+updated_at: 2026-09-23T17:58:25Z
+parent: folio-assistant-p5wm
 ---
 
 Owner, 2026-09-22: "bootstrap and who-iris need theme avatars, bootstrap = cowboy grump cat", then the IRIS wordmark by screenshot.
@@ -23,7 +24,7 @@ That is the inversion `ThemeBackdropSchema` exists for: a theme names a ROLE and
 - [x] one resolved `mark` (theme avatar, else icon, crop solved) instead of five Liquid branches
 - [x] an ICON may carry a crop too — a region on an icon was in the data and rendered by nothing
 - [x] who-iris has a mark
-- [ ] who-iris's mark is the asset the owner actually wants — see below
+- [x] who-iris's mark is the asset the owner actually wants — **owner, 2026-09-23: the WHO emblem is final**
 
 ## who-iris: shipped with the WHO emblem, NOT the IRIS wordmark
 
@@ -149,4 +150,13 @@ copied (0.78 already clears the floor at 7.36:1).
 
 - [x] engineer for the root instance
 - [x] architecture theme — id, palette, layouts, all measured
-- [ ] architecture BACKDROP — blocked on a portrait crop that does not exist
+- [x] architecture BACKDROP — **owner, 2026-09-23: stays laptop + card only; no portrait crop**
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner went through the two open items when asked to "go through beans", and chose **"Emblem is final, close"**.
+
+- **who-iris keeps the WHO emblem.** The `iris.` wordmark question was re-asked, as this bean said it should be, and the answer is final.
+- **The architecture theme has no portrait backdrop.** It keeps its `card` and `laptop` layouts. The mobile scrim measurement recorded above, 9.02:1 at 0.86, stays here for whoever supplies a portrait crop later. Adding one would be one `landing-architecture-mobile` declaration plus the four-line block.
+
+Delivered over the bean's life: the cowboy-cat theme art for bootstrap; marks for who-iris, folio-assistant-core and smart-trust; resolution through the site owner's images, so the supplier need not be the subject; one resolved `mark` in place of five Liquid branches; and crops on icons.

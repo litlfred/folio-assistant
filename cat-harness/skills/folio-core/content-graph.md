@@ -449,3 +449,11 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 | `/tmp/content-graph.json` | Machine-readable graph export |
 | `/tmp/content-graph-report.md` | Full analysis report |
 | `/tmp/content-graph-proposals.md` | Concrete reorganisation proposals |
+
+## Drawing it
+
+The drawing above is made by `content-graph-analysis.py`, which re-parses the
+sources and has no staleness check.
+[`graph-rendering`](../graph-management/graph-rendering.md) states what a
+drawing of this graph owes: chapters as groups, editorial and formal edges drawn
+distinctly, a stamped check. Bean `o3p3` tracks bringing it under those rules.
