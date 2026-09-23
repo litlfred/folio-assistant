@@ -613,6 +613,19 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // hand straight into the entry directory).
     expect(src).toContain("planFor(pdf, undefined, stagingRoot)");
     expect(src).not.toContain("const plan = planFor(pdf);");
+
+    // AND THE SAME FOR THE SENTENCE IT PRINTS, which this test did not cover
+    // until 2026-09-23 — so the code path was fixed in #495 while the
+    // INSTRUCTION went on telling an agent to do the wrong thing for four
+    // days. Measured by following it: `pdf-images.py -o ingest-staging/<slug>`
+    // wrote `ingest-staging/<slug>/<slug>/images.json`, and the entry's own
+    // `images.json` stayed absent — reproducing by hand exactly the defect the
+    // comment above describes.
+    //
+    // A fixed code path does not fix the prose beside it. They are two
+    // surfaces and only one of them was asserted.
+    expect(src).toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), stagingRoot)}");
+    expect(src).not.toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)}");
     expect(src).toContain('const staging = join(stagingRoot, slug);');
   });
 

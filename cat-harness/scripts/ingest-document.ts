@@ -710,7 +710,23 @@ if (import.meta.main) {
       console.log(`  ${pending.length} requirement(s) still to satisfy before it can be promoted:`);
       for (const r of pending) console.log(`    ${r.name.padEnd(22)} ${r.detail}`);
     }
-    console.log(`\nNext: run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)},`);
+    // THE ROOT, NOT THE ENTRY DIRECTORY — and this line said the entry
+    // directory until 2026-09-23, which is the SAME defect the comment above
+    // `stagingRoot` records, surviving in the instruction rather than in the
+    // code. That comment fixed `planFor`'s argument and says what the wrong
+    // one costs: "`checkEntry` read an empty parent and reported EVERY
+    // requirement unmet — a refusal that looked exactly like a correct one."
+    //
+    // An agent that followed this line got precisely that, by hand. Measured
+    // 2026-09-23 by doing it: `pdf-images.py -o ingest-staging/<slug>` wrote
+    // `ingest-staging/<slug>/<slug>/images.json`, while the entry's own
+    // `images.json` stayed absent. `pdf-images.py --help` is unambiguous —
+    // "library root; the sidecar lands in <out>/<doc-id>/" — so the arms were
+    // right and only this sentence was wrong.
+    //
+    // A FIXED CODE PATH DOES NOT FIX THE PROSE BESIDE IT. The two are
+    // separate surfaces and only one of them had a test.
+    console.log(`\nNext: run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), stagingRoot)},`);
     console.log(`then: bun run cat-harness/scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
     process.exit(0);
   }
