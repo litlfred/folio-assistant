@@ -118,7 +118,7 @@ decides it.
 | `issue-marks` | **harness** | how far an agent has read an issue — `lastCommentId`, `lastUpdatedAt`, `checkedAt`, one file per issue. **Not the comments**: an id and two timestamps, never a body. Two marks because a comment EDITED after being read keeps its id. Read with [`issue-working`](issue-working.md); shape in `src/issue-watch/seen-comments.ts`. | no |
 | `memory` | **harness** | agent memory — durable facts an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. Declared at `memory/`, **repository-scoped** — these are facts about the repository carried by the agents working in it, and `.claude/agents/` sits at the repository root too. They were in `skills/memory/` until 2026-09-20 (bean `07xs`), where the containing kind was `content` and the contents were `context`. | no |
 | `waiver` | **harness** | confirmations a person granted **in advance** — one `"$schema": "folio-waiver/v1"` node each, naming one gate class, scoped to a session or a process run, and carrying an expiry. Declared over the **same directory as `memory`**, `memory/`, and told apart from it by that tag rather than by a subdirectory: a directory is a place to look and may hold more than one part of a graph. `context` by the same test as `memory` — a process reads a waiver before a gate fires and no step writes one. Skill: [`confirmation-waiver`](confirmation-waiver.md). | no |
-| `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
+| `fsh-guts` | **harness** | Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **AND, IN FACT, THE HOME OF LIVE GOVERNING PROPOSALS — which this row said nothing about until 2026-09-22, at a measured cost.** `fsh-guts/proposals/` holds `instance-versioning.md`, `deployment-topologies.md`, `workflow-state-in-beans.md` and others, and they are cited AS THE SCHEME by seven skills and four code modules: `harness-config.ts` calls one *"the full scheme"*, `check-published-refs.ts` calls itself *"its §3.3 gate"*, and §"Pinning a reference" below points at the same file. So an agent that reads this table, learns the kind is throwaway and skips it has skipped the governing design corpus — which is exactly what happened on 2026-09-22 (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled, and mis-cited an unrelated skill as the authority for not deciding. **Read `fsh-guts/proposals/index.md` before proposing a scheme.** Whether live proposals should live under a kind named for throwaway is bean `5kn6`'s question, not this row's — the row's job is to stop the name being read as permission to skip it. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
 | `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the [`ig-artifact-ingestion`](../authoring-who-smart-guidelines/ig-artifact-ingestion.md) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
@@ -373,6 +373,77 @@ shipping into it, and `voices-viz.test.ts` asserts both directions: a voice
 under `vendors/` loads, a voice under any other nested directory does not.
 
 `VOICE_VENDORS_DIR` in `schemas/voices.ts` is the one spelling of the name.
+
+## Assets sit at `<stub>/<asset>` — no declaration reaches down (ENFORCED)
+
+**A declared directory never sits inside another declared directory.** An
+instance's assets hang directly off its stub — `cat-harness/skills/`,
+`who-iris/library/`, `smart-kg/methodologies/` — and a package inside one of
+those is a package, not a second graph.
+
+The owner, 2026-09-22: *"dont bury sub-graph assets. same for `<stub>/skills`,
+etc."* and *"follow established norms on layout. qa to enforce."*
+
+> **Read with §"Nesting is declared FROM WITHIN" below, which is the newer
+> ruling and the one that governs.** This section was titled *"nothing nests"*
+> until the two were merged, and that was too absolute: nesting is permitted,
+> **described by a node in the first subdirectory**. What is forbidden either
+> way — and what `check:layout-norms` actually measures — is a ROOT
+> DECLARATION enumerating a path it cannot verify, which is one of the two
+> things #980 rules out explicitly.
+>
+> So the two agree on every case in the corpus today, and the relocation this
+> section describes is *more* correct under the newer ruling than under the
+> one it was made for: `methodology-crdm` at `methodologies/crdm/` was a root
+> declaration reaching down a multi-level path, and removing it rather than
+> repointing it is what #980 requires.
+>
+> **The check will need to learn the from-within node when it exists.** Its
+> kind and name are open and are the owner's (#980), so nothing declares
+> nesting from within today and every pair the check finds is still a root
+> declaration reaching down. The day that node lands, a nesting it describes
+> is legitimate and `check:layout-norms` must stop reporting it — recorded
+> here so the next session reads the constraint instead of filing a false
+> finding against a sanctioned structure.
+
+**Depth is not the test, and reaching for it produces false findings
+immediately.** `who-iris/library/` is two segments from the repository root and
+is exactly right. `test/results/` is two segments from its instance root and is
+also right, because `test/` is not a graph. What is wrong is *containment*: a
+declared directory inside another declared directory, which forces a consumer
+scanning the outer one to decide whether the inner one's nodes are also its own
+— bean `x4v4`'s question, and every count computed from that sweep depends on
+the answer.
+
+### The part that is easy to get wrong
+
+When you relocate a buried asset, **remove its declaration rather than
+repointing it.** A package subdirectory of an already-declared graph needs no
+entry of its own, and adding one declares the same directory twice — the same
+defect, one level down from where it was.
+
+That is not a judgement call made in prose: on 2026-09-22 CRDM's skills were
+repointed from `methodologies/crdm/` to `skills/crdm/` with the entry kept, and
+`gen-skill-docs` immediately demanded a category under **both** the basename
+and the declaration id, because both discovery branches found the one
+directory. The three entries were dropped and `methodologies/` now holds its
+four nodes and no subgraph.
+
+### How it is enforced
+
+`bun run check:layout-norms`, a **ratchet** rather than a corpus-wide gate. The
+nestings that exist today are baselined in
+`scripts/layout-norms-baseline.json`; **a pair not in the baseline fails.**
+`cat-harness` reached zero and has no baseline entry, so it cannot regress,
+while the instances with outstanding work do not turn CI red — the
+`known-skills.ts` wolf-crying rule applied to somebody else's layout.
+
+Removing a nesting prints as `FIXED` and never fails: a guard that punished the
+fix it exists to encourage is the inversion bean `rl3h` produced elsewhere.
+`--update` shrinks the baseline, so the diff a reviewer sees is the progress.
+
+**Ask the baseline for the list, never this page.** It said "three instances"
+while the check found four.
 
 ## Inheritance
 

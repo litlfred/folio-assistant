@@ -28,15 +28,27 @@ describe("subgraph containment is derived from declared paths", () => {
     expect(dirs.length, "no directories resolved").toBeGreaterThan(10);
   });
 
-  test("methodologies contains its methodologies, and nothing else claims them", () => {
-    const tree = subgraphTree(dirs);
-    const m = tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci"]);
-    // Exactly one parent per child: two would make a node's owner ambiguous,
-    // which is the question this whole derivation exists to answer once.
-    for (const child of m?.children ?? []) {
-      expect(tree.filter((r) => r.children.includes(child)).length).toBe(1);
-    }
+  test("`methodologies/` nests nothing — the thing this branch actually achieved", () => {
+    // THIS ASSERTED A GLOBAL PROPERTY AND SHOULD NOT HAVE. Until 2026-09-22 it
+    // read `expect(subgraphTree(dirs)).toEqual([])` — "this instance nests
+    // nothing" — which was true the hour it was written and false by the next
+    // merge: `main` declared `test/` as a `code` graph (#963), so `test/` now
+    // contains the declared `test/results`, through no change of this branch's.
+    //
+    // An assertion any other branch can invalidate is not a regression guard,
+    // it is a tripwire on somebody else's work. The durable claim is the
+    // narrow one: the methodology subgraphs this branch un-buried stay
+    // un-buried. Corpus-wide nesting is `check:layout-norms`'s question, where
+    // it is a ratchet with a baseline rather than an absolute.
+    // Scoped to the id `methodologies` EXACTLY — this instance's own graph.
+    // A /methodolog/ substring also matches `smart-base-methodologies`, which
+    // `main` landed in #881 with a nested `smart-base-processes` inside it.
+    // That is a real finding, it is baselined in `check:layout-norms`, and it
+    // belongs to whoever owns smart-base — not to a test about this branch.
+    const nested = subgraphTree(dirs).flatMap((r) => [r.parent, ...r.children]);
+    expect(nested.filter((id) => id === "methodologies")).toEqual([]);
+    const methodologies = dirs.find((d) => d.id === "methodologies");
+    expect(methodologies, "the methodology graph did not resolve — the check above is vacuous").toBeDefined();
   });
 
   test("a repository-scoped directory is not a child of an instance-relative one", () => {
@@ -47,18 +59,35 @@ describe("subgraph containment is derived from declared paths", () => {
     for (const r of tree) expect(r.children).not.toContain("smart-kg-methodologies");
   });
 
+  // The real declaration no longer nests anything, so the two properties
+  // below have no witness in this corpus. They are pinned against a SYNTHETIC
+  // pair instead of dropped: `subgraphTree` and `owningDirectory` are shared
+  // machinery that any instance may exercise, and deleting their only tests
+  // because this instance stopped nesting would retire a guard for a defect
+  // that is still reachable.
+  const NESTED = [
+    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphKinds: ["cat-harness"] },
+    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphKinds: ["cat-harness"] },
+  ];
+
   test("a node belongs to its DEEPEST subgraph, not to the outer one", () => {
-    // This IS the x4v4 defect in concrete form. Attributing a CRDM skill to
-    // `methodologies` makes every count computed from that sweep wrong.
-    expect(owningDirectory(dirs, "methodologies/crdm/crdm-detect.md")?.id).toBe("methodology-crdm");
-    expect(owningDirectory(dirs, "methodologies/kepner-tregoe.md")?.id).toBe("methodologies");
+    // This IS the x4v4 defect in concrete form: attributing an inner node to
+    // the outer graph makes every count computed from that sweep wrong.
+    expect(owningDirectory(NESTED, "outer/inner/node.md")?.id).toBe("inner");
+    expect(owningDirectory(NESTED, "outer/node.md")?.id).toBe("outer");
+    // ...and immediate containment only: with `a/`, `a/b/` and `a/b/c/` all
+    // declared, `a` has one child, not two.
+    const tree = subgraphTree(NESTED);
+    expect(tree.find((r) => r.parent === "outer")?.children).toEqual(["inner"]);
   });
 
   test("relative and absolute queries agree", () => {
     // The bug that made every probe answer "no owner" while looking healthy.
-    const rel = owningDirectory(dirs, "methodologies/crdm/crdm-detect.md");
-    const abs = owningDirectory(dirs, `${ROOT}/methodologies/crdm/crdm-detect.md`);
-    expect(rel?.id).toBe("methodology-crdm");
+    // Run against the REAL declaration, because that is where the absPath
+    // keying actually bit — a fixture would not have caught it.
+    const rel = owningDirectory(dirs, "methodologies/kepner-tregoe.md");
+    const abs = owningDirectory(dirs, `${ROOT}/methodologies/kepner-tregoe.md`);
+    expect(rel?.id).toBe("methodologies");
     expect(abs?.id).toBe(rel?.id);
   });
 });
@@ -86,11 +115,17 @@ describe("the entanglement report", () => {
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
-  test("CRDM's relocation left no broken links behind", () => {
-    // 13 were left by `g43o` and repaired when this check first surfaced
-    // them. This is the regression guard for that specific move.
-    const crdm = report.dangling.filter((d) => d.fromDir === "methodology-crdm");
+  test("CRDM's relocations left no broken links behind — both of them", () => {
+    // 13 were left by `g43o` (into `methodologies/crdm/`) and repaired when
+    // this check first surfaced them. CRDM moved AGAIN on 2026-09-22, into
+    // `skills/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
+    // longer a declared id, and a filter on it would now match nothing and
+    // pass for the wrong reason — a guard that cannot fail, which is worse
+    // than one that is absent because it reads as coverage.
+    const crdm = report.dangling.filter((d) => d.from.includes("skills/crdm/"));
     expect(crdm.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
+    const raci = report.dangling.filter((d) => d.from.includes("skills/raci/"));
+    expect(raci.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
   test("an illustrative placeholder is not counted as a broken link", () => {
@@ -145,7 +180,18 @@ describe("repository-scoped directories are attributed", () => {
     for (const r of report.tree) {
       expect(r.children).not.toContain("smart-kg-methodologies");
     }
-    const m = report.tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci"]);
+    // The positive half USED to be `methodologies` → [methodology-crdm,
+    // methodology-raci]. Both declarations went on 2026-09-22.
+    //
+    // The negative assertion above must not become vacuous, which it does the
+    // moment the tree is empty ("clean" and "not computed" must never be one
+    // passing test). So what is pinned is that the tree was COMPUTED and that
+    // the scoped entry RESOLVED — the two facts that make "it is nobody's
+    // child" mean something. The tree is non-empty again since `main`
+    // declared `test/` as a `code` graph, but this test does not depend on
+    // that either way.
+    const scoped = dirs.find((d) => d.id === "smart-kg-methodologies");
+    expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
+    expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
   });
 });

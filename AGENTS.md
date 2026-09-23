@@ -433,12 +433,12 @@ When a user request is a **feature request** (platform capability change rather
 than content work), the agent enters the
 [CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
 rather than implementing directly. Detection signals and session-state handling
-are in [`methodologies/crdm/crdm-detect.md`](cat-harness/methodologies/crdm/crdm-detect.md);
+are in [`skills/crdm/crdm-detect.md`](cat-harness/skills/crdm/crdm-detect.md);
 the full six-phase process is in
-[`methodologies/crdm/crdm-requirements-workflow.md`](cat-harness/methodologies/crdm/crdm-requirements-workflow.md).
+[`skills/crdm/crdm-requirements-workflow.md`](cat-harness/skills/crdm/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
-`methodologies/crdm/processes/crdm-requirements.bpmn` loads like every other diagram here,
+`processes/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
 agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
@@ -459,10 +459,10 @@ the *pointer*, with the skill as the text:
 
 | rule | where it lives |
 |---|---|
-| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/methodologies/crdm/crdm-detect.md) §"Issue association" |
+| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/crdm/crdm-detect.md) §"Issue association" |
 | branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/folio-core/continual-progress.md) invariant 1 |
-| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/methodologies/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
-| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/methodologies/crdm/crdm-requirements-workflow.md) |
+| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
+| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) |
 | issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
 | an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
 

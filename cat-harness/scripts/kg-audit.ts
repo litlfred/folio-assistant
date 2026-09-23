@@ -43,7 +43,7 @@
 
 import { createHash } from "node:crypto";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
@@ -124,13 +124,25 @@ const root = resolve(import.meta.dir, "..");
 /**
  * THIS instance's own directory with `id`, or the convention if it declares none.
  *
- * Not {@link instanceDirectoryForGraph}: that asks by KIND, and this instance
- * declares TWO directories holding `processes` — its own `processes/` and
- * CRDM's `methodologies/crdm/processes/` — so a by-kind lookup throws rather
- * than choosing, which is bean `wggr` working as designed. A path-less
- * subject belongs to the instance's own graph, and that is a question only
- * the id answers: *"a by-ID lookup through `resolveDirectories` is the answer
- * when you want a particular one."*
+ * Not {@link instanceDirectoryForGraph}: that asks by KIND, and a path-less
+ * subject belongs to the instance's OWN graph, which is a question only the id
+ * answers: *"a by-ID lookup through `resolveDirectories` is the answer when you
+ * want a particular one."*
+ *
+ * THE CONCRETE WITNESS IS GONE, AND THAT IS WHY THIS PARAGRAPH IS REWRITTEN
+ * RATHER THAN LEFT. Until 2026-09-22 this said the instance declares TWO
+ * directories holding `processes` — its own and CRDM's
+ * `methodologies/crdm/processes/` — so a by-kind lookup throws. CRDM's
+ * diagrams moved into `processes/` that day (the owner's "dont bury sub-graph
+ * assets"), the second declaration was dropped, and exactly one directory
+ * holds `processes` now. So the by-kind lookup would no longer throw here.
+ *
+ * The id lookup stays, because the reason was never the count: a by-kind
+ * lookup that happens to work while one directory exists is a call that starts
+ * throwing the day a second is declared, and it would be asking the wrong
+ * question even while it worked. A comment justifying it by a witness that no
+ * longer exists is worse than none, which is the only reason this is five
+ * lines instead of one.
  */
 function ownDirectoryById(root: string, id: string, fallback: string): string {
   const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(

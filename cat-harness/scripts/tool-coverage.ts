@@ -69,7 +69,7 @@ import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { isSkillMd, kgRoots } from "./known-skills.js";
 

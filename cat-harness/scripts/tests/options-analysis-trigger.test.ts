@@ -74,7 +74,10 @@ describe("the trigger gateway", () => {
     const { model, state } = await start("irreversible");
     complete(model, state, "A_Frame");
     complete(model, state, "GW_Trigger", { outcome: "yes" });
-    for (const step of ["A_Select", "A_Apply", "A_Record"]) {
+    // `A_CheckEvidence` joined the sequence on 2026-09-22: selecting a
+    // methodology now checks that the source it cites resolves, because
+    // six methodologies cited an origin and none had one in any library.
+    for (const step of ["A_Select", "A_CheckEvidence", "A_Apply", "A_Record"]) {
       expect(names(enabled(model, state).map((e) => e.node))).toEqual([step]);
       complete(model, state, step);
     }
