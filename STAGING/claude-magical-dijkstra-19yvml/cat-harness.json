@@ -33,6 +33,14 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
       "@type": "@id"
@@ -264,11 +272,12 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:54:43.904Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b34c8157951546a0ff85e0dd2357190af63f1a4e",
-  "sourceCommitSha": "b34c8157951546a0ff85e0dd2357190af63f1a4e",
-  "sourceCommitAt": "2026-09-23T07:47:56Z",
+  "generatedAt": "2026-09-23T08:30:55.924Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a465e378b846f89d4bc62321651c350c68d7c57c",
+  "sourceCommitSha": "a465e378b846f89d4bc62321651c350c68d7c57c",
+  "sourceCommitAt": "2026-09-23T08:23:24Z",
   "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 241,
     "Actor": 32,
@@ -280,7 +289,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 69,
-    "Schema": 98,
+    "Schema": 100,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -9618,7 +9627,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the voice findings",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_NarrativeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -11454,7 +11463,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the conflict",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
       "implementedBy": [
@@ -17627,7 +17636,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate flagged passage (human reviewer)",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_Translation",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "implementedBy": [
@@ -19669,7 +19678,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate: prose, scope, or exception",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_VoiceReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -25406,7 +25415,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the flagged passage",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
       "implementedBy": [
@@ -34821,6 +34830,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/depends-on",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "depends-on",
+      "title": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "module": "schemas/depends-on.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -35308,6 +35326,15 @@
       "module": "schemas/types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/version-bump",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "version-bump",
+      "title": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "module": "schemas/version-bump.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/vocabulary",
@@ -37294,8 +37321,8 @@
   ],
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "3ea8c1029f0509edd69fd17e81628e9bace668ea",
+    "sha": "d2dc14c8b93ddfac78f17967bd9d820d52661c8f",
     "pr": "1020/merge",
-    "run": "35834046347"
+    "run": "35837355959"
   }
 }
