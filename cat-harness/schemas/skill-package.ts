@@ -215,7 +215,8 @@ export const SkillDefinitionSchema = z.object({
    * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
    * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
    * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
-   * consulted it: routes hardcode `hasRole(req, "collaborator")`. A field
+   * consulted it: routes hardcoded `hasRole(req, "collaborator")` (they name an
+   * ODRL action since issue #1207). A field
    * that reads as enforcement and enforces nothing is worse than an absent
    * one. Reinstating it means writing the consumer first, and deciding which
    * of the two vocabularies it speaks.

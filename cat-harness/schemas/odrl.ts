@@ -340,3 +340,34 @@ export function readPolicyGrants(dir: string): Map<string, string[]> {
   }
   return out;
 }
+
+/**
+ * The action every BPMN task execution asks for (owner, 2026-09-23, issue
+ * #1207): one action for every task, narrowed by the `cat-harness:process`,
+ * `cat-harness:task` and `cat-harness:role` constraints a rule carries and by
+ * its `target`. A task that needs a more specific right says so in the POLICY,
+ * as a constrained `perform-task` rule, never in the diagram.
+ */
+export const PERFORM_TASK = "perform-task" as const;
+
+/**
+ * {@link permits} across every policy an instance holds, which is the question
+ * a caller actually has: not "does this one policy allow it" but "does
+ * anything here speak to it". A `deny` from any policy wins (the folio default
+ * conflict strategy is `odrl:prohibit`, and a prohibition in one file must not
+ * be outvoted by a permission in another); otherwise any `permit` permits; and
+ * silence everywhere stays `unknown`, never permit.
+ */
+export function decide(
+  req: PermitRequest,
+  all: ReadonlyMap<string, OdrlPolicy>,
+  graph: ActionGraph,
+): Decision {
+  let permitted = false;
+  for (const policy of all.values()) {
+    const d = permits(req, policy, all, graph);
+    if (d === "deny") return "deny";
+    if (d === "permit") permitted = true;
+  }
+  return permitted ? "permit" : "unknown";
+}

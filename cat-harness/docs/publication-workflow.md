@@ -600,9 +600,12 @@ Why it is modelled as a lane rather than a note:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-is-who.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/who-is-who.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The roles in the lanes, and the actor definition each one maps to. Roles
-**inherit** (`viewer` → `reviewer` → `author` → `admin`) and a role's
-capabilities bound what the agent may do on its behalf (RBAC,
-`src/core/rbac.ts`).
+**inherit** (`viewer` → `reviewer` → `author` → `admin`). What an actor may
+**do** is not a property of its role: it is an ODRL rule in `policies/`, and
+before every task the BPMN executor checks that the actor is authenticated,
+eligible for the lane's role, permitted by policy and allowed to touch the
+content ([`task-authorization`](../../../skills/folio-core/task-authorization.md),
+issue #1207).
 
 ### People
 {: #people data-fa-label="sec:publication-workflow-people" }
