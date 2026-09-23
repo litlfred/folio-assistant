@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jo87
 title: 'QUEUED STREAM A: INGEST — uploads/ to a complete L1 library (slw1, 13 open beans)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T18:29:28Z
-updated_at: 2026-09-22T18:29:28Z
+updated_at: 2026-09-23T06:49:25Z
 parent: folio-assistant-slw1
 ---
 
