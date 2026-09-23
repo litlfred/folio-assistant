@@ -345,6 +345,52 @@ failing it would make an unreviewed queue indistinguishable from a broken arm.
 A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
 whether the shape was read, counted, or `undetermined`.
 
+### Describing a document's images — and why it is an ARM, not a step you run
+
+`pdf-images.py` classifies by geometry, which answers exactly one question: is
+this image the whole page, or something on it. It cannot tell a logo from a
+chart. The finer roles come from LOOKING, and that judgement is **data** —
+`<library>/image-verdicts.json`, one entry per image, reviewable line by line.
+
+```sh
+bun run ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
+# look at ingest-staging/<doc-id>/images/, write the verdicts into
+# <lib>/image-verdicts.json, then:
+bun run ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
+bun run ingest uploads/FILE.pdf --library <lib> --promote
+```
+
+**Re-running `ingest` is the second step, not a separate apply command**, and
+that is the whole design rather than a convenience. Bean `8suc`:
+
+- `--promote` refuses an entry whose `image-descriptions` requirement is unmet;
+- both writers of a narrative — `apply-image-verdicts.ts` and `narratives.ts` —
+  resolved their targets through `directoriesForGraph(root, "library")`.
+
+So a document with describable images could not be promoted without
+descriptions, and could not be given descriptions without being promoted. A
+cycle, and every staged document sat in it. It went unnoticed because every
+entry carrying applied verdicts predated the gate, so the tool always found
+it — the path that fails was the one nothing had walked.
+
+**Applying by hand works exactly once.** `pdf-images.py` opens the sidecar with
+`"w"` — no existence check, no merge — so the next `ingest` overwrites the
+descriptions, and overwrites them *quietly*: the file still parses and still
+validates, it simply has no narratives in it any more. Running the application
+as the fourth arm, **after** `pdf-images.py`, makes a re-run RE-APPLY instead —
+the sidecar is rebuilt from the PDF and the committed judgement is laid back
+over it.
+
+`--staging <entry-dir> --library <lib-dir>` is available directly if you need
+it, and `--library` is **required**: a staging directory does not say which
+library a document is being promoted into (`v1hw` — a queue does not determine
+a library). An absent verdicts file exits **0**, because the first ingest
+necessarily runs before anybody has looked at the images; `image-descriptions`
+is the gate that refuses, not that script. An *orphaned* verdict — one naming
+an image the sidecar does not have — still fails, in either mode.
+
+Every narrative it writes lands as `draft`. Only a person confirms one.
+
 ### An `.xlsx` IS a zip, and that broke the archive routing
 
 The magic bytes of an OOXML or ODF document say `application/zip`, which is
