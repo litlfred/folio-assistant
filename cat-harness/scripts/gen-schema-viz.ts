@@ -241,6 +241,7 @@ export function viewerPlacement(
  * and for the same reason: a consumer should not have to load a page builder
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
 export type { OwnershipTest } from "./orphan-pages.ts";
@@ -1102,18 +1103,16 @@ fetch(DATA_HREF).then(function (r) {
 
 /** Write, or report staleness. Same contract as `gen-docs-pages.ts`. */
 let stale = 0;
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
+/**
+ * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ *
+ * `emit` writes what it is given; `emitPage` is the same write with the rail,
+ * and takes the nav per call because a SUBJECT page lists that subject's
+ * graphs while the index lists this instance's. Both are facts this generator
+ * already holds, and neither is parsed back out of a path it just composed.
+ */
+const emit = makeEmit({ check, onStale: () => { stale++; } });
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const g = readSchemaGraph(ROOT);
@@ -1256,11 +1255,12 @@ if (import.meta.main) {
   // instance's own site.
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
 
 

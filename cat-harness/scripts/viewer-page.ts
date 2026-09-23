@@ -184,6 +184,12 @@ export interface EmitOptions {
   /** Called once per stale or missing artefact, so the caller keeps its own counter. */
   onStale: () => void;
   /**
+   * Suppress the per-file `✓` line. For a generator that reports by LEVEL
+   * rather than by file — changing what it prints would change what a reader
+   * of its output is being told, which is not this change's subject.
+   */
+  quiet?: boolean;
+  /**
    * Where the navbar comes from. OMITTED by a generator that writes no pages —
    * and omitting it is a decision, not a default: an emitter with no nav
    * writes exactly what it is given, which is what every JSON sidecar beside a
@@ -214,6 +220,6 @@ export function makeEmit(o: EmitOptions): (path: string, content: string) => voi
     }
     mkdirSync(dirname(path), { recursive: true });
     writeFileSync(path, final);
-    console.log(`  ✓ ${path}`);
+    if (!o.quiet) console.log(`  ✓ ${path}`);
   };
 }
