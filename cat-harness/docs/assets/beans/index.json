@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 659,
+      "count": 666,
       "unit": "beans"
     }
   },
@@ -1665,6 +1665,20 @@
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
     {
+      "id": "folio-assistant-6hf2",
+      "title": "A: data-modelling guidance — dependents point at the general node; references are typed KG refs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [ ] gates green, PR open",
+      "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
+    },
+    {
       "id": "folio-assistant-6hq4",
       "title": "QA: gateway documentation-completeness criteria (decisions and their branches)",
       "status": "completed",
@@ -2787,6 +2801,20 @@
       "file": "beans/defs/folio-assistant-ai9u--check-workflow-paths-trusts-working-directory-as-i.md"
     },
     {
+      "id": "folio-assistant-ajx9",
+      "title": "WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:56:03Z",
+      "updatedAt": "2026-09-23T20:15:41Z",
+      "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
+      "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
+    },
+    {
       "id": "folio-assistant-alox",
       "title": "The landing panel and its onboarding block — what shipped, and what is still judgement",
       "status": "completed",
@@ -3139,14 +3167,14 @@
     {
       "id": "folio-assistant-bvuk",
       "title": "ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:19:05Z",
-      "updatedAt": "2026-09-23T11:28:33Z",
+      "updatedAt": "2026-09-23T18:52:11Z",
       "preview": "Six processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## Two corrections to this bean, both from checking it before building\n\n### It is SIX callers, not five\n\n`wirefr",
       "file": "beans/defs/folio-assistant-bvuk--one-outcome-gateway-five-different-questions-proce.md"
     },
@@ -3191,6 +3219,20 @@
       "updatedAt": "2026-09-23T17:02:35Z",
       "preview": "Owner, 2026-09-23, on the 3 undetermined edges j79e's classifier reported (detangle.json and kg-navigation.json declare no `needs`): *\"Make them visualization of an existing harness\"*, then from the options offered chose **Fold into cat-harness**: move both under cat-harness as declared directories and drop their instance files.\n\nThis reverses the 2026-09-20 ruling that kg-navigation be a top-leve",
       "file": "beans/defs/folio-assistant-byql--fold-detangle-and-kg-navigation-into-cat-harness-v.md"
+    },
+    {
+      "id": "folio-assistant-bzre",
+      "title": "BPMN ARROW CROSSES THE DIAGRAM: document-ingestion's gap-to-derive edge routes under every task instead of back along the lane",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:00:15Z",
+      "updatedAt": "2026-09-23T20:00:15Z",
+      "preview": "Owner, 2026-09-23, on the rendered `document-ingestion` diagram: **\"bad\narrow\"**, then the rule: **\"keep rectilinear if possible, no overlapping.\"**\n\n## What is wrong\n\nThe `gap` flow from *Record the gap as a bean* back to *Derive content from the\nassets* is drawn as ONE LONG DIAGONAL crossing the full width of the process,\npassing beneath every task in the lane. It is an ordinary loop-back and it",
+      "file": "beans/defs/folio-assistant-bzre--bpmn-arrow-crosses-the-diagram-document-ingestions.md"
     },
     {
       "id": "folio-assistant-bzyu",
@@ -4531,6 +4573,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i4i1",
+      "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan C. After B lands.",
+      "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
+    },
+    {
       "id": "folio-assistant-i9xp",
       "title": "beans update --body-file REPLACES the body silently; the skill named only the inline --body-append",
       "status": "completed",
@@ -4659,14 +4715,14 @@
     {
       "id": "folio-assistant-iwtn",
       "title": "BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-88mg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:19:45Z",
-      "updatedAt": "2026-09-23T19:19:45Z",
+      "updatedAt": "2026-09-23T19:44:11Z",
       "preview": "Owner, 2026-09-23: *\"bootstrap = self definitional. no semantic leakage, no graph leakage.\"* The README, AGENTS.md and the new `schemas/graph.schema.json` now comply (pv51, with a test in `bootstrap-tools/schemas/graph.test.ts`). The rest of `bootstrap/` does not.\n\n**Measured 2026-09-23:** mentions of WHO, DAK, smart-guidelines, smart-base, cat-harness, folio or f-a-sci, or a `../` path, per file:",
       "file": "beans/defs/folio-assistant-iwtn--bootstrap-self-definitional-130-mentions-of-harnes.md"
     },
@@ -5387,6 +5443,20 @@
       "updatedAt": "2026-09-21T20:46:20Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
+      "id": "folio-assistant-lrmo",
+      "title": "KG BROWSER: a block's row shows a narrative STATE, never the content — no way to read what was extracted",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:59:19Z",
+      "updatedAt": "2026-09-23T20:12:56Z",
+      "preview": "Found by the owner on first use of the block browser `7nvr` shipped:\n\n| *\"i expected to be able to see narrative content of extracted node\"*\n| *\"like dropdown expand panel or so\"*\n\nThe row carried a narrative STATE — `draft`, `not-authored` — which says a\ndescription exists without saying what it is. For the arXiv paper whose\ncolourbars were corrected this morning, that means the reader sees `draf",
+      "file": "beans/defs/folio-assistant-lrmo--kg-browser-a-blocks-row-shows-a-narrative-state-ne.md"
     },
     {
       "id": "folio-assistant-lv3j",
@@ -6975,6 +7045,20 @@
       "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
     },
     {
+      "id": "folio-assistant-s4sp",
+      "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
+      "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -7493,6 +7577,20 @@
       "updatedAt": "2026-09-22T11:45:32Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/856\n\nOwner ruling 2026-09-22, over greying an empty tile out and over \"an empty\nviewer is fine to open\". Their reason is the stronger argument: a badge also\nmakes a WRONG count visible, where a dimmed tile only ever answers\n\"empty or not\".\n\n## The defect\n\nA tile carries a glyph and a caption and nothing else. An empty viewer's tile\nis indis",
       "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
+    },
+    {
+      "id": "folio-assistant-tr05",
+      "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:25Z",
+      "updatedAt": "2026-09-23T19:53:25Z",
+      "preview": "Owner 2026-09-23 (#1168). Plan A (guidance) -> B (data model) -> C (UML), in that order.",
+      "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
     },
     {
       "id": "folio-assistant-tr1m",

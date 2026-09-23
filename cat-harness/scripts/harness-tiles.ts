@@ -412,8 +412,8 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 
-/** Every `harness.json` in the tree: the repository root and one level down. */
-function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
+/** Every `harness.json` in the tree: the repository root and one level down. Exported for `harness-panel.ts`. */
+export function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   const out: string[] = [];
   if (findDeclarationFile(repoRoot) !== undefined) out.push(repoRoot);
   for (const name of names) {

@@ -352,9 +352,13 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:exclusiveGateway>
 
     <bpmn:callActivity id="Call_Adjudication" name="Adjudicate the disagreement&#10;[adjudication]" calledElement="Process_Adjudication">
-      <bpmn:documentation>adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it.</bpmn:documentation>
+      <bpmn:documentation>adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it.
+
+Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="adjudication" />
+        <folio:adjudication codes="stands withdrawn"/>
+        <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
       </bpmn:extensionElements>
       <bpmn:incoming>c7</bpmn:incoming>
       <bpmn:outgoing>c10</bpmn:outgoing>
