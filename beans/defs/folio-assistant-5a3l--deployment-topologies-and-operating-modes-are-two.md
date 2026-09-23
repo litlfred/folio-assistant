@@ -123,7 +123,7 @@ container and is not worked on directly.
 
 ## Closed 2026-09-21 — re-derived on `645dd7dd91`, with one stale path
 
-The proposal exists, at `fsh-guts/proposals/deployment-topologies.md` rather
+The proposal exists, at `cat-harness/docs/proposals/deployment-topologies.md` rather
 than the `docs/proposals/` this bean names: `e65dfe547f` moved proposals off
 the docs site into the declared trashcan. **Searched before concluding**, for
 the `pomp` reason — *"not in my checkout" is not "does not exist"*, and the

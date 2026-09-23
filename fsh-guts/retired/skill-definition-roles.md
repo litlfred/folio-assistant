@@ -1,3 +1,22 @@
+---
+$schema: folio-fsh-guts/v1
+title: "`SkillDefinition.roles` — retired"
+kind: retired
+bean: folio-assistant-y1w9
+movedOn: 2026-09-20
+summary: >-
+  The retired `SkillDefinition.roles` field, kept rather than deleted so a
+  reader can tell a considered removal from an accident.
+---
+
+<!-- Front matter added 2026-09-23. NOTHING HERE IS NEW: the bean and the date
+     were already asserted in the body and the heading below, and the file was
+     the sole fsh-guts node carrying neither as a readable field. It went
+     unasked because the provenance tests scanned `fsh-guts/proposals/` alone;
+     widening them to the whole tree is what surfaced it. Promoted rather than
+     invented — a fabricated provenance reads as evidence and is worse than
+     none, which is the rule those tests are written on. -->
+
 # `SkillDefinition.roles` — retired 2026-09-20
 
 Bean `folio-assistant-y1w9`. Companion to

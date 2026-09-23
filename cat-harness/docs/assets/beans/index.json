@@ -681,7 +681,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-19T15:56:22Z",
       "updatedAt": "2026-09-20T14:26:05Z",
-      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`processes/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' processes/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = declared === \"",
+      "preview": "Found while auditing for `folio-assistant-haya`; recorded there in\n[SDLC process audit §4](../../proposals/sdlc-process-audit.md).\n\n## The measurement\n\n`processes/` holds 33 `.bpmn` files. 17 carry a\n`<folio:policy enforcement=\"…\">`; **16 do not.**\n\n    grep -L 'folio:policy' processes/*.bpmn | wc -l   # 16\n\n`src/workflow/process-model.ts:502` reads\n\n    const enforcement = declared === \"",
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
@@ -793,7 +793,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T05:16:23Z",
       "updatedAt": "2026-09-20T05:21:39Z",
-      "preview": "**Asked by the owner, 2026-09-20**: *\"all zod usage is associated with skills\nand put in tools? (like validate node in graph, or so) in kg-navigation?\"* —\nand, on shape: *\"a Tool per Zod schema... no, but there should be common\npatterns (single pattern?) with some parameters more or less\"*.\n\nAnalysis: `fsh-guts/proposals/zod-schemas-as-tools.md`, attached to\n[#223](https://github.com/litlfred/foli",
+      "preview": "**Asked by the owner, 2026-09-20**: *\"all zod usage is associated with skills\nand put in tools? (like validate node in graph, or so) in kg-navigation?\"* —\nand, on shape: *\"a Tool per Zod schema... no, but there should be common\npatterns (single pattern?) with some parameters more or less\"*.\n\nAnalysis: `cat-harness/docs/proposals/zod-schemas-as-tools.md`, attached to\n[#223](https://github.com/litlfred/foli",
       "file": "beans/defs/folio-assistant-3lbz--tools-zod-schemas-are-not-reachable-as-tools-and-k.md"
     },
     {
@@ -2573,7 +2573,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T03:12:36Z",
       "updatedAt": "2026-09-20T03:12:36Z",
-      "preview": "**The parent of three, from the owner 2026-09-20.** Full argument:\n[`fsh-guts/proposals/actor-facts-and-their-processes.md`](../../fsh-guts/proposals/actor-facts-and-their-processes.md).\n\nAn actor fact that no process reads is the same defect as a skill bound to\nno role — found four times here, fixed once, and the missing CONSUMER was\nnever added:\n\n| when | where | what |\n|---|---|---|\n| 2026-09-1",
+      "preview": "**The parent of three, from the owner 2026-09-20.** Full argument:\n[`cat-harness/docs/proposals/actor-facts-and-their-processes.md`](../../proposals/actor-facts-and-their-processes.md).\n\nAn actor fact that no process reads is the same defect as a skill bound to\nno role — found four times here, fixed once, and the missing CONSUMER was\nnever added:\n\n| when | where | what |\n|---|---|---|\n| 2026-09-1",
       "file": "beans/defs/folio-assistant-bkje--actor-facts-a-declared-actor-fact-with-no-consumin.md"
     },
     {
@@ -4643,7 +4643,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
       "updatedAt": "2026-09-22T10:57:22Z",
-      "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `fsh-guts/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wiring to ext",
+      "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wiring to ext",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
     {
@@ -5289,7 +5289,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T08:40:51Z",
       "updatedAt": "2026-09-20T08:48:04Z",
-      "preview": "Route B of `folio-assistant-3lbz` (`fsh-guts/proposals/zod-schemas-as-tools.md`),\nauthorised by the owner as \"route B y\".\n\n## What was asked, and what was built\n\nThe proposal's route B reads naturally as **one Tool node per gate** — 43 of\nthem. What landed is **one parameterised node**, `gates`, and that deviation is\nthe substance of this bean rather than a shortcut taken under it.\n\nThree reasons,",
+      "preview": "Route B of `folio-assistant-3lbz` (`cat-harness/docs/proposals/zod-schemas-as-tools.md`),\nauthorised by the owner as \"route B y\".\n\n## What was asked, and what was built\n\nThe proposal's route B reads naturally as **one Tool node per gate** — 43 of\nthem. What landed is **one parameterised node**, `gates`, and that deviation is\nthe substance of this bean rather than a shortcut taken under it.\n\nThree reasons,",
       "file": "beans/defs/folio-assistant-ppkm--route-b-bind-the-derived-gates-as-tool-nodes-so-a.md"
     },
     {

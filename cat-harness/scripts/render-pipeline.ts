@@ -58,7 +58,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { flattenDependencies, runInOrder, type OrderedStep } from "./dependency-order.js";
+import { flattenDependencies, runInOrder, type OrderedStep } from "../schemas/dependency-order.js";
 import { buildManifest, readManifest, selectSteps } from "./render-selection.js";
 import { instanceRootFor, repoRootFor } from "../schemas/cat-harness.js";
 

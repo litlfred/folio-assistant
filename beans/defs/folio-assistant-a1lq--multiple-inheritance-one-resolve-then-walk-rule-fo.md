@@ -51,8 +51,125 @@ So the platform already contains the resolve-then-walk the owner describes. It j
 - **Where the node-kind parent declaration lives.** Probably the graph-kind or node-kind registry in `schemas/graph-kind-registry.ts`, which harness owns, with core's types (the review comment) registering into it.
 
 ## Done when
-- [ ] the roast is held and answered here, and nothing is built first
-- [ ] one resolver is used by instance resolution AND node-kind composition; the second `flattenDependencies` is gone or delegates
-- [ ] a diamond resolves once; a cycle and a missing dependency are reported problems (tests for each)
-- [ ] a same-depth field conflict between two parents is reported; an explicit child override is allowed (test)
+- [x] the roast is held and answered here, and nothing is built first
+- [x] one resolver is used by instance resolution AND node-kind composition; the second `flattenDependencies` is gone or delegates
+- [x] a diamond resolves once; a cycle and a missing dependency are reported problems (tests for each)
+- [x] a same-depth field conflict between two parents is reported; an explicit child override is allowed (test)
 - [ ] `TodoNodeSchema` and 423d's review comment declare their parents and are composed by the resolver
+
+## Roast, held 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): measured, nothing built
+
+### First finding: everything this bean fixes is latent today
+
+- **Instances.** No instance declares more than one `needs`. The whole graph
+  is a single chain, `bootstrap → cat-harness → folio-assistant-core →
+  fhir-harness → smart-base`, and four leaves hang off `smart-base`/`smart-ig`.
+  **There is no diamond anywhere in the repository**, so the "diamond read as
+  cycle" defect has never fired. It fires on the first instance that needs two
+  others.
+- **Node kinds.** Exactly ONE composition has two parents: `TodoNodeSchema` =
+  `CarriedNoteSchema` (9 fields) + `ThemedTodoFieldsSchema` (1 field), with
+  **zero overlapping keys**. The 18 spreads of `kgNodeLabelShape` are a mixin of
+  two optional fields, not a second parent kind.
+- **423d is not technically blocked.** A review comment has one parent (todo).
+  It is sequenced after this bean so that it is the first kind composed by the
+  resolver rather than a retrofit, which is a choice, not a dependency.
+
+What follows: build this small and as prevention. Every test below has to
+construct its own diamond, because the corpus has none to find.
+
+### Q1: C3 or plain deepest-first? **Deepest-first (topological) is enough, *given* the conflict rule.**
+
+C3's job is to pick a winner among parents that do not depend on each other,
+so that order carries meaning. This bean already says such a conflict is
+REPORTED, never won by order. Under that rule the composed result does not
+depend on which topological order is chosen, so C3 would add a failure mode
+(an "inconsistent MRO" on a hierarchy that is otherwise valid) and buy nothing.
+
+**Correction to the bean's own wording: "same depth" is the wrong criterion.**
+The right one is *incomparable*: neither node reaches the other. A
+counter-example: the root needs A and B, and B needs D. A (depth 1) and D
+(depth 2) both define key `k`. Their depths differ, so a same-depth rule lets
+deepest-first put D first and A later, and A silently wins. A and D are
+unrelated, so this must be REPORTED. An override is legitimate only from a
+node that reaches the node it overrides, and only the child that reaches
+both may settle a conflict between two.
+
+*Falsifier:* a caller that relies on list order between unrelated layers,
+for example two unrelated instances providing the same skill id and wanting
+"later wins". There is none today, because the graph is a chain. The first
+build step adds the test that would catch one.
+
+### Q2: 79t3. **A consumer, not the same resolver.**
+
+79t3's type set is a **union** of markers over the resolved closure. A union
+is commutative, so it needs the closure and its problems (missing, cycle) and
+does not need an order at all. It calls the resolver and folds. Its filename
+questions are independent of this bean.
+
+### Q3: where node kinds declare their parents. **Not `graph-kind-registry.ts`.**
+
+That registry holds GRAPH kinds (directories such as `todo-items` and
+`bean-defs`), not node schemas. A node kind is identified by its `$schema` tag
+(`folio-todo/v1`). Proposal:
+- a small harness-owned `schemas/node-kind-registry.ts`, with entries of the
+  form `{ id, parents: string[], shape }`;
+- a parent may be a tagged kind OR a named mixin (`themed` has no `$schema`
+  of its own);
+- core registers `folio-review-comment/v1` into it, the same way core
+  already registers the `folio` graph kind (`REGISTRATION_MODULE`);
+- the composed Zod schema is DERIVED by walking the parents in resolver order;
+- a key defined by two incomparable ancestors is thrown at registration, so
+  the first test that imports the kind fails.
+
+`kgNodeLabelShape` is left as a spread: moving 18 call sites is not this bean.
+
+### Q4: the two `flattenDependencies` functions. **One survives.**
+
+- Move the pure Kahn function out of `scripts/dependency-order.ts` into
+  `schemas/`. No non-test module under `schemas/` imports `scripts/` today,
+  and that direction should stay clean. Repoint its three callers
+  (`render-order.ts`, `harness-tiles.ts`, tests).
+- `harness-config.ts` splits into two passes:
+  1. **resolve**: collect every reachable instance and its edges, recording
+     missing and unreadable ones;
+  2. **order**: call the one flattener, which gives foundation-first, i.e.
+     deepest-first.
+  Its own `flattenDependencies` goes away. It has five internal callers plus
+  `po-resolve.ts` and `cat-harness.ts`.
+- A diamond is resolved once, keyed by absolute root. `seen` is no longer
+  shared across sibling branches as a cycle guard.
+
+### Decisions this leaves open
+
+1. **The runtime policy on a MISSING dependency** (asked 2026-09-23). Today it
+   is skipped silently. A cycle is unambiguous (throw), but a missing
+   dependency is also what an uncloned git-URL dependency looks like in a
+   partial checkout.
+   **Ruled by the owner, 2026-09-23: warn at runtime, and the gate fails.** At
+   runtime the missing layer is named in a warning and the run continues
+   without it. A gate check fails on it, so it cannot merge unnoticed. A cycle
+   always throws.
+
+## Built 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE)
+
+- `schemas/dependency-order.ts` (moved from `scripts/`) is the one flattener.
+  It gains `ancestorsOf` and `findConflicts`. The conflict test is
+  *incomparable*, not same-depth, as the roast corrected.
+- `harness-config.ts`: `resolveInstanceGraph` resolves every node once and
+  THEN orders it with that flattener. `orderedDependencies` throws on a cycle
+  and warns on a missing dependency (the owner's ruling). The old
+  `resolveDependencyTree` and `flattenDependencies` are gone, and all callers
+  are repointed.
+- `schemas/node-kind.ts`: `nodeKind(id, parents, own, { overrides })`.
+  Parents are objects, not registry ids, so there is no load order to get
+  wrong. It refuses:
+  - a field two unrelated ancestors define;
+  - a redefinition the child did not declare;
+  - a declared override that overrides nothing.
+- `TodoNodeKind` = `carried-note` + `themed` + its own fields. The composed
+  shape is key-for-key identical to the old `.extend()` + spread (tested).
+- `check:instance-graph` is in the gate set: 19 instances, clean.
+
+Left for 423d: its review comment declares `TodoNodeKind` as its parent.
+That is the last unchecked box, and it is 423d's work.

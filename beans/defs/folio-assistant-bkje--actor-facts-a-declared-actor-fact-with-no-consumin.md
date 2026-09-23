@@ -10,7 +10,7 @@ parent: folio-assistant-ahvw
 
 
 **The parent of three, from the owner 2026-09-20.** Full argument:
-[`fsh-guts/proposals/actor-facts-and-their-processes.md`](../../fsh-guts/proposals/actor-facts-and-their-processes.md).
+[`cat-harness/docs/proposals/actor-facts-and-their-processes.md`](../../cat-harness/docs/proposals/actor-facts-and-their-processes.md).
 
 An actor fact that no process reads is the same defect as a skill bound to
 no role — found four times here, fixed once, and the missing CONSUMER was

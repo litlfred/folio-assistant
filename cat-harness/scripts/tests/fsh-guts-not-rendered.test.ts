@@ -46,6 +46,28 @@ function jekyllSourceRoots(): { file: string; source: string }[] {
   return out;
 }
 
+/**
+ * Every markdown node under `fsh-guts/`, at any depth.
+ *
+ * Whole-tree rather than a named subdirectory, because naming one is how these
+ * tests broke: they scanned `fsh-guts/proposals/` and went ENOENT the moment
+ * the proposals moved out (2026-09-23), failing for a reason that had nothing
+ * to do with what they assert.
+ */
+function fshGutsNodes(repoRoot: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (e.name.endsWith(".md")) out.push(abs);
+    }
+  };
+  walk(join(repoRoot, GUTS));
+  return out;
+}
+
 describe("fsh-guts stays out of the render pipeline", () => {
   test("the directory exists at the repository root", () => {
     // If this fails the rest is vacuous — a test suite that passes because
@@ -116,14 +138,22 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // A directory is a place to look; the file says what it is. Without this
     // the graph is duck-typed on location, which is the coincidence-not-
     // contract problem the bean and workflow stores already fixed.
-    const proposals = join(REPO_ROOT, GUTS, "proposals");
-    const files = existsSync(proposals)
-      ? readdirSync(proposals).filter((f) => f.endsWith(".md"))
-      : [];
+    // RETARGETED 2026-09-23. These scanned `fsh-guts/proposals/` until the
+    // owner moved the proposals to the `docs/` of the stub that needs them —
+    // *"proposals not in fsh-guts but docs/ for needed <stub>"*. They are no
+    // longer fsh-guts nodes, so asking them for fsh-guts properties would be
+    // asking the wrong population; their `$schema: folio-fsh-guts/v1` tags
+    // were removed in the same change, because a tag that is false is worse
+    // than none.
+    //
+    // Scanning the WHOLE of fsh-guts rather than a named subdirectory is the
+    // durable form: the previous version went ENOENT the moment its one
+    // subdirectory moved, which is a test that fails for the wrong reason.
+    const files = fshGutsNodes(REPO_ROOT);
     expect(files.length).toBeGreaterThan(0);
 
     const undeclared = files.filter(
-      (f) => !readFileSync(join(proposals, f), "utf8").includes("$schema: folio-fsh-guts/v1"),
+      (f) => !readFileSync(f, "utf8").includes("$schema: folio-fsh-guts/v1"),
     );
     expect(undeclared).toEqual([]);
   });
@@ -145,11 +175,9 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // check accepts either. It is not weaker — it is the same question asked
     // of both populations, where before it was asked only of one and the
     // other could not answer it truthfully.
-    const proposals = join(REPO_ROOT, GUTS, "proposals");
-    const orphans = readdirSync(proposals)
-      .filter((f) => f.endsWith(".md"))
+    const orphans = fshGutsNodes(REPO_ROOT)
       .filter((f) => {
-        const text = readFileSync(join(proposals, f), "utf8");
+        const text = readFileSync(f, "utf8");
         const moved = /^movedFrom:/m.test(text);
         const born = /^issue:/m.test(text) || /^bean:/m.test(text);
         return !moved && !born;
@@ -161,10 +189,8 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // `movedFrom` without `movedOn` dates the move to "sometime", which is
     // the state the two fields exist together to avoid: a reader comparing
     // the trashcan against the site's history needs a point to compare at.
-    const proposals = join(REPO_ROOT, GUTS, "proposals");
-    const undated = readdirSync(proposals)
-      .filter((f) => f.endsWith(".md"))
-      .map((f) => [f, readFileSync(join(proposals, f), "utf8")] as const)
+    const undated = fshGutsNodes(REPO_ROOT)
+      .map((f) => [f, readFileSync(f, "utf8")] as const)
       .filter(([, text]) => /^movedFrom:/m.test(text) && !/^movedOn:/m.test(text))
       .map(([f]) => f);
     expect(undated).toEqual([]);

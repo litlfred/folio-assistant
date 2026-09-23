@@ -11,7 +11,7 @@ parent: folio-assistant-1xhc
 
 
 Found while auditing for `folio-assistant-haya`; recorded there in
-[SDLC process audit §4](../../fsh-guts/proposals/sdlc-process-audit.md).
+[SDLC process audit §4](../../cat-harness/docs/proposals/sdlc-process-audit.md).
 
 ## The measurement
 

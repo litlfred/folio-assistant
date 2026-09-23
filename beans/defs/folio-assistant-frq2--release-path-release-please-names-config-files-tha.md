@@ -98,7 +98,7 @@ package whose own `files[]` does not resolve makes the release path *look*
 configured while leaving it exactly as broken. It would tick this bean's first
 box and fix nothing — the shape this repository calls `xom7`.
 
-It also collides with an unbuilt decision: `fsh-guts/proposals/instance-versioning.md`
+It also collides with an unbuilt decision: `cat-harness/docs/proposals/instance-versioning.md`
 §3.1 says **publishability is DECLARED and most instances are not publishable**,
 and which ones are is that proposal's first open question. Writing a
 release-please config now answers it by accident.
@@ -111,7 +111,7 @@ release-please config now answers it by accident.
   not. `release-please` being dispatch-only may well be correct here. This
   bean is about it being **broken when dispatched** and **misdescribed**.
 - **Whether this repository should use release-please at all.** That is
-  `dhvf` and `fsh-guts/proposals/instance-versioning.md` §5, which deliberately
+  `dhvf` and `cat-harness/docs/proposals/instance-versioning.md` §5, which deliberately
   does not depend on it.
 
 ## Done when

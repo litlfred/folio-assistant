@@ -1,13 +1,23 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Instance versioning and dependency resolution, aligned to FHIR/SUSHI"
 kind: proposal
+movedFrom: fsh-guts/proposals/
+movedOn: 2026-09-23
 issue: 592
 summary: >-
   Downstream alignment to FHIR/SUSHI is a hard constraint, which settles exact-version pinning over npm-style ranges. Proposes id + version on publishable instances, a dependsOn-shaped published record, and a version bump COMPUTED by diffing the exported graph rather than asserted by a commit message.
 ---
 
 # Instance versioning and dependency resolution
+
+> **Editorial correction, 2026-09-23.** This proposal was written while the
+> instance declaration was a fixed `harness.json`; it is `<name>.json` since
+> the 2026-09-21 split (`<name>.config.json` is the config beside it). The
+> references below were updated so a reader is not sent to a file that does not
+> exist — the proposal's argument is untouched, and only the filename moved.
+> The occurrences were invisible while this lived under `fsh-guts/`, which the
+> filename gate counts as retired material; publishing it is what surfaced them.
+
 
 Asked 2026-09-20, in three messages:
 
@@ -110,7 +120,7 @@ a no**, and §4 gives the answer it was reaching for from somewhere better.
 ### 3.1 Publishability is declared, and most instances are not publishable
 
 Every instance does **not** get a version. An instance declares
-`publishable: true` in its `harness.json`, and only then owes an `id` and a
+`publishable: true` in its `<name>.json`, and only then owes an `id` and a
 `version`.
 
 The reason is the measurement in §1: eleven instances, and the ones with
