@@ -151,7 +151,7 @@ export const DiscussionOutputObjectSchema = z.object({
     .string()
     .optional()
     .describe(
-      "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness` or `folio-assistant`. Required when `outcome` is `settled` and `harness` was open.",
+      "The harness this repository is to become — `bootstrap`, or any Harness built on it. Required when `outcome` is `settled` and `harness` was open.",
     ),
   repositories: z
     .array(RepositoryRefSchema)
