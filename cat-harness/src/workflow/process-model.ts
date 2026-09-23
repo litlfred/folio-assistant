@@ -256,6 +256,15 @@ export interface ProcessNode {
    * read in the diff.
    */
   fulfilment?: { kinds: ActorKind[]; reason: string };
+  /**
+   * `<folio:adjudication codes="…"/>` — the activity is a judgement, and these
+   * are the answers it may give.
+   *
+   * The declared enum a recorded outcome is validated against. Its document
+   * contract is `folio-assistant-core/schemas/adjudication.ts`; see
+   * {@link adjudicationOf} for why the two are not one import.
+   */
+  adjudication?: { codes: string[] };
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
@@ -582,6 +591,83 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
  * has no way to tell which the author meant — so it is a conflict rather than
  * a preference.
  */
+/**
+ * `<folio:adjudication codes="a b c"/>` — this activity IS a judgement, and
+ * these are the answers it may give.
+ *
+ * Bean `5vo9`, the owner's *"formalized adjudication process so there is 'use
+ * judgement'"*. The contract for the request and outcome DOCUMENTS lives in
+ * `folio-assistant-core/schemas/adjudication.ts`; this is the harness half,
+ * and the two meet at the data rather than by import — core `needs`
+ * cat-harness, so an import from here would run up the layer stack.
+ *
+ * ## The two refusals, and why the second is the point
+ *
+ * A bare marker would add a word to a diagram and check nothing. What makes
+ * this worth a parser is that it **binds the judgement to who may make it**:
+ *
+ *  1. Fewer than two codes is not a judgement. One permitted answer is a step
+ *     that records assent, and calling it adjudication would let a rubber
+ *     stamp inherit a decision's authority.
+ *  2. **A mechanical or external actor may not judge.** The owner: *"ONLY
+ *     agentic human actor."* `adjudication.bpmn`'s judge step already declares
+ *     `<folio:fulfilment kinds="person agent"/>` and says why — *"a mechanical
+ *     system may NOT take this step, which is the whole reason the process
+ *     exists"* — but nothing tied the two together, so a NEW adjudication step
+ *     could omit the fulfilment entirely and no gate would notice. This makes
+ *     the marker carry its own precondition.
+ *
+ * A judgement a `system` actor could perform is a rule, and a rule belongs in
+ * a DMN table behind `folio:decision`, which this engine already refuses to
+ * let a caller hand-answer.
+ */
+function adjudicationOf(
+  ext: { $type: string; codes?: string }[],
+  el: { id: string; $type: string },
+  fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
+): { codes: string[] } | undefined {
+  const decl = ext.find((v) => v.$type === "folio:adjudication");
+  if (!decl) return undefined;
+  if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> is only meaningful on an activity — ` +
+        `somebody performs a judgement, and ${el.$type} is not performed.`,
+    );
+  }
+  const codes = (decl.codes ?? "").trim().split(/\s+/).filter(Boolean);
+  if (codes.length < 2) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> declares ${codes.length} code(s). A judgement ` +
+        `needs at least two permitted answers — one is assent, and naming it a ` +
+        `judgement would give a rubber stamp a decision's authority.`,
+    );
+  }
+  if (new Set(codes).size !== codes.length) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> repeats a code. The outcome could not say which was chosen.`,
+    );
+  }
+  // Refusal 2. Absent fulfilment is REFUSED rather than defaulted: a step that
+  // has not said who may judge has not restricted anyone, and the restriction
+  // is the whole reason this process kind exists.
+  if (fulfilment === undefined) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> with no <folio:fulfilment kinds="…"/>. ` +
+        `Say who may judge — a judgement open to a mechanical actor is a rule, ` +
+        `and a rule belongs in a DMN table behind <folio:decision/>.`,
+    );
+  }
+  const forbidden = fulfilment.kinds.filter((k) => k !== "person" && k !== "agent");
+  if (forbidden.length > 0) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> on a step fulfillable by ${forbidden.join(", ")}. ` +
+        `Only \`person\` and \`agent\` may judge. If a mechanical actor can decide it, ` +
+        `it is computable — use <folio:decision/> and a DMN table.`,
+    );
+  }
+  return { codes };
+}
+
 function judgementReasonOf(
   ext: { $type: string; reason?: string }[],
   el: { id: string; $type: string },
@@ -676,6 +762,8 @@ interface ModdleElement {
       involvement?: string;
       /** `<folio:involvement vocabulary="…"/>` on the process. */
       vocabulary?: string;
+      /** `<folio:adjudication codes="…"/>` on an activity. */
+      codes?: string;
       relaxable?: string;
       /** `<folio:precondition>` — bean `lv3j`. */
       id?: string;
@@ -908,6 +996,7 @@ export async function loadProcessModel(
       noCallReason: noCallReasonOf(ext, el.id),
       judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
+      adjudication: adjudicationOf(ext, el, fulfilmentOf(ext, el.id)),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
