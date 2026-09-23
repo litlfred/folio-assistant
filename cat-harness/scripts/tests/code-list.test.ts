@@ -114,14 +114,14 @@ describe("the engine checks an adjudication's codes against the list it names", 
   };
 
   test("the list's own codes load", async () => {
-    const m = await loadProcessModel(diagram('<folio:adjudication codes="local upstream" list="adjudication-materialized-conflict"/>'));
-    expect(m.nodes.get("A_T")!.adjudication).toEqual({ codes: ["local", "upstream"], list: "adjudication-materialized-conflict" });
+    const m = await loadProcessModel(diagram('<folio:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>'));
+    expect(m.nodes.get("A_T")!.adjudication).toEqual({ codes: ["stands", "withdrawn"], list: "adjudication-content-finding" });
   });
 
   test("REFUSES a code the list does not define, and one it defines that is missing", async () => {
     await expect(
-      loadProcessModel(diagram('<folio:adjudication codes="local remote" list="adjudication-materialized-conflict"/>')),
-    ).rejects.toThrow(/defines \(local, upstream\)/);
+      loadProcessModel(diagram('<folio:adjudication codes="stands overruled" list="adjudication-content-finding"/>')),
+    ).rejects.toThrow(/defines \(stands, withdrawn\)/);
   });
 
   test("REFUSES a list nothing declares", async () => {

@@ -76,6 +76,7 @@
     "beans",
     "cat-harness",
     "code",
+    "code-list",
     "docs",
     "external-schema",
     "folio",
@@ -144,7 +145,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 649,
+      "count": 650,
       "unit": "beans"
     },
     {
@@ -1439,12 +1440,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 39
+          "value": 40
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 26
         },
         {
           "id": "views",
@@ -1463,6 +1464,10 @@
         },
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code-list",
           "note": "no viewer yet"
         },
         {
@@ -1556,7 +1561,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 7 graph(s) with no published viewer — code, code-list, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1701,6 +1706,10 @@
       },
       {
         "kind": "code",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "code-list",
         "note": "no viewer yet"
       },
       {
