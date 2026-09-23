@@ -58,6 +58,8 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+
 import {
   FhirArtifactIndexSchema,
   materializationCensus,
@@ -70,6 +72,16 @@ import {
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
+/**
+ * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
+ *
+ * OPTIONAL, and its absence is a third state rather than "this IG has no
+ * menu": `ingest-ig-menu.ts` needs the upstream source checkout, which is not
+ * on every machine. Absent → the menu sections are not written and the build
+ * SAYS so; it does not quietly render a site with no navigation and call it
+ * complete.
+ */
+const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
 
 const CHECK = process.argv.includes("--check");
@@ -553,6 +565,55 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   );
 }
 
+/**
+ * One page per top-level menu group — which is how the IG's TOP BAR becomes a
+ * LEFT-HAND nav.
+ *
+ * The owner, 2026-09-23: *"navar menu is now on LHS"*. just-the-docs builds
+ * its sidebar from the PAGES in the collection, so an entry in it has to be a
+ * page; there is no per-folio hook for a bare external link. A page per group
+ * is therefore the mechanism, not a workaround — and it is the honest one,
+ * because each group genuinely has something to say: the list of its members
+ * and where they are published.
+ *
+ * **Every link points UPSTREAM, and that is not a shortfall.** These pages are
+ * published by the IG Publisher and this repository does not hold them — the
+ * gh-pages harvest kept 674 FHIR artefacts and none of the narrative pages
+ * (measured: 0 of 12 menu labels matched an artefact title). A page here that
+ * pretended to hold `system-actors.html` would be fabricating content; one
+ * that links to the canonical copy is a navigation aid, which is what a menu
+ * is.
+ */
+function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string {
+  const rows = group.items.map((it) => `- [${mdCell(it.label)}](${menuHref(menu, it)})`);
+  const body = [
+    `[← all ${menu.groups.length} sections](../)`,
+    ``,
+    ...(group.items.length > 0
+      ? rows
+      : [
+          // A group the config declares with no children. Stated, because an
+          // empty list and a page that failed to render look the same.
+          `*${mdCell(group.label)} carries no sub-items in \`sushi-config.yaml\`.*`,
+        ]),
+    ``,
+    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, group)}).`, ``] : []),
+    `Published by the IG at \`${menu.canonical}\`. This repository holds the IG's`,
+    `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
+  ].join("\n");
+  return shell(
+    `${group.label} — WHO SMART Trust`,
+    `The ${group.items.length} page(s) the WHO SMART Trust IG publishes under ${group.label}.`,
+    body,
+    { kind: "section", order },
+  );
+}
+
+/** A filename-safe slug, on the same rule `categoryName` uses. */
+function menuName(label: string): string {
+  return label.replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
 // ── Build ──────────────────────────────────────────────────────────────
 if (!existsSync(INDEX)) {
   console.error(`could not determine: no artefact index at ${INDEX}`);
@@ -590,7 +651,24 @@ for (const a of ix.artifacts) {
 // A page for each category too large to inline, so "too many to list here"
 // points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
 // makes — one threshold, read twice, rather than two that can disagree.
+// THE IG'S MENU, FIRST IN THE SIDEBAR — it is the IG's own ordering of itself,
+// and the artefact categories are this repository's view on top of it.
 let sectionOrder = 0;
+let menu: IgMenu | undefined;
+if (existsSync(MENU)) {
+  const m = IgMenuSchema.safeParse(JSON.parse(readFileSync(MENU, "utf8")));
+  if (!m.success) {
+    console.error("the committed IG menu does not validate — refusing to render nav from it:");
+    for (const i of m.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  menu = m.data;
+  for (const group of menu.groups) {
+    sectionOrder += 1;
+    pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
+  }
+}
+
 for (const [label, list] of byCategory(ix.artifacts)) {
   if (list.length > INLINE_LIMIT) {
     sectionOrder += 1;
@@ -645,4 +723,16 @@ if (CHECK) {
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
+  // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
+  // checks, and an absent menu reported as silence is indistinguishable from
+  // an IG that publishes no navigation — which this one plainly does.
+  if (menu) {
+    console.log(
+      `  ${menu.groups.length} menu section(s) — the IG's own top bar, ${menuItemCount(menu)} item(s), ` +
+        `from ${menu.source.path} @ ${menu.source.ref.slice(0, 8)}`,
+    );
+  } else {
+    console.log("  0 menu section(s) — COULD NOT DETERMINE: no menu.json.");
+    console.log("    Run `ingest-ig-menu.ts --source <ig-repo>`; this is not an IG without navigation.");
+  }
 }

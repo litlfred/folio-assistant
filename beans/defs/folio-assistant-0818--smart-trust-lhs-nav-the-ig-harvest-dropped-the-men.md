@@ -96,5 +96,74 @@ decision, so it was NOT done unasked.
 - [x] `NavRole` replaces `depth`; sections are listed, leaves excluded
 - [x] 4 tests on the RENDERED front matter, falsified both ways (2 fail when reverted)
 - [x] `smart-trust:pages:check` green; 4060 tests pass
-- [ ] the IG's own `menu` captured as data — **BLOCKED**, see above
+- [x] the IG's own `menu` captured as data — **UNBLOCKED**, see below
 - [ ] `smart-base.config.json` — offered, not yet authorised by the owner
+
+
+## UNBLOCKED — the owner named the right source
+
+2026-09-23: *"tried to open network policy for worldhealthorganization.github.io,
+but source is in github.com under WHO's smart-base, smart-trust etc"*.
+
+That is the correction that mattered. The Pages host is the IG's **output**;
+`sushi-config.yaml` is its **source**, and it is in an ordinary public GitHub
+repository the session's git proxy already serves anonymously. No policy change
+was needed — I had been asking for the wrong door.
+
+Cloned `WorldHealthOrganization/smart-trust` read-only at `26635f7b` and read
+its `menu:` block. It carries **5 groups and 29 items, with hrefs** — the thing
+a screenshot could never supply:
+
+| group | items |
+|---|---|
+| Home | 4 |
+| Business Requirements | 6 |
+| Data Models and Exchange | **7** |
+| Deployment | 7 |
+| Indices | 5 |
+
+Seven under *Data Models and Exchange* — exactly the seven visible in the
+owner's screenshot, which is the cheap check that the right file was read.
+`Indices → DAK API: dak-api.html` is also there, which is what
+`update_sushi_config.py` registers, matching `dak-preprocessing.md`.
+
+## What was built
+
+| piece | what it is |
+|---|---|
+| `schemas/ig-menu.ts` | `folio-ig-menu/v1` — groups, items, and a `source` block that REQUIRES a commit |
+| `scripts/ingest-ig-menu.ts` | reads `sushi-config.yaml`; `--check` compares; no `--source` exits **2** |
+| `gen-smart-trust-pages.ts` | 5 section pages, `nav_order` 1–5 in the config's own order |
+| graph-kind registry | `folio-ig-menu/v1` mapped to its validator — `1/1 parse` |
+| `gates.ts` | an exemption, with the reason CI cannot obtain the input |
+
+The hrefs are **verbatim** from the config, resolved against `canonical` by one
+function, so they are right by construction rather than by testing — which
+matters, because nothing here can fetch them to check.
+
+`menu.json` is a SECOND document in `fhir-artifact-index/`, not a field added
+to `index.json`. Two sources — the IG's published output, and its source config
+at a commit — so two provenance blocks. Folding them would give one file two
+answers to "where did this come from".
+
+## Three states, kept
+
+`ingest-ig-menu --check` with no `--source` prints `could not determine` and
+exits **2** — not 0, and not 1. In CI the upstream is absent, which is normal;
+a gate that silently passed there would be asserting a comparison it never
+made. What IS gated without the network is the menu's EFFECT:
+`smart-trust:pages:check` regenerates the 5 sections from `menu.json` and
+compares byte for byte.
+
+The generator also reports `0 menu section(s) — COULD NOT DETERMINE` when the
+file is absent, rather than rendering a site with no navigation and calling it
+complete.
+
+## Ratchets that caught this on the way
+
+Five, all of them the `v8gh` property working: an unclassified module
+(`check:partition`), a new artefact check with no verification declaration, a
+stale docs-auto index, an unmapped `$schema` family, and an unrun check script.
+The verification declaration names the real gap — **nothing resolves the 29
+hrefs**, because the pages they point at are published upstream and both hosts
+answer 403 here.

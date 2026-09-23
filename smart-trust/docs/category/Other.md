@@ -2,7 +2,7 @@
 title: "Other — WHO SMART Trust"
 description: "The 604 WHO SMART Trust artefacts in the Other category, with canonical URLs and published representations."
 parent: "WHO SMART Trust — artefact index"
-nav_order: 1
+nav_order: 6
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;

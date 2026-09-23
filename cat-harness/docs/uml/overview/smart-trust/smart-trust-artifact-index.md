@@ -57,6 +57,24 @@ classDiagram
       dakApi [1] unknown | absent | present
       count [1] integer
     }
+    class smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item["Item"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [1] string
+    }
+    class smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group["Group"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [0..1] string
+    }
+    class smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1["folio-ig-menu/v1"] {
+      <<json: IgMenuSchema>>
+      $schema [1] 'folio-ig-menu/v1'
+      id [1] string
+      canonical [1] string~uri~
+      version [0..1] string
+      source [1] object
+    }
     class smart_trust_smart_trust_artifact_index_https___json_schema_org_draft_2020_12_schema["JSON Schema 2020-12"] {
       <<ext: JSON Schema 2020-12>>
     }
@@ -64,16 +82,21 @@ classDiagram
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
+  smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
+  smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
   cssClass "smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context" fa_uml_kind_fhir_artifact_index
   cssClass "smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound" fa_uml_kind_fhir_artifact_index
   cssClass "smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact" fa_uml_kind_fhir_artifact_index
   cssClass "smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1" fa_uml_kind_fhir_artifact_index
   cssClass "smart_trust_smart_trust_artifact_index_https___json_schema_org_draft_2020_12_schema" fa_uml_kind_fhir_artifact_index
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `smart-trust/smart-trust-artifact-index` | `smart-trust/fhir-artifact-index` | fhir-artifact-index | `FhirArtifactIndexSchema`; `ext: JSON Schema 2020-12` |
+| `smart-trust/smart-trust-artifact-index` | `smart-trust/fhir-artifact-index` | fhir-artifact-index | `FhirArtifactIndexSchema`; `IgMenuSchema`; `ext: JSON Schema 2020-12` |
 
 ## Sub-graphs
 
