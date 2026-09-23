@@ -2,15 +2,15 @@
   "$schema": "folio-library-index/v1",
   "tile": {
     "uploads": {
-      "count": 22,
+      "count": 21,
       "unit": "waiting"
     },
     "agent-skills-library": {
-      "count": 4,
+      "count": 6,
       "unit": "entries"
     },
     "library": {
-      "count": 4,
+      "count": 5,
       "unit": "entries"
     },
     "folio-assistant-sci-library": {
@@ -23,6 +23,41 @@
     }
   },
   "entries": [
+    {
+      "id": "arxiv-2602.12670v4",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/arxiv-2602.12670v4",
+      "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "arxiv-2602.12670v4",
+      "sourceFile": "2602.12670v4.pdf",
+      "sourceSha256": "e987ebc3f0084a1ffc8acbca58259e33120b95fcef3876abfad060e169cf210b",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 82,
+      "blocks": 85,
+      "images": 7,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 42,
+      "words": 17553,
+      "chars": 127637,
+      "bytes": 365058,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "avatar": {
+        "href": "/assets/library/avatars/agent-skills/arxiv-2602.12670v4.png",
+        "src": "agent-skills/library/arxiv-2602.12670v4/images/img-p025-1.png",
+        "source": "figure"
+      },
+      "referencedBy": []
+    },
     {
       "id": "arxiv-2607.25032v1",
       "instance": "agent-skills",
@@ -37,7 +72,7 @@
       "doi": "",
       "documentClass": "",
       "sections": 13,
-      "blocks": 25,
+      "blocks": 13,
       "images": 0,
       "ocrPages": 0,
       "hasOcr": false,
@@ -48,7 +83,7 @@
       "pageEnd": 9,
       "words": 4766,
       "chars": 29016,
-      "bytes": 59920,
+      "bytes": 53896,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -74,7 +109,7 @@
       "doi": "",
       "documentClass": "",
       "sections": 21,
-      "blocks": 41,
+      "blocks": 21,
       "images": 0,
       "ocrPages": 0,
       "hasOcr": false,
@@ -85,7 +120,7 @@
       "pageEnd": 10,
       "words": 7014,
       "chars": 48165,
-      "bytes": 96846,
+      "bytes": 86799,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -122,7 +157,7 @@
       "pageEnd": 6,
       "words": 786,
       "chars": 5618,
-      "bytes": 16744,
+      "bytes": 16837,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -159,7 +194,7 @@
       "pageEnd": 8,
       "words": 1067,
       "chars": 7184,
-      "bytes": 22347,
+      "bytes": 22466,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -170,6 +205,66 @@
           "count": 2
         }
       ]
+    },
+    {
+      "id": "skills-in-openai-api",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/skills-in-openai-api",
+      "title": "skills-in-openai-api",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "skills-in-openai-api",
+      "sourceFile": "Skills in OpenAI API.pdf",
+      "sourceSha256": "2d261aeb7a6af6ab14d13d323960455165422e7dbefc88c451bc058133565de3",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 1,
+      "blocks": 1,
+      "images": 1,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "words": 175,
+      "chars": 1639,
+      "bytes": 4961,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": []
+    },
+    {
+      "id": "arxiv-2312.07755v1",
+      "instance": "cat-harness",
+      "dir": "cat-harness/library/arxiv-2312.07755v1",
+      "title": "Designing with Language: Wireframing UI Design Intent with Generative Large",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "arxiv-2312.07755v1",
+      "sourceFile": "feng-2023-designing-with-language.pdf",
+      "sourceSha256": "663850eb153e604dd193c4e6b7f3174509d0f0bcdef0c27ed478f5a8b2e37c8a",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 23,
+      "blocks": 107,
+      "images": 84,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 21,
+      "words": 10799,
+      "chars": 71996,
+      "bytes": 23397234,
+      "upload": "match",
+      "uploadInstance": "cat-harness",
+      "referencedBy": []
     },
     {
       "id": "arxiv-2508.05192v2",
@@ -185,7 +280,7 @@
       "doi": "",
       "documentClass": "",
       "sections": 12,
-      "blocks": 26,
+      "blocks": 14,
       "images": 2,
       "ocrPages": 0,
       "hasOcr": false,
@@ -196,7 +291,7 @@
       "pageEnd": 5,
       "words": 4282,
       "chars": 29642,
-      "bytes": 199166,
+      "bytes": 193133,
       "upload": "match",
       "uploadInstance": "cat-harness",
       "avatar": {
@@ -231,7 +326,7 @@
       "pageEnd": 6,
       "words": 2734,
       "chars": 21161,
-      "bytes": 55438,
+      "bytes": 55545,
       "upload": "match",
       "uploadInstance": "cat-harness",
       "referencedBy": []
@@ -261,7 +356,7 @@
       "pageEnd": 13,
       "words": 7285,
       "chars": 50936,
-      "bytes": 2064585,
+      "bytes": 2064889,
       "upload": "match",
       "uploadInstance": "cat-harness",
       "avatar": {
@@ -296,7 +391,7 @@
       "pageEnd": 9,
       "words": 4001,
       "chars": 27610,
-      "bytes": 62587,
+      "bytes": 62719,
       "upload": "match",
       "uploadInstance": "cat-harness",
       "referencedBy": []
@@ -326,7 +421,7 @@
       "pageEnd": 195,
       "words": 9022,
       "chars": 47832,
-      "bytes": 91364,
+      "bytes": 91639,
       "upload": "match",
       "uploadInstance": "cat-harness",
       "referencedBy": [
@@ -363,7 +458,7 @@
       "pageEnd": 182,
       "words": 69270,
       "chars": 473663,
-      "bytes": 2764096,
+      "bytes": 2766732,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -400,7 +495,7 @@
       "pageEnd": 66,
       "words": 22088,
       "chars": 166943,
-      "bytes": 323308,
+      "bytes": 324331,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "avatar": {
@@ -431,7 +526,7 @@
       "doi": "",
       "documentClass": "",
       "sections": 48,
-      "blocks": 104,
+      "blocks": 57,
       "images": 9,
       "ocrPages": 0,
       "hasOcr": false,
@@ -442,7 +537,7 @@
       "pageEnd": 98,
       "words": 46786,
       "chars": 315157,
-      "bytes": 1429024,
+      "bytes": 1404583,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "avatar": {
@@ -477,7 +572,7 @@
       "pageEnd": 72,
       "words": 21691,
       "chars": 161659,
-      "bytes": 264301,
+      "bytes": 265252,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": []
@@ -507,7 +602,7 @@
       "pageEnd": 106,
       "words": 38273,
       "chars": 265464,
-      "bytes": 19108617,
+      "bytes": 19112425,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "avatar": {
@@ -542,7 +637,7 @@
       "pageEnd": 144,
       "words": 69903,
       "chars": 444747,
-      "bytes": 14987344,
+      "bytes": 14990716,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": []
@@ -572,7 +667,7 @@
       "pageEnd": 20,
       "words": 11744,
       "chars": 87671,
-      "bytes": 117924,
+      "bytes": 118199,
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "referencedBy": [
@@ -609,7 +704,7 @@
       "pageEnd": 179,
       "words": 55174,
       "chars": 367906,
-      "bytes": 1103090,
+      "bytes": 1106885,
       "upload": "match",
       "uploadInstance": "who-iris",
       "avatar": {
@@ -657,7 +752,7 @@
       "pageEnd": 121,
       "words": 25713,
       "chars": 175821,
-      "bytes": 557526,
+      "bytes": 559332,
       "upload": "match",
       "uploadInstance": "who-iris",
       "avatar": {
@@ -705,7 +800,7 @@
       "pageEnd": 33,
       "words": 3405,
       "chars": 20063,
-      "bytes": 5331169,
+      "bytes": 5331582,
       "upload": "match",
       "uploadInstance": "who-iris",
       "avatar": {
@@ -750,6 +845,18 @@
       "bytes": 3757095,
       "ext": "pdf",
       "ingestedBy": "dusengumuremyi-2026-ai-mediated-raci",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "feng-2023-designing-with-language.pdf",
+      "kind": "file",
+      "instance": "cat-harness",
+      "path": "cat-harness/uploads/feng-2023-designing-with-language.pdf",
+      "bytes": 8470733,
+      "ext": "pdf",
+      "ingestedBy": "arxiv-2312.07755v1",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -809,7 +916,7 @@
       "path": "uploads/2602.12670v4.pdf",
       "bytes": 1769852,
       "ext": "pdf",
-      "ingestedBy": "",
+      "ingestedBy": "arxiv-2602.12670v4",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -1115,6 +1222,18 @@
       "declaredFiles": 0
     },
     {
+      "file": "ihris_admin_handbook_sep_17_2010.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/ihris_admin_handbook_sep_17_2010.pdf",
+      "bytes": 4734485,
+      "ext": "pdf",
+      "ingestedBy": "",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "rfc2119-key-words-requirement-levels.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -1157,7 +1276,7 @@
       "path": "uploads/Skills in OpenAI API.pdf",
       "bytes": 94337,
       "ext": "pdf",
-      "ingestedBy": "",
+      "ingestedBy": "skills-in-openai-api",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -1227,16 +1346,16 @@
     {
       "instance": "cat-harness",
       "dir": "cat-harness/uploads",
-      "total": 6,
-      "ingested": 5,
+      "total": 7,
+      "ingested": 6,
       "uningested": 1
     },
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 31,
-      "ingested": 11,
-      "uningested": 20
+      "total": 32,
+      "ingested": 13,
+      "uningested": 19
     },
     {
       "instance": "who-iris",
@@ -1247,7 +1366,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1728,
+    "filesRead": 1764,
     "unreadable": []
   }
 }
