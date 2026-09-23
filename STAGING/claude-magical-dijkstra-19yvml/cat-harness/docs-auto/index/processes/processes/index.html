@@ -92,7 +92,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">67</span></li>
+<li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">69</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -205,7 +206,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>Publishing the docs site, and keeping the previews alive</code></a><br><span class="p">cat-harness/processes/docs-site-publish.bpmn</span></td>
-  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging</div></td>
+  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging, publish-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>Document ingestion — uploads/ to the L1 source knowledge graph</code></a><br><span class="p">cat-harness/processes/document-ingestion.bpmn</span></td>
@@ -300,6 +301,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, issue-working</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>Alert the publication manager</code></a><br><span class="p">cat-harness/processes/publish-alert.bpmn</span></td>
+  <td>Owner, 2026-09-23: &quot;there is another alert needed for deployment failure.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline · Publication manager</div><div class="f"><span class="k">skills</span> publish-verification</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-verification.bpmn"><code>Verify the export before it is deployed</code></a><br><span class="p">cat-harness/processes/publish-verification.bpmn</span></td>
+  <td>Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — &quot;a failure triggers an alert to the publisher manager&quot;.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> publish-verification</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>QA report signing</code></a><br><span class="p">cat-harness/processes/qa-report-signing.bpmn</span></td>
   <td>Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Validation and QA (mechanical + agents) · Attestation service (API) · Human signer</div><div class="f"><span class="k">skills</span> content-test, qa-report-signing</div></td>
 </tr>
@@ -365,7 +374,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/wireframe-design-review.bpmn"><code>Wireframe design review</code></a><br><span class="p">cat-harness/processes/wireframe-design-review.bpmn</span></td>
-  <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, wireframe-design-review</div></td>
+  <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
 </tr>
 </tbody>
 </table>
