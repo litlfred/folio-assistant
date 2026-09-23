@@ -378,8 +378,15 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     declaredGraphs("who-iris", new Map(Object.entries(linked))).map((i) => i.label);
 
   it("lists every kind the instance declares, not only the published ones", () => {
-    // Six declared: library, catalogue, uploads, skills, themes, docs.
-    expect(kinds()).toEqual(["catalogue", "docs", "library", "skills", "themes", "uploads"]);
+    // SEVEN declared, and the seventh arrived by this test doing its job.
+    // `code` joined on 2026-09-23 when `who-iris/scripts/` was declared under
+    // bean `ylj7` — `gen-iris-pages.ts` and the catalogue checker had been
+    // sitting in no declared directory while every OTHER graph in this
+    // instance was declared. The list grew because the instance did, which is
+    // what "every kind the instance declares" is for; pinning it at six would
+    // have made the assertion a statement about 2026-09-22 rather than about
+    // the declaration.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "skills", "themes", "uploads"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -389,6 +396,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // non-link. `harness-tiles`: declared and not rendered is a GAP.
     expect(got.filter((i) => i.href === undefined).map((i) => i.label)).toEqual([
       "catalogue",
+      // `code` is declared and publishes no page — which is exactly the state
+      // this assertion exists to keep visible, rather than a gap to hide.
+      "code",
       "library",
       "skills",
       "themes",

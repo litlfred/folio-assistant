@@ -7,7 +7,7 @@ pages: 101-101
 pdf_page: 101
 source_pdf: 9789241509510_eng.pdf
 source_sha256: 26aa12fbae4eafb2
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 91

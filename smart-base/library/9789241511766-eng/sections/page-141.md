@@ -7,7 +7,7 @@ pages: 141-141
 pdf_page: 141
 source_pdf: 9789241511766-eng.pdf
 source_sha256: 934bdf1193c16ee5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 29.	 Performance monitoring and evaluation TIPS: building a results framework. Washington (DC): United States Agency 

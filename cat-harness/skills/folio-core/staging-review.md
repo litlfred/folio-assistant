@@ -404,12 +404,16 @@ at the top applies to every block:
 |---|---|---|---|
 | **Word diff of the source** | the Markdown with removed words struck and added words marked: exactly what the author typed | any kind not listed below | the block's prose |
 | **Inline, as rendered** | the block as a reader sees it now, with the change marked in place | `prose`, `remark`, `definition`, `example` | the block's prose |
-| **Side by side** | `main` and the preview next to each other, each scrolled to the block | `table`, `figure`, `diagram`, `equation`, `simulator` | a page on either side |
+| **Pictures, before and after** | a picture of the block on each side, the changed pixels marked, and the share changed in words ([`visual-diff`](visual-diff.md), bean `0rxe`) | `table`, `figure`, `diagram`, `equation`, `simulator` | `visual-diff.json` from the `folio-block-screenshots` Tool |
+| **Side by side** | `main` and the preview next to each other, each scrolled to the block | the same kinds, as the second choice when a build published no pictures | a page on either side |
 
 - **Where the data comes from.** The ChangeSet step's `--text-out` writes
   `changeset-text.json`: the source and rendered prose of each listed block,
-  on each side that has it. With no such file, only side by side is
-  available, and the page says so.
+  on each side that has it. The pictures step writes `visual-diff.json`
+  and `visual/`. With neither file, only side by side is available, and
+  the page says so.
+- **Two renderers may default for one kind.** Order is preference: the
+  page opens a block on the first renderer that lists its kind AND can run.
 - **A renderer that cannot run on a block is listed, disabled, with the
   reason.** For example, a manifest-only change has no prose to diff. If the
   page-level choice cannot run on a block, that block falls back to one
