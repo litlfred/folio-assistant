@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hfwl
 title: 'SAMPLE-IMPORT SDLC: the process for testing an import into a KG, with size, retention, source-loss and copyright as first-class gates'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T08:02:10Z
-updated_at: 2026-09-20T08:02:10Z
+updated_at: 2026-09-23T19:24:02Z
 parent: folio-assistant-kupb
 ---
 
@@ -23,3 +23,16 @@ FOUR GATES THE CURRENT INGESTION HAS NONE OF, each of which is a real decision s
 - `processes/sample-import.bpmn` with a lane per actor and the four gates as real gateways, not documentation.
 - A strawperson skill naming what each gate REFUSES on, since a gate that only warns is a gate nobody fails.
 - Rendered via `render:bpmn`, and `render:bpmn:check` green.
+
+---
+
+## Summary of Changes — 2026-09-23
+
+Built together with `hpax`, at the owner's pick ("hfwl + hpax").
+
+- [x] **`processes/sample-import.bpmn`** — three lanes (contributor, ingestion engine, corpus). Two entries: a proposed sample, and an upstream change to a permanent one.
+- [x] **The gates are real, and they are CALLED.** `hpax` requires one copy of the gates, which conflicted with this bean's "the four gates as real gateways" wording. The owner was asked. The answer ("if sample-import is not intended to be permanent, materialise to fsh-guts") kept the gates as a call to `materialize-remote`, whose own gateway refuses on any unanswered gate. This process's gateways act on its outcome (`Materialized?`), then on the owner's new question (`Meant to be permanent?`), then on its own test (`Every check passed?`, whose `no` branch includes *could not run*).
+- [x] **Strawperson skill** `skills/content-lifecycle/sample-import.md`. What each gate REFUSES on stays in `materialize-remote`, one copy. This skill covers scope, destination (library vs the kept trashcan), the four import checks, and what is recorded on every path.
+- [x] Rendered; `render:bpmn:check` green. The diagram is indexed on the publication-workflow page and has translation templates.
+
+**Owner's destination rule, as built:** a permanent sample lands in `library/` and is refreshed; a trial lands in `fsh-guts/`, kept and unpublished, and is never refreshed. Its provenance is the bean or issue, never an invented `movedFrom`. Exported identifiers do not spell the trashcan's name, because `fsh-guts-unpublished.test.ts` forbids it anywhere in the published export.

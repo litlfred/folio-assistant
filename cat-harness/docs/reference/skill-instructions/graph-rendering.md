@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/graph-management/graph-rendering.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/graph-management/graph-rendering.md) — do not edit here.
+> Generated from [`cat-harness/skills/graph-management/graph-rendering.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-rendering.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/graph-management/graph-rendering.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/graph-rendering.md){: .fa-edit-source }
 
 {% raw %}
 # Graph rendering: one set of rules for every drawn graph

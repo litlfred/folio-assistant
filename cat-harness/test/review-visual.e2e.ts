@@ -71,7 +71,11 @@ test.describe("review page: pictures before and after (0rxe)", () => {
     await open(page);
     const tbl = page.locator("li").nth(1);
     await expect(tbl.locator(".diff-visual .kind")).toHaveText("Only one side could be pictured, so nothing is compared.");
-    await tbl.locator("input[type=radio]").first().focus();
+    // It opens on the side that WAS pictured, not on the missing one.
+    expect(await tbl.locator("input[type=radio]:checked").getAttribute("value")).toBe("after");
+    expect(await tbl.locator(".diff-visual img").getAttribute("src")).toBe("../visual/tbl_new.after.png");
+    await tbl.locator("input[type=radio]:checked").focus();
+    await page.keyboard.press("ArrowLeft");
     await expect(tbl.locator(".diff-visual")).toContainText("Not on main: this block is new.");
   });
 });

@@ -17,7 +17,7 @@ Owner, 2026-09-20: "also need to know about refreshing amterialed remote content
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Sample import into a structured data store](sample-import.html)
 - **Calls:** [Adjudication](adjudication.html)
 
 ## Lanes — who acts
