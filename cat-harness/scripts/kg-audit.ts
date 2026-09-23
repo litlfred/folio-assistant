@@ -1052,11 +1052,9 @@ function auditRoles(
   const hash = sha256(readFileSync(graphPath, "utf-8"));
   const rel = relative(root, graphPath);
 
-  const corpusLanes = new Set<string>();
   const explicitRefs = new Set<string>();
   for (const p of processes) {
     for (const lane of p.model?.lanes ?? []) {
-      if (lane.name) corpusLanes.add(lane.name);
       if (lane.roleRef) explicitRefs.add(lane.roleRef);
     }
   }
@@ -1070,11 +1068,12 @@ function auditRoles(
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
-    const usedLanes = r.lanes.filter((l) => corpusLanes.has(l));
-    const bindsSomething = usedLanes.length > 0 || explicitRefs.has(r.id);
+    // A lane binds a role by its own `<folio:role ref>`; the role lists no lanes
+    // (data-modelling step 8, #1168).
+    const bindsSomething = explicitRefs.has(r.id);
     const laneFindings: KgFinding[] = bindsSomething
       ? []
-      : [{ where: r.id, detail: `role "${r.id}" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead.` }];
+      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
 
     const criteria: Record<string, KgCriterionEntry> = {
       "role-skills-resolve": entry(badSkills),

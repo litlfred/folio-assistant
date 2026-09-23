@@ -698,14 +698,14 @@ describe("a Role comes from the registry as well as from a lane", () => {
   });
 
   test("the registry view joins the lane view rather than replacing it", () => {
-    // Two nodes per role, joined by `bindsLane`: one carrying what the role
-    // IS, one per lane it is bound to carrying where it acts. The join is
-    // only worth having if it resolves — which is what `danglingLinks`
-    // checks, and what the `log` role failed until the lane set was read.
+    // Two kinds of node, joined by `bindsRole` ON THE LANE: the registry node
+    // carries what the role IS, each lane node where it acts. The lane holds
+    // the pointer, not the role (#1168). The join is only worth having if it
+    // resolves, which is what the `log` lane failed until the lane set was read.
     const log = registry.find((r) => r.name === "log")!;
-    expect(log.bindsLane).toHaveLength(1);
-    const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
-    for (const lane of log.bindsLane as string[]) expect(ids.has(lane)).toBe(true);
+    const binding = EXPORT["@graph"].filter((n) => n.bindsRole === log["@id"]);
+    expect(binding.length).toBeGreaterThanOrEqual(1);
+    expect(log.bindsLane).toBeUndefined();
     expect(log.hasSkill).toContain(
       EXPORT["@graph"].find((n) => String(n["@id"]).endsWith("#skill/activity-log"))!["@id"],
     );
