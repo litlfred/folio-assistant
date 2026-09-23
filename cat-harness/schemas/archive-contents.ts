@@ -29,6 +29,8 @@
  */
 import { z } from "zod";
 
+import { CONTENT_CONTEXT_URL } from "./jsonld";
+
 export const ARCHIVE_ENTRY_KINDS = ["file", "directory", "symlink", "special"] as const;
 export type ArchiveEntryKind = (typeof ARCHIVE_ENTRY_KINDS)[number];
 
@@ -52,6 +54,13 @@ export const ARCHIVE_CONTENTS_SCHEMA_ID = "folio-archive-contents/v1";
 
 export const ArchiveContentsSchema = z
   .object({
+    /**
+     * The published content context — bean `yh6u`. OPTIONAL because folio
+     * repositories hold records written before the arm emitted it; when
+     * present it must be that context, since any other would bind these keys
+     * to terms nobody declared.
+     */
+    "@context": z.literal(CONTENT_CONTEXT_URL).optional(),
     $schema: z.literal(ARCHIVE_CONTENTS_SCHEMA_ID),
     "@id": z.string().min(1),
     /** The archive file's own `_tech_meta` block. */
