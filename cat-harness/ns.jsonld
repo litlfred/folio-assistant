@@ -514,9 +514,9 @@
         "skos:Concept"
       ],
       "label": "QaGraph",
-      "comment": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited.",
+      "comment": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
       "prefLabel": "QaGraph",
-      "definition": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited.",
+      "definition": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
       "notation": "cat-harness:QaGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -623,6 +623,21 @@
       "prefLabel": "TranslationSourceGraph",
       "definition": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
       "notation": "cat-harness:TranslationSourceGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:UmlGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "UmlGraph",
+      "comment": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
+      "prefLabel": "UmlGraph",
+      "definition": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
+      "notation": "cat-harness:UmlGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

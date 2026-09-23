@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 571,
+      "count": 577,
       "unit": "beans"
     }
   },
@@ -1597,6 +1597,20 @@
       "file": "beans/defs/folio-assistant-6tkl--stale-list-check-declared-assets-hardcodes-two-ins.md"
     },
     {
+      "id": "folio-assistant-6vvv",
+      "title": "PlantUML object model generated from the JSON Schemas",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T23:25:34Z",
+      "updatedAt": "2026-09-22T23:31:21Z",
+      "preview": "Generate a .puml of the harness object model (deck slide 3: schema, scenario, process, state, test) whose class attributes are DERIVED from each model's JSON Schema — zod-to-json-schema for harness-owned models, the SMART DAK JSON Schema for User Story, the beans GraphQL schema for Bean — and whose relationships are asserted against those schemas.\n\n## Todo\n- [x] generator script\n- [x] generated .p",
+      "file": "beans/defs/folio-assistant-6vvv--plantuml-object-model-generated-from-the-json-sche.md"
+    },
+    {
       "id": "folio-assistant-6xaz",
       "title": "pdf-structure infers a TOC from a worked EXAMPLE and ships it as the document's own structure",
       "status": "in-progress",
@@ -2773,6 +2787,20 @@
       "file": "beans/defs/folio-assistant-bu2q--visualiser-voices-every-voice-defined-with-the-cit.md"
     },
     {
+      "id": "folio-assistant-bvhf",
+      "title": "UML overview per named sub-graph: PlantUML + Mermaid from one model",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T05:54:59Z",
+      "updatedAt": "2026-09-23T05:54:59Z",
+      "preview": "Owner, 2026-09-23: cat-harness/uml/overview/<sub-graph path>. Groupings are the named sub-graphs a harness declares (bootstrap/processes, bootstrap/schemas, bootstrap/scenarios, ...) and the node schema kinds in them; colours are declared in theme CSS; just-the-docs renders Mermaid; each page cross-references its PlantUML source.\n\n## Todo\n- [x] generator: instances -> declared directories -> kind ",
+      "file": "beans/defs/folio-assistant-bvhf--uml-overview-per-named-sub-graph-plantuml-mermaid.md"
+    },
+    {
       "id": "folio-assistant-bweb",
       "title": "MEMORY MOVE FALLOUT: sweep consumers after 07xs moved skills/memory/ to memory/",
       "status": "completed",
@@ -3887,6 +3915,20 @@
       "file": "beans/defs/folio-assistant-hw9g--mounted-pages-have-no-lhs-rail-a-collapsed-icon-wi.md"
     },
     {
+      "id": "folio-assistant-hwzu",
+      "title": "bootstrap's published graph carries a timestamp and commit SHA its emission skill forbids",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T07:37:59Z",
+      "updatedAt": "2026-09-23T08:30:37Z",
+      "preview": "Found by n350 while writing BootstrapGraphDocumentSchema. bootstrap-graph-emission says the document has 'no timestamp, no commit SHA' (a generated file cannot name its own commit). But the ONE publisher since dyd3 is kg-export --instance ./bootstrap, and its output carries generatedAt, sourceCommit, sourceCommitSha, sourceCommitAt and sourceTreeDirty. The four properties are asserted only against",
+      "file": "beans/defs/folio-assistant-hwzu--bootstraps-published-graph-carries-a-timestamp-and.md"
+    },
+    {
       "id": "folio-assistant-hylg",
       "title": "Workflow interpreter descends into call activities — subprocesses give increasing context",
       "status": "in-progress",
@@ -4927,6 +4969,20 @@
       "file": "beans/defs/folio-assistant-n2s1--practice-graph-detanglement-and-extraction-as-a-na.md"
     },
     {
+      "id": "folio-assistant-n350",
+      "title": "Consolidate bootstrap's render/ sub-graph into tools/",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:25:14Z",
+      "updatedAt": "2026-09-23T07:37:59Z",
+      "preview": "Owner, 2026-09-23: 'render/ should be consolidated to tools/'. Today bootstrap declares bootstrap-render at bootstrap/tools/ with graph kind skills, and cat-harness re-declares the same directory (by decision, so skill_fetch can reach it — see the entry's _comment). The UML overview shows it as a separate section. Merge it into the tools sub-graph; keep skill_fetch reaching the two rendering-exemp",
+      "file": "beans/defs/folio-assistant-n350--consolidate-bootstraps-render-sub-graph-into-tools.md"
+    },
+    {
       "id": "folio-assistant-n7vv",
       "title": "BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row",
       "status": "completed",
@@ -5741,6 +5797,20 @@
       "file": "beans/defs/folio-assistant-qttr--relationship-diagram-a-layer-has-no-width-budget-s.md"
     },
     {
+      "id": "folio-assistant-quda",
+      "title": "Register node schemas for the graph kinds that still declare none",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:25:14Z",
+      "updatedAt": "2026-09-23T06:48:50Z",
+      "preview": "Found by the UML overview (bean bvhf): these kinds register neither validator nor schema, so every sub-graph of theirs is drawn 'could not determine': cat-harness, skills, methodology, docs, schemas, uml, code, glossary, models, beans, bean-defs, todos, uploads, library, catalogue, fhir-artifact-index, themes, todo-feedback, session-state, interaction, issue-marks, fsh-guts, external-schema (Zod e",
+      "file": "beans/defs/folio-assistant-quda--register-node-schemas-for-the-graph-kinds-that-sti.md"
+    },
+    {
       "id": "folio-assistant-r1lz",
       "title": "Ingest the three WHO style guides to library/ as KG, then derive the three WHO voices",
       "status": "completed",
@@ -5839,6 +5909,20 @@
       "updatedAt": "2026-09-20T16:55:43Z",
       "preview": "## What was measured\n\n`schemas/cat-harness.ts` holds two resolvers over the same declaration, and\nthey treat `directories: []` differently:\n\n- **`resolveDirectories(chain)`** seeds `DEFAULT_DIRECTORIES` at the root link\n  *before* reading any declaration, existence-filtered, tagged\n  `declaredBy: \"(default)\"`. An instance that declares nothing still gets the\n  conventional set.\n- **`ownDirectories",
       "file": "beans/defs/folio-assistant-rday--owndirectories-and-resolvedirectories-disagree-abo.md"
+    },
+    {
+      "id": "folio-assistant-rdkm",
+      "title": "A graph kind names one node schema per $schema family (qa holds seven)",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:25:14Z",
+      "updatedAt": "2026-09-23T06:39:05Z",
+      "preview": "Owner, 2026-09-23: 'QA audits?'. The qa graph (test/results/) holds seven $schema families: kg-qa/v1 426, qa-witness/v1 137, block-qa/v1 122, qa-results/v1 20, folio-qa-index/v1 13, translation-qa/v1 9, folio-test-run/v1 1. GraphKindDef.validator takes ONE module#Export, so the UML overview can only draw qa as a bare box naming content/pipeline/qa-witness.ts (TS interfaces, no Zod). Let a kind map",
+      "file": "beans/defs/folio-assistant-rdkm--a-graph-kind-names-one-node-schema-per-schema-fami.md"
     },
     {
       "id": "folio-assistant-rfev",

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "bootstrap-tools-schemas": {
-      "count": 2,
+      "count": 3,
       "unit": "modules"
     },
     "schemas": {
@@ -30,6 +30,14 @@
     "large-datasets/schemas"
   ],
   "modules": [
+    {
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "instance": "bootstrap-tools",
+      "name": "bootstrap-graph",
+      "graphNode": "schema",
+      "summary": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
+      "isTest": false
+    },
     {
       "module": "bootstrap-tools/schemas/discussion.test.ts",
       "instance": "bootstrap-tools",
@@ -1307,6 +1315,155 @@
     }
   ],
   "decls": [
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocument",
+      "name": "BootstrapGraphDocument",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "name": "BootstrapGraphDocumentSchema",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Must equal the path the document is published at (bootstrap-graph-publication)."
+        },
+        {
+          "name": "@type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's declared name."
+        },
+        {
+          "name": "omitted",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools"
+        },
+        {
+          "name": "problems",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sources that could not be read, counted rather than silently dropped."
+        },
+        {
+          "name": "counts",
+          "type": "z.record(z.string(), z.number().int().nonnegative()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommit",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitSha",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceTreeDirty",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitUnavailable",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Said instead of `sourceCommit*` when the build could not read git."
+        },
+        {
+          "name": "@graph",
+          "type": "z.array(BootstrapGraphNodeSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "name": "BootstrapGraphNodeSchema",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "doc": "One node of the graph. Only the two keys every node carries are required.",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
     {
       "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInput",
       "name": "DiscussionInput",
@@ -13216,7 +13373,6 @@
       "name": "GraphKindDef",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "kind": "interface",
-      "doc": "What a declared directory's graph kind means.",
       "fields": [
         {
           "name": "type",
@@ -13274,6 +13430,13 @@
           "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
         },
         {
+          "name": "nodeSchemas",
+          "type": "Readonly<Record<string, NodeSchemaRef>>",
+          "optional": true,
+          "array": false,
+          "doc": "One entry per `$schema` family a node of this kind may carry, keyed by"
+        },
+        {
           "name": "declarationFile",
           "type": "string",
           "optional": true,
@@ -13284,7 +13447,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+        "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef"
       ],
       "unresolved": [],
       "external": [],
@@ -13304,6 +13468,20 @@
         "state",
         "derived"
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "name": "NodeSchemaRef",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "Where ONE `$schema` family of a graph kind is defined. Bean `rdkm`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -15253,6 +15431,54 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/kind-validator.ts#NodeSchemaResolution",
+      "name": "NodeSchemaResolution",
+      "module": "cat-harness/schemas/kind-validator.ts",
+      "kind": "type-alias",
+      "doc": "One `$schema` family of a kind, resolved. Four states, and the two in the",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kind-validator.ts#ShapeField",
+      "name": "ShapeField",
+      "module": "cat-harness/schemas/kind-validator.ts",
+      "kind": "interface",
+      "doc": "One field of a TypeScript shape, read from source — never executed.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "optional",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The type as written in the source."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/kind-validator.ts#ValidatorRef",
       "name": "ValidatorRef",
       "module": "cat-harness/schemas/kind-validator.ts",
@@ -15260,11 +15486,18 @@
       "doc": "A validator reference, split from its `module#Export` form.",
       "fields": [
         {
+          "name": "instance",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance the module belongs to, by its DECLARED NAME, when that is not"
+        },
+        {
           "name": "module",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Instance-relative module path."
+          "doc": "Module path, relative to {@link ValidatorRef.instance}'s root, or to the resolving one."
         },
         {
           "name": "exportName",
@@ -34135,6 +34368,14 @@
   ],
   "edges": [
     {
+      "from": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "to": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "via": "@graph",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
       "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
       "via": "askedOf",
@@ -36204,6 +36445,14 @@
       "via": "holds",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "via": "nodeSchemas",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

@@ -268,25 +268,25 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T09:21:51.841Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/eb22439bc89b185f958a297e5df6f83c7567d7ff",
-  "sourceCommitSha": "eb22439bc89b185f958a297e5df6f83c7567d7ff",
-  "sourceCommitAt": "2026-09-23T11:19:10+02:00",
+  "generatedAt": "2026-09-23T09:48:53.284Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0bcf94bd8a8e8ae0211b152ce63aff3870d10b16",
+  "sourceCommitSha": "0bcf94bd8a8e8ae0211b152ce63aff3870d10b16",
+  "sourceCommitAt": "2026-09-23T11:46:25+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 242,
+    "Skill": 240,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 16,
+    "SkillPackage": 15,
     "Process": 62,
     "SequenceFlow": 791,
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 70,
-    "Schema": 100,
-    "GraphKind": 29,
+    "Schema": 101,
+    "GraphKind": 30,
     "Directory": 40,
     "Asset": 3
   },
@@ -1913,7 +1913,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 976,
+      "instructionLines": 1032,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4062,38 +4062,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bootstrap-graph-emission",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-graph-emission",
-      "title": "Emitting bootstrap's own graph",
-      "description": "How bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/bootstrap-render"
-      ],
-      "instructionsPath": "../bootstrap/tools/bootstrap-graph-emission.md",
-      "instructionLines": 89,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-render"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bootstrap-graph-publication",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-graph-publication",
-      "title": "Publishing bootstrap's graph",
-      "description": "Where bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/bootstrap-render"
-      ],
-      "instructionsPath": "../bootstrap/tools/bootstrap-graph-publication.md",
-      "instructionLines": 140,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-render"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-navigation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "kg-navigation",
@@ -5162,14 +5130,6 @@
         "typescript",
         "python"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/bootstrap-render",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "bootstrap-render",
-      "path": "../bootstrap/tools",
-      "hasManifest": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-render"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-navigation",
@@ -29396,7 +29356,9 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
       ]
     },
     {
@@ -33388,6 +33350,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/detangle-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bootstrap-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "bootstrap-graph",
+      "title": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
+      "module": "../bootstrap-tools/schemas/bootstrap-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/discussion",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "discussion",
@@ -33468,12 +33438,20 @@
       "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/uml",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "uml",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#UmlGraph",
+      "renderable": false,
+      "summary": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "qa",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#QaGraph",
       "renderable": false,
-      "summary": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited."
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health",
@@ -34677,14 +34655,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-render",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-render",
-      "path": "bootstrap/tools/",
+      "name": "uml",
+      "path": "uml/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/uml"
       ],
-      "description": "MOVED from `render/` to `tools/` on 2026-09-22 on the owner's instruction. The ID is UNCHANGED: `bootstrap-render` names what this package IS — the skills governing bootstrap's own graph emission — and ids are stable across a relocation while paths are not, which is the same rule that kept the discussion schemas' published `$id`s fixed when they moved. graphKinds stays `[\"skills\"]` and does NOT become `[\"tools\"]`: the `tools` graph holds Tool nodes authored as TypeScript through `defineTool`, and these are two markdown skill bodies. `hfkl` records the owner's original words for this content — *\"as subgraph of skill related to renering .jsonld/.json\"*, and *\"maybe in wrong place\"*, which is what this move answers. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents."
+      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which render the Mermaid and link both sources. Owner, 2026-09-23.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness",
@@ -35099,8 +35078,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "eb22439bc89b185f958a297e5df6f83c7567d7ff",
+    "sha": "0bcf94bd8a8e8ae0211b152ce63aff3870d10b16",
     "pr": "main",
-    "run": "35842230147"
+    "run": "35844911475"
   }
 }
