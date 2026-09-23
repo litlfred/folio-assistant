@@ -133,6 +133,7 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Authoritative" name="Authority confirmed?">
+      <bpmn:documentation>Answered by checking the source against the observatory or registry API: is its authority confirmed? `no` opens a bean for the unverified citation; `yes` goes on to appraise and grade the evidence.</bpmn:documentation>
       <bpmn:incoming>Flow_11</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>
@@ -156,6 +157,7 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_Sufficient" name="Sufficient for a recommendation?">
+      <bpmn:documentation>Answered by the appraisal: is the graded evidence enough to support a recommendation? `no` records the evidence gap; `yes` attaches the evidence to the recommendation.</bpmn:documentation>
       <bpmn:incoming>Flow_15</bpmn:incoming>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
       <bpmn:outgoing>Flow_17</bpmn:outgoing>

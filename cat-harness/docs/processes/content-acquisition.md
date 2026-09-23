@@ -43,10 +43,10 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Offered already?**<br>`GW_Offered` | — | **no** → Say what is needed, and ask for a link OR a description<br>**yes** → Accept it, and record where it came from |
+| **Offered already?**<br>`GW_Offered` | Did the resource arrive with the request? `no`: say what is needed and ask for a link or a description. `yes`: accept it and record where it came from. | **no** → Say what is needed, and ask for a link OR a description<br>**yes** → Accept it, and record where it came from |
 
 {% endraw %}

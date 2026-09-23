@@ -41,10 +41,10 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **BA approves?**<br>`GW_Needs` | — | **revise** → Phase 1: Synthesise needs from sources<br>**yes** → Phase complete |
+| **BA approves?**<br>`GW_Needs` | The BA's answer to the needs statement. `revise` goes back to synthesising needs from the sources; `yes` completes the phase. | **revise** → Phase 1: Synthesise needs from sources<br>**yes** → Phase complete |
 
 {% endraw %}

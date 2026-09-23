@@ -5,7 +5,7 @@
     "id": "Process_MaterializeRemote",
     "path": "processes/materialize-remote.bpmn"
   },
-  "source_hash": "sha256:063c6b91b9d189da777a989e2f104f6b60de499010608f8941398bcfccffd783",
+  "source_hash": "sha256:3a2ebc1d7ebe34f44c494df4c374cde71e2acac75abfe3068c940318de6040fb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,13 +97,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Gates",
-          "detail": "\"All five answered, none refused?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -119,8 +114,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 2,
+    "pass": 12,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

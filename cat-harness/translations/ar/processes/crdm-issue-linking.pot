@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-issue-linking\n"
-"POT-Creation-Date: 2026-09-23T09:51:01.137Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.848Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/crdm-issue-linking.bpmn:43
+#: processes/crdm-issue-linking.bpmn:45
 #. Diagram element documentation
 msgid "A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one."
 msgstr ""
@@ -24,12 +24,17 @@ msgstr ""
 msgid "Agent"
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:38
+#: processes/crdm-issue-linking.bpmn:36
+#. Diagram element documentation
+msgid "Answered by the scan of open issues: does one already cover this work? `yes` links to it; `no` asks the BA to create or name one. The agent does not create an issue on its own."
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:40
 #. Diagram element documentation
 msgid "Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent."
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:36
+#: processes/crdm-issue-linking.bpmn:38
 #. Diagram label
 msgid "Ask BA to create or link issue"
 msgstr ""
@@ -49,12 +54,12 @@ msgstr ""
 msgid "Issue found?"
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:42
+#: processes/crdm-issue-linking.bpmn:44
 #. Diagram label
 msgid "Link to existing issue"
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:50
+#: processes/crdm-issue-linking.bpmn:52
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -64,7 +69,7 @@ msgstr ""
 msgid "Phase begins"
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:46
+#: processes/crdm-issue-linking.bpmn:48
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
@@ -94,7 +99,7 @@ msgstr ""
 msgid "When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023)."
 msgstr ""
 
-#: processes/crdm-issue-linking.bpmn:51
+#: processes/crdm-issue-linking.bpmn:53
 #. Diagram label
 msgid "yes"
 msgstr ""

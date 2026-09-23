@@ -168,6 +168,7 @@
       <bpmn:outgoing>B18</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_Accurate" name="Clinically accurate?">
+      <bpmn:documentation>The clinical validator's result. `changes needed` goes back to the author; `validated` goes on to assemble and validate the DAK.</bpmn:documentation>
       <bpmn:incoming>B18</bpmn:incoming>
       <bpmn:outgoing>B19</bpmn:outgoing>
       <bpmn:outgoing>B20</bpmn:outgoing>

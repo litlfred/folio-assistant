@@ -86,7 +86,9 @@
       <bpmn:documentation>An operational question, asked of the people who run the process because they know where the exceptions are.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-data-model"/><folio:raci ref="business-analyst" involvement="accountable"/><folio:raci ref="authoring-agent" involvement="informed"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Model" name="Entities recognised and&#10;every cardinality answered?"/>
+    <bpmn:exclusiveGateway id="GW_Model" name="Entities recognised and&#10;every cardinality answered?">
+      <bpmn:documentation>Answered by the BA after confirming cardinalities: are the entities recognised and every cardinality answered? `revise` returns to identifying entities; `yes` declares the model where a tool can read it.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="A_Declare" name="Declare the model&#10;where a tool can read it">
       <bpmn:documentation>A model in prose is a proposal; a model in the declaration is a model. Ship a reader in the same change — everything here that was only documentation went inert within weeks.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-data-model"/><folio:raci ref="business-analyst" involvement="accountable"/><folio:raci ref="publication-manager" involvement="informed"/></bpmn:extensionElements>

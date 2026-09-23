@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "processes/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:0f1462a45c48b118754534e63340d653d05299625e387af725a6be8ceb5a3804",
+  "source_hash": "sha256:33db72492a9a623fcc0ce4f1d1e8eca0efcf7d4a16dd70c1cc463603427b804a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,26 +80,16 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Drift",
-          "detail": "\"Did anything&#10;change?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/jsonld-gen-check.yml",
-          "detail": ".github/workflows/jsonld-gen-check.yml changed since cat-harness/processes/jsonld-drift-check.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -107,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 2,
+    "pass": 14,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   },
@@ -117,8 +107,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/jsonld-drift-check.bpmn",
       "code": ".github/workflows/jsonld-gen-check.yml",
-      "prose_hash": "0f1462a45c48",
-      "code_hash": "6b2acbbf2868",
+      "prose_hash": "33db72492a9a",
+      "code_hash": "ccfade10a6fc",
       "by": "baseline"
     }
   ]

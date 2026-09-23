@@ -47,11 +47,11 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Capture enabled?**<br>`Gateway_Capture` | — | **on** → Persist the log to the data store<br>**off or unknown** → Report the capture state |
-| **One entry or all?**<br>`Gateway_EmptyScope` | — | **one** → Discard one entry by id<br>**all / periodic** → Discard all entries, or a whole session |
+| **Capture enabled?**<br>`Gateway_Capture` | Asked after a task ends: is log capture switched on for this session? `on` persists the entry to the data store. `off or unknown` persists nothing and reports the capture state instead, so an unknown setting is said out loud rather than read as off. | **on** → Persist the log to the data store<br>**off or unknown** → Report the capture state |
+| **One entry or all?**<br>`Gateway_EmptyScope` | Asked when a person asks to empty the log: which entries? `one` discards a single entry by id; `all / periodic` discards every entry or a whole session, the branch a scheduled clean-up also takes. | **one** → Discard one entry by id<br>**all / periodic** → Discard all entries, or a whole session |
 
 {% endraw %}

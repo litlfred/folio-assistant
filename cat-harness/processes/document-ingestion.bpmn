@@ -157,6 +157,7 @@ uncovered until the skill is written.</bpmn:documentation>
       <bpmn:outgoing>Flow_i6</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:exclusiveGateway id="Gateway_Complete" name="L1 complete?">
+      <bpmn:documentation>The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/&lt;bib-slug&gt;/.</bpmn:documentation>
       <bpmn:incoming>Flow_i6</bpmn:incoming>
       <bpmn:outgoing>Flow_i7</bpmn:outgoing>
       <bpmn:outgoing>Flow_i9</bpmn:outgoing>

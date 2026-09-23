@@ -40,11 +40,11 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Is every maintained&#10;artefact present?**<br>`GW_Complete` | — | **something is missing** → Refused &#8212;&#10;nothing published<br>**complete** → Restore the OPEN PRs'&#10;staging previews |
-| **Did the previews&#10;survive?**<br>`GW_Survived` | — | **yes** → Site published,&#10;previews intact<br>**no, or could not tell** → Job RED &#8212; a preview&#10;was deleted |
+| **Is every maintained&#10;artefact present?**<br>`GW_Complete` | Answered by the export: is every maintained artefact present? `something is missing` refuses and publishes nothing, because a full replace would ship the gap; `complete` goes on to restore the open PRs' staging previews. | **something is missing** → Refused &#8212;&#10;nothing published<br>**complete** → Restore the OPEN PRs'&#10;staging previews |
+| **Did the previews&#10;survive?**<br>`GW_Survived` | Asked after the full-replace publish: are the open PRs' previews still there? `yes` ends published; `no, or could not tell` fails the job, because a preview that cannot be confirmed is treated as deleted. | **yes** → Site published,&#10;previews intact<br>**no, or could not tell** → Job RED &#8212; a preview&#10;was deleted |
 
 {% endraw %}

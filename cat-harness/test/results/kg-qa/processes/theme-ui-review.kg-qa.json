@@ -5,7 +5,7 @@
     "id": "Process_ThemeUIReview",
     "path": "processes/theme-ui-review.bpmn"
   },
-  "source_hash": "sha256:ae102fad729a9dc33a0e35be723e6d715f16ddcbc41574734c2e492ec3a72789",
+  "source_hash": "sha256:eeed553ff36f485b813be35b739b1de79be59db0291eb4767a0ae271d9fc4584",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,13 +101,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Findings",
-          "detail": "\"Findings?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -123,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 11,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

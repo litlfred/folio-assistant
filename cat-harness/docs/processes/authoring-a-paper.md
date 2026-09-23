@@ -49,11 +49,11 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Build green, no sorries?**<br>`Gateway_LeanGreen` | — | **not yet** → 5 · Formalise in Lean<br>**green** → 6 · Validate |
-| **Ready to publish?**<br>`Gateway_ReviewOutcome` | — | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
+| **Build green, no sorries?**<br>`Gateway_LeanGreen` | Answered by the Lean build after step 5: is it green with no `sorry` left? `not yet` loops on formalisation; `green` goes on to validation. A build that passes with a `sorry` is not green. | **not yet** → 5 · Formalise in Lean<br>**green** → 6 · Validate |
+| **Ready to publish?**<br>`Gateway_ReviewOutcome` | The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish. | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
 
 {% endraw %}

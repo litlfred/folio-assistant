@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-theme\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.492Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.934Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:120
+#: processes/ingest-theme.bpmn:121
 #. Diagram element documentation
 msgid "A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (\"Never red with green, never blue with yellow\")."
 msgstr ""
@@ -54,7 +54,12 @@ msgstr ""
 msgid "Ingestion subprocess — ingest a theme"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:115
+#: processes/ingest-theme.bpmn:110
+#. Diagram element documentation
+msgid "Is every layout the theme must cover present in the source? `yes` goes on to the contrast and non-colour review; `no` refuses the theme as incomplete rather than filling the gap by guessing."
+msgstr ""
+
+#: processes/ingest-theme.bpmn:116
 #. Diagram element documentation
 msgid "j66n's fourth clause: every layout still required, and a missing one stays INVALID rather than degraded. Three viewports for a screen theme, three print formats for a publication one. A theme that quietly dropped a layout would render correctly everywhere the missing one is not used, which is the state this refusal exists to prevent."
 msgstr ""
@@ -64,7 +69,7 @@ msgstr ""
 msgid "Map values onto the shared palette ROLES"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:138
+#: processes/ingest-theme.bpmn:139
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -89,17 +94,17 @@ msgstr ""
 msgid "Record contradictions IN the source"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:114
+#: processes/ingest-theme.bpmn:115
 #. Diagram label
 msgid "Refused — incomplete"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:118
+#: processes/ingest-theme.bpmn:119
 #. Diagram label
 msgid "Review contrast and non-colour signal"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:131
+#: processes/ingest-theme.bpmn:132
 #. Diagram label
 msgid "served — a deployment"
 msgstr ""
@@ -109,7 +114,7 @@ msgstr ""
 msgid "Served, or stated?"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:132
+#: processes/ingest-theme.bpmn:133
 #. Diagram label
 msgid "stated — a style guide"
 msgstr ""
@@ -124,7 +129,7 @@ msgstr ""
 msgid "The ONE difference between the two paths. A deployed site SERVES its theme as a compiled stylesheet; a style guide STATES its rules as prose and swatches. Everything after the join is shared."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:127
+#: processes/ingest-theme.bpmn:128
 #. Diagram label
 msgid "Theme node"
 msgstr ""
@@ -134,7 +139,7 @@ msgstr ""
 msgid "Theme source in hand"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:137
+#: processes/ingest-theme.bpmn:138
 #. Diagram label
 msgid "yes"
 msgstr ""

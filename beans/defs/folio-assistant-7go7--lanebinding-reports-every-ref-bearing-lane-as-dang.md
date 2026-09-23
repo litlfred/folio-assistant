@@ -1,7 +1,7 @@
 ---
 # folio-assistant-7go7
 title: laneBinding reports every ref-bearing lane as dangling when the role graph cannot be read
-status: todo
+status: completed
 parent: folio-assistant-zzmr
 type: task
 created_at: 2026-09-23T10:46:28Z
@@ -71,3 +71,51 @@ problem to every call site. Not decided here.
 - [ ] A test covers the no-graph case explicitly, whichever way it resolves.
       One exists in `scripts/tests/lane-detail.test.ts` pinning today's
       behaviour; it should move or change with the decision.
+
+
+## Decided — the owner, 2026-09-23: candidate (2), make the graph required
+
+Chosen over (1), a sixth `ungraphed` kind. The reason it is the stronger of the
+two: **a caller with no graph cannot ask the question, which is the honest
+answer** — a lane's binding is not a fact that exists without a role registry.
+A sixth kind would have let a consumer keep asking and then forget to handle
+the reply, which is the shape this bean is about.
+
+### The reason given for NOT fixing it was false, and checking it is what unblocked this
+
+This bean said a local guard *"would make the viewer and the audit disagree
+about whether a lane is bound"*. It would not have. `kg-audit.ts` **already**
+branches on `!graph` and overwrites `role-ref-resolves`, `lane-binds-role` and
+five more with `unknown` — *"No role graph is a state the audit can be in, and
+it is not a pass."* So the audit never published `dangling` in that state; it
+computed the verdicts and threw them away.
+
+**The consumer that disagreed with the audit was the viewer**, which took the
+verdict verbatim and published it. The premise was backwards, and it was the
+only thing standing between the defect and a small fix.
+
+### What each consumer answers now
+
+The type found all five call sites, which is the argument for a required
+parameter over a defaulted one.
+
+| consumer | with no graph |
+|---|---|
+| `kg-audit.ts` | skips the lane loop (`if (!graph) break`) instead of computing and discarding; the `unknown` overwrite it already had is unchanged |
+| `gen-processes-viz.ts` | `binding: "ungraphed"` — the viewer's word for could-not-determine, agreeing with the audit's `unknown` rather than contradicting it |
+| `glossary-export.ts` | ONE problem naming the missing registry, not one per lane. That channel is fatal (`exit(1)`), so the old behaviour was a red gate built from false symptoms |
+
+`variable-performer.test.ts`'s two no-graph tests now use an EMPTY graph, which
+still shows the contradictory case is decided before the graph is consulted —
+an empty graph could not have produced that answer. A third test pins that an
+empty graph answering `dangling` is CORRECT: somebody declared roles and this
+ref is not among them, which is an answer, where no graph is not.
+
+`lane-detail.test.ts`'s pinning test now asserts `ungraphed` and carries the
+corrected premise.
+
+## Summary of Changes
+
+`laneBinding(graph: RoleGraph, lane)` — required. Three consumers each given an
+explicit could-not-determine. Five call sites, all found by the type. Gates
+135/135.
