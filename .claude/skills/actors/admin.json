@@ -2,7 +2,7 @@
   "id": "admin",
   "title": "Administrator",
   "kind": "person",
-  "description": "Full administrative access. The three fields say three different things: `roles` is what it may act AS, `permissions` what it may DO in any lane, `capabilities` what its machine has.",
+  "description": "Full administrative access. `roles` is what it may act AS and `capabilities` what its machine has. What it may DO is no longer written here: it is an ODRL rule in cat-harness/policies/folio-defaults.jsonld (issue #1180).",
   "roles": [
     "administrator",
     "programme-manager",
@@ -11,11 +11,6 @@
     "author",
     "reviewer",
     "code-reviewer"
-  ],
-  "permissions": [
-    "admin-settings",
-    "role-management",
-    "release-authorization"
   ],
   "capabilities": [
     "git-push"

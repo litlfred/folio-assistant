@@ -25,9 +25,9 @@ The shape of a session from the outside: establish who is acting, open a record 
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent (playing the machine) | — | Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate. |
-| Human actor | — | Entered only when Gateway_ActorKnown cannot confirm an actor — the one fact in this whole record that the machine cannot recover by reading the repository — and answered once: the response is recorded so this lane is never re-entered for the same session, which is what keeps asking who is acting from becoming a repeated interruption. |
-| Session record | — | — |
+| Agent (playing the machine) | `authoring-agent` | Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate. |
+| Human actor | `user` | Entered only when Gateway_ActorKnown cannot confirm an actor — the one fact in this whole record that the machine cannot recover by reading the repository — and answered once: the response is recorded so this lane is never re-entered for the same session, which is what keeps asking who is acting from becoming a repeated interruption. |
+| Session record | `session-record` | — |
 
 ## Steps
 

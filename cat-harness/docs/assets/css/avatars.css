@@ -87,6 +87,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="policies"] {
+  /* a shield with a tick — what each Actor is permitted to do */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zm-3.5 9l2.5 2.5 4.5-4.5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="folio-assistant"] {
   /* a leaf of paper held in a frame — the folio, and the instance that holds it */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -369,6 +376,7 @@
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
+  .fa-avatar[data-fa-kind="policies"] { background-color: hsl(304 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
@@ -419,6 +427,7 @@
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
+    .fa-avatar[data-fa-kind="policies"] { background-color: hsl(304 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 46% 34%); }
@@ -470,6 +479,7 @@
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
+  .fa-avatar[data-fa-kind="policies"] { background-color: hsl(304 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
@@ -520,6 +530,7 @@
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
+    .fa-avatar[data-fa-kind="policies"] { background-color: hsl(304 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="folio"] { background-color: hsl(224 42% 72%); }
@@ -573,6 +584,7 @@
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+  .fa-avatar[data-fa-kind="policies"][data-fa-trash="true"] { background-color: hsl(304 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
@@ -622,6 +634,7 @@
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+    .fa-avatar[data-fa-kind="policies"][data-fa-trash="true"] { background-color: hsl(304 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
@@ -671,6 +684,7 @@
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+  .fa-avatar[data-fa-kind="policies"][data-fa-trash="true"] { background-color: hsl(304 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
@@ -720,6 +734,7 @@
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+    .fa-avatar[data-fa-kind="policies"][data-fa-trash="true"] { background-color: hsl(304 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="folio"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }

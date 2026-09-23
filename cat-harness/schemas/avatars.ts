@@ -175,6 +175,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "two figures — the Actors and the Roles they take on",
   },
+  policies: {
+    // A shield with a tick: what is permitted, and to whom. ODRL policies,
+    // issue #1180.
+    glyph: "M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zm-3.5 9l2.5 2.5 4.5-4.5",
+    tone: 304,
+    reads: "a shield with a tick — what each Actor is permitted to do",
+  },
   // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
   //
   // Owner, reporting it: *"folio assistant icon is messed up still. I want

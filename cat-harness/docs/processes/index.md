@@ -358,5 +358,5 @@ Every one of the **71** diagrams has a rendered SVG.
 | Trusted registries and observatories (external) | 1 |
 | User | 1 |
 
-**No verdict is offered on which of these is a gap**, and that is the honest state rather than a hedge: distinguishing a person's judgement step from an agent step somebody forgot needs the lane's actor KIND, which a free-text lane name does not give — `process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is the join that would answer it, and it is present on **6** of these **23** steps — which is the measurement, not an impression. An earlier draft of this sentence said *few of these* and was counting whether the lane had a NAME, a different question with a different answer.
+**No verdict is offered on which of these is a gap**, and that is the honest state rather than a hedge: distinguishing a person's judgement step from an agent step somebody forgot needs the lane's actor KIND, which a free-text lane name does not give — `process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is the join that would answer it, and it is present on **23** of these **23** steps — which is the measurement, not an impression. An earlier draft of this sentence said *few of these* and was counting whether the lane had a NAME, a different question with a different answer.
 

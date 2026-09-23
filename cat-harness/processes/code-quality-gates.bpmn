@@ -23,6 +23,7 @@
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Lean</bpmn:flowNodeRef>

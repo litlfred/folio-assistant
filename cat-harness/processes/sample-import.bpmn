@@ -34,11 +34,13 @@ WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-
     <bpmn:laneSet id="Process_SampleImport_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
         <bpmn:documentation>One decision, and it is the one no file answers: what the sample is FOR. Which items, into which store, and whether the result is meant to last. The last question decides the destination, and asking it after the copy exists would mean moving a copy that was already landed somewhere under the wrong obligations.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Proposed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Scope</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Calls the two shared subprocesses and does the part that is this process's own: landing the copy in the destination the contributor chose, importing it into the store, and testing the import. It never re-asks a gate: it acts on materialize-remote's outcome. It also answers the second entry, an upstream change to a permanent sample, by calling refresh-materialized rather than re-importing.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Upstream</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Refresh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Refreshed</bpmn:flowNodeRef>
@@ -52,6 +54,7 @@ WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-
       </bpmn:lane>
       <bpmn:lane id="Lane_2" name="Corpus — L1 source knowledge graph">
         <bpmn:documentation>Every path ends here with something written down. A refused sample stays referenced with the refusing gate's reason, a failed import records what failed, and a passed one records where it landed. None ends in silence, because an import nobody can tell was tried is the one somebody tries again.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>EndEvent_Refused</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RecordFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Failed</bpmn:flowNodeRef>

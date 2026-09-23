@@ -33,6 +33,7 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
     <bpmn:laneSet id="LaneSet_Main">
       <bpmn:lane id="Lane_Coordinator" name="Translation Coordinator">
         <bpmn:documentation>Owns the completeness gate, Gateway_Complete, a different question from the accuracy Lane_Reviewer judges later: this lane can send work back to the translator for missing or fuzzy strings before a single sentence has been checked for meaning.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="translation-coordinator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_TranslationNeeded</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_IdentifyContent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AssignTranslator</bpmn:flowNodeRef>
@@ -42,12 +43,14 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
       </bpmn:lane>
       <bpmn:lane id="Lane_Translator" name="Human Translator">
         <bpmn:documentation>Task_TranslateInTool is where both loops in this process land — an incompleteness request from the coordinator and a correction from the reviewer — so nothing in the task itself says which one sent the work back; only the annotations that travel with each loop carry that distinction.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="translator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ReceiveAssignment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TranslateInTool</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SubmitPO</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Subject-Matter Expert / Reviewer">
         <bpmn:documentation>The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SMEReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReturnForCorrection</bpmn:flowNodeRef>
@@ -56,6 +59,7 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Automated Pipeline">
         <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ExtractPOT</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PrepareGlossary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_InjectPO</bpmn:flowNodeRef>
