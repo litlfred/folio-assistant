@@ -7731,7 +7731,27 @@
       for (var j = 0; j < graphs.length; j++) {
         var g = graphs[j];
         var li = el("li", { class: "fa-nav-folders__item" });
-        if (g && g.path) {
+        if (g && g.path && g.stagingOnly && !isStagingPreview()) {
+          /* WITHHELD FROM THIS DEPLOY — a path that resolves and a page that
+           * is not there.
+           *
+           * `compose-docs.ts` lays a `publish: "staging-only"` page into the
+           * site only under `--staging`, and `path` is resolved against the
+           * SOURCE tree, so on the canonical build it is present, correct and
+           * dead. The graph TILE has skipped such a page since it was written
+           * — *"Conflating them would let 'show hidden' resurrect a link to a
+           * 404"* — and this list linked it. Measured on a canonical-shaped
+           * local build: `fsh-guts`, 1 of 387 sidebar links.
+           *
+           * SHOWN, not skipped, unlike the tile. The owner's ruling on #1036
+           * is that a graph a reader cannot open is rendered inert and
+           * labelled, and this list is the one surface that enumerates every
+           * declared kind — dropping a row here would answer "what is in this
+           * KG" with a shorter and wronger list. `inertNote`'s own
+           * `staging-only` wording says which case it is; until now that
+           * bucket had no live case at all. */
+          li.appendChild(inert(g.kind, "staging only"));
+        } else if (g && g.path) {
           // `safeHref` for the same reason as the icon row above, and applied
           // AFTER `withBase` so what is checked is the href that is actually
           // written -- checking the bare path would clear a value the baseurl

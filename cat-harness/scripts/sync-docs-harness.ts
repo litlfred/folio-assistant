@@ -254,7 +254,7 @@ function navbarRow(
   harnesses: readonly {
     name: string;
     navbarIcons?: string[];
-    visualisations?: { kind: string; path?: string | null; note?: string }[];
+    visualisations?: { kind: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
@@ -263,7 +263,7 @@ function navbarRow(
   hrefs: Record<string, string>;
   /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
   notes: Record<string, string>;
-  folders: { kind: string; path?: string; note?: string }[];
+  folders: { kind: string; path?: string; note?: string; stagingOnly?: true }[];
 } | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
@@ -335,8 +335,15 @@ function navbarRow(
   // 0.35`, a strikethrough and a `title` tooltip reading "declared, with no
   // published viewer" — one wording for four states, in a channel a keyboard
   // or screen-reader user never reaches. `gjli`: the state belongs in TEXT.
+  //
+  // `stagingOnly` RIDES ALONG WITH THE PATH, and it has to: a withheld page's
+  // `path` resolves against the SOURCE tree, so it is present and correct and
+  // the link is still dead on the canonical deploy. The client decides, since
+  // only the page knows which deploy it is on.
   const folders = (mine.visualisations ?? []).map((v) =>
-    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind, ...(v.note ? { note: v.note } : {}) },
+    v.path
+      ? { kind: v.kind, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
+      : { kind: v.kind, ...(v.note ? { note: v.note } : {}) },
   );
   return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
