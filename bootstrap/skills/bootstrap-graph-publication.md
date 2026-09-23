@@ -102,7 +102,7 @@ cannot run `bun install`, let alone `kg:export`, so a graph that only appears
 after a build is a graph that reader never sees — and README step 2 was cited
 as telling them to load it. **No prose file under `bootstrap/` tells a reader
 to load this document.** The README sends that reader to
-`workflows/initialize-harness.bpmn` and
+`processes/initialize-harness.bpmn` and
 `skills/bootstrap-kg-navigation.md`. The pair of tests defending
 "committed" and "current" therefore defended an instruction that does not
 exist, while the `@id` went unguarded.
