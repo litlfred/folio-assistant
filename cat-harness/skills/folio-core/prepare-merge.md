@@ -88,6 +88,21 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    `latexmk`**, which is the common case in a container. Exit 2 means the gate
    did **not run**; report it that way rather than folding it into a green,
    per the same honesty rule as the build above.
+   **For a branch that changes a folio's blocks, report review coverage.**
+   `content-change-review.bpmn`'s coverage gate (`GW_Covered`, table
+   `decisions/review-coverage-gate.dmn`) reads two counts. Report both in
+   the PR body, in the gate's own terms:
+   - **open defects**: review comments of kind `defect` still `open` or
+     `addressed`, from the preview's `review-comments.json`;
+   - **changed blocks with neither a verdict nor a waiver**: nothing records
+     a per-block verdict yet (bean `px0t`), so write **"not measured"**.
+     Never write 0, and never count resolved comments as coverage. A
+     resolved comment is not a reviewer's verdict on the block.
+
+   This REPORTS; it does not merge or refuse. The gate belongs to the review
+   process, and the committee decides the outcome. A prepare-merge that
+   passed a branch whose coverage it could not measure, without saying so,
+   would read as "reviewed".
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`. Then **ask whether the push produced a run**:
    `bun run check:head-has-run`.

@@ -55,7 +55,7 @@ Findings and a decision — two things, not one. See
 |---|---|
 | [Authoring a document](../../processes/authoring-a-document.html) | 8 · Review and feedback |
 | [Authoring a paper](../../processes/authoring-a-paper.html) | 8 · Review and feedback |
-| [Content Change and Review](../../processes/content-change-review.html) | Review impact assessment; Request changes |
+| [Content Change and Review](../../processes/content-change-review.html) | Review each slice (calls a sub-process); Review impact assessment; Request changes |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Editing and HCI validation (calls a sub-process); Draft, review and publish (calls a sub-process) |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Circulate the draft; Review the draft publication; Clinical / scientific sign-off |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Agent review of the change; Human / SME review |
