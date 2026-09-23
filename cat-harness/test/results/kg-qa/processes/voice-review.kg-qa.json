@@ -5,7 +5,7 @@
     "id": "Process_VoiceReview",
     "path": "processes/voice-review.bpmn"
   },
-  "source_hash": "sha256:1a3d43a16e0eb0f7a3872fcf1bd69b1ba02f838ee893055191eab1bf691990c6",
+  "source_hash": "sha256:4c399d1ec26e183ffd05a958c2618f3cd5b4ee5d4cec61a3e4265875559313de",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,21 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_AnyActive",
-          "detail": "\"Any voice activated?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_QuoteSupports",
-          "detail": "\"Does the quote support the rule?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_MoreVoices",
-          "detail": "\"Another active voice?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -110,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

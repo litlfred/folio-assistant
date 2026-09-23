@@ -85,7 +85,9 @@ A red gate is EVIDENCE, not an exit. It does not end the process and it does not
 A `userTask`, and the lane admits `person` and `agent` — a review agent is a legitimate reviewer here, and the separation that matters is the next lane's: a reviewer cannot accept.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="staging-review"/></bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?"/>
+    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?">
+      <bpmn:documentation>The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline).</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt &#183; hold &#183; decline" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.
 
@@ -104,7 +106,9 @@ Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?"/>
+    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?">
+      <bpmn:documentation>The project manager's decision. `yes` moves the pin and opens the PR; `no` records the hold or the decline.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="A_ApplyPin" name="Move the pin&#10;and open the PR">
       <bpmn:documentation>The pin literal moves in the one file `upstream-pins.json` declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict.</bpmn:documentation>
       <bpmn:extensionElements>

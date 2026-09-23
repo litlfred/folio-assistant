@@ -7,7 +7,7 @@ pages: 54-54
 pdf_page: 54
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Systems that serve as a central authority for maintaining specific sets of data. They provide 

@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:0c29615cd1e1e7fc59a91a9a76e264ff14a664ea549ad11c9400a08cc6d611b0",
+  "source_hash": "sha256:31a4e64ac3230f2929d903062668f7bddd0ec7b58a1ec56e418621bebb6cd49f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -93,29 +93,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_AuthorSatisfied",
-          "detail": "\"Satisfied with changes?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Withdraw",
-          "detail": "\"A comment withdrawn?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Disputed",
-          "detail": "\"A finding disputed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Approved",
-          "detail": "\"Changes approved?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Merged",
-          "detail": "\"PR merged?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -131,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

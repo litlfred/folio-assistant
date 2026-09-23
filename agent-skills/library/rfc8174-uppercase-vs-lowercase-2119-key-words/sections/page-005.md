@@ -7,7 +7,7 @@ pages: 5-5
 pdf_page: 5
 source_pdf: rfc8174-uppercase-vs-lowercase-2119-key-words.pdf
 source_sha256: ce9339e636af66e5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 RFC 8174                 RFC 2119 Clarification                 May 2017

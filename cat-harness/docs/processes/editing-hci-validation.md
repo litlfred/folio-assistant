@@ -58,11 +58,11 @@ Every one of the 17 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Judgement call?**<br>`Gateway_ReviewerKind` | — | **no** → Agent review of the change<br>**yes** → Human / SME review |
-| **Accept, revise or discard?**<br>`Gateway_EditorDecision` | — | **revise** → Revise the proposed change<br>**discard** → Change discarded<br>**accept** → Commit into the corpus |
+| **Judgement call?**<br>`Gateway_ReviewerKind` | Does this change need a judgement call? `no` goes to agent review; `yes` goes to a human or SME. The question is about the change, not about who is available. | **no** → Agent review of the change<br>**yes** → Human / SME review |
+| **Accept, revise or discard?**<br>`Gateway_EditorDecision` | The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus. | **revise** → Revise the proposed change<br>**discard** → Change discarded<br>**accept** → Commit into the corpus |
 
 {% endraw %}

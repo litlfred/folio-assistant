@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-needs\n"
-"POT-Creation-Date: 2026-09-23T09:01:16.263Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.851Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Phase begins"
 msgstr ""
 
-#: processes/crdm-needs.bpmn:55
+#: processes/crdm-needs.bpmn:57
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Review synthesised needs statement"
 msgstr ""
 
-#: processes/crdm-needs.bpmn:61
+#: processes/crdm-needs.bpmn:63
 #. Diagram label
 msgid "revise"
 msgstr ""
@@ -104,6 +104,11 @@ msgstr ""
 msgid "The BA reviews what the agent synthesised and checks it against what they actually need."
 msgstr ""
 
+#: processes/crdm-needs.bpmn:55
+#. Diagram element documentation
+msgid "The BA's answer to the needs statement. `revise` goes back to synthesising needs from the sources; `yes` completes the phase."
+msgstr ""
+
 #: processes/crdm-needs.bpmn:16
 #. Diagram element documentation
 msgid "The single review here is what GW_Needs is literally named for — \"BA approves?\" — even though Lane_Stakeholders' confirmation sits between this task and that gateway in the flow; the phase's own documentation makes clear the loop needs both, so reading the gate label alone would miss half of what it takes to exit it."
@@ -114,7 +119,7 @@ msgstr ""
 msgid "The task itself carries no documentation of its own, so this lane's entry is the only place recording what \"confirm\" means in Phase 1: recognising the synthesised needs statement as actually theirs, immediately before the loop gate — not, as in the later data-model phase, judging a cardinality, because there is no model yet to have one."
 msgstr ""
 
-#: processes/crdm-needs.bpmn:62
+#: processes/crdm-needs.bpmn:64
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -52,7 +52,9 @@ They do not need to know it is called CRDM.</bpmn:documentation>
       <bpmn:documentation>Recognise the request as a platform capability change rather than content work, from crdm-detect's signals. Never call it "CRDM" to the person. Mid-content-work, ask whether to pause for requirements now or record a bean for later — do not switch on your own.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-detect"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Feature" name="Feature?"/>
+    <bpmn:exclusiveGateway id="GW_Feature" name="Feature?">
+      <bpmn:documentation>Answered by crdm-detect: is this request a feature request, a change to the platform, rather than content work? `no` continues authoring; `yes` enters CRDM, starting by linking the work to an issue.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Content" name="Continue authoring"/>
     <bpmn:callActivity id="Call_Issue" name="Link the work&#10;to an issue" calledElement="Process_CRDM_Issue">
       <bpmn:documentation>Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>

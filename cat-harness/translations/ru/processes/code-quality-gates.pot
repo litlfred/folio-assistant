@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-09-23T08:48:43.873Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.809Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -24,12 +24,17 @@ msgstr ""
 msgid "Any HARD&#10;gate red?"
 msgstr ""
 
+#: processes/code-quality-gates.bpmn:116
+#. Diagram element documentation
+msgid "Asked once every parallel gate has joined: did any gate marked HARD fail? `no` is mergeable; `yes` blocks the merge. Warn-only gates do not decide this branch."
+msgstr ""
+
 #: processes/code-quality-gates.bpmn:98
 #. Diagram element documentation
 msgid "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:123
+#: processes/code-quality-gates.bpmn:124
 #. Diagram label
 msgid "Blocked"
 msgstr ""
@@ -74,12 +79,12 @@ msgstr ""
 msgid "Lean: no bare&#10;`import Mathlib` (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:120
+#: processes/code-quality-gates.bpmn:121
 #. Diagram label
 msgid "Mergeable"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:138
+#: processes/code-quality-gates.bpmn:139
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -124,7 +129,7 @@ msgstr ""
 msgid "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:139
+#: processes/code-quality-gates.bpmn:140
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -22,6 +22,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
 import { readDeclaredFolioProfile } from "../../content/pipeline/profile-check";
@@ -40,6 +41,28 @@ describe("this repository's content root and its config agree — bean `zkgs`", 
     const p = readDeclaredFolioProfile(root);
     expect(p.profile).toBe("document");
     expect(p.declaredBy).not.toMatch(/undetermined/);
+  });
+
+  /**
+   * THE NESTED INSTANCE RESOLVES TO ITS OWN CONFIG, not the root's.
+   *
+   * Added 2026-09-23 from a duplicate investigation of this bean that reached
+   * the same conclusion independently; the rest of that work was dropped
+   * rather than landed beside this file, because two tests answering one
+   * question is how they drift. This assertion is the part that was not
+   * already here.
+   *
+   * It matters because `cat-harness/` is the directory the walk USED to stop
+   * at, and the root is the one it used to miss — they are the two ends of
+   * the defect. The tests above pin the root; without this one, a resolver
+   * that answered the root's config for every instance would pass them all
+   * while making every nested instance read the wrong `contentType`.
+   */
+  test("`cat-harness/` resolves to its OWN config, not the repository root's", () => {
+    const nested = readDeclaredFolioProfile(join(root, "cat-harness"));
+    expect(nested.profile).toBe("document");
+    expect(nested.declaredBy).toContain("cat-harness.config.json");
+    expect(nested.declaredBy).not.toMatch(/undetermined/);
   });
 
   test("the optional-axes reader looks where the config actually is", () => {

@@ -7,7 +7,7 @@ pages: 58-58
 pdf_page: 58
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Systems that support the continuous, systematic collection, analysis and interpretation of data 

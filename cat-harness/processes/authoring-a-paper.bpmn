@@ -116,6 +116,7 @@
       <bpmn:outgoing>A06</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_LeanGreen" name="Build green, no sorries?">
+      <bpmn:documentation>Answered by the Lean build after step 5: is it green with no `sorry` left? `not yet` loops on formalisation; `green` goes on to validation. A build that passes with a `sorry` is not green.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/lean-build-gate.dmn#Decision_LeanBuildGate" />
       </bpmn:extensionElements>
@@ -148,6 +149,7 @@
       <bpmn:outgoing>A11</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Ready to publish?">
+      <bpmn:documentation>The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish.</bpmn:documentation>
       <bpmn:incoming>A11</bpmn:incoming>
       <bpmn:outgoing>A12</bpmn:outgoing>
       <bpmn:outgoing>A13</bpmn:outgoing>

@@ -41,10 +41,10 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Confirmed by the reader?**<br>`GW_Confirmed` | — | **yes, move it** → Relocate the content to the trashcan<br>**no** → Leave the content exactly where it is |
+| **Confirmed by the reader?**<br>`GW_Confirmed` | The reader's answer to A_AskConfirm, which named what will move and where it lands. `yes, move it` relocates the content to the trashcan; `no` leaves it exactly where it is. Nothing moves without the yes. | **yes, move it** → Relocate the content to the trashcan<br>**no** → Leave the content exactly where it is |
 
 {% endraw %}

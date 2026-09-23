@@ -571,6 +571,95 @@ describe("bean-store", () => {
     ...o,
   });
 
+  // ── Bean `thux`: a claim worked through its CHILDREN is not quiet ─────
+  //
+  // `bean-quiet-claims` reads one signal — `updated_at` on the bean's own
+  // file — and for a task that is right. For a bean worked through its
+  // children nothing touches the parent while they move, so it accrued quiet
+  // hours for doing exactly what it is for, and the finding had no action:
+  // refreshing it means editing a file for no reason, which is `o5qj`'s shape
+  // one check over. Measured 2026-09-23: 39 quiet claims, 8 of them parenting
+  // work that had moved inside the window.
+  //
+  // `QUIET` is 72 hours; the fixture clock is 2026-09-19T12:00:00Z.
+  const longAgo = "2026-09-14T12:00:00Z"; // 120 h — quiet
+  const justNow = "2026-09-19T06:00:00Z"; // 6 h  — moving
+
+  it("a claim whose CHILD moved is not reported quiet", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
+  it("...but it is still COUNTED — `dh4f`", () => {
+    // "No claim went quiet" and "the quiet ones were parents of moving work"
+    // must not read the same. Nothing thresholds this.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    const m = r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work");
+    expect(m?.value).toBe(1);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims")?.value).toBe(0);
+  });
+
+  it("a parent whose children are ALL quiet still fires — the discrimination", () => {
+    // `bzyu` on the real store: 8 open children, none moving. Without this the
+    // change would excuse every parent and the check would stop saying
+    // anything about the beans it exists for.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: longAgo, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toContain("bean-quiet-claims");
+    // Both of them: the child is quiet on its own account too.
+    expect(r.findings.filter((f) => f.metric === "bean-quiet-claims").length).toBe(2);
+  });
+
+  it("a CHILDLESS quiet claim is untouched by any of this", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [bean({ id: "lone", status: "in-progress", updatedAt: longAgo })],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-quiet-claims"]);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work")?.value).toBe(0);
+  });
+
+  it("keyed on PARENTHOOD, not on `type: epic`", () => {
+    // The relation carries the argument; `type` is a label a bean sets about
+    // itself while `parent` is a fact another bean asserts about it. The
+    // fixture's parent has no type at all and is still excused.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "plain", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "todo", updatedAt: justNow, parent: "plain" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
   it("fires `major` on a duplicate title — the 14,688-duplicate shape, at its leading edge", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {

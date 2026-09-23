@@ -7,7 +7,7 @@ pages: 19-19
 pdf_page: 19
 source_pdf: 9789240120747-eng.pdf
 source_sha256: c710f7cf4a432221
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 1. Assess the current 

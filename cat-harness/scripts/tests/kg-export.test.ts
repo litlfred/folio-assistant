@@ -777,19 +777,21 @@ describe("a package's id is declared, not derived from its path", () => {
   // graph, then `bootstrap-render` (directory `tools/`) until bean `n350`
   // consolidated that package into `bootstrap/skills/` on 2026-09-23.
   //
-  // It is now `kg-navigation`: directory `kg-navigation/skills/`, basename
-  // `skills`, manifest `kg-navigation`. Same shape, and a witness the root
+  // It is now `large-datasets`: directory `large-datasets/skills/`, basename
+  // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
+  // `byql` folded that one into `cat-harness/skills/kg-navigation/`, where the
+  // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
   // graph carries for its own reasons rather than by a declaration made for
   // one package. The members are READ from its manifest rather than listed,
   // so adding a skill there is not a test edit.
-  const WITNESS = "kg-navigation";
+  const WITNESS = "large-datasets";
   const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
 
   test("a package is named by its manifest, not by its directory", () => {
     const p = witness();
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
     expect(p!["name"]).toBe(WITNESS);
-    expect(String(p!["path"])).toContain("kg-navigation/skills");
+    expect(String(p!["path"])).toContain("large-datasets/skills");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
     expect(p!["name"]).not.toBe("skills");
@@ -800,7 +802,7 @@ describe("a package's id is declared, not derived from its path", () => {
     // from ANOTHER package — a count would have gone on passing while one
     // name was swapped for another.
     const manifest = JSON.parse(
-      readFileSync(join(import.meta.dir, "../../..", "kg-navigation", "skills", "package-manifest.json"), "utf8"),
+      readFileSync(join(import.meta.dir, "../../..", "large-datasets", "skills", "package-manifest.json"), "utf8"),
     ) as { skills: string[] };
     expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
   });

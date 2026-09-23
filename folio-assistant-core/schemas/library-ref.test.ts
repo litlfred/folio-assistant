@@ -172,15 +172,18 @@ describe("resolution keeps four failures apart", () => {
   });
 
   it("a known instance with no library graph is its own finding", () => {
-    // `kg-navigation` is declared and legitimately holds no corpus — distinct
-    // from a missing section, and distinct from an unknown instance.
+    // `bootstrap` is declared and legitimately holds no corpus — distinct
+    // from a missing section, and distinct from an unknown instance. It is the
+    // zero-install floor, so it will never hold one. (This named
+    // `kg-navigation` until bean `byql` folded that instance into cat-harness,
+    // which made it an UNKNOWN instance and flipped the assertion.)
     //
     // This named `who-iris` until bean `frs5`, when who-iris gained the
     // library it had been deliberately withholding. Moving the assertion to an
     // instance that will never hold one is the point: an assertion that only
     // holds until somebody does the obvious next thing is not testing the
     // distinction, it is testing the schedule.
-    const r = resolveLibraryRef({ ...local, instance: "kg-navigation" }, PLATFORM, REPO);
+    const r = resolveLibraryRef({ ...local, instance: "bootstrap" }, PLATFORM, REPO);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.failure.kind).toBe("no-library-graph");
   });

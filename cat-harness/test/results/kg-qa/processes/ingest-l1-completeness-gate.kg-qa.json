@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "processes/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:b2766096048311c0942cdc4dae0d22dd9278ed39fd41a3ddbb76956278a74adb",
+  "source_hash": "sha256:89a46a51910dd23412056e938c4c338d1288289b28e0e98db97c41af4c11d61a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,13 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Drift",
-          "detail": "\"Drift or bad terminology?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

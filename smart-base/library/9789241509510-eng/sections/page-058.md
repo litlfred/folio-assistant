@@ -7,7 +7,7 @@ pages: 58-58
 pdf_page: 58
 source_pdf: 9789241509510_eng.pdf
 source_sha256: 26aa12fbae4eafb2
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 48

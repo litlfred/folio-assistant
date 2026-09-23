@@ -5,7 +5,7 @@
     "id": "Process_WireframeDesignReview",
     "path": "processes/wireframe-design-review.bpmn"
   },
-  "source_hash": "sha256:b2bef3270ca341088b7a998073712859c95d2118907faff64cdd829cbc8dcf9d",
+  "source_hash": "sha256:f92a33c95b6f1e34684b66167c37782f0e9688a8d03e655bd34378a97fc0f999",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,21 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Checks",
-          "detail": "\"Checks pass?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Agree",
-          "detail": "\"Entries agree?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Iterate",
-          "detail": "\"Revise the intent?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -110,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

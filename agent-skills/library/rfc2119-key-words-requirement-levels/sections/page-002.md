@@ -7,7 +7,7 @@ pages: 2-2
 pdf_page: 2
 source_pdf: rfc2119-key-words-requirement-levels.pdf
 source_sha256: 3c11b6002f839b8f
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 3. SHOULD   This word, or the adjective "RECOMMENDED", mean that there

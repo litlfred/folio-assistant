@@ -5,7 +5,7 @@
     "id": "Process_EvidenceRetrieval",
     "path": "processes/evidence-retrieval.bpmn"
   },
-  "source_hash": "sha256:f6a89f4bd9ae0e9512772048d31568290e7006e45aabe0da5d8a49df6458ded4",
+  "source_hash": "sha256:8fd8f4e5f59f60cc057da84443b4716c09b9f902affd2da0f5ed0a9f74442fa2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,17 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Authoritative",
-          "detail": "\"Authority confirmed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_Sufficient",
-          "detail": "\"Sufficient for a recommendation?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -106,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

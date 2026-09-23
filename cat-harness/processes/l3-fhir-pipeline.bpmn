@@ -104,6 +104,7 @@
       <bpmn:outgoing>C05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Valid" name="FHIR valid?">
+      <bpmn:documentation>Answered by validating the resources against their profiles. `no` returns to FSH authoring; `yes` goes on to the QC gates.</bpmn:documentation>
       <bpmn:incoming>C05</bpmn:incoming>
       <bpmn:outgoing>C06</bpmn:outgoing>
       <bpmn:outgoing>C07</bpmn:outgoing>
@@ -117,6 +118,7 @@
       <bpmn:outgoing>C08</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_QcPass" name="QC clean?">
+      <bpmn:documentation>Answered by the QC gates. `no` files the findings as beans; `yes` goes on to the IG Publisher build.</bpmn:documentation>
       <bpmn:incoming>C08</bpmn:incoming>
       <bpmn:outgoing>C09</bpmn:outgoing>
       <bpmn:outgoing>C11</bpmn:outgoing>

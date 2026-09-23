@@ -43,10 +43,10 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Entities recognised and every cardinality answered?**<br>`GW_Model` | — | **revise** → Identify entities from the BPA and requirements<br>**yes** → Declare the model where a tool can read it |
+| **Entities recognised and every cardinality answered?**<br>`GW_Model` | Answered by the BA after confirming cardinalities: are the entities recognised and every cardinality answered? `revise` returns to identifying entities; `yes` declares the model where a tool can read it. | **revise** → Identify entities from the BPA and requirements<br>**yes** → Declare the model where a tool can read it |
 
 {% endraw %}

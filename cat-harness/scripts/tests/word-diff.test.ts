@@ -48,7 +48,7 @@ describe("the renderer registry", () => {
   test("exactly one fallback, unique ids, and a default for every kind", () => {
     expect(DIFF_RENDERERS.filter((r) => r.defaultFor.includes("*"))).toHaveLength(1);
     expect(new Set(DIFF_RENDERERS.map((r) => r.id)).size).toBe(DIFF_RENDERERS.length);
-    expect(defaultRendererFor("table").id).toBe("side-by-side");
+    expect(defaultRendererFor("table").id).toBe("visual");
     expect(defaultRendererFor("prose").id).toBe("inline");
     expect(defaultRendererFor("some-new-kind").id).toBe("word");
   });

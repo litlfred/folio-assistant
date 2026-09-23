@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: qa-report-signing\n"
-"POT-Creation-Date: 2026-09-22T08:18:10.072Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.971Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,12 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/qa-report-signing.bpmn:156
+#: processes/qa-report-signing.bpmn:157
 #. Diagram element documentation
 msgid "A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route."
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:187
+#: processes/qa-report-signing.bpmn:138
+#. Diagram element documentation
+msgid "Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign."
+msgstr ""
+
+#: processes/qa-report-signing.bpmn:188
 #. Diagram label
 msgid "api"
 msgstr ""
@@ -54,7 +59,7 @@ msgstr ""
 msgid "Deleting this lane's role binding is not a documentation nicety: `check:fallback-roles` DERIVES the fallback role from whichever lane holds a task only a person can fill, so removing it turns that check red rather than merely undocumented. The gate that sends work here fires BEFORE any API attempt, never after one fails — an air-gapped host has no degraded mode to retry into, so this lane is a routing destination, not a retry path."
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:188
+#: processes/qa-report-signing.bpmn:189
 #. Diagram label
 msgid "human"
 msgstr ""
@@ -89,12 +94,12 @@ msgstr ""
 msgid "Reached only from the DMN table's one row where both egress and a configured endpoint are true — everything else in Gateway_SigningRoute's table routes around this lane entirely, so its presence in a trace is itself already the answer to whether egress existed. It carries exactly one task and no branch of its own, because the routing decision was already made before this lane was entered."
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:170
+#: processes/qa-report-signing.bpmn:171
 #. Diagram label
 msgid "Record which route signed it"
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:180
+#: processes/qa-report-signing.bpmn:181
 #. Diagram label
 msgid "Report attested"
 msgstr ""
@@ -104,27 +109,27 @@ msgstr ""
 msgid "Resolve the performer's reach [effectiveReach + signing-api probe]"
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:155
+#: processes/qa-report-signing.bpmn:156
 #. Diagram label
 msgid "Sign as release authority"
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:146
+#: processes/qa-report-signing.bpmn:147
 #. Diagram label
 msgid "Sign over the API"
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:164
+#: processes/qa-report-signing.bpmn:165
 #. Diagram label
 msgid "Signed"
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:171
+#: processes/qa-report-signing.bpmn:172
 #. Diagram element documentation
 msgid "The attestation records the route, not only the signature. A reader who cannot tell an API signature from a human one cannot tell which trust assumption they are relying on."
 msgstr ""
 
-#: processes/qa-report-signing.bpmn:147
+#: processes/qa-report-signing.bpmn:148
 #. Diagram element documentation
 msgid "The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint."
 msgstr ""

@@ -47,11 +47,11 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **A theme source? (author's judgement)**<br>`Gateway_ThemeSource` | Wired 2026-09-23 on the owner's ruling for bean `j66n`, choosing "human/agentic judgement at the gateway" over a declared predicate. THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable rule — a captured web deployment, or a document that STATES palette and typography rules — and it was refused for the reason the owner had already given when withdrawing `xffc`/`d3yq`: "no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement." So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not. WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. `ingest-theme.bpmn` starts at "Theme source in hand" and can refuse as incomplete. Routing every document into it would make "this is not a theme" and "this theme is malformed" the same refusal, and the second is a defect while the first is the normal case. | **yes** → Ingest the theme<br>**no** → Build the L1 knowledge graph |
-| **L1 complete?**<br>`Gateway_Complete` | — | **gap** → Record the gap as a bean<br>**complete** → Move into library/<bib-slug>/ |
+| **L1 complete?**<br>`Gateway_Complete` | The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/<bib-slug>/. | **gap** → Record the gap as a bean<br>**complete** → Move into library/<bib-slug>/ |
 
 {% endraw %}
