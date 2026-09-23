@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../kg-navigation/skills/kg-navigation.md) — do not edit here.
+> Generated from [`skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/kg-navigation/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -103,8 +103,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](../../cat-harness/skills/folio-core/skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](../../cat-harness/skills/folio-core/directory-conventions.md)
+[`skills-and-tools`](../folio-core/skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](../folio-core/directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill

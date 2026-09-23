@@ -515,7 +515,7 @@
       "id": "methodologies",
       "theme": "analyst",
       "coverage": {
-        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-kg/methodologies/` and `smart-base/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
+        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone \u2014 `smart-kg/methodologies/` and `smart-base/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
         "visualiser": [
           {
             "ref": "cat-harness/docs/methodologies/index.md",
@@ -849,24 +849,6 @@
       }
     },
     {
-      "id": "kg-navigation",
-      "path": "kg-navigation/skills/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The TOOLED knowledge-graph navigation skill, lifted out of the `folio-core` package on 2026-09-20 at the owner's direction: '(kg-navigation should be similar named subgraph)'. Repository-scoped and a SIBLING of `skills/`, not a child: `skills/` is already declared as this instance's `cat-harness` graph in full, so a nested entry would be a declaration inside a declaration -- #263's own defect, where a consumer beneath the outer path cannot tell which declaration owns what it finds. The name is shared with `bootstrap/skills/kg-navigation.md`, which stays where it is and must: that one assumes NOTHING is installed, and a bootstrap reaching into another instance for its first skill would fail in the cold-start case it exists for. Two bodies under one name, each addressable -- see kg-navigation/README.md. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` \u2014 *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation \u2014 so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "graphKinds": [
-        "skills"
-      ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html",
-            "title": "Skills \u2014 kg-navigation"
-          }
-        ]
-      }
-    },
-    {
       "id": "large-datasets-skills",
       "path": "large-datasets/skills/",
       "scope": "repository",
@@ -914,22 +896,6 @@
       ],
       "coverage": {
         "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
-      }
-    },
-    {
-      "id": "detangle-schemas",
-      "path": "detangle/schemas/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
-      "graphKinds": [
-        "schemas",
-        "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
