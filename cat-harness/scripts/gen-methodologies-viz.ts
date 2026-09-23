@@ -284,11 +284,9 @@ export function page(rows: readonly MethodologyRow[], report: EvidenceReport): s
 
   for (const r of rows) {
     b.push(
-      // The id rides ON the heading (kramdown IAL) rather than on an anchor
-      // beside it: kramdown also mints a heading id from the title, and when
-      // the slug of the title equals this one — "HL7 FHIR" and \`hl7-fhir\` —
-      // the page carried the id twice (bean \`uknu\`).
-      `### ${cell(r.title)} {#${r.name}}`,
+      `### ${cell(r.title)}`,
+      "",
+      `<a id="${r.name}"></a>`,
       "",
       `\`${cell(r.name)}\` — declared by \`${cell(r.instance)}\` — ${BADGE[r.state]}`,
       "",

@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T19:18:10Z
-updated_at: 2026-09-22T19:18:10Z
+updated_at: 2026-09-23T21:59:49Z
 parent: folio-assistant-o3xy
 ---
 
@@ -88,29 +88,21 @@ than guessed. Filed by the #956 consolidation session, which owns neither
 - [x] A check can fail on a duplicate `id` in a built page, so this class does
       not recur silently
 
-## Summary of Changes
+---
 
-**Measured in Chromium on a local build (`preview:site`, served at its `baseurl`), 2026-09-23. The mobile toggle was operable by mouse only by accident, and was NOT operable by keyboard.**
+## Summary of Changes — 2026-09-23
 
-| at 375px, before | result |
+Owner's pick ("uknu duplicate id"). Every item was measured on a local build
+(`bun run preview:site`), not read off the source.
+
+| Done-when item | Evidence |
 |---|---|
-| click the footer copy's `☰` | opens the nav, but only because `for="fa-nav-open"` resolves to the FIRST id, the checkbox inside `.side-bar` |
-| Space on the footer copy's own checkbox | ticks a checkbox OUTSIDE `.side-bar`, so `.side-bar:has(.fa-nav-open:checked)` never matches and **nothing opens** |
+| runtime behaviour at phone width, measured in a browser | Playwright at 390×844 and 1280×900. **Before:** the toggle opened the sidebar; the duplicate id worked by accident, because both copies' labels resolved to the first input, which sits inside `.side-bar`. **The first fix (`fa-nav-open-2`) broke it**: the second copy sits OUTSIDE `.side-bar`, and the stylesheet reads `.side-bar:has(.fa-nav-open:checked)`, so its toggle checked a box nothing reads. **Final:** the input is rendered once and every copy renders only the labels, `for="fa-nav-open"`. Clicking either copy's toggle opens the sidebar at both widths. |
+| no generated page carries a duplicate `id` | `check:duplicate-ids` on the built site: **429 of 1,283** pages before, **0** after. |
+| a check can fail on a duplicate `id` in a built page | `cat-harness/scripts/check-duplicate-ids.ts` (`bun run check:duplicate-ids <site>`). It counts ids in real tags only, which removes the 2 first-run false hits from code samples. It runs in `feature-staging.yml` after the Jekyll build and the instance mount. 6 tests pin it, including the include's one-input rule. |
 
-The theme's source for this, v0.12.0: `components/sidebar.html` includes `nav_footer_custom.html` inside `.side-bar`, and `components/footer.html` includes it again in the main content (`.d-md-none`).
-
-**Fix.**
-- `nav_footer_custom.html` renders the checkbox and both labels once per page, behind an `unless`/`assign` guard. The sidebar is included first in `_layouts/default.html`, so the copy that renders is the one inside `.side-bar`.
-- The harness tabs still render in both copies. They carry no id, and the footer copy is where a phone reader finds them.
-- After the fix, at 375px and at 1280px, there is one checkbox and one `☰`; click opens the nav, Space opens it and Space again closes it.
-
-**The other duplicate the scan found.** `external-schemas/index.html` had `hl7-fhir` twice: kramdown slugged the heading "HL7 FHIR" to the same id as the explicit `<a id>` beside it. `gen-external-schemas-viz.ts` and `gen-methodologies-viz.ts` (same shape, latent) now put the id ON the heading with a kramdown IAL `{#id}`.
-
-**The check.** Added `html-unique-ids` to the pre-deploy verifier set (`publish-verify.ts`, bean `vigi`). A duplicate id now blocks the deploy and raises the publication-manager alert.
-
-| tree | before | after |
-|---|---|---|
-| local build, 1,288 pages | 433 findings (432 `fa-nav-open`, 1 `hl7-fhir`) | 0 |
-| live `gh-pages` (non-STAGING), 3,115 pages incl. TypeDoc and smart-trust | 1,223 findings, exactly those two ids | fixed by this change; no third id anywhere |
-
-The live-site row is why this check can block: its first run on main will not find something this change did not fix.
+**Caveat, stated rather than hidden.** The local build uses the installed
+just-the-docs GEM, not the pinned remote theme CI uses, so page chrome can
+differ (`preview-site.sh` says so). In this build both copies render at both
+widths. The fix does not depend on which copy is visible: either copy's
+labels operate the one checkbox the stylesheet reads.

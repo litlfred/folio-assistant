@@ -6,7 +6,7 @@
  *
  * ## These shapes describe `bootstrap`, and deliberately do not live in it
  *
- * `bootstrap/README.md` promises an Initiator that it needs **no harness,
+ * `bootstrap/README.md` promises a Bootstrapping Agent that it needs **no harness,
  * no server, no tools and no work plan**, and that what it reads is "a file
  * you read, not something you run". Measured: that directory holds `.md`,
  * `.json` and `.bpmn` and **no executable code**. So its shapes cannot be Zod
@@ -46,7 +46,7 @@ export const RepositoryRefSchema = z.object({
   url: z
     .string()
     .describe(
-      "Clone URL or path. Not required to be reachable — an Initiator may have been told about a repository it cannot yet fetch.",
+      "Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told about a repository it cannot yet fetch.",
     ),
   role: z
     .enum(["read-from", "written-to"])
@@ -80,7 +80,7 @@ export type Participant = z.infer<typeof ParticipantSchema>;
  * The occasion for asking: what the agent already knows, and which unknown is
  * still open.
  *
- * Deliberately small — an Initiator has read one README and can look nothing
+ * Deliberately small — a Bootstrapping Agent has read one README and can look nothing
  * up, so an input it cannot populate is an input that stops the process.
  */
 export const DiscussionInputSchema = z.object({

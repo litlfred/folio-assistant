@@ -61,7 +61,9 @@ nothing. **Citation does not resolve** is neither: the node claims a source
 and the slug names nothing, which reads as evidence in every listing and is
 strictly worse than declaring none.
 
-### DIIG — Digital Implementation Investment Guide {#diig}
+### DIIG — Digital Implementation Investment Guide
+
+<a id="diig"></a>
 
 `diig` — declared by `smart-base` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -73,7 +75,9 @@ strictly worse than declaring none.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### DMN — Decision Model and Notation {#dmn}
+### DMN — Decision Model and Notation
+
+<a id="dmn"></a>
 
 `dmn` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -85,7 +89,9 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### GRADE — Grading of Recommendations, Assessment, Development and Evaluation {#grade}
+### GRADE — Grading of Recommendations, Assessment, Development and Evaluation
+
+<a id="grade"></a>
 
 `grade` — declared by `smart-kg` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -97,7 +103,9 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it {#hybrid-llm-deterministic}
+### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
+
+<a id="hybrid-llm-deterministic"></a>
 
 `hybrid-llm-deterministic` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
@@ -109,7 +117,9 @@ these.
 
 - `library/arxiv-2508.05192v2`
 
-### Kepner-Tregoe Decision Analysis {#kepner-tregoe}
+### Kepner-Tregoe Decision Analysis
+
+<a id="kepner-tregoe"></a>
 
 `kepner-tregoe` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -121,7 +131,9 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### MADR — Markdown Architectural Decision Records {#madr}
+### MADR — Markdown Architectural Decision Records
+
+<a id="madr"></a>
 
 `madr` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -133,7 +145,9 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### RACI — who is involved in an activity, and in which of four ways {#raci}
+### RACI — who is involved in an activity, and in which of four ways
+
+<a id="raci"></a>
 
 `raci` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
@@ -145,7 +159,9 @@ these.
 
 - `library/dusengumuremyi-2026-ai-mediated-raci`
 
-### RASCI — RACI plus Supportive, for when doing the work and owning it come apart {#rasci}
+### RASCI — RACI plus Supportive, for when doing the work and owning it come apart
+
+<a id="rasci"></a>
 
 `rasci` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
 
@@ -157,7 +173,9 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### SWOT — situation analysis over internal and external factors {#swot}
+### SWOT — situation analysis over internal and external factors
+
+<a id="swot"></a>
 
 `swot` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
@@ -170,7 +188,9 @@ these.
 - `library/gurel-tat-2017-swot-analysis`
 - `library/sammut-bonnici-galea-2015-swot-analysis`
 
-### WireGen: wireframing from a written design intent {#wiregen}
+### WireGen: wireframing from a written design intent
+
+<a id="wiregen"></a>
 
 `wiregen` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 

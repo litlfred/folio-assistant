@@ -295,10 +295,11 @@ export function page(
   for (const s of specs) {
     const rows = used.get(s.id) ?? [];
     b.push(
-      // The id rides ON the heading (kramdown IAL) rather than on an anchor
-      // beside it: kramdown also mints a heading id from the title, and when
-      // the slug of the title equals this one — "HL7 FHIR" and \`hl7-fhir\` —
-      // the page carried the id twice (bean \`uknu\`).
+      // The record id IS the heading's id (kramdown `{#…}`), one element. A
+      // separate `<a id>` beside the heading collided with kramdown's own slug
+      // whenever a title slugified to its id: "HL7 FHIR" -> `hl7-fhir`, twice
+      // on one page. `check:duplicate-ids` caught it on the staged site
+      // (bean `uknu`); the other records only escaped by their wording.
       `### ${cell(s.title)} {#${s.id}}`,
       "",
       `\`${cell(s.id)}\` — ${cell(s.authority)}, edition [${cell(s.version)}](${s.specUrl}) — ` +

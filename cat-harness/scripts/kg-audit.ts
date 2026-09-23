@@ -101,6 +101,7 @@ import {
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
+import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
 const ENGINE_VERSION = "1";
 
@@ -1052,8 +1053,16 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  storiesPath: string,
 ): KgQaReport[] {
-  const hash = sha256(readFileSync(graphPath, "utf-8"));
+  // Both files: `role-has-story` reads the stories, which point at the role
+  // (#1168), so a story added or removed changes a role's verdict without
+  // touching roles.json.
+  const hash = sha256(
+    readFileSync(graphPath, "utf-8") + (existsSync(storiesPath) ? readFileSync(storiesPath, "utf-8") : ""),
+  );
+  const toldAs = new Set((stories?.stories ?? []).filter((s) => s.role.instance === undefined).map((s) => s.role.role));
   const rel = relative(root, graphPath);
 
   const explicitRefs = new Set<string>();
@@ -1091,19 +1100,16 @@ function auditRoles(
               ? []
               : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
           ),
-      "role-declares-voice": !readsProse(r)
+      // No `role-declares-voice`: a voice points at the role it addresses
+      // (`activeIn.roles`), and the voices graph is a DEPENDENT instance's, so
+      // this instance cannot see it — `check:voices` reports which roles no
+      // voice addresses, from the side that can (#1168, B2).
+      "role-has-story": !readsProse(r)
         ? entry([], false)
         : entry(
-            r.voice && r.voice.trim().length > 0
+            toldAs.has(r.id)
               ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
-          ),
-      "role-has-use-cases": !readsProse(r)
-        ? entry([], false)
-        : entry(
-            (r.useCases ?? []).length > 0
-              ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+              : [{ where: r.id, detail: `no user story in scenarios/stories.json is told as role "${r.id}" — nothing says what this reader came to do.` }],
           ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
@@ -1472,6 +1478,7 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -1706,6 +1713,19 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      // A story points at its role (#1168); a story whose role is not declared
+      // is told as nobody. Only this instance's roles are judged — see
+      // `danglingStoryRoles`.
+      "story-role-resolves": !stories
+        ? entry([], false)
+        : graph
+        ? entry(
+            danglingStoryRoles(stories, graph).map((st) => ({
+              where: st.id,
+              detail: `user story "${st.id}" is told as role "${st.role.role}", which the role graph does not declare.`,
+            })),
+          )
+        : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve story roles against." }] },
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
@@ -1797,12 +1817,21 @@ const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.fil
 const docs = docsSurface();
 for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
+const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
+let stories: UserStoryGraph | undefined;
+try {
+  stories = readUserStories(SCENARIO_DIR);
+} catch (e) {
+  console.error(`Could not read the user stories: ${e instanceof Error ? e.message : String(e)}`);
+  console.error("This is NOT a pass. Nothing was audited against stories.");
+  process.exit(2);
+}
 if (graph) {
-  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills, stories, storiesPath));
 }
 reports.push(...auditRequirements(readRequirements(), skills, actors));
 reports.push(...auditSkills());
-reports.push(auditGraph(graph, processes, actors, skills));
+reports.push(auditGraph(graph, processes, actors, skills, stories));
 reports.push(...auditTools());
 
 // Write or compare.

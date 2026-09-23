@@ -16,7 +16,7 @@ import { CAT_HARNESS_NS } from "../../schemas/namespaces";
 import { buildFshGutsExport } from "../fsh-guts-export";
 import { buildGlossary } from "../glossary-export";
 import { buildVocabulary } from "../ns-export";
-import { HTML_UNIQUE_IDS, JSONLD_EXPAND, duplicateIds, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
+import { HTML_UNIQUE_IDS, JSONLD_EXPAND, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
   const dir = mkdtempSync(join(tmpdir(), "publish-verify-"));
@@ -86,19 +86,12 @@ describe("the unique-id verifier — bean uknu", () => {
     expect(results[0]!.findings).toEqual([{ verifier: "html-unique-ids", file: "p/a.html", detail: "duplicate id fa-nav-open ×2" }]);
   });
 
-  test("...and on a heading id colliding with an anchor beside it (`hl7-fhir`)", () => {
-    expect(duplicateIds(page('<h3 id="hl7-fhir">HL7 FHIR</h3><p><a id="hl7-fhir"></a></p>'))).toEqual(["hl7-fhir ×2"]);
+  test("...and names the page and every id it repeats", async () => {
+    const { results } = await verify(site({ "x.html": page('<h3 id="hl7-fhir">HL7 FHIR</h3><p><a id="hl7-fhir"></a></p>') }), [HTML_UNIQUE_IDS]);
+    expect(results[0]!.findings.map((f) => f.detail)).toEqual(["duplicate id hl7-fhir ×2"]);
   });
-
-  test("markup QUOTED in a script, style, template or comment is text, not an element", () => {
-    const quoted = '<script>const s = \'<b id="q">\';</script><!-- <i id="q"> --><template><i id="q"></i></template>';
-    expect(duplicateIds(page(`<p id="q">q</p>${quoted}`))).toEqual([]);
-  });
-
-  test("single-quoted ids count; `data-id` is not an id", () => {
-    expect(duplicateIds(page(`<p id='a'></p><p id="a"></p>`))).toEqual(["a ×2"]);
-    expect(duplicateIds(page('<p data-id="a"></p><p id="a"></p>'))).toEqual([]);
-  });
+  // The scanner's own edge cases (code samples, script bodies, quote styles)
+  // are `duplicate-ids.test.ts`'s; this file owns only the verifier around it.
 });
 
 describe("the documents this platform actually publishes", () => {

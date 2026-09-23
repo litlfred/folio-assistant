@@ -42,6 +42,7 @@ import jsonld from "jsonld";
 
 import { CONTENT_CONTEXT_URL } from "../schemas/jsonld";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
+import { duplicateIds } from "./check-duplicate-ids";
 
 export interface Finding {
   verifier: string;
@@ -162,26 +163,13 @@ export const JSONLD_EXPAND: Verifier = {
 };
 
 /**
- * The ids an HTML page declares more than once. Script, style, template and
- * comment bodies are dropped first: markup quoted inside them is text, not
- * elements, and counting it would make a page that documents an id look like
- * one that repeats it.
- */
-export function duplicateIds(html: string): string[] {
-  const body = html.replace(/<(script|style|template)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi, "");
-  const seen = new Map<string, number>();
-  for (const m of body.matchAll(/<[a-zA-Z][^>]*?\sid\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) {
-    const id = m[1] ?? m[2] ?? "";
-    seen.set(id, (seen.get(id) ?? 0) + 1);
-  }
-  return [...seen].filter(([, n]) => n > 1).map(([id, n]) => `${id} ×${n}`);
-}
-
-/**
- * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 432 pages
- * carried `id="fa-nav-open"` twice, and the second copy was a keyboard control
- * that did nothing. The source was correct throughout and every gate was
- * green; only a built page showed it. So this reads built pages.
+ * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 1,222
+ * published pages carried `id="fa-nav-open"` twice while the source was
+ * correct and every gate was green. #1213 fixed it and added
+ * `check:duplicate-ids`, which runs on a PR's STAGING build — this runs the
+ * same scanner on the build that DEPLOYS, so a duplicate that reaches `main`
+ * blocks the release and raises the publication-manager alert instead of
+ * going live. One scanner, two call sites.
  *
  * Every page in the tree is in scope. Unlike a JSON-LD document, which may be
  * someone else's data we carry, an HTML page here is one our site build wrote
@@ -197,8 +185,8 @@ export const HTML_UNIQUE_IDS: Verifier = {
     let checked = 0;
     for (const f of treeFiles(dir, ".html")) {
       checked += 1;
-      for (const d of duplicateIds(readFileSync(f, "utf-8"))) {
-        findings.push({ verifier: "html-unique-ids", file: relative(dir, f), detail: `duplicate id ${d}` });
+      for (const [id, n] of duplicateIds(readFileSync(f, "utf-8"))) {
+        findings.push({ verifier: "html-unique-ids", file: relative(dir, f), detail: `duplicate id ${id} ×${n}` });
       }
     }
     return { checked, outOfScope: 0, findings };

@@ -73,7 +73,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
     // interaction is documented as a skill plus a tool. The SKILL lives in
-    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // `bootstrap/skills/discussion.md`, because a Bootstrapping Agent must be able to
     // READ it with nothing installed; the typed node lives here, because a
     // Tool is cat-harness's vocabulary and bootstrap may not import it.
     //
@@ -83,7 +83,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // unfinished record. It is the honest declaration: there is no binary and
     // no endpoint, the mechanism is putting a question to a participant and
     // receiving an answer. Declaring a shell or an MCP name would assert
-    // machinery that is not there, and an Initiator that trusted it would be
+    // machinery that is not there, and a Bootstrapping Agent that trusted it would be
     // stuck at the first step of `initialize-harness` — the step this exists
     // to unblock. (`conversation: true` was the first draft; `tsc` refused it,
     // correctly — a new invoke kind for one tool is a vocabulary change, and
@@ -1609,7 +1609,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
       // The destination is a conversation. There is nothing to install and
       // there could not be — that is the property that makes it the arm an
-      // Initiator can always reach.
+      // Bootstrapping Agent can always reach.
       install: { none: true },
       // `manual`, and honestly so. The agent composes the entry and sends it;
       // no command runs. Modelling it as an absent `shell` would have made it

@@ -1460,7 +1460,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // already has is the right one.
   { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
   { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
+  { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
   // THE CONVENTION, as of 2026-09-21: an instance's KGraph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
@@ -1944,8 +1944,15 @@ export interface RenderExemption {
   /**
    * Where the instance IS reachable, since it renders nothing of its own.
    *
-   * Repository-relative, under the site-owning harness's site directory —
-   * the same shape `coverage.visualiser` and `coverage.docs` use.
+   * One of the instance's OWN files, relative to its own directory and
+   * inside it — e.g. `README.md`. The site build publishes the instance's
+   * files at `<base>/<stub>/` (`publish-instance-files.ts`), rendering `.md`
+   * as `.html`, and the tab links there.
+   *
+   * It was repository-relative, under the site-owning harness's site
+   * directory, until 2026-09-23. That made bootstrap, the floor of the stack,
+   * point at a page in the layer above it. Owner (bean iwtn): *"bootstrap is
+   * bootstrap"*.
    *
    * ## Why an exemption needs this at all
    *
@@ -3531,6 +3538,17 @@ export interface ResolvedDirectory extends ContentDirectory {
  * it is taken as a parameter rather than walked here so this module does not
  * depend on the dependency resolver, and so tests can state a chain directly.
  */
+/**
+ * Directory ids that were renamed, read as their new id so that a declaration
+ * written before the rename still overrides the entry it always meant.
+ *
+ * `cat-harness` → `skills`, 2026-09-23 (bean iwtn): a Subgraph's id is its own
+ * name within its Harness, and the Harness name is the qualifier
+ * (`bootstrap.skills`, `cat-harness.skills`), so a Subgraph named after a
+ * Harness named the wrong thing.
+ */
+export const RENAMED_DIRECTORY_IDS: Readonly<Record<string, string>> = { "cat-harness": "skills" };
+
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
   registry: GraphKindRegistry = defaultGraphKinds,
@@ -3566,8 +3584,10 @@ export function resolveDirectories(
       if (dir.scope === "repository" && link.own !== true) continue;
       // Override by id, replacing in place so the inherited ORDER is kept: a
       // relocation should not reshuffle what a consumer scans first.
-      byId.set(dir.id, {
+      const id = RENAMED_DIRECTORY_IDS[dir.id] ?? dir.id;
+      byId.set(id, {
         ...dir,
+        id,
         declaredBy: decl.name,
         absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
         own: link.own === true,
@@ -4121,6 +4141,9 @@ export function ownDirectories(
     .filter((dir) => dir.scope !== "repository" || link.own === true)
     .map((dir) => ({
       ...dir,
+      // Read a renamed id as its new one, as `resolveDirectories` does, or the
+      // two resolvers disagree about which default an old declaration overrides.
+      id: RENAMED_DIRECTORY_IDS[dir.id] ?? dir.id,
       declaredBy: decl.name,
       // THROUGH `rootForScope`, not `resolve(link.root, …)`. This function was
       // the third consumer of a declared path and the one that did not go

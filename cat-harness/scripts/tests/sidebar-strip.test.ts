@@ -357,22 +357,3 @@ describe("no rule may stop the sidebar rising above `.main` (bean `vfr8`)", () =
     expect(sidebarZRules().filter((r) => r.value === "auto")).toEqual([]);
   });
 });
-
-describe("the controls render ONCE though the theme includes this file twice — bean uknu", () => {
-  // just-the-docs v0.12.0 includes `nav_footer_custom.html` from
-  // `components/sidebar.html` AND `components/footer.html`. The footer copy is
-  // outside `.side-bar`, so its checkbox could never open the nav, and its id
-  // duplicated the sidebar's on every page. Measured in a browser on a built
-  // page; this pins the source half, `publish-verify`'s `html-unique-ids`
-  // checks every built page.
-  it("the checkbox and both labels sit inside one render-once guard", () => {
-    const guard = /\{%-?\s*unless (\w+)\s*-?%\}\s*\{%-?\s*assign \1 = true\s*-?%\}([\s\S]*?)\{%-?\s*endunless\s*-?%\}/.exec(inside);
-    expect(guard).not.toBeNull();
-    const body = guard![2]!;
-    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-toggle"]) {
-      expect({ cls, guarded: body.includes(`class="${cls}"`) }).toEqual({ cls, guarded: true });
-    }
-    // Nothing outside the guard declares an id — the tabs render in both copies.
-    expect(inside.replace(guard![0], "").match(/\sid="/g) ?? []).toEqual([]);
-  });
-});

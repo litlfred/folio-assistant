@@ -76,7 +76,10 @@ not decided does not compile.
 > **A directory `id` of `kg` is untouched.** An id is the instance's own
 > handle and must survive a rename of anything else; this repository's own
 > declaration moved to `id: "cat-harness"` because it chose to, not because
-> it had to.
+> it had to, and moved on to `id: "skills"` on 2026-09-23. A Subgraph id is
+> its name inside its Harness, and the Harness name qualifies it
+> (`cat-harness.skills`). `RENAMED_DIRECTORY_IDS` reads the old id as the new
+> one, so an older declaration still overrides the entry it meant.
 >
 > **The JSON-LD projection canonicalises.** `toJsonLd` emits the type IRI, not
 > the spelling, so reading a projection back yields `cat-harness` whatever was
@@ -103,7 +106,7 @@ decides it.
 | `cat-harness` | **harness** | the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `["schemas", "cat-harness"]` entries, where it means "a schema IS a knowledge-graph node". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `["cat-harness"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had. | no |
 | `skills` | **harness**, and any layer | Skill packages — the authored instruction bodies an Actor performs a Task from. A Skill is a **Capability with defined inputs and outputs**, stated generically so it is portable across forges, binaries and machines. Split out of `cat-harness` on 2026-09-21. | no |
 | `processes` | **harness**, and any layer | Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21. | no |
-| `scenarios` | **harness**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. Named for what it WILL hold: a Role's `useCases` are free-text strings today, so a User Story cannot be pointed at or traced to the Workflow it justifies — naming the kind now is what gives that gap somewhere to be fixed. Split out of `cat-harness` on 2026-09-21. | no |
+| `scenarios` | **harness**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. `roles.json` and `stories.json`; a User Story points at its Role (#1168), where it was once free text on the role. Split out of `cat-harness` on 2026-09-21. | no |
 | `policies` | **harness**, and any layer | What an Actor may DO: W3C ODRL 2.2 policies (issue #1180). One rule per (assignee, action), scoped by `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints when it needs to be; actions are the profile in `skills/permissions/permissions.json`, inheriting through `includedIn`. A downstream instance inherits these with ODRL's `inheritFrom` instead of copying them. No login is ever written here: identity is the data store's. | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
 | `uml` | **harness** | UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph kind's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored. | no |
