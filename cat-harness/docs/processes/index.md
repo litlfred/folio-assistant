@@ -75,7 +75,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Options analysis](options-analysis.html) | 5 | — |
 | [Which open pull requests have no CI run on their head?](pr-checks-present.html) | 5 | — |
 | [QA report signing](qa-report-signing.html) | 5 | — |
-| [Refresh materialized remote content](refresh-materialized.html) | 5 | — |
+| [Refresh materialized remote content](refresh-materialized.html) | 8 | — |
 | [Related work: find, sort, summarize, ask to coordinate](related-work.html) | 5 | 1 |
 | [Is the repository itself healthy?](repository-health-watch.html) | 4 | — |
 | [Code node review](review-code.html) | 4 | — |
@@ -86,7 +86,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Render log — the publish branch keeps its own history](staging-render-log.html) | 6 | — |
 | [SWOT situation analysis](swot-analysis.html) | 7 | — |
 | [Post-MVP theme and UI review](theme-ui-review.html) | 6 | — |
-| [Translation Workflow](translation-workflow.html) | 9 | — |
+| [Translation Workflow](translation-workflow.html) | 10 | — |
 | [Watching a pinned upstream dependency](upstream-pin-watch.html) | 6 | — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | 10 | — |
 | [Voice overlay review](voice-review.html) | 6 | — |
