@@ -102,7 +102,10 @@ views?".
   - a grid of unconnected packages (an overview page) stays on ELK with more
     columns. The `' grid:` comment line in the `.puml` names the packages;
   - a diagram with edges between classes switches to Graphviz, left to
-    right, with orthogonal edges. Graphviz can route an edge across a box,
+    right, with straight-segment (polyline) edges, `nodesep 70` and
+    `ranksep 160`. Orthogonal edges were tried first: Graphviz placed their
+    labels away from the lines and ran lines through boxes (owner: "make
+    wider, its messy"). Graphviz can route an edge across a box,
     which is why ELK stays the portrait default.
 
 ## Regenerating
