@@ -148,6 +148,7 @@ export const RULES: Rule[] = [
       "scripts/gen-review-page.ts",
       "scripts/review-renderers.ts",     // the diff renderers the review page embeds (bean `d903`)
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
+      "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is

@@ -73,7 +73,7 @@ export type BlocksFile = Record<string, BlockAnchor>;
 export function blocksOf(folioDir: string): BlocksFile {
   const out: BlocksFile = {};
   for (const [label, s] of snapshot(folioDir)) {
-    out[label] = { hash: s.proseHash ?? s.manifestHash, renamedFrom: s.renamedFrom };
+    out[label] = { hash: s.proseHash ?? s.manifestHash, renamedFrom: s.renamedFrom, ...(s.section ? { section: s.section } : {}) };
   }
   return out;
 }

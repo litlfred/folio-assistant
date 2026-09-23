@@ -426,6 +426,8 @@ export function reanchor(comments: readonly ReviewComment[], changes: readonly A
 export interface BlockAnchor {
   hash: string;
   renamedFrom: readonly string[];
+  /** The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`). */
+  section?: string;
 }
 
 /**

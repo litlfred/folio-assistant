@@ -38,4 +38,41 @@ coverage is not approval.
 ## Done when
 - [ ] the five metrics are computed from published data, not from an agent's /tmp
 - [ ] the matrix, minimap and table view are on the review page, and pass the dataviz validator in both themes
-- [ ] the skill is written, and content-graph.md points to it for the review use
+- [x] the skill is written, and content-graph.md points to it for the review use
+
+## Measured and ruled 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE)
+
+**What published data exists, per metric:**
+
+| metric | data today |
+|---|---|
+| change density | `changeset.json` |
+| open review comments, by kind | `review-comments.json` (9gyz Findings are not published in previews) |
+| staleness | each comment's recorded block hash vs `blocks.json` |
+| review coverage | **none**: no per-block reviewer verdict is recorded (that comes with en2d) |
+| QA | **not published**: the staging build does not copy the folio's QA results |
+
+**Owner's answer: "1 2".**
+- **1, now:** build the three columns that have data. Coverage and QA are
+  columns that say "not measured yet" / "not published yet" in every row,
+  never 0 or blank.
+- **2, next:** make the staging build publish the folio's QA results, so the
+  QA column becomes real.
+
+**Built (option 1):**
+- `cat-harness/scripts/review-heat.ts`: `computeHeat`, `heatBucket` and
+  `renderHeat`, embedded by `toString()`.
+- `blocks.json` now carries each block's `section`.
+- The page's table uses a blue ordinal ramp that passes the dataviz validator
+  in both themes, with every cell's ink at ≥ 4.7:1 against its fill.
+- The `review-heatmap` skill says what each column means and must not be read
+  as, and `content-graph.md` now points to it.
+- 5 unit tests and 4 Playwright tests. Checked in Chromium, light and dark, on
+  the scaffolded folio with real ingested comments.
+
+**Deviations from the bean's text:**
+- The skill is in `cat-harness/skills/folio-core/` beside `staging-review` and
+  `review-comments`, not in `folio-assistant-core/skills/review/`. Core holds
+  no skills package, and a review skill split from its siblings would be found
+  by nobody.
+- The minimap is not built here. It is the outline/minimap bean (`eb4l`).
