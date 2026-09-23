@@ -152,8 +152,8 @@ classDiagram
       models [0..*] Model[]
     }
   }
-  namespace bootstrap__glossary {
-    class bootstrap_glossary_folio_glossary_ledger_v1["folio-glossary-ledger/v1"] {
+  namespace bootstrap__swimlane_glossary {
+    class bootstrap_swimlane_glossary_folio_glossary_ledger_v1["folio-glossary-ledger/v1"] {
       <<ts: Ledger>>
       $schema [1] string
       instance [1] string
@@ -197,5 +197,5 @@ classDiagram
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
-  cssClass "bootstrap_glossary_folio_glossary_ledger_v1" fa_uml_kind_glossary
+  cssClass "bootstrap_swimlane_glossary_folio_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
   cssClass "bootstrap_bootstrap_translations_TranslationConfig" fa_uml_kind_translation_sources

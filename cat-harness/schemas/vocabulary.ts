@@ -259,6 +259,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "Authored content — the folio itself, rendered to a website.",
     seeAlso: "/content-types.html",
   },
+  GlossaryGraph: {
+    layer: "core",
+    gloss:
+      "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+  },
   PreviewGraph: {
     layer: "core",
     gloss: "A staging target: the same folio built for review rather than for release.",

@@ -112,11 +112,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `glossary`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/glossary/' | relative_url }})
+- [folio-assistant-core]({{ '/glossary/' | relative_url }})
 
 ### `health`
 
@@ -224,6 +223,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - FHIR IG Harness — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*
+
+### `swimlane-glossary`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- Bootstrap — *declared, not published*
+- [C@T Harness]({{ '/swimlane-glossary/' | relative_url }})
 
 ### `themes`
 
