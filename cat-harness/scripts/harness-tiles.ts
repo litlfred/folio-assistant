@@ -142,6 +142,26 @@ export type HarnessVisualisation = {
    * maintenance.
    */
   note?: string;
+  /**
+   * The page this row opens is WITHHELD from the canonical deploy.
+   *
+   * `compose-docs.ts` lays a `publish: "staging-only"` page into the site only
+   * under `--staging`, so on the canonical build the file exists in the SOURCE
+   * and not in the published tree. `path` is resolved against the source, so
+   * it is present and correct and the link is still dead.
+   *
+   * The graph TILE has carried this since `graphTiles` was written, and
+   * `docs-ui.js` skips such a tile unless the page says it is a staging
+   * preview — its own comment: *"Conflating them would let 'show hidden'
+   * resurrect a link to a 404."* The navbar's folder list carried it nowhere
+   * and linked `fsh-guts` on the canonical site, which is that 404 arriving by
+   * the other door. Measured 2026-09-23 by sweeping a canonical-shaped local
+   * build: 1 of 387 sidebar links.
+   *
+   * Absent means "publishes normally". It is not a third state: a page that is
+   * withheld says so, and everything else is published.
+   */
+  stagingOnly?: true;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -551,10 +571,19 @@ function tileFor(
     // edited". Both branches carry it, so a kind never loses its read-only
     // state by failing to resolve a page.
     const ro = readOnlyFor(kind);
+    // WITHHELD FROM THE CANONICAL DEPLOY — read from the same declaration
+    // `declaredFor` reads it from, rather than inferred from anything. See
+    // `HarnessVisualisation.stagingOnly` for what its absence cost.
+    const withheld = dirs.some(
+      (d) =>
+        (d.graphKinds ?? []).includes(kind) &&
+        visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
+    );
     visualisations.push({
       kind,
       ...(path ? { path } : {}),
       ...(ro === undefined ? {} : { readOnly: ro }),
+      ...(withheld ? { stagingOnly: true as const } : {}),
     });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.

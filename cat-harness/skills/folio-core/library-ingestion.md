@@ -274,6 +274,20 @@ union across sheets, and it is the field a `grep` for a column name lands in —
 without it a dataset is stored but not findable, and a failed search is
 indistinguishable from the dataset not having that column.
 
+**The record is real JSON-LD, and so is `contents.jsonld`** (bean `yh6u`).
+Both used to be named `.jsonld` with an `@id` and no `@context`, so a JSON-LD
+processor dropped every key they wrote. Both arms now emit the published
+content context (the URL lives once, in `scripts/_content_context.py`, pinned
+to `CONTENT_CONTEXT_URL` by a test), and every key is a declared term. The
+facts a consumer queries across documents — `format`, the counts,
+`header_vocabulary` — are real terms; the nested structures that are ours —
+`sheets`, `entries`, the technical metadata, the `narrative` — are `@json`
+literals, **because that is how their nulls survive**: `rows: null` means
+"could not be counted" and `narrative.text: null` means "nobody has written
+one", and JSON-LD drops a null anywhere else. Records written before this
+carry no `@context`; the schemas accept that, since folio repositories hold
+them.
+
 **Stdlib only** (`zipfile` + `xml.etree`, `csv`). This repository declares no
 Python dependencies — no `requirements.txt`, and CI installs only `ruff` — so a
 tool needing openpyxl would pass locally and fail there. Everything this arm
