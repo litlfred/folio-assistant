@@ -94,6 +94,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // settles the matter. The output is a document conforming to
     // `discussion.output.schema.json`, which is what makes the task checkable
     // rather than "we discussed it".
+    // `folio-block-qa-summary` — bean `qbfi`, option 2. The review page's
+    // heat map reads a folio's QA verdicts from a PUBLISHED summary. This
+    // reads the committed `block-qa/v1` sidecars and runs no checker.
+    defineTool({
+      id: "folio-block-qa-summary",
+      title: "Folio block QA summary",
+      description:
+        "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/publish-block-qa.ts" },
+      io: {
+        inputs: [
+          { name: "folio", schema: t("RepoPath"), required: true, arg: { flag: "--folio" }, description: "The folio's `folio` graph directory." },
+          { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write `block-qa.json`." },
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio repository root, where verdicts are anchored. Default `.`." },
+        ],
+        outputs: [
+          { name: "block-qa", schema: t("RepoPath"), description: "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr." },
+        ],
+      },
+      satisfies: ["review-heatmap"],
+      selection: {
+        when: "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
+        limits:
+          "Reports the LAST sweep. A folio never swept reads unaudited throughout. Reads verdicts at the instance root and at the folio directory, because the sweep currently anchors at the swept directory (bean s3p2).",
+        cost: "One text walk of the folio and one read per sidecar. No network.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "discuss",
       title: "discussion",
