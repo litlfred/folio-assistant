@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/content-test/input.schema.json",
+  "title": "Content Test Input",
+  "description": "Input schema for end-to-end content testing.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string",
+      "description": "Path to test plan file."
+    },
+    "testData": {
+      "type": "string",
+      "description": "Path to test data directory."
+    },
+    "regressionBaseline": {
+      "type": "string",
+      "description": "Git ref for regression baseline."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "b88a70ba31ceb469bee3329acd9ddb2ea08453b9",
+    "pr": "1169/merge",
+    "run": "35914777201"
+  }
+}
