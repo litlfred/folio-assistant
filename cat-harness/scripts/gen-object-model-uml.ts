@@ -9,8 +9,8 @@
  * from a schema, and the stereotype names which one:
  *
  * - `«json: X»` — a JSON Schema generated from the Zod schema `X` in
- *   `schemas/` (`zod-to-json-schema`, the same route `generate-schemas.ts` and
- *   `harness-schema-export.ts` take).
+ *   `schemas/` (`toJsonSchema` in `schemas/to-json-schema.ts`, Zod 4's native
+ *   converter — the route every generator here takes).
  * - `«ext: …»` — a schema this repository does not own: the WHO SMART DAK's
  *   own JSON Schema for User Story (read from `smart-base/`), the beans CLI's
  *   GraphQL schema for Bean, OMG BPMN 2.0 for Process.
@@ -34,8 +34,9 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ZodTypeAny } from "zod";
+import type { z } from "zod";
+
+import { toJsonSchema } from "../schemas/to-json-schema.js";
 
 import { ActorDefSchema, RoleDefSchema } from "../schemas/role-graph.js";
 import { SkillDefinitionSchema } from "../schemas/skill-package.js";
@@ -131,8 +132,8 @@ function attrsOf(schema: Json, prefix = "", depth = 0): Attr[] {
   return out;
 }
 
-function fromZod(schema: ZodTypeAny): Json {
-  return zodToJsonSchema(schema, { $refStrategy: "none" }) as Json;
+function fromZod(schema: z.ZodType): Json {
+  return toJsonSchema(schema) as Json;
 }
 
 function readJson(path: string): Json {

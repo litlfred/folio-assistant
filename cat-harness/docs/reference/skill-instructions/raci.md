@@ -5,23 +5,35 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/raci/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/raci/raci.md) — do not edit here.
+> Generated from [`skills/raci/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/raci/raci.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/raci/raci.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/raci/raci.md){: .fa-edit-source }
 
 {% raw %}
 # RACI — involvement, over the graph that already exists
 
-**R is already declared.** A BPMN lane says who performs an activity; that
-IS Responsible, and this methodology does not repeat it. What BPMN cannot
-say is the other three:
+**The method is not in this file.** It is the `raci` node in the `methodology`
+graph — [`methodologies/raci.md`](../../methodologies/raci.md) — which carries
+the four letters, the exactly-one-Accountable constraint, and what RACI is not
+for. This file carries how *this platform* applies it. That split is
+`methodology-adoption`'s: a skill names the methodology it follows, and the
+method's own text lives once, so two skills quoting it cannot drift apart.
 
-| letter | means | direction |
-|---|---|---|
-| **R**esponsible | does the work | from the **lane** |
-| **A**ccountable | carries the decision; answers for the outcome | exactly one |
-| **C**onsulted | asked for input **before** | two-way |
-| **I**nformed | told **after** | one-way |
+The node arrived on the owner's ruling of 2026-09-22 (bean `2xfl`). Until then
+the definitions below lived here, which made RACI the one methodology in use
+that the methodology graph could not see. **Read the node first**; everything
+here assumes it.
+
+**R is already declared, and that is this platform's contribution.** A BPMN
+lane says who performs an activity; that IS Responsible, so the overlay does
+not restate it and declares only the other three:
+
+| letter | where it comes from HERE |
+|---|---|
+| **R**esponsible | read from the BPMN **lane**, never declared |
+| **A**ccountable | `folio:raci`, exactly one per activity, gated |
+| **C**onsulted | `folio:raci` |
+| **I**nformed | `folio:raci` |
 
 ```xml
 <bpmn:task id="A_Entities" name="Identify entities">
@@ -55,20 +67,19 @@ and naming a concrete actor would bind a process to one participant. That
 holds for *informed* too, where the temptation to name a person is
 strongest.
 
-## Exactly one Accountable, and it is enforced
+## Exactly one Accountable — the method's rule, ENFORCED here
 
-A chart that permits two A's lies about who carries the decision, and that
-is the rule most often broken in practice. `check:raci` fails on it.
+The constraint itself is the node's; what this section adds is that
+`check:raci` fails on a breach rather than advising against one.
 
-**Zero is also a breach**, once an activity declares any RACI at all. A
-half-annotated activity is worse than an unannotated one, because the
-chart looks complete. An activity declaring nothing is `n/a` — annotation
-is incremental by design, and the gate is on what a diagram CLAIMS, never
-on how much it has claimed so far.
+**Zero is also a breach**, once an activity declares any RACI at all. An
+activity declaring nothing is `n/a` — annotation is incremental by design, and
+the gate is on what a diagram CLAIMS, never on how much it has claimed so far.
+That incrementality is the platform's choice, not the method's: RACI says
+nothing about partially annotated corpora.
 
-**A role cannot be both accountable and consulted on one activity.** Asking
-yourself is not consultation, and that pairing is how *consulted* quietly
-becomes a formality while the chart still reads as complete.
+**A role cannot be both accountable and consulted on one activity**, and the
+gate enforces that too.
 
 ## Using it to initiate a project
 
@@ -94,17 +105,18 @@ stakeholder identification — *"the BA knows the domain, the agent does not
 guess"* — and it applies here with more force, because a wrong A is
 invisible until something goes wrong and somebody has to answer for it.
 
-## What this is NOT
+## What this is NOT — the platform's half
 
-**Not an approval mechanism.** A is who answers for the outcome, not who
-signs a gate. Gates are BPMN — a `userTask` in a lane, with the
-`fulfilmentKindsForBpmnType` rule that a system actor cannot fill one.
+The method's own refusals are in the node. These three are about the
+overlay, and each names the declaration RACI must not be mistaken for:
+
+**Not an approval mechanism.** Gates are BPMN — a `userTask` in a lane, with
+the `fulfilmentKindsForBpmnType` rule that a system actor cannot fill one.
 
 **Not permissions.** What an actor may DO is
-`skills/permissions/permissions.json` and cross-cuts roles. RACI says who
-is involved in a task, not what they are allowed to do in general.
+`skills/permissions/permissions.json` and cross-cuts roles.
 
-**Not a substitute for the lane.** If the chart and the lane disagree
-about who performs something, the lane is right and the chart is stale —
-which is why R is read rather than declared.
+**Not a substitute for the lane.** If the chart and the lane disagree about who
+performs something, the lane is right and the chart is stale — which is why R
+is read rather than declared, and the sharpest reason this is an overlay.
 {% endraw %}

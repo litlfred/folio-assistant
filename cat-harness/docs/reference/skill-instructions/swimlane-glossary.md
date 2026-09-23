@@ -94,7 +94,7 @@ and produces a string no catalogue contains.
 A concept's `@id` is the IRI `kg-export` already mints for that role
 (`makeIri(docIri, "role", id)`), imported rather than re-spelled. The
 graph's `performedBy` links point at exactly those IRIs; a parallel
-`cat:reviewer` would leave the glossary unjoinable with the graph it
+`cat-harness:reviewer` would leave the glossary unjoinable with the graph it
 describes.
 
 ## The ledger is the memory, and it is the only durable part

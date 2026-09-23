@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>69</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>70</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>51</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>51</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>52</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 51 |
+| <span class="tg-tag tg-shell">shell</span> | 52 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 64 |
+| `none` | 65 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **51** skills named across **69** tools resolve to a
+Yes — all **51** skills named across **70** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -68,6 +68,7 @@ tool advertising a capability the graph cannot locate.
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
 | `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
+| `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | `feature-staging` | 3 in / 1 out |
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `getting-started`<br>`repo-conversion` | 9 in / 1 out |

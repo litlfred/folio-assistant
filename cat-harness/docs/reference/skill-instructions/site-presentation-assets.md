@@ -110,3 +110,10 @@ The skill was written before the nodes, and deliberately names no script. A skil
 written to give a command somewhere to point is **a Tool with front matter**: it
 passes every check and teaches nothing.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code node review](../../processes/review-code.html) | Review the schema definition node |
+

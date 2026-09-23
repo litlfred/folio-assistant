@@ -250,7 +250,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
         .optional()
         .describe("For a decision a person makes — one of the outcomes workflow_next listed"),
       facts: z
-        .record(z.unknown())
+        .record(z.string(), z.unknown())
         .optional()
         .describe(
           "For a decision workflow_next reported as `computed by <table>`: the values " +

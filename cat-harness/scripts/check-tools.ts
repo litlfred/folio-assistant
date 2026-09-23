@@ -32,7 +32,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { knownSkills as knownSkillsIn } from "./known-skills.js";
 import { instanceDirectoryForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";

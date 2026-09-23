@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-20T21:23:04Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-5a3l
 ---
 
 Owner, 2026-09-20, naming the pipeline verbatim:
@@ -174,3 +174,18 @@ envelope is elsewhere and, for a document package, unsettled).
 Read those before designing stage 4. **Not ingested** — owner: *"dont ingest
 whole thing."* Two files were read over HTTP and nothing was cloned or added to
 `library/`.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `5a3l`.** "editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE" — a publication topology, and the bean says so.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

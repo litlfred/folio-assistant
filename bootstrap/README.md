@@ -249,4 +249,4 @@ server and that constraint is the role.
 [process](../cat-harness/processes) ·
 [tool](../cat-harness/schemas/tool.ts).
 Why bootstrapping is built this way:
-[the proposal](../fsh-guts/proposals/bootstrap.md).
+[the proposal](../cat-harness/docs/proposals/bootstrap.md).

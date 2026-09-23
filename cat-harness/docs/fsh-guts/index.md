@@ -20,7 +20,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**29 file(s)** across 3 group(s). Each links to the file itself —
+**19 file(s)** across 2 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -33,30 +33,13 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 18 | carries the tag itself |
+| <span class="fg-tag fg-ok">declared</span> | 9 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 4 | a script, described by a tagged `.md` sibling |
-| <span class="fg-tag fg-gap">undeclared</span> | 7 | **neither** — a gap, not a format limit |
+| <span class="fg-tag fg-gap">undeclared</span> | 6 | **neither** — a gap, not a format limit |
 
-The 7 undeclared are listed below with the rest rather than in a
+The 6 undeclared are listed below with the rest rather than in a
 separate section: they are part of the corpus, and a gap hidden behind a
 summary count is the failure this table exists to avoid.
-
-## proposals
-
-10 file(s).
-
-| file | what it is | declares itself |
-|---|---|---|
-| [actor-facts-and-their-processes.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/actor-facts-and-their-processes.md) | Actor facts and the processes that must read them | <span class="fg-tag fg-ok">declared</span> |
-| [agents-md-migration.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/agents-md-migration.md) | Migrating `AGENTS.md` into skills — the classification | <span class="fg-tag fg-ok">declared</span> |
-| [bean-archiving-in-bpmn.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/bean-archiving-in-bpmn.md) | Bean archiving in BPMN — the terminal state nothing draws | <span class="fg-tag fg-ok">declared</span> |
-| [bootstrap.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/bootstrap.md) | `bootstrap/` — the graph an agent can read before it knows anything | <span class="fg-tag fg-ok">declared</span> |
-| [deployment-topologies.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/deployment-topologies.md) | Deployment topologies and operating modes | <span class="fg-tag fg-ok">declared</span> |
-| [index.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/index.md) | Proposals | <span class="fg-tag fg-ok">declared</span> |
-| [instance-versioning.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/instance-versioning.md) | Instance versioning and dependency resolution | <span class="fg-tag fg-ok">declared</span> |
-| [sdlc-process-audit.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/sdlc-process-audit.md) | SDLC process audit — which diagram owns which phase | <span class="fg-tag fg-ok">declared</span> |
-| [workflow-state-in-beans.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/workflow-state-in-beans.md) | Options for executing DMN/BPMN with beans as state | <span class="fg-tag fg-ok">declared</span> |
-| [zod-schemas-as-tools.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/proposals/zod-schemas-as-tools.md) | Zod schemas as Tools — audit and analysis | <span class="fg-tag fg-ok">declared</span> |
 
 ## retired
 
@@ -64,7 +47,7 @@ summary count is the failure this table exists to avoid.
 
 | file | what it is | declares itself |
 |---|---|---|
-| [skill-definition-roles.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md) | `SkillDefinition.roles` — retired 2026-09-20 | <span class="fg-tag fg-gap">undeclared</span> |
+| [skill-definition-roles.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md) | `SkillDefinition.roles` — retired 2026-09-20 | <span class="fg-tag fg-ok">declared</span> |
 | [skill-roles-front-matter.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-roles-front-matter.md) | `roles:` in skill front matter — the whole record | <span class="fg-tag fg-ok">declared</span> |
 | [translations-fr-agent-onboarding.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/translations-fr-agent-onboarding.md) | Intégration de l'agent | <span class="fg-tag fg-ok">declared</span> |
 

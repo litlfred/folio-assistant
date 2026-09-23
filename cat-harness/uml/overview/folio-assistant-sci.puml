@@ -50,7 +50,7 @@ package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>
     judgementOnly [0..1] : boolean
   }
   class "VoiceProfile" as folio_assistant_sci_voices_VoiceProfile <<json: VoiceProfileSchema>> #e8f0ee {
-    $schema [1] : folio-voice/v1 | folio-voice-skill/v1
+    $schema [1] : 'folio-voice/v1' | 'folio-voice-skill/v1'
     id [1] : string
     title [1] : string
     description [1] : string

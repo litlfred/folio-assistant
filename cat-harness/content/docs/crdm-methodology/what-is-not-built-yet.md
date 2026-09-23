@@ -6,7 +6,7 @@ there, or lets them assume something exists because nobody updated the list.
 
 **Built since this page was first written:**
 
-- **CRDM detection skill** — [`methodologies/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-detect.md)
+- **CRDM detection skill** — [`skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md)
   gives the agent five categories of detection phrasing, an explicit "what is
   *not* a feature request" list, and the session-state rules (new session,
   existing session already in the process, existing session doing content
@@ -27,10 +27,10 @@ there, or lets them assume something exists because nobody updated the list.
   they would be a second answer to "where are we", free to disagree with the
   first.
 - **BPMN diagram of the process itself** —
-  [`methodologies/crdm/processes/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/processes/crdm-requirements.bpmn),
+  [`processes/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-requirements.bpmn),
   with lanes for the BA / feature requestor, the agent, and stakeholders.
 - **The six-phase workflow as a skill** —
-  [`methodologies/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-requirements-workflow.md),
+  [`skills/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-workflow.md),
   including the actors table and the issue-association rules.
 
 **Not yet implemented:**

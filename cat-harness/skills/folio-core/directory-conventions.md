@@ -119,7 +119,7 @@ decides it.
 | `issue-marks` | **harness** | how far an agent has read an issue — `lastCommentId`, `lastUpdatedAt`, `checkedAt`, one file per issue. **Not the comments**: an id and two timestamps, never a body. Two marks because a comment EDITED after being read keeps its id. Read with [`issue-working`](issue-working.md); shape in `src/issue-watch/seen-comments.ts`. | no |
 | `memory` | **harness** | agent memory — durable facts an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. Declared at `memory/`, **repository-scoped** — these are facts about the repository carried by the agents working in it, and `.claude/agents/` sits at the repository root too. They were in `skills/memory/` until 2026-09-20 (bean `07xs`), where the containing kind was `content` and the contents were `context`. | no |
 | `waiver` | **harness** | confirmations a person granted **in advance** — one `"$schema": "folio-waiver/v1"` node each, naming one gate class, scoped to a session or a process run, and carrying an expiry. Declared over the **same directory as `memory`**, `memory/`, and told apart from it by that tag rather than by a subdirectory: a directory is a place to look and may hold more than one part of a graph. `context` by the same test as `memory` — a process reads a waiver before a gate fires and no step writes one. Skill: [`confirmation-waiver`](confirmation-waiver.md). | no |
-| `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
+| `fsh-guts` | **harness** | Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
 | `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the [`ig-artifact-ingestion`](../authoring-who-smart-guidelines/ig-artifact-ingestion.md) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
@@ -374,6 +374,77 @@ shipping into it, and `voices-viz.test.ts` asserts both directions: a voice
 under `vendors/` loads, a voice under any other nested directory does not.
 
 `VOICE_VENDORS_DIR` in `schemas/voices.ts` is the one spelling of the name.
+
+## Assets sit at `<stub>/<asset>` — no declaration reaches down (ENFORCED)
+
+**A declared directory never sits inside another declared directory.** An
+instance's assets hang directly off its stub — `cat-harness/skills/`,
+`who-iris/library/`, `smart-kg/methodologies/` — and a package inside one of
+those is a package, not a second graph.
+
+The owner, 2026-09-22: *"dont bury sub-graph assets. same for `<stub>/skills`,
+etc."* and *"follow established norms on layout. qa to enforce."*
+
+> **Read with §"Nesting is declared FROM WITHIN" below, which is the newer
+> ruling and the one that governs.** This section was titled *"nothing nests"*
+> until the two were merged, and that was too absolute: nesting is permitted,
+> **described by a node in the first subdirectory**. What is forbidden either
+> way — and what `check:layout-norms` actually measures — is a ROOT
+> DECLARATION enumerating a path it cannot verify, which is one of the two
+> things #980 rules out explicitly.
+>
+> So the two agree on every case in the corpus today, and the relocation this
+> section describes is *more* correct under the newer ruling than under the
+> one it was made for: `methodology-crdm` at `methodologies/crdm/` was a root
+> declaration reaching down a multi-level path, and removing it rather than
+> repointing it is what #980 requires.
+>
+> **The check will need to learn the from-within node when it exists.** Its
+> kind and name are open and are the owner's (#980), so nothing declares
+> nesting from within today and every pair the check finds is still a root
+> declaration reaching down. The day that node lands, a nesting it describes
+> is legitimate and `check:layout-norms` must stop reporting it — recorded
+> here so the next session reads the constraint instead of filing a false
+> finding against a sanctioned structure.
+
+**Depth is not the test, and reaching for it produces false findings
+immediately.** `who-iris/library/` is two segments from the repository root and
+is exactly right. `test/results/` is two segments from its instance root and is
+also right, because `test/` is not a graph. What is wrong is *containment*: a
+declared directory inside another declared directory, which forces a consumer
+scanning the outer one to decide whether the inner one's nodes are also its own
+— bean `x4v4`'s question, and every count computed from that sweep depends on
+the answer.
+
+### The part that is easy to get wrong
+
+When you relocate a buried asset, **remove its declaration rather than
+repointing it.** A package subdirectory of an already-declared graph needs no
+entry of its own, and adding one declares the same directory twice — the same
+defect, one level down from where it was.
+
+That is not a judgement call made in prose: on 2026-09-22 CRDM's skills were
+repointed from `methodologies/crdm/` to `skills/crdm/` with the entry kept, and
+`gen-skill-docs` immediately demanded a category under **both** the basename
+and the declaration id, because both discovery branches found the one
+directory. The three entries were dropped and `methodologies/` now holds its
+four nodes and no subgraph.
+
+### How it is enforced
+
+`bun run check:layout-norms`, a **ratchet** rather than a corpus-wide gate. The
+nestings that exist today are baselined in
+`scripts/layout-norms-baseline.json`; **a pair not in the baseline fails.**
+`cat-harness` reached zero and has no baseline entry, so it cannot regress,
+while the instances with outstanding work do not turn CI red — the
+`known-skills.ts` wolf-crying rule applied to somebody else's layout.
+
+Removing a nesting prints as `FIXED` and never fails: a guard that punished the
+fix it exists to encourage is the inversion bean `rl3h` produced elsewhere.
+`--update` shrinks the baseline, so the diff a reviewer sees is the progress.
+
+**Ask the baseline for the list, never this page.** It said "three instances"
+while the check found four.
 
 ## Inheritance
 
@@ -760,8 +831,39 @@ something reads the stale one.
 
 Both renderings already have their mechanism, so adding a schema introduces no
 new machinery: `scripts/generate-schemas.ts` walks a map of Zod schemas through
-`zodToJsonSchema` into `schemas/generated/`, and `toJsonLd()` in
-`schemas/cat-harness.ts` is the worked example of the graph projection.
+`schemas/to-json-schema.ts` (Zod 4's native `z.toJSONSchema`; the older
+`zodToJsonSchema` silently emptied its output under Zod 4) into
+`schemas/generated/`, and `toJsonLd()` in `schemas/cat-harness.ts` is the
+worked example of the graph projection.
+
+### Why Zod — the grounds, and what kind of ground each is
+
+The owner, 2026-09-23: *"not preference on .ts, fixed on
+functionality/pragmatism"*. The choice is a JUDGEMENT on what the tool does,
+and stating its grounds is what lets a later reader tell whether they still
+hold. **Three are functional and checkable:**
+
+1. **It produces both renderings the graph needs** — JSON Schema natively and
+   the JSON-LD projection from the same definition — so there is one source.
+2. **Validation is easy**, at author time (`tsc`, the editor) and at run time
+   (`.parse`), with the TypeScript type inferred rather than restated.
+3. **A large, active community** — the converter replacement above was a
+   version bump, not a rewrite, because the library is maintained.
+
+**One is a HOUSE RULE, and is labelled as one.** In the owner's
+trials, agents hallucinated less authoring schemas in `.ts` than in the
+alternatives tried — the owner's guess is that it is easier to digest, or
+costs fewer tokens. The owner calls this *unscientific*: it is an
+observation, **not a measurement**, and it must not be quoted as evidence
+that `.ts` is better. It is a tie-breaker between options that pass the
+three functional grounds, never a reason on its own.
+
+**What would reopen the decision:** another carrier that meets all three
+functional grounds and measurably beats this one on something that matters
+here. "`.ts` is what we use" is not a ground, and nor is the house rule by
+itself. Keep the two kinds of ground apart when you argue it either way —
+running a preference and a measurement together is how a judgement comes to
+look like a fact.
 
 **Generate as many renderings as have a consumer, and no more.** JSON Schema
 because validators and editors speak it; JSON-LD because the KG query path
@@ -926,4 +1028,4 @@ gate that silently covers nothing and exits 0 is this repository's most
 expensive recurring defect (`xom7`, `dh4f`, `a6kl`).
 
 Full scheme, including what an instance's version means and what makes it go
-up: [`fsh-guts/proposals/instance-versioning.md`](../../../fsh-guts/proposals/instance-versioning.md).
+up: [`cat-harness/docs/proposals/instance-versioning.md`](../../docs/proposals/instance-versioning.md).

@@ -111,6 +111,30 @@ describe("required inputs", () => {
 });
 
 describe("what gets written", () => {
+  test("a DOCUMENT folio's staging caller is ON and builds with build-document-site (fyu2)", () => {
+    const d = tmp();
+    const r = initFolio(opts(d, { contentType: "document" }));
+    const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
+    expect(wf).toContain("uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main");
+    expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(true);
+    expect(wf).toContain("cat-harness/scripts/build-document-site.ts --out _site");
+    // A reviewer's tagged comment refreshes the preview's review comments (423d).
+    expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
+    expect(wf).toContain("issues: read");
+    expect(r.notes.join(" ")).not.toContain("wired but OFF");
+    expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
+  });
+
+  test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
+    const d = tmp();
+    const r = initFolio(opts(d, { contentType: "paper" }));
+    const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
+    expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
+    expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(false);
+    expect(wf).toContain("exit 1");
+    expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
+  });
+
   test("every file the layout needs, and no subject matter", () => {
     const d = tmp();
     const r = initFolio(opts(d));
@@ -129,6 +153,7 @@ describe("what gets written", () => {
       "AGENTS.md",
       "CLAUDE.md",
       "GEMINI.md",
+      ".github/workflows/staging.yml",
     ]) {
       expect(r.created).toContain(f);
       expect(existsSync(join(d, f))).toBe(true);

@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { siteDir, siteDirFor } from "../../schemas/cat-harness.js";
-import { harnessTiles, ownStatePage, subjectPage } from "../harness-tiles.js";
+import { harnessTiles, inertNote, ownStatePage, subjectPage } from "../harness-tiles.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with a site-owning harness and any number of siblings. */
@@ -175,7 +175,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
       who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
 
@@ -200,7 +200,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
     const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] } }, [
       "beans",
     ]);
-    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans" }]);
+    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans", note: "no viewer yet" }]);
   });
 });
 
@@ -360,14 +360,35 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
     expect(tile.icon?.src).not.toContain(`${siteDirFor(join(f.repo, "host"))}/`);
   });
 
-  test("an instance mounted beneath the site root carries its mount", () => {
-    // The site owner is at `/`; everything else is at `/<name>/`. A helper
-    // that answered `/assets/...` for both would 404 for every instance but
-    // one, which is the shape of the defect it replaced.
-    const f = fixture({ host: host(), sibling: withIcon("sibling") });
+  test("an instance mounted beneath the site root carries its SITE DIR's mount", () => {
+    // THIS TEST ASSERTED `/sibling/...` AND THAT WAS THE BUG, on the premise
+    // "the site owner is at `/`; everything else is at `/<name>/`".
+    //
+    // Disproved by running the mount rather than by reading a file:
+    //
+    //     who-iris/library/  ->  /who-iris/        (1378 files)
+    //     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+    //
+    // Every instance gets a `<kind>/<name>` route unconditionally; the bare
+    // `<name>` route goes to whichever kind claims it FIRST, and for who-iris
+    // that is the library. So the front door served 1,378 corpus files and the
+    // icon composed against it 404'd — 404 against 200 for the same asset at
+    // `/docs/who-iris/assets/...`, on a mounted build.
+    //
+    // `<kind>/<name>` is the route that always exists, so it is the one to
+    // compose against; the bare one is right only by luck.
+    const f = fixture({
+      host: host(),
+      sibling: withIcon("sibling", {
+        directories: [
+          { id: "beans", path: "beans/", graphKinds: ["beans"] },
+          { id: "site", path: `${siteDir({ name: "sibling", stub: "sibling" })}/`, graphKinds: ["docs"] },
+        ],
+      }),
+    });
     giveOwnSite(f.repo, "sibling");
     const [tile] = tilesOf(f).filter((t) => t.name === "sibling");
-    expect(tile.icon?.src).toBe("/sibling/assets/img/mark.svg");
+    expect(tile.icon?.src).toBe("/docs/sibling/assets/img/mark.svg");
   });
 
   test("no mount means NO icon and a finding — `pb04` one layer down", () => {
@@ -602,7 +623,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = join("host", hostSite(f.repo), "nowhere", "index.html");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("does not resolve on disk");
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
@@ -625,7 +646,10 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = join("who", "elsewhere", "index.html");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    // THE ROW SAYS THE SAME THING THE FINDING DOES. `viewer not published`,
+    // never `no viewer yet` — a reader told the second about a viewer that
+    // was built would go and build a second one.
+    expect(who.visualisations).toEqual([{ kind: "library", note: "viewer not published" }]);
     expect(who.findings.join(" ")).toContain("exists but is not at a conventional path");
     // And NOT the unbuilt message, which is the assertion that would have
     // been false. Without this line the test passes on a report that says
@@ -667,7 +691,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([
       { kind: "library", path: "/lib-view/" },
-      { kind: "uploads" },
+      { kind: "uploads", note: "no viewer yet" },
     ]);
     expect(who.findings.join(" ")).toContain("no published viewer — uploads");
   });
@@ -731,5 +755,131 @@ describe("a render-exempt instance is not missing what it was excused from", () 
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.findings.join(" ")).toContain("no published viewer");
+  });
+});
+
+describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front door", () => {
+  // MEASURED, by running `mount-instance-docs` against a built preview rather
+  // than by reading either file:
+  //
+  //     who-iris/library/  ->  /who-iris/        (1378 files)
+  //     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+  //
+  // Every instance gets a `<kind>/<name>` route unconditionally; the bare
+  // `<name>` route goes to whichever kind claims it first, and for who-iris
+  // that is the LIBRARY. So its front door serves 1,378 corpus files and its
+  // docs are somewhere else entirely.
+  //
+  // The shipped version composed an icon against `folioRoot` — the front door
+  // — and produced a URL that 404s. Confirmed against a mounted build: 404 for
+  // `/who-iris/assets/...` and 200 for `/docs/who-iris/assets/...`, same asset.
+  //
+  // The local preview HID it, which is why this is a test and not a comment:
+  // `preview:site` does not run the mount, so the asset was absent there for
+  // an unrelated reason and the wrong URL looked like the same 404.
+
+  const withIcon = (name: string, kind: string) => ({
+    name,
+    icon: "mark",
+    images: [{ id: "mark", src: `${siteDir({ name })}/assets/m.svg`, title: "M", description: "d" }],
+    directories: [{ id: `${name}-site`, path: `${siteDir({ name })}/`, graphKinds: [kind] }],
+  });
+
+  test("a mounted instance addresses its icon under its site dir's KIND", () => {
+    const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "docs") });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon?.src).toBe("/docs/guest/assets/m.svg");
+  });
+
+  test("...and the kind is the DECLARATION's, not the string `docs`", () => {
+    // The whole point: who-iris's bare route is taken by `library`, so a rule
+    // that assumed `docs` would be right by luck here and wrong there.
+    const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "catalogue") });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon?.src).toBe("/catalogue/guest/assets/m.svg");
+  });
+
+  test("the site OWNER keeps the root — its docs are built in place, not mounted", () => {
+    const f = fixture({
+      host: { ...host({ needs: [] }), ...withIcon("host", "docs"), name: "host" },
+    });
+    const h = tilesOf(f).find((t) => t.name === "host")!;
+    expect(h.icon?.src).toBe(`/assets/m.svg`);
+  });
+
+  test("an instance that classifies its site dir under NO kind gets no icon", () => {
+    // `pb04` one layer down, and a real answer rather than a guess: nothing
+    // can be said about where a directory nobody classified will be served, so
+    // an `<img>` is not emitted at all.
+    const f = fixture({
+      host: host({ needs: [] }),
+      guest: {
+        name: "guest",
+        icon: "mark",
+        images: [{ id: "mark", src: `${siteDir({ name: "guest" })}/assets/m.svg`, title: "M", description: "d" }],
+        // A registered kind, on a path that is NOT the site directory — so the
+        // site dir itself is classified by nothing.
+        directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+      },
+    });
+    giveOwnSite(f.repo, "guest");
+    const guest = tilesOf(f).find((t) => t.name === "guest")!;
+    expect(guest.icon).toBeNull();
+  });
+});
+
+/**
+ * THE WORDS ON AN INERT ROW, all four of them.
+ *
+ * Two of these four answers occur ZERO times in this repository — measured
+ * over all 31 unlinked kinds in `docs/_data/harness.json` on 2026-09-23, of
+ * which 24 are `unbuilt` and 7 are `unbuilt` under `bootstrap`'s exemption.
+ * `staging-only` and `undiscovered` are produced by no instance here, and
+ * `harnessTiles` emits no finding of either shape either.
+ *
+ * `undiscovered` is still reached by a FIXTURE — the `flh4` test above, for a
+ * viewer that resolves outside the site directory, which now asserts the row
+ * as well as the finding. `staging-only` is reached by nothing else at all,
+ * so the first test below is the only thing in this repository that runs it.
+ * `1xhc` — a gate that does not fire is indistinguishable from one that
+ * passed.
+ */
+describe("inertNote — why a row does not open", () => {
+  test("a STAGING-ONLY viewer is withheld on purpose, and is not called a gap", () => {
+    // `harness-tiles` already refuses to report this as a finding: "a report
+    // that flags an intended state as a finding is the same disease as one
+    // that hides a real gap". Labelling the row "no viewer yet" on the surface
+    // a reader is actually looking at would be that same mistake, moved.
+    expect(inertNote("staging-only", false)).toBe("staging only");
+    // And the exemption has no view about it — it is withheld by its own
+    // `publish` setting, not by a decision not to render.
+    expect(inertNote("staging-only", true)).toBe("staging only");
+  });
+
+  test("a viewer that EXISTS but is not published says so — it is a different gap", () => {
+    // "Built and unreachable is a different gap from unbuilt", in the
+    // finding's own words. A reader told "no viewer yet" about a viewer that
+    // was built would go and build a second one.
+    expect(inertNote("undiscovered", false)).toBe("viewer not published");
+    expect(inertNote("undiscovered", true)).toBe("viewer not published");
+  });
+
+  test("UNBUILT is the only bucket the render exemption narrows", () => {
+    expect(inertNote("unbuilt", false)).toBe("no viewer yet");
+    expect(inertNote("unbuilt", true)).toBe("no viewer by design");
+  });
+
+  test("every answer is distinct — four states must not collapse to one wording", () => {
+    // The defect this replaced: `title="declared, with no published viewer"`,
+    // one wording for four states, and wrong for two of them.
+    const all = [
+      inertNote("staging-only", false),
+      inertNote("undiscovered", false),
+      inertNote("unbuilt", false),
+      inertNote("unbuilt", true),
+    ];
+    expect(new Set(all).size).toBe(4);
   });
 });

@@ -129,43 +129,6 @@ classDiagram
       bpmn:userTask [0..*] element
     }
   }
-  namespace cat_harness__methodology_raci {
-    class n_cat_harness_methodology_raci_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__methodology_crdm {
-    class n_cat_harness_methodology_crdm_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__methodology_crdm_processes {
-    class cat_harness_methodology_crdm_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
-      <<ext: omg-bpmn-2.0>>
-      bpmn:callActivity [0..*] element
-      bpmn:collaboration [0..*] element
-      bpmn:definitions [0..*] element
-      bpmn:documentation [0..*] element
-      bpmn:endEvent [0..*] element
-      bpmn:exclusiveGateway [0..*] element
-      bpmn:extensionElements [0..*] element
-      bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
-      bpmn:incoming [0..*] element
-      bpmn:lane [0..*] element
-      bpmn:laneSet [0..*] element
-      bpmn:outgoing [0..*] element
-      bpmn:parallelGateway [0..*] element
-      bpmn:participant [0..*] element
-      bpmn:process [0..*] element
-      bpmn:sequenceFlow [0..*] element
-      bpmn:serviceTask [0..*] element
-      bpmn:startEvent [0..*] element
-      bpmn:task [0..*] element
-      bpmn:timerEventDefinition [0..*] element
-      bpmn:userTask [0..*] element
-    }
-  }
   namespace cat_harness__methodologies {
     class n_cat_harness_methodologies_methodology["methodology: no node schema"] {
       <<could not determine>>
@@ -356,8 +319,12 @@ classDiagram
     }
   }
   namespace cat_harness__library {
-    class n_cat_harness_library_library["library: no node schema"] {
-      <<could not determine>>
+    class cat_harness_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
+      <<json: ImagesSidecarSchema>>
+      $schema [1] 'folio-document-images/v1'
+      doc_id [1] string
+      images [1] object[] | null
+      undetermined_reason [0..1] string
     }
   }
   namespace cat_harness__who_iris_library {
@@ -653,11 +620,6 @@ classDiagram
   cssClass "cat_harness_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_RoleGraph" fa_uml_kind_scenarios
   cssClass "cat_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
-  cssClass "n_cat_harness_methodology_raci_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_methodology_raci_skills" fa_uml_undetermined
-  cssClass "n_cat_harness_methodology_crdm_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_methodology_crdm_skills" fa_uml_undetermined
-  cssClass "cat_harness_methodology_crdm_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
@@ -689,8 +651,7 @@ classDiagram
   cssClass "cat_harness_issue_marks_issue_marks_shape" fa_uml_kind_issue_marks
   cssClass "n_cat_harness_uploads_uploads" fa_uml_kind_uploads
   cssClass "n_cat_harness_uploads_uploads" fa_uml_undetermined
-  cssClass "n_cat_harness_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_library_library" fa_uml_undetermined
+  cssClass "cat_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_undetermined
   cssClass "n_cat_harness_agent_skills_library_library" fa_uml_kind_library
@@ -769,9 +730,6 @@ classDiagram
 | `cat-harness/cat-harness` | `cat-harness/skills` | skills | `KgQaManifestSchema` |
 | `cat-harness/scenarios` | `cat-harness/scenarios` | scenarios | `RoleGraphSchema` |
 | `cat-harness/processes` | `cat-harness/processes` | processes | `ext: omg-bpmn-2.0` |
-| `cat-harness/methodology-raci` | `cat-harness/methodologies/raci` | skills | skills: *could not determine* |
-| `cat-harness/methodology-crdm` | `cat-harness/methodologies/crdm` | skills | skills: *could not determine* |
-| `cat-harness/methodology-crdm-processes` | `cat-harness/methodologies/crdm/processes` | processes | `ext: omg-bpmn-2.0` |
 | `cat-harness/methodologies` | `cat-harness/methodologies` | methodology | methodology: *could not determine* |
 | `cat-harness/qa` | `cat-harness/test/results` | qa | `KgQaReportSchema`; `BlockQaReport`; `TestRunSchema`; `ts: QaWitness`; `ts: QaResult`; `ts: TranslationBlockQaReport`; `untyped: written by scripts/gen-docs-pages.ts` |
 | `cat-harness/fsh-guts` | `cat-harness/fsh-guts` | fsh-guts | `FshGutsNodeSchema` |
@@ -782,7 +740,7 @@ classDiagram
 | `cat-harness/interaction` | `cat-harness/interaction` | interaction | `schema: schemas/harness-config.ts` |
 | `cat-harness/issue-marks` | `cat-harness/issue-marks` | issue-marks | `schema: src/issue-watch/seen-comments.ts` |
 | `cat-harness/uploads` | `cat-harness/uploads` | uploads | uploads: *could not determine* |
-| `cat-harness/library` | `cat-harness/library` | library | library: *could not determine* |
+| `cat-harness/library` | `cat-harness/library` | library | `ImagesSidecarSchema` |
 | `cat-harness/who-iris-library` | `cat-harness/who-iris/library` | library | library: *could not determine* |
 | `cat-harness/agent-skills-library` | `cat-harness/agent-skills/library` | library | library: *could not determine* |
 | `cat-harness/folio-assistant-sci-library` | `cat-harness/folio-assistant-sci/library` | library | library: *could not determine* |
@@ -816,9 +774,6 @@ classDiagram
 - [cat-harness/cat-harness](cat-harness/cat-harness.html)
 - [cat-harness/scenarios](cat-harness/scenarios.html)
 - [cat-harness/processes](cat-harness/processes.html)
-- [cat-harness/methodology-raci](cat-harness/methodology-raci.html)
-- [cat-harness/methodology-crdm](cat-harness/methodology-crdm.html)
-- [cat-harness/methodology-crdm-processes](cat-harness/methodology-crdm-processes.html)
 - [cat-harness/methodologies](cat-harness/methodologies.html)
 - [cat-harness/qa](cat-harness/qa.html)
 - [cat-harness/fsh-guts](cat-harness/fsh-guts.html)

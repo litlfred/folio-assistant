@@ -34,3 +34,119 @@ The owner chose "reuse the captured who_logo.svg" from four options, with the op
 ## Not done
 
 smart-trust, folio-assistant-core and the rest still show initials: they declare neither a sticky-with-theme nor an icon. Reported as a finding, not invented.
+
+
+## ROUND 2, 2026-09-22 — a card id is NOT the instance name
+
+Owner: *"now do smart-trust and folio-assistant-core avatars"*.
+
+`folio-assistant-core` needed no decision and no art. It already declares a
+sticky naming `theme: library`, and `landing-library-card.webp` already exists
+with a measured `avatarRegion`. **The resolver was wrong**, in the way this
+repository has already paid for once:
+
+    decl.stickies?.find((st) => st.id === decl.name)
+
+`landing-sticky.test.ts` pins the opposite, by name:
+
+> `folio-assistant-core/` is the directory since the owner's ruling of
+> 2026-09-20; its card id stays `folio-assist-core` because **a card id is a
+> published identifier on the landing page and the directory is only where the
+> files sit** ... which is exactly why it broke when they were **assumed to be
+> one string**.
+
+That is the assumption I wrote yesterday, one file over, and it is why core had
+no avatar while its theme was declared all along. There is a test asserting the
+divergence and it was green throughout, because it tests `contributionsOf`
+rather than the tile.
+
+**Fixed by not assuming**: an instance's own sticky is the one its OWN
+declaration contributes — exact id match first, and a single contribution
+otherwise. Several contributions with no exact match is reported rather than
+picked from.
+
+- [x] folio-assistant-core shows the librarian cat, with no new art and no
+      renamed id
+- [x] smart-trust — owner chose `operations` from three cards; it contributes
+      a card naming that theme, which ALSO puts it on the landing board (a
+      theme is reached through a sticky, so that is inherent and is recorded
+      in the declaration rather than discovered later)
+- [x] an icon's URL is the SITE DIRECTORY's mount, not the front door — see
+      below; this was shipped broken in #984
+
+
+## A DEFECT I SHIPPED IN #984, found by running the mount
+
+who-iris's mark 404'd on the published site. `publishedIcon` composed against
+`folioRoot` — *"`/` for the instance that owns the site, `/<name>/` for one
+mounted beneath it"* — which is the instance's FRONT DOOR, a different question
+from where its SITE DIRECTORY lands.
+
+Measured by running `mount-instance-docs` against a built preview:
+
+    who-iris/library/  ->  /who-iris/        (1378 file(s))
+    who-iris/docs/     ->  /docs/who-iris/   (4 file(s))
+
+Every instance gets a `<kind>/<name>` route unconditionally; the bare `<name>`
+route goes to whichever kind claims it FIRST, and for who-iris that is the
+**library**. So its front door serves 1,378 corpus files and the icon pointed
+into it. Confirmed 404 against 200 for the same asset.
+
+**The local preview hid it**, which is the part worth keeping: `preview:site`
+does not run the mount, so the asset was absent there for an unrelated reason
+and the wrong URL looked like the same 404. I only separated them by running
+the mount step by hand.
+
+`siteDirMount` composes the `<kind>/<name>` route from the kind the instance
+declares for that directory, and an instance that classifies its site dir under
+no kind gets NO icon — a real answer, since nothing can be said about where an
+unclassified directory is served.
+
+**An existing test asserted the broken rule** (`"an instance mounted beneath the
+site root carries its mount"` → `/sibling/...`) on the premise *"everything else
+is at `/<name>/`"*. Updated with the measurement rather than deleted; four new
+specs pin the kind coming from the declaration rather than the string `docs`.
+
+
+## ROUND 3, 2026-09-23 — engineer for root, and the architecture theme is HELD
+
+Owner: *"create architecture theme. engineer for root"*.
+
+**engineer → root is done.** The root instance declares a card naming
+`theme: engineer`, at order 5 so the repository reads ahead of cat-harness's
+10. The art is cat-harness's `landing-engineer` — the root declares no images
+— which is the supplier-is-not-the-subject fallback `bootstrap` already
+relies on. **Every instantiated harness now carries a mark**; none is on an
+initial. All five verified 200 against a MOUNTED build.
+
+**The architecture theme ships PALETTE-ONLY, and the backdrop is withheld.**
+
+The palette is real and measured rather than matched to its neighbours: the
+card was drawn to a canvas and every pixel binned into a 32-step cube, giving
+`#fdfbf0` 35.38 %, `#6a7c73` 33.07 %, `#a6aea8` 3.45 %, `#1a372d` 2.32 %. Ink
+on surface is **12.43:1**, past the AAA 7:1 floor the whole set is held to.
+
+**The art cannot carry a backdrop.** `landing-architecture` declares laptop and
+card and **no mobile**; `resolveThemeBackdrop` refuses a partial set wholesale.
+I wrote the entry WITH a backdrop first and `themes.test.ts` failed it — the
+gate doing precisely its job, and its own comment names this case:
+
+> the architecture art arrived as two layouts of three (**the third upload was
+> a byte-identical copy of the second**), so no `architecture` theme is
+> declared. If somebody adds one before the portrait crop arrives, this fails
+> rather than shipping a theme that serves a landscape crop to a phone.
+
+So the portrait crop was never supplied — it is not a mislaid file. I did not
+derive one: there is no image tooling in this container (no PIL, no
+ImageMagick, no sharp), and cropping a square card to portrait is a
+compositional judgement about the owner's brand art rather than a mechanical
+step.
+
+The scrim is measured anyway and recorded in the entry, so the remaining edit
+is declaring `landing-architecture-mobile` and pasting a four-line block:
+**9.02:1** over pure black at 0.86, 12.52:1 over white, swept rather than
+copied (0.78 already clears the floor at 7.36:1).
+
+- [x] engineer for the root instance
+- [x] architecture theme — id, palette, layouts, all measured
+- [ ] architecture BACKDROP — blocked on a portrait crop that does not exist

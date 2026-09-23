@@ -117,7 +117,7 @@ describe("extracted claims become typed blocks", () => {
   test("kind and type survive", () => {
     const thm = parse("blocks/thm-sec-001-01.jsonld");
     expect(thm.kind).toBe("theorem");
-    expect(thm["@type"]).toEqual(["folio:Theorem", "doco:Section"]);
+    expect(thm["@type"]).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
   });
 
   test("a claim's statement is written as its own text file", () => {

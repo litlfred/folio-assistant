@@ -21,7 +21,7 @@
  * and not free. So a literal naming a declared directory is allowed when:
  *
  *  - **it names a FILE that exists.** Authored prose naming one specific
- *    artefact — `source: "methodologies/crdm/processes/crdm-requirements.bpmn"` in a docs
+ *    artefact — `source: "processes/crdm-requirements.bpmn"` in a docs
  *    page — is not discovery and no declaration would answer it. Eighteen of
  *    these are correct and must stay. They are **checked to resolve**, which
  *    closes the `blv9` defect class (a link-shaped value that does not

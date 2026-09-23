@@ -75,3 +75,12 @@ cleared, and a QC gate is the last place that should be blurred.
 `findings` and `checklistResults` are what the reviewer reads — not
 `overallResult` alone, which is a summary of them rather than a substitute.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Run publication QA gates |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Post the cone report on the PR; QC gates on the aggregate QA |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | QC gates |
+

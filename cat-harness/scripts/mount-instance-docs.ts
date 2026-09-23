@@ -326,10 +326,38 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
  * same kind (an override and its default), and a navbar that listed `library`
  * twice would be reporting the declaration's shape rather than the graph's.
  *
- * @param linked  href per kind for the kinds that ARE published, already
- *   relative to the page being rendered.
+ * A KIND WITH NO HREF SAYS WHY, when the site can tell it — see
+ * {@link publishedGraphs}. Greying the row was the whole of the signal until
+ * 2026-09-23, which made "declared and not built" a fact carried by contrast
+ * and by nothing else, on the one surface where the sidebar template at least
+ * had a `title`. Absent from `site` is the honest third state and renders as
+ * it always did: a grey row with no claim about why.
+ *
+ * ## TWO WITNESSES, AND THE MOUNT TABLE IS ASKED FIRST (`pk2s`)
+ *
+ * `linked` still wins wherever it has an answer, and that order is the
+ * owner's rather than a tie-break: a mount is the instance PRESENTING ITSELF
+ * (`/who-iris/`), and the handler's viewer is cat-harness's default rendering
+ * of the same graph (`/cat-harness/library/who-iris/`). *"cliking shoud go to
+ * folio view, not the schema viweer."*
+ *
+ * `site` is consulted only where the mount table is SILENT — and it is silent
+ * about every handler-published viewer by construction, because `mountable()`
+ * requires an `index.html` that a data directory does not have. That silence
+ * used to render as a grey row over a page that exists; two of who-iris's
+ * six kinds were in exactly that state. {@link publishedGraphs} carries the
+ * measurement.
+ *
+ * @param linked  href per kind from the MOUNT TABLE, already relative to the
+ *   page being rendered. The instance's own route, and preferred.
+ * @param site  what the published site knows for the kinds the mount table
+ *   says nothing about — a handler's href, or the reason there is none.
  */
-export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<string, string>): NavItem[] {
+export function declaredGraphs(
+  instanceDirName: string,
+  linked: ReadonlyMap<string, string>,
+  site: ReadonlyMap<string, GraphFallback> = new Map(),
+): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
   let d: { directories?: { graphKinds?: string[] }[] };
@@ -347,8 +375,19 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
     for (const kind of entry.graphKinds ?? []) {
       if (seen.has(kind)) continue;
       seen.add(kind);
-      const href = linked.get(kind);
-      out.push({ label: kind, icon: kind.slice(0, 1).toUpperCase(), ...(href ? { href } : {}) });
+      const fallback = site.get(kind);
+      const href = linked.get(kind) ?? fallback?.href;
+      // A row that opens owes no explanation, and `publishedGraphs` never
+      // returns both — but the guard stays, because `href` may come from the
+      // mount table while the note came from the site, and those two are not
+      // the pair that function makes exclusive.
+      const note = href ? undefined : fallback?.note;
+      out.push({
+        label: kind,
+        icon: kind.slice(0, 1).toUpperCase(),
+        ...(href ? { href } : {}),
+        ...(note ? { note } : {}),
+      });
     }
   }
   return out.sort((a, b) => a.label.localeCompare(b.label));
@@ -381,6 +420,99 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
  *   href in `harness.json` is site-absolute and a mounted page is not at the
  *   root.
  */
+/** Where a kind opens, or why it does not. Never both — see the loop below. */
+type GraphFallback = { href?: string; note?: string };
+
+/**
+ * WHAT THE PUBLISHED SITE KNOWS about each of an instance's declared kinds —
+ * where it opens, or why it does not.
+ *
+ * Read from the same `harness.json` {@link instantiatedHarnesses} reads, and
+ * for the same reason: `harness-tiles.ts` already separates staging-only,
+ * render-exempt, built-but-unreachable and nobody-built-it in order to word
+ * four different findings, and a table here would be a fifth answer free to
+ * disagree with those four. This function looks the answer up; it decides
+ * nothing.
+ *
+ * EMPTY, not `undefined`, when the file is missing or will not parse — and
+ * that is a deliberate difference from `instantiatedHarnesses`, which uses
+ * absence to make the caller omit a whole region. Here there is nothing to
+ * omit: the graph rows come from the DECLARATION and are rendered either way.
+ * A missing file costs the reasons, not the rows, and a row with no reason is
+ * exactly what this surface shipped until today.
+ *
+ * Keyed by kind within one instance, because that is how `declaredGraphs`
+ * asks. Two harnesses may both declare `library`, so the instance is part of
+ * the question and never assumed.
+ *
+ * ## Why it carries the HREF too, as of `pk2s`
+ *
+ * It read only the reasons until 2026-09-23, and the rail then greyed two
+ * rows this same file believed were published: who-iris's `catalogue` and
+ * `uploads`. Settled against `gh-pages` rather than against either
+ * generator — `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes
+ * there and `cat-harness/library/who-iris/index.html` is 20,204 — so the
+ * rail was losing two WORKING links.
+ *
+ * **Neither producer was wrong.** They answer different questions, and the
+ * caller was asking the one that cannot see a handler's viewer:
+ *
+ * | producer | answers | `catalogue` |
+ * |---|---|---|
+ * | the mount table | did we copy this instance's own RENDERED directory? | no |
+ * | `harness-tiles` | is there a PUBLISHED VIEWER for this kind? | yes |
+ *
+ * `mountable()` requires an `index.html`, rightly — a directory with no
+ * rendered page has nothing to mount — and who-iris's `catalogue/`,
+ * `uploads/`, `skills/` and `themes/` have none, because they hold DATA. The
+ * page that renders who-iris's catalogue is the cat-harness HANDLER's, laid
+ * down by Jekyll at `/cat-harness/catalogue/who-iris/`. It is not a mount and
+ * can never become one, so the mount table is invisible to it by
+ * construction.
+ *
+ * That is the split `harness_details.html` already states in its own words:
+ * *"`/who-iris/` is who-iris presenting itself, `/library/who-iris/` is the
+ * cat-harness handler's default rendering of its library."* The rail's graph
+ * rows are meant to reach the second, and until now reached it only where a
+ * mount happened to coincide — which is the whole of why `library` linked and
+ * `catalogue` did not.
+ *
+ * **This is still not the hardcoded list the caller's comment forbids.**
+ * `harness.json` is generated and presence-checked; the rule it states — a
+ * kind gains a link the moment it gains a viewer — is the rule being kept
+ * here, against a witness that can actually see one.
+ */
+function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
+  const out = new Map<string, GraphFallback>();
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return out;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return out;
+  let d: { harnesses?: { name?: string; visualisations?: { kind?: string; path?: string; note?: string }[] }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return out;
+  }
+  const h = (d.harnesses ?? []).find((x) => x.name === instanceName);
+  for (const v of h?.visualisations ?? []) {
+    if (!v.kind) continue;
+    // EXACTLY ONE OF THE TWO, because they are the two halves of one answer:
+    // a kind either opens somewhere or owes a reason it does not. A row
+    // carrying both would be a working link captioned "no viewer yet", which
+    // is the stale-note case the previous guard was written for and which
+    // this shape makes unrepresentable rather than merely checked.
+    //
+    // The path is SITE-ABSOLUTE in `harness.json` and a mounted page is not at
+    // the root, so it is re-based exactly as `instantiatedHarnesses` re-bases
+    // a harness href. Composing it any other way here would be a second answer
+    // to "where does this page live".
+    if (v.path) out.set(v.kind, { href: `${toRoot}${v.path}` });
+    else if (v.note) out.set(v.kind, { note: v.note });
+  }
+  return out;
+}
+
 function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
   // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
   // was the first version and `check:declared-paths` refused it -- rightly,
@@ -521,7 +653,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
       }
 
-      const links: NavItem[] = declaredGraphs(m.name, linked);
+      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toRoot));
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");

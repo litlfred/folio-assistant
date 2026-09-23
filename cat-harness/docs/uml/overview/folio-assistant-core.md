@@ -56,7 +56,7 @@ classDiagram
     }
     class folio_assistant_core_voices_VoiceProfile["VoiceProfile"] {
       <<json: VoiceProfileSchema>>
-      $schema [1] folio-voice/v1 | folio-voice-skill/v1
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
       id [1] string
       title [1] string
       description [1] string
@@ -66,6 +66,27 @@ classDiagram
       extends [0..1] object
       activeIn [0..1] object
       superseded [0..1] object
+    }
+  }
+  namespace folio_assistant_core__core_tools {
+    class folio_assistant_core_core_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class folio_assistant_core_core_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      alternativeTo [0..*] string[]
+      selection [0..1] object
+      requires [0..1] object
     }
   }
   cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_kind_schemas
@@ -81,6 +102,9 @@ classDiagram
   cssClass "folio_assistant_core_voices_Terminology" fa_uml_kind_voices
   cssClass "folio_assistant_core_voices_Rule" fa_uml_kind_voices
   cssClass "folio_assistant_core_voices_VoiceProfile" fa_uml_kind_voices
+  folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+  cssClass "folio_assistant_core_core_tools_Maintain" fa_uml_kind_tools
+  cssClass "folio_assistant_core_core_tools_ToolDefinition" fa_uml_kind_tools
 ```
 
 | sub-graph | directory | graph kinds | node schema |
@@ -88,9 +112,11 @@ classDiagram
 | `folio-assistant-core/core-schemas` | `folio-assistant-core/schemas` | schemas, cat-harness | schemas: *could not determine* |
 | `folio-assistant-core/folios` | `folio-assistant-core/folios` | folio | folio: *could not determine* |
 | `folio-assistant-core/voices` | `folio-assistant-core/skills/voices` | voices | `VoiceProfileSchema` |
+| `folio-assistant-core/core-tools` | `folio-assistant-core/tools` | tools | `ToolDefinitionSchema` |
 
 ## Sub-graphs
 
 - [folio-assistant-core/core-schemas](folio-assistant-core/core-schemas.html)
 - [folio-assistant-core/folios](folio-assistant-core/folios.html)
 - [folio-assistant-core/voices](folio-assistant-core/voices.html)
+- [folio-assistant-core/core-tools](folio-assistant-core/core-tools.html)

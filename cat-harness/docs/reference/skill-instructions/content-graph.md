@@ -444,3 +444,11 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 | `/tmp/content-graph-report.md` | Full analysis report |
 | `/tmp/content-graph-proposals.md` | Concrete reorganisation proposals |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Assess downstream impact |
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phases 3–4: Define requirements + impact |
+

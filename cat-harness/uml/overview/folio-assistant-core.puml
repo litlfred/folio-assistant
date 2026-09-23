@@ -43,7 +43,7 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
     judgementOnly [0..1] : boolean
   }
   class "VoiceProfile" as folio_assistant_core_voices_VoiceProfile <<json: VoiceProfileSchema>> #e8f0ee {
-    $schema [1] : folio-voice/v1 | folio-voice-skill/v1
+    $schema [1] : 'folio-voice/v1' | 'folio-voice-skill/v1'
     id [1] : string
     title [1] : string
     description [1] : string
@@ -55,9 +55,29 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
     superseded [0..1] : object
   }
 }
+package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools <<tools>> {
+  class "Maintain" as folio_assistant_core_core_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
+    source [1] : string
+    artefact [1] : string
+    format [0..1] : string
+  }
+  class "ToolDefinition" as folio_assistant_core_core_tools_ToolDefinition <<json: ToolDefinitionSchema>> #eee9f5 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    install [1] : object
+    invoke [1] : object
+    io [1] : object
+    satisfies [1..*] : string[]
+    alternativeTo [0..*] : string[]
+    selection [0..1] : object
+    requires [0..1] : object
+  }
+}
 
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
+folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
 @enduml

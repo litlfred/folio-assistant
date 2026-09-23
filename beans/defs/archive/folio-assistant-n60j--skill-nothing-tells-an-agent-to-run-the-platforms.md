@@ -11,7 +11,7 @@ parent: folio-assistant-ahvw
 
 
 Found by the SDLC audit for `folio-assistant-haya`
-([`fsh-guts/proposals/sdlc-process-audit.md`](../../../fsh-guts/proposals/sdlc-process-audit.md)
+([`cat-harness/docs/proposals/sdlc-process-audit.md`](../../../cat-harness/docs/proposals/sdlc-process-audit.md)
 §3), and it is the concrete content of that audit's finding that the
 **Verification** phase is unowned for the platform.
 

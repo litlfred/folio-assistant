@@ -46,7 +46,7 @@ classDiagram
     }
     class folio_assistant_core_voices_VoiceProfile["VoiceProfile"] {
       <<json: VoiceProfileSchema>>
-      $schema [1] folio-voice/v1 | folio-voice-skill/v1
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
       id [1] string
       title [1] string
       description [1] string

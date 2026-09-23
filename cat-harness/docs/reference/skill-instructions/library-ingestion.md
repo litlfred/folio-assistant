@@ -375,3 +375,10 @@ only from a layer above it: a wrong-direction dependency, and after the split
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
 - `processes/document-ingestion.bpmn` — the process this sits inside
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content acquisition](../../processes/content-acquisition.html) | Route it, and watch the queue |
+

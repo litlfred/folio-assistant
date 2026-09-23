@@ -16,7 +16,7 @@
  *   harness already declares, so it is the unit a diagram draws.
  * - **Node schema kind** — each of the entry's `graphKinds`, resolved through
  *   {@link resolveKindValidator}: the Zod schema the registry names, turned
- *   into JSON Schema (`zod-to-json-schema`) and then into classes. A kind
+ *   into JSON Schema (`toJsonSchema`) and then into classes. A kind
  *   with no validator is drawn as an EMPTY section that says so — *could not
  *   determine*, never an empty-but-valid box.
  * - **Colour** — a CSS class per graph kind (`fa_uml_kind_<kind>`), coloured
@@ -47,8 +47,9 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ZodTypeAny } from "zod";
+import type { z } from "zod";
+
+import { toJsonSchema } from "../schemas/to-json-schema.js";
 
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
@@ -176,6 +177,12 @@ function decompose(
     }
     attrs.push({ name, type: typeOf(s), mult: multOf(s, req.has(name)) });
   }
+  // A root that resolved to a schema but yields no properties is a converter
+  // failure, not an empty shape: the Zod 3 → 4 upgrade made every class come
+  // out empty here, silently, while the object model's edge check caught it.
+  if (depth === 0 && Object.keys(props).length === 0 && schema.type === "object") {
+    throw new Error(`${source}: JSON Schema has no properties — is the Zod → JSON Schema converter current?`);
+  }
   if (!out.classes.some((c) => c.id === id)) out.classes.push({ id, title, source, kind, attrs });
   return id;
 }
@@ -190,7 +197,7 @@ function drawFamily(
 ): void {
   const title = f.tag;
   if (f.state === "resolved") {
-    const json = zodToJsonSchema(f.schema as ZodTypeAny, { $refStrategy: "none" }) as Json;
+    const json = toJsonSchema(f.schema as z.ZodType) as Json;
     decompose(json, title, `json: ${f.ref.exportName}`, kind, `${prefix}_${safeId(f.tag)}`, acc);
   } else if (f.state === "shape") {
     acc.classes.push({
@@ -323,7 +330,7 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
         v = await resolveKindValidator(kind, HARNESS);
       }
       if (v.state === "resolved") {
-        const json = zodToJsonSchema(v.schema as ZodTypeAny, { $refStrategy: "none" }) as Json;
+        const json = toJsonSchema(v.schema as z.ZodType) as Json;
         decompose(json, v.ref.exportName.replace(/Schema$/, ""), `json: ${v.ref.exportName}`, kind, prefix, acc);
         continue;
       }

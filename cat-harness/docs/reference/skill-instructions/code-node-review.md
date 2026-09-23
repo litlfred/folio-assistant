@@ -111,3 +111,11 @@ expectations on.
 - **Do not treat a clean `check:tools` as coverage.** It verifies the Tools that
   exist; it says nothing about the skills that have none.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Review the change |
+| [Code node review](../../processes/review-code.html) | Run the node audits; Review the schema definition node; Record the verdict on the node |
+

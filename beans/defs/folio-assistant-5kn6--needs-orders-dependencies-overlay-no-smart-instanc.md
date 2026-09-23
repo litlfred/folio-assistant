@@ -65,8 +65,13 @@ Three shapes, and they are not equivalent:
 
 1. **Derive the config dependency from `needs`.** One place to state the stack,
    which is `smart-stack-layering`'s own argument against a `layer` field. But
-   it merges two relations #727 deliberately split, and `AGENTS.md` warns that
-   merging the two compositions gives a closure too broad to fail an audit.
+   it merges two relations #727 deliberately split. ~~and `AGENTS.md` warns
+   that merging the two compositions gives a closure too broad to fail an
+   audit~~ — **STRUCK 2026-09-22: that citation is false.** It is about Roles
+   (`inherits` versus the scoped subprocess stack, `role-model.md`), not about
+   dependencies, and it was the strongest reason this bean gave for not
+   deciding. Left struck rather than deleted so the error is legible; see
+   §"Two errors of mine" below.
 2. **Declare `dependencies` in each `<name>.config.json`, by hand.** Keeps the
    split. Two places to state one fact, which is two places for it to drift —
    and this bean exists because one of them was already wrong.
@@ -80,3 +85,77 @@ Three shapes, and they are not equivalent:
       disagree silently again
 - [ ] `smart-trust` can reach `ig-build-pipeline` — or it is recorded why it
       should not
+
+## RULED 2026-09-22 — and this bean asked a settled question
+
+The owner:
+
+> i want to adopt the sushi/fhir IG(/npm?) versioning dependencies for
+> computing overlays.  SHAs are for provenance, digital signing, staging.  we
+> need both, different needs.
+
+**None of the three shapes above was the answer, and the answer was already
+written down** — `cat-harness/docs/proposals/instance-versioning.md` §3.3, on an owner
+ruling of 2026-09-20: *"sha is for staging, regernecing in published SEMVER"*,
+with `check:published-refs` already implemented as its gate.
+
+### Two errors of mine, recorded rather than quietly fixed
+
+**1. A fake citation.** This bean argued against deciding by quoting
+`AGENTS.md` — *"merging the two compositions gives a closure too broad to fail
+an audit"* — as if it governed `needs`/`dependencies`. **It is about Roles**:
+`inherits` (IS-A, static) versus the scoped subprocess stack, in
+`role-model.md`. An analogous argument, not an authority, and used as one. The
+same wrong citation went into PR #977's body and its merge commit; it is
+removed above.
+
+**2. Proposing options for a settled question.** Offering three shapes made the
+owner answer twice, and the second answer had to overrule a confident-sounding
+reason that did not exist. The rule is now in
+[`opening-brief`](../../cat-harness/skills/folio-core/opening-brief.md)
+§"Before you offer options, check whether it is already ruled".
+
+### Why the scheme was missed, and it is not only carelessness
+
+`instance-versioning.md` lives in `fsh-guts/proposals/`. The `fsh-guts` graph
+kind is declared *"deprecated and throwaway structured content … the
+destination for anything that would otherwise be deleted"* and is deliberately
+absent from the published site.
+
+**Seven skills and four code modules cite `fsh-guts/proposals/*` as the
+governing scheme** — `harness-config.ts` calls one *"the full scheme"*,
+`check-published-refs.ts` calls itself *"its §3.3 gate"*, and
+`directory-conventions` §"Pinning a reference" points at the same file. So the
+live design corpus sits under a kind whose name is an instruction to skip it,
+and an agent reading the graph-kind table learns exactly that.
+
+`directory-conventions`' row for the kind now says so. **Whether live proposals
+should live under a kind named for throwaway is the open question**, and it is
+this bean's, below.
+
+## What shipped
+
+`needs` now DRIVES the overlay for edges inside one checkout.
+`dependenciesFromNeeds` derives a staging-tier `{name, path}` per `needs`
+entry that resolves to a sibling instance; `resolveDependencyTree` merges them
+under authored config entries, which win on name because a config entry can
+say what a derived one cannot — a git URL, a version, a `provides` narrowing.
+
+`FolioAssistantDependency` gains `id` and `version`, with `ExactVersionSchema`
+refusing ranges: FHIR pins exact versions and `dependsOn` has no field a range
+fits, and alignment downstream is the owner's hard constraint. `ref`/`git` keep
+their place and change status — **how to fetch while staging, and the
+provenance of the bytes, not what is depended on.**
+
+Measured: `smart-trust` went from **0 reachable skill directories to 8**, and
+now reaches `fhir-harness/skills` — `ig-build-pipeline` and `ig-render-jekyll`,
+the two governing how its own IG is built.
+
+A derived edge carries **no version**, deliberately: one checkout is the
+staging tier, and §3.1 settles that most instances are not publishable.
+
+## Still open
+- [ ] should live proposals live under a kind named for throwaway, or move?
+- [ ] `publishable`, `id` and `version` are *accepted* by the schema; no
+      instance declares them yet, and §4's computed bump is unbuilt
+- [ ] a check that an authored dependency does not contradict `needs`

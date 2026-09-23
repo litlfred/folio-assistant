@@ -3,7 +3,7 @@
  * imply.
  *
  * The MCP surface over `scripts/render-pipeline.ts`, which is itself the one
- * caller of the generic flattener in `scripts/dependency-order.ts`. An agent
+ * caller of the generic flattener in `schemas/dependency-order.ts`. An agent
  * asking "what runs before what, and what happens if one fails" gets an
  * answer it can read rather than a YAML file it has to interpret.
  *

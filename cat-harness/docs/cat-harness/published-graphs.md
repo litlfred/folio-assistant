@@ -132,13 +132,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-4 of 5 published.
+5 of 5 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
-- SMART Base — *declared, not published*
+- [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
 
 ### `memory`
@@ -150,10 +150,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-0 of 2 published.
+1 of 2 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/methodologies/' | relative_url }})
 - SMART Base — *declared, not published*
 
 ### `models`
@@ -228,11 +228,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 3 published.
+1 of 4 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `translation-sources`

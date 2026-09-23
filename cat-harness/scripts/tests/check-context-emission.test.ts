@@ -157,3 +157,100 @@ describe("the bound set is read from the context, not listed here", () => {
     expect(aliasPrefix.get("title")).toBe("dcterms");
   });
 });
+
+// ── Bean `zaqn`: the direction that corrupts data ─────────────────────────
+//
+// A prefix SPOKEN and bound nowhere is not an error to a JSON-LD processor —
+// it reads the prefix as a URI scheme. So each test below breaks the corpus
+// and requires the check to see it, and the "clean" cases assert a non-empty
+// corpus first, for the reason at the top of this file.
+
+import { checkPrefixDeclaration, declaredStubs } from "../check-context-emission.ts";
+import { NS_PREFIXES, stubOfNamespace } from "../../schemas/namespaces.ts";
+
+const URL = "https://example.org/ctx.jsonld";
+const OWN = "https://litlfred.github.io/folio-assistant/some-instance/ns#";
+const STUBS = new Set(["some-instance"]);
+
+describe("a prefix that is spoken must be bound", () => {
+  test("an unbound prefix in @type is caught — the `folio:` defect", () => {
+    const root = corpus({ "a.jsonld": { "@context": URL, "@type": "folio:Definition" } });
+    const r = checkPrefixDeclaration(root, { doco: "http://purl.org/spar/doco/" }, URL, STUBS);
+    expect(r.documents).toBe(1);
+    expect(r.undeclared.map((u) => u.prefix)).toEqual(["folio"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an unbound prefix used as a KEY is caught", () => {
+    const root = corpus({ "a.jsonld": { "@context": { doco: "http://purl.org/spar/doco/" }, "fac:anchor": 1 } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.undeclared.map((u) => u.prefix)).toEqual(["fac"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the published context's own term targets are checked, with no document using them", () => {
+    const root = corpus({ "a.jsonld": { "@context": URL } });
+    const r = checkPrefixDeclaration(root, { fac: OWN.replace("some-instance", "x"), label: "folio:label" }, URL, STUBS);
+    expect(r.undeclared.map((u) => u.prefix)).toContain("folio");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a bound prefix, an absolute IRI and a CURIE-shaped LITERAL are all clean", () => {
+    const root = corpus({
+      "a.jsonld": {
+        "@context": [URL, { extra: "http://example.org/x#" }],
+        "@type": ["doco:Section", "extra:Thing", "http://example.org/Abs"],
+        // An authored label looks exactly like a CURIE and is not one.
+        label: "def:foo",
+      },
+    });
+    const r = checkPrefixDeclaration(root, { doco: "http://purl.org/spar/doco/", label: "doco:label" }, URL, STUBS);
+    expect(r.documents).toBe(1);
+    expect(r.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a context URL the check cannot resolve is the third state, never clean", () => {
+    const root = corpus({ "a.jsonld": { "@context": "https://elsewhere.example/ctx", "@type": "zz:Q" } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.documents).toBe(0);
+    expect(r.unresolved.count).toBe(1);
+    expect(r.unresolved.urls).toEqual(["https://elsewhere.example/ctx"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("a prefix onto our own namespace is the declaring instance's stub", () => {
+  test("an abbreviation is caught, once, however many times the context is read", () => {
+    const root = corpus({ "a.jsonld": { "@context": { si: OWN }, "@type": "si:Thing" } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.misspelt).toEqual([{ prefix: "si", namespace: OWN, stub: "some-instance", where: "a.jsonld" }]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the stub spelling is clean — and only if an instance declares that stub", () => {
+    const root = corpus({ "a.jsonld": { "@context": { "some-instance": OWN }, "@type": "some-instance:Thing" } });
+    expect(checkPrefixDeclaration(root, {}, URL, STUBS).misspelt).toEqual([]);
+    expect(checkPrefixDeclaration(root, {}, URL, new Set()).misspelt).toHaveLength(1);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("NS_PREFIXES: every key IS its namespace's stub, and a declared one", () => {
+    const stubs = declaredStubs();
+    expect(stubs.size).toBeGreaterThan(0);
+    for (const [prefix, ns] of Object.entries(NS_PREFIXES)) {
+      expect(stubOfNamespace(ns)).toBe(prefix);
+      expect(stubs.has(prefix)).toBe(true);
+    }
+  });
+});
+
+describe("the real corpus", () => {
+  test("every spoken prefix is bound and every own prefix is a stub", () => {
+    const r = checkPrefixDeclaration();
+    expect(r.documents).toBeGreaterThan(0);
+    expect(r.undeclared).toEqual([]);
+    expect(r.misspelt).toEqual([]);
+    expect(r.unresolved.count).toBe(0);
+  });
+});

@@ -674,6 +674,65 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+
+  /**
+   * Is this instance PUBLISHED for consumers outside this repository?
+   *
+   * `instance-versioning.md` §3.1, and the whole point is the THIRD STATE:
+   *
+   * > Absence is a third state, not a default. An instance that has not
+   * > declared `publishable` is *undecided*, never *false*, and a gate reports
+   * > it — the same rule `publication.host` already follows.
+   *
+   * So `undefined` here does NOT mean "internal". It means nobody has said,
+   * and `check:publishable` reports it rather than picking. That distinction is
+   * the field's reason to exist: **most instances genuinely are not
+   * publishable**, and minting a version for one nothing outside resolves is
+   * ceremony with no reader — but "we decided it is internal" and "nobody
+   * looked" are different facts, and a boolean defaulting to `false` would
+   * erase the second.
+   *
+   * Only a `true` here obliges {@link id} and {@link version}.
+   *
+   * **Which instances are publishable is NOT inferable and is not inferred.**
+   * §6 Q1 leaves it open — *"the rest are unclear and should be declared rather
+   * than inferred"* — so this ships with no instance declaring it, and the gate
+   * saying so.
+   */
+  publishable?: boolean;
+
+  /**
+   * The package identity — reverse-DNS, stable forever, never reused.
+   *
+   * `instance-versioning.md` §3.2. SEPARATE FROM {@link name}, which is the
+   * handle this repository resolves against, and from {@link stub}, which
+   * names published FILES. An id is what an EXTERNAL consumer depends on, and
+   * FHIR rule 1 is that the id is the identity and never changes while the
+   * version distinguishes snapshots of it.
+   *
+   * Required when {@link publishable} is `true`, refused otherwise — declaring
+   * an identity for something nothing may depend on is the ceremony §3.1 is
+   * written against.
+   */
+  id?: string;
+
+  /**
+   * The version, and it is an EXACT semver triple.
+   *
+   * No range syntax, ever (`instance-versioning.md` §2 rule 2). FHIR pins exact
+   * versions and `dependsOn` has no field a range fits, and aligning downstream
+   * is the owner's hard constraint rather than a preference — some instances
+   * here are consumed from outside this monorepo.
+   *
+   * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
+   * (rule 3). Accepted here and barred from the published tier by
+   * `check:published-refs`, which is the same line §3.3 draws for a SHA.
+   *
+   * {@link canonicalUrl} already plays the `uri` role (rule 6) and the version
+   * deliberately does not appear in it: the canonical URL is stable ACROSS
+   * versions.
+   */
+  version?: string;
 }
 
 /**
@@ -875,19 +934,32 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
  */
+/**
+ * The surfaces a tile can appear on.
+ *
+ * `glass` joined 2026-09-23 (bean `zrvt`, issue #1006) on the owner's words:
+ * *"where are the todo, fsh guts etc tiles on bottom of glass?"* That
+ * overrides `v0jv`'s earlier *"the tiles must NOT be projected onto the
+ * glass"*, and it is a SURFACE on the one declaration rather than a second
+ * list of glass tiles — `harness-tiles`: one declaration, per-surface
+ * visibility, never two registries.
+ */
+export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
+export type TileSurface = (typeof TILE_SURFACES)[number];
+
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
   /** What a tile calls it. Absent falls back to the directory's id. */
   title: z.string().min(1).optional(),
   /**
-   * Where its tile appears. Absent means BOTH.
+   * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
    *
    * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
    * declared once and says where it shows — never two registries free to
    * disagree about what a tile is.
    */
-  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  surfaces: z.array(z.enum(TILE_SURFACES)).nonempty().optional(),
   /**
    * Whether this tile starts out of frame. Absent means shown.
    *
@@ -1002,8 +1074,8 @@ export function visualisationsOf(
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
 }
 
-/** Does this visualisation's tile appear on this surface? Absent means both. */
-export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+/** Does this visualisation's tile appear on this surface? Absent means every surface. */
+export function showsOn(v: Visualisation, surface: TileSurface): boolean {
   return v.surfaces === undefined || v.surfaces.includes(surface);
 }
 
@@ -2002,6 +2074,45 @@ export function resolveNavbarIcons(
   return undefined;
 }
 
+/**
+ * An EXACT semver version. Ranges are refused.
+ *
+ * Rule 2 of `cat-harness/docs/proposals/instance-versioning.md` §2, and the one that
+ * matters most: **FHIR pins exact versions and has no way to express a range**,
+ * so a downstream that must align to FHIR cannot be handed `^1.2.0`. The
+ * constraint is alignment, and alignment is not a preference here — the owner
+ * called it a hard constraint on 2026-09-20 because some instances are
+ * consumed from outside this monorepo.
+ *
+ * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
+ * (rule 3). They are deliberately accepted HERE and barred from the published
+ * tier by `check:published-refs`, which is the same line §3.3 draws for a SHA:
+ * a staging reference is fine in a checkout and unresolvable to an external
+ * consumer.
+ *
+ * ## It lives HERE, and is re-exported from `harness-config`
+ *
+ * Two fields carry this rule — a declaration's own `version` (§3.2) and a
+ * dependency's `version` (§3.3) — and they are in two modules. `harness-config`
+ * imports this one, so the constraint is defined in the lower of the two and
+ * re-exported from the upper. Defining it twice would make "no ranges" a rule
+ * that holds on whichever half somebody remembered.
+ */
+export const ExactVersionSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (v) =>
+      v === "current" ||
+      v === "dev" ||
+      /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(v),
+    {
+      message:
+        "an exact semver version, `current` or `dev` — ranges (^, ~, >=, *, ||, x) cannot be expressed in FHIR's dependsOn and are refused",
+    },
+  );
+
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -2077,7 +2188,99 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
-});
+  /**
+   * Is this instance PUBLISHED for consumers outside this repository?
+   *
+   * `instance-versioning.md` §3.1. **Three states, and the third is the
+   * field's reason to exist**: absent is *undecided*, never *false*. Most
+   * instances here genuinely are not publishable, so a boolean defaulting to
+   * `false` would read correctly nearly always — and that is the trap. It
+   * would make "we decided this is internal" and "nobody looked" the same
+   * value, which is the `dh4f` shape one level up: a consumer sees a settled
+   * answer where none was given.
+   *
+   * §6 Q1 leaves WHICH instances are publishable open — *"the rest are
+   * unclear and should be declared rather than inferred"* — so nothing here
+   * declares it yet and `check:publishable` reports the undecided set rather
+   * than picking for the owner.
+   */
+  publishable: z.boolean().optional(),
+  /**
+   * The package identity an EXTERNAL consumer depends on — reverse-DNS.
+   *
+   * §3.2, and it is separate from `name` (the handle this repository resolves
+   * against) and from `stub` (which names published FILES) on purpose. FHIR
+   * rule 1: the id IS the identity, stable forever and never reused, while the
+   * version distinguishes snapshots of it. Collapsing it into `name` would
+   * make an internal rename a breaking change for everyone downstream.
+   */
+  id: z.string().min(1).optional(),
+  /**
+   * The version — an exact semver triple, `current` or `dev`. Never a range.
+   *
+   * §3.2, constrained by {@link ExactVersionSchema}. `canonicalUrl` already
+   * plays FHIR's `uri` role and deliberately carries no version: the canonical
+   * URL is stable ACROSS versions.
+   */
+  version: ExactVersionSchema.optional(),
+})
+  /**
+   * `publishable: true` OBLIGES an id and a version; neither is allowed
+   * without it.
+   *
+   * Both halves matter and the second is the one that gets dropped. Requiring
+   * them under `true` is what makes a published instance resolvable at all.
+   * REFUSING them otherwise is what keeps the declaration honest: an id and a
+   * version on something nothing outside may depend on look exactly like a
+   * published package to any consumer reading the export, and §3.1's whole
+   * argument is that minting that identity is ceremony with no reader.
+   *
+   * It is a refinement rather than a discriminated union because `publishable`
+   * has THREE states — a union on a two-valued discriminant cannot express
+   * "undecided", and undecided is the state every instance is in today.
+   */
+  .superRefine((d, ctx) => {
+    if (d.publishable === true) {
+      // §3.2 names `id` and `version`; the third obligation is §3.4's, and it
+      // is the same rule rather than an extra one. The exported `dependsOn`
+      // record is `{packageId, version, uri}`, and `canonicalUrl` is what
+      // plays `uri` — so a publishable instance without one cannot be
+      // *expressed* as a dependency by anything that depends on it. Requiring
+      // it here fails at parse time rather than producing a record with a
+      // hole in it. (Interpretation, flagged as such on issue #1017: the
+      // proposal states it as "already exists" rather than as an obligation.)
+      if (d.canonicalUrl === undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["canonicalUrl"],
+          message:
+            "required when `publishable: true` — it plays FHIR's `uri` role, and §3.4's `dependsOn` record cannot be emitted without it (instance-versioning.md §3.2, §3.4)",
+        });
+      }
+      for (const field of ["id", "version"] as const) {
+        if (d[field] === undefined) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: [field],
+            message: `required when \`publishable: true\` — a published instance nothing can resolve by ${field} is not published (instance-versioning.md §3.2)`,
+          });
+        }
+      }
+      return;
+    }
+    for (const field of ["id", "version"] as const) {
+      if (d[field] !== undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [field],
+          message:
+            d.publishable === undefined
+              ? `refused while \`publishable\` is undeclared — a declared \`${field}\` reads as a published identity, and nobody has said this instance is published (instance-versioning.md §3.1)`
+              : `refused when \`publishable: false\` — a declared \`${field}\` on an instance nothing outside may depend on is ceremony with no reader (instance-versioning.md §3.1)`,
+        });
+      }
+    }
+  });
 
 /**
  * The stem every published artefact is named with: `stub` when declared,
@@ -3190,7 +3393,7 @@ export interface ResolvedDirectory extends ContentDirectory {
  *
  * `chain` runs deepest dependency first and the root last, so a root
  * redeclaring an inherited id wins. Callers usually get this from
- * `flattenDependencies(resolveDependencyTree(root))` plus the root itself;
+ * `orderedDependencies(root)` plus the root itself;
  * it is taken as a parameter rather than walked here so this module does not
  * depend on the dependency resolver, and so tests can state a chain directly.
  */

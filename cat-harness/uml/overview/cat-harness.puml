@@ -113,38 +113,6 @@ package "cat-harness/processes" as pkg_cat_harness_processes <<processes>> {
     bpmn:userTask [0..*] : element
   }
 }
-package "cat-harness/methodology-raci" as pkg_cat_harness_methodology_raci <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_cat_harness_methodology_raci_skills
-}
-package "cat-harness/methodology-crdm" as pkg_cat_harness_methodology_crdm <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_cat_harness_methodology_crdm_skills
-}
-package "cat-harness/methodology-crdm-processes" as pkg_cat_harness_methodology_crdm_processes <<processes>> {
-  class "Business Process Model and Notation (BPMN)" as cat_harness_methodology_crdm_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
-    bpmn:callActivity [0..*] : element
-    bpmn:collaboration [0..*] : element
-    bpmn:definitions [0..*] : element
-    bpmn:documentation [0..*] : element
-    bpmn:endEvent [0..*] : element
-    bpmn:exclusiveGateway [0..*] : element
-    bpmn:extensionElements [0..*] : element
-    bpmn:flowNodeRef [0..*] : element
-    bpmn:import [0..*] : element
-    bpmn:incoming [0..*] : element
-    bpmn:lane [0..*] : element
-    bpmn:laneSet [0..*] : element
-    bpmn:outgoing [0..*] : element
-    bpmn:parallelGateway [0..*] : element
-    bpmn:participant [0..*] : element
-    bpmn:process [0..*] : element
-    bpmn:sequenceFlow [0..*] : element
-    bpmn:serviceTask [0..*] : element
-    bpmn:startEvent [0..*] : element
-    bpmn:task [0..*] : element
-    bpmn:timerEventDefinition [0..*] : element
-    bpmn:userTask [0..*] : element
-  }
-}
 package "cat-harness/methodologies" as pkg_cat_harness_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodologies_methodology
 }
@@ -309,7 +277,12 @@ package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
   note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (2 named): could not determine)" as n_cat_harness_uploads_uploads
 }
 package "cat-harness/library" as pkg_cat_harness_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_library_library
+  class "folio-document-images/v1" as cat_harness_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-document-images/v1'
+    doc_id [1] : string
+    images [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
   note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_who_iris_library_library

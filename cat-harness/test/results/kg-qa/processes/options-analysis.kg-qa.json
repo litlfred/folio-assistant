@@ -5,7 +5,7 @@
     "id": "Process_OptionsAnalysis",
     "path": "processes/options-analysis.bpmn"
   },
-  "source_hash": "sha256:842d01da34723a13cebd27dc26bdd30ec63eea7204a4f14898ddd0b72d30f6c2",
+  "source_hash": "sha256:9cb597457fd8a31996884d64a9e7ccdc47fa49030b7b4472f20f61d670adb3cf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,8 +52,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_CheckEvidence",
+          "detail": "needs skill \"literature-search\", but its lane's role \"business-analyst\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -66,11 +71,23 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

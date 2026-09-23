@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 125,
+      "count": 135,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 13,
+      "count": 17,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -329,6 +329,31 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/dependency-order.test.ts",
+      "instance": "cat-harness",
+      "name": "dependency-order.test",
+      "graphNode": "undeclared",
+      "summary": "The four rules of {@link flattenDependencies}, each tested as a rule rather",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "instance": "cat-harness",
+      "name": "dependency-order",
+      "graphNode": "none",
+      "reason": "an ordering function library: it defines no schema",
+      "summary": "dependency-order.ts — flatten a dependency hierarchy into ONE ordered list,",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/depends-on.ts",
+      "instance": "cat-harness",
+      "name": "depends-on",
+      "graphNode": "schema",
+      "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/document-image.ts",
       "instance": "cat-harness",
       "name": "document-image",
@@ -416,6 +441,14 @@
       "reason": "a re-export barrel: it defines nothing of its own",
       "summary": "Re-exports all types, Zod validation schemas, and builder functions.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-versioning.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-versioning.test",
+      "graphNode": "undeclared",
+      "summary": "A minimal valid declaration, extended per test.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/jsonld.ts",
@@ -522,6 +555,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/methodology.ts",
+      "instance": "cat-harness",
+      "name": "methodology",
+      "graphNode": "schema",
+      "summary": "A methodology node's front matter — `folio-methodology/v1`.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/namespaces.ts",
       "instance": "cat-harness",
       "name": "namespaces",
@@ -536,6 +577,31 @@
       "name": "narrative",
       "graphNode": "schema",
       "summary": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/navbar-icons.test.ts",
+      "instance": "cat-harness",
+      "name": "navbar-icons.test",
+      "graphNode": "undeclared",
+      "summary": "The navbar icon row — WHICH icons, and whose answer it is.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind.test",
+      "graphNode": "undeclared",
+      "summary": "Node-kind multiple inheritance (bean a1lq). Each refusal is tested as a rule:",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind.ts",
+      "instance": "cat-harness",
+      "name": "node-kind",
+      "graphNode": "none",
+      "reason": "a composition function over other modules' schemas, not a schema",
+      "summary": "Node kinds with more than one parent, composed by the platform's one",
       "isTest": false
     },
     {
@@ -901,6 +967,15 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/to-json-schema.ts",
+      "instance": "cat-harness",
+      "name": "to-json-schema",
+      "graphNode": "none",
+      "reason": "a function library. It defines no schema of its own; it",
+      "summary": "JSON Schema conversion — one wrapper, because the converter changed under us.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/todo-graph.test.ts",
       "instance": "cat-harness",
       "name": "todo-graph.test",
@@ -986,6 +1061,14 @@
       "name": "types",
       "graphNode": "schema",
       "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/version-bump.ts",
+      "instance": "cat-harness",
+      "name": "version-bump",
+      "graphNode": "schema",
+      "summary": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
       "isTest": false
     },
     {
@@ -1075,6 +1158,23 @@
       "name": "detangle",
       "graphNode": "schema",
       "summary": "Detangling — is this candidate subgraph really a subgraph?",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/adjudication.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "adjudication.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The adjudication contract.",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "instance": "folio-assistant-core",
+      "name": "adjudication",
+      "graphNode": "schema",
+      "summary": "The adjudication contract — what a judgement is ASKED and what it ANSWERS.",
       "isTest": false
     },
     {
@@ -1180,6 +1280,22 @@
       "graphNode": "undeclared",
       "summary": "The invariants the three content-layer schemas exist to enforce.",
       "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-comment.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-comment.test",
+      "graphNode": "undeclared",
+      "summary": "The review-comment todo kind (bean 423d): a todo with more structure, a",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-comment",
+      "graphNode": "schema",
+      "summary": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "isTest": false
     },
     {
       "module": "large-datasets/schemas/artifact-store.ts",
@@ -1293,6 +1409,13 @@
           "type": "z.boolean().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "sourceCommitUnavailable",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Said instead of `sourceCommit*` when the build could not read git."
         },
         {
           "name": "@graph",
@@ -5636,6 +5759,27 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "publishable",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity — reverse-DNS, stable forever, never reused."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The version, and it is an EXACT semver triple."
         }
       ],
       "extendsNames": [
@@ -5757,12 +5901,34 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "publishable",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity an EXTERNAL consumer depends on — reverse-DNS."
+        },
+        {
+          "name": "version",
+          "type": "ExactVersionSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The version — an exact semver triple, `current` or `dev`. Never a range."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+        "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
@@ -6003,6 +6169,20 @@
         "reproduce",
         "skip"
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+      "name": "ExactVersionSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-scalar",
+      "doc": "An EXACT semver version. Ranges are refused.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -6610,6 +6790,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#TileSurface",
+      "name": "TileSurface",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#Topology",
       "name": "Topology",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -6743,7 +6936,6 @@
       "name": "VisualisationSchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "ONE visualisation of a subgraph — where it is rendered, and what to call it.",
       "fields": [
         {
           "name": "ref",
@@ -6761,10 +6953,10 @@
         },
         {
           "name": "surfaces",
-          "type": "z.array(z.enum([\"navbar\", \"board\"])).nonempty().optional()",
+          "type": "z.array(z.enum(TILE_SURFACES)).nonempty().optional()",
           "optional": true,
           "array": true,
-          "doc": "Where its tile appears. Absent means BOTH."
+          "doc": "Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}."
         },
         {
           "name": "hidden",
@@ -6800,6 +6992,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "TILE_SURFACES",
         "z"
       ],
       "exported": true
@@ -10211,6 +10404,313 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "name": "FlattenResult",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "order",
+          "type": "OrderedStep[]",
+          "optional": false,
+          "array": true,
+          "doc": "The flattened run order — empty when any problem was found."
+        },
+        {
+          "name": "problems",
+          "type": "OrderProblem[]",
+          "optional": false,
+          "array": true,
+          "doc": "Everything wrong with the graph. NON-EMPTY MEANS `order` IS EMPTY: a"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/dependency-order.ts#OrderProblem",
+        "cat-harness/schemas/dependency-order.ts#OrderedStep"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#InheritanceConflict",
+      "name": "InheritanceConflict",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "doc": "Two layers define one key and neither reaches the other.",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ids",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Every definer none of the others reaches. Always two or more."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "name": "OrderedStep",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "doc": "One node of a dependency hierarchy, before it is flattened.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "needs",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Ids this step must run after. Absent or empty means it may run first."
+        },
+        {
+          "name": "fatal",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Does a failure here end the run?"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Free-text, carried through to the report so a reader is not left guessing."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#OrderProblem",
+      "name": "OrderProblem",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "name": "RunRecord",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "step",
+          "type": "OrderedStep",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outcome",
+          "type": "StepOutcome",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blockedBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why it was skipped: the id whose failure reached it."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/dependency-order.ts#OrderedStep",
+        "cat-harness/schemas/dependency-order.ts#StepOutcome"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#StepOutcome",
+      "name": "StepOutcome",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "type-alias",
+      "doc": "What happened to one step once the flattened order was run.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "ran",
+        "failed",
+        "skipped"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "name": "DependsOnExport",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "records",
+          "type": "DependsOnRecord[]",
+          "optional": false,
+          "array": true,
+          "doc": "Emitted only when the exporting instance is itself publishable."
+        },
+        {
+          "name": "gaps",
+          "type": "DependsOnGap[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unavailable",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why there are no records, when the answer is not \"it has no dependencies\"."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/depends-on.ts#DependsOnGap",
+        "cat-harness/schemas/depends-on.ts#DependsOnRecord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "name": "DependsOnGap",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The dependency's declared name, which is all an unresolved edge has."
+        },
+        {
+          "name": "reason",
+          "type": "DependsOnGapReason",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/depends-on.ts#DependsOnGapReason"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnGapReason",
+      "name": "DependsOnGapReason",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "type-alias",
+      "doc": "Why an edge could not become a record.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "undecided",
+        "internal",
+        "unresolved",
+        "unreadable"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnRecord",
+      "name": "DependsOnRecord",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "doc": "One `ImplementationGuide.dependsOn` entry.",
+      "fields": [
+        {
+          "name": "packageId",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The dependency's `id` — reverse-DNS, the identity a consumer resolves."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Its exact `version`. Never a range, never a SHA (§3.3)."
+        },
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Its `canonicalUrl`, which plays FHIR's `uri` role (§3.2)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
       "name": "CaptureBasis",
       "module": "cat-harness/schemas/document-image.ts",
@@ -13078,6 +13578,27 @@
           "doc": "Display name of the dependency (e.g. \"smart-base\", \"qou-platform\")."
         },
         {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Reverse-DNS package identity, stable forever. See the schema."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT is depended on — an exact version. See the schema; ranges are refused."
+        },
+        {
+          "name": "derivedFromNeeds",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Was this dependency DERIVED from the declaration's `needs` rather than"
+        },
+        {
           "name": "path",
           "type": "string",
           "optional": true,
@@ -13126,6 +13647,20 @@
           "array": false
         },
         {
+          "name": "id",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity — reverse-DNS, stable forever, never reused."
+        },
+        {
+          "name": "version",
+          "type": "ExactVersionSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT IS DEPENDED ON — the exact version, for computing the overlay."
+        },
+        {
           "name": "path",
           "type": "z.string().optional()",
           "optional": true,
@@ -13141,7 +13676,8 @@
           "name": "ref",
           "type": "z.string().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "HOW TO FETCH WHILE STAGING, and the provenance of the bytes — not what is"
         },
         {
           "name": "provides",
@@ -13152,7 +13688,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#ExactVersionSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -13380,6 +13918,50 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "name": "InstanceGraph",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "order",
+          "type": "ResolvedDependency[]",
+          "optional": false,
+          "array": true,
+          "doc": "Every dependency the root reaches, EACH ONCE, deepest first and the root's"
+        },
+        {
+          "name": "problems",
+          "type": "InstanceGraphProblem[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+        "cat-harness/schemas/harness-config.ts#ResolvedDependency"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+      "name": "InstanceGraphProblem",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Something wrong with an instance's dependency graph.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
       "name": "ResolvedDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -13408,11 +13990,11 @@
           "doc": "The dependency's own harness config (if present)."
         },
         {
-          "name": "transitive",
-          "type": "ResolvedDependency[]",
+          "name": "needs",
+          "type": "string[]",
           "optional": false,
           "array": true,
-          "doc": "Transitive dependencies (resolved recursively)."
+          "doc": "Absolute roots of this dependency's OWN dependencies. Edges, not a"
         }
       ],
       "extendsNames": [],
@@ -15611,6 +16193,92 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/methodology.ts#MethodologyFrontMatter",
+      "name": "MethodologyFrontMatter",
+      "module": "cat-harness/schemas/methodology.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/methodology.ts#MethodologyFrontMatterSchema",
+      "name": "MethodologyFrontMatterSchema",
+      "module": "cat-harness/schemas/methodology.ts",
+      "kind": "zod-object",
+      "doc": "Front matter of a methodology node.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(METHODOLOGY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z .string() .min(1) .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, \"a methodology `name` is kebab-case, like a skill id\")",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id, referenced from skills and diagrams. Kebab-case, like a skill's."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What a reader sees. Not the id with capitals — it may name the acronym's expansion."
+        },
+        {
+          "name": "origin",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Authors, a publication, a standards body."
+        },
+        {
+          "name": "applies-when",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When this methodology applies, phrased so `methodology-adoption`'s"
+        },
+        {
+          "name": "evidence",
+          "type": "z .array( z .string() .regex(/^library\\/[a-z0-9][a-z0-9.-]*$/, \"each `evidence` entry is a library reference: `library/…",
+          "optional": true,
+          "array": true,
+          "doc": "The ingested sources, each as `library/<bib-slug>`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "METHODOLOGY_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/namespaces.ts#NsPrefix",
+      "name": "NsPrefix",
+      "module": "cat-harness/schemas/namespaces.ts",
+      "kind": "type-alias",
+      "doc": "One of our own prefixes — each the stub of the instance declaring it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/narrative.ts#Narrative",
       "name": "Narrative",
       "module": "cat-harness/schemas/narrative.ts",
@@ -15712,6 +16380,159 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.test.ts#base",
+      "name": "base",
+      "module": "cat-harness/schemas/node-kind.test.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#AsShape",
+      "name": "AsShape",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Composed",
+      "name": "Composed",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "doc": "The type-level mirror of the runtime rule: parents' fields, then own fields over them.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Flat",
+      "name": "Flat",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Inherited",
+      "name": "Inherited",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#NodeKind",
+      "name": "NodeKind",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "interface",
+      "doc": "A node kind: its declared parents, its own fields, and the composed schema.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "parents",
+          "type": "readonly NodeKind[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "own",
+          "type": "z.ZodRawShape",
+          "optional": false,
+          "array": false,
+          "doc": "The fields this layer itself declares."
+        },
+        {
+          "name": "overrides",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false,
+          "doc": "Inherited fields this layer redefines, on purpose."
+        },
+        {
+          "name": "order",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false,
+          "doc": "Every ancestor and then this kind, deepest first: the composition order."
+        },
+        {
+          "name": "schema",
+          "type": "z.ZodObject<S>",
+          "optional": false,
+          "array": false,
+          "doc": "Every field, composed in {@link order}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#ShapeOf",
+      "name": "ShapeOf",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#UnionToIntersection",
+      "name": "UnionToIntersection",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/note-anchor.ts#AlsoAbout",
@@ -19246,7 +20067,7 @@
         },
         {
           "name": "meta",
-          "type": "z.record(z.unknown()).optional()",
+          "type": "z.record(z.string(), z.unknown()).optional()",
           "optional": true,
           "array": false
         }
@@ -19546,13 +20367,13 @@
         },
         {
           "name": "env",
-          "type": "z.record(z.string()).optional()",
+          "type": "z.record(z.string(), z.string()).optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "labels",
-          "type": "z.record(z.string()).optional()",
+          "type": "z.record(z.string(), z.string()).optional()",
           "optional": true,
           "array": false
         }
@@ -23922,52 +24743,39 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/todo.ts#TodoNodeKind",
+      "name": "TodoNodeKind",
+      "module": "cat-harness/schemas/todo.ts",
+      "kind": "zod-object",
+      "doc": "A todo — one person's outstanding work.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo.ts#TodoNodeSchema",
       "name": "TodoNodeSchema",
       "module": "cat-harness/schemas/todo.ts",
       "kind": "zod-object",
-      "doc": "A todo — one person's outstanding work.",
-      "fields": [
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoStatus` from `types.ts`, not re-enumerated here."
-        },
-        {
-          "name": "priority",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoPriority` from `types.ts`."
-        },
-        {
-          "name": "origin",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoOrigin` from `types.ts`."
-        },
-        {
-          "name": "$schema",
-          "type": "z.literal(\"folio-todo/v1\")",
-          "optional": false,
-          "array": false,
-          "doc": "What this file IS, declared inside it."
-        }
-      ],
+      "doc": "The composed schema: carried note, then themed, then the todo's own fields.",
+      "fields": [],
       "extendsNames": [
-        "CarriedNoteSchema"
+        "TodoNodeKind"
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/carried-note.ts#CarriedNoteSchema"
+        "cat-harness/schemas/todo.ts#TodoNodeKind"
       ],
       "unresolved": [],
-      "external": [
-        "z"
-      ],
+      "external": [],
       "exported": true
     },
     {
@@ -24764,6 +25572,20 @@
         "section",
         "How much of the folio to render."
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#RepoFullNameSchema",
+      "name": "RepoFullNameSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A forge repository's full name, `owner/name`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -28203,6 +29025,107 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/version-bump.ts#Bump",
+      "name": "Bump",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "type-alias",
+      "doc": "A version bump, in increasing order of what it costs a consumer.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "patch",
+        "minor",
+        "major"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#ExportedGraph",
+      "name": "ExportedGraph",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "doc": "The shape this reads out of an exported document. Deliberately minimal.",
+      "fields": [
+        {
+          "name": "@graph",
+          "type": "unknown[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "name": "SurfaceDiff",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "added",
+          "type": "SurfaceSubject[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "removed",
+          "type": "SurfaceSubject[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "bump",
+          "type": "Bump",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/version-bump.ts#Bump",
+        "cat-harness/schemas/version-bump.ts#SurfaceSubject"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "name": "SurfaceSubject",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "doc": "One subject in the exported surface: its type and its id, together.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/vocabulary.ts#TermGloss",
       "name": "TermGloss",
       "module": "cat-harness/schemas/vocabulary.ts",
@@ -29974,6 +30897,268 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAsset",
+      "name": "AdjudicationAsset",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+      "name": "AdjudicationAssetSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "One thing the judge is shown.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable identifier — a bib-slug, a block id, a path."
+        },
+        {
+          "name": "state",
+          "type": "z.enum(MATERIALIZATION_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the bytes are, when they are anywhere. Required when"
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What it is, in a few words, so a reader of the record can follow it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "MATERIALIZATION_STATES"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcome",
+      "name": "AdjudicationOutcome",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema",
+      "name": "AdjudicationOutcomeSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "What a judge answers.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ADJUDICATION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "request",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The request this answers."
+        },
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The chosen code. Must be one of `codes`."
+        },
+        {
+          "name": "codes",
+          "type": "z.array(z.string().min(1)).min(2)",
+          "optional": false,
+          "array": true,
+          "doc": "The enum in force when this was judged."
+        },
+        {
+          "name": "reasoning",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why, as markdown. REQUIRED, and never empty."
+        },
+        {
+          "name": "by",
+          "type": "z .object({ id: z.string().min(1), kind: z.enum(ADJUDICATOR_KINDS), /** An `agent` judge must name its model, so a verd…",
+          "optional": false,
+          "array": false,
+          "doc": "Who judged, and of which kind. An outcome with no judge is"
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ADJUDICATION_SCHEMA_TAG",
+        "ADJUDICATOR_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequest",
+      "name": "AdjudicationRequest",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "name": "AdjudicationRequestSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "What a judge is given.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ADJUDICATION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id, so an outcome can point back at the exact question asked."
+        },
+        {
+          "name": "assets",
+          "type": "z.array(AdjudicationAssetSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Everything the judge is shown, and **nothing else is**."
+        },
+        {
+          "name": "prompt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The question, as markdown."
+        },
+        {
+          "name": "codes",
+          "type": "z.array(JudgementCodeSchema).min(2, \"a single permitted answer is assent, not a judgement\")",
+          "optional": false,
+          "array": true,
+          "doc": "The permitted answers — the owner's *\"list of judgement codes\"*."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+        "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ADJUDICATION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicatorKind",
+      "name": "AdjudicatorKind",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#JudgementCode",
+      "name": "JudgementCode",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema",
+      "name": "JudgementCodeSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "One answer the judge is allowed to give.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "means",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What choosing this code means. Required — see the type docstring."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -32354,6 +33539,522 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/review-comment.ts#AnchorChange",
+      "name": "AnchorChange",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "doc": "The two ChangeSet entries that move an anchor. Structural, so no import cycle.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#BlockAnchor",
+      "name": "BlockAnchor",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "One block as the head has it: its content hash and the labels it used to have.",
+      "fields": [
+        {
+          "name": "hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
+      "name": "IngestResult",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "created",
+          "type": "ReviewComment[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unchanged",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Already ingested. Same id, so nothing new."
+        },
+        {
+          "name": "malformed",
+          "type": "Array<{ commentId: number; url: string; error: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "Tagged but malformed: said, not dropped, so the reviewer can fix it."
+        },
+        {
+          "name": "untagged",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "No tag: ordinary conversation. Counted so \"nothing ingested\" is explained."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewComment"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#PrComment",
+      "name": "PrComment",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "A PR conversation comment, in the fields GitHub's API returns.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+      "name": "ProcessTask",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "A task in a BPMN process: the only thing allowed to move a comment.",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The `<bpmn:process id>`."
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The task's id in that process."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "name": "ReviewComment",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind",
+      "name": "ReviewCommentKind",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "nodeKind"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName",
+      "name": "ReviewCommentKindName",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "name": "ReviewCommentSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "ReviewCommentKind"
+      ],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFile",
+      "name": "ReviewCommentsFile",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema",
+      "name": "ReviewCommentsFileSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "doc": "`review-comments.json`, published beside `changeset.json` in a preview.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(REVIEW_COMMENTS_FILE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repo",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commit",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The head commit whose blocks the comments were anchored against."
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "comments",
+          "type": "z.array(ReviewCommentSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "malformed",
+          "type": "z.array(z.object({ commentId: z.number().int(), url: z.string(), error: z.string() }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "untagged",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "REVIEW_COMMENTS_FILE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "name": "ReviewCommentStatus",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewFields",
+      "name": "ReviewFields",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema",
+      "name": "ReviewFieldsSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repo",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/name` of the repository the pull request is in."
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "The edit-set's pull request."
+        },
+        {
+          "name": "commentId",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub's id of the conversation comment this was ingested from."
+        },
+        {
+          "name": "commentUrl",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub login of the reviewer."
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The lane they reviewed in: a role id from `roles.json`."
+        },
+        {
+          "name": "kind",
+          "type": "z.enum(REVIEW_COMMENT_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blockHash",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The block's content hash when the comment was ingested. `null` when the"
+        },
+        {
+          "name": "commit",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The head commit the comment was ingested against."
+        },
+        {
+          "name": "orphaned",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false,
+          "doc": "The block the label names is gone. Kept and shown, never dropped. An"
+        },
+        {
+          "name": "anchoredFrom",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "The labels this comment was anchored to before a rename re-anchored it."
+        },
+        {
+          "name": "decision",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The 9gyz Decision that closed it. Required once resolved or adjudicated."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "REVIEW_COMMENT_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewTag",
+      "name": "ReviewTag",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "The tag a reviewer starts a PR comment with.",
+      "fields": [
+        {
+          "name": "block",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ReviewCommentKindName",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Everything after the header, trimmed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "name": "ReviewTransition",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "from",
+          "type": "readonly (ReviewCommentStatus | null)[]",
+          "optional": false,
+          "array": false,
+          "doc": "`null` for creation."
+        },
+        {
+          "name": "to",
+          "type": "ReviewCommentStatus",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "ProcessTask & { /** The `.bpmn` under `cat-harness/processes/` that declares it. */ file: string; /** * Set when the di…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "needsDecision",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "A transition that closes a comment must name the Decision that closed it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "large-datasets/schemas/artifact-store.ts#ArtifactStore",
       "name": "ArtifactStore",
       "module": "large-datasets/schemas/artifact-store.ts",
@@ -33396,6 +35097,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+      "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
       "via": "navbarIcons",
       "kind": "field",
@@ -34283,6 +35992,62 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "via": "order",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderProblem",
+      "via": "problems",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "via": "step",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "to": "cat-harness/schemas/dependency-order.ts#StepOutcome",
+      "via": "outcome",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "via": "gaps",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnRecord",
+      "via": "records",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnGapReason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -34715,6 +36480,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/harness-config.ts#FolioAssistantDependencySchema",
+      "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+      "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
       "via": "dependencies",
@@ -34769,6 +36542,22 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "to": "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+      "via": "problems",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "to": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
+      "via": "order",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
@@ -36180,7 +37969,7 @@
     },
     {
       "from": "cat-harness/schemas/todo.ts#TodoNodeSchema",
-      "to": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
+      "to": "cat-harness/schemas/todo.ts#TodoNodeKind",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -36763,6 +38552,30 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#Bump",
+      "via": "bump",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "via": "added",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "via": "removed",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/vocabulary.ts#TermGloss",
       "to": "cat-harness/schemas/vocabulary.ts#TermLayer",
       "via": "layer",
@@ -37006,6 +38819,22 @@
       "from": "detangle/schemas/detangle.ts#DetangleMetrics",
       "to": "detangle/schemas/detangle.ts#DetangleEdge",
       "via": "worklist",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "to": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "to": "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema",
+      "via": "codes",
       "kind": "field",
       "optional": false,
       "array": true
@@ -37304,6 +39133,62 @@
       "via": "signature",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "via": "created",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "via": "comments",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTag",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+      "via": "by",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "via": "to",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

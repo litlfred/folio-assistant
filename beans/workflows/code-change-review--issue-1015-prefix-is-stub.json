@@ -1,0 +1,62 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--issue-1015-prefix-is-stub",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-1015-prefix-is-stub",
+  "bean": "folio-assistant-zaqn",
+  "tokens": [
+    "Task_Review"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-23T07:40:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "RECORDED DURING THE WORK, after Implement had begun \u2014 not at the start. The session opened as a QUESTION (explain JSON Schema / JSON / JSON-LD and no-dangles), the answer surfaced the defect, and the owner chose 'bean + fix + PR'. The process should have been named at that choice."
+    },
+    {
+      "at": "2026-09-23T07:45:00.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Bean zaqn created in-progress after a duplicate scan (two prefix-mentioning beans, x4mt and cjtm, neither the same defect)."
+    },
+    {
+      "at": "2026-09-23T07:46:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/charming-curie-n04agq (session-designated). Issue #1015 opened; the branch announcement comment goes on it with the first push."
+    },
+    {
+      "at": "2026-09-23T08:30:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "Owner decisions taken during Implement: prefix = stub (bootstrap / cat-harness / folio-assistant-core); 91 orphaned blocks rewritten in place, not pruned (bean xwi8); CSVW tabular keys deferred (bean 792y); document the rule in skills and tools; record the Zod carrier grounds with the house rule labelled as one."
+    },
+    {
+      "at": "2026-09-23T07:31:00.000Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "First local run exited 1 on 7 gates, all this PR's (bean parents, the new Tool's sidecar, tools viewer, skill-instruction docs, detangle). The commits went up while it ran; the rule 'run gates before you push' was broken for 916b10e2/a17efd99, and CI caught the same four test failures."
+    },
+    {
+      "at": "2026-09-23T07:32:00.000Z",
+      "node": "Task_CommitAndOpenPR",
+      "actor": "claude",
+      "note": "PR #1016 opened; issue #1015 announced."
+    },
+    {
+      "at": "2026-09-23T07:43:00.000Z",
+      "node": "Task_Diagnose",
+      "actor": "claude",
+      "note": "Root cause: the generated artefacts the new Tool node and skill edits owe, plus unparented beans. Regenerated; 440cc48e; bun run gates 128/128; CI green."
+    },
+    {
+      "at": "2026-09-23T07:55:00.000Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "origin/main merged (f3e3ce6e); gates 128/128 again, prefix check clean over 3,113 documents. Waiting on review."
+    }
+  ]
+}
