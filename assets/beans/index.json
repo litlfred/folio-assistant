@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 555,
+      "count": 556,
       "unit": "beans"
     }
   },
@@ -946,7 +946,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:55Z",
-      "updatedAt": "2026-09-22T21:04:32Z",
+      "updatedAt": "2026-09-23T06:15:45Z",
       "preview": "Owner: *\"and then manage review comments etc.\"*\n\n**The real obstacle, measured.** `docs-ui.js` states it outright: *\"A\npublished page cannot write back to the repo\"* (lines 2077 and 2592). The\nreview page is static on gh-pages, so \"manage comments\" needs a WRITE PATH,\nand choosing it is the owner's decision:\n\n| option | anchors to | cost |\n|---|---|---|\n| A. GitHub PR review comments | a line of a",
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
     },
@@ -1629,12 +1629,12 @@
       "title": "A repo's type set is the markers it carries, closed under the dependency tree",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T21:28:21Z",
-      "updatedAt": "2026-09-18T21:28:21Z",
+      "updatedAt": "2026-09-23T06:15:45Z",
       "preview": "## The idea, as stated 2026-09-18\n\n**A repo declares itself an instance of a content type by carrying a file named\nafter that type.** The filename is the assertion; the file's JSON-LD `@type` is\nthe resolvable reference to what that type *means*. Several markers coexist, so\na repo is a **set** of types, not one: `smart-base` is a DAK *and* a SUSHI\nproject. Each marker stays owned by whoever define",
       "file": "beans/defs/folio-assistant-79t3--a-repos-type-set-is-the-markers-it-carries-closed.md"
     },
@@ -2267,6 +2267,20 @@
       "updatedAt": "2026-09-20T11:24:49Z",
       "preview": "`ec24133a` (\"excise directoryForGraph — and it took a silently-dead CI gate\nwith it\") removed this, on the owner's instruction \"excise singulsar\":\n\n```ts\nexport function directoryForGraph(root, graph, registry = defaultGraphKinds) {\n  return resolveDirectories([{ name: \"(local)\", root, own: true }], registry)\n    .find((d) => d.graphs.includes(graph))?.absPath;\n}\n```\n\n## Correction: `[0]` was DELI",
       "file": "beans/defs/folio-assistant-a02m--sole-directory-excising-directoryforgraph-relocate.md"
+    },
+    {
+      "id": "folio-assistant-a1lq",
+      "title": "MULTIPLE INHERITANCE: one resolve-then-walk rule for harness instances and node kinds — fully resolve the ordered dependency tree, then walk deepest-first from bootstrap/",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T06:15:36Z",
+      "updatedAt": "2026-09-23T06:15:36Z",
+      "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE), verbatim, prompted by the review-comment todo subtype (423d) being built on `TodoNodeSchema`:\n\n> *\"thhemed todo? we didnt discuss mult-iheritence of harness or node kinds. we need to have that. once depedencies of (orderd) dependecy tree are full resolve, walk tree in order starting w/ deepest depenencies (bootstreap/)\"*\n\n> *\"make sure consiste",
+      "file": "beans/defs/folio-assistant-a1lq--multiple-inheritance-one-resolve-then-walk-rule-fo.md"
     },
     {
       "id": "folio-assistant-a46u",
@@ -5253,14 +5267,14 @@
     {
       "id": "folio-assistant-pk2s",
       "title": "NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:12:12Z",
-      "updatedAt": "2026-09-23T05:12:12Z",
+      "updatedAt": "2026-09-23T06:05:22Z",
       "preview": "Found while executing #956's empty-graph ruling (PR #996), by rendering the\nsite and running the mount step rather than by reading a diff. It is NOT that\nPR's defect and was deliberately not widened into it: that ruling is about a\nrow's LABEL, this is about a row's LINK.\n\n## Measured, 2026-09-23\n\nOn who-iris's mounted rail, four of six graph rows draw inert. Two of them —\n`catalogue` and `uploads`",
       "file": "beans/defs/folio-assistant-pk2s--navbar-the-rail-greys-rows-the-tile-generator-says.md"
     },
@@ -6321,14 +6335,14 @@
     {
       "id": "folio-assistant-txut",
       "title": "REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:04:44Z",
+      "updatedAt": "2026-09-23T06:02:50Z",
       "preview": "Owner: *\"need a new visualizer under the harness maybe, like review/ which\nshows things in folio diff from main\"*.\n\n**What.** A `review/` page per folio, reached from the navbar tile for that\nfolio and from the STAGING banner. It reads the ChangeSet (child 02) and shows:\n- the changed blocks, grouped by the folio/ graph's chapter/section tree;\n- counts per change kind;\n- the MAIN and STAGING URLs ",
       "file": "beans/defs/folio-assistant-txut--review-visualiser-a-review-page-per-folio-showing.md"
     },
