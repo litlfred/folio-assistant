@@ -3234,7 +3234,6 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
 
 /* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
-.fa-glass-sheet { padding-bottom: 8.5rem; }
 .fa-glass-tiles {
   position: fixed;
   left: 0;
@@ -3248,7 +3247,8 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   border-top: 2px solid var(--fa-glass-accent);
   color: var(--fa-glass-ink);
 }
-.fa-glass-tiles .fa-tile {
+.fa-glass-tiles .fa-tile,
+.fa-glass-tiles .fa-glass-chrome-tile {
   flex: 0 0 auto;
   width: 5.5rem;
   min-height: 5.5rem;
@@ -3269,13 +3269,15 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   position: relative;
 }
 .fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+.fa-glass-chrome-tile { font-weight: 700; }
 .fa-glass-tile-glyph { font-size: 1.6rem; line-height: 1; }
-.fa-glass-tiles .fa-tile[aria-expanded="true"] {
+.fa-glass-tiles .fa-glass-chrome-tile[aria-expanded="true"] {
   border-color: var(--fa-glass-accent);
   box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
 }
 .fa-glass-tiles .fa-tile-caption { overflow-wrap: anywhere; line-height: 1.15; }
 .fa-glass-tiles .fa-tile:focus-visible,
+.fa-glass-tiles .fa-glass-chrome-tile:focus-visible,
 .fa-glass-sheet button:focus-visible,
 .fa-glass-sheet a:focus-visible,
 .fa-glass-sheet input:focus-visible {
@@ -3347,7 +3349,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-sheet {
   position: absolute;
   inset: 0;
-  padding: 3rem 1rem 1rem;
+  /* The BOTTOM is kept clear for the tile strip, which overlays this edge:
+     padding to scroll into, and scroll-padding so a control scrolled into
+     view — by focus or by a click — lands above the strip, not under it. */
+  padding: 3rem 1rem 8.5rem;
+  scroll-padding-bottom: 8.5rem;
   overflow: auto;
 }
 .fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
