@@ -1,11 +1,11 @@
 ---
 # folio-assistant-589f
 title: 'TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T11:57:40Z
-updated_at: 2026-09-23T12:29:57Z
+updated_at: 2026-09-23T13:24:28Z
 parent: folio-assistant-zzmr
 ---
 
@@ -44,3 +44,11 @@ same declaration and no committed values yet.
 ## Done when
 
 A prose block's `text`, expanded by a JSON-LD processor, names the section file's real location — or is a literal that does not pretend to.
+
+## Summary of Changes
+
+PR #1085, merged on the owner's "merge it" (2026-09-23). Issue #1084.
+
+- `text` and `leanSource` declared LITERALS in `CONTENT_CONTEXT`: their values are document-relative paths, and under `@id` a processor resolved them against `@base` — `../sections/x.md` became a link to nowhere on all 1,323 committed prose blocks. Context-only: nothing regenerated, no reader changed.
+- The owner's upgrade rule, chosen for the least drift, recorded in `schemas/jsonld.ts` and skill `kg-export`: these become absolute IRIs minted by the one block-IRI function when, and only when, the files are served at a URL an instance declares.
+- New gate `checkPathsAreNotLinks` in `check:context-emission`: a file path under any `@id` term fails. Falsified by restoring the old declaration.
