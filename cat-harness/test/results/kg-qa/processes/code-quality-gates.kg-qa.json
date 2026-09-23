@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:7598efd571dd8b146bec8fcee44b101eb832891dc27af191040f1dcaf1c46de5",
+  "source_hash": "sha256:af4c4a06c6be975e56e4d6639ceb77b5ab1d36e41ff1c889287616cf3ffb4914",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -91,12 +91,61 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Hard",
+          "detail": "\"Any HARD&#10;gate red?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/code-quality-gates.yml",
+          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 11,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/code-quality-gates.bpmn",
+      "code": ".github/workflows/code-quality-gates.yml",
+      "prose_hash": "af4c4a06c6be",
+      "code_hash": "ee3939965cde",
+      "by": "agent",
+      "reason": "Re-read after main added five check:* lines inside the typescript job (uml-overview, methodologies:viz, external-schemas:viz, source-licence, wireframes). Task_TypeScript documents 'the repository gates …' with bun run gates deriving its list from this job, so the diagram still holds; no new job or branch to draw."
+    }
+  ]
 }

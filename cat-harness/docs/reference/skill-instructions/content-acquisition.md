@@ -105,3 +105,14 @@ It does not ingest. The moment a file is in the queue, this is finished and
 what lets a resource acquired through a channel that does not exist yet reach
 ingestion unchanged.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Content acquisition](../../processes/content-acquisition.html)**.
+
+<img src="../../assets/img/workflows/content-acquisition.svg" alt="BPMN diagram: Content acquisition" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Content acquisition](../../processes/content-acquisition.html) | Say what is needed, and ask for a link OR a description; Point at the upload target [scripts/upload-url.ts]; Accept it, and record where it came from |
+

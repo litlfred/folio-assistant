@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:4d866b8c69b032cfe0a4f6189e1f7182e98a55bbe25174853744a9f95152d34e",
+  "source_hash": "sha256:f7b81f4e009160b7c13166284cfc3f7848d47d94230b2d2b93c75516ea833259",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,8 +52,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "CallActivity_IngestTheme",
+          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -66,12 +71,45 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Complete",
+          "detail": "\"L1 complete?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
-    "n/a": 6,
+    "pass": 12,
+    "fail": 2,
+    "n/a": 8,
     "unknown": 0
   }
 }

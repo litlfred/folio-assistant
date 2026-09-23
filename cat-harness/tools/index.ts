@@ -94,6 +94,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // settles the matter. The output is a document conforming to
     // `discussion.output.schema.json`, which is what makes the task checkable
     // rather than "we discussed it".
+    // `folio-block-qa-summary` — bean `qbfi`, option 2. The review page's
+    // heat map reads a folio's QA verdicts from a PUBLISHED summary. This
+    // reads the committed `block-qa/v1` sidecars and runs no checker.
+    defineTool({
+      id: "folio-block-qa-summary",
+      title: "Folio block QA summary",
+      description:
+        "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/publish-block-qa.ts" },
+      io: {
+        inputs: [
+          { name: "folio", schema: t("RepoPath"), required: true, arg: { flag: "--folio" }, description: "The folio's `folio` graph directory." },
+          { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write `block-qa.json`." },
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio repository root, where verdicts are anchored. Default `.`." },
+        ],
+        outputs: [
+          { name: "block-qa", schema: t("RepoPath"), description: "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr." },
+        ],
+      },
+      satisfies: ["review-heatmap"],
+      selection: {
+        when: "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
+        limits:
+          "Reports the LAST sweep. A folio never swept reads unaudited throughout. Reads verdicts at the instance root and at the folio directory, because the sweep currently anchors at the swept directory (bean s3p2).",
+        cost: "One text walk of the folio and one read per sidecar. No network.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "discuss",
       title: "discussion",
@@ -468,7 +497,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "problems", schema: t("Text"), description: "Sources that could not be read, counted rather than silently omitted." },
         ],
       },
-      satisfies: ["kg-export"],
+      // Bean `n350`: the Tool that publishes bootstrap's graph, so it also
+      // satisfies the two skills that govern that graph. They live in
+      // `bootstrap/skills/`; `check-tools` resolves them across instances.
+      satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
       // No `alternativeTo`, deliberately. The four siblings sharing this skill
       // are COMPLEMENTARY steps — export, then publish, then serve — not four
       // ways to do one thing, and the schema's own note on that field says a
@@ -821,6 +853,28 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun", "chromium"], network: false },
     }),
 
+    // Wireframes (issue #1023): the mechanical half of `wireframe-design-review`.
+    // It records per-viewport pass/fail entries and never a score, because the
+    // `wiregen` methodology adopts the structure of its source's rating and
+    // refuses the arithmetic.
+    defineTool({
+      id: "wireframe-check",
+      title: "Wireframe check at web and mobile viewports",
+      description:
+        "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
+      install: { none: true },
+      invoke: { shell: "bun run wireframe:check" },
+      io: {
+        inputs: [
+          { name: "candidates", schema: t("RepoPath"), required: true, repeated: true, arg: { positional: 0 }, description: "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where screenshots and report.json go; default .build/wireframes." },
+        ],
+        outputs: [{ name: "report", schema: t("RepoPath"), description: "report.json: per candidate, per viewport, per criterion. The screenshots are beside it." }],
+      },
+      satisfies: ["wireframe-design-review"],
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
     //
     // These two were blocked rather than missing. Both are committed, published,
@@ -840,6 +894,44 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They are siblings rather than alternatives: one renders theme tokens and
     // the other avatar glyphs, and a caller wanting either is not served by the
     // other.
+    // The two UML generators (bean `19cc`). Siblings rather than alternatives:
+    // one draws every declared sub-graph from the registry, the other draws
+    // the harness object model with its relationships, and neither covers
+    // the other.
+    defineTool({
+      id: "uml-overview",
+      title: "UML overview per named sub-graph",
+      description:
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      install: { none: true },
+      invoke: { shell: "bun run uml:overview" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram, SVG or page is stale or orphaned, instead of writing." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "uml-object-model",
+      title: "Harness object model as PlantUML",
+      description:
+        "Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-object-model-uml.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed diagram is stale. Needs the beans CLI; without it the result is could-not-check (exit 2)." },
+        ],
+        outputs: [{ name: "diagram", schema: t("RepoPath"), description: "The object-model diagram, in the instance's declared uml directory." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     defineTool({
       id: "themes-css",
       title: "Theme stylesheet",
@@ -1007,6 +1099,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── Every prefix spoken is bound, and every own prefix is a stub ──────
+    //
+    // Bean `zaqn`. `content-context` above proves the published context
+    // AGREES with its source; it cannot prove the source is right, and it was
+    // not: twenty terms written `folio:` under a binding spelt `fac`, so 1,737
+    // documents expanded to IRIs in a URI scheme called `folio`. This node is
+    // the check that asks the converse of the emission count — the direction
+    // that corrupts data. The discipline is `kg-export` §"A prefix is the stub".
+    defineTool({
+      id: "context-prefixes",
+      title: "JSON-LD prefix check",
+      description:
+        "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean.",
+      install: { none: true },
+      invoke: { shell: "bun run check:context-emission" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit both reports as JSON instead of the console summary." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "Console (or JSON) report; exit 1 on an unbound prefix, a misspelt own prefix, a silent binding, or an empty corpus." }],
+      },
+      satisfies: ["kg-export"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── Running the checks CI runs ────────────────────────────────────────
     //
     // `tools/` is an INHERITED declaration and `.github/workflows/` is not:
@@ -1055,6 +1172,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
         cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
+    // ── The gates, on the COMBINED state — bean `nytj` ──────────────────
+    //
+    // `gates` above runs what CI runs, on THIS tree. The failure it cannot
+    // see is the one neither PR evaluates: green on the branch, green on the
+    // base, stale on the two merged. Three times on 2026-09-23.
+    defineTool({
+      id: "gates-merged",
+      title: "Gates on the merged tree",
+      description:
+        "Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.",
+      install: { none: true },
+      invoke: { shell: "bun run check:merged" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base branch to merge with; `main` when omitted. Fetched first." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "The gate report for the merged tree, or the conflicting paths." }],
+      },
+      satisfies: ["prepare-merge"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when:
+          "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
+        limits:
+          "It tests the base as fetched NOW; the base can still move before the merge lands. The merge queue (`merge_group:` on the gating workflows, switched on by the owner) is what closes that last gap.",
+        cost: "One full `bun run gates`, plus a worktree; a `bun install` only when the merge changes the lockfile.",
       },
     }),
 

@@ -3,7 +3,7 @@
  * Run the gates CI runs — DERIVED from the workflow, never listed here.
  *
  * Bean `folio-assistant-n60j`. The SDLC audit
- * (`fsh-guts/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
+ * (`cat-harness/docs/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
  * phase unowned for the platform: the commands a contributor runs before
  * pushing lived in `package.json` and in CI YAML and nowhere an agent was
  * told to read. An agent found them by grepping.
@@ -433,6 +433,44 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
   },
   {
+    // The ChangeSet step of `folio-staging.yml`, the reusable workflow folios
+    // call (bean `ojcx`). It computes over a folio's `folio` graph against
+    // its base, and this repository holds no folio, so there is nothing for
+    // a gate here to run it on. Its logic is not exempt: every change kind
+    // is asserted by `folio-assistant-core/schemas/changeset.test.ts` in
+    // `bun test`, which IS in the gate set.
+    match: "changeset.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's graph; the platform carries no folio. " +
+      "Covered by changeset.test.ts in `bun test`",
+  },
+  {
+    // Same reason as the ChangeSet above (bean `423d`): the review-comments
+    // Tool ingests a FOLIO's pull-request comments against that folio's
+    // blocks, in the folio's staging job and in its comment-triggered
+    // refresh. The platform has no folio and no such pull request to run it
+    // on here. Its logic is not exempt: `review-comments.test.ts` (the Tool,
+    // including the command run offline exactly as both jobs call it) and
+    // `review-comment.test.ts` (the kind) are in `bun test`.
+    match: "review-comments.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging and comment-refresh jobs over that folio's PR and blocks; the platform carries no folio. " +
+      "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
+  },
+  {
+    // The same reason again (bean `qbfi`): the block QA summary reads a
+    // FOLIO's committed verdicts, in that folio's staging job. The platform
+    // has no folio. Its logic is covered by `publish-block-qa.test.ts` and
+    // the heat map's unit and Playwright tests, in the gate set.
+    match: "publish-block-qa.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's committed QA verdicts; the platform carries no folio. " +
+      "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
@@ -697,6 +735,18 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "same as `library:viz:check`, and NECESSARILY so: it renders that projection. The writer runs at deploy (`docs-site.yml`), and what it draws derives from the whole repository, so a red here means a sibling merged rather than that this diff forgot. Gating it would also be worse than gating its sibling, because this generator emits no projection of its own — it publishes a viewer over `assets/library/index.json` (bean `flh4`: one dataset, since two would be two answers to how many are queued), so its staleness is the library projection's staleness wearing a second name. Run it by hand, or from `/prepare-merge`",
   },
   {
+    script: "wireframe:check",
+    kind: "covered-by",
+    reason:
+      "not a gate but the Tool `wireframe-check`: it takes the candidate files to render as arguments, and with none it has nothing to measure. What it writes, `checks/report.json` beside each wireframe, IS gated, by `check:wireframes`, which fails on a declared visualiser whose wireframe has no report, or a report missing a viewport or holding a fail (issue #1023). Run it by hand when a wireframe changes",
+  },
+  {
+    script: "ingest:ig-menu:check",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
+  },
+  {
     script: "check:session-staleness",
     kind: "report",
     reason:
@@ -756,6 +806,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints the unaccounted paths with their sizes; `check:undeclared-files:check` is the gating form and is wired",
+  },
+  {
+    script: "check:merged",
+    kind: "covered-by",
+    reason:
+      "runs the WHOLE gate set on this branch merged with the current base (bean `nytj`), so wiring it into the workflow the gate set is read from would run the gates inside the gates. In CI the same question is answered by the merge queue: `merge_group:` on the gating workflows tests exactly the commit that will land. `check:merged` is the agent's half, run from `/prepare-merge` before asking for a merge",
   },
   {
     script: "ingest:ig:check",

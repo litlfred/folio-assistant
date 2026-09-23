@@ -95,12 +95,23 @@ const ROOT_TYPES = new Set(["milestone", "epic"]);
 /**
  * The types a parent may have.
  *
- * An epic's parent is a milestone, and a task's is an epic, so both are
- * acceptable rather than only `epic`. Nothing wider: parenting a task to a
- * task nests the roadmap somewhere nobody looks, which is the original
- * reason this constraint exists.
+ * `milestone -> epic -> feature -> task/bug`, which is the hierarchy
+ * `beans prime` states. Nothing wider: parenting a task to a task nests the
+ * roadmap somewhere nobody looks, which is the original reason this
+ * constraint exists.
+ *
+ * `feature` WAS MISSING and the owner settled it, 2026-09-22 (`itka` finding
+ * 2, issue #941): a feature is a real tier that may hold tasks, not a label.
+ * Until then this set omitted it while the file's own header quoted the
+ * four-tier sentence to justify `ROOT_TYPES` — the check cited the rule and
+ * then contradicted it.
+ *
+ * MEASURED BEFORE THE RULING, so the choice was not made blind: 51 beans are
+ * typed `feature`, exactly 2 hang from one and neither is open, and 25 of 25
+ * open features hang from an epic. The omission had no live victim; what it
+ * decided was what is allowed NEXT.
  */
-const PARENT_TYPES = new Set(["milestone", "epic"]);
+const PARENT_TYPES = new Set(["milestone", "epic", "feature"]);
 
 export interface BeanParentsReport {
   store: string | null;
@@ -185,17 +196,29 @@ export function checkBeanParents(root: string): BeanParentsReport {
         key: key(b.id, "parent-type"),
         message: `${where}: \`parent: ${b.parent}\` is a ${p.type || "bean with no type"}, not an epic or a milestone`,
       });
-    } else if (b.type === "epic" && p.type === "epic") {
-      // Epics nest under a GOAL, not under each other, and `beans prime`'s
-      // hierarchy says so: milestone -> epic -> feature -> task/bug. Its own
-      // case rather than a narrower PARENT_TYPES, because the two are not the
-      // same rule — a task's parent may be an epic, and this one may not — and
-      // because the message can then say WHY instead of "wrong type".
+    } else if (b.type === "epic" && p.type !== "milestone") {
+      /* AN EPIC HANGS FROM A GOAL, and from nothing else. `beans prime`'s
+       * hierarchy says so: milestone -> epic -> feature -> task/bug.
+       *
+       * STATED POSITIVELY rather than as "not another epic", which is what it
+       * said until `feature` joined `PARENT_TYPES` (owner's ruling, 2026-09-22).
+       * The old form tested one wrong parent out of the set; widening
+       * `PARENT_TYPES` silently made `epic -> feature` legal, which inverts the
+       * hierarchy — a goal's child hanging off one of its own grandchildren.
+       * The general form cannot be holed that way by a later addition.
+       *
+       * Its own case rather than a narrower `PARENT_TYPES`, because the two
+       * are not the same rule — a task's parent may be an epic and this one
+       * may not — and because the message can then say WHY rather than
+       * "wrong type".
+       */
       found.push({
         key: key(b.id, "epic-under-epic"),
         message:
-          `${where}: an epic's parent is a \`milestone\` (a goal), not another epic — ` +
-          `\`${b.parent}\` is an epic`,
+          `${where}: an epic's parent is a \`milestone\` (a goal) — ` +
+          // Typed rather than prosed: "is a epic" is what an article in a
+          // template gets you, and the fix is to stop needing one.
+          `\`${b.parent}\` has type \`${p.type || "none"}\``,
       });
     }
   }
@@ -214,9 +237,16 @@ function formatReport(r: BeanParentsReport): string {
   if (r.store === null) return "Bean parents\n  · no bean store — nothing to check";
   const out = [`Bean parents (${r.open} open, below the roadmap roots)`];
   if (r.problems.length === 0) {
-    // THE CLAIM IS NOW EARNED. It was printed over a rule that could not be
-    // taken (`itka`, #941); the rule is reachable, so the sentence stands.
-    out.push("  ✓ every open bean is placed under an epic or a milestone, and no epic hangs from another");
+    /* THE CLAIM IS NOW EARNED, and it says what is actually checked.
+     *
+     * It was printed over a rule that could not be taken (`itka`, #941). It
+     * also named the wrong shape TWICE over: parents may be features since
+     * the owner's 2026-09-22 ruling, and the epic rule requires a milestone
+     * rather than merely forbidding another epic. A summary that describes a
+     * rule the code no longer has is the same defect one layer up. */
+    out.push(
+      "  ✓ every open bean hangs from a milestone, epic or feature, and every epic from a milestone",
+    );
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);
     out.push("");

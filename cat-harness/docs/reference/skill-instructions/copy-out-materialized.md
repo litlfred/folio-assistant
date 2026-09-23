@@ -130,3 +130,14 @@ clean run over nothing.
 - `bun run check:read-only-graphs` — your folio's directory is not accidentally
   declared read-only, and the source's still is.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Copy out materialized content — to work on somebody else's bytes](../../processes/copy-out-materialized.html)**.
+
+<img src="../../assets/img/workflows/copy-out-materialized.svg" alt="BPMN diagram: Copy out materialized content — to work on somebody else's bytes" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Copy out materialized content — to work on somebody else's bytes](../../processes/copy-out-materialized.html) | Edit it in place — it is your own content; Read the original — and write nothing; Land the bytes in the copier's own folio/; Record provenance.local — what this is a copy OF; Verify the ORIGINAL still hashes to its digest |
+

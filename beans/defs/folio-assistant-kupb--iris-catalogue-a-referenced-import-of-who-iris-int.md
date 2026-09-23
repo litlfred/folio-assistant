@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-20T08:01:14Z
-updated_at: 2026-09-20T18:48:38Z
+updated_at: 2026-09-23T02:45:00Z
 parent: folio-assistant-yg29
 ---
 
@@ -31,3 +31,52 @@ REVISES bean `r1lz`, which recorded the owner's 2026-09-19 decision as one repo 
 
 ## Done when
 Every child is closed, `check:voices` is green ACROSS the instance boundary, and the just-the-docs rendering shows the IRIS hierarchy with three materialised items and the rest referenced.
+
+---
+
+## Narrowed to IRIS-catalogue work, 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, choosing **"re-parent the non-catalogue five"** over keeping
+them, narrowing this bean's Done-when, or a per-bean review.
+
+**The problem this solves.** `kupb`'s Done-when is *"Every child is closed"*,
+and it had **12 open children**. GOAL 3 (`yg29`) cannot close until `kupb`
+does, so Pagefind, CDN publication, compiled-artefact caching, detangle and the
+large-datasets skill family were each holding *"who-iris is shown through a
+themed harness"* open — for reasons that have nothing to do with who-iris.
+
+### Moved out — eight, not seven
+
+| bean | to | why it is not catalogue work |
+|---|---|---|
+| `4pm8` | `5a3l` | Pagefind is a search-**engine** choice — deployment/topology |
+| `eof6` | `5a3l` | *"build it on release, never on staging refresh"* — a release-pipeline rule |
+| `xies` | `5a3l` | *"GH Pages is a TOOL CHOICE"* — its own body says topology |
+| `54rk` | `5a3l` | caching + on-demand materialisation is an operating mode |
+| `gpdo` | `5a3l` | `.olean` caching, the same shape as `54rk` |
+| `j79e` | `zzmr` | detangle measures whether a subgraph is cohesive — KG structure |
+| `w5bn` | `zzmr` | subsetting a corpus you do not own — a KG skill family |
+| **`rtrg`** | `ahvw` | **beyond the named set** — BPMN `targetNamespace` drift across the *workflow* corpus is process hygiene, and is not catalogue work by any reading |
+
+**`rtrg` is flagged because it is an addition, not an application.** The ruling
+named five and allowed two more; this is an eighth, moved on the ruling's stated
+principle — *"kupb keeps only IRIS-catalogue work"* — rather than on its list.
+If that reading is wrong, this is the one line to reverse.
+
+### Staying — four, and each earns it
+
+| bean | why |
+|---|---|
+| `j66n` | theme ingestion for who-iris; GOAL 3 names it on its own path |
+| `hfwl` | SAMPLE-IMPORT SDLC — testing an import into a KG |
+| `hpax` | MATERIALIZE REMOTE CONTENT — its own body says *"shared by catalogue import"* |
+| `v048` | ROAST — an adversarial pass over the catalogue-import design itself |
+
+**Nothing was closed, scrapped or deleted, and no moved bean's own work
+changed** — not a status, not a Done-when, not a line above the note each now
+carries. Only the question *"whose goal does finishing this serve?"* is answered
+differently.
+
+**`kupb` still does not close**: four open children remain, and they are the
+four this epic is actually about. What changed is that GOAL 3 is now reachable
+by finishing IRIS-catalogue work, instead of waiting on a CDN.

@@ -48,3 +48,19 @@ Findings and a decision — two things, not one. See
   At least one per decision, each citing corpus evidence. Approving over an open
   `critical` or `blocking` finding without overruling it is a reported problem.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 8 · Review and feedback |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 8 · Review and feedback |
+| [Content Change and Review](../../processes/content-change-review.html) | Review each slice (calls a sub-process); Review impact assessment; Request changes |
+| [Content lifecycle](../../processes/content-lifecycle.html) | Editing and HCI validation (calls a sub-process); Draft, review and publish (calls a sub-process) |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Circulate the draft; Review the draft publication; Clinical / scientific sign-off |
+| [Editing and HCI validation](../../processes/editing-hci-validation.html) | Agent review of the change; Human / SME review |
+| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Review the guidance already in this content |
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Clinical validation |
+| [Narrative review](../../processes/review-narrative.html) | Read the sidecar findings |
+| [Review task](../../processes/review-task.html) | Consolidate findings |
+

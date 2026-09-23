@@ -27,6 +27,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [dak-postprocessing](dak-postprocessing.html) | `dak-postprocessing` | — | > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` · |
+| [dak-preprocessing](dak-preprocessing.html) | `dak-preprocessing` | — | > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` · |
 | [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
 | [ig-artifact-ingestion](ig-artifact-ingestion.html) | `ig-artifact-ingestion` | — | > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` · |
 | [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
@@ -34,7 +36,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [quality-control](quality-control.html) | `quality-control` | [schema](../skills/quality-control.html) | > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` · |
 | [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Capability: `smart-base` · Package: |
+| [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
 | [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
+| [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
 
 ## Lifecycle skills
 
@@ -50,12 +54,21 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
 
+## CRDM requirements methodology (skills/crdm)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
+| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
+| [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
+
 ## Platform core (folio-core)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
 | [Adjudication](adjudication.html) | `adjudication` | — | > Skill id: `adjudication` · Capability: `review` · Package: `folio-core` |
+| [Adopt a methodology from a source document](adopt-methodology-from-source.html) | `adopt-methodology-from-source` | — | The adoption **rules** are [`methodology-adoption`](methodology-adoption.md). This skill is the **op |
 | [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
 | [Materializing from arXiv](archiving-arxiv.html) | `archiving-arxiv` | — | arXiv is the easiest case to get *nearly* right, which is why it is worth its |
 | [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
@@ -124,6 +137,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [KG → package → distribution → portal](kg-to-portal.html) | `kg-to-portal` | — | A knowledge graph is in a repository. A portal — a Moodle site, a ministry's |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
 | [Library ingestion](library-ingestion.html) | `library-ingestion` | — | `uploads/` and `library/` are two stages of **one** pipeline. `uploads/` is the |
+| [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
 | [MCP assembly](mcp-assembly.html) | `mcp-assembly` | — | [`mcp-projection`](mcp-projection.md) maps **one** Tool node to one MCP tool. |
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
@@ -131,6 +145,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Markdown Authoring Conventions](md-authoring.html) | `md-authoring` | — |  |
 | [Adopting a methodology, and choosing between them](methodology-adoption.html) | `methodology-adoption` | — | **A methodology is somebody else's work, adopted whole.** It is not a house |
 | [The Milnor exposition standard](milnor-exposition-standard.html) | `milnor-exposition-standard` | — | **Three files sent readers here for this section and it did not exist.** |
+| [Does the prose say what the code does?](narrative-asserts-code.html) | `narrative-asserts-code` | — | Issue #1042, feature bean `flbx`, stage C. The owner, 2026-09-21: *"need to see |
 | [One-Voice Audit](one-voice-audit.html) | `one-voice-audit` | — | grep -rEn "[✅❌⚠⏳🔧🚧☑☒]\|✓\|✗\|★" "$CONTENT" --include="*.md" |
 | [/one-voice-integration-watcher](one-voice-integration-watcher.html) | `one-voice-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
@@ -147,10 +162,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
 | [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
+| [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
 | [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
 | [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
+| [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
+| [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Capability: `review` · Package: `folio-core` |
+| [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: ` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
@@ -161,6 +180,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Surprise to corpus](surprise-to-corpus.html) | `surprise-to-corpus` | — | > Skill id: `surprise-to-corpus` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Swimlane Glossary](swimlane-glossary.html) | `swimlane-glossary` | — |  |
+| [Running a SWOT scan](swot-analysis.html) | `swot-analysis` | — | **The method is not in this file.** It is the `swot` node in the `methodology` |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
@@ -171,6 +191,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [UML overview: generated from declarations and schemas, never drawn](uml-overview.html) | `uml-overview` | — | **Every UML diagram here is generated.** Nothing in a class box is typed by |
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
@@ -184,6 +205,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
 | [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
+| [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](../../methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bp |
 
 ## Document adapter (folio-document-adapter)
 
@@ -231,7 +253,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
 | [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md). |
-| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | grep -rn ':= by \(rfl\\|trivial\\|True.intro\)' content/**/*.lean |
+| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](../folio-core/narrative-asserts-code.md)** |
 | [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
@@ -253,6 +275,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Domain fencing](domain-fencing.html) | `domain-fencing` | — | > Skill id: `domain-fencing` · Capability: `architecture` · Package: `graph-management` |
 | [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
+
+## RACI involvement model (skills/raci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [RACI](raci.html) | `raci` | — | **The method is not in this file.** It is the `raci` node in the `methodology` |
 
 ## Declared but not implemented here (stubs)
 
@@ -289,27 +317,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
-
-## CatBootstrap rendering (bootstrap/tools)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Emitting bootstrap's own graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** bootstrap |
-| [Publishing bootstrap's graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
-
-## RACI involvement model (methodologies/raci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [RACI](raci.html) | `raci` | — | **R is already declared.** A BPMN lane says who performs an activity; that |
-
-## CRDM requirements methodology (methodologies/crdm)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
-| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
-| [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
 ## Knowledge-graph navigation (tooled)
 

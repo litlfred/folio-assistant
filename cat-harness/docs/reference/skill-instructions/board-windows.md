@@ -226,3 +226,11 @@ The layout layer and why a note carries no coordinates:
 out of a folio is `deletion-requires-confirmation`, applied by
 `processes/board-relocate.bpmn` rather than restated here.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Board: open and close content](../../processes/board-open-close.html) | Render every card as its avatar; Project a window onto the board; Raise the window the reader selected; Close the window back to its avatar; Leave a reachable way back; Resolve the kind's zoom threshold; Swap cards below the threshold; leave open windows alone |
+| [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Leave the content exactly where it is |
+

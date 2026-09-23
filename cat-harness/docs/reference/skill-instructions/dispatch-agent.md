@@ -232,3 +232,10 @@ When an agent emits `⟦DONE⟧` (or the harness notifies completion):
 - **Wrong cadence** — 5-minute or "when I remember" ticks when the user
   asked for 2 minutes. Honor the literal cadence.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Getting started](../../processes/getting-started.html) | Import what, where, and who does it |
+

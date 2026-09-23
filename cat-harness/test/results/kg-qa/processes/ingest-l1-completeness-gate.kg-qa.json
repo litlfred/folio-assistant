@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "processes/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:3a999608610a3386ce8b388a7e6e1958764a759e1d1b33e1272160c72c37c541",
+  "source_hash": "sha256:b2766096048311c0942cdc4dae0d22dd9278ed39fd41a3ddbb76956278a74adb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,47 @@
       "findings": []
     },
     "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Drift",
+          "detail": "\"Drift or bad terminology?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
-    "n/a": 7,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 8,
     "unknown": 0
   }
 }

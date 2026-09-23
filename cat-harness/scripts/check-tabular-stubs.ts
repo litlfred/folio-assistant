@@ -38,7 +38,7 @@ import { join, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
-import { TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
+import { TABULAR_CSVW_FILENAME, TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -157,7 +157,7 @@ function run(): number {
   const findings = stubFindings(
     entries,
     (dir) => {
-      const f = join(dir, "tabular.csvw.jsonld");
+      const f = join(dir, TABULAR_CSVW_FILENAME);
       return existsSync(f) ? readFileSync(f, "utf-8") : undefined;
     },
     (id) => stubbed.has(id),
@@ -166,7 +166,7 @@ function run(): number {
   for (const f of findings) console.log(`  ${f.severity.padEnd(11)} ${f.detail}`);
 
   const blocking = findings.filter((f) => f.severity !== "stub");
-  const withRecords = entries.filter((d) => existsSync(join(d, "tabular.csvw.jsonld"))).length;
+  const withRecords = entries.filter((d) => existsSync(join(d, TABULAR_CSVW_FILENAME))).length;
   console.log();
   console.log(
     `  ${entries.length} entry/entries scanned, ${withRecords} with a tabular record, ` +

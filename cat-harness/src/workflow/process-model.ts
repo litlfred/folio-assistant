@@ -61,7 +61,53 @@ export type NodeKind = "start" | "end" | "activity" | "exclusive" | "parallel";
  * deliberately — the lane already carries it. See {@link ProcessNode.raci}.
  */
 export const RACI_INVOLVEMENTS = ["accountable", "consulted", "informed"] as const;
-export type RaciInvolvement = (typeof RACI_INVOLVEMENTS)[number];
+
+/**
+ * RASCI — RACI plus **S**upportive: a role that does work on the activity
+ * without owning the deliverable.
+ *
+ * ## Why `supportive` is declarable when `responsible` is not
+ *
+ * The obvious objection, and it was the first answer given to the owner: in a
+ * lane-derived model S and R collapse, because a party that does work on the
+ * activity is a lane participant. **That is wrong, and the reason is
+ * structural.** A BPMN activity sits in EXACTLY ONE lane, so the lane is a
+ * discriminator rather than a description: R is the owning lane, S is a
+ * declared role that is not it. There is no case where both could apply.
+ *
+ * Checked against the corpus before this was added (2026-09-23): no activity
+ * anywhere declares `involvement="responsible"`, and all declared
+ * involvements used the three legal values. So the premise R-is-the-lane holds
+ * corpus-wide and `supportive` inherits no ambiguity from it.
+ *
+ * It also buys expressiveness rather than a letter for its own sake: BPMN
+ * **cannot place one activity in two lanes**, so before this there was no way
+ * to say "this role also does the work here".
+ */
+export const RASCI_INVOLVEMENTS = [...RACI_INVOLVEMENTS, "supportive"] as const;
+
+/**
+ * The involvement vocabularies a process may declare, by name.
+ *
+ * **Parallel, not cumulative**, and the distinction is the whole reason this
+ * is a choice rather than a superset always in force. `methodology-adoption`:
+ * *"Two or more methodologies may answer the same question. Do not blend
+ * them… pick one per decision, name it, and follow it."* A process that has
+ * chosen four letters has chosen them, and a fifth appearing in it is a defect
+ * to report — not a convenience to absorb.
+ *
+ * The same shape bean `5vo9` needs for adjudication: a declared enum that a
+ * step's value is validated against. One mechanism, two users.
+ */
+export const INVOLVEMENT_VOCABULARIES = {
+  raci: RACI_INVOLVEMENTS,
+  rasci: RASCI_INVOLVEMENTS,
+} as const satisfies Record<string, readonly string[]>;
+
+export type InvolvementVocabulary = keyof typeof INVOLVEMENT_VOCABULARIES;
+
+/** Every letter any vocabulary admits — the union, for typing only. */
+export type RaciInvolvement = (typeof RASCI_INVOLVEMENTS)[number];
 
 export interface ProcessNode {
   id: string;
@@ -103,6 +149,23 @@ export interface ProcessNode {
    */
   raci: { role: string; involvement: RaciInvolvement }[];
   /**
+   * Declared `folio:raci` entries whose `involvement` is NOT in the process's
+   * vocabulary — a typo, or a `supportive` in a four-letter process.
+   *
+   * **These used to be dropped with no trace, and the comment at the filter
+   * said `check:raci` reported them. It did not.** The filter runs inside
+   * `loadProcessModel`, so by the time `raci-chart.ts` sees a node the
+   * rejected entries are gone; there was nothing left to report and nothing
+   * ever had. Measured 2026-09-23 — `process-model.ts` is the only reader of
+   * the raw element, so no other consumer could have caught them either.
+   *
+   * They are still **not coerced**, which was the right half of the original
+   * decision: a typo read as `informed` would put somebody on a notification
+   * list who was meant to be consulted. Not-coerced and not-recorded are
+   * different things, and only the first was ever intended.
+   */
+  raciUnknown: { role: string; involvement: string }[];
+  /**
    * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
    *
    * `<folio:convention ref="…"/>`, mirroring `folio:skill` rather than
@@ -133,6 +196,18 @@ export interface ProcessNode {
    * silencing the criterion cheaper than satisfying it.
    */
   noSkillReason?: string;
+  /**
+   * `<folio:no-call reason="…"/>` — this step names a skill that owns a
+   * same-named process, and is deliberately NOT a call activity of it.
+   *
+   * A call activity runs the called process from its first start event to its
+   * end. A step that uses a skill's know-how for one slice of that process —
+   * one check out of a review, one deploy out of a three-entry lifecycle, a
+   * loop over many previews — would be misdrawn as a call. Same rule as
+   * {@link noSkillReason}: the reason is required at load time, so silencing
+   * `activity-calls-skill-process` costs a sentence somebody can review.
+   */
+  noCallReason?: string;
   /**
    * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
    * call, on purpose, and this is why.
@@ -181,6 +256,39 @@ export interface ProcessNode {
    * read in the diff.
    */
   fulfilment?: { kinds: ActorKind[]; reason: string };
+  /**
+   * `<folio:adjudication codes="…"/>` — the activity is a judgement, and these
+   * are the answers it may give.
+   *
+   * The declared enum a recorded outcome is validated against. Its document
+   * contract is `folio-assistant-core/schemas/adjudication.ts`; see
+   * {@link adjudicationOf} for why the two are not one import.
+   */
+  adjudication?: { codes: string[] };
+  /**
+   * `<folio:adjudication accepts="…"/>` — on a CALL ACTIVITY: the answers this
+   * caller can act on, checked against the adjudicator inside the process it calls.
+   *
+   * A different claim from {@link adjudication}, on a different element, which
+   * is why it is a different attribute rather than the same one reused. A
+   * adjudicator SAYS what may be answered; a caller says what it can HEAR. Bean
+   * `bvuk`: six diagrams call `Process_Adjudication` and each asks it a
+   * different question, and nothing compared any of them to its three
+   * outcomes.
+   */
+  adjudicationAccepts?: string[];
+  /**
+   * `<folio:adjudication defers="caller"/>` — this step IS an adjudication and
+   * its permitted answers are the CALLER's to declare.
+   *
+   * Declared rather than inferred from a missing `codes`, because in this
+   * corpus an absence is never allowed to read as a decision. `A_Adjudicate`
+   * in `adjudication.bpmn` could have simply dropped its enum when bean `bvuk`
+   * split the outcome half out; then a step that had lost its marker by
+   * accident and one that deferred on purpose would parse identically, and
+   * `check:workflow-refs` could not report the callers that still owe an enum.
+   */
+  adjudicationDefers?: boolean;
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
@@ -215,6 +323,17 @@ export interface ProcessFlow {
   name?: string;
   from: string;
   to: string;
+  /**
+   * `<folio:adjudication code="…"/>` — on a branch out of an adjudicated
+   * judgement's gateway, WHICH declared answer selects this branch.
+   *
+   * The flow's `name` is prose for a reader ("the finding stands"); this is
+   * the token the recorded outcome carries. They are deliberately not the
+   * same field: a label is free to be rewritten for clarity, and a code that
+   * moved with it would silently invalidate every record judged under the old
+   * one.
+   */
+  adjudicationCode?: string;
 }
 
 /**
@@ -229,6 +348,8 @@ export interface ProcessFlow {
 export interface LaneDef {
   id: string;
   name?: string;
+  /** `<bpmn:documentation>` on the lane — what the role does IN this diagram. */
+  documentation?: string;
   /** `<folio:role ref="…"/>` on the lane, when declared. */
   roleRef?: string;
   /**
@@ -322,6 +443,16 @@ export interface ProcessModel {
    */
   enforcement: "strict" | "advisory";
   /**
+   * `<folio:involvement vocabulary="…"/>` — which involvement methodology's
+   * letters this diagram is written in. Absent in the diagram means `raci`.
+   *
+   * Exposed so a consumer can say WHICH vocabulary a finding is against:
+   * `supportive` is a defect in a four-letter process and correct in a
+   * five-letter one, and a report that could not name the vocabulary would be
+   * asserting the same value is both.
+   */
+  involvementVocabulary: InvolvementVocabulary;
+  /**
    * `<folio:precondition>` elements on the process — what must hold BEFORE the
    * start event, bean `lv3j`.
    *
@@ -346,6 +477,13 @@ export interface ProcessModel {
    * agent can report a decision or only a default.
    */
   logCapture?: "on" | "off";
+  /**
+   * `<bpmn:documentation>` on the process element itself — what the diagram
+   * is FOR. The node-level `documentation` says what one step does; this is
+   * the paragraph a reader meets before any step, and `process-documented`
+   * in `schemas/kg-qa.ts` is what notices when it is missing.
+   */
+  documentation?: string;
   /** The process's lanes, in document order. A lane IS a role — see below. */
   lanes: LaneDef[];
   /** Every start event, in document order. */
@@ -461,6 +599,20 @@ function noSkillReasonOf(
   return reason;
 }
 
+/** `<folio:no-call reason="…"/>` — same load-time rule as {@link noSkillReasonOf}. */
+function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:no-call");
+  if (!decl) return undefined;
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${id}: <folio:no-call/> carries no reason. Say why this step uses the skill's know-how ` +
+        `rather than calling its process.`,
+    );
+  }
+  return reason;
+}
+
 /**
  * `<folio:judgement reason="…"/>`, with the reason enforced at LOAD time.
  *
@@ -474,6 +626,252 @@ function noSkillReasonOf(
  * has no way to tell which the author meant — so it is a conflict rather than
  * a preference.
  */
+/**
+ * `<folio:adjudication codes="a b c"/>` — this activity IS a judgement, and
+ * these are the answers it may give.
+ *
+ * Bean `5vo9`, the owner's *"formalized adjudication process so there is 'use
+ * judgement'"*. The contract for the request and outcome DOCUMENTS lives in
+ * `folio-assistant-core/schemas/adjudication.ts`; this is the harness half,
+ * and the two meet at the data rather than by import — core `needs`
+ * cat-harness, so an import from here would run up the layer stack.
+ *
+ * ## The two refusals, and why the second is the point
+ *
+ * A bare marker would add a word to a diagram and check nothing. What makes
+ * this worth a parser is that it **binds the judgement to who may make it**:
+ *
+ *  1. Fewer than two codes is not a judgement. One permitted answer is a step
+ *     that records assent, and calling it adjudication would let a rubber
+ *     stamp inherit a decision's authority.
+ *  2. **A mechanical or external actor may not adjudicate.** The owner: *"ONLY
+ *     agentic human actor."* `adjudication.bpmn`'s adjudicator step already declares
+ *     `<folio:fulfilment kinds="person agent"/>` and says why — *"a mechanical
+ *     system may NOT take this step, which is the whole reason the process
+ *     exists"* — but nothing tied the two together, so a NEW adjudication step
+ *     could omit the fulfilment entirely and no gate would notice. This makes
+ *     the marker carry its own precondition.
+ *
+ * A judgement a `system` actor could perform is a rule, and a rule belongs in
+ * a DMN table behind `folio:decision`, which this engine already refuses to
+ * let a caller hand-answer.
+ */
+/**
+ * The three attributes `<folio:adjudication/>` carries, by where it sits.
+ *
+ * `codes` on the adjudicating activity, `code` on a branch out of its gateway,
+ * `accepts` on a call activity. They are deliberately three names rather than
+ * one overloaded one: an adjudicator declaring its enum, a branch naming the answer
+ * that selects it, and a caller stating what it can act on are three different
+ * assertions, and a single attribute would let a reader believe any of them.
+ */
+const ADJUDICATION_ATTRS = {
+  /**
+   * On a node: an adjudicator's enum, a caller's list of answers it can act
+   * on, or `defers="caller"` — an adjudication whose enum belongs to whoever
+   * asked.
+   */
+  node: ["codes", "accepts", "defers"],
+  /** On a sequence flow: the one answer that selects this branch. */
+  flow: ["code"],
+} as const;
+
+/**
+ * Read `<folio:adjudication/>` off an element, REFUSING an attribute the
+ * engine does not read.
+ *
+ * The same guard `folio:bean` carries, and for the same measured reason: that
+ * element gained a second attribute, a diagram spelled one of them wrong, and
+ * "the step silently did nothing for weeks" because an absent attribute was
+ * itself meaningful. This element now has three attributes whose absences are
+ * all meaningful — an activity with no `codes` is not a judgement, a branch
+ * with no `code` opts out, a caller with no `accepts` has not checked — so a
+ * misspelling is again indistinguishable from an abstention.
+ *
+ * Written when `accepts` was added rather than before it, which is the point:
+ * one attribute could not be misspelled into another's meaning.
+ */
+function adjudicationDeclOf(
+  ext: { $type: string }[],
+  elId: string,
+  where: keyof typeof ADJUDICATION_ATTRS = "node",
+): { codes?: string; code?: string; accepts?: string; defers?: string } | undefined {
+  const decl = ext.find((v) => v.$type === "folio:adjudication") as
+    | (Record<string, unknown> & {
+        codes?: string;
+        code?: string;
+        accepts?: string;
+        defers?: string;
+      })
+    | undefined;
+  if (!decl) return undefined;
+  // Checked PER POSITION, not against the union. `code` is a real attribute
+  // on a flow and meaningless on an activity, so a union guard would let
+  // `<folio:adjudication code="a b"/>` sit on an adjudicator and be ignored — which
+  // is precisely the shape the guard exists to refuse, one element over.
+  const allowed = ADJUDICATION_ATTRS[where] as readonly string[];
+  const unknown = Object.keys(decl).filter((k) => !k.startsWith("$") && !allowed.includes(k));
+  if (unknown.length > 0) {
+    throw new UnsupportedBpmn(
+      `${elId}: <folio:adjudication/> carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
+        `which the engine does not read on a ${where}. Here the attribute(s) are ` +
+        `${allowed.map((a) => `\`${a}\``).join(", ")} — and each one's ABSENCE ` +
+        `means something, so a misspelling reads as a deliberate abstention.`,
+    );
+  }
+  if (decl.codes !== undefined && decl.accepts !== undefined) {
+    throw new Error(
+      `${elId}: <folio:adjudication/> declares both \`codes\` and \`accepts\`. ` +
+        `A step either MAKES a judgement or CALLS one; declaring both says it is ` +
+        `its own caller, and nothing could check that against anything.`,
+    );
+  }
+  return decl;
+}
+
+/** Split a whitespace-separated code list, refusing a degenerate enum. */
+function codeList(raw: string | undefined, elId: string, attr: string, why: string): string[] {
+  const codes = (raw ?? "").trim().split(/\s+/).filter(Boolean);
+  if (codes.length < 2) {
+    throw new Error(
+      `${elId}: <folio:adjudication ${attr}="…"/> names ${codes.length} code(s). ${why}`,
+    );
+  }
+  if (new Set(codes).size !== codes.length) {
+    throw new Error(
+      `${elId}: <folio:adjudication ${attr}="…"/> repeats a code. ` +
+        `The outcome could not say which was chosen.`,
+    );
+  }
+  return codes;
+}
+
+/**
+ * `<folio:adjudication accepts="a b c"/>` on a call activity — the answers
+ * this caller can act on.
+ *
+ * Bean `bvuk`, and the measurement that produced it is worth carrying here
+ * because it is the reason this is a declaration rather than an inference.
+ * Six diagrams call `Process_Adjudication`; **not one of them branches on the
+ * outcome** — every call activity has exactly one outgoing flow, and the
+ * called process has exactly one settled end event, so no caller could branch
+ * even if it wanted to. The three codes are therefore internal work selectors,
+ * not a value the caller reads.
+ *
+ * So the mismatch could not be found by looking at the caller's own flows:
+ * a caller asking "which side wins" and one asking "does this finding stand"
+ * have IDENTICAL shapes. Somebody has to state what the caller can act on,
+ * and then a machine can compare it.
+ *
+ * The check itself is in {@link loadProcessModel}'s descent, because it needs
+ * the called process — see there for what it refuses and what it leaves alone.
+ */
+/**
+ * `<folio:adjudication defers="caller"/>` — an adjudication whose enum the
+ * caller declares. Bean `bvuk`.
+ *
+ * Carries the same actor restriction as a `codes` adjudication, because it is
+ * one: the step is performed, a person or an agent performs it, and a
+ * mechanical actor may not. What it does not carry is the enum.
+ */
+function adjudicationDefersOf(
+  el: { id: string; $type: string },
+  decl: { defers?: string } | undefined,
+  fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
+): boolean {
+  if (!decl || decl.defers === undefined) return false;
+  if (decl.defers !== "caller") {
+    throw new Error(
+      `${el.id}: <folio:adjudication defers="${decl.defers}"/>. The only value is ` +
+        `\`caller\` — an enum can be deferred to whoever asked, and there is nowhere ` +
+        `else for it to come from.`,
+    );
+  }
+  if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
+    throw new Error(
+      `${el.id}: <folio:adjudication defers="caller"/> is only meaningful on an activity — ` +
+        `somebody performs an adjudication, and ${el.$type} is not performed.`,
+    );
+  }
+  requireAdjudicatorKinds(el.id, fulfilment);
+  return true;
+}
+
+function adjudicationAcceptsOf(
+  ext: { $type: string }[],
+  el: { id: string; $type: string },
+  decl: { codes?: string; accepts?: string } | undefined,
+): string[] | undefined {
+  if (!decl || decl.accepts === undefined) return undefined;
+  if (el.$type !== "bpmn:CallActivity") {
+    throw new Error(
+      `${el.id}: <folio:adjudication accepts="…"/> is only meaningful on a call activity — ` +
+        `it states what a CALLER can act on, and ${el.$type} calls nothing. ` +
+        `A step that makes the judgement itself declares \`codes\`.`,
+    );
+  }
+  return codeList(
+    decl.accepts,
+    el.id,
+    "accepts",
+    `A caller that can act on one answer is not consuming a judgement, and the ` +
+      `called adjudicator must offer at least two.`,
+  );
+}
+
+function adjudicationOf(
+  ext: { $type: string; codes?: string }[],
+  el: { id: string; $type: string },
+  fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
+  decl: { codes?: string; accepts?: string } | undefined,
+): { codes: string[] } | undefined {
+  if (!decl || decl.codes === undefined) return undefined;
+  if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
+    throw new Error(
+      `${el.id}: <folio:adjudication/> is only meaningful on an activity — ` +
+        `somebody performs a judgement, and ${el.$type} is not performed.`,
+    );
+  }
+  const codes = codeList(
+    decl.codes,
+    el.id,
+    "codes",
+    `A judgement needs at least two permitted answers — one is assent, and naming ` +
+      `it a judgement would give a rubber stamp a decision's authority.`,
+  );
+  requireAdjudicatorKinds(el.id, fulfilment);
+  return { codes };
+}
+
+/**
+ * Refusal 2, shared by every adjudication marker naming a PERFORMED step.
+ *
+ * Absent fulfilment is REFUSED rather than defaulted: a step that has not said
+ * who may adjudicate has not restricted anyone, and the restriction is the
+ * whole reason this process kind exists. Factored out when `defers` arrived,
+ * so a third marker cannot be added that quietly skips it.
+ */
+function requireAdjudicatorKinds(
+  elId: string,
+  fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
+): void {
+  if (fulfilment === undefined) {
+    throw new Error(
+      `${elId}: <folio:adjudication/> with no <folio:fulfilment kinds="…"/>. ` +
+        `Say who may adjudicate — an adjudication open to a mechanical actor is a rule, ` +
+        `and a rule belongs in a DMN table behind <folio:decision/>.`,
+    );
+  }
+  const forbidden = fulfilment.kinds.filter((k) => k !== "person" && k !== "agent");
+  if (forbidden.length > 0) {
+    throw new Error(
+      `${elId}: <folio:adjudication/> on a step fulfillable by ${forbidden.join(", ")}. ` +
+        `Only \`person\` and \`agent\` may adjudicate. If a mechanical actor can decide it, ` +
+        `it is computable — use <folio:decision/> and a DMN table.`,
+    );
+  }
+}
+
 function judgementReasonOf(
   ext: { $type: string; reason?: string }[],
   el: { id: string; $type: string },
@@ -566,6 +964,16 @@ interface ModdleElement {
       enforcement?: string;
       capture?: string;
       involvement?: string;
+      /** `<folio:involvement vocabulary="…"/>` on the process. */
+      vocabulary?: string;
+      /** `<folio:adjudication codes="…"/>` on an activity. */
+      codes?: string;
+      /** `<folio:adjudication code="…"/>` on a branch out of its gateway. */
+      code?: string;
+      /** `<folio:adjudication accepts="…"/>` on a call activity. */
+      accepts?: string;
+      /** `<folio:adjudication defers="caller"/>` on an adjudicating activity. */
+      defers?: string;
       relaxable?: string;
       /** `<folio:precondition>` — bean `lv3j`. */
       id?: string;
@@ -722,7 +1130,8 @@ export async function loadProcessModel(
       .filter((v) => v.$type === CONVENTION_EXT && v.ref)
       .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
-    lanes.push({ id: laneId, name: lane.name, roleRef, performerVaries, nodes: nodeIds });
+    const laneDoc = (lane as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined;
+    lanes.push({ id: laneId, name: lane.name, ...(laneDoc ? { documentation: laneDoc } : {}), roleRef, performerVaries, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);
@@ -736,6 +1145,29 @@ export async function loadProcessModel(
   const processConventions = (proc.extensionElements?.values ?? [])
     .filter((v) => v.$type === CONVENTION_EXT && v.ref)
     .map((v) => v.ref!);
+
+  // `<folio:involvement vocabulary="raci|rasci"/>` on the process — which
+  // methodology's letters this diagram is written in.
+  //
+  // THROWS on a name no vocabulary defines, the same way `folio:policy` and
+  // `folio:bean op` do. A diagram asking for letters the engine does not have
+  // must not load and quietly fall back to four, because the fallback would
+  // be indistinguishable from having chosen four.
+  //
+  // Absent means `raci`, and that default is what makes this change inert for
+  // every existing diagram: nothing already written changes meaning, and a
+  // process opts in to the fifth letter deliberately.
+  const declaredVocabulary = (proc.extensionElements?.values ?? []).find(
+    (v) => v.$type === "folio:involvement",
+  )?.vocabulary;
+  if (declaredVocabulary !== undefined && !(declaredVocabulary in INVOLVEMENT_VOCABULARIES)) {
+    throw new UnsupportedBpmn(
+      `${basename(bpmnPath)}: folio:involvement vocabulary="${declaredVocabulary}" is not a ` +
+        `declared vocabulary. Use one of: ${Object.keys(INVOLVEMENT_VOCABULARIES).join(", ")}.`,
+    );
+  }
+  const involvementVocabulary = (declaredVocabulary ?? "raci") as InvolvementVocabulary;
+  const vocabulary = INVOLVEMENT_VOCABULARIES[involvementVocabulary];
 
   const nodes = new Map<string, ProcessNode>();
   const flows = new Map<string, ProcessFlow>();
@@ -752,23 +1184,33 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      // An unrecognised `involvement` is never COERCED — a typo silently read
+      // as `informed` would put somebody on a notification list who was meant
+      // to be consulted, and the difference between those two is the whole
+      // point of the model. It is now also never dropped silently: the
+      // rejects land in `raciUnknown` and `check:raci` fails on them.
       raci: ext
         .filter((v) => v.$type === "folio:raci" && v.ref)
-        // An unrecognised `involvement` is DROPPED rather than coerced. A
-        // typo silently read as `informed` would put somebody on a
-        // notification list who was meant to be consulted, and the
-        // difference between those two is the whole point of the model.
-        // `check:raci` reports what this drops.
-        .filter((v) => (RACI_INVOLVEMENTS as readonly string[]).includes(v.involvement ?? ""))
+        .filter((v) => (vocabulary as readonly string[]).includes(v.involvement ?? ""))
         .map((v) => ({ role: v.ref!, involvement: v.involvement as RaciInvolvement })),
+      raciUnknown: ext
+        .filter((v) => v.$type === "folio:raci" && v.ref)
+        .filter((v) => !(vocabulary as readonly string[]).includes(v.involvement ?? ""))
+        .map((v) => ({ role: v.ref!, involvement: v.involvement ?? "(absent)" })),
       conventions: conventionsInForce({
         process: processConventions,
         lane: laneConventionsOf.get(el.id),
         activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
       }),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      noCallReason: noCallReasonOf(ext, el.id),
       judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
+      adjudication: adjudicationOf(ext, el, fulfilmentOf(ext, el.id), adjudicationDeclOf(ext, el.id)),
+      adjudicationAccepts: adjudicationAcceptsOf(ext, el, adjudicationDeclOf(ext, el.id)),
+      adjudicationDefers:
+        adjudicationDefersOf(el, adjudicationDeclOf(ext, el.id), fulfilmentOf(ext, el.id)) ||
+        undefined,
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
@@ -789,7 +1231,15 @@ export async function loadProcessModel(
         `${basename(bpmnPath)}: sequence flow ${el.id} does not connect two known nodes`,
       );
     }
-    flows.set(el.id, { id: el.id, name: el.name?.trim() || undefined, from, to });
+    flows.set(el.id, {
+      id: el.id,
+      name: el.name?.trim() || undefined,
+      from,
+      to,
+      adjudicationCode:
+        adjudicationDeclOf(el.extensionElements?.values ?? [], el.id ?? "(flow)", "flow")
+          ?.code?.trim() || undefined,
+    });
     nodes.get(from)!.outgoing.push(el.id);
     nodes.get(to)!.incoming.push(el.id);
   }
@@ -904,6 +1354,53 @@ export async function loadProcessModel(
     seenIds.add(p.id);
   }
 
+  // An adjudicated activity's declared codes must match the branches out of the
+  // gateway it feeds — bean `5vo9`.
+  //
+  // Without this the codes are decoration. The adjudicator step says the answers are
+  // `stands scope dispensation` and the gateway draws three branches, and
+  // nothing asserts they are the same three: two statements of one fact, free
+  // to drift, which is the failure this repository keeps paying for.
+  //
+  // The comparison is against `<folio:adjudication code="…"/>` on each branch
+  // rather than against the flow's NAME. A label is prose a reader may improve
+  // ("the finding stands"); the code is the token a recorded outcome carries,
+  // and a code that moved when somebody reworded a label would silently
+  // invalidate every record judged under the old one.
+  //
+  // ONLY the direct case is checked: the activity's single outgoing flow
+  // reaching an exclusive gateway. A judgement whose answer is recorded rather
+  // than branched is legitimate — `A_RecordEntry` is where all three of
+  // adjudication.bpmn's converge — so demanding a gateway everywhere would
+  // report a false finding on the diagram that motivated this.
+  for (const n of nodes.values()) {
+    if (n.adjudication === undefined) continue;
+    const out = n.outgoing.map((f) => flows.get(f)).filter((f) => f !== undefined);
+    if (out.length !== 1) continue;
+    const next = nodes.get(out[0]!.to);
+    if (next?.kind !== "exclusive") continue;
+    const branches = next.outgoing.map((f) => flows.get(f)?.adjudicationCode);
+    if (branches.every((c) => c === undefined)) continue; // gateway opts out entirely
+    const onBranches = [...new Set(branches.filter((c): c is string => c !== undefined))].sort();
+    const declared = [...new Set(n.adjudication.codes)].sort();
+    if (onBranches.join("\u0000") !== declared.join("\u0000")) {
+      throw new Error(
+        `${n.id}: declares codes (${declared.join(", ")}) but ${next.id}'s branches carry ` +
+          `(${onBranches.join(", ") || "none"}). A judgement's permitted answers and the branches ` +
+          `that act on them must be the same set, or a recorded outcome can name an answer the ` +
+          `process cannot take.`,
+      );
+    }
+    const unlabelled = next.outgoing.filter((f) => flows.get(f)?.adjudicationCode === undefined);
+    if (unlabelled.length > 0) {
+      throw new Error(
+        `${next.id}: branch(es) ${unlabelled.join(", ")} carry no <folio:adjudication code="…"/> ` +
+          `while their siblings do. A partly-coded gateway reads as complete — either every branch ` +
+          `names the answer that selects it, or none does.`,
+      );
+    }
+  }
+
   const startNodes = [...nodes.values()].filter((n) => n.kind === "start").map((n) => n.id);
   if (startNodes.length === 0) {
     throw new UnsupportedBpmn(`${basename(bpmnPath)}: no start event, so nothing can begin`);
@@ -929,7 +1426,9 @@ export async function loadProcessModel(
     }
     const home = index.get(node.calledElement);
     if (!home) continue;
-    children.set(node.id, await loadProcessModel(home, path));
+    const child = await loadProcessModel(home, path);
+    children.set(node.id, child);
+    checkAcceptedCodes(node, child, bpmnPath);
   }
 
   return {
@@ -937,7 +1436,9 @@ export async function loadProcessModel(
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
     dir: dirname(bpmnPath),
+    documentation: (proc as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
     enforcement,
+    involvementVocabulary,
     logCapture,
     preconditions,
     nodes,
@@ -947,6 +1448,81 @@ export async function loadProcessModel(
     decisions,
     children,
   };
+}
+
+/**
+ * A caller's `accepts` and the adjudicator's `codes` are ONE fact — bean `bvuk`.
+ *
+ * ## What it refuses, and what it deliberately does not
+ *
+ * **Refused:** a declared `accepts` that is not the called adjudicator's enum, and a
+ * declared `accepts` on a call into a process that adjudicates nothing. Both are
+ * claims a reader would act on that no longer hold.
+ *
+ * **Not refused — reported instead, by `check:workflow-refs`:** a caller that
+ * declares NOTHING. Every one of the six callers in this corpus was in that
+ * state when the attribute was added, so refusing absence would mean either
+ * failing the corpus on day one or backfilling six declarations nobody had
+ * grounds for. Four of the six ask `Process_Adjudication` a question its three
+ * QA-criterion outcomes do not obviously answer, and guessing an `accepts` for
+ * them would convert an open question into a checked-looking assertion — the
+ * `dh4f` shape pointed the wrong way. An undeclared caller is "could not
+ * determine", and that is never rendered as clean.
+ *
+ * **Not checked at all:** a call into a process no file here defines. A folio
+ * may legitimately call out, the descent above already leaves those opaque,
+ * and a refusal would be this checker reporting on something it cannot see.
+ *
+ * ## Why set equality rather than a subset
+ *
+ * A caller accepting a strict subset would be saying it can act on some of the
+ * answers the adjudicator may give — which means the others reach it and it does
+ * something undefined with them. There is no useful reading of a partial
+ * accept, so it is the same defect as a wrong one.
+ */
+function checkAcceptedCodes(
+  node: ProcessNode,
+  child: ProcessModel,
+  bpmnPath: string,
+): void {
+  if (node.adjudicationAccepts === undefined) return;
+  const adjudicators = [...child.nodes.values()].filter((n) => n.adjudication !== undefined);
+  if (adjudicators.length === 0) {
+    // A DEFERRING adjudicator gets its own message, because the fix is the
+    // opposite one. `accepts` says "I have read your enum"; there is no enum
+    // to read, and the caller is the one who has to write it.
+    const deferring = [...child.nodes.values()].filter((n) => n.adjudicationDefers);
+    if (deferring.length > 0) {
+      throw new Error(
+        `${basename(bpmnPath)}: ${node.id} declares \`accepts\`, but ${child.id}'s ` +
+          `${deferring.map((d) => d.id).join(", ")} defers its enum to the caller. ` +
+          `There is nothing to accept — declare <folio:adjudication codes="…"/> here ` +
+          `instead, and code the branches out of this step's gateway.`,
+      );
+    }
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} declares <folio:adjudication accepts="…"/> but ` +
+        `${child.id} contains no judgement. Either the called process lost its ` +
+        `<folio:adjudication codes="…"/>, or this caller is not calling an adjudication.`,
+    );
+  }
+  if (adjudicators.length > 1) {
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} calls ${child.id}, which adjudicates more than once ` +
+        `(${adjudicators.map((j) => j.id).join(", ")}). One \`accepts\` cannot say which of them ` +
+        `it answers, so the caller would look checked while naming nothing in particular.`,
+    );
+  }
+  const offered = [...new Set(adjudicators[0]!.adjudication!.codes)].sort();
+  const accepted = [...new Set(node.adjudicationAccepts)].sort();
+  if (offered.join("\u0000") !== accepted.join("\u0000")) {
+    throw new Error(
+      `${basename(bpmnPath)}: ${node.id} accepts (${accepted.join(", ")}) but ` +
+        `${child.id}'s ${adjudicators[0]!.id} may answer (${offered.join(", ")}). ` +
+        `An answer the caller cannot act on still reaches it — see bean \`bvuk\`, ` +
+        `where six callers asked one three-outcome process six different questions.`,
+    );
+  }
 }
 
 /**
@@ -1001,4 +1577,55 @@ async function loadDecisions(
 /** Whether a node is work someone does, as opposed to routing. */
 export function isActivity(node: ProcessNode): boolean {
   return node.kind === "activity";
+}
+
+/**
+ * Whether a node is a DECISION: an exclusive gateway with more than one way
+ * out. A converging exclusive gateway, a parallel fork and a parallel join
+ * decide nothing — the BPMN symbol is their whole meaning — so the
+ * documentation-completeness criteria (`gateway-documented`,
+ * `gateway-branches-named`) ask nothing of them.
+ */
+export function isDecision(node: ProcessNode): boolean {
+  return node.kind === "exclusive" && node.outgoing.length > 1;
+}
+
+/** One way out of a decision, as a reader sees it. */
+export interface DecisionBranch {
+  flowId: string;
+  /** The flow's label — the answer that selects it — if it has one. */
+  label?: string;
+  /** Id of the node the branch leads to. */
+  to: string;
+}
+
+/** The ways out of a node, in document order. */
+export function branchesOf(model: Pick<ProcessModel, "flows">, node: ProcessNode): DecisionBranch[] {
+  return node.outgoing.map((id) => {
+    const f = model.flows.get(id);
+    return { flowId: id, label: f?.name, to: f?.to ?? "" };
+  });
+}
+
+/**
+ * Branches of a decision a reader cannot tell apart: one with no label, or
+ * one whose label (case- and whitespace-insensitively) repeats a sibling's.
+ * Every branch in a repeated pair is reported, since neither one is the
+ * "right" holder of the label. Empty for a node that is not a decision.
+ */
+export function indistinctBranches(
+  model: Pick<ProcessModel, "flows">,
+  node: ProcessNode,
+): Array<DecisionBranch & { problem: "unnamed" | "duplicate" }> {
+  if (!isDecision(node)) return [];
+  const branches = branchesOf(model, node);
+  const key = (l: string): string => l.replace(/\s+/g, " ").trim().toLowerCase();
+  const seen = new Map<string, number>();
+  for (const b of branches) if (b.label) seen.set(key(b.label), (seen.get(key(b.label)) ?? 0) + 1);
+  const out: Array<DecisionBranch & { problem: "unnamed" | "duplicate" }> = [];
+  for (const b of branches) {
+    if (!b.label) out.push({ ...b, problem: "unnamed" });
+    else if ((seen.get(key(b.label)) ?? 0) > 1) out.push({ ...b, problem: "duplicate" });
+  }
+  return out;
 }

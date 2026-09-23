@@ -63,3 +63,10 @@ without a next step hands the reader a fact and a chore.
 Nothing, unless you were asked. A watch that reports every quiet interval trains
 its reader to skip it, and the one round that mattered goes with the rest.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content acquisition](../../processes/content-acquisition.html) | Route it, and watch the queue |
+

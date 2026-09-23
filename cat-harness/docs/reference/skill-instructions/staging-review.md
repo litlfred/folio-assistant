@@ -67,6 +67,7 @@ surfaces:
 | a template or include | the pages that include it | where on the page to look |
 | generated content | the page it generates | **what it was generated from** — a stale generator and a correct one look identical on the page |
 | a schema, a test, a gate | **none** | say so, and point at the diff |
+| **folio content** (block manifests and prose) | the page each block renders on | **the ChangeSet's aspect**: reworded, moved, renamed, added, removed. See below. |
 
 **Where a change is only visible after an interaction — a control behind a
 disclosure, a mode a reader turns on — say WHICH interaction.** A reviewer who
@@ -319,7 +320,12 @@ function branchToSlug(branch: string): string {
 In the CRDM requirements workflow (Phase 5: implementation), once a staging
 preview is deployed:
 
-1. **Post the staging URL** on the GitHub issue as a comment
+1. **Post the staging URL** on the GitHub issue as a comment. For a folio,
+   post the **review page** too, `STAGING/<slug>/review/`, and name it as the
+   page a reviewer opens first. The `folio-staging` workflow's PR comment
+   carries both links. The page lists every changed block, not only every
+   changed page. Posting the site root alone sends a reviewer hunting through
+   a 300-page document for a one-word edit.
 2. **Include before/after table** for every changed page
 3. **Link from the PR body** to the staging preview
 4. **Remind reviewers** that staging uses the magenta "FEATURE BRANCH" banner
@@ -331,10 +337,87 @@ review the rendered output, not just the code diff.
 
 When an author has made content changes on a feature branch:
 
-1. **List all changed files** in the feature branch vs main
-2. **Construct before/after URLs** for each changed docs page
+1. **Compute the ChangeSet**, not a file list, when the branch touches a
+   folio's `folio` graph:
+   `bun run <platform>/folio-assistant-core/schemas/changeset.ts --folio <folio dir> --base origin/main --head <branch>`.
+   It says, per block, whether it was added, removed, reworded (`prose`),
+   edited (`manifest`), `moved` or `renamed`. A file list cannot: a
+   prose-only edit changes no `.ts`, and a move changes two files that look
+   unrelated. Rank "where to start" by it. For a large document, the section
+   with the most changed blocks is where a reviewer's time goes first.
+2. **Construct before/after URLs** for each changed docs page, and for each
+   page carrying a changed block
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
+
+### Finding your way on the review page (bean `eb4l`)
+
+A 300-page review needs to know where it is, and to move in one key or one
+click. The review page has a navigation pane, beside the list on a wide
+screen and above it on a narrow one:
+
+- **Outline.** Each document's chapters and sections, in manifest order,
+  from the `outline.json` the folio's site build writes.
+  - A section with something to review is a button that moves focus to it,
+    with word badges ("2 changed, 1 comment, QA failing").
+  - Any other section links to its published page.
+  - By the owner's ruling it is **on the review page only**. The "no toc"
+    ruling for normal pages stands.
+- **Minimap.** One cell per block, in order. It is **one tab stop**: Up and
+  Down move, Home and End jump to either end, and Enter opens the block.
+  Each cell is labelled in words and marked with glyphs (Δ changed, + added,
+  ● open comments, ! QA failing), so colour is never the only signal.
+- **Where am I.** Every move announces "document › chapter › section ›
+  block" in the page's one live status line.
+
+**Keys, each with a visible button twin:**
+
+| key | button | goes to |
+|---|---|---|
+| `j` | Next | the next item |
+| `k` | Previous | the previous item |
+| `n` | Next with comments | the next block with open comments |
+| `p` | Previous with comments | the previous block with open comments |
+| `u` | Next unreviewed | the next changed block with no reviewer verdict on its CURRENT version (bean `px0t`) |
+
+**"Unreviewed" means no verdict on this version**, not "no comments". A
+block whose only verdict is on an earlier version is unreviewed, and says so
+in words ("1 verdict on an earlier version, not counted"). A build whose
+`review-comments.json` carries no verdicts says "No verdict data on this
+build" rather than treating every block as unread. Typing into a selector is never navigation.
+
+**Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
+keyboard alone. It uses no mouse, no click and no hover.
+
+### The review page, and choosing how to see a change
+
+A folio's preview carries `review/index.html`: every changed block, grouped by
+section, with its reviewer comments (the `review-comments` skill). Each
+changed block has a **"Show this change as"** selector (bean `d903`), and one
+at the top applies to every block:
+
+| renderer | shows | the default for | needs |
+|---|---|---|---|
+| **Word diff of the source** | the Markdown with removed words struck and added words marked: exactly what the author typed | any kind not listed below | the block's prose |
+| **Inline, as rendered** | the block as a reader sees it now, with the change marked in place | `prose`, `remark`, `definition`, `example` | the block's prose |
+| **Side by side** | `main` and the preview next to each other, each scrolled to the block | `table`, `figure`, `diagram`, `equation`, `simulator` | a page on either side |
+
+- **Where the data comes from.** The ChangeSet step's `--text-out` writes
+  `changeset-text.json`: the source and rendered prose of each listed block,
+  on each side that has it. With no such file, only side by side is
+  available, and the page says so.
+- **A renderer that cannot run on a block is listed, disabled, with the
+  reason.** For example, a manifest-only change has no prose to diff. If the
+  page-level choice cannot run on a block, that block falls back to one
+  that can.
+- **The page-level choice is remembered** for this viewer in
+  `localStorage`. A private window just gets the defaults.
+- **The renderers and the registry** are `cat-harness/scripts/review-renderers.ts`,
+  `cat-harness/scripts/word-diff.ts` (no diff library; about forty lines,
+  tested) and `cat-harness/schemas/diff-renderers.ts`. To add one, declare it
+  in the registry with what it needs and which kinds it defaults for, add its
+  function to `review-renderers.ts`, and add a case to the page's
+  `renderInto`.
 
 ## Staging retention
 
@@ -502,3 +585,12 @@ so a failed fetch is not evidence either way.
 Full rule and the measured failure:
 [`github-state-inspection`](github-state-inspection.md).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
+

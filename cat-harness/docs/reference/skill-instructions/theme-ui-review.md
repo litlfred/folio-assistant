@@ -89,4 +89,24 @@ Not the choice itself. Whether a sticky should be `engineer` or `library` is an
 authoring decision, and this review does not second-guess it; it asks whether
 what was chosen **renders legibly, consistently and in every declared
 language**.
+
+## Both viewports, always
+
+Owner, 2026-09-23 (issue #1023): *"need both web and mobile layouts in usability reviews"*.
+
+- Every surface is inventoried and judged at a **web** width and at a **mobile** width.
+- A review done at one width is **incomplete**, not passed.
+- The surface's wireframe, in [`wireframe-design-review`](wireframe-design-review.md), states what each layout was meant to be, so the review compares the build against an intent rather than against memory.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Post-MVP theme and UI review](../../processes/theme-ui-review.html)**.
+
+<img src="../../assets/img/workflows/theme-ui-review.svg" alt="BPMN diagram: Post-MVP theme and UI review" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Review contrast and non-colour signal |
+| [Post-MVP theme and UI review](../../processes/theme-ui-review.html) | Inventory what actually renders; Accessibility: measure, do not assert; Branding: does it read as this instance?; Languages: extracted, rendered, and RTL; Raise findings against the authoring |
+

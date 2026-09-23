@@ -585,3 +585,10 @@ uniquely was had no picture.
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Add an actor, and declare its kind; Open or close a role to an actor; Grant or revoke a permission; Retire an actor — never delete one; Audit the graph [kg:audit] |
+

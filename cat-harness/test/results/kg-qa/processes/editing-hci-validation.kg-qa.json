@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:30849a78abfd1bf297859ec4f0687d16e3768e493c0173dc0ff8e2f46d131ce1",
+  "source_hash": "sha256:3c32b6b6715bac039e600adba19ab269a82a6e0906e811fea692f1425d175a88",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,49 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_ReviewerKind",
+          "detail": "\"Judgement call?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "Gateway_EditorDecision",
+          "detail": "\"Accept, revise or discard?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
-    "n/a": 6,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 8,
     "unknown": 0
   }
 }

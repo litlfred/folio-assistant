@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "processes/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:72fc714252b1e7ac7420bdd9ea474b8571400482c8bb71155223ea9c72525c49",
+  "source_hash": "sha256:0f1462a45c48b118754534e63340d653d05299625e387af725a6be8ceb5a3804",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,60 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Drift",
+          "detail": "\"Did anything&#10;change?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/jsonld-gen-check.yml",
+          "detail": ".github/workflows/jsonld-gen-check.yml changed since cat-harness/processes/jsonld-drift-check.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 12,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/jsonld-drift-check.bpmn",
+      "code": ".github/workflows/jsonld-gen-check.yml",
+      "prose_hash": "0f1462a45c48",
+      "code_hash": "6b2acbbf2868",
+      "by": "baseline"
+    }
+  ]
 }

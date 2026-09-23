@@ -245,6 +245,11 @@ export const BlockBaseSchema = z.object({
    */
   audience: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  /**
+   * Former labels — see `BlockBase.renamedFrom` in `schemas/types.ts`.
+   * Declared here too because Zod strips what it does not know (bean `zdrf`).
+   */
+  renamedFrom: z.array(z.string().min(1)).optional(),
   foreshadows: z.array(z.string()).optional(),
   cites: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),

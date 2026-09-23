@@ -44,6 +44,7 @@
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Sweep" name="Ask, per open PR, whether its&amp;#10;HEAD has a run &amp;#8212; skipping&amp;#10;heads younger than 15 min">
+      <bpmn:documentation>Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -51,6 +52,7 @@
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Determined" name="Could we&amp;#10;tell?">
+      <bpmn:documentation>Asked of the `verdict` output of the `Sweep` step in .github/workflows/pr-checks-present.yml, which runs `check:prs-have-runs --min-age-minutes 15`. Exit 0 is clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is reclassified as could-not-determine, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `pr-no-checks` label.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -59,6 +61,7 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
+      <bpmn:documentation>Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -66,11 +69,13 @@
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Finding" name="Any head&amp;#10;with no run?">
+      <bpmn:documentation>Asked of the same `verdict`. `none` is verdict == 'clean': every open PR's head older than 15 minutes has a run, and the tracking issue is closed. `one or more` is verdict == 'findings': the one tracking issue is opened or edited in place, and the workflow also comments once on each affected pull request.</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
+      <bpmn:documentation>Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -81,6 +86,7 @@
       <bpmn:incoming>Flow_6</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
+      <bpmn:documentation>Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -88,6 +94,7 @@
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Comment" name="Comment ONCE per&amp;#10;(PR, head sha)">
+      <bpmn:documentation>Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="issue-working"/>
       </bpmn:extensionElements>

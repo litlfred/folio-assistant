@@ -197,3 +197,15 @@ If no fingerprint discriminates, say so and pin the newest release anyway; an
 unverified pin is still strictly better than an unpinned dependency, and
 "could not determine" written down is worth more than a confident guess.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Adopting an upstream version bump](../../processes/upstream-version-adoption.html)**.
+
+<img src="../../assets/img/workflows/upstream-version-adoption.svg" alt="BPMN diagram: Adopting an upstream version bump" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Watching a pinned upstream dependency](../../processes/upstream-pin-watch.html) | Read the pin registry upstream-pins.json; List upstream releases and compare to the pin; Close the tracking issue; Open or EDIT the one tracking issue; Pick up the stale pin claim a bean; Adopt the version bump (calls a sub-process) |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Scope the delta pinned → candidate; Impact analysis what of ours binds it; Record the hold or the decline |
+

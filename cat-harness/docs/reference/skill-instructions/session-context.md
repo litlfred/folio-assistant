@@ -130,3 +130,10 @@ writes one. The state machine is bean `3nfv`, and declaring a directory before
 anything fills it is the defect where a consumer scans nothing and reports a
 clean run.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Session state machine](../../processes/session-state-machine.html) | Establish who is acting; Open the session record; Refresh `updatedAt` only; Write what changed; Close the session |
+

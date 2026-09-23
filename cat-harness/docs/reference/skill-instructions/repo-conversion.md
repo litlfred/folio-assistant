@@ -131,3 +131,10 @@ hand:
 6. **Treating the scan as ingestion.** It reads; it never writes. Ingestion is
    a separate process with its own diagram and its own gate.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Getting started](../../processes/getting-started.html) | Scan the repo for content worth importing; Import what, where, and who does it; Create the repository |
+

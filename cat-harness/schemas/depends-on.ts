@@ -1,0 +1,225 @@
+/**
+ * depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it
+ * cannot fill.
+ *
+ * > `kg-export` emits, per publishable instance, `{packageId, version, uri}`
+ * > per dependency. An external consumer then reads this instance's dependency
+ * > set the same way it reads a FHIR IG's, which is what "align downstream"
+ * > means in practice.
+ *
+ * Three fields, deliberately FHIR's and not this repository's: `packageId`,
+ * `version`, `uri` are what `ImplementationGuide.dependsOn` carries, and the
+ * whole purpose of the record is that a consumer already knows how to read it.
+ * Renaming them to this repository's spellings would mean a downstream
+ * translating a structure it can otherwise consume directly — and `qa-report.ts`
+ * already settled that argument the same way, keeping upstream's snake_case.
+ *
+ * ## A dependency that cannot be expressed is REPORTED, never dropped
+ *
+ * Most instances here are not publishable and §3.1 says that is correct, so
+ * most edges out of a publishable instance will be to something that has no
+ * `id` and no `version`. Emitting `dependsOn: []` in that case would state
+ * that the instance depends on nothing, which is false. Emitting a partial
+ * record with an empty `version` would be worse: a consumer resolves it and
+ * fails. So each such edge becomes a {@link DependsOnGap} carrying WHICH of
+ * the reasons applies, and a reader can tell "depends on nothing" from
+ * "depends on four things none of which is publishable".
+ *
+ * That is the `dh4f` rule applied to an edge rather than a directory, and the
+ * distinction it preserves is exactly the one §3.1 spent a third state on:
+ * `undecided` (nobody said) and `internal` (somebody said no) are different
+ * gaps with different remedies.
+ *
+ * @graphNode schema
+ * @module schemas/depends-on
+ */
+
+import { resolve } from "node:path";
+
+import { instanceRootsIn, readDeclaration, siblingScopeFor } from "./cat-harness";
+import { dependenciesFromNeeds } from "./harness-config";
+
+/**
+ * One `ImplementationGuide.dependsOn` entry.
+ *
+ * Every field is required and none may be empty. A record exists only when all
+ * three are known; anything less is a {@link DependsOnGap}.
+ */
+export interface DependsOnRecord {
+  /** The dependency's `id` — reverse-DNS, the identity a consumer resolves. */
+  packageId: string;
+  /** Its exact `version`. Never a range, never a SHA (§3.3). */
+  version: string;
+  /** Its `canonicalUrl`, which plays FHIR's `uri` role (§3.2). */
+  uri: string;
+}
+
+/**
+ * Why an edge could not become a record.
+ *
+ * The four reasons are not interchangeable and the remedy differs for each,
+ * which is the whole reason this is an enum rather than a boolean:
+ *
+ * | reason | what happened | remedy |
+ * |---|---|---|
+ * | `undecided` | the dependency has not declared `publishable` | the owner declares it (§6 Q1) |
+ * | `internal` | it declared `publishable: false` | none — this is a correct, settled state |
+ * | `unresolved` | the name matches no instance in this checkout | it is external, or the name is misspelled |
+ * | `unreadable` | its declaration did not parse | fix the declaration |
+ */
+export type DependsOnGapReason = "undecided" | "internal" | "unresolved" | "unreadable";
+
+export interface DependsOnGap {
+  /** The dependency's declared name, which is all an unresolved edge has. */
+  name: string;
+  reason: DependsOnGapReason;
+  detail: string;
+}
+
+export interface DependsOnExport {
+  /** Emitted only when the exporting instance is itself publishable. */
+  records: DependsOnRecord[];
+  gaps: DependsOnGap[];
+  /**
+   * Why there are no records, when the answer is not "it has no dependencies".
+   *
+   * Present exactly when `records` is empty for a reason other than an empty
+   * dependency set — the same contract `sourceCommitUnavailable` already has
+   * in the export, and for the same reason: a consumer never has to infer why
+   * a field is missing.
+   */
+  unavailable?: string;
+}
+
+const GAP_DETAIL: Record<DependsOnGapReason, string> = {
+  undecided:
+    "has not declared `publishable`, so it has no id or version to depend on — undecided, never false (instance-versioning.md §3.1)",
+  internal:
+    "declared `publishable: false`; nothing outside this repository may depend on it, so no record can name it",
+  unresolved:
+    "matches no instance in this checkout — it is external to it, or the name is misspelled, and those are not the same",
+  unreadable: "its declaration did not parse, so its publishability is unknown rather than undecided",
+};
+
+/**
+ * Every dependency edge out of `instanceRoot`, by name.
+ *
+ * Read from `needs` via {@link dependenciesFromNeeds}, which is where the
+ * stack is stated — *"`needs` states the stack, the config states what a name
+ * cannot carry"*. A name it could not resolve comes back in `unresolved` and
+ * becomes a gap here rather than vanishing.
+ */
+function edgesOf(instanceRoot: string): { names: string[]; unresolved: string[] } {
+  const { dependencies, unresolved } = dependenciesFromNeeds(instanceRoot);
+  return { names: dependencies.map((d) => d.name), unresolved };
+}
+
+/**
+ * Build §3.4's record set for one instance.
+ *
+ * Returns `unavailable` rather than an empty `records` whenever the emptiness
+ * means something other than "this instance depends on nothing".
+ */
+export function dependsOnFor(instanceRoot: string): DependsOnExport {
+  const abs = resolve(instanceRoot);
+
+  let self;
+  try {
+    self = readDeclaration(abs);
+  } catch (error) {
+    return { records: [], gaps: [], unavailable: `this instance's own declaration did not parse: ${String(error).slice(0, 160)}` };
+  }
+  if (self === undefined) {
+    return { records: [], gaps: [], unavailable: "no declaration found at this instance root" };
+  }
+
+  // §3.4 is "per publishable instance". An undecided instance emitting a
+  // dependency block would be asserting a published dependency set for
+  // something nobody has said is published — the ceremony §3.1 is written
+  // against. So the block is withheld, and WHY is stated.
+  if (self.publishable !== true) {
+    return {
+      records: [],
+      gaps: [],
+      unavailable:
+        self.publishable === false
+          ? "this instance declared `publishable: false`; a dependsOn record is for consumers outside this repository, and it has none"
+          : "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
+    };
+  }
+
+  const { names, unresolved } = edgesOf(abs);
+  const records: DependsOnRecord[] = [];
+  const gaps: DependsOnGap[] = unresolved.map((name) => ({
+    name,
+    reason: "unresolved" as const,
+    detail: GAP_DETAIL.unresolved,
+  }));
+
+  const byName = new Map<string, string>();
+  // `siblingScopeFor`, not `repoRootFor` — see its docblock. This is a lookup
+  // of siblings by name, and for the instance declared at the repository root
+  // `dirname` looks outside the checkout and finds none of them.
+  for (const root of instanceRootsIn(siblingScopeFor(abs))) {
+    try {
+      const n = readDeclaration(root)?.name;
+      if (n !== undefined) byName.set(n, root);
+    } catch {
+      // Unreadable siblings are caught below, per edge, where the name that
+      // wanted them is known and can be named in the gap.
+    }
+  }
+
+  for (const name of names) {
+    const root = byName.get(name);
+    if (root === undefined) {
+      gaps.push({ name, reason: "unresolved", detail: GAP_DETAIL.unresolved });
+      continue;
+    }
+    let dep;
+    try {
+      dep = readDeclaration(root);
+    } catch {
+      gaps.push({ name, reason: "unreadable", detail: GAP_DETAIL.unreadable });
+      continue;
+    }
+    if (dep === undefined) {
+      gaps.push({ name, reason: "unreadable", detail: GAP_DETAIL.unreadable });
+      continue;
+    }
+    if (dep.publishable !== true) {
+      gaps.push({
+        name,
+        reason: dep.publishable === false ? "internal" : "undecided",
+        detail: dep.publishable === false ? GAP_DETAIL.internal : GAP_DETAIL.undecided,
+      });
+      continue;
+    }
+    // The schema refuses `publishable: true` without all three, so reaching
+    // here with one missing means the declaration bypassed it. Treated as a
+    // gap rather than trusted into a record with an empty field: a consumer
+    // resolving `""` fails at a distance from the cause.
+    if (dep.id === undefined || dep.version === undefined || dep.canonicalUrl === undefined) {
+      gaps.push({
+        name,
+        reason: "unreadable",
+        detail:
+          "declares `publishable: true` but is missing id, version or canonicalUrl — the schema refuses this, so the declaration was not validated",
+      });
+      continue;
+    }
+    records.push({ packageId: dep.id, version: dep.version, uri: dep.canonicalUrl });
+  }
+
+  if (records.length === 0) {
+    return {
+      records,
+      gaps,
+      unavailable:
+        gaps.length === 0
+          ? undefined // genuinely depends on nothing — a determined empty
+          : `${gaps.length} dependency edge(s), none expressible as a record — see gaps`,
+    };
+  }
+  return { records, gaps };
+}

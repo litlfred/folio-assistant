@@ -5,7 +5,7 @@
     "id": "Process_UpstreamAdoption",
     "path": "processes/upstream-version-adoption.bpmn"
   },
-  "source_hash": "sha256:b36a40fa20759b9132d53e546a8d51c3e86cb84ece3a05582e4d06ebc06b6785",
+  "source_hash": "sha256:8897ca36408467962523447a10080a5dfd5a1f58cd8f4d601ffd22230b4b0c12",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,49 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Findings",
+          "detail": "\"Findings we can fix?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Adopt",
+          "detail": "\"Adopt?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 0,
-    "n/a": 6,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 8,
     "unknown": 0
   }
 }

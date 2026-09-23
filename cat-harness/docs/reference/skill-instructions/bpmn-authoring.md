@@ -92,3 +92,11 @@ FHIR Shorthand, so the BPMN is a **source artefact** rather than documentation
 of one. Author it knowing it will be transformed: names and ids you choose here
 appear in generated FSH. `smart-base-tools` has the mechanics.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phase 2: Map current workflow (BPA) |
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Business processes · BPMN 2.0 |
+

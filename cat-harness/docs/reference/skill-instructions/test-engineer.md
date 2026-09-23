@@ -25,7 +25,7 @@ Tests are TypeScript using Bun's built-in test runner (`bun:test`).
 | `scripts/tests/helpers.ts` | Shared helpers: paths, project discovery, parsing |
 | `scripts/tests/report.ts` | Test report generator (outputs `TestReport` JSON) |
 | `scripts/tests/run-tests.sh` | Shell entry point (delegates to `bun test`) |
-| `schemas/test-types.ts` | TypeScript types for test definitions, results, reports, coverage |
+| `schemas/formalization-types.ts` | TypeScript types for test definitions, results, reports, coverage |
 | `content/schema/` | Content-object types, Zod schemas, builder functions |
 | `content/pipeline/validate.ts` | Content validation pipeline (schema + constraints + AST) |
 | `content/pipeline/render.ts` | Block → output rendering + AST validation |
@@ -81,7 +81,7 @@ describe("Feature under test", () => {
   contracts (JSON validity, required fields, file existence) should fail.
 - **Comment the failure point**: Each test should document what bug or
   failure it prevents.
-- **Types from `schemas/test-types.ts`**: Use `TestResult`, `TestReport`,
+- **Types from `schemas/formalization-types.ts`**: Use `TestResult`, `TestReport`,
   `CoverageEntry` etc. when generating structured output.
 
 ### Adding a new formal-layer project
@@ -146,7 +146,7 @@ bun run report.ts --out test-report.json
 ## Report output
 
 `bun run report.ts` outputs JSON conforming to `TestReport` in
-`schemas/test-types.ts`. This report is consumed by:
+`schemas/formalization-types.ts`. This report is consumed by:
 
 1. **CI pipeline** — build status, pass/fail gates
 2. **Publication pipeline** — coverage statistics for output artifacts

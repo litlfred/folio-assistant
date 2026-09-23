@@ -192,11 +192,32 @@ describe("declared and defaulted are different facts", () => {
     expect(rows.some((r) => r.enforcementDeclared)).toBe(true);
   });
 
-  it("a process whose file declares a policy is marked declared", () => {
+  it("a process whose file declares an enforcement VALUE is marked declared", () => {
     for (const r of rows) {
       const declares = /<folio:policy[^>]*\benforcement\s*=/.test(readFileSync(join(REPO, r.file), "utf-8"));
       expect(r.enforcementDeclared, `${r.file}`).toBe(declares);
     }
+  });
+
+  // This test's NAME said "declares a policy" until 2026-09-22 while its
+  // assertion read the enforcement value — the same two-readings-of-one-word
+  // defect the module doc now carries, restated one layer in (bean `osyc`).
+  // The two oracles are not interchangeable, so the relation between them is
+  // asserted rather than left to whichever sentence a reader meets first.
+  it("declaring a value implies carrying an element, but not the reverse", () => {
+    const element = (f: string) => /<folio:policy\b/.test(readFileSync(join(REPO, f), "utf-8"));
+
+    // Subset: every file the page calls `declared` has a policy element.
+    for (const r of rows.filter((x) => x.enforcementDeclared)) {
+      expect(element(r.file), `${r.file} is marked declared`).toBe(true);
+    }
+
+    // Proper subset: the corpus contains at least one element carrying no
+    // value. If this ever goes empty the two oracles agree by accident, and
+    // the distinction above stops being load-bearing — which is worth being
+    // told about, because the doc explaining it would then read as pedantry.
+    const elementOnly = rows.filter((r) => !r.enforcementDeclared && element(r.file));
+    expect(elementOnly.length, "policy elements carrying no enforcement").toBeGreaterThan(0);
   });
 });
 

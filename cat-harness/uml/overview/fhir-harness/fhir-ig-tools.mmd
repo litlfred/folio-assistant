@@ -1,0 +1,27 @@
+classDiagram
+  direction TB
+  namespace fhir_harness__fhir_ig_tools {
+    class fhir_harness_fhir_ig_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class fhir_harness_fhir_ig_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      alternativeTo [0..*] string[]
+      selection [0..1] object
+      requires [0..1] object
+      maintains [0..*] Maintain[]
+    }
+  }
+  fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
+  cssClass "fhir_harness_fhir_ig_tools_Maintain" fa_uml_kind_tools
+  cssClass "fhir_harness_fhir_ig_tools_ToolDefinition" fa_uml_kind_tools

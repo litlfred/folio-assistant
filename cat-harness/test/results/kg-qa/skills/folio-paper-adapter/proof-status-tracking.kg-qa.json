@@ -22,12 +22,30 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 6,
     "fail": 0,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/proof-status-tracking.md",
+      "code": "cat-harness/skills/folio-paper-adapter/proof-status-tracking.ts",
+      "prose_hash": "2c5d866a0ebb",
+      "code_hash": "f8886492cf7a",
+      "by": "baseline"
+    }
+  ]
 }

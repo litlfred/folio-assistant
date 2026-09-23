@@ -27,12 +27,30 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
+    "pass": 4,
     "fail": 1,
-    "n/a": 0,
+    "n/a": 1,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/paper-importer.md",
+      "code": "cat-harness/skills/folio-paper-adapter/paper-importer.ts",
+      "prose_hash": "ad1bfa9982a0",
+      "code_hash": "fa3f5ca58029",
+      "by": "baseline"
+    }
+  ]
 }

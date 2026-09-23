@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:c0c8f333c0879097a5b3494969d0075bef5d47846051e3039bc6ab149bed7795",
+  "source_hash": "sha256:7735b8cefaf929b6d76c6ab9626d6eae7b2eb83fb28604255652ddf512a86cd0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,12 +87,50 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 13,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/pr-checks-present.bpmn",
+      "code": ".github/workflows/pr-checks-present.yml",
+      "prose_hash": "7735b8cefaf9",
+      "code_hash": "221e1fe18e43",
+      "by": "baseline"
+    }
+  ]
 }

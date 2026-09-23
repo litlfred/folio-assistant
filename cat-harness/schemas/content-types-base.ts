@@ -62,7 +62,7 @@
  *
  * `smart-base` depends on core, so core recognising a DAK means core importing
  * downstream. The comment was right about the destination and wrong that it
- * could wait: recognising `dak.json` needs `DAK_TYPE`, and reaching for it is
+ * could wait: recognising `dak.config.json` needs `DAK_TYPE`, and reaching for it is
  * the edge. They live in {@link module:schemas/dak-content-type}, registered by
  * the layer that owns the model — exactly as `folio-graph-kind.ts` registers
  * `folio` rather than the harness declaring a kind it cannot serve.
@@ -147,6 +147,49 @@ function folioMarkerFilename(repoRoot: string): string | undefined {
  * Dropping it would under-report what the repository says about itself, which
  * is the third-state rule this file already applies to `sushi-config.yaml`.
  */
+/**
+ * `.config.json` filenames that a content type OTHER than `harness`/`folio`
+ * claims, so the fallback above cannot report one of them as a harness marker.
+ *
+ * ## Why this exists, 2026-09-22
+ *
+ * The fallback's premise was written down as *"`.config.json` names a harness
+ * artefact and nothing else"*. The owner's rename of the DAK marker from
+ * `dak.json` to `dak.config.json` — for consistency with `<name>.config.json`,
+ * and legitimate because the DAK type is ours (bean `cz17`) — **falsified that
+ * premise**, and the repository's own tests caught it: a DAK repository was
+ * reported as `["dak", "harness", "sushi"]` where it is `["dak", "sushi"]`.
+ *
+ * ## Derived, never listed
+ *
+ * It reads the registry rather than naming `dak.config.json`. A literal here
+ * would have to be edited every time a type takes a config-suffixed marker,
+ * and the edit that did not happen is invisible: the fallback would go on
+ * asserting a harness membership nobody declared, and nothing would fail.
+ *
+ * This layer therefore stays ignorant of the DAK type, which is the split this
+ * module's header insists on — `dak-content-type.ts` registers it, and all
+ * this reads is that SOME type claimed the name.
+ *
+ * `harness` is excluded because it is this function's own caller, and `folio`
+ * because its marker IS `<name>.config.json` — the two memberships are
+ * deliberately asserted off one file.
+ */
+function configSuffixedMarkersOfOtherTypes(): ReadonlySet<string> {
+  const out = new Set<string>();
+  for (const [id, def] of defaultContentTypes.entries()) {
+    if (id === "harness" || id === "folio") continue;
+    // Only a LITERAL filename can be excluded. A computed one is a function of
+    // the repository, so asking it here would mean resolving every type's
+    // marker against a root this function has not been given — and a function
+    // that returned a name for a DIFFERENT root would exclude the wrong file.
+    if (typeof def.filename === "string" && def.filename.endsWith(CONFIG_SUFFIX)) {
+      out.add(def.filename);
+    }
+  }
+  return out;
+}
+
 function harnessMarkerFilename(repoRoot: string): string | undefined {
   let found: string | undefined;
   try {
@@ -167,8 +210,12 @@ function harnessMarkerFilename(repoRoot: string): string | undefined {
     // under the same suffix because it additionally requires the stem to equal
     // the declared `name`; a bare suffix filter has no such guard, which is
     // exactly why it cannot use the bare suffix.
+    const owned = configSuffixedMarkersOfOtherTypes();
     return readdirSync(repoRoot)
-      .filter((e) => e.endsWith(CONFIG_SUFFIX) && e.length > CONFIG_SUFFIX.length)
+      .filter(
+        (e) =>
+          e.endsWith(CONFIG_SUFFIX) && e.length > CONFIG_SUFFIX.length && !owned.has(e),
+      )
       .sort()[0];
   } catch {
     return undefined;

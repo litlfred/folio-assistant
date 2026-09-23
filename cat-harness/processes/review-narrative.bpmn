@@ -56,14 +56,14 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
       <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:task id="Task_AdjudicateVoice" name="Adjudicate the voice findings">
+    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_CriterionAdjudication" name="Adjudicate the voice findings">
       <bpmn:documentation>
         Three outcomes, all legitimate: the register is wrong for this genre;
         the criterion does not belong in this genre and should carry `profiles`;
         or the block is a stated exception and a reviewer entry records why.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/></bpmn:extensionElements>
-    </bpmn:task>
+      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
+    </bpmn:callActivity>
 
     <bpmn:callActivity id="Call_VoiceOverlay" name="Voice overlay review" calledElement="Process_VoiceReview">
       <bpmn:documentation>Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register.

@@ -1,0 +1,66 @@
+---
+doc_id: arxiv-2312.07755v1
+doc_title: "Designing with Language: Wireframing UI Design Intent with Generative Large"
+section_id: sec-000-1-introduction
+section_title: "Introduction"
+section_number: 1
+pages: 1-3
+source_pdf: feng-2023-designing-with-language.pdf
+source_sha256: 663850eb153e604d
+toc_source: outline
+---
+User Interface (UI) plays a crucial role in today’s desktop software, mobile applications, and online websites. It serves as
+a visual bridge between a software application and end-users through which they can interact with each other [30, 33].
+Good UI designs are essential to the success of a software application and can gain loyalty from the software users [19].
+However, designing a good UI can be challenging, even for experienced designers. On the one hand, designers need to
+strive for creative ideas and follow many design rules and principles, such as fluent interactivity, universal usability,
+clear readability, aesthetic appearance, and consistent styles [24, 35]. On the other hand, designers need to rapidly sketch
+the designs to validate the prototypes, solicit higher-level user feedback, and figure out flaws in the early stage [18]. For
+this purpose, one common and effective way is wireframing the design intent.
+1
+arXiv:2312.07755v1  [cs.HC]  12 Dec 2023
+Feng et al.
+UI wireframe is a basic representation of design intent with a rough sketch, intentionally devoid of colors, graphics,
+and stylized fonts (see Fig. 2). This is a quick and cheap way to provide a clear overview of structure, functionality,
+layout, information flow, and possible user behavior when interacting with the app [49]. Typically, designers start from
+low-fidelity wireframes, the initial visual representation of their ideas with simple layouts and placeholder elements.
+Landay [48] introduces the first interactive tool SILK for low-fidelity UI wireframing. Huang et al. [42] propose Swire, a
+system that leverages a deep-learning model to search for similar UI screens from a low-fidelity wireframe, to help
+designers gain inspiration. Many studies [15, 25, 51, 63, 68, 69] have attempted to develop intelligence tools to support
+low-fidelity wireframes.
+However, low-fidelity wireframes can sometimes be too rudimentary to provide an accurate representation of the
+final product and may need to be modified to account for real-world constraints [76]. For example, if an original
+low-fidelity wireframe envisions images and text arranged side by side, but the actual image is too large or the text is
+too lengthy, it would then need to be altered to a top-to-bottom layout. To address this, designers refine low-fidelity
+wireframes into mid-fidelity wireframes by incorporating more details, such as relevant written content, interactive
+semantic icons, and other elements. With higher levels of detail, mid-fidelity wireframes allow for more authentic and
+complex interactions to be explored and can lead to a better final UI, but also require more time and effort to create.
+None of the previous works have focused on streamlining the design process for mid-fidelity wireframes.
+In this study, we introduce WireGen, a novel solution to expedite the UI design process by generating mid-fidelity
+wireframes from high-level design intent descriptions. To achieve this, we utilize the stunning generative Large Language
+Models (LLMs) that inherit billions of web resources, such as web DOMs, semantic relationship, etc. Since the LLMs are
+not specifically designed to generate UI wireframes, we fine-tune the LLMs with thousands of UI screens and their
+corresponding view hierarchies from Rico [25] to help recognize the patterns of the UIs. With this fine-tuned LLMs,
+we prompt it in the same way to create innovative wireframes for the test design intent descriptions. However, UI
+wireframe design is not a straightforward task, it is subject to design rules, guidelines, and knowledge to match the
+psychology of human perception, which machines may not be aware of. To ensure the generated wireframes meet
+these standards, we further employ post-processing methods to transform raw generations to beautiful UI wireframes,
+including adding semantic icons, refining text typography, and adhering to UI guidelines.
+To evaluate the performance of our LLMs WireGen, we first conduct experiments under the specific UI textual
+descriptions from Screen2Words [75]. The results show that our fine-tuned WireGen achieves the best performance
+(77.5% significantly better generations) compared with two widely-used large language in-context learning baselines.
+Our WireGen also generates on average 84.5% significantly better UI wireframes, which outperforms three ablation
+models. As there are many ways to describe a design intent in different words, we further conduct a user study with
+five professional designers to gain insight into the usefulness of our WireGen. The study reveals that designers respond
+positively to the mid-fidelity wireframes generated by our tool and provide valuable feedback. Lastly, we discuss the
+limitations and the implications of WireGen. Altogether, our paper makes the following contributions:
+• To the best of our knowledge, this is the first study that investigates the collaboration between humans and AI
+for creating mid-fidelity wireframes.
+• We present WireGen, that harnesses the power of Large Language Models (LLMs) to generate mid-fidelity
+wireframes from a simple description of the design intention.
+• The experiments and user study demonstrate the effectiveness and usefulness of WireGen in aiding designers
+with UI design.
+2
+Wireframing UI Design Intent with Generative Large Language Models
+Fig. 2. Examples of a low-fidelity wireframe, mid-fidelity UI wireframe, and final UI.
+2

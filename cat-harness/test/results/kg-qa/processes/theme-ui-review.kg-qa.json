@@ -5,7 +5,7 @@
     "id": "Process_ThemeUIReview",
     "path": "processes/theme-ui-review.bpmn"
   },
-  "source_hash": "sha256:c1a4afe345dd397d2769d2d6d5574d1ada8284a4b5fa3417b2fe24bdc82683da",
+  "source_hash": "sha256:ae102fad729a9dc33a0e35be723e6d715f16ddcbc41574734c2e492ec3a72789",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,12 +87,45 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Findings",
+          "detail": "\"Findings?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 10,
+    "fail": 2,
+    "n/a": 10,
     "unknown": 0
   }
 }

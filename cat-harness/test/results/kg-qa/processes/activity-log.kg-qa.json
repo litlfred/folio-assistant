@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "processes/activity-log.bpmn"
   },
-  "source_hash": "sha256:a8d86554c03408f38ee398f89d468baeac0fda4bc5eecef6777776aebb99876b",
+  "source_hash": "sha256:51418ba536e38dbe6778bb7c6cd68af4ea5c602db5327ce4cd5527c07ed8c93e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -95,12 +95,49 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Capture",
+          "detail": "\"Capture enabled?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "Gateway_EmptyScope",
+          "detail": "\"One entry or all?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 10,
+    "fail": 2,
+    "n/a": 10,
     "unknown": 0
   }
 }

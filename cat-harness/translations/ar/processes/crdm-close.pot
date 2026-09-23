@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-close\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.403Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.257Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,72 +14,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: methodologies/crdm/processes/crdm-close.bpmn:19
+#: processes/crdm-close.bpmn:19
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:15
+#: processes/crdm-close.bpmn:15
 #. Diagram label
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:37
+#: processes/crdm-close.bpmn:40
 #. Diagram label
 msgid "Close issue ONLY on BA authorisation"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:33
+#: processes/crdm-close.bpmn:35
 #. Diagram label
 msgid "Confirm all criteria met"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:10
+#: processes/crdm-close.bpmn:10
 #. Diagram label
 msgid "CRDM close-out"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:31
+#: processes/crdm-close.bpmn:31
 #. Diagram label
 msgid "Feature sign-off on issue"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:20
+#: processes/crdm-close.bpmn:20
 #. Diagram element documentation
 msgid "Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:30
+#: processes/crdm-close.bpmn:30
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:48
+#: processes/crdm-close.bpmn:51
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:39
+#: processes/crdm-close.bpmn:42
 #. Diagram element documentation
 msgid "Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:24
+#: processes/crdm-close.bpmn:24
 #. Diagram label
 msgid "Stakeholders"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:16
+#: processes/crdm-close.bpmn:33
+#. Diagram element documentation
+msgid "Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it."
+msgstr ""
+
+#: processes/crdm-close.bpmn:16
 #. Diagram element documentation
 msgid "Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:25
+#: processes/crdm-close.bpmn:37
+#. Diagram element documentation
+msgid "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so."
+msgstr ""
+
+#: processes/crdm-close.bpmn:25
 #. Diagram element documentation
 msgid "The first of three sequential checks this diagram exists to enforce in order — sign off, confirm, close, never any other sequence — and what is being signed off here is the delivered FEATURE on the issue, not the requirement model that crdm-requirements-definition.bpmn's Lane_Stakeholders approved earlier in the process."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-close.bpmn:13
+#: processes/crdm-close.bpmn:13
 #. Diagram element documentation
 msgid "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion."
 msgstr ""

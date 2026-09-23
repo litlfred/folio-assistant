@@ -5,7 +5,7 @@
     "id": "Process_ExtractStructure",
     "path": "processes/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:bf098843c9812d8358b2abd0725469c207700c2d4233e2036b7bc464d3f05be1",
+  "source_hash": "sha256:df064d3b797a40b053b32fa51ff6d6a4a57fc40ac9e958e41807247b772b51aa",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,45 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_HasText",
+          "detail": "\"Embedded text layer?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
-    "n/a": 7,
+    "pass": 12,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }

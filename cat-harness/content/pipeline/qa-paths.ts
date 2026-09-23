@@ -44,8 +44,10 @@
  *
  * @module content/pipeline/qa-paths
  */
-import { join, relative } from "node:path";
-import { existsSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
+import { existsSync, statSync } from "node:fs";
+
+import { findDeclarationFile } from "../../schemas/cat-harness";
 
 /** Where block verdicts live now, relative to the instance root. */
 export const BLOCK_QA_RESULTS_DIR = join("test", "results", "block-qa");
@@ -191,4 +193,53 @@ export function blockOfQaPath(repoRoot: string, qaPath: string): string | undefi
   const rel = relative(base, qaPath);
   if (rel.startsWith("..") || !rel.endsWith(BLOCK_QA_SUFFIX)) return undefined;
   return join(repoRoot, rel.slice(0, -BLOCK_QA_SUFFIX.length) + ".ts");
+}
+
+// ── The sweep's anchor ───────────────────────────────────────────
+
+/**
+ * Root of the CONTENT repo that owns the swept blocks, discovered by
+ * walking up from the sweep target until a directory containing `.git`
+ * (a dir in a normal checkout, a file in a git worktree) or its own
+ * instance declaration (`<name>.json`, `findDeclarationFile`) is found.
+ *
+ * Sidecar `paths` must be anchored HERE, not at the platform checkout:
+ * anchoring there bakes the content
+ * checkout's *directory name* into every recorded path
+ * (`../qou/content/...`), which poisons sidecars when the sweep runs
+ * against a git worktree (`../agent-<id>/content/...` — dangling once
+ * the worktree is pruned; observed live in qou PR #3604). Paths
+ * relative to the content repo root (`content/...`) are invariant
+ * across checkout names, worktrees, and invocation cwd.
+ *
+ * `fallback` (the platform checkout, in the sweep) is returned only when
+ * nothing above the target qualifies. The platform checkout remains the
+ * right anchor for the *checker script* hashes and script sidecars, which
+ * genuinely live there.
+ */
+export function findContentRepoRoot(startAbs: string, fallback: string): string {
+  // The sweep target may be a block-path PREFIX (`.../<block>` with no
+  // extension) rather than an existing file or directory — statSync on
+  // it would throw ENOENT. Walk up from the nearest existing directory.
+  let dir = existsSync(startAbs) && statSync(startAbs).isDirectory()
+    ? startAbs
+    : dirname(startAbs);
+  while (true) {
+    // THIS directory declares an instance, or holds `.git`. Not
+    // `resolveHarnessConfigPath(dir)`: that climbs to ancestors itself, so it
+    // succeeded at the very first directory tried whenever any ancestor had a
+    // config, and a sweep of `folio/` anchored at `folio/`. Its verdicts then
+    // landed at `folio/test/results/block-qa/…`, where `blockQaPath` (relative
+    // to the instance root) never looks. Bean `s3p2`, owner ruling 2026-09-23.
+    if (existsSync(join(dir, ".git")) || findDeclarationFile(dir) !== undefined) {
+      return dir;
+    }
+    const parent = dirname(dir);
+    if (parent === dir) {
+      // Fell off the filesystem root: fall back to the legacy anchor so
+      // the sweep still runs (paths then match the pre-fix behaviour).
+      return fallback;
+    }
+    dir = parent;
+  }
 }

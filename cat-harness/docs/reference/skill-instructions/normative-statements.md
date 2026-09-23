@@ -90,3 +90,10 @@ If you are choosing between waiting for that kind and writing the folio: write
 the folio. A `prose` block converts to a `recommendation` block by changing
 one builder call.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 4 · Author blocks |
+

@@ -97,3 +97,10 @@ lives in the **folio repo**, as content. This platform holds the formalism.
 If you are about to add a domain constant or a subject-specific rule to
 folio-assistant, you are in the wrong repository.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 4 · Author blocks |
+

@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-09-21T10:29:09Z
+updated_at: 2026-09-22T18:54:19Z
 parent: folio-assistant-ahvw
 ---
 
@@ -218,3 +218,80 @@ stdin, and hung. Fixed, with the reason at the call site.
 - [ ] The owner's four `qou` items are theirs: **this session works
       folio-assistant only, on their instruction, and has no `qou` access**,
       so no bean could be left there. Recorded here instead
+
+---
+
+## 2026-09-22 — the sweep now asks for it, and the check was run live
+
+### The remaining box, and why it could not be "wire in a fetch"
+
+`session-start-coord-sweep.sh` gains **§"Sibling sessions waiting on a person"**.
+It does **not** fetch the listing, and the section says so in its first line:
+the 401/403 probe above is quoted in place, so the next reader sees why the
+input is asked for by name rather than obtained. A fetch wired into a shell
+that cannot authenticate would examine nothing and report every session clean —
+the `dh4f` defect, in the tool written to stop one.
+
+The section carries the exact call (`list_sessions`, `mine: true`, `limit: 50`),
+the pipe, the three classes with their bases, and the rule that **not running it
+is `unknown`, never "none waiting"**. It is also step 4 of the recommended
+actions, named as *the only step whose input this script cannot produce, so the
+only one that silently reports nothing when skipped*.
+
+Same shape as §"Running processes", which is the precedent: the sweep cannot
+decide it, so it makes sure the question is put.
+
+### Run live from this session, 2026-09-22T18:5xZ — and it fires
+
+`list_sessions` (mine, 50) → `bun run check:session-staleness`, **50 sessions
+read**, exit 1:
+
+```
+✗ litlfred/qou — FAILED 190.3h ago (7.9 days) with output nobody has read: Universal triangulation and binding gap
+✗ litlfred/qou — FAILED 190.3h ago (7.9 days) with output nobody has read: Dark matter and antimatter feasibility
+✗ litlfred/qou — FAILED 167.9h ago (7.0 days) with output nobody has read: 1D mechanics framework in QOU
+✗ litlfred/qou — FAILED 167.3h ago (7.0 days) with output nobody has read: 8-fold way derivation from QOU
+```
+
+**Four unread failures in `litlfred/qou`, 7–7.9 days old.** Zero sessions in
+`REQUIRES_ACTION` past 72 h and none in the stopped-undeclared class, so the
+report is four findings of one class rather than a wall.
+
+Two things about this reading, both stated rather than smoothed:
+
+- **The window is 50 sessions, newest first.** The q-Riemann and Q-Collatz
+  failures this bean recorded on 2026-09-21 at 359 h and 385 h are **not** in
+  the output, and the listing cannot distinguish *"somebody read them"* from
+  *"they fell outside the window"*. A larger `limit` answers it; this run did
+  not ask one.
+- **All four are `qou`, which is a MATH repository and not this session's.**
+  This session has no `qou` access and opens nothing there — recorded here, and
+  surfaced to the owner on #956, exactly as the four before them were.
+
+### The compliance ceiling is stated rather than claimed away
+
+This is a rule in prose asking an agent to make a tool call. `1xhc`'s thesis
+says such a rule has a ceiling nobody measures, and nothing here measures it:
+a session that skips step 4 leaves no trace, and the next sweep cannot tell
+that from a clean run. Making it measurable means a durable record of *when a
+listing was last read*, which is a new `state` artefact and a declaration
+decision — **put to the owner rather than invented here.**
+
+## Done when
+
+- [x] A check reports sessions in `REQUIRES_ACTION` past an idle threshold,
+      and `FAILED` sessions carrying `unread`, with each threshold's **basis**
+      stated rather than a bare number
+- [x] The question in `task_summary` is printed with the finding
+- [x] **Could-not-determine is never rendered as clean**
+- [x] The five are surfaced to the owner, with links (2026-09-21)
+- [x] The session-start sweep runs it — §"Sibling sessions waiting on a person"
+      names the call, the pipe and the three classes, and says that skipping it
+      is `unknown` rather than none. It asks for the input rather than fetching
+      it, and the 401/403 probe is quoted in place so the next reader does not
+      "fix" that by wiring a fetch in.
+- [ ] The owner's `qou` items are theirs: this session works folio-assistant
+      only and has no `qou` access. Four fresh unread failures (7–7.9 days)
+      surfaced on #956 2026-09-22.
+- [ ] **Owner decision:** whether the skip should leave a durable trace, which
+      needs a new `state` artefact and a declaration. Not invented here.

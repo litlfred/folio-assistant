@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_Process_CRDM_Close" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_CRDM_Close">
+    <bpmn:participant id="Participant_Process_CRDM_Close" name="CRDM close-out" processRef="Process_CRDM_Close"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_CRDM_Close" name="CRDM close-out" isExecutable="false">
+    <bpmn:documentation>The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_CRDM_Close">
+      <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
+        <bpmn:documentation>Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it.</bpmn:documentation>
+        <bpmn:flowNodeRef>BA_Confirm</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:documentation>Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread.</bpmn:documentation>
+        <bpmn:flowNodeRef>A_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Process_CRDM_Close</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
+        <bpmn:documentation>The first of three sequential checks this diagram exists to enforce in order — sign off, confirm, close, never any other sequence — and what is being signed off here is the delivered FEATURE on the issue, not the requirement model that crdm-requirements-definition.bpmn's Lane_Stakeholders approved earlier in the process.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_Process_CRDM_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>S_FeatureSignoff</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Process_CRDM_Close" name="Phase begins"/>
+    <bpmn:task id="S_FeatureSignoff" name="Feature sign-off
+on issue">
+      <bpmn:documentation>Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it.</bpmn:documentation>
+    </bpmn:task>
+    <bpmn:task id="BA_Confirm" name="Confirm all criteria
+met">
+      <bpmn:documentation>The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="decision-audit"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="A_Close" name="Close issue ONLY on
+BA authorisation">
+      <bpmn:documentation>Reachable only through BA_Confirm, which is the BA
+saying every criterion is met. An agent must never close an issue without
+that explicit authorisation — the gate is the preceding task, and this name
+says so rather than leaving a reader to trace the flow for it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow"/>
+        <folio:bean op="resolve"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Process_CRDM_Close" name="Phase complete"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Close_1" sourceRef="Start_Process_CRDM_Close" targetRef="S_FeatureSignoff"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Close_2" sourceRef="S_FeatureSignoff" targetRef="BA_Confirm"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Close_3" sourceRef="BA_Confirm" targetRef="A_Close"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Close_4" sourceRef="A_Close" targetRef="End_Process_CRDM_Close"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_CRDM_Close">
+    <bpmndi:BPMNPlane id="Plane_Process_CRDM_Close" bpmnElement="Collaboration_Process_CRDM_Close">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_CRDM_Close" bpmnElement="Participant_Process_CRDM_Close" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1066" height="550" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_BA_Process_CRDM_Close" bpmnElement="Lane_BA" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1036" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Agent_Process_CRDM_Close" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="190" y="250" width="1036" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Stakeholders_Process_CRDM_Close" bpmnElement="Lane_Stakeholders" isHorizontal="true">
+        <dc:Bounds x="190" y="420" width="1036" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Process_CRDM_Close" bpmnElement="Start_Process_CRDM_Close">
+        <dc:Bounds x="310" y="487" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_S_FeatureSignoff" bpmnElement="S_FeatureSignoff">
+        <dc:Bounds x="510" y="465" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_BA_Confirm" bpmnElement="BA_Confirm">
+        <dc:Bounds x="710" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Close" bpmnElement="A_Close">
+        <dc:Bounds x="910" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Process_CRDM_Close" bpmnElement="End_Process_CRDM_Close">
+        <dc:Bounds x="1110" y="317" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Close_1" bpmnElement="SF_Process_CRDM_Close_1">
+        <di:waypoint x="346" y="505" />
+        <di:waypoint x="510" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Close_2" bpmnElement="SF_Process_CRDM_Close_2">
+        <di:waypoint x="650" y="505" />
+        <di:waypoint x="680" y="505" />
+        <di:waypoint x="680" y="165" />
+        <di:waypoint x="710" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Close_3" bpmnElement="SF_Process_CRDM_Close_3">
+        <di:waypoint x="850" y="165" />
+        <di:waypoint x="880" y="165" />
+        <di:waypoint x="880" y="335" />
+        <di:waypoint x="910" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Close_4" bpmnElement="SF_Process_CRDM_Close_4">
+        <di:waypoint x="1050" y="335" />
+        <di:waypoint x="1110" y="335" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

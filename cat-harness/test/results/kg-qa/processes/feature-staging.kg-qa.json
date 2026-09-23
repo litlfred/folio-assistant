@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:363a0d0c5cde3d861d61cb91467b559b10f2653b7373e4389f04095d2ab9bbc4",
+  "source_hash": "sha256:ab2a96ba1dee915b565dc32ce1c52a7d322c5e7169d9a7110d1097cd52629a4f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -108,12 +108,55 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/feature-staging.yml",
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 2,
+    "pass": 12,
+    "fail": 3,
     "n/a": 7,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "ab2a96ba1dee",
+      "code_hash": "ac0e77b5bf5f",
+      "by": "baseline"
+    }
+  ]
 }

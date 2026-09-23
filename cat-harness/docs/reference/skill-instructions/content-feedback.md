@@ -39,3 +39,14 @@ Gather and triage feedback on published content for future iterations.
 - Prioritized backlog for next iteration
 - Change requests linked to feedback
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Adjudication](../../processes/adjudication.html) | State the finding and what it read |
+| [Content lifecycle](../../processes/content-lifecycle.html) | Triage published feedback; File feedback as beans |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Open beans for the change requests |
+| [Prose and the code it describes](../../processes/narrative-code-review.html) | Raise a finding against the wrong side |
+| [Narrative review](../../processes/review-narrative.html) | Record findings as advice |
+

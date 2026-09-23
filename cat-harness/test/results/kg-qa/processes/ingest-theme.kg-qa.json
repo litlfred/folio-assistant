@@ -5,7 +5,7 @@
     "id": "Process_IngestTheme",
     "path": "processes/ingest-theme.bpmn"
   },
-  "source_hash": "sha256:3bb3d3ebd6e649a8c2fa292ea291d8eda5636c27a9721d7c8202ec71fd0f0c40",
+  "source_hash": "sha256:105eac8d3e4a5d7322dd7e40157d049d99cef7bd50768f8f9580de5964bc7f94",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,12 +87,45 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Layouts",
+          "detail": "\"Every layout present?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
-    "n/a": 7,
+    "pass": 11,
+    "fail": 2,
+    "n/a": 9,
     "unknown": 0
   }
 }

@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Persona (DAK) API",
+    "description": "Logical Model for representing Personas from a DAK",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-Persona.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-Persona",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-Persona.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-Persona",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-Persona.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-Persona": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-Persona.schema.json",
+        "title": "Persona (DAK)",
+        "description": "Logical Model for representing Personas from a DAK",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "Persona",
+            "description": "Resource type identifier for Persona logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for Persona logical model",
+            "examples": [
+              "LogicalModel-Persona"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "An identifier or code for the persona"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the persona"
+          },
+          "ISCO": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "ISCO Code"
+          },
+          "type": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Code from ValueSet SGPersonaTypesVS (plain string)"
+              },
+              {
+                "type": "object",
+                "description": "Code from ValueSet SGPersonaTypesVS (JSON-LD structure)",
+                "properties": {
+                  "@type": {
+                    "type": "string",
+                    "const": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.jsonld",
+                    "description": "JSON-LD type reference to ValueSet SGPersonaTypesVS"
+                  },
+                  "@id": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Full IRI of the code from ValueSet SGPersonaTypesVS"
+                  }
+                },
+                "required": [
+                  "@type",
+                  "@id"
+                ],
+                "additionalProperties": false
+              }
+            ],
+            "description": "Persona Types: Key/Related/System/Hardware Device"
+          }
+        },
+        "required": [
+          "resourceType",
+          "id",
+          "name",
+          "description",
+          "type"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/Persona",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base",
+        "jsonld:valuesets": [
+          "SGPersonaTypesVS"
+        ],
+        "jsonld:contextTemplate": {
+          "@version": 1.1,
+          "fhir": "http://hl7.org/fhir/",
+          "SGPersonaTypesVS": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.jsonld"
+        }
+      }
+    }
+  }
+}

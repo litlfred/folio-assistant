@@ -123,7 +123,7 @@ export const ActorDefinitionSchema = z.object({
    * `schemas/actor-reach.ts` for how it composes with the deployment's.
    */
   reach: z.enum(NETWORK_REACHES).optional(),
-  meta: z.record(z.unknown()).optional(),
+  meta: z.record(z.string(), z.unknown()).optional(),
 });
 
 // ─── CapabilityDefinition ────────────────────────────────────────────────────
@@ -309,8 +309,8 @@ export const DockerRequirementsSchema = z.object({
   npmPackages: z.array(z.string()).optional(),
   setupCommands: z.array(z.string()).optional(),
   exposePorts: z.array(z.number()).optional(),
-  env: z.record(z.string()).optional(),
-  labels: z.record(z.string()).optional(),
+  env: z.record(z.string(), z.string()).optional(),
+  labels: z.record(z.string(), z.string()).optional(),
 });
 
 export const SkillPackageManifestSchema = z.object({

@@ -543,3 +543,11 @@ downstream repo, update that repo's ownership note and close the tracking beans.
   Beans ≠ sidecars. Do **not** convert QA / witness queue items into individual
   beans (see todo-manager.md disambiguation block).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
+| [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+

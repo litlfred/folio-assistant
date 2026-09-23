@@ -43,8 +43,11 @@
 
 import { createHash } from "node:crypto";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
+import { docsLayers } from "./compose-docs.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -82,7 +85,7 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
-import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
@@ -124,13 +127,25 @@ const root = resolve(import.meta.dir, "..");
 /**
  * THIS instance's own directory with `id`, or the convention if it declares none.
  *
- * Not {@link instanceDirectoryForGraph}: that asks by KIND, and this instance
- * declares TWO directories holding `processes` — its own `processes/` and
- * CRDM's `methodologies/crdm/processes/` — so a by-kind lookup throws rather
- * than choosing, which is bean `wggr` working as designed. A path-less
- * subject belongs to the instance's own graph, and that is a question only
- * the id answers: *"a by-ID lookup through `resolveDirectories` is the answer
- * when you want a particular one."*
+ * Not {@link instanceDirectoryForGraph}: that asks by KIND, and a path-less
+ * subject belongs to the instance's OWN graph, which is a question only the id
+ * answers: *"a by-ID lookup through `resolveDirectories` is the answer when you
+ * want a particular one."*
+ *
+ * THE CONCRETE WITNESS IS GONE, AND THAT IS WHY THIS PARAGRAPH IS REWRITTEN
+ * RATHER THAN LEFT. Until 2026-09-22 this said the instance declares TWO
+ * directories holding `processes` — its own and CRDM's
+ * `methodologies/crdm/processes/` — so a by-kind lookup throws. CRDM's
+ * diagrams moved into `processes/` that day (the owner's "dont bury sub-graph
+ * assets"), the second declaration was dropped, and exactly one directory
+ * holds `processes` now. So the by-kind lookup would no longer throw here.
+ *
+ * The id lookup stays, because the reason was never the count: a by-kind
+ * lookup that happens to work while one directory exists is a call that starts
+ * throwing the day a second is declared, and it would be asking the wrong
+ * question even while it worked. A comment justifying it by a witness that no
+ * longer exists is worse than none, which is the only reason this is five
+ * lines instead of one.
  */
 function ownDirectoryById(root: string, id: string, fallback: string): string {
   const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
@@ -223,6 +238,46 @@ async function loadProcesses(): Promise<LoadedProcess[]> {
   return out;
 }
 
+// ── Documentation surface ───────────────────────────────────────
+
+/**
+ * What a reader can reach: the base docs layer's rendered diagrams, and the
+ * text of every page in every layer, read once per run.
+ *
+ * `undefined` when no docs layer is declared, which `process-diagram-published`
+ * records as `unknown` — the third state. Treating "could not look" as "shown
+ * nowhere" would fail every diagram in an instance that publishes elsewhere;
+ * treating it as "shown" would be the clean run over nothing (`dh4f`).
+ */
+interface DocsSurface {
+  /** Absolute directory `render:bpmn` writes SVGs into. */
+  svgDir: string;
+  /** Every page's text, concatenated — searched for `workflows/<stem>.svg`. */
+  pages: string;
+}
+
+function docsSurface(): DocsSurface | undefined {
+  let layers;
+  try {
+    layers = docsLayers(resolve(root, "..")).layers;
+  } catch {
+    return undefined;
+  }
+  const base = layers.find((l) => !l.repositoryScoped);
+  if (!base) return undefined;
+  const texts: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (/\.(md|html)$/.test(e.name)) texts.push(readFileSync(p, "utf-8"));
+    }
+  };
+  for (const l of layers) walk(l.dir);
+  return { svgDir: join(base.dir, "assets", "img", "workflows"), pages: texts.join("\n") };
+}
+
 // ── Per-process criteria ────────────────────────────────────────
 
 async function auditProcess(
@@ -230,6 +285,9 @@ async function auditProcess(
   graph: RoleGraph | undefined,
   skills: Set<string>,
   processIds: Set<string>,
+  /** Basenames of every loadable diagram — a skill of the same name OWNS that process. */
+  processStems: Set<string> = new Set(),
+  docs?: DocsSurface,
 ): Promise<KgQaReport> {
   const rel = relative(root, p.file);
   const hash = sha256(readFileSync(p.file, "utf-8"));
@@ -245,6 +303,7 @@ async function auditProcess(
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
   const unresolvedCall: KgFinding[] = [];
+  const undocumented: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
 
   // Lane ids whose role is declared `actedUpon` — a store or an external
@@ -313,6 +372,48 @@ async function auditProcess(
       });
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
+    if (!n.documentation) {
+      undocumented.push({ where: n.id, detail: `"${n.name}" carries no <bpmn:documentation>, so its page shows a name and nothing more.` });
+    }
+  }
+
+  // A skill that owns a same-named process, named by exactly ONE plain step
+  // here. Several steps naming it are using its know-how, not calling it —
+  // see the criterion's note in `schemas/kg-qa.ts`.
+  const stem = basename(p.file, ".bpmn");
+  const namers = new Map<string, typeof activities>();
+  for (const n of activities) {
+    for (const ref of new Set(n.skills)) {
+      if (ref === stem || !processStems.has(ref)) continue;
+      namers.set(ref, [...(namers.get(ref) ?? []), n]);
+    }
+  }
+  const shouldCall: KgFinding[] = [];
+  for (const [ref, ns] of namers) {
+    // A declared `<folio:no-call reason>` is the recorded judgement that this
+    // step uses the skill without being its process — `n/a` for that step.
+    if (ns.length !== 1 || ns[0].calledElement !== undefined || ns[0].noCallReason !== undefined) continue;
+    shouldCall.push({
+      where: ns[0].id,
+      detail:
+        `"${ns[0].name}" names skill "${ref}", which owns ${ref}.bpmn, but is a plain task. Make it a ` +
+        `<bpmn:callActivity calledElement="…"> so the diagram descends into that process, or declare ` +
+        `<folio:no-call reason="…"/> saying why it only uses the skill.`,
+    });
+  }
+
+  // Published: an SVG exists AND some page embeds it.
+  let published: KgCriterionEntry;
+  if (!docs) {
+    published = { result: "unknown", findings: [{ where: "—", detail: "no docs layer is declared, so no page could be searched." }] };
+  } else if (!existsSync(join(docs.svgDir, `${stem}.svg`))) {
+    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run render:bpmn\`.` }]);
+  } else {
+    published = entry(
+      docs.pages.includes(`workflows/${stem}.svg`)
+        ? []
+        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run processes:viz\`.` }],
+    );
   }
 
   // Lanes → roles.
@@ -423,6 +524,28 @@ async function auditProcess(
     }
   }
 
+  // DECISIONS — diverging exclusive gateways. Merges, forks and joins decide
+  // nothing, so `isDecision` leaves them out; see the criteria's notes in
+  // `schemas/kg-qa.ts` for the measurement behind both.
+  const decisions = [...m.nodes.values()].filter(isDecision);
+  const undocumentedDecision: KgFinding[] = decisions
+    .filter((n) => !n.documentation)
+    .map((n) => ({
+      where: n.id,
+      detail:
+        `"${n.name}" carries no <bpmn:documentation>, so its page shows the question and not what answers it ` +
+        `— who decides, from what evidence, and what each branch commits the process to.`,
+    }));
+  const indistinct: KgFinding[] = decisions.flatMap((n) =>
+    indistinctBranches(m, n).map((b) => ({
+      where: b.flowId,
+      detail:
+        b.problem === "unnamed"
+          ? `a branch out of "${n.name}" (${n.id}) has no name, so a reader cannot tell which answer takes it.`
+          : `a branch out of "${n.name}" (${n.id}) is labelled "${b.label}", as is a sibling — the two cannot be told apart.`,
+    })),
+  );
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -528,6 +651,13 @@ async function auditProcess(
         : unresolvedCall.length
           ? { result: "unknown" as KgResult, findings: unresolvedCall }
           : { result: "pass" as KgResult, findings: [] },
+    "process-diagram-published": published,
+    "activity-documented": entry(undocumented, activities.length > 0),
+    "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
+    // `n/a` for a diagram with no decision — a linear process has nothing to
+    // document here, which is not the same as having documented it.
+    "gateway-documented": entry(undocumentedDecision, decisions.length > 0),
+    "gateway-branches-named": entry(indistinct, decisions.length > 0),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -1606,7 +1736,9 @@ if (graphError) {
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
+const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.file, ".bpmn")] : [])));
+const docs = docsSurface();
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
 if (graph) {
   reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
@@ -1720,6 +1852,27 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+  }
+}
+
+// ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
+//
+// Evaluated here rather than inside auditProcess/auditSkills because it is the
+// one criterion that READS the previous sidecar: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. Done before the write loop so
+// `--check` regenerates the same text the writer would.
+{
+  const repoRoot = resolve(root, "..");
+  const scripts = rootScripts(repoRoot);
+  for (const r of reports) {
+    if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
+    const pairs = discoverPairs(r.subject, root, repoRoot);
+    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    r.criteria[PAIR_CRITERION] = e;
+    // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
+    r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
+    r.totals = tally(r.criteria);
+    if (attestations.length) r.pair_attestations = attestations;
   }
 }
 

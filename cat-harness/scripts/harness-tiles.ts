@@ -54,10 +54,14 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
+import { resolveThemeBackdrop } from "../schemas/theme.js";
+import { themeById } from "../schemas/themes.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
-import { flattenDependencies } from "./dependency-order.js";
+import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
   type CatHarnessDeclaration,
+  type NavbarIcon,
+  resolveNavbarIcons,
   findDeclarationFile,
   isExemptFrom,
   readDeclaration,
@@ -111,6 +115,53 @@ export type HarnessVisualisation = {
    * `false`.
    */
   readOnly?: boolean;
+  /**
+   * WHY this row is inert, in the words a reader sees — absent when
+   * {@link path} is present, because a row that opens owes no explanation.
+   *
+   * ## Why the note is DATA and not a word the navbar picks
+   *
+   * "No viewer" is four states, and this function already separates them a
+   * few dozen lines down in order to word four different findings:
+   * `stagingOnly` and a declared `renderExemption` are INTENDED, `undiscovered`
+   * is built-and-unreachable, `unbuilt` is nobody-built-it. Until now that
+   * classification reached the reader only as prose inside a collapsed
+   * `<details>` of "gaps", while the navbar row it describes said nothing at
+   * all on one surface and `title="declared, with no published viewer"` on
+   * the other — one wording for four states, and wrong for two of them.
+   *
+   * That is the mistake this file has already paid for twice, in the two
+   * comments above about `staging-only` and `renderExemption`: **an intended
+   * state reported as a defect is the same disease as a real gap hidden.** A
+   * navbar that labelled a staging-only row "no viewer yet" would be making
+   * it a third time, on the surface a reader is actually looking at.
+   *
+   * So the note is computed HERE, where the four states are already told
+   * apart, and both navbars render what they are given. Neither composes it,
+   * which is what keeps them one navbar rather than two that agree by
+   * maintenance.
+   */
+  note?: string;
+  /**
+   * The page this row opens is WITHHELD from the canonical deploy.
+   *
+   * `compose-docs.ts` lays a `publish: "staging-only"` page into the site only
+   * under `--staging`, so on the canonical build the file exists in the SOURCE
+   * and not in the published tree. `path` is resolved against the source, so
+   * it is present and correct and the link is still dead.
+   *
+   * The graph TILE has carried this since `graphTiles` was written, and
+   * `docs-ui.js` skips such a tile unless the page says it is a staging
+   * preview — its own comment: *"Conflating them would let 'show hidden'
+   * resurrect a link to a 404."* The navbar's folder list carried it nowhere
+   * and linked `fsh-guts` on the canonical site, which is that 404 arriving by
+   * the other door. Measured 2026-09-23 by sweeping a canonical-shaped local
+   * build: 1 of 387 sidebar links.
+   *
+   * Absent means "publishes normally". It is not a third state: a page that is
+   * withheld says so, and everything else is published.
+   */
+  stagingOnly?: true;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -138,6 +189,23 @@ export type HarnessTile = {
    */
   footer: boolean;
   icon: { src: string; title: string } | null;
+  /**
+   * Which icons this instance's navbar row shows, after inheritance.
+   *
+   * OPTIONAL, and absent means UNDETERMINED — neither this instance nor
+   * anything it needs nor the site owner has decided. `[]` is a different
+   * answer and means "show none", which the owner asked for by name. A
+   * consumer that renders the two the same reports an un-migrated instance as
+   * a deliberate one.
+   */
+  navbarIcons?: NavbarIcon[];
+  /**
+   * The mark the navbar renders: the theme avatar if there is one, else the
+   * instance's own icon, with its crop solved. Absent when neither exists —
+   * and the navbar then draws an INITIAL, which is a different answer from a
+   * broken image and from a placeholder glyph.
+   */
+  mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
   /** Hue angle from the avatar registry — the tile's theme. */
   tone: number;
   /** What the avatar reads as, for the accessible name. */
@@ -213,18 +281,71 @@ export type HarnessTile = {
  * ## Two parts, because an instance is not always at the site root
  *
  * The published path is the instance's mount plus the asset's path with its
- * site directory removed. `folioRoot` already answers the first — `/` for the
- * instance that owns the site, `/<name>/` for one mounted beneath it — so this
- * takes it rather than re-deriving it, and an instance whose mount is unknown
- * gets **no icon at all**. That is the `pb04` rule one layer down: an `<img>`
- * whose `src` 404s is worse than no `<img>`, because a placeholder reads as a
- * broken site rather than as an instance with no art.
+ * site directory removed. An instance whose mount is unknown gets **no icon at
+ * all** — the `pb04` rule one layer down: an `<img>` whose `src` 404s is worse
+ * than no `<img>`, because a placeholder reads as a broken site rather than as
+ * an instance with no art.
+ *
+ * ## `folioRoot` IS THE WRONG MOUNT FOR THIS, and it shipped
+ *
+ * This took `folioRoot` — *"`/` for the instance that owns the site,
+ * `/<name>/` for one mounted beneath it"* — and that is the instance's FRONT
+ * DOOR, which is a different question from where its SITE DIRECTORY lands.
+ *
+ * MEASURED by running the mount rather than by reading either file:
+ *
+ *     who-iris/library/  ->  /who-iris/        (1378 files)
+ *     who-iris/docs/     ->  /docs/who-iris/   (4 files)
+ *
+ * `mount-instance-docs` gives every instance a `<kind>/<name>` route
+ * unconditionally and a bare `<name>` route to whichever kind claims it first.
+ * For who-iris that is the **library**, so `/who-iris/` serves 1,378 corpus
+ * files and the front door is not the docs at all. The icon composed against
+ * it 404s — confirmed, 404 against 200 for the same asset at
+ * `/docs/who-iris/assets/img/who-emblem.svg`.
+ *
+ * So this composes against the route the site directory ACTUALLY takes: the
+ * unconditional `<kind>/<name>` one, from the kind the instance declares for
+ * that directory. The site owner keeps `/`, because its docs are the site
+ * root and are not mounted at all.
+ *
+ * The local preview hid it: `preview:site` does not run the mount, so the
+ * asset was missing there for an unrelated reason and the wrong URL looked
+ * like the same 404.
  */
-function publishedIcon(instanceDir: string, src: string, mount: string | undefined): string | undefined {
-  if (mount === undefined) return undefined;
+function publishedIcon(
+  instanceDir: string,
+  src: string,
+  siteMount: string | undefined,
+): string | undefined {
+  if (siteMount === undefined) return undefined;
   const prefix = `${siteDirFor(instanceDir)}/`;
   if (!src.startsWith(prefix)) return undefined;
-  return `${mount.replace(/\/$/, "")}/${src.slice(prefix.length)}`;
+  return `${siteMount.replace(/\/$/, "")}/${src.slice(prefix.length)}`;
+}
+
+/**
+ * Where this instance's SITE DIRECTORY is served from.
+ *
+ * `/` for the instance that owns the site — the main docs pipeline builds it
+ * in place. For every other instance, the `<kind>/<name>` route
+ * `mount-instance-docs` always produces, with the kind read from the
+ * declaration entry whose path IS the site directory. `undefined` when the
+ * instance declares no kind for it, which is a real answer: nothing can be
+ * said about where a directory nobody classified will be served.
+ */
+function siteDirMount(
+  decl: CatHarnessDeclaration,
+  instanceDir: string,
+  ownsSite: boolean,
+): string | undefined {
+  if (ownsSite) return "/";
+  const site = siteDirFor(instanceDir);
+  const entry = (decl.directories ?? []).find(
+    (d) => (d.path ?? "").replace(/\/$/, "") === site,
+  );
+  const kind = entry?.graphKinds?.[0];
+  return kind === undefined ? undefined : `/${kind}/${decl.name}/`;
 }
 
 /**
@@ -302,6 +423,41 @@ function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   return out;
 }
 
+/**
+ * The words an inert navbar row shows — one per bucket, and nothing else.
+ *
+ * ## Why this is a separate exported function
+ *
+ * TWO OF ITS FOUR ANSWERS NEVER OCCUR IN THIS REPOSITORY. Measured 2026-09-23
+ * over all 31 unlinked kinds in `docs/_data/harness.json`: 24 are `unbuilt`,
+ * 7 are `unbuilt` under `bootstrap`'s declared exemption, and `staging-only`
+ * and `undiscovered` occur **not at all** — `harnessTiles` emits no finding
+ * of either shape here either.
+ *
+ * Of those two, `undiscovered` is at least reached by a fixture: the `flh4`
+ * test for a viewer that resolves outside the site directory. `staging-only`
+ * is reached by NOTHING — not the corpus, not a fixture — so before this
+ * function existed its wording would have been a line that no test and no
+ * deploy ever ran. That is how the read-only mark came to ship live CSS and
+ * live JS rendering on 0 of 3 deployed pages (the comment further down
+ * records it, found by reading a deploy rather than a diff), and `1xhc` is
+ * the general form: a gate that does not fire is indistinguishable from one
+ * that passed. Lifting the decision out makes all four answers assertable
+ * directly, with no declaration to construct.
+ *
+ * `exempt` narrows `unbuilt` ONLY. A staging-only viewer is withheld by its
+ * own `publish` setting and a declared-but-unreachable one exists, so neither
+ * is anything a `renderExemption` has a view about.
+ *
+ * @param bucket which of the three reasons a kind has no published viewer
+ * @param exempt the instance declares `renderExemption.of: ["visualiser"]`
+ */
+export function inertNote(bucket: "staging-only" | "undiscovered" | "unbuilt", exempt: boolean): string {
+  if (bucket === "staging-only") return "staging only";
+  if (bucket === "undiscovered") return "viewer not published";
+  return exempt ? "no viewer by design" : "no viewer yet";
+}
+
 function tileFor(
   decl: CatHarnessDeclaration,
   handler: string,
@@ -312,6 +468,17 @@ function tileFor(
   isRepoRoot: boolean,
   /** This instance's OWN directory, which is where its declared paths are relative to. */
   instanceDir: string,
+  /**
+   * The SITE-OWNING instance — its declaration and its directory.
+   *
+   * Needed because theme art is routinely declared by the harness that
+   * SUPPLIES it rather than by the instance it is about: `bootstrap` declares
+   * a sticky with `theme: bootstrap` and **no images at all**, while
+   * `cat-harness` declares the `landing-bootstrap` role's three layouts. That
+   * is the inversion `ThemeBackdropSchema` describes — a theme names a ROLE,
+   * and whoever holds images for that role supplies the art.
+   */
+  owner?: { decl: CatHarnessDeclaration; dir: string },
 ): HarnessTile {
   const dirs = decl.directories ?? [];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
@@ -350,7 +517,7 @@ function tileFor(
     for (const v of visualisationsOf(d.coverage, d.id)) {
       if (!v.ref.startsWith(sitePrefix)) continue;
       if (!existsSync(join(repoRoot, v.ref))) continue;
-      const page = `/${v.ref.slice(sitePrefix.length).replace(/index\.html$/, "")}`;
+      const page = publishedUrlOf(v.ref.slice(sitePrefix.length));
       for (const kind of d.graphKinds ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }
@@ -404,10 +571,19 @@ function tileFor(
     // edited". Both branches carry it, so a kind never loses its read-only
     // state by failing to resolve a page.
     const ro = readOnlyFor(kind);
+    // WITHHELD FROM THE CANONICAL DEPLOY — read from the same declaration
+    // `declaredFor` reads it from, rather than inferred from anything. See
+    // `HarnessVisualisation.stagingOnly` for what its absence cost.
+    const withheld = dirs.some(
+      (d) =>
+        (d.graphKinds ?? []).includes(kind) &&
+        visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
+    );
     visualisations.push({
       kind,
       ...(path ? { path } : {}),
       ...(ro === undefined ? {} : { readOnly: ro }),
+      ...(withheld ? { stagingOnly: true as const } : {}),
     });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
@@ -460,6 +636,30 @@ function tileFor(
   const rest = unlinked.filter((k) => !stagingOnly.includes(k));
   const undiscovered = rest.filter((k) => declaredFor(k, false) !== undefined);
   const unbuilt = rest.filter((k) => declaredFor(k, false) === undefined);
+
+  /* THE SAME CLASSIFICATION, ONTO THE ROW — see `HarnessVisualisation.note`.
+   *
+   * Four buckets are already in hand and were, until now, spent entirely on
+   * `findings`: prose, inside a `<details>` a reader opens on purpose. The
+   * navbar row that each bucket is ABOUT carried none of it. This loop is the
+   * whole of the fix, and it invents no state — every branch below reads a
+   * variable computed above.
+   *
+   * `renderExemption` splits `unbuilt`, and only `unbuilt`: `isExemptFrom` is
+   * the same predicate the finding twenty lines down calls, so a render-exempt
+   * instance cannot be told "no viewer yet" by one surface and "not a gap" by
+   * the other.
+   */
+  const exempt = isExemptFrom(decl, "visualiser");
+  for (const v of visualisations) {
+    if (v.path !== undefined) continue;
+    const bucket = stagingOnly.includes(v.kind)
+      ? "staging-only"
+      : undiscovered.includes(v.kind)
+        ? "undiscovered"
+        : "unbuilt";
+    v.note = inertNote(bucket, exempt);
+  }
 
   if (stagingOnly.length > 0) {
     findings.push(
@@ -596,7 +796,10 @@ function tileFor(
   // THE ICON, published rather than declared — see `publishedIcon`. Resolved
   // here rather than beside `icon` because it needs the mount, and the mount
   // is `folio`.
-  const iconSrc = icon ? publishedIcon(instanceDir, icon.src, folio) : undefined;
+  // The SITE-DIR mount, not `folio` — see `publishedIcon`. `folio` is the
+  // instance's front door, which for who-iris is its 1,378-file library.
+  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot);
+  const iconSrc = icon ? publishedIcon(instanceDir, icon.src, siteMount) : undefined;
   if (icon && iconSrc === undefined) {
     // Reported, never rendered as a placeholder. The instance ASKED for a
     // mark and did not get one, and that is a fact about its declaration
@@ -659,6 +862,113 @@ function tileFor(
     }
   }
 
+  // The instance's theme, from the sticky it contributes about ITSELF. A
+  // contribution whose id is this instance is the instance talking about
+  // itself, which is the same key `composeContributions` dedupes on.
+  // THE INSTANCE'S OWN STICKY — and a card id is NOT the instance name.
+  //
+  // This matched `st.id === decl.name` and therefore found nothing for
+  // `folio-assistant-core`, whose card id is `folio-assist-core`. That is not
+  // a stale declaration: `landing-sticky.test.ts` pins the divergence
+  // deliberately, because *"a card id is a published identifier on the landing
+  // page and the directory is only where the files sit ... which is exactly
+  // why it broke when they were assumed to be one string."* The exact
+  // assumption, written here one file over, and it cost core its avatar while
+  // its theme had been declared all along.
+  //
+  // THE SET IS ALREADY RIGHT: `decl.stickies` is what THIS instance
+  // contributes, so its own card is in there whatever it is called. An exact
+  // match still wins where one exists (cat-harness, bootstrap); a lone
+  // contribution is taken as the instance's own; and several with no exact
+  // match is REPORTED rather than picked from, because choosing by order would
+  // make the avatar depend on declaration order.
+  const contributed = decl.stickies ?? [];
+  const exact = contributed.find((st) => st.id === decl.name);
+  const ownSticky = exact ?? (contributed.length === 1 ? contributed[0] : undefined);
+  if (exact === undefined && contributed.length > 1) {
+    findings.push(
+      `${decl.name}: contributes ${contributed.length} stickies and none carries its own name ` +
+        `(${contributed.map((st) => st.id).join(", ")}), so which one is this instance's own card ` +
+        `cannot be told — showing no theme avatar rather than picking by declaration order.`,
+    );
+  }
+  const theme = ownSticky?.theme === undefined ? undefined : themeById(ownSticky.theme);
+  if (ownSticky?.theme !== undefined && theme === undefined) {
+    findings.push(
+      `${decl.name}: its sticky names theme "${ownSticky.theme}", which is not installed — ` +
+        `showing no theme avatar rather than a broken image.`,
+    );
+  }
+  // OWN IMAGES FIRST, THE SITE OWNER'S SECOND — the overlay order this
+  // repository uses everywhere else, and the one the theme docs describe: *"an
+  // instance declaring its own `landing` images gets its own backdrop"*, with
+  // the supplier as the fallback rather than the only answer.
+  //
+  // MEASURED, and it is why `bootstrap` had no avatar until now: it declares a
+  // sticky naming `theme: bootstrap` and **zero images**, while `cat-harness`
+  // declares the `landing-bootstrap` role. Resolving against `decl.images`
+  // alone found nothing and reported a gap that was not one.
+  // `gen-landing-data.ts` has always resolved a contributed sticky's art
+  // against the site owner's images, so this is that join rather than a second
+  // one — widened by the own-first step, which changes no existing answer
+  // because no instance below the owner declares a landing role today.
+  const ownCard = theme ? resolveThemeBackdrop(theme, decl.images).art.get("card") : undefined;
+  const ownerCard =
+    theme && ownCard === undefined && owner
+      ? resolveThemeBackdrop(theme, owner.decl.images).art.get("card")
+      : undefined;
+  const card = ownCard ?? ownerCard;
+  // THE PATH FOLLOWS THE SOURCE. An image declared by the site owner is
+  // published under the SITE's own root, not under this instance's mount —
+  // composing it from `folio` would point at a path the instance does not
+  // serve, which is `68au` with the baseurl replaced by the wrong instance.
+  const cardSrc = card
+    ? ownCard !== undefined
+      ? publishedIcon(instanceDir, card.src, siteMount)
+      : publishedIcon(owner!.dir, card.src, "/")
+    : undefined;
+  const themeAvatar =
+    card && cardSrc !== undefined
+      ? {
+          src: cardSrc,
+          title: theme!.name,
+          ...(card.avatarRegion ? { region: card.avatarRegion } : {}),
+          // THE SAME CROP, SOLVED — for a consumer that cannot do arithmetic.
+          //
+          // `region` is the declaration and `navbar.ts`'s `mark()` solves it
+          // itself for a mounted page. The Liquid sidebar cannot: dividing two
+          // floats in a template is the kind of thing that silently yields an
+          // integer. So the four CSS values are computed here, exactly as
+          // `sync-docs-harness.ts` already does for the site title's avatar.
+          //
+          // Two fields from one declaration, both generated, neither authored
+          // — which is why this is not the duplication `sjic` is about. The
+          // sum has ONE home; only its output has two shapes.
+          ...(card.avatarRegion ? { crop: solveCrop(card.avatarRegion) } : {}),
+        }
+      : undefined;
+  if (card && card.avatarRegion === undefined) {
+    // A card with no crop would render the whole 1254px composition in a 32px
+    // frame — `603s` measured that and called it "grey mush". Reported rather
+    // than rendered: an uncropped card is a declaration gap, not an avatar.
+    findings.push(
+      `${decl.name}: its theme's card art declares no avatarRegion, so the navbar has no ` +
+        `crop to show — the whole card in a 2rem frame is unreadable. Declare one.`,
+    );
+  }
+
+  // Resolved after both candidates exist. `icon` keeps its own field for
+  // `mount-instance-docs.ts`, which builds a NavItem rather than reading this.
+  const iconMark =
+    iconSrc === undefined
+      ? undefined
+      : {
+          src: iconSrc,
+          title: icon?.title ?? "",
+          ...(icon?.avatarRegion ? { crop: solveCrop(icon.avatarRegion) } : {}),
+        };
+  const navMark = themeAvatar ?? iconMark;
+
   const href = folio ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
     findings.push(
@@ -682,7 +992,52 @@ function tileFor(
     description: decl.description ?? "",
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
-    icon: iconSrc === undefined ? null : { src: iconSrc, title: icon?.title ?? "" },
+    // `avatarRegion` rides the ICON too, when the icon image declares one.
+    // None does today; the THEME avatar below is where the declared crops
+    // actually live. Kept because the two are different questions: an instance
+    // may declare a mark that wants cropping without having a theme at all.
+    icon:
+      iconSrc === undefined
+        ? null
+        : {
+            src: iconSrc,
+            title: icon?.title ?? "",
+            ...(icon?.avatarRegion ? { region: icon.avatarRegion } : {}),
+          },
+    // THE THEME AVATAR — *"use theme avatar not the purply thing"*.
+    //
+    // I reported on 2026-09-22 that the harness->card assignment "does not
+    // exist". THAT WAS WRONG, and the correction matters because it was the
+    // reason gap 6 was left unwired: the assignment is THEME-MEDIATED and has
+    // been all along. An instance contributes a sticky, the sticky names a
+    // `theme`, the theme names an `imageRole`, and the instance's own images
+    // carry that role per layout. `resolveThemeBackdrop` is the join and it
+    // already returns the DeclaredImage, so the `avatarRegion` `603s` measured
+    // comes with it. Nothing new is invented here; a chain that existed is
+    // read.
+    //
+    // THE CARD LAYOUT, because it is the square one — 1254x1254 — and
+    // `KgImageSchema` refuses a non-square `avatarRegion` in PIXELS. A
+    // landscape layout would carry a box that is square in fractions and not
+    // in pixels, which is exactly the stretch that refusal exists to stop.
+    ...(themeAvatar ? { avatar: themeAvatar } : {}),
+    /**
+     * THE MARK THE NAVBAR SHOWS, resolved once here rather than branched on in
+     * a template.
+     *
+     * Theme avatar first, the instance's own `icon` second. The precedence is
+     * the owner's — *"use theme avatar not the purply thing"* — and it is
+     * decided HERE because the alternative is five branches of Liquid
+     * (`avatar` with a crop, `avatar` without, `icon` with a crop, `icon`
+     * without, initial) that would each have to agree about the order.
+     *
+     * The crop rides whichever source won, so an ICON may be cropped too:
+     * `who-iris` declares the WHO emblem-and-wordmark at 581x178 and an
+     * `avatarRegion` taking the leftmost square, which is the emblem. Before
+     * this, a region on an icon was carried in the data and rendered by
+     * nothing.
+     */
+    ...(navMark ? { mark: navMark } : {}),
     tone: avatar.tone,
     reads: avatar.reads,
     genericAvatar: !own,
@@ -727,17 +1082,48 @@ export function harnessTiles(
   // caller pointed at a tree that has no harness gets no tiles, which is a
   // real answer; an exception here would take down the whole docs sync over a
   // question that has one.
-  const handler = readDeclaration(harnessRoot)?.name;
+  const ownerDecl = readDeclaration(harnessRoot);
+  const handler = ownerDecl?.name;
   if (!handler) return [];
   const siteDir = join(harnessRoot, siteDirFor(harnessRoot));
 
   const tiles: HarnessTile[] = [];
+  const decls: { dir: string; decl: CatHarnessDeclaration }[] = [];
   for (const dir of instanceDirs(repoRoot, names)) {
     const decl = readDeclaration(dir);
     if (!decl) continue;
-    tiles.push(
-      tileFor(decl, handler, siteDir, dir === harnessRoot, repoRoot, dir === repoRoot, dir),
+    decls.push({ dir, decl });
+  }
+
+  // THE ICON ROW IS RESOLVED OVER THE WHOLE SET, not per tile, because
+  // inheritance is a question about the OTHER instances. Owner: *"should be in
+  // each harness config which are shown (so some could show none, but make
+  // this default in cat-harness that is inherited)."*
+  //
+  // `handler` is the floor rather than a literal `"cat-harness"`: the
+  // site-owning instance is whoever declares this site, and naming it here
+  // would be the hardcoded-four-names failure `builtOn` was declared to end.
+  const declaredIcons = new Map(decls.map(({ decl }) => [decl.name, decl.navbarIcons]));
+  const needsOf = new Map(decls.map(({ decl }) => [decl.name, decl.needs]));
+
+  for (const { dir, decl } of decls) {
+    const tile = tileFor(
+      decl,
+      handler,
+      siteDir,
+      dir === harnessRoot,
+      repoRoot,
+      dir === repoRoot,
+      dir,
+      ownerDecl ? { decl: ownerDecl, dir: harnessRoot } : undefined,
     );
+    const icons = resolveNavbarIcons(decl.name, declaredIcons, needsOf, handler);
+    // UNDETERMINED IS NOT EMPTY, and the field is omitted rather than set to
+    // `[]` so a consumer cannot read "nobody decided" as "show none". That is
+    // the distinction `navbarIcons`' own docs are about, and collapsing it
+    // here would undo it one layer down.
+    if (icons !== undefined) tile.navbarIcons = [...icons];
+    tiles.push(tile);
   }
 
   return orderTiles(disambiguate(tiles));
@@ -756,6 +1142,85 @@ export function harnessTiles(
  * that was not the thing it counted. Qualifying the label fixes what a reader
  * sees; the finding is what tells somebody a declaration is ambiguous.
  */
+/**
+ * A source path under the site directory, as the URL the built site serves it at.
+ *
+ * ## The defect this closes, measured rather than argued
+ *
+ * This was `replace(/index\.html$/, "")` inline — it handled the `.html` case
+ * and silently passed a `.md` path through as if it were a URL. Owner,
+ * 2026-09-22: *"fix the .md paths in the harness tabs too."*
+ *
+ * Swept with a HEAD request per link against a local build, 2026-09-22:
+ * **3 of 31** distinct harness-tab links returned 404, and all three were the
+ * `index.md` ones — `/processes/index.md`, `/tools/index.md`,
+ * `/fsh-guts/index.md`. The other 28 were fine, so this is the whole of it and
+ * not a sample.
+ *
+ * **The declaration was never wrong.** A `coverage` ref names a SOURCE FILE —
+ * that is what `resolveCoveragePath` resolves it to, on disk. The bug was
+ * treating a source path as a URL, which is a conversion with exactly one
+ * correct home: here.
+ *
+ * ## The rules are Jekyll's, and they were verified, not assumed
+ *
+ * `_config.yml` sets **no** `permalink`, so Jekyll's default applies. Checked
+ * against the built site rather than read off the documentation:
+ *
+ * | source | served at | measured |
+ * |---|---|---|
+ * | `processes/index.md` | `/processes/` | 200 |
+ * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
+ *
+ * So an `index` leaf addresses as its directory and every other page addresses
+ * as itself with an `.html` extension. The second row is why this does not
+ * simply strip `.md`: that would have produced `/tool-graph/`, which is a 404
+ * this repository would have shipped in place of the one it had.
+ *
+ * **If a `permalink` is ever set, this becomes wrong** — and it will be wrong
+ * silently, because a 404 behind a tab looks like a broken site rather than a
+ * stale rule. The test pins the three cases above; a `permalink` added to
+ * `_config.yml` should send somebody here.
+ */
+/**
+ * A declared crop, solved into the four values CSS wants.
+ *
+ * The image is scaled by `1/w` and `1/h` and then offset by `-x` and `-y` OF
+ * THE SCALED image, which is why the offsets divide by the same fractions.
+ * `navbar.ts`'s `mark()` does the identical sum for a mounted page, and
+ * `sync-docs-harness.ts` for the site title.
+ *
+ * SOLVED IN TYPESCRIPT because the consumer is Liquid, which cannot be trusted
+ * to divide two floats without quietly producing an integer.
+ *
+ * EXPORTED so that the one test that matters about it can be written: that it
+ * and `mark()` agree. Two copies of one sum, each with its own test asserting
+ * its own copy, is exactly the shape that let the navbar widths be stated
+ * twice and both be green (`sjic`). The only way that cannot happen is a test
+ * that reads both, which needs both reachable.
+ */
+export function solveCrop(r: { x: number; y: number; w: number; h: number }): {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+} {
+  return {
+    width: +(100 / r.w).toFixed(4),
+    height: +(100 / r.h).toFixed(4),
+    left: +((-100 * r.x) / r.w).toFixed(4),
+    top: +((-100 * r.y) / r.h).toFixed(4),
+  };
+}
+
+export function publishedUrlOf(relPathUnderSite: string): string {
+  const withoutIndex = relPathUnderSite.replace(/(^|\/)index\.(html|md)$/, "$1");
+  // Only a LEAF page is rewritten. A path already ending in `/` is a
+  // directory and addresses as itself.
+  return `/${withoutIndex.replace(/\.md$/, ".html")}`;
+}
+
 export function disambiguate(tiles: readonly HarnessTile[]): HarnessTile[] {
   const byTitle = new Map<string, number>();
   for (const t of tiles) byTitle.set(t.title, (byTitle.get(t.title) ?? 0) + 1);

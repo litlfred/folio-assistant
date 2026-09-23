@@ -102,6 +102,7 @@
       <bpmn:outgoing>F02</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Restore" name="Cache usable?">
+      <bpmn:documentation>Answered by the exit code of `ig-cache restore` (Task_Restore): 0 is a usable cache and takes `yes`, into the cone machinery. 1 (a miss) or 3 (present, but the toolchain moved) takes `no`, to the full publisher build, whose outputs become the records the next seed writes. Exit 2 (an environment error) is not routed by either branch in this diagram.</bpmn:documentation>
       <bpmn:incoming>F02</bpmn:incoming>
       <bpmn:outgoing>F03</bpmn:outgoing>
       <bpmn:outgoing>F04</bpmn:outgoing>
@@ -145,6 +146,7 @@
       <bpmn:outgoing>F07</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI on the restricted tank&#10;[l3-fhir-authoring]">
+      <bpmn:documentation>Compile the restricted checkout with SUSHI — the cone's FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
@@ -162,6 +164,7 @@
       <bpmn:outgoing>F09</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Validate" name="Validate the cone&#10;(fhir_validate) [fhir-validation]">
+      <bpmn:documentation>Validate the cone's resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="fhir-validation" />
       </bpmn:extensionElements>
@@ -169,11 +172,13 @@
       <bpmn:outgoing>F10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Valid" name="Valid?">
+      <bpmn:documentation>Answered by Task_Validate — the cone's resources checked against the warm validator. `yes` goes on to re-render the cone's records. `no` logs the findings on the change's bean and returns them to the author. A validator that could not start is could-not-determine, which Task_Validate's documentation says is never a pass, so it does not take `yes`; and a green cone is not a green IG, since a profile the change did not touch can still be broken by it.</bpmn:documentation>
       <bpmn:incoming>F10</bpmn:incoming>
       <bpmn:outgoing>F11</bpmn:outgoing>
       <bpmn:outgoing>F13</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_LogFindings" name="Log findings on the bean&#10;[todo-manager]">
+      <bpmn:documentation>Validation failed: record the findings on the change's bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:bean op="note" />
@@ -195,6 +200,7 @@
       <bpmn:outgoing>F14</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Merge" name="Merge restored and&#10;rebuilt records">
+      <bpmn:documentation>Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
@@ -212,6 +218,7 @@
       <bpmn:outgoing>F16</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Site" name="Assemble the site&#10;(template · Jekyll) [ig-publication]">
+      <bpmn:documentation>Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
@@ -228,11 +235,13 @@
       <bpmn:outgoing>F19</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_QcPass" name="QC clean?">
+      <bpmn:documentation>Decided in the reviewer's QC gate (Task_Qa, `quality-control`) over qa.json, the aggregate of per-artefact outcomes, reading the cone's rows first. `no` files each QC finding as a bean, checking for an existing one first, and returns the findings to the author. `yes` goes on to deploy.</bpmn:documentation>
       <bpmn:incoming>F19</bpmn:incoming>
       <bpmn:outgoing>F20</bpmn:outgoing>
       <bpmn:outgoing>F22</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
+      <bpmn:documentation>QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:bean op="note" />
@@ -244,6 +253,7 @@
       <bpmn:incoming>F21</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:exclusiveGateway id="Gateway_Path" name="PR branch, or&#10;main / release?">
+      <bpmn:documentation>Answered by the push that started the process. `PR branch` is the review path: deploy the preview, which never seeds the shared cache. `main / release` is the publish path: deploy the site after a human has authorised the release, then seed the cache, which writes to a -test branch, verifies a restore from a clean clone, and only then promotes. Only this branch reaches the lane allowed to touch the shared cache.</bpmn:documentation>
       <bpmn:incoming>F22</bpmn:incoming>
       <bpmn:outgoing>F23</bpmn:outgoing>
       <bpmn:outgoing>F25</bpmn:outgoing>
@@ -261,6 +271,7 @@
       <bpmn:incoming>F24</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Deploy" name="Deploy the site&#10;[content-publish] [ig-publication]">
+      <bpmn:documentation>Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:fulfilment kinds="person system" reason="deploying the built site is mechanical; the lane records who is accountable for what is live, and its name “Publication manager — deploy and seed” says so. A publication manager may also deploy by hand." />
         <folio:skill ref="content-publish" />

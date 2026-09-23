@@ -77,3 +77,14 @@ a per-content-type process, and this package owns what "adequate" means in its
 domain. That is licence to adapt the sequence, not to skip the gate — the base
 processes it feeds (`editing-hci-validation`, `content-lifecycle`) stay strict.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[L2 DAK authoring](../../processes/l2-dak-authoring.html)**.
+
+<img src="../../assets/img/workflows/l2-dak-authoring.svg" alt="BPMN diagram: L2 DAK authoring" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Personas and scenarios; Data dictionary and core data elements; Indicators and requirements |
+

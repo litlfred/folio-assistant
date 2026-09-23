@@ -327,3 +327,11 @@ Match user-accessibility note in AGENTS.md:
 - Numbered choices when integration is non-obvious
 - Run small fixes proactively; flag big ones
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Address the review |
+| [Content Change and Review](../../processes/content-change-review.html) | Open the branch-watch bean; Note the main-branch watch |
+

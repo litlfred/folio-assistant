@@ -77,3 +77,11 @@ Quality gates on the aggregate are `quality-control`; publishing is
 `ig-publication`. Keep them separate — a validator's verdict is an input to the
 QC reviewer's decision, not the decision.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Validate the cone (fhir_validate) |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Validate against profiles |
+

@@ -334,3 +334,10 @@ content object:
 6. **Could not determine?** Stop. Ask in the Step 5 frame. Do not default to
    the repo you are in.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Run placement, and raise a bean for the authoring |
+

@@ -125,6 +125,8 @@
  */
 import { z } from "zod";
 
+import { nodeKind } from "./node-kind.js";
+
 /**
  * The three layouts a theme must define.
  *
@@ -758,6 +760,19 @@ export interface DeclaredImage {
    * above describes.
    */
   textRegion?: { x: number; y: number; w: number; h: number } | undefined;
+  /**
+   * The part of this image that IS the avatar, in fractions of it — `603s`.
+   *
+   * Structural for the same reason as `textRegion`, and declared per IMAGE
+   * rather than per role because the cat sits in a different place in every
+   * composition: the seven measured boxes share no two values.
+   *
+   * A consumer wanting an avatar wants the CARD layout, because
+   * `KgImageSchema` refuses a non-square box in PIXELS and only the square
+   * crop can satisfy that. Equal fractions on a landscape image are a box
+   * 1.78x wider than tall, and the clip scales width and height separately.
+   */
+  avatarRegion?: { x: number; y: number; w: number; h: number } | undefined;
 }
 
 /** What {@link resolveThemeBackdrop} found, so a caller can REPORT a gap. */
@@ -850,6 +865,12 @@ export const ThemedTodoFieldsSchema = z
   })
   .strict();
 export type ThemedTodoFields = z.infer<typeof ThemedTodoFieldsSchema>;
+
+/**
+ * `themed` as a mixin node kind: a parent a kind declares to carry a `theme`.
+ * No `$schema` of its own; it is a layer, not a file type (bean `a1lq`).
+ */
+export const ThemedKind = nodeKind("themed", [], ThemedTodoFieldsSchema.shape);
 
 /**
  * Every user-facing string a theme contributes, for extraction.

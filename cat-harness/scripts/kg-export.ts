@@ -48,6 +48,7 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -72,7 +73,7 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
-import { tools } from "../tools/index.js";
+import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
@@ -232,6 +233,19 @@ export function buildContext(): Record<string, unknown> {
     sourceCommitAt: { "@id": termIri("sourceCommitAt"), "@type": `${XSD}dateTime` },
     sourceTreeDirty: { "@id": termIri("sourceTreeDirty"), "@type": `${XSD}boolean` },
     sourceCommitUnavailable: termIri("sourceCommitUnavailable"),
+
+    // §3.4's published dependency set. `uri` is a LINK — it is the thing a
+    // consumer dereferences, and a bare string here would be the `inSubgraph`
+    // mistake: a second, unresolvable way of naming something that resolves.
+    // `version` is NOT redeclared here: it is already `schema:softwareVersion`
+    // above, and a dependency's version is a software version. A second
+    // `folio:version` beside it would be two names for one term in one
+    // document — the exact drift the single term table exists to stop.
+    dependsOn: termIri("dependsOn"),
+    packageId: termIri("packageId"),
+    uri: { "@id": termIri("uri"), ...link },
+    dependsOnGaps: termIri("dependsOnGaps"),
+    dependsOnUnavailable: termIri("dependsOnUnavailable"),
 
     // Edges. Each of these is a LINK, not a string — see above.
     partOf: { "@id": termIri("partOf"), ...link },
@@ -727,6 +741,35 @@ interface Export {
    * for a missing field.
    */
   sourceCommitUnavailable?: string;
+  /**
+   * §3.4's published dependency set — `{packageId, version, uri}` per edge.
+   *
+   * Present only when THIS instance declares `publishable: true`. An undecided
+   * instance emitting one would assert a published dependency set for
+   * something nobody has said is published, which is the ceremony §3.1 is
+   * written against — and `dependsOnUnavailable` says so in that case rather
+   * than leaving an absent field to be read as "depends on nothing".
+   */
+  dependsOn?: readonly DependsOnRecord[];
+  /**
+   * Edges that could NOT become a record, each carrying which of the four
+   * reasons applies.
+   *
+   * The `dh4f` rule applied to an edge: `dependsOn: []` beside four
+   * unpublishable dependencies would state that this instance depends on
+   * nothing, which is false. Present only alongside `dependsOn`.
+   */
+  dependsOnGaps?: readonly DependsOnGap[];
+  /**
+   * Why there is no `dependsOn`, when the reason is not an empty dependency
+   * set.
+   *
+   * Same contract as `sourceCommitUnavailable`: present exactly when the field
+   * it explains is absent for a reason, so a consumer never infers one. Today
+   * every instance is undecided, so every export carries this — which is the
+   * honest reading of the repository rather than a silence over it.
+   */
+  dependsOnUnavailable?: string;
   /** Node counts by `@type`, so a consumer can spot a truncated graph. */
   counts: Record<string, number>;
   /**
@@ -1539,7 +1582,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
   let defs;
   try {
     // The SAME base the document is published against — see tools/index.ts.
-    defs = tools(base);
+    defs = toolsOf(ROOT, base);
   } catch (e) {
     problems.push(`tools/ did not load: ${e instanceof Error ? e.message : String(e)}`);
     return [];
@@ -1613,7 +1656,7 @@ function collectSchemas(doc: string, base: string): Node[] {
   // Tool → artefact, inverted once so each schema node can name its keeper.
   const keeper = new Map<string, string[]>();
   try {
-    for (const t of tools(base)) {
+    for (const t of toolsOf(ROOT, base)) {
       for (const m of t.maintains ?? []) {
         keeper.set(m.source, (keeper.get(m.source) ?? []).concat(makeIri(doc, "tool", t.id)));
       }
@@ -2380,6 +2423,17 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     }
   }
 
+  // §3.4. Computed over the instance being EXPORTED, not over this one — a
+  // foreign instance's document states that instance's dependency set, and
+  // reading it from `ROOT` would publish cat-harness's stack under
+  // bootstrap's name. Same seam, same reason, as `schemaAudit` above.
+  const deps = dependsOnFor(exportedInstance);
+  const dependsOnFields = {
+    ...(deps.unavailable === undefined
+      ? { dependsOn: deps.records, ...(deps.gaps.length > 0 ? { dependsOnGaps: deps.gaps } : {}) }
+      : { dependsOnUnavailable: deps.unavailable }),
+  };
+
   const counts: Record<string, number> = {};
   for (const n of graph) {
     // Strip WHICHEVER namespace applies. A single `.replace(FOLIO_NS, "")`
@@ -2405,6 +2459,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...(instanceOnly ? { omitted: instanceOnly.omitted } : {}),
     generatedAt: new Date().toISOString(),
     ...commitFields,
+    ...dependsOnFields,
     counts,
     problems,
     undeclaredTerms: undeclaredTerms(graph, buildContext()),

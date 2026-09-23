@@ -21,7 +21,7 @@
  * and not free. So a literal naming a declared directory is allowed when:
  *
  *  - **it names a FILE that exists.** Authored prose naming one specific
- *    artefact — `source: "methodologies/crdm/processes/crdm-requirements.bpmn"` in a docs
+ *    artefact — `source: "processes/crdm-requirements.bpmn"` in a docs
  *    page — is not discovery and no declaration would answer it. Eighteen of
  *    these are correct and must stay. They are **checked to resolve**, which
  *    closes the `blv9` defect class (a link-shaped value that does not
@@ -143,9 +143,58 @@ const BASELINE = join(root, "scripts", "declared-path-baseline.json");
  */
 function declaredPrefixes(root: string): string[] {
   return resolveDirectories([{ name: "(local)", root, own: true }])
+    .filter((d) => !isAddressedByPath(d))
     .map((d) => d.path.replace(/\/+$/, ""))
     .filter((p) => p.length > 0)
     .sort((a, b) => b.length - a.length);
+}
+
+/**
+ * Is this directory one you address BY PATH on purpose, rather than one you
+ * DISCOVER through the declaration?
+ *
+ * ## Why the distinction, and why it had to be drawn
+ *
+ * This gate's rule is in its header: *a path a declaration could have answered
+ * is not written down in code*. Every prefix it guarded when it was written
+ * was a graph whose access pattern is discovery — `workflowDirs()` answers
+ * "where are the processes", so a literal `processes/` is a site that would
+ * break under a topical split.
+ *
+ * **A declaration cannot answer "which script is the gate runner".** Code
+ * directories are named by path deliberately: `package.json` and the CI
+ * workflows invoke `cat-harness/scripts/*.ts` by name, which is precisely what
+ * `check:ci-invocations` and `check:command-paths` exist to keep honest. There
+ * is no helper to reach for, so the finding this gate would raise names no
+ * remedy.
+ *
+ * ## Measured, 2026-09-22, bean `ylj7`
+ *
+ * Declaring the four code directories took this gate from 0 refusals to
+ * **822**, against a recorded baseline of 38 — a twentyfold jump, in one
+ * change, with not one of them a real instance of the defect the gate
+ * describes. A baseline bump would have hidden that; it would also have raised
+ * the bar under every prefix where the rule DOES apply, which is the failure
+ * mode a shared baseline has.
+ *
+ * So the scope is narrowed at the premise instead. The rule is unchanged for
+ * every kind it was written for.
+ *
+ * ## It is a property of the KIND, never of the path
+ *
+ * Keyed on `code`, not on the strings `src`/`scripts`. Matching on a path
+ * would exempt any future directory that happened to be called `scripts/`,
+ * including one holding a graph you genuinely discover — and it would stop
+ * exempting this one the moment it moved, which is the same reason overrides
+ * here match on an entry's `id` rather than its `path`.
+ *
+ * A directory holding `code` AND a discoverable kind is NOT exempt: the
+ * discoverable half is the access pattern that needs guarding, and a directory
+ * is a place to look that may hold more than one part of a graph.
+ */
+function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
+  const kinds = d.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => k === "code");
 }
 
 /**

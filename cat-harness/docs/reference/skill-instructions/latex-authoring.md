@@ -69,3 +69,10 @@ attempted** — not that it failed, and certainly not that it produced nothing
 because there was nothing to produce. `check-deps` is how you find out what the
 environment actually has; the capability is `latex-compiler`.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 7 · Render PDF / HTML |
+

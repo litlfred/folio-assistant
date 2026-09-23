@@ -556,6 +556,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "consultation, and it is how `consulted` quietly becomes a formality.",
   },
   {
+    id: "raci-involvement-vocabulary",
+    applies: ["process"],
+    // `major`, matching its two neighbours above, and the reasoning is the
+    // same: every role named exists, so this is not a dangling reference. It
+    // is a modelling error — a letter the process's chosen vocabulary does
+    // not admit, which until 2026-09-23 was discarded during parsing with
+    // nothing reporting it, so the chart read as complete while an
+    // involvement somebody wrote had simply evaporated.
+    severity: "major",
+    summary:
+      "A `<folio:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
+      "`supportive` where only RACI's four letters are in force. The value is neither coerced to a " +
+      "neighbouring letter nor silently dropped; a process opts in to the fifth letter with " +
+      "`<folio:involvement vocabulary=\"rasci\"/>`.",
+  },
+  {
     id: "activity-fulfilment-kind",
     applies: ["process"],
     // `major`. Nothing dangles — both ends of this join resolve — so it is not
@@ -589,6 +605,112 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "activity's skill exemption safe — without it, a typo in `calledElement` would satisfy both criteria and " +
       "implement the step with nothing at all. A target this instance cannot load is `unknown`, not `fail`: it may " +
       "be hosted elsewhere, and an audit that cannot tell must not claim it can.",
+  },
+  // ── Documentation completeness (bean `ooq3`, issue #1007) ─────────────
+  //
+  // The three criteria below ask whether a diagram can be READ, not whether it
+  // runs. Every join above can pass over a process nobody can find: on
+  // 2026-09-23 every one of 62 diagrams had a fresh SVG and `render:bpmn:check`
+  // was green, while 45 of them were shown on no page. `adjudication.bpmn` was
+  // one — drawn, rendered, merged, and reachable only by typing its URL.
+  {
+    id: "process-diagram-published",
+    applies: ["process"],
+    // `major`: the diagram exists and is correct, so nothing dangles — what is
+    // absent is the page a reader would meet it on, which the scale calls major.
+    severity: "major",
+    summary:
+      "The rendered diagram is shown on no docs page. A fresh SVG proves `render:bpmn` ran, not that anybody can " +
+      "reach the picture; the per-process pages `gen-processes-viz.ts` writes are what make this pass. `unknown` when " +
+      "no docs layer is declared — an audit that could not look must not report a clean page.",
+  },
+  {
+    id: "activity-documented",
+    applies: ["process"],
+    // `minor`, and deliberately not gated. A step's NAME is often enough; the
+    // measurement (95 of 456 undocumented) is the backlog, not a verdict that
+    // each one is wrong.
+    severity: "minor",
+    summary:
+      "An activity carries no `<bpmn:documentation>`, so its page can show a name and nothing about what the step " +
+      "is for. The process-level documentation is not a substitute: it says why the diagram exists, not what one " +
+      "step asks of its performer.",
+  },
+  {
+    id: "activity-calls-skill-process",
+    applies: ["process"],
+    // `minor` because the rule is a heuristic and says so. It fires only when
+    // exactly ONE step in a diagram names a skill that owns a same-named
+    // process: several steps naming one skill are using its know-how as steps
+    // (five in `refresh-materialized` name `materialize-remote`), which a call
+    // activity would get wrong. The raw match was 24; the rule leaves 9.
+    severity: "minor",
+    summary:
+      "A single step names a skill that has its own process of the same name, but is a plain task rather than a " +
+      "call activity — so the diagram re-describes the procedure instead of descending into it, and the called " +
+      "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
+      "records that it uses the skill for one slice rather than running its whole process.",
+  },
+  // ── Documentation completeness past activities (bean `6hq4`, issue #1044) ─
+  //
+  // Measured 2026-09-23 over all 62 diagrams: 123 gateways — 102 diverging
+  // exclusive (DECISIONS), 9 converging exclusive, 6 parallel forks, 6 joins,
+  // no inclusive (the model refuses them). 104 of 123 had no documentation, 83
+  // of them decisions. Of 220 branches out of a decision, 0 were unnamed and 0
+  // repeated a sibling's label; of 174 start/end events, 0 were unnamed — so
+  // there is no event criterion, and lanes are `check:lane-documentation`'s.
+  {
+    id: "gateway-documented",
+    applies: ["process"],
+    // `minor` and not gated, like `activity-documented`: 83 is a backlog, and
+    // a well-named question with well-named branches often reads without
+    // prose. Only DECISIONS are asked — a merge, fork or join decides nothing,
+    // and its BPMN symbol already says everything true of it.
+    severity: "minor",
+    summary:
+      "A decision (an exclusive gateway with more than one way out) carries no `<bpmn:documentation>`, so its page " +
+      "shows the question and not what answers it: who decides, from what evidence, and what each branch commits " +
+      "the process to. A DMN table or a `<folio:judgement reason>` is not a substitute — it says how the answer is " +
+      "reached, not what is being asked.",
+  },
+  {
+    id: "gateway-branches-named",
+    applies: ["process"],
+    // `minor`, and it reads 0 on the day it was added: it holds a line the
+    // corpus already meets rather than opening a backlog. Not `major`, because
+    // an engine routes an unnamed branch correctly — what is lost is the
+    // READER's ability to say which answer leads where.
+    severity: "minor",
+    summary:
+      "A branch out of a decision has no name, or repeats a sibling's label, so a reader cannot tell which answer " +
+      "takes it. Every branch of a decision needs a label distinct from the others on the same gateway.",
+  },
+  {
+    id: "prose-reviewed-since-code-changed",
+    applies: ["process", "skill"],
+    // `minor` and not gated (R7, issue #1042): it asserts nothing about
+    // whether the prose is TRUE, only that the code moved while the prose
+    // describing it stood still. Gating waits for a clean run to show it does
+    // not cry wolf — the lesson of bean `77ex`.
+    severity: "minor",
+    summary:
+      "A declared prose ↔ code pair — a diagram's <folio:implements workflow>, or a skill .md beside its same-stem .ts — " +
+      "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
+      "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
+  },
+  {
+    id: "prose-claims-resolve",
+    applies: ["process", "skill"],
+    // `minor`, advisory (R7). Stage A of #1042: what the prose side of a
+    // declared pair says about the code side, checked where it names a
+    // resolvable thing. Measured before it shipped: 1 false, 23 holding and
+    // 10 undetermined claims over 32 pairs — the undetermined are a folio's
+    // files and scripts, which is why they are never counted as false.
+    severity: "minor",
+    summary:
+      "The prose of a declared prose ↔ code pair names something that does not exist: a symbol not declared in the module " +
+      "it cites, a module missing from a directory that exists here, a `bun run` file that is not there, or a " +
+      "`<folio:job>` the workflow does not have. `unknown` when every parsed claim pointed outside this repository.",
   },
   {
     id: "role-skills-resolve",
@@ -966,6 +1088,24 @@ export interface KgQaReport {
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
+  /**
+   * Declared prose ↔ code pairs and the state each was last accepted in —
+   * carried ACROSS runs, unlike everything above, because it is the baseline
+   * `prose-reviewed-since-code-changed` compares against. Written by
+   * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
+   */
+  pair_attestations?: KgPairAttestation[];
+}
+
+/** One declared pair's accepted state. Paths are repo-relative. */
+export interface KgPairAttestation {
+  kind: "implements" | "co-located";
+  prose: string;
+  code: string;
+  prose_hash: string;
+  code_hash: string;
+  by: "baseline" | "agent" | "human";
+  reason?: string;
 }
 
 export const KgFindingSchema = z.object({
@@ -988,6 +1128,19 @@ export const KgQaReportSchema = z.object({
   source_hash: z.string().nullable(),
   criteria: z.record(z.string(), KgCriterionEntrySchema),
   totals: z.record(z.enum(KG_RESULTS), z.number()),
+  pair_attestations: z
+    .array(
+      z.object({
+        kind: z.enum(["implements", "co-located"]),
+        prose: z.string().min(1),
+        code: z.string().min(1),
+        prose_hash: z.string().min(1),
+        code_hash: z.string().min(1),
+        by: z.enum(["baseline", "agent", "human"]),
+        reason: z.string().min(1).optional(),
+      }),
+    )
+    .optional(),
 });
 
 export const KgQaManifestSchema = z.object({

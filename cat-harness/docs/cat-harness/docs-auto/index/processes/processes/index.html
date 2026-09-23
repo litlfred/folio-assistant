@@ -43,8 +43,8 @@
 </div>
 
 <ul class="subs">
-<li><a href="../methodology-crdm-processes/">methodology-crdm-processes</a> <span class="p">cat-harness/methodologies/crdm/processes</span> <span class="n">8</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">52</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
+<li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
 <table>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>Adjudication</code></a><br><span class="p">cat-harness/processes/adjudication.bpmn</span></td>
-  <td>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Feedback provider · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, untainted-verification</div></td>
+  <td>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Feedback provider · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, untainted-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">cat-harness/processes/atomic-mass-drift-check.bpmn</span></td>
@@ -108,7 +108,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>Content Change and Review</code></a><br><span class="p">cat-harness/processes/content-change-review.bpmn</span></td>
-  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 23</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline</div><div class="f"><span class="k">skills</span> content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge-auto, semantic-review-scoping, staging-review, todo-manager, watch</div></td>
+  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 29</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, semantic-review-scoping, staging-review, todo-manager, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">cat-harness/processes/content-lifecycle.bpmn</span></td>
@@ -119,12 +119,48 @@
   <td>Materialized content is read-only.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reader (any actor) · Source graph — read-only · Copier's own folio/ · Verification</div><div class="f"><span class="k">skills</span> copy-out-materialized</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-close.bpmn"><code>CRDM close-out</code></a><br><span class="p">cat-harness/processes/crdm-close.bpmn</span></td>
+  <td>The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-data-model.bpmn"><code>CRDM data model</code></a><br><span class="p">cat-harness/processes/crdm-data-model.bpmn</span></td>
+  <td>Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-data-model</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>CRDM Phase 6 — implement, MVP, acceptance</code></a><br><span class="p">cat-harness/processes/crdm-deliver.bpmn</span></td>
+  <td>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, delivery-summary, feature-staging, prepare-merge</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-issue-linking.bpmn"><code>CRDM — link the work to an issue</code></a><br><span class="p">cat-harness/processes/crdm-issue-linking.bpmn</span></td>
+  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-needs.bpmn"><code>CRDM Phase 1 — needs</code></a><br><span class="p">cat-harness/processes/crdm-needs.bpmn</span></td>
+  <td>Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-requirements-definition.bpmn"><code>CRDM Phases 2–4 — BPA and requirements</code></a><br><span class="p">cat-harness/processes/crdm-requirements-definition.bpmn</span></td>
+  <td>Map the current workflow, then define the requirements and the impact they carry, and loop until approved.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> bpmn-authoring, content-graph, crdm-requirements-workflow, decision-comparison</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-requirements.bpmn"><code>CRDM requirements</code></a><br><span class="p">cat-harness/processes/crdm-requirements.bpmn</span></td>
+  <td>The CRDM requirements process, decomposed.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-detect, crdm-requirements-workflow</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-signoff.bpmn"><code>CRDM Phase 5 — beans and sign-off</code></a><br><span class="p">cat-harness/processes/crdm-signoff.bpmn</span></td>
+  <td>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit, kg-contribution-offer, placement, todo-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>Criterion adjudication</code></a><br><span class="p">cat-harness/processes/criterion-adjudication.bpmn</span></td>
+  <td>Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Adjudicator</div><div class="f"><span class="k">skills</span> adjudication</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>Publishing the docs site, and keeping the previews alive</code></a><br><span class="p">cat-harness/processes/docs-site-publish.bpmn</span></td>
   <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>Document ingestion — uploads/ to the L1 source knowledge graph</code></a><br><span class="p">cat-harness/processes/document-ingestion.bpmn</span></td>
-  <td>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, todo-manager</div></td>
+  <td>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, theme-art-intake, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>Draft, review and publish</code></a><br><span class="p">cat-harness/processes/draft-to-publication.bpmn</span></td>
@@ -199,8 +235,16 @@
   <td>One process, called wherever remote content is landed locally.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>Adopt a methodology from a source document</code></a><br><span class="p">cat-harness/processes/methodology-from-source.bpmn</span></td>
+  <td>The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refuse…<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Owner · Agent</div><div class="f"><span class="k">skills</span> adopt-methodology-from-source, methodology-adoption</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>Prose and the code it describes</code></a><br><span class="p">cat-harness/processes/narrative-code-review.bpmn</span></td>
+  <td>Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reviewer</div><div class="f"><span class="k">skills</span> content-feedback, narrative-asserts-code</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>Options analysis</code></a><br><span class="p">cat-harness/processes/options-analysis.bpmn</span></td>
-  <td>A decision reached by a NAMED methodology, with its rejected options recorded.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Business analyst</div><div class="f"><span class="k">skills</span> decision-audit, methodology-adoption, opening-brief</div></td>
+  <td>A decision reached by a NAMED methodology, with its rejected options recorded.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Business analyst</div><div class="f"><span class="k">skills</span> decision-audit, literature-search, methodology-adoption, opening-brief</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>Which open pull requests have no CI run on their head?</code></a><br><span class="p">cat-harness/processes/pr-checks-present.bpmn</span></td>
@@ -213,6 +257,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>Refresh materialized remote content</code></a><br><span class="p">cat-harness/processes/refresh-materialized.bpmn</span></td>
   <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/related-work.bpmn</span></td>
+  <td>Before new work takes shape, find the work it touches.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Agent · User</div><div class="f"><span class="k">skills</span> related-work-coordination</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
@@ -228,7 +276,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>Review task</code></a><br><span class="p">cat-harness/processes/review-task.bpmn</span></td>
-  <td>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reviewer / SME · Editors + authoring agents</div><div class="f"><span class="k">skills</span> content-review, content-validate, semantic-review-scoping</div></td>
+  <td>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Reviewer / SME · Editors + authoring agents</div><div class="f"><span class="k">skills</span> content-review, content-validate, semantic-review-scoping</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>Session state machine</code></a><br><span class="p">cat-harness/processes/session-state-machine.bpmn</span></td>
@@ -237,6 +285,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>Render log — the publish branch keeps its own history</code></a><br><span class="p">cat-harness/processes/staging-render-log.bpmn</span></td>
   <td>Every change to the publish branch appends an entry to `_render-log/&lt;day&gt;.jsonl`.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> render-logging</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/swot-analysis.bpmn"><code>SWOT situation analysis</code></a><br><span class="p">cat-harness/processes/swot-analysis.bpmn</span></td>
+  <td>Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Business analyst · Stakeholder</div><div class="f"><span class="k">skills</span> methodology-adoption, swot-analysis</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>Post-MVP theme and UI review</code></a><br><span class="p">cat-harness/processes/theme-ui-review.bpmn</span></td>
@@ -257,6 +309,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>Voice overlay review</code></a><br><span class="p">cat-harness/processes/voice-review.bpmn</span></td>
   <td>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, voice-overlay-review</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/wireframe-design-review.bpmn"><code>Wireframe design review</code></a><br><span class="p">cat-harness/processes/wireframe-design-review.bpmn</span></td>
+  <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
 </tr>
 </tbody>
 </table>

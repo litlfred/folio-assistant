@@ -476,6 +476,7 @@ function claudeSettings(assistant: string): string {
 function gitignore(o: InitFolioOptions): string {
   return `# Build output
 build/
+_site/
 .folio-feedback/
 node_modules/
 
@@ -486,6 +487,127 @@ bib-qa.json
 .DS_Store
 *.swp
 ${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n" : ""}`;
+}
+
+/**
+ * The folio's before/after preview: a caller of the platform's reusable
+ * `folio-staging.yml` (bean `ojcx`). Without it a folio in its own repository
+ * gets no STAGING build, and a reviewer has no "after" to compare.
+ *
+ * **A document folio gets it ON**, building with the platform's
+ * `build-document-site.ts` (bean `fyu2`). That command was rehearsed end to
+ * end on a folio this function scaffolds: site, ChangeSet and banner.
+ *
+ * **A paper folio gets it OFF**: dispatch-only, with a build step that
+ * refuses. A paper builds through `publish.yml` (LaTeX, a folio-supplied
+ * builder image), and the site a reviewer should see from that is the
+ * folio's to name. A guessed command would publish a preview built by
+ * something the author never chose.
+ */
+function stagingWorkflow(assistant: string, contentType: InitFolioOptions["contentType"]): string {
+  const on = contentType === "document";
+  const build = on
+    ? `bun run ${assistant}/cat-harness/scripts/build-document-site.ts --out _site`
+    : `echo "::error::set build_command in .github/workflows/staging.yml to build this folio''s site" && exit 1`;
+  const header = on
+    ? `# The site is built by the platform's build-document-site.ts: one page per
+# document, with an anchor on every labelled block.`
+    : `# TO ENABLE (a paper folio builds through publish.yml, so its site is yours
+# to name):
+#   1. Set build_command below to the command that builds this folio's site.
+#   2. Uncomment the pull_request trigger.
+# Until then it runs only when dispatched, and the build step refuses.`;
+  // `issue_comment` refreshes the preview's review comments when a reviewer
+  // writes one (bean 423d, the `review-comments` skill). The reusable
+  // workflow's `comments` job runs only on it, and checks out no PR code.
+  const trigger = on
+    ? `  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created, edited]
+  workflow_dispatch:`
+    : `  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  # issue_comment:
+  #   types: [created, edited]`;
+  return `name: Staging preview
+
+# A before/after preview of this folio for every pull request, published to
+# STAGING/<branch>/ on gh-pages, with the ChangeSet (what changed, block by
+# block) beside it. The mechanics live in the platform's reusable workflow.
+#
+${header}
+
+on:
+${trigger}
+
+# What the reusable workflow needs, and no more: publish the preview, comment
+# on the pull request, and read its comments for the review page.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  staging:
+    uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main
+    with:
+      build_command: '${build}'
+      site_dir: _site
+      folio_dir: folio
+      platform_dir: ${assistant}
+`;
+}
+
+/**
+ * The folio's todos graph: people's outstanding items, and FEEDBACK raised
+ * against a block. Bean `423d`.
+ *
+ * `feedback` (graph kind `todo-feedback`) is where a review-process task
+ * commits a reviewer's comment when it decides what happens to it
+ * (`folio-review-comment-move`, on the edit-set's feature branch, per the
+ * owner's ruling). Without the declaration the first recorded decision on a
+ * new folio stops with "declares no directory of graph kind todo-feedback",
+ * so a folio gets it from the start.
+ *
+ * `verdicts` (graph kind `review-verdicts`) is where the review coordinator
+ * commits reviewers' per-block verdicts (`folio-review-coverage --commit`,
+ * bean `px0t`). Declared from the start for the same reason.
+ *
+ * No `defaultTheme`: a folio's own theme is the folio's to choose, and a
+ * literal here would impose one on every new folio.
+ */
+function todosGraph(slug: string): string {
+  return JSON.stringify(
+    {
+      name: slug,
+      directories: [
+        {
+          id: "items",
+          path: "items",
+          graphKinds: ["todo-items"],
+          description: "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter: a person's outstanding item.",
+        },
+        {
+          id: "feedback",
+          path: "feedback",
+          graphKinds: ["todo-feedback"],
+          description:
+            "Todos raised against a specific block. Review comments land here as `folio-review-comment/v1` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
+        },
+        {
+          id: "verdicts",
+          path: "verdicts",
+          graphKinds: ["review-verdicts"],
+          description:
+            "Reviewers' per-block verdicts, one `folio-review-verdict/v1` JSON each, pinned to the block's hash and committed on the edit-set's feature branch by the review coordinator (`folio-review-coverage --commit`).",
+        },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
 }
 
 function beansYml(slug: string): string {
@@ -629,10 +751,24 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
+  write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
+  if (o.contentType !== "document") {
+    result.notes.push(
+      "Staging previews are wired but OFF: set build_command in .github/workflows/staging.yml " +
+        "and uncomment its pull_request trigger. Until then there is no STAGING build to review.",
+    );
+  }
   // declared-path-literal: the scaffolder CREATES the layout. There is no
   // declaration to read in a repo that does not exist yet — this is the
   // write that makes one possible.
   write("beans/.gitkeep", "");
+  // The todos graph, and both directories it declares: declaring a directory
+  // that does not exist is the `dh4f` defect (a consumer scans nothing and
+  // reports a clean run). declared-path-literal: scaffolding the layout, as above.
+  write("todos/todos.json", todosGraph(o.slug));
+  write("todos/items/.gitkeep", "");
+  write("todos/feedback/.gitkeep", "");
+  write("todos/verdicts/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
   // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.

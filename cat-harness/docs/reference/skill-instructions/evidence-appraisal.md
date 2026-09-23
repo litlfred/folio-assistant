@@ -102,3 +102,10 @@ are in the right repository at all.
 - Clinical SME (domain judgement, where the question is clinical)
 - Content Reviewer (checks the grade's reasons survive, not the grade itself)
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Appraise and grade the body of evidence |
+

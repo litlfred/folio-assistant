@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "processes/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:14cbfa6074619e9c6f2eca0234c7dc46cb06e87e737655f23b2df4a85d014a18",
+  "source_hash": "sha256:7844c74ed28090fec54101ae67a43f0cb1edef020488f5e154ef8822dd8e6bed",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,55 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Drift",
+          "detail": "\"Did anything&#10;change?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 13,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/atomic-mass-drift-check.bpmn",
+      "code": ".github/workflows/atomic-mass-gen-check.yml",
+      "prose_hash": "7844c74ed280",
+      "code_hash": "92f3675a0e49",
+      "by": "baseline"
+    }
+  ]
 }

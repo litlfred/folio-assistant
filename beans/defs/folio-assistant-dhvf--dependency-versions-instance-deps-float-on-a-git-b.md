@@ -153,7 +153,7 @@ sufficient pin; the third message bars a SHA from a published reference. C is
 npm-style ranges; FHIR pins exact versions and a downstream aligning to FHIR
 cannot be handed ranges. **Option A, on the rules rather than the registry.**
 
-Full scheme drafted: [`fsh-guts/proposals/instance-versioning.md`](../../fsh-guts/proposals/instance-versioning.md).
+Full scheme drafted: [`cat-harness/docs/proposals/instance-versioning.md`](../../cat-harness/docs/proposals/instance-versioning.md).
 
 Three defects found while establishing the ground, all the `xom7` shape and
 none of them this bean's to fix:
