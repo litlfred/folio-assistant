@@ -540,27 +540,33 @@ function walk(dir: string): string[] {
   return out;
 }
 
-const check = process.argv.includes("--check");
-const files = await build();
-const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT)];
-// Only this generator's own kinds of output count as orphans.
-const orphans = existing.filter((p) => !files.has(p) && /\.(puml|mmd|md)$/.test(p));
+// Guarded: an import must write nothing. `declared-directory-resolves.test.ts`
+// imports every module that resolves a declared directory, and an unguarded
+// run rewrote the generated files on import (in CI, where the output differs).
+async function main(): Promise<void> {
+  const check = process.argv.includes("--check");
+  const files = await build();
+  const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT)];
+  // Only this generator's own kinds of output count as orphans.
+  const orphans = existing.filter((p) => !files.has(p) && /\.(puml|mmd|md)$/.test(p));
 
-if (check) {
-  const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
-  if (stale.length || orphans.length) {
-    for (const p of stale) console.error(`stale: ${relative(REPO, p)}`);
-    for (const p of orphans) console.error(`orphan: ${relative(REPO, p)}`);
-    console.error(`run: bun run ${GENERATOR}`);
-    process.exit(1);
+  if (check) {
+    const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
+    if (stale.length || orphans.length) {
+      for (const p of stale) console.error(`stale: ${relative(REPO, p)}`);
+      for (const p of orphans) console.error(`orphan: ${relative(REPO, p)}`);
+      console.error(`run: bun run ${GENERATOR}`);
+      process.exit(1);
+    }
+    console.log(`UML overview is current — ${files.size} file(s)`);
+  } else {
+    for (const p of orphans) rmSync(p);
+    for (const [p, text] of files) {
+      mkdirSync(dirname(p), { recursive: true });
+      writeFileSync(p, text);
+    }
+    console.log(`wrote ${files.size} file(s) under ${relative(REPO, UML_ROOT)} and ${relative(REPO, DOCS_ROOT)}${orphans.length ? `; removed ${orphans.length} orphan(s)` : ""}`);
   }
-  console.log(`UML overview is current — ${files.size} file(s)`);
-} else {
-  for (const p of orphans) rmSync(p);
-  for (const [p, text] of files) {
-    mkdirSync(dirname(p), { recursive: true });
-    writeFileSync(p, text);
-  }
-  console.log(`wrote ${files.size} file(s) under ${relative(REPO, UML_ROOT)} and ${relative(REPO, DOCS_ROOT)}${orphans.length ? `; removed ${orphans.length} orphan(s)` : ""}`);
 }
 
+if (import.meta.main) await main();

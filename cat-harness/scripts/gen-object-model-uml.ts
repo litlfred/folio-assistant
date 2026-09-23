@@ -338,32 +338,39 @@ function render(classes: ClassDef[], edges: Edge[]): string {
 
 // ── main ──────────────────────────────────────────────────────────────────
 
-const check = process.argv.includes("--check");
-if (!existsSync(DAK_USER_STORY)) {
-  console.error(`could not determine: ${DAK_USER_STORY} is missing`);
-  process.exit(2);
-}
-const beans = beanAttrs();
-const { classes, edges } = build(beans);
-const problems = assertEdges(classes, edges);
-if (problems.length) {
-  console.error("Relationships not carried by their schema:\n  " + problems.join("\n  "));
-  process.exit(1);
-}
-const text = render(classes, edges);
-
-if (check) {
-  if (!beans) {
-    console.error("could not check: the beans CLI is not on PATH, so the Bean class cannot be derived");
+// Guarded: an import must write nothing. `declared-directory-resolves.test.ts`
+// imports every module that resolves a declared directory, and an unguarded
+// run rewrote the generated files on import (in CI, where the output differs).
+function main(): void {
+  const check = process.argv.includes("--check");
+  if (!existsSync(DAK_USER_STORY)) {
+    console.error(`could not determine: ${DAK_USER_STORY} is missing`);
     process.exit(2);
   }
-  const current = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
-  if (current !== text) {
-    console.error(`${OUT} is stale — run: bun run cat-harness/scripts/gen-object-model-uml.ts`);
+  const beans = beanAttrs();
+  const { classes, edges } = build(beans);
+  const problems = assertEdges(classes, edges);
+  if (problems.length) {
+    console.error("Relationships not carried by their schema:\n  " + problems.join("\n  "));
     process.exit(1);
   }
-  console.log("harness-object-model.puml is current");
-} else {
-  writeFileSync(OUT, text);
-  console.log(`wrote ${OUT} (${classes.length} classes, ${edges.length} relationships)`);
+  const text = render(classes, edges);
+
+  if (check) {
+    if (!beans) {
+      console.error("could not check: the beans CLI is not on PATH, so the Bean class cannot be derived");
+      process.exit(2);
+    }
+    const current = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
+    if (current !== text) {
+      console.error(`${OUT} is stale — run: bun run cat-harness/scripts/gen-object-model-uml.ts`);
+      process.exit(1);
+    }
+    console.log("harness-object-model.puml is current");
+  } else {
+    writeFileSync(OUT, text);
+    console.log(`wrote ${OUT} (${classes.length} classes, ${edges.length} relationships)`);
+  }
 }
+
+if (import.meta.main) main();
