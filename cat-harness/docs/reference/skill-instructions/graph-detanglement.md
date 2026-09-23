@@ -272,6 +272,9 @@ auto-dischargeable — they rename things and ripple through every reference.
 
 ## Related
 
+- [`graph-rendering`](graph-rendering.md) — drawing the graph being
+  partitioned, with each group's detangle numbers beside it. The UML overview
+  pages show them per sub-graph.
 - `placement.md` — the sibling SOP, for where a NEW node goes. Same shape:
   numbered steps, a stop, a closing checklist.
 - `covered-is-not-reachable` — the reachability half, and the rule that

@@ -575,6 +575,41 @@ function mmd(sections: Section[], withAttrs: boolean): string {
   return L.join("\n") + "\n";
 }
 
+// ── Detangle measurements ─────────────────────────────────────────────────
+//
+// Each sub-graph's row carries the detangle numbers for the same directory,
+// so the picture and the partition metric are read together (graph-rendering
+// rule 10; owner, 2026-09-23). Read from the detangle instance's declared
+// `detangle-results` directory. Pinned fields only: `kg-detangle.ts` pins
+// size, cohesion and the authority counts, never the verdict.
+
+interface DetangleNumbers {
+  size: number;
+  cohesion: number;
+  inbound: number;
+  outbound: number;
+}
+
+const DETANGLE_RESULTS: string | null = (() => {
+  for (const root of instanceRootsIn(REPO)) {
+    const entry = readDeclaration(root)?.directories.find((d) => d.id === "detangle-results");
+    if (entry) return join(root, entry.path);
+  }
+  return null;
+})();
+
+/** The pinned numbers for the detangle group at `path`, or null: not every directory is scanned. */
+function detangleOf(path: string): DetangleNumbers | null {
+  if (!DETANGLE_RESULTS) return null;
+  const file = join(DETANGLE_RESULTS, `${path.replace(/\/$/, "")}.detangle.json`);
+  if (!existsSync(file)) return null;
+  const j = JSON.parse(readFileSync(file, "utf8")) as Partial<DetangleNumbers>;
+  if ([j.size, j.cohesion, j.inbound, j.outbound].some((v) => typeof v !== "number")) {
+    throw new Error(`${relative(REPO, file)}: missing a pinned detangle number`);
+  }
+  return j as DetangleNumbers;
+}
+
 // ── Pages ─────────────────────────────────────────────────────────────────
 
 /**
@@ -640,14 +675,20 @@ function page(opts: {
     // a column three times taller. Owner, 2026-09-23.
     ...views(opts.svg, `UML class diagram of ${opts.title}: one package per named sub-graph, one class per node schema, with its data fields.`),
     "",
-    "| sub-graph | directory | graph kinds | node schema |",
-    "|---|---|---|---|",
+    "| sub-graph | directory | graph kinds | node schema | nodes | cohesion | in | out |",
+    "|---|---|---|---|---|---|---|---|",
   ];
   for (const s of opts.sections) {
     const found = [...new Set(s.classes.map((c) => c.source.replace(/^json: /, "")))];
     const missing = s.undetermined.map((u) => `${u.kind}: *could not determine*`);
-    L.push(`| \`${s.instance}/${s.id}\` | \`${s.path}\` | ${s.kinds.join(", ")} | ${[...found.map((f) => `\`${f}\``), ...missing].join("; ")} |`);
+    const m = detangleOf(s.path);
+    const measured = m ? `${m.size} | ${m.cohesion.toFixed(2)} | ${m.inbound} | ${m.outbound}` : "*not measured* | | |";
+    L.push(`| \`${s.instance}/${s.id}\` | \`${s.path}\` | ${s.kinds.join(", ")} | ${[...found.map((f) => `\`${f}\``), ...missing].join("; ")} | ${measured} |`);
   }
+  L.push(
+    "",
+    "*Nodes, cohesion, in and out* are the detangler's pinned measurements for the same directory (`bun run kg:detangle`; skill [`graph-detanglement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-detanglement.md)). *Not measured* means the detangler does not scan that directory, not that it has no edges.",
+  );
   if (opts.links?.length) {
     L.push("", "## Sub-graphs", "");
     for (const l of opts.links) L.push(`- [${l.label}](${l.href})`);
