@@ -1051,6 +1051,28 @@
      where it sits in the markup, so neither control needs the theme's
      `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
+  /* SHOWN WHENEVER THE BAR IS OPEN, not only while pinned — and only when the
+   * script is here to make it mean something.
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## Why `.fa-nav-js` guards it
+   *
+   * This control is a `<label for="fa-nav-open">`, and a label TOGGLES. While
+   * pinned that is exactly right: it unchecks and the bar closes, with no
+   * script at all, which is the property this file has protected twice. While
+   * the bar is open because a POINTER is on it the checkbox is already clear,
+   * so the same click would CHECK it — pinning the bar open, the opposite of
+   * what the control says.
+   *
+   * `mountNavPreference` intercepts that case and records a stay-closed
+   * preference instead. So the control is offered in the hover case only when
+   * that handler exists; with no script the pinned behaviour is unchanged and
+   * nothing new appears that would do the wrong thing.
+   */
+  .side-bar.fa-nav-js:hover .fa-nav-close,
+  .side-bar.fa-nav-js:focus-within .fa-nav-close,
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
     /* IN THE ICON ROW, not floating over the bar — owner, 2026-09-22: *"[x]
      * should be on the navbar w/ other icons"*.
@@ -1085,6 +1107,58 @@
     opacity: 0.75;
   }
   .fa-nav-close:hover { opacity: 1; }
+
+  /* STAY CLOSED — the second state bit, and the owner's choice of three.
+   *
+   * *"[x] appears whenever the bar is open. Pressing it sets a remembered
+   * 'stay closed' preference that stops the bar peeking on hover, on every
+   * page in that browser."*
+   *
+   * ## It re-asserts the rest state rather than guarding every open rule
+   *
+   * The bar opens through several rules — its width, the `--fa-nav-text` flag,
+   * the icon row's width and wrap. Adding a `:not([data-fa-nav="closed"])` to
+   * each would be four places to keep in step and one to forget. This block
+   * instead re-states the CLOSED geometry at a specificity that wins, in one
+   * place, so a new open rule is covered by whichever of these it fights.
+   *
+   * ## `:focus-within` IS DELIBERATELY NOT SUPPRESSED
+   *
+   * A keyboard reader tabs into `.site-nav` whether or not the bar looks open.
+   * Suppressing focus-opening would leave them moving through links they
+   * cannot see — a trap, and a worse defect than the one this fixes. Only the
+   * POINTER peek is withheld, which is the thing a reader asked to stop.
+   *
+   * The pinned checkbox is not suppressed either: `☰` is how the preference is
+   * lifted, and a control that did nothing would be the `l4zi` defect — an
+   * action whose inverse is not reachable is not a toggle. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+    padding-top: 2rem;
+  }
+  /* AND `[x]` GOES AWAY WITH THE OPEN STATE, because otherwise it lands ON
+   * the hamburger.
+   *
+   * Found by the test rather than by looking: Playwright reported *"`<span
+   * aria-hidden="true">x</span>` from `.fa-nav-close` subtree intercepts
+   * pointer events"* while trying to press `☰` — the control that LIFTS this
+   * preference was underneath the one that sets it.
+   *
+   * The arithmetic, once it was pointed at: `.fa-nav-close` is `right: 0.5rem`
+   * with a 1.75rem box and a 0.5rem margin, so in a 3.5rem strip it occupies
+   * roughly x 12-40 — inside the hamburger's full-width 0-56 band. It never
+   * collided before because it was only ever shown while PINNED, where the bar
+   * is 15.5rem wide and `☰` is hidden anyway. Showing it whenever the bar is
+   * open is what brought the two together, and only in this state, where the
+   * bar is hovered and still a strip. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
 }
 
 /* The control itself is never seen -- the two labels are the interface. A real
@@ -4780,6 +4854,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the folder list with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -4802,7 +4879,10 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-nav-folders__link {
-  display: block;
+  /* See the target-size block above `.fa-doc-index__link`. */
+  display: flex;
+  align-items: center;
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -5023,6 +5103,9 @@ button.fa-nav-icon {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the index with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -5044,8 +5127,64 @@ button.fa-nav-icon {
   list-style: none;
 }
 
+/* ═══ EVERY ROW IN THIS NAVBAR IS A TARGET ═════════════════════════════════
+ *
+ * `ui-accessibility`: *"Targets are at least 24x24 CSS px (SC 2.5.8), and aim
+ * higher: 32px for rows in a list … Density is cheaper than a missed target."*
+ * This instance's declared interaction profile is low-dexterity
+ * (`interaction/interaction.json`), so that is the binding constraint here
+ * rather than a nicety.
+ *
+ * THREE ROWS WERE UNDER IT, measured in a browser at 1400x900 rather than read
+ * off this file:
+ *
+ * | row | was | why it was missed |
+ * |---|---|---|
+ * | `.fa-doc-index__link` | 23px | `0.1875rem` padding on a 16.8px line — one pixel short |
+ * | `.fa-nav-folders__link` | 23px | the same rule, copied |
+ * | `.fa-harness-graph__link` | **13px** | an inline `<a>`, so its box IS its text |
+ *
+ * The repository already holds this floor in two places — the KG viewer's
+ * `a11y.e2e.ts` and the language bar — and the navbar was in neither, which is
+ * why three rows drifted under it unnoticed. `navbar-row.e2e.ts` now sweeps
+ * every interactive element in `.side-bar`, so the next row added is measured
+ * rather than trusted.
+ *
+ * `min-height` rather than more padding on the two block rows: padding alone
+ * would push the text off-centre in a row whose height is set by its line, and
+ * the point is the BOX a pointer has to hit. The inline one has to become
+ * `inline-block` before a height applies to it at all.
+ *
+ * ## 1.75rem on the two primary rows, not 1.5
+ *
+ * The skill asks for the floor AND a margin above it — *"a target that is
+ * barely legal is a target that is hard to hit … aim higher: 32px for rows in
+ * a list"* — and `a11y.e2e.ts`'s own note says the suite holds the floor *"so
+ * the comfort margin can be spent without silence"*. 24px exactly is the
+ * legal minimum and nothing more.
+ *
+ * So the document index and the folder list, which are the navigation a
+ * reader actually clicks, get **28px**. Measured cost, in a browser rather
+ * than arithmetic: the folder list's 24 rows make it **772px** tall, inside a
+ * region that already scrolls. That is the trade `ui-accessibility` names in
+ * one line — *"density is cheaper than a missed target"*. (An earlier draft of
+ * this paragraph computed 24 x 28 = 672 and wrote it as a measurement; the
+ * list has margins the arithmetic did not.)
+ *
+ * The per-harness graph sub-links stay at the 24px floor plus their padding
+ * (26px). They nest under a `.fa-harness-tab__body` that is already 40px, so
+ * the reader reaching for a harness is not reaching for these; spending the
+ * margin on six sub-rows per harness would push the fixed bottom past its cap
+ * and cost the avatars the owner asked to keep.
+ * ───────────────────────────────────────────────────────────────────────── */
+
 .fa-doc-index__link {
-  display: block;
+  display: flex;
+  align-items: center;
+  /* 1.75rem — the floor plus the margin the skill asks for; see the block
+     above. `flex` + `align-items` keeps the text centred in a box that is now
+     taller than its own line. */
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -5335,6 +5474,17 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-graph__link {
+  /* THE WORST OF THE THREE, at 26x13: an inline `<a>`, so its box was exactly
+   * its text and no height applied to it. `inline-block` is what makes the
+   * floor reachable at all; the padding is what a pointer aims at. See the
+   * target-size block above `.fa-doc-index__link`. */
+  display: inline-block;
+  min-height: 1.5rem;
+  /* WIDTH TOO, and it is the half a height fix leaves behind: SC 2.5.8 is
+     24x24, and once the height was right this row was 20x32 because its text
+     is the word "docs". Found by the sweep, not by looking. */
+  min-width: 1.5rem;
+  padding: 0.25rem 0;
   color: inherit;
   opacity: 0.72;
   text-decoration: none;
