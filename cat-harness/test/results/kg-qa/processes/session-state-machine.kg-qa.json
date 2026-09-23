@@ -5,7 +5,7 @@
     "id": "Process_SessionStateMachine",
     "path": "processes/session-state-machine.bpmn"
   },
-  "source_hash": "sha256:6421b28af73d8bd1bcf32f63bc0e34f0c139102ac9180f677953b88dc83955ad",
+  "source_hash": "sha256:ceef4b8a4dff48cc7bf9e9200228b9b32a3ae43f098efef482c81233e5400e5f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 15,
     "fail": 0,
     "n/a": 9,
     "unknown": 0

@@ -21,7 +21,7 @@
  * @module scripts/external-schemas
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import {
   ExternalSchemaSchema,
   undeclaredNamespaces,
@@ -29,9 +29,10 @@ import {
   type ExternalSchema,
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
-import { FOLIO_BPMN_NS, OWN_XML_NAMESPACES } from "../schemas/namespaces.js";
+import { FOLIO_BPMN_NS, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { workflowFiles } from "./known-skills.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 // Read from the DECLARATION rather than hardcoded, and the reason this
@@ -69,6 +70,31 @@ export function namespacesInUse(root = ROOT): string[] {
     for (const m of src.matchAll(/xmlns(?::[a-zA-Z0-9]+)?="([^"]+)"/g)) out.push(m[1]!);
   }
   return [...new Set(out)].sort();
+}
+
+/**
+ * Each `targetNamespace` the corpus declares, with the diagrams declaring it.
+ *
+ * Bean `rtrg`. A separate question from {@link namespacesInUse}, which reads
+ * `xmlns` BINDINGS: `targetNamespace` is the namespace a diagram's own
+ * processes are IN, so it decides what a `calledElement` QName resolves to. A
+ * diagram with none is reported under the empty string, not skipped, because
+ * a diagram whose identity is unstated is the same defect as one that
+ * misstates it.
+ */
+export function targetNamespacesInUse(
+  files: readonly string[] = workflowFiles(ROOT),
+  base = resolve(ROOT, ".."),
+): Map<string, string[]> {
+  // The DECLARED workflow graph, not a literal `processes/`: that reaches a
+  // dependency's diagrams too (smart-base's), which call into the same corpus.
+  const out = new Map<string, string[]>();
+  for (const f of files.filter((f) => f.endsWith(".bpmn"))) {
+    const src = readFileSync(f, "utf-8");
+    const ns = /<(?:bpmn:)?definitions\b[^>]*?\stargetNamespace="([^"]*)"/.exec(src)?.[1] ?? "";
+    out.set(ns, [...(out.get(ns) ?? []), relative(base, f)]);
+  }
+  return out;
 }
 
 /**
@@ -281,6 +307,11 @@ function run(argv: string[]): number {
   // spelling means a consumer matching on the first skips every element in the
   // second — silently, and while parsing without error.
   const drifted = own.filter((ns) => ns !== FOLIO_BPMN_NS);
+  // The diagram's IDENTITY drifting is a different defect with the same shape:
+  // a call is a QName, so two diagrams in two namespaces cannot call each
+  // other without an import a standards tool would demand.
+  const targets = targetNamespacesInUse();
+  const offTarget = [...targets].filter(([ns]) => ns !== WORKFLOWS_NS);
 
   let stale = 0;
   for (const s of specs) {
@@ -335,14 +366,26 @@ function run(argv: string[]): number {
     console.error("  matching on this one, and the file still parses.");
   }
 
-  if (check && (undeclared.length > 0 || drifted.length > 0 || stale > 0)) {
+  if (offTarget.length > 0) {
+    const n = offTarget.reduce((a, [, fs]) => a + fs.length, 0);
+    console.error(`\n✗ ${n} diagram(s) declare a targetNamespace other than the one every diagram shares:`);
+    console.error(`    ${WORKFLOWS_NS}   (canonical — schemas/namespaces.ts, bean rtrg)`);
+    for (const [ns, fs] of offTarget) {
+      console.error(`    ${ns || "(none declared)"}   ✗ ${fs.length}: ${fs.slice(0, 4).join(", ")}${fs.length > 4 ? ", …" : ""}`);
+    }
+    console.error("  Set it to the canonical IRI. Not cosmetic: calledElement is a QName, so a call");
+    console.error("  into a diagram in another namespace does not resolve in a conformant tool.");
+  }
+
+  if (check && (undeclared.length > 0 || drifted.length > 0 || offTarget.length > 0 || stale > 0)) {
     if (stale > 0) console.error(`\n✗ ${stale} record(s) have stale operative terms. Run with --write and commit.`);
     return 1;
   }
-  if (undeclared.length > 0 || drifted.length > 0) return 1;
+  if (undeclared.length > 0 || drifted.length > 0 || offTarget.length > 0) return 1;
   console.log(
     `\n✓ ${external.length} external namespace(s) declared with their edition; ` +
-      `${own.length} own namespace(s), one spelling each`,
+      `${own.length} own namespace(s), one spelling each; ` +
+      `${targets.get(WORKFLOWS_NS)?.length ?? 0} diagram(s), one targetNamespace`,
   );
   return 0;
 }
