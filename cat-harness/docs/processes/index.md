@@ -29,11 +29,11 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Adjudication](adjudication.html) | 6 | — |
 | [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | 1 |
 | [Authoring a document](authoring-a-document.html) | 9 | — |
-| [Authoring a paper](authoring-a-paper.html) | 9 | 5 |
+| [Authoring a paper](authoring-a-paper.html) | 9 | — |
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
 | [Board: open and close content](board-open-close.html) | 7 | — |
-| [Board: place a note](board-place-note.html) | 3 | 3 |
-| [Board: relocate content to the trashcan](board-relocate.html) | 5 | 5 |
+| [Board: place a note](board-place-note.html) | 3 | — |
+| [Board: relocate content to the trashcan](board-relocate.html) | 5 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
 | [The gates a change must pass before it can merge](code-quality-gates.html) | 6 | — |
@@ -67,7 +67,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Are the .jsonld siblings still in sync with their .ts manifests?](jsonld-drift-check.html) | 1 | 1 |
 | [KG to public portal](kg-to-portal.html) | 10 | — |
 | [L2 DAK authoring](l2-dak-authoring.html) | 10 | — |
-| [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | 5 |
+| [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | — |
 | [Materialize remote content — the shared subprocess](materialize-remote.html) | 9 | — |
 | [Options analysis](options-analysis.html) | 5 | — |
 | [Which open pull requests have no CI run on their head?](pr-checks-present.html) | 5 | — |

@@ -33,18 +33,18 @@ folio-assistant — authoring a scientific paper end to end (Lean + LaTeX). Sour
 
 ## Steps
 
-**5** of 9 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 9 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **1 · Plan the paper**<br>`Task_Plan` | Author (person) | [`content-plan`](../reference/skill-instructions/content-plan.html) | Scope the paper: chapters, the blocks each needs, what gets formalised. |
 | **2 · Seed the work plan**<br>`Task_SeedPlan` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | The plan becomes beans, so a resumed session or a sibling agent can pick it up. |
-| **3 · Scaffold the folio repo**<br>`Task_Scaffold` | Authoring agent (system) | [`content-plan`](../reference/skill-instructions/content-plan.html) | — |
+| **3 · Scaffold the folio repo**<br>`Task_Scaffold` | Authoring agent (system) | [`content-plan`](../reference/skill-instructions/content-plan.html) | Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied. |
 | **4 · Author blocks**<br>`Task_AuthorBlocks` | Authoring agent (system) | [`content-author`](../reference/skill-instructions/content-author.html) | Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. |
-| **5 · Formalise in Lean**<br>`Task_Formalize` | Lean toolchain (lean-mcp) | [`lean-formalization`](../reference/skill-instructions/lean-formalization.html)<br>[`proof-verification`](../reference/skill-instructions/proof-verification.html) | — |
-| **6 · Validate**<br>`Task_Validate` | Build pipeline — validate · render · publish | [`content-validate`](../reference/skill-instructions/content-validate.html) | — |
-| **7 · Render PDF / HTML**<br>`Task_Render` | Build pipeline — validate · render · publish | [`latex-authoring`](../reference/skill-instructions/latex-authoring.html) | — |
-| **8 · Review and feedback**<br>`Task_Review` | Reviewer / SME | [`content-review`](../reference/skill-instructions/content-review.html) | — |
+| **5 · Formalise in Lean**<br>`Task_Formalize` | Lean toolchain (lean-mcp) | [`lean-formalization`](../reference/skill-instructions/lean-formalization.html)<br>[`proof-verification`](../reference/skill-instructions/proof-verification.html) | Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification. |
+| **6 · Validate**<br>`Task_Validate` | Build pipeline — validate · render · publish | [`content-validate`](../reference/skill-instructions/content-validate.html) | Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure. |
+| **7 · Render PDF / HTML**<br>`Task_Render` | Build pipeline — validate · render · publish | [`latex-authoring`](../reference/skill-instructions/latex-authoring.html) | Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform. |
+| **8 · Review and feedback**<br>`Task_Review` | Reviewer / SME | [`content-review`](../reference/skill-instructions/content-review.html) | Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path. |
 | **9 · Publish**<br>`Task_Publish` | Build pipeline — validate · render · publish | [`content-publish`](../reference/skill-instructions/content-publish.html) | See draft-to-publication.bpmn for the review and release path this expands into. |
 
 {% endraw %}

@@ -78,6 +78,7 @@
       <bpmn:outgoing>C02</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_AuthorFsh" name="Author FSH profiles&#10;[l3-fhir-authoring]">
+      <bpmn:documentation>Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
@@ -87,6 +88,7 @@
       <bpmn:outgoing>C03</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI compile → FHIR JSON&#10;[l3-fhir-authoring]">
+      <bpmn:documentation>Compile the FSH to FHIR JSON with SUSHI. Compiling is not conformance: a green SUSHI result goes on to validation and never stands in for it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
@@ -94,6 +96,7 @@
       <bpmn:outgoing>C04</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Validate" name="Validate against profiles&#10;[fhir-validation]">
+      <bpmn:documentation>Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="fhir-validation" />
       </bpmn:extensionElements>
@@ -106,6 +109,7 @@
       <bpmn:outgoing>C07</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Task_QcGates" name="QC gates&#10;[quality-control]">
+      <bpmn:documentation>The QC reviewer rules on the aggregate QA against the publication gates. Emitting the QA report is mechanical; ruling on it is a decision, which is why it sits in the reviewer's lane rather than the build's.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="quality-control" />
       </bpmn:extensionElements>
@@ -127,6 +131,7 @@
       <bpmn:outgoing>C10</bpmn:outgoing>
     </bpmn:task>
     <bpmn:serviceTask id="Task_IgPublisher" name="IG Publisher build&#10;[ig-publication]">
+      <bpmn:documentation>Run the IG Publisher: it renders output/, writes each resource's JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
