@@ -52,9 +52,12 @@ import type { ZodTypeAny } from "zod";
 
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
+import { readUmlPalette } from "./uml-palette.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
+/** Colours for the `.puml`, read from `uml.css` so both renderings agree. */
+const PALETTE = readUmlPalette(HARNESS);
 const REPO = resolve(HARNESS, "..");
 // declared-path-literal: the conventional fallback when no declaration names the directory
 const UML_ROOT = join(instanceDirectoryForGraph(HARNESS, "uml") ?? join(HARNESS, "uml"), "overview");
@@ -354,7 +357,7 @@ function puml(name: string, pageUrl: string, sections: Section[], withAttrs: boo
   for (const s of sections) {
     L.push(`package "${s.instance}/${s.id}" as ${safeId(`pkg_${s.instance}_${s.id}`)} <<${s.kinds.join(", ")}>> {`);
     for (const c of s.classes) {
-      L.push(`  class "${pumlEsc(c.title)}" as ${c.id} <<${pumlEsc(c.source)}>> {`);
+      L.push(`  class "${pumlEsc(c.title)}" as ${c.id} <<${pumlEsc(c.source)}>> ${PALETTE.kind(c.kind)} {`);
       if (withAttrs) for (const a of c.attrs) L.push(`    ${a.name} [${a.mult}] : ${pumlEsc(a.type)}`);
       L.push("  }");
     }
@@ -379,7 +382,10 @@ function mmdText(s: string): string {
 }
 
 function mmd(sections: Section[], withAttrs: boolean): string {
-  const L = ["classDiagram", "  direction TB"];
+  // LR for a multi-section overview: dagre lays unconnected groups side by
+  // side along the CROSS axis, so LR stacks the sub-graphs vertically — one
+  // readable column instead of a strip too wide to scroll. Owner, 2026-09-23.
+  const L = ["classDiagram", sections.length > 1 ? "  direction LR" : "  direction TB"];
   for (const s of sections) {
     L.push(`  namespace ${safeId(`${s.instance}__${s.id}`)} {`);
     for (const c of s.classes) {
@@ -468,8 +474,8 @@ async function build(): Promise<Map<string, string>> {
   const umlRel = relative(REPO, UML_ROOT).replace(/\\/g, "/");
   for (const inst of instances) {
     const pageUrl = `${SITE_URL}/uml/overview/${inst.name}.html`;
-    const overviewMmd = mmd(inst.sections, false);
-    files.set(join(UML_ROOT, `${inst.name}.puml`), puml(inst.name, pageUrl, inst.sections, false));
+    const overviewMmd = mmd(inst.sections, true);
+    files.set(join(UML_ROOT, `${inst.name}.puml`), puml(inst.name, pageUrl, inst.sections, true));
     files.set(join(UML_ROOT, `${inst.name}.mmd`), overviewMmd);
     files.set(
       join(DOCS_ROOT, `${inst.name}.md`),

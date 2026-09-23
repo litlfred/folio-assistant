@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/models" as pkg_bootstrap_models <<models>> {
-  class "Model" as bootstrap_models_Model <<json: ModelRegistrySchema>> {
+  class "Model" as bootstrap_models_Model <<json: ModelRegistrySchema>> #e8f0ee {
     id [1] : string
     title [1] : string
     preferredLanguages [0..*] : string[]
@@ -18,7 +18,7 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
     validatedOn [0..1] : string
     note [0..1] : string
   }
-  class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> {
+  class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> #e8f0ee {
     $schema [1] : 'folio-model-registry/v1'
   }
 }

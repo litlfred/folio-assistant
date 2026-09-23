@@ -9,41 +9,108 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
-  class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> {
+  class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
+    source [1] : string
+    artefact [1] : string
+    format [0..1] : string
   }
-  class "ToolDefinition" as cat_harness_tools_ToolDefinition <<json: ToolDefinitionSchema>> {
+  class "ToolDefinition" as cat_harness_tools_ToolDefinition <<json: ToolDefinitionSchema>> #eee9f5 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    install [1] : object
+    invoke [1] : object
+    io [1] : object
+    satisfies [1..*] : string[]
+    alternativeTo [0..*] : string[]
+    selection [0..1] : object
+    requires [0..1] : object
   }
 }
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {
-  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> {
+  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> #e9edf3 {
+    term [1] : string
+    operative [1] : string
   }
-  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> {
+  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> #e9edf3 {
+    $schema [1] : 'folio-external-schema/v1'
+    id [1] : string
+    authority [1] : enum(7)
+    title [1] : string
+    version [1] : string
+    specUrl [1] : string<uri>
+    namespaces [0..*] : string[]
+    use [1] : conforms | reads | cites
+    usedBy [1..*] : string[]
+    note [0..1] : string
   }
 }
 package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>> {
-  class "JSON Schema draft-07" as cat_harness_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  class "JSON Schema draft-07" as cat_harness_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> #e9edf3 {
   }
-  class "JSON Schema 2020-12" as cat_harness_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  class "JSON Schema 2020-12" as cat_harness_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> #e9edf3 {
   }
 }
 package "cat-harness/uml" as pkg_cat_harness_uml <<uml>> {
-  class "uml" as cat_harness_uml_uml_shape <<schema: scripts/gen-uml-overview.ts>> {
+  class "uml" as cat_harness_uml_uml_shape <<schema: scripts/gen-uml-overview.ts>> #e9edf3 {
   }
 }
 package "cat-harness/cat-harness" as pkg_cat_harness_cat_harness <<skills>> {
-  class "kg-qa-manifest/v1" as cat_harness_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  class "kg-qa-manifest/v1" as cat_harness_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #e8f0ee {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
   }
 }
 package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
-  class "Role" as cat_harness_scenarios_Role <<json: RoleGraphSchema>> {
+  class "Role" as cat_harness_scenarios_Role <<json: RoleGraphSchema>> #e8f0ee {
+    persona [0..1] : string
+    voice [0..1] : string
+    useCases [0..*] : string[]
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    actorKinds [1..*] : list<person | agent | system | external>
+    lanes [0..*] : string[]
+    skills [0..*] : string[]
+    inherits [0..*] : string[]
+    actedUpon [0..1] : boolean
+    judgementOnly [0..1] : boolean
   }
-  class "Actor" as cat_harness_scenarios_Actor <<json: RoleGraphSchema>> {
+  class "Actor" as cat_harness_scenarios_Actor <<json: RoleGraphSchema>> #e8f0ee {
+    id [1] : string
+    title [1] : string
+    kind [1] : person | agent | system | external
+    description [0..1] : string
+    roles [0..*] : string[]
   }
-  class "RoleGraph" as cat_harness_scenarios_RoleGraph <<json: RoleGraphSchema>> {
+  class "RoleGraph" as cat_harness_scenarios_RoleGraph <<json: RoleGraphSchema>> #e8f0ee {
+    name [1] : string
   }
 }
 package "cat-harness/processes" as pkg_cat_harness_processes <<processes>> {
-  class "Business Process Model and Notation (BPMN)" as cat_harness_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> {
+  class "Business Process Model and Notation (BPMN)" as cat_harness_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
+    bpmn:callActivity [0..*] : element
+    bpmn:collaboration [0..*] : element
+    bpmn:definitions [0..*] : element
+    bpmn:documentation [0..*] : element
+    bpmn:endEvent [0..*] : element
+    bpmn:exclusiveGateway [0..*] : element
+    bpmn:extensionElements [0..*] : element
+    bpmn:flowNodeRef [0..*] : element
+    bpmn:import [0..*] : element
+    bpmn:incoming [0..*] : element
+    bpmn:lane [0..*] : element
+    bpmn:laneSet [0..*] : element
+    bpmn:outgoing [0..*] : element
+    bpmn:parallelGateway [0..*] : element
+    bpmn:participant [0..*] : element
+    bpmn:process [0..*] : element
+    bpmn:sequenceFlow [0..*] : element
+    bpmn:serviceTask [0..*] : element
+    bpmn:startEvent [0..*] : element
+    bpmn:task [0..*] : element
+    bpmn:timerEventDefinition [0..*] : element
+    bpmn:userTask [0..*] : element
   }
 }
 package "cat-harness/methodology-raci" as pkg_cat_harness_methodology_raci <<skills>> {
@@ -53,42 +120,143 @@ package "cat-harness/methodology-crdm" as pkg_cat_harness_methodology_crdm <<ski
   note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_cat_harness_methodology_crdm_skills
 }
 package "cat-harness/methodology-crdm-processes" as pkg_cat_harness_methodology_crdm_processes <<processes>> {
-  class "Business Process Model and Notation (BPMN)" as cat_harness_methodology_crdm_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> {
+  class "Business Process Model and Notation (BPMN)" as cat_harness_methodology_crdm_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
+    bpmn:callActivity [0..*] : element
+    bpmn:collaboration [0..*] : element
+    bpmn:definitions [0..*] : element
+    bpmn:documentation [0..*] : element
+    bpmn:endEvent [0..*] : element
+    bpmn:exclusiveGateway [0..*] : element
+    bpmn:extensionElements [0..*] : element
+    bpmn:flowNodeRef [0..*] : element
+    bpmn:import [0..*] : element
+    bpmn:incoming [0..*] : element
+    bpmn:lane [0..*] : element
+    bpmn:laneSet [0..*] : element
+    bpmn:outgoing [0..*] : element
+    bpmn:parallelGateway [0..*] : element
+    bpmn:participant [0..*] : element
+    bpmn:process [0..*] : element
+    bpmn:sequenceFlow [0..*] : element
+    bpmn:serviceTask [0..*] : element
+    bpmn:startEvent [0..*] : element
+    bpmn:task [0..*] : element
+    bpmn:timerEventDefinition [0..*] : element
+    bpmn:userTask [0..*] : element
   }
 }
 package "cat-harness/methodologies" as pkg_cat_harness_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodologies_methodology
 }
 package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
-  class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> {
+  class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa/v1'
+    subject [1] : object
+    source_hash [1] : string | null
+    criteria [1] : map<object>
+    totals [1] : map<number>
   }
-  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> {
+  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> #f4e6e6 {
+    $schema [1] : 'block-qa/v1'
+    label [1] : string
+    kind [1] : string
+    paths [1] : object
+    source_hashes [1] : object
+    criteria [1] : map<object[]>
+    updated_at [1] : string
   }
-  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> {
+  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> #f4e6e6 {
+    $schema [1] : 'folio-test-run/v1'
+    subject [1] : string
+    data [1] : object
+    process [1] : object
+    outcome [1] : map<any>
+    updated_at [1] : string
   }
-  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> {
+  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
+    kind [1] : 'script' | 'agent' | 'human'
+    id [1] : string
+    version [0..1] : string
+    at [0..1] : string
+    sha [0..1] : string
+    scriptHash [0..1] : string
+    scriptCommitSha [0..1] : string
+    depsHash [0..1] : string
+    model [0..1] : string
+    session [0..1] : string
+    skill [0..1] : string
+    method [0..1] : string
+    freshness [1] : QaFreshness
+    changed [0..1] : string[]
+    notCompared [0..1] : string[]
+    notes [0..1] : string
   }
-  class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> {
+  class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
+    $schema [1] : 'qa-results/v1'
+    producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
+    subject [1] : { kind: string; id: string }
+    updated_at [1] : string
+    families [1] : Record<string, QaResultFamily>
+    total [1] : number
   }
-  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> {
+  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> #f4e6e6 {
+    $schema [1] : 'translation-qa/v1'
+    label [1] : string
+    block [0..1] : string
+    locale [1] : string
+    paths [1] : { md: string; ts?: string }
+    po [1] : string
+    source_hashes [1] : TranslationFieldHash
+    criteria [1] : Record<string, TranslationQaEntry[]>
+    updated_at [1] : string
   }
-  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4e6e6 {
   }
 }
 package "cat-harness/fsh-guts" as pkg_cat_harness_fsh_guts <<fsh-guts>> {
-  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> {
+  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-fsh-guts/v1'
+    title [1] : string
+    kind [1] : string
+    movedOn [0..1] : string
+    movedFrom [0..1] : string
+    issue [0..1] : string | number
+    bean [0..1] : string
+    summary [0..1] : string
   }
 }
 package "cat-harness/health" as pkg_cat_harness_health <<health>> {
-  class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> {
+  class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> #f4e6e6 {
+    metric [1] : string
+    value [1] : number
+    unit [1] : string
+    basis [1] : string
+    severity [1] : critical | major | minor
   }
-  class "Measurement" as cat_harness_health_Measurement <<json: HealthReportSchema>> {
+  class "Measurement" as cat_harness_health_Measurement <<json: HealthReportSchema>> #f4e6e6 {
+    metric [1] : string
+    value [1] : number
+    unit [1] : string
+    command [1] : string
   }
-  class "Finding" as cat_harness_health_Finding <<json: HealthReportSchema>> {
+  class "Finding" as cat_harness_health_Finding <<json: HealthReportSchema>> #f4e6e6 {
+    summary [1] : string
+    metric [0..1] : string
+    severity [1] : critical | major | minor
+    action [1] : string
   }
-  class "Check" as cat_harness_health_Check <<json: HealthReportSchema>> {
+  class "Check" as cat_harness_health_Check <<json: HealthReportSchema>> #f4e6e6 {
+    id [1] : string
+    state [1] : ok | finding | unknown
+    summary [1] : string
+    reason [0..1] : string
   }
-  class "HealthReport" as cat_harness_health_HealthReport <<json: HealthReportSchema>> {
+  class "HealthReport" as cat_harness_health_HealthReport <<json: HealthReportSchema>> #f4e6e6 {
+    $schema [1] : 'health-report/v1'
+    producer [1] : object
+    subject [1] : object
+    updated_at [1] : string
+    verdict [1] : clean | findings | unknown
   }
 }
 package "cat-harness/beans" as pkg_cat_harness_beans <<beans>> {
@@ -98,19 +266,43 @@ package "cat-harness/todos" as pkg_cat_harness_todos <<todos>> {
   note "todos: no node schema declared\n(no node here carries a $schema family todos names (1 named): could not determine)" as n_cat_harness_todos_todos
 }
 package "cat-harness/memory" as pkg_cat_harness_memory <<memory, waiver>> {
-  class "AlsoAbout" as cat_harness_memory_AlsoAbout <<json: MemoryNodeSchema>> {
+  class "AlsoAbout" as cat_harness_memory_AlsoAbout <<json: MemoryNodeSchema>> #f6eedf {
+    kind [1] : 'block'
+    label [1] : string
   }
-  class "MemoryNode" as cat_harness_memory_MemoryNode <<json: MemoryNodeSchema>> {
+  class "MemoryNode" as cat_harness_memory_MemoryNode <<json: MemoryNodeSchema>> #f6eedf {
+    id [1] : string
+    summary [1] : string
+    comment [0..1] : string
+    createdAt [1] : string
+    updatedAt [0..1] : string
+    targetLabel [0..1] : string
+    anchor [0..1] : object
+    tags [0..1] : object
+    label [1] : stable | trap | baseline
+    measured [0..1] : object
+    archived [0..1] : boolean
+    detail [0..1] : string
+    $schema [1] : 'folio-memory/v1'
   }
-  class "WaiverNode" as cat_harness_memory_WaiverNode <<json: WaiverNodeSchema>> {
+  class "WaiverNode" as cat_harness_memory_WaiverNode <<json: WaiverNodeSchema>> #f6eedf {
+    $schema [1] : 'folio-waiver/v1'
+    id [1] : string
+    grantedBy [1] : string
+    quote [1] : string
+    gate [1] : merge-to-main | bean-close | deletion | swarm-spawn | process-reentry | issue-close
+    scope [1] : string
+    grantedAt [1] : string
+    expires [1] : string
+    bounds [1] : string
   }
 }
 package "cat-harness/interaction" as pkg_cat_harness_interaction <<interaction>> {
-  class "interaction" as cat_harness_interaction_interaction_shape <<schema: schemas/harness-config.ts>> {
+  class "interaction" as cat_harness_interaction_interaction_shape <<schema: schemas/harness-config.ts>> #f6eedf {
   }
 }
 package "cat-harness/issue-marks" as pkg_cat_harness_issue_marks <<issue-marks>> {
-  class "issue-marks" as cat_harness_issue_marks_issue_marks_shape <<schema: src/issue-watch/seen-comments.ts>> {
+  class "issue-marks" as cat_harness_issue_marks_issue_marks_shape <<schema: src/issue-watch/seen-comments.ts>> #f6eedf {
   }
 }
 package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
@@ -132,7 +324,12 @@ package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <
   note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
-  class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> {
+  class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
   }
 }
 package "cat-harness/folio" as pkg_cat_harness_folio <<folio>> {
@@ -145,59 +342,147 @@ package "cat-harness/smart-base-methodologies" as pkg_cat_harness_smart_base_met
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_smart_base_methodologies_methodology
 }
 package "cat-harness/smart-base-processes" as pkg_cat_harness_smart_base_processes <<processes>> {
-  class "Business Process Model and Notation (BPMN)" as cat_harness_smart_base_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> {
+  class "Business Process Model and Notation (BPMN)" as cat_harness_smart_base_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
+    bpmn:callActivity [0..*] : element
+    bpmn:collaboration [0..*] : element
+    bpmn:definitions [0..*] : element
+    bpmn:documentation [0..*] : element
+    bpmn:endEvent [0..*] : element
+    bpmn:exclusiveGateway [0..*] : element
+    bpmn:extensionElements [0..*] : element
+    bpmn:flowNodeRef [0..*] : element
+    bpmn:import [0..*] : element
+    bpmn:incoming [0..*] : element
+    bpmn:lane [0..*] : element
+    bpmn:laneSet [0..*] : element
+    bpmn:outgoing [0..*] : element
+    bpmn:parallelGateway [0..*] : element
+    bpmn:participant [0..*] : element
+    bpmn:process [0..*] : element
+    bpmn:sequenceFlow [0..*] : element
+    bpmn:serviceTask [0..*] : element
+    bpmn:startEvent [0..*] : element
+    bpmn:task [0..*] : element
+    bpmn:timerEventDefinition [0..*] : element
+    bpmn:userTask [0..*] : element
   }
 }
 package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
-  class "Relation" as cat_harness_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  class "Relation" as cat_harness_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> #f4f4f1 {
+    axis [1] : string
+    label [1] : string
+    href [0..1] : string
   }
-  class "Item" as cat_harness_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  class "Item" as cat_harness_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> #f4f4f1 {
+    id [1] : string
+    summary [1] : string
+    comment [1] : string
+    status [1] : string
+    priority [1] : string
+    origin [0..1] : string
+    createdAt [1] : string
+    targetLabel [0..1] : string
+    target [0..1] : object
+    theme [0..1] : string
+    tags [1] : object
+    viewHref [0..1] : string
+    editHref [0..1] : string
   }
-  class "folio-todo-index/v1" as cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  class "folio-todo-index/v1" as cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-todo-index/v1'
+    tile [0..1] : map<object>
+    repoWeb [1] : string
+    processes [1] : map<string[]>
+    themeArt [1] : map<map<string>>
   }
-  class "folio-semantic-zoom/v1" as cat_harness_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  class "folio-semantic-zoom/v1" as cat_harness_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> #f4f4f1 {
+    $schema [1] : 'folio-semantic-zoom/v1'
+    belowPx [1] : number
+    byKind [0..1] : map<object>
   }
-  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> #f4f4f1 {
+    $schema [1] : typeof QA_GRAPH_INDEX_SCHEMA
+    files [1] : number
+    families [1] : QaFamily[]
+    unclassified [1] : number
+    unreadable [1] : number
   }
-  class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> #f4f4f1 {
+    $schema [1] : string
+    sourceLocale [1] : string
+    locales [1] : string[]
+    pages [1] : Record<string, IndexedPage>
   }
-  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4f4f1 {
   }
-  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> #f4f4f1 {
   }
-  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> #f4f4f1 {
   }
-  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
   }
-  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> #f4f4f1 {
   }
-  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> #f4f4f1 {
   }
 }
 package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
-  class "Relation" as cat_harness_root_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  class "Relation" as cat_harness_root_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> #f4f4f1 {
+    axis [1] : string
+    label [1] : string
+    href [0..1] : string
   }
-  class "Item" as cat_harness_root_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  class "Item" as cat_harness_root_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> #f4f4f1 {
+    id [1] : string
+    summary [1] : string
+    comment [1] : string
+    status [1] : string
+    priority [1] : string
+    origin [0..1] : string
+    createdAt [1] : string
+    targetLabel [0..1] : string
+    target [0..1] : object
+    theme [0..1] : string
+    tags [1] : object
+    viewHref [0..1] : string
+    editHref [0..1] : string
   }
-  class "folio-todo-index/v1" as cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  class "folio-todo-index/v1" as cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-todo-index/v1'
+    tile [0..1] : map<object>
+    repoWeb [1] : string
+    processes [1] : map<string[]>
+    themeArt [1] : map<map<string>>
   }
-  class "folio-semantic-zoom/v1" as cat_harness_root_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  class "folio-semantic-zoom/v1" as cat_harness_root_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> #f4f4f1 {
+    $schema [1] : 'folio-semantic-zoom/v1'
+    belowPx [1] : number
+    byKind [0..1] : map<object>
   }
-  class "folio-qa-graph/v1" as cat_harness_root_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  class "folio-qa-graph/v1" as cat_harness_root_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> #f4f4f1 {
+    $schema [1] : typeof QA_GRAPH_INDEX_SCHEMA
+    files [1] : number
+    families [1] : QaFamily[]
+    unclassified [1] : number
+    unreadable [1] : number
   }
-  class "folio-translation-index/v1" as cat_harness_root_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  class "folio-translation-index/v1" as cat_harness_root_docs_folio_translation_index_v1 <<ts: TranslationIndex>> #f4f4f1 {
+    $schema [1] : string
+    sourceLocale [1] : string
+    locales [1] : string[]
+    pages [1] : Record<string, IndexedPage>
   }
-  class "folio-bean-index/v1" as cat_harness_root_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  class "folio-bean-index/v1" as cat_harness_root_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4f4f1 {
   }
-  class "folio-translation-status/v1" as cat_harness_root_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  class "folio-translation-status/v1" as cat_harness_root_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> #f4f4f1 {
   }
-  class "folio-schema-graph/v1" as cat_harness_root_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  class "folio-schema-graph/v1" as cat_harness_root_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> #f4f4f1 {
   }
-  class "folio-library-index/v1" as cat_harness_root_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  class "folio-library-index/v1" as cat_harness_root_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
   }
-  class "folio-voices-index/v1" as cat_harness_root_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  class "folio-voices-index/v1" as cat_harness_root_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> #f4f4f1 {
   }
-  class "folio-graph-projection/v1" as cat_harness_root_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  class "folio-graph-projection/v1" as cat_harness_root_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> #f4f4f1 {
   }
 }
 package "cat-harness/folio-assist-core-schemas" as pkg_cat_harness_folio_assist_core_schemas <<schemas, cat-harness>> {
@@ -222,7 +507,10 @@ package "cat-harness/bootstrap-tools-schemas" as pkg_cat_harness_bootstrap_tools
   note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_cat_harness_bootstrap_tools_schemas_schemas
 }
 package "cat-harness/glossary" as pkg_cat_harness_glossary <<glossary>> {
-  class "folio-glossary-ledger/v1" as cat_harness_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> {
+  class "folio-glossary-ledger/v1" as cat_harness_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #e8f0ee {
+    $schema [1] : string
+    instance [1] : string
+    concepts [1] : Record<string, LedgerEntry>
   }
 }
 package "cat-harness/cat-harness-scripts" as pkg_cat_harness_cat_harness_scripts <<code>> {

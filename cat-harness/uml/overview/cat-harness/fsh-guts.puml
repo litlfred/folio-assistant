@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/fsh-guts" as pkg_cat_harness_fsh_guts <<fsh-guts>> {
-  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> {
+  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-fsh-guts/v1'
     title [1] : string
     kind [1] : string

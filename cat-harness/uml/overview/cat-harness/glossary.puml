@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/glossary" as pkg_cat_harness_glossary <<glossary>> {
-  class "folio-glossary-ledger/v1" as cat_harness_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> {
+  class "folio-glossary-ledger/v1" as cat_harness_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #e8f0ee {
     $schema [1] : string
     instance [1] : string
     concepts [1] : Record<string, LedgerEntry>

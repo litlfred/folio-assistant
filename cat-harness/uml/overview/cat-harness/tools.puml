@@ -9,12 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
-  class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> {
+  class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
     format [0..1] : string
   }
-  class "ToolDefinition" as cat_harness_tools_ToolDefinition <<json: ToolDefinitionSchema>> {
+  class "ToolDefinition" as cat_harness_tools_ToolDefinition <<json: ToolDefinitionSchema>> #eee9f5 {
     id [1] : string
     title [1] : string
     description [1] : string

@@ -15,15 +15,15 @@ hide empty methods
 
 title Harness object model — attributes derived from JSON Schema
 
-package scenario #E8F0EE {
-  class "Actor" as Actor <<json: ActorDefSchema>> {
+package scenario {
+  class "Actor" as Actor <<json: ActorDefSchema>> #e8f0ee {
     id [1] : string
     title [1] : string
     kind [1] : person | agent | system | external
     description [0..1] : string
     roles [0..*] : string[]
   }
-  class "Role" as Role <<json: RoleDefSchema>> {
+  class "Role" as Role <<json: RoleDefSchema>> #e8f0ee {
     persona [0..1] : string
     voice [0..1] : string
     useCases [0..*] : string[]
@@ -37,7 +37,7 @@ package scenario #E8F0EE {
     actedUpon [0..1] : boolean
     judgementOnly [0..1] : boolean
   }
-  class "Skill" as Skill <<json: SkillDefinitionSchema>> {
+  class "Skill" as Skill <<json: SkillDefinitionSchema>> #e8f0ee {
     id [1] : string
     name [1] : string
     description [1] : string
@@ -54,7 +54,7 @@ package scenario #E8F0EE {
     lifecycleStages [0..*] : list<plan | author | validate | review | test | publish | feedback | retire>
     schemaRef [0..1] : string
   }
-  class "User Story" as UserStory <<ext: SMART DAK FunctionalRequirement>> {
+  class "User Story" as UserStory <<ext: SMART DAK FunctionalRequirement>> #e8f0ee {
     resourceType [1] : 'FunctionalRequirement'
     id [1] : string
     activity [1] : string
@@ -65,8 +65,8 @@ package scenario #E8F0EE {
   }
 }
 
-package process #EEE9F5 {
-  class "Process" as Process <<ext: OMG BPMN 2.0>> {
+package process {
+  class "Process" as Process <<ext: OMG BPMN 2.0>> #eee9f5 {
     bpmn:endEvent : element
     bpmn:exclusiveGateway : element
     bpmn:lane : element
@@ -76,7 +76,7 @@ package process #EEE9F5 {
     bpmn:sequenceFlow : element
     bpmn:startEvent : element
   }
-  class "Task" as Task <<json: TaskRefSchema>> {
+  class "Task" as Task <<json: TaskRefSchema>> #eee9f5 {
     process [1] : string
     task [1] : string
     bpmn:callActivity : element
@@ -86,8 +86,8 @@ package process #EEE9F5 {
   }
 }
 
-package state #F6EEDF {
-  class "Todo" as Todo <<json: TodoNodeSchema>> {
+package state {
+  class "Todo" as Todo <<json: TodoNodeSchema>> #f6eedf {
     id [1] : string
     summary [1] : string
     comment [0..1] : string
@@ -108,7 +108,7 @@ package state #F6EEDF {
     origin [1] : string
     $schema [1] : 'folio-todo/v1'
   }
-  class "Bean" as Bean <<ext: beans GraphQL type Bean>> {
+  class "Bean" as Bean <<ext: beans GraphQL type Bean>> #f6eedf {
     id [1] : ID
     slug [0..1] : String
     path [1] : String
@@ -127,8 +127,8 @@ package state #F6EEDF {
   }
 }
 
-package schema #E9EDF3 {
-  class "External Schema" as ExternalSchema <<json: ExternalSchemaSchema>> {
+package schema {
+  class "External Schema" as ExternalSchema <<json: ExternalSchemaSchema>> #e9edf3 {
     $schema [1] : 'folio-external-schema/v1'
     id [1] : string
     authority [1] : OMG | DCMI | W3C | IETF | ISO | HL7 | other
@@ -141,15 +141,15 @@ package schema #E9EDF3 {
     terms [0..*] : {term, operative}[]
     note [0..1] : string
   }
-  class "JSON Schema" as JsonSchema <<draft-07, from Zod>> {
+  class "JSON Schema" as JsonSchema <<draft-07, from Zod>> #e9edf3 {
     $schema [1] : string<uri>
     properties [0..*] : schema
   }
   JsonSchema ..> ExternalSchema : $ref / conformsTo
 }
 
-package test #F4E6E6 {
-  class "Test Run" as TestRun <<json: TestRunSchema>> {
+package test {
+  class "Test Run" as TestRun <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
     subject [1] : string
     data.hash [1] : string
@@ -159,7 +159,7 @@ package test #F4E6E6 {
     outcome [1] : map<any>
     updated_at [1] : string
   }
-  class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> {
+  class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject.kind [1] : process | decision | role | requirement | skill | graph | tool
     subject.id [1] : string

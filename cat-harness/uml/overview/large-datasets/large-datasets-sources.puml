@@ -9,13 +9,13 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "large-datasets/large-datasets-sources" as pkg_large_datasets_large_datasets_sources <<schemas>> {
-  class "Identifier" as large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  class "Identifier" as large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> #e9edf3 {
     name [1] : string
     authoritative [1] : boolean
     example [0..1] : string
     note [0..1] : string
   }
-  class "folio-source-descriptor/v1" as large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  class "folio-source-descriptor/v1" as large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> #e9edf3 {
     $schema [1] : 'folio-source-descriptor/v1'
     id [1] : string
     title [1] : string

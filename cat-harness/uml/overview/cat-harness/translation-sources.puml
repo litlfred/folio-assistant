@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
-  class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> {
+  class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
     defaultLocale [0..1] : string
     supportedLocales [0..*] : string[]
     translationDir [0..1] : string

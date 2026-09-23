@@ -9,12 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
-  class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> {
+  class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> #f4f4f1 {
     field [1] : string
     source [1] : string
     reason [1] : string
   }
-  class "Theme" as who_iris_who_iris_themes_Theme <<json: ThemeSchema>> {
+  class "Theme" as who_iris_who_iris_themes_Theme <<json: ThemeSchema>> #f4f4f1 {
     $schema [1] : 'folio-theme/v1'
     id [1] : string
     kind [1] : sticky | webpage | publication

@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/bootstrap-translations" as pkg_bootstrap_bootstrap_translations <<translation-sources>> {
-  class "TranslationConfig" as bootstrap_bootstrap_translations_TranslationConfig <<json: TranslationConfigSchema>> {
+  class "TranslationConfig" as bootstrap_bootstrap_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
     defaultLocale [0..1] : string
     supportedLocales [0..*] : string[]
     translationDir [0..1] : string

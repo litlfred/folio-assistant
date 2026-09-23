@@ -9,14 +9,14 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
-  class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> {
+  class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
   }
-  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> {
+  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> #f4e6e6 {
     $schema [1] : 'block-qa/v1'
     label [1] : string
     kind [1] : string
@@ -25,7 +25,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : map<object[]>
     updated_at [1] : string
   }
-  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> {
+  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
     subject [1] : string
     data [1] : object
@@ -33,7 +33,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     outcome [1] : map<any>
     updated_at [1] : string
   }
-  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> {
+  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
     kind [1] : 'script' | 'agent' | 'human'
     id [1] : string
     version [0..1] : string
@@ -51,7 +51,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     notCompared [0..1] : string[]
     notes [0..1] : string
   }
-  class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> {
+  class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
     $schema [1] : 'qa-results/v1'
     producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
     subject [1] : { kind: string; id: string }
@@ -59,7 +59,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     families [1] : Record<string, QaResultFamily>
     total [1] : number
   }
-  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> {
+  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> #f4e6e6 {
     $schema [1] : 'translation-qa/v1'
     label [1] : string
     block [0..1] : string
@@ -70,7 +70,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : Record<string, TranslationQaEntry[]>
     updated_at [1] : string
   }
-  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4e6e6 {
   }
 }
 

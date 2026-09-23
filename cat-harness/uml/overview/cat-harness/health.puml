@@ -9,32 +9,32 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/health" as pkg_cat_harness_health <<health>> {
-  class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> {
+  class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> #f4e6e6 {
     metric [1] : string
     value [1] : number
     unit [1] : string
     basis [1] : string
     severity [1] : critical | major | minor
   }
-  class "Measurement" as cat_harness_health_Measurement <<json: HealthReportSchema>> {
+  class "Measurement" as cat_harness_health_Measurement <<json: HealthReportSchema>> #f4e6e6 {
     metric [1] : string
     value [1] : number
     unit [1] : string
     command [1] : string
   }
-  class "Finding" as cat_harness_health_Finding <<json: HealthReportSchema>> {
+  class "Finding" as cat_harness_health_Finding <<json: HealthReportSchema>> #f4e6e6 {
     summary [1] : string
     metric [0..1] : string
     severity [1] : critical | major | minor
     action [1] : string
   }
-  class "Check" as cat_harness_health_Check <<json: HealthReportSchema>> {
+  class "Check" as cat_harness_health_Check <<json: HealthReportSchema>> #f4e6e6 {
     id [1] : string
     state [1] : ok | finding | unknown
     summary [1] : string
     reason [0..1] : string
   }
-  class "HealthReport" as cat_harness_health_HealthReport <<json: HealthReportSchema>> {
+  class "HealthReport" as cat_harness_health_HealthReport <<json: HealthReportSchema>> #f4e6e6 {
     $schema [1] : 'health-report/v1'
     producer [1] : object
     subject [1] : object

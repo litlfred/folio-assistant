@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
-  class "Asset" as folio_assistant_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> {
+  class "Asset" as folio_assistant_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> #f4f4f1 {
     path [1] : string
     bytes [1] : integer
     mediaType [0..1] : string
@@ -18,12 +18,12 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     localPath [0..1] : string
     extractedBecause [0..1] : string
   }
-  class "Omitted" as folio_assistant_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> {
+  class "Omitted" as folio_assistant_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> #f4f4f1 {
     pattern [1] : string
     reason [1] : string
     count [1] : integer
   }
-  class "folio-extraction/v1" as folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> {
+  class "folio-extraction/v1" as folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> #f4f4f1 {
     $schema [1] : 'folio-extraction/v1'
     container [1] : string
     method [1] : zip | pdf | saved-webpage | tarball

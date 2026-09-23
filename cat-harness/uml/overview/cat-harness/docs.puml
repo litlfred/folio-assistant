@@ -9,12 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
-  class "Relation" as cat_harness_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  class "Relation" as cat_harness_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> #f4f4f1 {
     axis [1] : string
     label [1] : string
     href [0..1] : string
   }
-  class "Item" as cat_harness_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  class "Item" as cat_harness_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> #f4f4f1 {
     id [1] : string
     summary [1] : string
     comment [1] : string
@@ -29,42 +29,42 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     viewHref [0..1] : string
     editHref [0..1] : string
   }
-  class "folio-todo-index/v1" as cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  class "folio-todo-index/v1" as cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> #f4f4f1 {
     $schema [1] : 'folio-todo-index/v1'
     tile [0..1] : map<object>
     repoWeb [1] : string
     processes [1] : map<string[]>
     themeArt [1] : map<map<string>>
   }
-  class "folio-semantic-zoom/v1" as cat_harness_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  class "folio-semantic-zoom/v1" as cat_harness_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> #f4f4f1 {
     $schema [1] : 'folio-semantic-zoom/v1'
     belowPx [1] : number
     byKind [0..1] : map<object>
   }
-  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> #f4f4f1 {
     $schema [1] : typeof QA_GRAPH_INDEX_SCHEMA
     files [1] : number
     families [1] : QaFamily[]
     unclassified [1] : number
     unreadable [1] : number
   }
-  class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> #f4f4f1 {
     $schema [1] : string
     sourceLocale [1] : string
     locales [1] : string[]
     pages [1] : Record<string, IndexedPage>
   }
-  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4f4f1 {
   }
-  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> #f4f4f1 {
   }
-  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> #f4f4f1 {
   }
-  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
   }
-  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> #f4f4f1 {
   }
-  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> #f4f4f1 {
   }
 }
 

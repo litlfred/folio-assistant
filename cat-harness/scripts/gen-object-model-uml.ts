@@ -45,8 +45,11 @@ import { TestRunSchema } from "../schemas/test-run.js";
 import { KgQaReportSchema } from "../schemas/kg-qa.js";
 import { ExternalSchemaSchema } from "../../folio-assistant-core/schemas/external-schema.js";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+import { readUmlPalette } from "./uml-palette.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
+/** Colours from `uml.css`, the one place they are declared. */
+const PALETTE = readUmlPalette(HARNESS);
 const REPO = resolve(HARNESS, "..");
 /**
  * In THIS instance's declared `uml` directory, beside the per-sub-graph
@@ -265,13 +268,8 @@ function assertEdges(classes: ClassDef[], edges: Edge[]): string[] {
 
 // ── PlantUML ──────────────────────────────────────────────────────────────
 
-const PKG = {
-  scenario: "#E8F0EE",
-  process: "#EEE9F5",
-  state: "#F6EEDF",
-  schema: "#E9EDF3",
-  test: "#F4E6E6",
-} as const;
+/** The five families, in drawing order. Their colours are `uml.css`'s. */
+const PKG = ["scenario", "process", "state", "schema", "test"] as const;
 
 function esc(s: string): string {
   return s.replace(/"/g, "'");
@@ -297,17 +295,17 @@ function render(classes: ClassDef[], edges: Edge[]): string {
     "title Harness object model — attributes derived from JSON Schema",
     "",
   ];
-  for (const pkg of Object.keys(PKG) as (keyof typeof PKG)[]) {
-    L.push(`package ${pkg} ${PKG[pkg]} {`);
+  for (const pkg of PKG) {
+    L.push(`package ${pkg} {`);
     for (const c of classes.filter((x) => x.pkg === pkg)) {
-      L.push(`  class "${c.title}" as ${c.id} <<${esc(c.source)}>> {`);
+      L.push(`  class "${c.title}" as ${c.id} <<${esc(c.source)}>> ${PALETTE.family[pkg] ?? ""} {`);
       for (const a of c.attrs) {
         L.push(`    ${a.name}${a.mult ? ` ${a.mult}` : ""} : ${esc(a.type)}`);
       }
       L.push("  }");
     }
     if (pkg === "schema") {
-      L.push('  class "JSON Schema" as JsonSchema <<draft-07, from Zod>> {');
+      L.push(`  class "JSON Schema" as JsonSchema <<draft-07, from Zod>> ${PALETTE.family.schema ?? ""} {`);
       L.push("    $schema [1] : string<uri>");
       L.push("    properties [0..*] : schema");
       L.push("  }");

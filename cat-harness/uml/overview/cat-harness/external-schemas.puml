@@ -9,11 +9,11 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {
-  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> {
+  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> #e9edf3 {
     term [1] : string
     operative [1] : string
   }
-  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> {
+  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> #e9edf3 {
     $schema [1] : 'folio-external-schema/v1'
     id [1] : string
     authority [1] : enum(7)

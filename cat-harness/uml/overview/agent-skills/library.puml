@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "agent-skills/library" as pkg_agent_skills_library <<library>> {
-  class "folio-document-images/v1" as agent_skills_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  class "folio-document-images/v1" as agent_skills_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
     $schema [1] : 'folio-document-images/v1'
     doc_id [1] : string
     images [1] : object[] | null

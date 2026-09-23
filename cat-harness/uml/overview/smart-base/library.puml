@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-base/library" as pkg_smart_base_library <<library>> {
-  class "folio-document-images/v1" as smart_base_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  class "folio-document-images/v1" as smart_base_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
     $schema [1] : 'folio-document-images/v1'
     doc_id [1] : string
     images [1] : object[] | null

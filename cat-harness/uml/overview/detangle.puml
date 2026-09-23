@@ -12,7 +12,17 @@ package "detangle/detangle-schemas-local" as pkg_detangle_detangle_schemas_local
   note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_detangle_detangle_schemas_local_schemas
 }
 package "detangle/detangle-results" as pkg_detangle_detangle_results <<qa>> {
-  class "folio-detangle-sidecar/v1" as detangle_detangle_results_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> {
+  class "folio-detangle-sidecar/v1" as detangle_detangle_results_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> #f4e6e6 {
+    $schema [1] : 'folio-detangle-sidecar/v1'
+    group [1] : string
+    size [1] : number
+    internal [1] : number
+    inbound [1] : number
+    outbound [1] : number
+    cohesion [1] : number
+    enforcedBoundary [1] : number
+    recordedBoundary [1] : number
+    proseMentions [1] : number
   }
 }
 

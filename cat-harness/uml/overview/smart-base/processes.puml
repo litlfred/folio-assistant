@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-base/processes" as pkg_smart_base_processes <<processes>> {
-  class "Business Process Model and Notation (BPMN)" as smart_base_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> {
+  class "Business Process Model and Notation (BPMN)" as smart_base_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
     bpmn:callActivity [0..*] : element
     bpmn:collaboration [0..*] : element
     bpmn:definitions [0..*] : element
