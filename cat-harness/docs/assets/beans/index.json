@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 616,
+      "count": 617,
       "unit": "beans"
     }
   },
@@ -3049,7 +3049,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
       "updatedAt": "2026-09-23T11:21:05Z",
-      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [ ] claim shapes extended and run over each declared pair kind\n- [ ] not-parsed count reported per run; tests pin each shape",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape",
       "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
     },
     {
@@ -3497,14 +3497,14 @@
     {
       "id": "folio-assistant-eb4l",
       "title": "REVIEW NAVIGATION: outline, where-am-I, next change / next unreviewed, minimap — one key or one click each",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:55Z",
-      "updatedAt": "2026-09-22T21:26:45Z",
+      "updatedAt": "2026-09-23T11:20:14Z",
       "preview": "Owner: *\"review navigation\"*.\n\n**What a 300-page reader needs that does not exist** (measured 2026-09-22):\n- **Outline.** The owner withdrew a folio-level TOC (\"no toc\"), so this is a\n  NAVIGATION pane on the review page, not a TOC in the content. Confirm that\n  this does not reopen the ruling.\n- **Where am I**: a breadcrumb along the folio/ graph path. Nothing exists; the\n  only breadcrumb hit is",
       "file": "beans/defs/folio-assistant-eb4l--review-navigation-outline-where-am-i-next-change-n.md"
     },
@@ -6173,6 +6173,20 @@
       "updatedAt": "2026-09-20T09:16:26Z",
       "preview": "**Measured 2026-09-19** while triaging `folio-assistant-y1w9`. Found by a\nhypothesis failing, which is the useful kind: I expected skills to declare\nwho performs them, so that binding them to roles would be evidence-backed\nrather than invented. 89 of 112 unbound skills DO declare `roles:` — and\nonly **2** name an actual swimlane role.\n\n## The measurement\n\nAcross 178 skill files with front matter, ",
       "file": "beans/defs/folio-assistant-qif9--skill-front-matter-roles-carries-two-vocabularies.md"
+    },
+    {
+      "id": "folio-assistant-qivo",
+      "title": "SPOKEN COUNT: the glass handle's accessible name says how many items wait on the folio",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:27:15Z",
+      "updatedAt": "2026-09-23T11:27:15Z",
+      "preview": "Owner, 2026-09-23: \"do the spoken count on phone next\".\n\n`c132` (#1039) drew the phone handle's `· N` with `::after` and recorded it as Not done: a screen reader reads the handle's `aria-label`, which replaces its content, so the number was visible and silent.\n\n## Done when\n\n- [x] while the glass is closed, the accessible name carries the count: \"Pull down your folio — 2 items on it\", singular for",
+      "file": "beans/defs/folio-assistant-qivo--spoken-count-the-glass-handles-accessible-name-say.md"
     },
     {
       "id": "folio-assistant-qmjh",
