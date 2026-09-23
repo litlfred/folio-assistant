@@ -34,4 +34,12 @@ Every one of the 1 step(s) is documented.
 |---|---|---|---|
 | **Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Did anything&#10;change?**<br>`GW_Drift` | — | **no &#8212; in sync** → Generated file in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+
 {% endraw %}

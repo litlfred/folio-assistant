@@ -45,4 +45,14 @@ Every one of the 10 step(s) is documented.
 | **Translate feedback into agent direction**<br>`BA_TranslateFeedback` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA translates stakeholder findings into actionable direction: new beans or bean updates for the agent. |
 | **Post-MVP theme + UI review**<br>`Call_ThemeUIReview` | Agent | calls [Post-MVP theme and UI review](theme-ui-review.html) | On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Meets criteria?**<br>`GW_IncrementOK` | — | **no** → Phase 6: Implement (feature branch + PR)<br>**yes** → MVP ready for stakeholders? |
+| **MVP ready for stakeholders?**<br>`GW_MVPReady` | — | **not yet** → Phase 6: Implement (feature branch + PR)<br>**yes** → Deploy the MVP to staging |
+| **Accepted?**<br>`GW_StakeholderOK` | — | **findings** → Translate feedback into agent direction<br>**accepted** → Post-MVP theme + UI review |
+
 {% endraw %}
