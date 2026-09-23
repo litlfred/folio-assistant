@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(127)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(127) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(127) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(127) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Ingestion subprocess — the L1 completeness gate | folio-assistant</title>
+<title>Materialize on demand | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Ingestion subprocess — the L1 completeness gate" />
+<meta property="og:title" content="Materialize on demand" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Ingestion subprocess — the L1 completeness gate" />
+<meta property="twitter:title" content="Materialize on demand" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -759,149 +778,139 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Materialize on demand</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
             <blockquote class="note">
-  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/ingest-l1-completeness-gate.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md"><code class="language-plaintext highlighter-rouge">large-datasets/skills/materialize-on-demand.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/materialize-on-demand.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="ingestion-subprocess--the-l1-completeness-gate">
+<h1 id="materialize-on-demand">
   
   
-    <a href="#ingestion-subprocess--the-l1-completeness-gate" class="anchor-heading" aria-labelledby="ingestion-subprocess--the-l1-completeness-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ingestion subprocess — the L1 completeness gate
+    <a href="#materialize-on-demand" class="anchor-heading" aria-labelledby="materialize-on-demand"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Materialize on demand
   
   
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_L1Gate</code> · advisory · 4 step(s)</p>
+<p>Bootstrap brings an agent to a working harness. It does <strong>not</strong> bring the
+corpus, and must not: <code class="language-plaintext highlighter-rouge">who-iris</code> alone is 1,057,223 files and 361.55 GB
+(IRIS’s own storage report, read 2026-09-20). What arrives is the
+<strong>reference</strong>. Owner, 2026-09-20: <em>“user can ask (as they come in need to
+use) if they want to material parts of subgraphs.”</em></p>
 
-<p>folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.</folio:bean></folio:skill></p>
-
-<p><img src="../assets/img/workflows/ingest-l1-completeness-gate.svg" alt="BPMN diagram: Ingestion subprocess — the L1 completeness gate" style="max-width:100%" /></p>
-<h2 id="how-it-connects">
+<p>This skill is that ask. The gates are not here; they are in
+<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/reference/skill-instructions/materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote</code></a>, once.</p>
+<h2 id="1-what-is-already-here">
   
   
-    <a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
+    <a href="#1-what-is-already-here" class="anchor-heading" aria-labelledby="1-what-is-already-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. What is already here
   
   
 </h2>
     
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cache:index          <span class="c"># summary and eviction candidates</span>
+bun run cache:index <span class="nt">--all</span>    <span class="c"># every copy</span>
+</code></pre></div></div>
+
+<p>Read the columns for what they are:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>column</th>
+      <th>values</th>
+      <th>what it means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>size</td>
+      <td><code class="language-plaintext highlighter-rouge">recorded</code> · <code class="language-plaintext highlighter-rouge">measured</code> · <code class="language-plaintext highlighter-rouge">directory</code> · <code class="language-plaintext highlighter-rouge">absent</code></td>
+      <td><code class="language-plaintext highlighter-rouge">measured</code> is the file now, not when it landed. A directory is counted through its parts. <code class="language-plaintext highlighter-rouge">absent</code> is not zero.</td>
+    </tr>
+    <tr>
+      <td>fetched</td>
+      <td>a date, or <code class="language-plaintext highlighter-rouge">not recorded</code></td>
+      <td>only the record’s <code class="language-plaintext highlighter-rouge">materializedAt</code></td>
+    </tr>
+    <tr>
+      <td>last read</td>
+      <td><code class="language-plaintext highlighter-rouge">not recorded</code>, always</td>
+      <td>nothing records reads. The owner chose to say so rather than read file access times, which are often off or reset by a checkout.</td>
+    </tr>
+    <tr>
+      <td>freshness</td>
+      <td><code class="language-plaintext highlighter-rouge">fresh</code> · <code class="language-plaintext highlighter-rouge">expired</code> · <code class="language-plaintext highlighter-rouge">no-expiry</code> · <code class="language-plaintext highlighter-rouge">permanent</code></td>
+      <td>from <code class="language-plaintext highlighter-rouge">freshness()</code>. <code class="language-plaintext highlighter-rouge">no-expiry</code> is a finding: a working copy nobody gave a lifetime.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>If what they want is already held and fresh, stop: point them at it.</p>
+<h2 id="2-put-a-number-on-the-ask-before-anything-moves">
+  
+  
+    <a href="#2-put-a-number-on-the-ask-before-anything-moves" class="anchor-heading" aria-labelledby="2-put-a-number-on-the-ask-before-anything-moves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Put a number on the ask BEFORE anything moves
+  
+  
+</h2>
+    
+
+<p>“The user can ask” must not mean 361 GB arrives without a number first. Before
+calling <code class="language-plaintext highlighter-rouge">materialize-remote</code>:</p>
 
 <ul>
-  <li><strong>Called by:</strong> <a href="document-ingestion.html">Document ingestion — uploads/ to the L1 source knowledge graph</a></li>
-  <li><strong>Calls:</strong> <a href="adjudication.html">Adjudication</a></li>
+  <li><strong>Name the subset</strong> in the source’s own terms: its identifiers, or a subset
+strategy its descriptor (<code class="language-plaintext highlighter-rouge">large-datasets/sources/</code>) supports.</li>
+  <li><strong>Close it over dependencies</strong> if the descriptor says the subset is not
+self-contained (<code class="language-plaintext highlighter-rouge">subsetIsSelfContained: false</code>, mathlib). The size that
+matters is the closure’s.</li>
+  <li><strong>State the size and its basis</strong>: from the descriptor’s enumeration, or a
+measured listing. If neither gives a number, say that. The SIZE gate
+refuses on an unknown, and so should this conversation.</li>
+  <li><strong>Say what it would add</strong> to the cache total from step 1.</li>
 </ul>
-<h2 id="lanes--who-acts">
+
+<p>Then ask the person, with the number in front of them.</p>
+<h2 id="3-materialize">
   
   
-    <a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
+    <a href="#3-materialize" class="anchor-heading" aria-labelledby="3-materialize"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Materialize
   
   
 </h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>lane</th>
-      <th>role</th>
-      <th>what it does here</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Ingestion Engine (agent, runs unattended)</td>
-      <td><code class="language-plaintext highlighter-rouge">ingestion-agent</code></td>
-      <td>Runs both QA checks unattended and hands off exactly where the role’s persona says it must: Gateway_Drift’s ‘drift’ branch leaves this lane the moment a passage needs a judgement about which of two readings is right, rather than guessing — but Task_Verdict, which records the outcome either way, stays in this lane, so Lane_1 adjudicates a single passage while this lane still owns the completeness verdict as a whole.</td>
-    </tr>
-    <tr>
-      <td>Reviewer (SME or editor)</td>
-      <td><code class="language-plaintext highlighter-rouge">reviewer</code></td>
-      <td>The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="steps">
+<p>Run <code class="language-plaintext highlighter-rouge">Process_MaterializeRemote</code>. Its five gates decide; this skill does not
+second-guess them. A refusal leaves the content <code class="language-plaintext highlighter-rouge">referenced</code>, with the reason
+recorded. That is the process working, not failing.</p>
+<h2 id="4-eviction-is-a-report">
   
   
-    <a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+    <a href="#4-eviction-is-a-report" class="anchor-heading" aria-labelledby="4-eviction-is-a-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Eviction is a report
   
   
 </h2>
     
 
-<p>Every one of the 4 step(s) is documented.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>step</th>
-      <th>lane</th>
-      <th>skill / sub-process</th>
-      <th>what it does</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Is every derived artefact present?</strong><br /><code class="language-plaintext highlighter-rouge">Task_CheckDerived</code></td>
-      <td>Ingestion Engine (agent, runs unattended)</td>
-      <td><a href="../reference/skill-instructions/document-intake.html"><code class="language-plaintext highlighter-rouge">document-intake</code></a></td>
-      <td>L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational.</td>
-    </tr>
-    <tr>
-      <td><strong>Round-trip translation QA</strong><br /><code class="language-plaintext highlighter-rouge">Task_RoundTrip</code></td>
-      <td>Ingestion Engine (agent, runs unattended)</td>
-      <td><a href="../reference/skill-instructions/document-intake.html"><code class="language-plaintext highlighter-rouge">document-intake</code></a></td>
-      <td>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see.</td>
-    </tr>
-    <tr>
-      <td><strong>Adjudicate the flagged passage</strong><br /><code class="language-plaintext highlighter-rouge">Task_FlagDrift</code></td>
-      <td>Reviewer (SME or editor)</td>
-      <td>calls <a href="adjudication.html">Adjudication</a><br /><a href="../reference/skill-instructions/document-intake.html"><code class="language-plaintext highlighter-rouge">document-intake</code></a><br /><a href="../reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a></td>
-      <td>A machine can detect that two readings differ. Which one is right is a human call.</td>
-    </tr>
-    <tr>
-      <td><strong>Record the L1 completeness verdict</strong><br /><code class="language-plaintext highlighter-rouge">Task_Verdict</code></td>
-      <td>Ingestion Engine (agent, runs unattended)</td>
-      <td><a href="../reference/skill-instructions/document-intake.html"><code class="language-plaintext highlighter-rouge">document-intake</code></a></td>
-      <td>Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="decisions">
-  
-  
-    <a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
-  
-  
-</h2>
-    
-
-<p>Every one of the 2 decision(s) is documented.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>decision</th>
-      <th>what decides it</th>
-      <th>branches</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Drift or bad terminology?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_Drift</code></td>
-      <td>Answered by the round-trip translation QA: did it flag semantic drift or a terminology miss? <code class="language-plaintext highlighter-rouge">drift</code> sends the passage to a person to adjudicate, since which reading is right is a human call; <code class="language-plaintext highlighter-rouge">clean</code> records the verdict directly.</td>
-      <td><strong>drift</strong> → Adjudicate the flagged passage<br /><strong>clean</strong> → Record the L1 completeness verdict</td>
-    </tr>
-    <tr>
-      <td><strong>Which reading was right?</strong><br /><code class="language-plaintext highlighter-rouge">GW_DriftOutcome</code></td>
-      <td>All three converge on Task_Verdict, and that is deliberate rather than the codes being decoration: this lane adjudicates ONE passage while Lane_0 still owns the completeness verdict as a whole, so the outcome of a passage is a REASON recorded against that verdict, never a different next step. The same shape criterion-adjudication uses, where three outcomes converge on one write because what makes an outcome legitimate is that its reason was recorded. What differs is what gets written and what it obliges. <code class="language-plaintext highlighter-rouge">real</code> is drift to fix in the translation. <code class="language-plaintext highlighter-rouge">spurious</code> is a false positive, and recording it is what stops the same passage being re-flagged every run. <code class="language-plaintext highlighter-rouge">source-wrong</code> points at the SOURCE rather than the translation — the one answer that sends work out of this process entirely, because no amount of re-translating a wrong source produces a right target.</td>
-      <td><strong>the drift is real</strong> → Record the L1 completeness verdict<br /><strong>false positive</strong> → Record the L1 completeness verdict<br /><strong>the SOURCE is wrong</strong> → Record the L1 completeness verdict</td>
-    </tr>
-  </tbody>
-</table></div>
+<p><code class="language-plaintext highlighter-rouge">cache:index</code> lists candidates: <code class="language-plaintext highlighter-rouge">expired</code> first, then <code class="language-plaintext highlighter-rouge">no-expiry</code> working
+copies, largest first. <strong>An archival copy is never a candidate.</strong> Nothing is
+removed by the tool or by you. Show the list with sizes and reasons, and let
+the person decide (<code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code>). Its worked example,
+<code class="language-plaintext highlighter-rouge">plj1</code>, is a workflow whose shape deleted every open PR’s preview with nobody
+deciding.</p>
 
           
 

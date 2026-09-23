@@ -272,14 +272,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T21:14:28.299Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/83f937fbabe32c263bcf009d534bd7754e82114e",
-  "sourceCommitSha": "83f937fbabe32c263bcf009d534bd7754e82114e",
-  "sourceCommitAt": "2026-09-23T21:12:16Z",
+  "generatedAt": "2026-09-23T21:29:17.321Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9ba7d75509aeaec6def3525cc0a0d911a34c3f52",
+  "sourceCommitSha": "9ba7d75509aeaec6def3525cc0a0d911a34c3f52",
+  "sourceCommitAt": "2026-09-23T21:19:09Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 251,
+    "Skill": 252,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -2322,7 +2322,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/getting-started.md",
-      "instructionLines": 214,
+      "instructionLines": 221,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4504,6 +4504,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/materialize-on-demand",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "materialize-on-demand",
+      "title": "Materialize on demand",
+      "description": "After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/materialize-on-demand.md",
+      "instructionLines": 70,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/copy-out-materialized",
@@ -40580,8 +40597,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "646551c94eb98194b97e09a4f676b1e476899008",
+    "sha": "0666980e47209d57b2297be8da2c29c6bd1d6cd3",
     "pr": "1182/merge",
-    "run": "35920965823"
+    "run": "35922522952"
   }
 }
