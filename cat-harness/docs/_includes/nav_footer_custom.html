@@ -55,7 +55,24 @@
   ONE CHECKBOX, TWO LABELS, so open and close cannot disagree -- and read with
   `:has()`, which is why neither has to sit in any particular place. No
   JavaScript; a real checkbox is focusable and announces its own state.
+
+  RENDERED ONCE PER PAGE, though the theme includes this file TWICE: v0.12.0
+  renders it in `components/sidebar.html` (the `.d-md-block.d-none` wrapper,
+  inside `.side-bar`) and again in `components/footer.html` (`.d-md-none`, in
+  the main content, OUTSIDE `.side-bar`). Bean `uknu`, measured in a browser
+  at 375px on a built page, 2026-09-23: the second copy made `id="fa-nav-open"`
+  a duplicate on 432 of 1,288 pages, and it was worse than invalid. Its `☰`
+  worked by mouse only by accident -- `for=` resolves to the FIRST id, the
+  sidebar's -- while Space on its own checkbox ticked a box outside
+  `.side-bar`, so `.side-bar:has(.fa-nav-open:checked)` never matched: a
+  keyboard control that did nothing. The sidebar renders first in
+  `_layouts/default.html`, so the first render is the one inside `.side-bar`;
+  `assign` in an include writes the page's render scope, so the flag is seen
+  by the footer's copy. The harness tabs below are not guarded: they carry no
+  id, and the footer copy is where a phone reader finds them.
 {%- endcomment -%}
+{%- unless fa_nav_controls_rendered -%}
+{%- assign fa_nav_controls_rendered = true -%}
 <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
 <label class="fa-nav-close" for="fa-nav-open" title="Close navigation">
   <span aria-hidden="true">&times;</span>
@@ -85,6 +102,7 @@
   <span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>
   <span class="fa-sr-only">Keep navigation open</span>
 </label>
+{%- endunless -%}
 
 {%- comment -%}
   THE FIXED BOTTOM IS ITSELF A COLUMN: the harnesses scroll, home does not.

@@ -295,9 +295,11 @@ export function page(
   for (const s of specs) {
     const rows = used.get(s.id) ?? [];
     b.push(
-      `### ${cell(s.title)}`,
-      "",
-      `<a id="${s.id}"></a>`,
+      // The id rides ON the heading (kramdown IAL) rather than on an anchor
+      // beside it: kramdown also mints a heading id from the title, and when
+      // the slug of the title equals this one — "HL7 FHIR" and \`hl7-fhir\` —
+      // the page carried the id twice (bean \`uknu\`).
+      `### ${cell(s.title)} {#${s.id}}`,
       "",
       `\`${cell(s.id)}\` — ${cell(s.authority)}, edition [${cell(s.version)}](${s.specUrl}) — ` +
         `\`${cell(s.use)}\`, meaning ${cell(USE_MEANS[s.use] ?? "")}.`,

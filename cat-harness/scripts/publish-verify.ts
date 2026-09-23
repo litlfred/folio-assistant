@@ -24,7 +24,8 @@
  * report, the exit code and the alert need no change. The first is JSON-LD
  * expansion, because the graph was JSON-LD by convention and not by
  * construction — nothing had ever run a processor over it, and the first run
- * found two documents silently dropping a property.
+ * found two documents silently dropping a property. The second is unique ids
+ * in built HTML (bean `uknu`) — a defect the source cannot show.
  *
  * ## What is in scope
  *
@@ -64,15 +65,15 @@ export interface Verifier {
   run(dir: string): Promise<Omit<VerifierResult, "id" | "asks">>;
 }
 
-/** Every `.jsonld` under a directory, skipping dot-prefixed segments. */
-export function jsonLdFiles(dir: string): string[] {
+/** Every file with this extension under a directory, skipping dot-prefixed segments. */
+export function treeFiles(dir: string, ext: string): string[] {
   const out: string[] = [];
   const walk = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
       if (e.name.startsWith(".") || e.name === "node_modules") continue;
       const p = join(d, e.name);
       if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".jsonld")) out.push(p);
+      else if (e.name.endsWith(ext)) out.push(p);
     }
   };
   if (existsSync(dir) && statSync(dir).isDirectory()) walk(dir);
@@ -138,7 +139,7 @@ export const JSONLD_EXPAND: Verifier = {
     const findings: Finding[] = [];
     let checked = 0;
     let outOfScope = 0;
-    for (const f of jsonLdFiles(dir)) {
+    for (const f of treeFiles(dir, ".jsonld")) {
       let doc: unknown;
       try {
         doc = JSON.parse(readFileSync(f, "utf-8"));
@@ -160,8 +161,52 @@ export const JSONLD_EXPAND: Verifier = {
   },
 };
 
+/**
+ * The ids an HTML page declares more than once. Script, style, template and
+ * comment bodies are dropped first: markup quoted inside them is text, not
+ * elements, and counting it would make a page that documents an id look like
+ * one that repeats it.
+ */
+export function duplicateIds(html: string): string[] {
+  const body = html.replace(/<(script|style|template)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi, "");
+  const seen = new Map<string, number>();
+  for (const m of body.matchAll(/<[a-zA-Z][^>]*?\sid\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) {
+    const id = m[1] ?? m[2] ?? "";
+    seen.set(id, (seen.get(id) ?? 0) + 1);
+  }
+  return [...seen].filter(([, n]) => n > 1).map(([id, n]) => `${id} ×${n}`);
+}
+
+/**
+ * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 432 pages
+ * carried `id="fa-nav-open"` twice, and the second copy was a keyboard control
+ * that did nothing. The source was correct throughout and every gate was
+ * green; only a built page showed it. So this reads built pages.
+ *
+ * Every page in the tree is in scope. Unlike a JSON-LD document, which may be
+ * someone else's data we carry, an HTML page here is one our site build wrote
+ * and publishes under our URL.
+ */
+export const HTML_UNIQUE_IDS: Verifier = {
+  id: "html-unique-ids",
+  asks:
+    "Does every built HTML page declare each id once — so every `<label for>`, `#fragment` link and " +
+    "`aria-labelledby` reaches the one element it names?",
+  async run(dir) {
+    const findings: Finding[] = [];
+    let checked = 0;
+    for (const f of treeFiles(dir, ".html")) {
+      checked += 1;
+      for (const d of duplicateIds(readFileSync(f, "utf-8"))) {
+        findings.push({ verifier: "html-unique-ids", file: relative(dir, f), detail: `duplicate id ${d}` });
+      }
+    }
+    return { checked, outOfScope: 0, findings };
+  },
+};
+
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS];
 
 export async function verify(dir: string, verifiers: readonly Verifier[] = VERIFIERS): Promise<{
   results: VerifierResult[];
