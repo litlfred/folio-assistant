@@ -42,6 +42,7 @@
  *
  * @module scripts/check-l1-complete
  */
+import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -1035,8 +1036,10 @@ export function checkAll(root: string): EntryReport[] | undefined {
   // for the same reason, and this does not delegate to it: a gate that relies
   // on a DIFFERENT tool having run is a gate with a hole in it.
   const seen = new Map<string, string>();
-  for (const lib of libs) {
-    if (!existsSync(lib)) continue;
+  // Declared-but-absent is REPORTED, not dropped (bean `95ir`).
+  const presence = splitDeclared(libs);
+  noteAbsent(presence.absent, "a library");
+  for (const lib of presence.present) {
     for (const d of readdirSync(lib).sort()) {
       if (!statSync(join(lib, d)).isDirectory()) continue;
       const prior = seen.get(d);
@@ -1215,7 +1218,9 @@ if (import.meta.main) {
     // Across EVERY declared library: an exception that has expired in the
     // second one is a gate lying about its coverage just as much as one that
     // expired in the first. Bean `a02m`.
-    const libs = libRoot ? directoriesForGraph(libRoot, "library").filter((d) => existsSync(d)) : [];
+    const declaredLibs = libRoot ? splitDeclared(directoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
+    noteAbsent(declaredLibs.absent, "a library");
+    const libs = declaredLibs.present;
     if (libs.length > 0) {
       const dirs = libs.flatMap((lib) =>
         readdirSync(lib)

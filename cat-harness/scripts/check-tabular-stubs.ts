@@ -33,6 +33,7 @@
  *
  * Exit 0 clean · 1 a finding · 2 could not determine, which is never a pass.
  */
+import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -133,7 +134,9 @@ function run(): number {
   // documents, and scanning one of three libraries would report every stub in
   // the other two as expired-nowhere — a clean run over the documents that
   // actually carry them.
-  const libs = directoriesForGraph(ROOT, "library").filter((d) => existsSync(d));
+  // Declared-but-absent is REPORTED, not dropped (bean `95ir`).
+  const { present: libs, absent } = splitDeclared(directoriesForGraph(ROOT, "library"));
+  noteAbsent(absent, "a library");
   if (libs.length === 0) {
     console.error("Could not resolve a `library` directory. This is NOT a pass.");
     return 2;

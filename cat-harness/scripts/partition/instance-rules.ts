@@ -898,6 +898,9 @@ export const RULES: Rule[] = [
       "scripts/check-requirements.ts",
       // Bean `4d22`: a completion on a branch that main never received.
       "scripts/check-bean-orphans.ts",
+      // Bean `95ir`: declared-but-absent is reported by a scanner, never
+      // dropped. Harness machinery over declarations; imports only node:fs.
+      "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
