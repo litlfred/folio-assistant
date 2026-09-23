@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(151)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(99)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(151) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(99) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(151) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(99) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(151) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(99) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Proof Triage &amp; Resolution | folio-assistant</title>
+<title>Graph rendering: one set of rules for every drawn graph | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Proof Triage &amp; Resolution" />
+<meta property="og:title" content="Graph rendering: one set of rules for every drawn graph" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Proof Triage &amp; Resolution" />
+<meta property="twitter:title" content="Graph rendering: one set of rules for every drawn graph" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -769,7 +769,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Proof Triage & Resolution</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Graph rendering: one set of rules for every drawn graph</span></li>
   </ol>
 </nav>
 
@@ -778,414 +778,155 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/proof-triage.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/proof-triage.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/graph-management/graph-rendering.md"><code class="language-plaintext highlighter-rouge">skills/graph-management/graph-rendering.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/proof-triage.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/graph-management/graph-rendering.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="proof-triage--resolution">
+<h1 id="graph-rendering-one-set-of-rules-for-every-drawn-graph">
   
   
-    <a href="#proof-triage--resolution" class="anchor-heading" aria-labelledby="proof-triage--resolution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proof Triage &amp; Resolution
+    <a href="#graph-rendering-one-set-of-rules-for-every-drawn-graph" class="anchor-heading" aria-labelledby="graph-rendering-one-set-of-rules-for-every-drawn-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Graph rendering: one set of rules for every drawn graph
   
   
 </h1>
     
-<h2 id="overview">
+
+<blockquote>
+  <p>Skill id: <code class="language-plaintext highlighter-rouge">graph-rendering</code> · Capability: <code class="language-plaintext highlighter-rouge">architecture</code> · Package: <code class="language-plaintext highlighter-rouge">graph-management</code></p>
+</blockquote>
+
+<p>This repository draws graphs in at least six places, and until this skill each
+one followed its own conventions. Owner, 2026-09-23 (issue #1137): <em>“make
+skill that applies to graphs in general…. then apply to papers, schemas,
+math proofs/lean etc”</em>.</p>
+
+<p>This skill is the general part. It says what any drawing of a graph owes its
+reader. The per-graph skills say how one generator meets it:
+<a href="../folio-core/uml-overview.md"><code class="language-plaintext highlighter-rouge">uml-overview</code></a> for schemas,
+<a href="../workflow/bpmn-authoring.md"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a> for processes, and
+<a href="../folio-core/content-graph.md"><code class="language-plaintext highlighter-rouge">content-graph</code></a> for a paper’s blocks.</p>
+
+<p>A drawing is how a person READS a graph. <a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a>
+is how the graph is RESTRUCTURED, and it needs the drawing: a partition you
+cannot see is a partition you argue about from numbers alone.</p>
+<h2 id="the-ten-rules">
   
   
-    <a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+    <a href="#the-ten-rules" class="anchor-heading" aria-labelledby="the-ten-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The ten rules
   
   
 </h2>
     
 
-<p>This skill examines the entire Lean codebase for unresolved <code class="language-plaintext highlighter-rouge">sorry</code> markers,
-builds a dependency-ordered work list, and iteratively attempts to replace each
-<code class="language-plaintext highlighter-rouge">sorry</code> with a valid proof or well-typed definition.  When a proof attempt
-fails, it searches existing libraries for similar statements and presents these
-to a proof writer for guidance.</p>
-<h2 id="when-to-use-this-skill">
+<p>Each rule was learned on the UML overview (issue #990). The failure each one
+prevents is stated beside it.</p>
+
+<ol>
+  <li><strong>Draw from a declared graph, never by hand.</strong> Every node and edge in the
+picture is read from a source: a schema, a declaration, a BPMN file, a
+<code class="language-plaintext highlighter-rouge">uses[]</code> list, a Lean dependency cache. A wrong picture is fixed at its
+source. A hand-edited diagram is overwritten on the next run, and a check
+fails while it is stale.</li>
+  <li><strong>Groups are declared sub-graphs.</strong> A box around nodes is a named
+sub-graph (a <code class="language-plaintext highlighter-rouge">directories[]</code> entry, a chapter, a package), never a
+grouping the renderer invented. Owner, 2026-09-23: <em>“sections are
+sub-graphs in a harness”</em>.</li>
+  <li><strong>No empty box without a reason.</strong> A node drawn with nothing in it reads
+as a rendering fault; the owner asked <em>“why empty?”</em> of exactly that. A
+node with no fields to show carries one line saying why. A node whose
+shape could not be determined is drawn dashed, as a finding, never as a
+quiet empty shape. The UML overview went from 242 empty boxes to 0.</li>
+  <li><strong>Edge kinds are drawn distinctly and never merged.</strong> A graph has more
+than one kind of edge (<a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/edge-kinds-and-blast-radius.html"><code class="language-plaintext highlighter-rouge">edge-kinds-and-blast-radius</code></a>).
+Editorial <code class="language-plaintext highlighter-rouge">uses[]</code> and formal Lean edges, enforced and prose-only
+references, and a field-carried link versus one declared elsewhere (the
+UML’s dashed <code class="language-plaintext highlighter-rouge">folio:skill</code> edge) each get their own line style and a
+legend. Merging two kinds into one line destroys the signal every metric
+on that graph is computed from.</li>
+  <li><strong>Pick the layout engine by what the graph is, and write down why.</strong>
+See §”Layout engines” below. The choice is a claim with a measurement
+behind it, not a taste.</li>
+  <li><strong>Offer two orientations from one source.</strong> A tall graph on a wide screen
+and a wide graph on a phone are both unreadable. Derive the second view
+from the first (<code class="language-plaintext highlighter-rouge">landscapeOf</code> in <code class="language-plaintext highlighter-rouge">gen-uml-overview.ts</code>) rather than keeping
+two sources that can drift apart. Owner: <em>“can we have portrait and
+landscape views?”</em></li>
+  <li><strong>Declare colour once.</strong> Colour a node by its family (for the UML: schema,
+scenario, process, state, test) in one stylesheet, and have every renderer
+read that stylesheet (<code class="language-plaintext highlighter-rouge">uml-palette.ts</code>). A second palette is a second answer
+free to disagree with the first.</li>
+  <li><strong>Stamp the output with its source’s hash.</strong> A rendering whose staleness
+check needs the renderer is a check CI cannot run: Java, a browser, or a
+font set that measures text a pixel differently. Write the sha256 of the
+exact source text into the output and compare stamps. The UML SVGs and
+BPMN renderings do this; the paper and Lean drawings do not yet.</li>
+  <li><strong>Show it in a zoomable figure.</strong> On the site, use the <code class="language-plaintext highlighter-rouge">bpmn-figure</code>
+markup so <code class="language-plaintext highlighter-rouge">docs-ui.js</code> adds zoom, reset and full-width controls. A pages
+template missing <code class="language-plaintext highlighter-rouge">layout: default</code> renders with no site script and so no
+controls, and nothing reports it.</li>
+  <li><strong>Put the measurement on the drawing.</strong> When a graph is being partitioned,
+show each group’s detangle numbers (size, cohesion, links in and out)
+beside the group, so the picture and the metric are read together. The UML
+overview pages do this from <code class="language-plaintext highlighter-rouge">detangle/results/</code>. A number shown without its
+picture invites arguing about the number.</li>
+</ol>
+<h2 id="layout-engines">
   
   
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+    <a href="#layout-engines" class="anchor-heading" aria-labelledby="layout-engines"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Layout engines
   
   
 </h2>
     
 
-<ul>
-  <li>After a formalization pass leaves <code class="language-plaintext highlighter-rouge">sorry</code> stubs</li>
-  <li>After a <code class="language-plaintext highlighter-rouge">lake build</code> produces sorry warnings or type errors</li>
-  <li>When onboarding a new chapter and filling in proof obligations</li>
-  <li>Periodically as a “proof debt” sweep</li>
-</ul>
-<h2 id="lean-mcp-tools-paper-assistant">
-  
-  
-    <a href="#lean-mcp-tools-paper-assistant" class="anchor-heading" aria-labelledby="lean-mcp-tools-paper-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean MCP Tools (paper-assistant)
-  
-  
-</h2>
-    
-
-<p>When the MCP server is available, it <strong>transforms every phase</strong> of triage:</p>
+<p>Measured on the UML overview, 2026-09-23. Re-measure before relying on it for
+a different graph.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Phase</th>
-      <th>Old workflow</th>
-      <th>MCP tool</th>
-      <th>Improvement</th>
+      <th>engine</th>
+      <th>use it for</th>
+      <th>what it gets wrong</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Inventory</td>
-      <td><code class="language-plaintext highlighter-rouge">grep sorry</code> + manual classification</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></td>
-      <td>Structured sorry warnings with file/line/type</td>
+      <td><strong>stored layout</strong> (BPMN DI)</td>
+      <td>a graph whose author placed the nodes</td>
+      <td>nothing to choose: never re-lay a graph that carries its own layout</td>
     </tr>
     <tr>
-      <td>Goal reading</td>
-      <td>Manual file reading</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_goal</code></td>
-      <td>Live goal state at each sorry position</td>
+      <td><strong>ELK</strong> (<code class="language-plaintext highlighter-rouge">!pragma layout elk</code> in PlantUML)</td>
+      <td>the compact, portrait default; it routes edges around boxes</td>
+      <td>it lays everything top to bottom and <strong>ignores <code class="language-plaintext highlighter-rouge">left to right direction</code> and arrow hints</strong> (output byte-identical). Unconnected groups end up in one wide row.</td>
     </tr>
     <tr>
-      <td>Mathlib search</td>
-      <td><code class="language-plaintext highlighter-rouge">Grep</code> on Mathlib source</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_leansearch</code></td>
-      <td>Natural language: “lemma about positivity of norms”</td>
+      <td><strong>ELK + hidden links</strong></td>
+      <td>a grid of unconnected groups (an overview)</td>
+      <td>nothing, if the column count suits the orientation: <code class="language-plaintext highlighter-rouge">ceil(√(n/2))</code> for portrait, <code class="language-plaintext highlighter-rouge">ceil(√(2n))</code> for landscape</td>
     </tr>
     <tr>
-      <td>Type-sig search</td>
-      <td>Manual <code class="language-plaintext highlighter-rouge">exact?</code></td>
-      <td><code class="language-plaintext highlighter-rouge">lean_loogle</code></td>
-      <td>Type signature search: “_ → 0 ≤ _”</td>
+      <td><strong>Graphviz dot, left to right, polyline edges</strong></td>
+      <td>the landscape view of a connected graph</td>
+      <td>it can route a long edge across a box, which is why ELK stays the portrait default. Use <code class="language-plaintext highlighter-rouge">nodesep 70</code>, <code class="language-plaintext highlighter-rouge">ranksep 160</code>.</td>
     </tr>
     <tr>
-      <td>Tactic attempts</td>
-      <td>Edit → <code class="language-plaintext highlighter-rouge">lake build</code> → repeat</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_multi_attempt</code></td>
-      <td>Try 5+ tactics at once, get goal states for each</td>
+      <td>Graphviz with <strong>orthogonal</strong> edges</td>
+      <td>avoid</td>
+      <td>it places edge labels away from their edges and runs lines through boxes. The owner: <em>“make wider, its messy”</em>.</td>
     </tr>
     <tr>
-      <td>“Try This”</td>
-      <td>Read <code class="language-plaintext highlighter-rouge">lake build</code> output</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_code_actions</code></td>
-      <td>Get resolved edits directly</td>
-    </tr>
-    <tr>
-      <td>Verification</td>
-      <td><code class="language-plaintext highlighter-rouge">lake build</code></td>
-      <td><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></td>
-      <td>Per-file, no full rebuild</td>
-    </tr>
-    <tr>
-      <td>Axiom check</td>
-      <td><code class="language-plaintext highlighter-rouge">axiom_report.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">lean_verify</code></td>
-      <td>Axioms used by a specific theorem</td>
-    </tr>
-    <tr>
-      <td>Similar lemmas</td>
-      <td>Grep for conclusion type</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_local_search</code></td>
-      <td>Ripgrep-powered search across project + stdlib</td>
+      <td>Mermaid (dagre)</td>
+      <td>a secondary view where CSS classes on nodes matter</td>
+      <td>the same model came out three times taller than ELK’s</td>
     </tr>
   </tbody>
 </table></div>
-<h3 id="mcp-first-triage-loop-replaces-phases-34">
+<h2 id="applying-it">
   
   
-    <a href="#mcp-first-triage-loop-replaces-phases-34" class="anchor-heading" aria-labelledby="mcp-first-triage-loop-replaces-phases-34"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> MCP-first triage loop (replaces Phases 3–4)
-  
-  
-</h3>
-    
-
-<p>For each sorry site:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. lean_goal          → read the goal
-2. lean_multi_attempt → try [simp, ring, linarith, aesop, positivity, omega]
-3. If all fail:
-   a. lean_leansearch  → "what lemma proves &lt;goal in words&gt;?"
-   b. lean_loogle      → search by type signature of the goal
-   c. lean_code_actions → check for "Try This" suggestions
-4. If a tactic works:
-   a. Apply the edit
-   b. lean_diagnostic_messages → verify no new errors
-   c. lean_verify → check axiom soundness
-5. If nothing works:
-   a. lean_local_search for similar declarations in the project
-   b. Escalate with goal state + failed attempts + similar lemmas
-</code></pre></div></div>
-
-<p>This loop replaces the edit-build-check cycle with <strong>interactive feedback</strong>
-that doesn’t require a full <code class="language-plaintext highlighter-rouge">lake build</code> between attempts.</p>
-<h2 id="prerequisites">
-  
-  
-    <a href="#prerequisites" class="anchor-heading" aria-labelledby="prerequisites"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prerequisites
-  
-  
-</h2>
-    
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">lake build</code> should be run once before starting (to populate oleans)</li>
-  <li>paper-assistant MCP server configured (<code class="language-plaintext highlighter-rouge">.mcp.json</code>)</li>
-  <li>Mathlib4 and any project-specific libraries are in <code class="language-plaintext highlighter-rouge">lakefile.toml</code>
-(per-paper) and aggregated in the root <code class="language-plaintext highlighter-rouge">/lakefile.toml</code></li>
-  <li>The Lean files follow the project’s naming conventions</li>
-</ul>
-<h2 id="workflow">
-  
-  
-    <a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
-  
-  
-</h2>
-    
-<h3 id="phase-1--inventory">
-  
-  
-    <a href="#phase-1--inventory" class="anchor-heading" aria-labelledby="phase-1--inventory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1 — Inventory
-  
-  
-</h3>
-    
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></strong> on each file (or <code class="language-plaintext highlighter-rouge">grep sorry</code> as fallback)</li>
-  <li>For each hit, classify into one of:
-    <ul>
-      <li><strong>Type stub</strong>: <code class="language-plaintext highlighter-rouge">def X : Type* := sorry</code> — needs a concrete type or structure</li>
-      <li><strong>Proof stub</strong>: <code class="language-plaintext highlighter-rouge">theorem/lemma ... := sorry</code> or <code class="language-plaintext highlighter-rouge">by sorry</code> — needs a proof</li>
-      <li><strong>Field stub</strong>: a structure field defaulting to <code class="language-plaintext highlighter-rouge">sorry</code> — needs a value or proof</li>
-      <li><strong>Axiom placeholder</strong>: <code class="language-plaintext highlighter-rouge">sorry</code> with a comment like “deferred to Ch.N” — skip for now</li>
-    </ul>
-  </li>
-  <li>Record each sorry site:
-    <ul>
-      <li>File path and line number</li>
-      <li>Declaration name</li>
-      <li>Classification (type / proof / field / axiom-placeholder)</li>
-      <li>Statement signature (hypotheses and goal type)</li>
-      <li>Any <code class="language-plaintext highlighter-rouge">-- sorry:</code> or adjacent comment explaining the deferral</li>
-      <li><strong>Criticality</strong> (<code class="language-plaintext highlighter-rouge">routine</code> | <code class="language-plaintext highlighter-rouge">core</code> | <code class="language-plaintext highlighter-rouge">restates-target</code>, per
-<a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/proof-gap-audit.html"><code class="language-plaintext highlighter-rouge">proof-gap-audit</code></a> §”Gap criticality”).
-<code class="language-plaintext highlighter-rouge">restates-target</code> is an <strong>auto-fail</strong>: do not attempt it — escalate,
-because the block is mis-typed (it defers the target itself), not
-merely under-proved.</li>
-    </ul>
-  </li>
-</ol>
-<h3 id="phase-2--dependency-ordering">
-  
-  
-    <a href="#phase-2--dependency-ordering" class="anchor-heading" aria-labelledby="phase-2--dependency-ordering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2 — Dependency Ordering
-  
-  
-</h3>
-    
-
-<ol>
-  <li>For each sorry site, identify <strong>what it depends on</strong>:
-    <ul>
-      <li>Other definitions/structures referenced in its type signature</li>
-      <li>Imports from mathlib or other project files</li>
-    </ul>
-  </li>
-  <li>Build a rough dependency DAG:
-    <ul>
-      <li>Glossary type stubs are leaves (no intra-project dependencies)</li>
-      <li>Theorem stubs depend on the structures they quantify over</li>
-      <li>Chapter-level theorems may depend on cross-chapter definitions</li>
-    </ul>
-  </li>
-  <li><strong>Priority ordering</strong> (work on these first → last):
-    <ol>
-      <li>Standalone field proofs (e.g. <code class="language-plaintext highlighter-rouge">error_nonneg : 0 ≤ x</code>)</li>
-      <li>Limit / degeneration theorems (e.g. a parameter limit reducing to a known case)</li>
-      <li>Algebraic identities provable by <code class="language-plaintext highlighter-rouge">ring</code> / <code class="language-plaintext highlighter-rouge">field_simp</code> / <code class="language-plaintext highlighter-rouge">linarith</code></li>
-      <li>Approximation lemmas requiring <code class="language-plaintext highlighter-rouge">norm_num</code> or <code class="language-plaintext highlighter-rouge">native_decide</code></li>
-      <li>Type stubs that need concrete structure definitions</li>
-      <li>Deep mathematical content deferred to later chapters</li>
-    </ol>
-  </li>
-</ol>
-
-<p><strong>Criticality overlay (value, not just ease).</strong> The ordering above is by
-<em>ease</em> (quick mechanical wins build confidence). Cross it with the <em>value</em>
-axis from <a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/proof-gap-audit.html"><code class="language-plaintext highlighter-rouge">proof-gap-audit</code></a> §”Gap criticality”: once
-the mechanical wins are banked, attack <code class="language-plaintext highlighter-rouge">core</code> gaps (where the result’s idea
-lives) ahead of remaining <code class="language-plaintext highlighter-rouge">routine</code> ones, and never <em>attempt</em> a
-<code class="language-plaintext highlighter-rouge">restates-target</code> gap — it is a non-proof to escalate, not a <code class="language-plaintext highlighter-rouge">sorry</code> to
-discharge. <em>An honest gap beats a no-gap dead end.</em></p>
-<h3 id="phase-3--iterative-proof-attempts">
-  
-  
-    <a href="#phase-3--iterative-proof-attempts" class="anchor-heading" aria-labelledby="phase-3--iterative-proof-attempts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3 — Iterative Proof Attempts
-  
-  
-</h3>
-    
-
-<p>For each sorry site, in priority order:</p>
-
-<ol>
-  <li><strong>Read the declaration</strong> and its surrounding context (10 lines above/below)</li>
-  <li><strong>Identify the goal type</strong> — what needs to be proved or constructed</li>
-  <li><strong>Search for relevant lemmas</strong> (MCP preferred):
-    <ul>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_leansearch</code></strong> with a natural language description of the goal</li>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_loogle</code></strong> with the type signature of the goal</li>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_local_search</code></strong> for similar declarations in the project</li>
-      <li>Fallback: <code class="language-plaintext highlighter-rouge">Grep</code> on Mathlib source for key terms</li>
-    </ul>
-  </li>
-  <li><strong>Attempt a proof</strong> (MCP preferred):
-    <ul>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_multi_attempt</code></strong> with all candidate tactics at once:
-<code class="language-plaintext highlighter-rouge">[simp, ring, linarith, positivity, omega, norm_num, aesop]</code></li>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_code_actions</code></strong> on the sorry line for “Try This” suggestions</li>
-      <li>For positivity: <code class="language-plaintext highlighter-rouge">by positivity</code> or <code class="language-plaintext highlighter-rouge">by linarith</code> with explicit bounds</li>
-      <li>For approximation: <code class="language-plaintext highlighter-rouge">by norm_num</code> or <code class="language-plaintext highlighter-rouge">by native_decide</code></li>
-      <li>For algebraic: <code class="language-plaintext highlighter-rouge">by ring</code> or <code class="language-plaintext highlighter-rouge">by field_simp; ring</code></li>
-      <li>Fallback: edit + <code class="language-plaintext highlighter-rouge">lake build</code> cycle</li>
-    </ul>
-  </li>
-  <li><strong>Test the proof</strong>:
-    <ul>
-      <li><strong><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></strong> on the file (fast, per-file)</li>
-      <li>Fallback: <code class="language-plaintext highlighter-rouge">lake build</code> on the specific file</li>
-    </ul>
-  </li>
-  <li><strong>Record the outcome</strong>:
-    <ul>
-      <li><strong>Success</strong>: mark as resolved, move to next</li>
-      <li><strong>Failure</strong>: capture the error message, proceed to Phase 4</li>
-    </ul>
-  </li>
-</ol>
-<h3 id="phase-4--escalation-to-proof-writer">
-  
-  
-    <a href="#phase-4--escalation-to-proof-writer" class="anchor-heading" aria-labelledby="phase-4--escalation-to-proof-writer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4 — Escalation to Proof Writer
-  
-  
-</h3>
-    
-
-<p>When a proof attempt fails:</p>
-
-<ol>
-  <li><strong>Document the failure</strong>:
-    <ul>
-      <li>The exact declaration and goal type</li>
-      <li>What tactics were tried and what errors resulted</li>
-      <li>The specific Lean error message</li>
-    </ul>
-  </li>
-  <li><strong>Search for similar statements</strong>:
-    <ul>
-      <li>Grep mathlib for lemmas with similar conclusion types</li>
-      <li>Look for generalizations that could be specialized</li>
-      <li>Check if the statement holds under stronger hypotheses</li>
-    </ul>
-  </li>
-  <li><strong>Present to proof writer</strong> with:
-    <ul>
-      <li>The original statement</li>
-      <li>2–3 similar lemmas from mathlib that are “close but not matching”</li>
-      <li>A suggestion of which mathlib lemma might be adaptable</li>
-      <li>Any missing hypotheses that would make the proof go through</li>
-    </ul>
-  </li>
-  <li><strong>Iterate</strong>: incorporate proof writer feedback, retry, repeat</li>
-</ol>
-<h3 id="phase-5--build-verification">
-  
-  
-    <a href="#phase-5--build-verification" class="anchor-heading" aria-labelledby="phase-5--build-verification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5 — Build Verification
-  
-  
-</h3>
-    
-
-<p>After each batch of resolved sorries:</p>
-
-<ol>
-  <li>Run <code class="language-plaintext highlighter-rouge">lake build</code> on the modified files</li>
-  <li>Check for:
-    <ul>
-      <li>New type errors introduced by proof changes</li>
-      <li>Sorry warnings (expected for remaining stubs)</li>
-      <li>Successful compilation of resolved proofs</li>
-    </ul>
-  </li>
-  <li>If a previously-resolved proof breaks:
-    <ul>
-      <li>Add it back to the work list</li>
-      <li>Re-examine dependencies that may have changed</li>
-    </ul>
-  </li>
-</ol>
-<h3 id="phase-6--commit--report">
-  
-  
-    <a href="#phase-6--commit--report" class="anchor-heading" aria-labelledby="phase-6--commit--report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 6 — Commit &amp; Report
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Commit resolved proofs in logical batches:
-    <ul>
-      <li>One commit per file, or per thematic group</li>
-      <li>Message pattern: <code class="language-plaintext highlighter-rouge">feat(lean): prove &lt;theorem-names&gt; in &lt;File&gt;.lean</code></li>
-    </ul>
-  </li>
-  <li>
-    <p>Generate a summary table:</p>
-
-    <div class="table-wrapper"><table>
-      <thead>
-        <tr>
-          <th>Declaration</th>
-          <th>File</th>
-          <th>Status</th>
-          <th>Tactic</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code class="language-plaintext highlighter-rouge">error_nonneg</code></td>
-          <td>MyPaper.Foo</td>
-          <td>Resolved</td>
-          <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td><code class="language-plaintext highlighter-rouge">main_commutative_diagram</code></td>
-          <td>MyPaper.Bar</td>
-          <td>Deferred</td>
-          <td>—</td>
-          <td>Ch.11</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </li>
-  <li>Update any tracking files (proof-objects.json if present)</li>
-</ol>
-<h2 id="tactic-cheat-sheet">
-  
-  
-    <a href="#tactic-cheat-sheet" class="anchor-heading" aria-labelledby="tactic-cheat-sheet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tactic Cheat Sheet
+    <a href="#applying-it" class="anchor-heading" aria-labelledby="applying-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Applying it
   
   
 </h2>
@@ -1194,344 +935,84 @@ discharge. <em>An honest gap beats a no-gap dead end.</em></p>
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Goal Pattern</th>
-      <th>Try First</th>
-      <th>Then Try</th>
+      <th>graph</th>
+      <th>source</th>
+      <th>groups</th>
+      <th>edge kinds</th>
+      <th>renderer today</th>
+      <th>owes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">0 ≤ x</code></td>
-      <td><code class="language-plaintext highlighter-rouge">positivity</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith [hyp]</code></td>
+      <td><strong>schemas</strong></td>
+      <td>graph-kind registry, Zod schemas</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;instance&gt;/&lt;sub-graph&gt;</code></td>
+      <td>composition; field-carried vs declared elsewhere</td>
+      <td><code class="language-plaintext highlighter-rouge">gen-uml-overview.ts</code>, <code class="language-plaintext highlighter-rouge">gen-object-model-uml.ts</code></td>
+      <td>meets all ten</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">x = y</code> (algebraic)</td>
-      <td><code class="language-plaintext highlighter-rouge">ring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">field_simp; ring</code></td>
+      <td><strong>processes</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">.bpmn</code> files</td>
+      <td>pools and lanes</td>
+      <td>sequence, message, call</td>
+      <td><code class="language-plaintext highlighter-rouge">render-bpmn.ts</code> (stored layout)</td>
+      <td>rule 6 (orientation) does not apply: the author placed it</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">x = y</code> (definitional)</td>
-      <td><code class="language-plaintext highlighter-rouge">rfl</code></td>
-      <td><code class="language-plaintext highlighter-rouge">unfold ...; rfl</code></td>
+      <td><strong>paper blocks</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">buildContentGraph</code> in <code class="language-plaintext highlighter-rouge">content/pipeline/content-graph.ts</code></td>
+      <td>chapters</td>
+      <td><code class="language-plaintext highlighter-rouge">editorial</code> (<code class="language-plaintext highlighter-rouge">uses[]</code>, <code class="language-plaintext highlighter-rouge">interprets</code>) vs <code class="language-plaintext highlighter-rouge">formal</code> (Lean, <code class="language-plaintext highlighter-rouge">type</code>/<code class="language-plaintext highlighter-rouge">value</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">content-graph-analysis.py</code> re-parses the sources and has no staleness check</td>
+      <td>rules 1, 3, 4, 6, 8, 10: bean <code class="language-plaintext highlighter-rouge">o3p3</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">x = 0</code> (limit/degeneration)</td>
-      <td><code class="language-plaintext highlighter-rouge">unfold ...; rw [h]; ring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">simp [h]</code></td>
+      <td><strong>Lean proofs</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-objects.json</code>, the Lean Atlas cache</td>
+      <td>modules or chapters</td>
+      <td>formal dependency; status as colour</td>
+      <td><code class="language-plaintext highlighter-rouge">.github/scripts/generate_dependency_graph.py</code>, run in CI, no staleness check</td>
+      <td>rules 1, 6, 7, 8: bean <code class="language-plaintext highlighter-rouge">ukfw</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">x &lt; y</code> (numeric)</td>
-      <td><code class="language-plaintext highlighter-rouge">norm_num</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">∃ x, P x</code></td>
-      <td><code class="language-plaintext highlighter-rouge">exact ⟨witness, proof⟩</code></td>
-      <td><code class="language-plaintext highlighter-rouge">use witness; simp</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">P ∧ Q</code></td>
-      <td><code class="language-plaintext highlighter-rouge">exact ⟨proof_P, proof_Q⟩</code></td>
-      <td><code class="language-plaintext highlighter-rouge">constructor &lt;;&gt; simp</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">P → Q</code></td>
-      <td><code class="language-plaintext highlighter-rouge">intro h; exact ...</code></td>
-      <td><code class="language-plaintext highlighter-rouge">fun h =&gt; ...</code></td>
-    </tr>
-    <tr>
-      <td>Anything</td>
-      <td><code class="language-plaintext highlighter-rouge">simp</code></td>
-      <td><code class="language-plaintext highlighter-rouge">aesop</code></td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="common-mistakes-to-avoid">
-  
-  
-    <a href="#common-mistakes-to-avoid" class="anchor-heading" aria-labelledby="common-mistakes-to-avoid"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Common Mistakes to Avoid
-  
-  
-</h2>
-    
-<h3 id="1-ill-typed-theorem-conclusions--true-anti-pattern">
-  
-  
-    <a href="#1-ill-typed-theorem-conclusions--true-anti-pattern" class="anchor-heading" aria-labelledby="1-ill-typed-theorem-conclusions--true-anti-pattern"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Ill-typed theorem conclusions (<code class="language-plaintext highlighter-rouge">= True</code> anti-pattern)
-  
-  
-</h3>
-    
-
-<p><strong>Wrong:</strong></p>
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">theorem</span> <span class="n">self_dual_curvature</span> <span class="o">...</span> : <span class="n">inst</span><span class="o">.</span><span class="n">self_dual</span> <span class="n">hn</span> <span class="o">=</span> <span class="n">True</span> := <span class="k">by</span> <span class="n">sorry</span>
-</code></pre></div></div>
-<p>Here <code class="language-plaintext highlighter-rouge">inst.self_dual hn</code> is a <em>term of type <code class="language-plaintext highlighter-rouge">True</code></em> (a proof), while <code class="language-plaintext highlighter-rouge">True</code> is
-a <em>type</em> (<code class="language-plaintext highlighter-rouge">Prop</code>).  You cannot compare a proof to its type with <code class="language-plaintext highlighter-rouge">=</code>.</p>
-
-<p><strong>Right:</strong></p>
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">theorem</span> <span class="n">self_dual_curvature</span> <span class="o">...</span> : <span class="n">inst</span><span class="o">.</span><span class="n">self_dual</span> <span class="n">hn</span> := <span class="k">by</span> <span class="n">sorry</span>
-</code></pre></div></div>
-<p>When the goal is to <em>prove</em> a proposition, the conclusion IS the proposition,
-not <code class="language-plaintext highlighter-rouge">proposition = True</code>.  Before resolving any sorry, verify the statement
-is well-typed by checking that <code class="language-plaintext highlighter-rouge">lake build</code> produces a sorry warning (not a
-type error).</p>
-<h3 id="2-placeholder-field-axioms-prefer-true--by-trivial">
-  
-  
-    <a href="#2-placeholder-field-axioms-prefer-true--by-trivial" class="anchor-heading" aria-labelledby="2-placeholder-field-axioms-prefer-true--by-trivial"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Placeholder field axioms: prefer <code class="language-plaintext highlighter-rouge">True := by trivial</code>
-  
-  
-</h3>
-    
-
-<p><strong>Wrong:</strong></p>
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">laplacian_vanishes</span> : <span class="o">∀</span> (<span class="n">p</span> : <span class="n">M</span>), (<span class="mi">0</span> : <span class="err">ℝ</span>) <span class="o">=</span> <span class="mi">0</span><span class="cd">  -- placeholder for Δ α = 0</span>
-</code></pre></div></div>
-<p>This is technically provable but semantically misleading — it universally
-quantifies over an unused variable and states a tautology unrelated to the
-real axiom.</p>
-
-<p><strong>Right:</strong></p>
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">laplacian_vanishes</span> : <span class="n">True</span> := <span class="k">by</span> <span class="n">trivial</span><span class="cd">  -- placeholder for Δ α = 0</span>
-</code></pre></div></div>
-<p>Use <code class="language-plaintext highlighter-rouge">True := by trivial</code> for placeholder axioms.  It’s immediately discharged,
-clearly marks itself as a placeholder, and is consistent with other axiom
-placeholders in the codebase.</p>
-<h3 id="3-pin-external-dependencies-to-commit-hashes">
-  
-  
-    <a href="#3-pin-external-dependencies-to-commit-hashes" class="anchor-heading" aria-labelledby="3-pin-external-dependencies-to-commit-hashes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Pin external dependencies to commit hashes
-  
-  
-</h3>
-    
-
-<p>In <code class="language-plaintext highlighter-rouge">lakefile.toml</code>, never track <code class="language-plaintext highlighter-rouge">main</code> for external dependencies:</p>
-<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Wrong: tracks a moving target, non-reproducible builds</span>
-<span class="nn">[[require]]</span>
-<span class="py">name</span> <span class="p">=</span> <span class="s">"someDep"</span>
-<span class="py">git</span>  <span class="p">=</span> <span class="s">"https://github.com/example/some-dep"</span>
-<span class="py">rev</span>  <span class="p">=</span> <span class="s">"main"</span>
-
-<span class="c"># Right: pinned to a specific commit</span>
-<span class="nn">[[require]]</span>
-<span class="py">name</span> <span class="p">=</span> <span class="s">"someDep"</span>
-<span class="py">git</span>  <span class="p">=</span> <span class="s">"https://github.com/example/some-dep"</span>
-<span class="py">rev</span>  <span class="p">=</span> <span class="s">"abc1234def5678"</span>
-</code></pre></div></div>
-<p>After adding a new dependency, run <code class="language-plaintext highlighter-rouge">lake update</code> and use the commit hash from
-the generated <code class="language-plaintext highlighter-rouge">lake-manifest.json</code>.</p>
-<h3 id="4-glossary-notation-consistency">
-  
-  
-    <a href="#4-glossary-notation-consistency" class="anchor-heading" aria-labelledby="4-glossary-notation-consistency"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Glossary notation consistency
-  
-  
-</h3>
-    
-
-<p>In <code class="language-plaintext highlighter-rouge">glossary.json</code>, follow the existing notation conventions:</p>
-<ul>
-  <li>Use <code class="language-plaintext highlighter-rouge">q^-1</code> not <code class="language-plaintext highlighter-rouge">q^{-1}</code> (no LaTeX-style braces in JSON narrative fields)</li>
-  <li>Use <code class="language-plaintext highlighter-rouge">K^pm 1</code> not <code class="language-plaintext highlighter-rouge">K^{pm 1}</code></li>
-  <li>Use <code class="language-plaintext highlighter-rouge">mapsto</code> not <code class="language-plaintext highlighter-rouge">-&gt;</code> for function mappings</li>
-  <li>Use <code class="language-plaintext highlighter-rouge">textstylesum</code> not <code class="language-plaintext highlighter-rouge">sum</code> for summation notation</li>
-  <li>Check 2–3 neighboring entries for the prevailing style before adding new ones</li>
-</ul>
-<h2 id="current-sorry-inventory">
-  
-  
-    <a href="#current-sorry-inventory" class="anchor-heading" aria-labelledby="current-sorry-inventory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Current Sorry Inventory
-  
-  
-</h2>
-    
-
-<p>Live state — <strong>do not</strong> maintain a static snapshot in this skill file
-(prior dated tables drifted within months and misled fresh agents).
-Pull the current inventory at the start of each triage pass:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Source</th>
-      <th>Command</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>All sorry sites with file/line/category</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> per file (MCP), or <code class="language-plaintext highlighter-rouge">grep -rn 'sorry' content/&lt;paper&gt;/lean/</code> as fallback</td>
-    </tr>
-    <tr>
-      <td>Per-block formalization status</td>
-      <td>Read <code class="language-plaintext highlighter-rouge">proof-objects.json</code> (CI artefact, derived from Lean diagnostics)</td>
-    </tr>
-    <tr>
-      <td>Axiom dependencies for any theorem</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_verify</code></td>
-    </tr>
-    <tr>
-      <td>Bibliographic backing of each sorry</td>
-      <td><code class="language-plaintext highlighter-rouge">grep -B2 'sorry' &lt;file&gt;.lean</code> — every sorry must carry a <code class="language-plaintext highlighter-rouge">-- Ref: [key]</code> line per the project authoring conventions</td>
+      <td><strong>detangle partition</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">detangle/results/*.detangle.json</code></td>
+      <td>detangle groups</td>
+      <td>enforced / recorded / prose</td>
+      <td>numbers only; the UML pages show them (rule 10)</td>
+      <td>a drawing of the cross-group edges themselves</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>When triaging, classify each live sorry into the four categories from
-Phase 1 (type stub / proof stub / field stub / axiom placeholder) and
-apply the priority ordering from Phase 2.</p>
-<h2 id="feedback--iteration-notes">
+<p>A paper or a Lean project is <strong>content</strong>, and content lives in a folio
+repository, not here. Apply the rules there through the platform’s generator,
+and ask the owner before a PR in a mathematics repository.</p>
+
+<p><strong>Never populate <code class="language-plaintext highlighter-rouge">uses[]</code> from the formal graph to make a drawing look
+connected.</strong> The editorial relation is authored; see <code class="language-plaintext highlighter-rouge">AGENTS.md</code> and
+<a href="../folio-core/uses-editorial-review.md"><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></a>. Rule 4 is how
+the drawing keeps them apart.</p>
+<h2 id="related">
   
   
-    <a href="#feedback--iteration-notes" class="anchor-heading" aria-labelledby="feedback--iteration-notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Feedback &amp; Iteration Notes
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2>
     
 
-<p>These notes capture lessons learned from applying the skill across the codebase.
-Update them after each triage pass.</p>
-<h3 id="classification-boundaries">
-  
-  
-    <a href="#classification-boundaries" class="anchor-heading" aria-labelledby="classification-boundaries"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Classification Boundaries
-  
-  
-</h3>
-    
-
 <ul>
-  <li><strong>Glossary type stubs</strong> (<code class="language-plaintext highlighter-rouge">def X : Type* := sorry</code>) are <strong>design tasks</strong>, not
-proof tasks.  They need a concrete <code class="language-plaintext highlighter-rouge">structure</code>/<code class="language-plaintext highlighter-rouge">class</code>/<code class="language-plaintext highlighter-rouge">inductive</code>.  Route
-them through Phase 3b (Design Review), not Phase 3 (Proof Attempts).</li>
-  <li><strong>Structure field defaults</strong> (<code class="language-plaintext highlighter-rouge">field : P := by sorry</code>) are a special case:
-the sorry lives in the structure definition but must be resolved per-instance.
-The fix is usually to remove the default and provide explicit proofs at each
-construction site.  This is a <strong>refactoring task</strong>, not a single proof.</li>
-  <li><strong>Axiom placeholders</strong> (<code class="language-plaintext highlighter-rouge">True := by trivial</code> with <code class="language-plaintext highlighter-rouge">-- axiom placeholder</code>
-comment) are sorry-free by design.  Do not count them in the sorry inventory.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">axiom</code> declarations</strong> (if any remain) are intentionally unproved — they
-represent conjectures or assumptions stated honestly.</li>
-</ul>
-<h3 id="common-proof-patterns">
-  
-  
-    <a href="#common-proof-patterns" class="anchor-heading" aria-labelledby="common-proof-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Common Proof Patterns
-  
-  
-</h3>
-    
-
-<ul>
-  <li><strong>Limit / degeneration theorems</strong> (a parameter limit reducing to a known
-case) are the easiest wins. Pattern: <code class="language-plaintext highlighter-rouge">unfold &lt;op&gt;; rw [hq, inv_one,
-sub_self, ...]; ring</code>.  Always attempt these first — they build confidence
-and verify the operator definitions.</li>
-  <li><strong>Approximation lemmas</strong> on <code class="language-plaintext highlighter-rouge">noncomputable def</code> values: always <code class="language-plaintext highlighter-rouge">unfold</code> first.
-Without <code class="language-plaintext highlighter-rouge">unfold</code>, <code class="language-plaintext highlighter-rouge">norm_num</code> sees an opaque constant and fails silently.</li>
-  <li><strong>Division rearrangement</strong> (<code class="language-plaintext highlighter-rouge">a/b = c ↔ b*c = a</code>): <code class="language-plaintext highlighter-rouge">field_simp</code> is the
-correct first move.  Always provide <code class="language-plaintext highlighter-rouge">h : b ≠ 0</code> (or <code class="language-plaintext highlighter-rouge">pow_ne_zero</code> for <code class="language-plaintext highlighter-rouge">b²</code>).</li>
-  <li><strong>Composed numeric expressions</strong> (e.g. <code class="language-plaintext highlighter-rouge">1 - 1/(1.1097)</code>): if <code class="language-plaintext highlighter-rouge">norm_num</code> fails
-after <code class="language-plaintext highlighter-rouge">unfold</code>, rewrite the constant as an explicit rational (<code class="language-plaintext highlighter-rouge">11097/10000</code>).</li>
-</ul>
-<h3 id="escalation-triggers">
-  
-  
-    <a href="#escalation-triggers" class="anchor-heading" aria-labelledby="escalation-triggers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escalation Triggers
-  
-  
-</h3>
-    
-
-<ul>
-  <li><strong>&gt;10 minutes on a single sorry</strong>: move on.  The iterative approach means
-it’s better to attempt the next sorry and come back with new information.</li>
-  <li><strong>Nonlinear real arithmetic</strong> (square roots, reciprocal composition): these
-almost never yield to <code class="language-plaintext highlighter-rouge">norm_num</code>/<code class="language-plaintext highlighter-rouge">linarith</code>.  Escalate immediately with:
-(a) the exact goal after <code class="language-plaintext highlighter-rouge">unfold</code>, (b) which tactics were tried,
-(c) a suggestion to use <code class="language-plaintext highlighter-rouge">polyrith</code> or rational rewriting.</li>
-  <li><strong>Missing mathlib lemma</strong>: if you need a helper that doesn’t exist, state it
-as a local <code class="language-plaintext highlighter-rouge">have</code> or <code class="language-plaintext highlighter-rouge">lemma</code> and prove it.  Don’t wait for upstream.</li>
-</ul>
-<h3 id="process-notes">
-  
-  
-    <a href="#process-notes" class="anchor-heading" aria-labelledby="process-notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Process Notes
-  
-  
-</h3>
-    
-
-<ul>
-  <li><strong>Deferred axiom placeholders</strong> should be skipped unless the referenced
-chapter has been formalized.  Check comments for <code class="language-plaintext highlighter-rouge">-- deferred to Ch.N</code>.</li>
-  <li><strong>Build errors vs sorry warnings</strong>: A sorry warning means the file compiles
-but has holes.  A build error means something is broken.  Always fix build
-errors before attempting new proofs.</li>
-  <li><strong>Batch size</strong>: resolve 3–5 sorries per commit.  Larger batches make it
-harder to bisect if a proof breaks something downstream.</li>
-  <li><strong>Sorry comments</strong>: after each failed attempt, update the sorry comment with
-what was tried.  This saves future triage passes from repeating work.</li>
-</ul>
-<h2 id="content-object-integration">
-  
-  
-    <a href="#content-object-integration" class="anchor-heading" aria-labelledby="content-object-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Object Integration
-  
-  
-</h2>
-    
-
-<p>Each formalizable item lives as a <strong>triple</strong>: <code class="language-plaintext highlighter-rouge">block.ts</code> (typed manifest with
-<code class="language-plaintext highlighter-rouge">kind</code>, <code class="language-plaintext highlighter-rouge">label</code>, and <code class="language-plaintext highlighter-rouge">lean.ref</code> URI), <code class="language-plaintext highlighter-rouge">block.md</code> (narrative), and
-<code class="language-plaintext highlighter-rouge">block.lean</code> (formalization). The <code class="language-plaintext highlighter-rouge">.ts</code> manifest is authoritative — it
-determines whether a block requires Lean. Formalization status is <strong>not</strong>
-stored in <code class="language-plaintext highlighter-rouge">.ts</code>; it is derived at build time and written to
-<code class="language-plaintext highlighter-rouge">proof-objects.json</code>.</p>
-
-<p><strong>Kind-aware filtering.</strong> Only triage blocks whose <code class="language-plaintext highlighter-rouge">kind</code> requires Lean:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">definition</code>: <code class="language-plaintext highlighter-rouge">.lean</code> required — always triage if sorry present.</li>
-  <li><code class="language-plaintext highlighter-rouge">theorem</code> / <code class="language-plaintext highlighter-rouge">lemma</code> / <code class="language-plaintext highlighter-rouge">proposition</code> / <code class="language-plaintext highlighter-rouge">corollary</code>: <code class="language-plaintext highlighter-rouge">.lean</code> expected — triage.</li>
-  <li><code class="language-plaintext highlighter-rouge">example</code> / <code class="language-plaintext highlighter-rouge">remark</code> / <code class="language-plaintext highlighter-rouge">conjecture</code>: <code class="language-plaintext highlighter-rouge">.lean</code> optional — triage only if a
-<code class="language-plaintext highlighter-rouge">.lean</code> sibling exists and contains sorry.</li>
-  <li><code class="language-plaintext highlighter-rouge">prose</code> / <code class="language-plaintext highlighter-rouge">equation</code> / <code class="language-plaintext highlighter-rouge">diagram</code>: no Lean — <strong>skip entirely</strong>.</li>
-</ul>
-
-<p><strong>Dependency-driven prioritization.</strong> Use the <code class="language-plaintext highlighter-rouge">uses[]</code> field in <code class="language-plaintext highlighter-rouge">.ts</code>
-manifests to order the work list: blocks depended on by many others should
-be resolved first. This replaces or supplements the DAG built from Lean
-imports in Phase 2.</p>
-
-<p><strong>Source of truth.</strong> Formalization status is derived at build time from
-<code class="language-plaintext highlighter-rouge">.lean</code> file content and Lean build output, then written to
-<code class="language-plaintext highlighter-rouge">proof-objects.json</code>. It is not stored in <code class="language-plaintext highlighter-rouge">.ts</code> manifests.</p>
-<h2 id="checklist">
-  
-  
-    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
-  
-  
-</h2>
-    
-
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">.lean</code> files grepped for <code class="language-plaintext highlighter-rouge">sorry</code></li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Each sorry classified (type / proof / field / axiom-placeholder)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Theorem statements checked for well-typedness (no <code class="language-plaintext highlighter-rouge">= True</code> anti-pattern)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Placeholder axioms use <code class="language-plaintext highlighter-rouge">True := by trivial</code> consistently</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dependency order established</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Easy proofs attempted first (positivity, ring, limit cases)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">noncomputable def</code> values unfolded before <code class="language-plaintext highlighter-rouge">norm_num</code></li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mathlib searched for similar lemmas on failed attempts</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Failed proofs documented with similar-lemma suggestions</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">lake build</code> passes (sorry warnings OK, errors not OK)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />External deps pinned to commit hashes in <code class="language-plaintext highlighter-rouge">lakefile.toml</code></li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Resolved proofs committed with descriptive messages</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Summary table generated</li>
+  <li><a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a>: restructuring the graph this
+skill draws.</li>
+  <li><a href="/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/reference/skill-instructions/edge-kinds-and-blast-radius.html"><code class="language-plaintext highlighter-rouge">edge-kinds-and-blast-radius</code></a>: why edge
+kinds must stay distinct (rule 4).</li>
+  <li><a href="../folio-core/uml-overview.md"><code class="language-plaintext highlighter-rouge">uml-overview</code></a>: the schema diagrams, where
+these rules were first learned.</li>
+  <li><a href="../folio-core/kg-viewer.md"><code class="language-plaintext highlighter-rouge">kg-viewer</code></a>: the shared rule for an HTML
+viewer that fetches its projection by a path relative to itself.</li>
 </ul>
 
           

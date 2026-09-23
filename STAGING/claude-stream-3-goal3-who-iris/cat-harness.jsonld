@@ -272,14 +272,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T18:49:10.270Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e90d53e4f1f32d0f5b004fb7ef931f9cd9efc35c",
-  "sourceCommitSha": "e90d53e4f1f32d0f5b004fb7ef931f9cd9efc35c",
-  "sourceCommitAt": "2026-09-23T18:47:17Z",
+  "generatedAt": "2026-09-23T19:13:03.567Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f4145200bf679f777b4d24b113936e2affbfe8b8",
+  "sourceCommitSha": "f4145200bf679f777b4d24b113936e2affbfe8b8",
+  "sourceCommitAt": "2026-09-23T19:10:54Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 247,
+    "Skill": 248,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -737,12 +737,29 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-detanglement.md",
-      "instructionLines": 301,
+      "instructionLines": 304,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/graph-rendering",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "graph-rendering",
+      "title": "Graph rendering: one set of rules for every drawn graph",
+      "description": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/graph-rendering.md",
+      "instructionLines": 127,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/domain-fencing",
@@ -970,7 +987,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/uml-overview.md",
-      "instructionLines": 164,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2996,7 +3013,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-graph.md",
-      "instructionLines": 452,
+      "instructionLines": 460,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5684,13 +5701,14 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "graph-management",
       "version": "0.1.0",
-      "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave. The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
+      "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
       "path": "skills/graph-management",
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/domain-fencing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/graph-detanglement"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/graph-detanglement",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/graph-rendering"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -39684,8 +39702,8 @@
   ],
   "staging": {
     "branch": "claude/stream-3-goal3-who-iris",
-    "sha": "ca7d533292d66b09c7b30040c423a6f7164298d5",
+    "sha": "88e101155c686bbea7ae95d7b000c656da400e34",
     "pr": "1114/merge",
-    "run": "35904893800"
+    "run": "35907593937"
   }
 }
