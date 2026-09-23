@@ -1164,8 +1164,14 @@ export function harnessTiles(
  *
  * SOLVED IN TYPESCRIPT because the consumer is Liquid, which cannot be trusted
  * to divide two floats without quietly producing an integer.
+ *
+ * EXPORTED so that the one test that matters about it can be written: that it
+ * and `mark()` agree. Two copies of one sum, each with its own test asserting
+ * its own copy, is exactly the shape that let the navbar widths be stated
+ * twice and both be green (`sjic`). The only way that cannot happen is a test
+ * that reads both, which needs both reachable.
  */
-function solveCrop(r: { x: number; y: number; w: number; h: number }): {
+export function solveCrop(r: { x: number; y: number; w: number; h: number }): {
   width: number;
   height: number;
   left: number;

@@ -35,7 +35,7 @@ import {
   renderNavbarGeometryCss,
   withGeometry,
 } from "../gen-navbar-geometry-css.js";
-import { publishedUrlOf } from "../harness-tiles.js";
+import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
@@ -700,5 +700,59 @@ describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () 
         .map((v) => `${h.name}:${v.kind} -> ${v.path}`),
     );
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("the crop is ONE sum, and two renderers do it", () => {
+  /**
+   * `solveCrop` solves a declared `avatarRegion` for the Jekyll sidebar, where
+   * the consumer is Liquid; `mark()` solves the same region inline for a
+   * mounted page. The arithmetic is `603s`'s and it is written out twice,
+   * which is the shape that let the navbar widths be stated twice with a test
+   * per copy — both green, and disagreeing (`sjic`).
+   *
+   * Nothing here says the arithmetic is RIGHT; `schemas/avatar-region.test.ts`
+   * owns the declaration and this file's other tests own the markup. What it
+   * says is that the two surfaces cannot drift apart silently, which is the
+   * failure neither of those would notice.
+   */
+  const regions = [
+    // who-iris: the WHO emblem cut out of a 581x178 emblem-and-wordmark.
+    { x: 0, y: 0, w: 0.3064, h: 1 },
+    { x: 0, y: 0, w: 1, h: 1 },
+    { x: 0.25, y: 0.46, w: 0.5, h: 0.5 },
+    // A third that divides badly on purpose: 1/0.3 is not representable, and
+    // agreement has to survive the rounding rather than dodge it.
+    { x: 0.1, y: 0.1, w: 0.3, h: 0.3 },
+  ];
+
+  /** What the rail actually writes, read back off its own markup. */
+  function railCrop(r: { x: number; y: number; w: number; h: number }) {
+    const html = navbarHtml({
+      instance: "x",
+      root: { href: "./", label: "x", avatar: { src: "m.svg", region: r } },
+      graphs: { label: "Graphs", items: [] },
+      harnesses: { label: "Harnesses", items: [] },
+    });
+    const style = /style="(width:[^"]+)"/.exec(html)?.[1] ?? "";
+    const num = (k: string) => Number(new RegExp(k + ":([-0-9.]+)%").exec(style)?.[1]);
+    return { width: num("width"), height: num("height"), left: num("left"), top: num("top") };
+  }
+
+  for (const r of regions) {
+    it(`agrees on ${JSON.stringify(r)}`, () => {
+      expect(railCrop(r)).toEqual(solveCrop(r));
+    });
+  }
+
+  it("the whole image is the identity crop, not a no-op that skips the branch", () => {
+    // A renderer that treated w=h=1 as "no crop" would agree with the other by
+    // accident on every other case and diverge on this one.
+    expect(solveCrop({ x: 0, y: 0, w: 1, h: 1 })).toEqual({
+      width: 100,
+      height: 100,
+      left: 0,
+      top: 0,
+    });
   });
 });
