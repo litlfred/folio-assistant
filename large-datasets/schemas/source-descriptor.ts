@@ -185,6 +185,18 @@ export const SourceDescriptorSchema = z
      * `false` means every request must be closed over dependencies first.
      */
     subsetIsSelfContained: z.boolean(),
+    /**
+     * Why `subsetIsSelfContained` has the value it has. Optional, because a
+     * self-contained source (IRIS: fetch an item and you have it) has little
+     * to say; the `false` case is the one that needs its reason recorded.
+     *
+     * Added 2026-09-23 (bean `w5bn`). mathlib carried this as an
+     * `_subsetIsSelfContained_note` key, which `.strict()` rejects, so the
+     * second worked descriptor, the one meant to prove the abstraction, had
+     * failed its own schema since it was written. Nothing noticed, because
+     * no gate read `sources/`. A field is checked; an underscore is not.
+     */
+    subsetBasis: z.string().min(1).optional(),
     identifiers: z.array(IdentifierSystemSchema).min(1),
     enumeration: z
       .object({

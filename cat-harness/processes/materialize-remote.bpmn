@@ -40,7 +40,8 @@ The three states (referenced / materialized / unknown) and the five gates are sc
         <bpmn:flowNodeRef>Task_Purpose</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
-        <bpmn:documentation>Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.</bpmn:documentation>
+        <bpmn:documentation>Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused. Before the first gate it resolves the request against the source DESCRIPTOR (Task_Enumerate), because the size being gated is the closure's, not the request's — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_Enumerate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Size</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Restrictions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Copyright</bpmn:flowNodeRef>
@@ -70,6 +71,16 @@ working or archival">
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:serviceTask id="Task_Enumerate" name="ENUMERATE + SUBSET
+against the source
+descriptor">
+      <bpmn:documentation>Resolve the request against the source's descriptor (large-datasets/schemas/source-descriptor.ts, one file per source under large-datasets/sources/) BEFORE any gate. Three things come from it and none may be guessed. (1) Which subset strategies the source supports — supportsSubset(). (2) Whether a subset stands on its own: when subsetIsSelfContained is false (mathlib), the request is closed over its dependencies here, and every gate after this one is asked about the CLOSURE, because a subset that omits what its members depend on is not a smaller corpus, it is one that does not build. (3) What enumerating the whole costs — enumerationCost(), which is undefined when the descriptor has no measured denominator; SIZE then refuses rather than estimates. A source with no descriptor is not an error here: it is an unknown, and SIZE refuses on it. Bean w5bn: the descriptor is CALLED here rather than restated.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="materialize-remote" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_2b</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Size" name="SIZE
 what fraction, and what
 the whole would cost">
@@ -77,7 +88,7 @@ the whole would cost">
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:incoming>Flow_2b</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_Restrictions" name="RESTRICTIONS
@@ -163,7 +174,8 @@ and the graph says why">
       <bpmn:incoming>Flow_12</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_Asked" targetRef="Task_Purpose" />
-    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Purpose" targetRef="Task_Size" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Purpose" targetRef="Task_Enumerate" />
+    <bpmn:sequenceFlow id="Flow_2b" sourceRef="Task_Enumerate" targetRef="Task_Size" />
     <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_Size" targetRef="Task_Restrictions" />
     <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_Restrictions" targetRef="Task_Copyright" />
     <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_Copyright" targetRef="Task_Retention" />
@@ -178,16 +190,16 @@ and the graph says why">
   <bpmndi:BPMNDiagram id="Diagram_MaterializeRemote">
     <bpmndi:BPMNPlane id="Plane_MaterializeRemote" bpmnElement="Collaboration_MaterializeRemote">
       <bpmndi:BPMNShape id="Participant_MaterializeRemote_di" bpmnElement="Participant_MaterializeRemote" isHorizontal="true">
-        <dc:Bounds x="130" y="60" width="3010" height="610" />
+        <dc:Bounds x="130" y="60" width="3260" height="610" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0_di" bpmnElement="Lane_0" isHorizontal="true">
-        <dc:Bounds x="160" y="60" width="2980" height="190" />
+        <dc:Bounds x="160" y="60" width="3230" height="190" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
-        <dc:Bounds x="160" y="250" width="2980" height="190" />
+        <dc:Bounds x="160" y="250" width="3230" height="190" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
-        <dc:Bounds x="160" y="440" width="2980" height="190" />
+        <dc:Bounds x="160" y="440" width="3230" height="190" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_Asked_di" bpmnElement="StartEvent_Asked">
         <dc:Bounds x="200" y="127" width="36" height="36" />
@@ -196,41 +208,44 @@ and the graph says why">
       <bpmndi:BPMNShape id="Task_Purpose_di" bpmnElement="Task_Purpose">
         <dc:Bounds x="450" y="95" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Size_di" bpmnElement="Task_Size">
+      <bpmndi:BPMNShape id="Task_Enumerate_di" bpmnElement="Task_Enumerate">
         <dc:Bounds x="700" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Restrictions_di" bpmnElement="Task_Restrictions">
+      <bpmndi:BPMNShape id="Task_Size_di" bpmnElement="Task_Size">
         <dc:Bounds x="950" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Copyright_di" bpmnElement="Task_Copyright">
+      <bpmndi:BPMNShape id="Task_Restrictions_di" bpmnElement="Task_Restrictions">
         <dc:Bounds x="1200" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Retention_di" bpmnElement="Task_Retention">
+      <bpmndi:BPMNShape id="Task_Copyright_di" bpmnElement="Task_Copyright">
         <dc:Bounds x="1450" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_SourceLoss_di" bpmnElement="Task_SourceLoss">
+      <bpmndi:BPMNShape id="Task_Retention_di" bpmnElement="Task_Retention">
         <dc:Bounds x="1700" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SourceLoss_di" bpmnElement="Task_SourceLoss">
+        <dc:Bounds x="1950" y="285" width="190" height="100" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_Gates_di" bpmnElement="Gateway_Gates">
-        <dc:Bounds x="1950" y="310" width="50" height="50" />
-        <bpmndi:BPMNLabel><dc:Bounds x="1910" y="365" width="130" height="30" /></bpmndi:BPMNLabel>
+        <dc:Bounds x="2200" y="310" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2160" y="365" width="130" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Fetch_di" bpmnElement="Task_Fetch">
-        <dc:Bounds x="2200" y="285" width="190" height="100" />
+        <dc:Bounds x="2450" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Declare_di" bpmnElement="Task_Declare">
-        <dc:Bounds x="2450" y="475" width="190" height="100" />
+        <dc:Bounds x="2700" y="475" width="190" height="100" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_StayRef_di" bpmnElement="Task_StayRef">
-        <dc:Bounds x="2450" y="600" width="190" height="100" />
+        <dc:Bounds x="2700" y="600" width="190" height="100" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_Done_di" bpmnElement="EndEvent_Done">
-        <dc:Bounds x="2700" y="507" width="36" height="36" />
-        <bpmndi:BPMNLabel><dc:Bounds x="2660" y="548" width="116" height="30" /></bpmndi:BPMNLabel>
+        <dc:Bounds x="2950" y="507" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2910" y="548" width="116" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_Refused_di" bpmnElement="EndEvent_Refused">
-        <dc:Bounds x="2700" y="632" width="36" height="36" />
-        <bpmndi:BPMNLabel><dc:Bounds x="2660" y="673" width="116" height="30" /></bpmndi:BPMNLabel>
+        <dc:Bounds x="2950" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2910" y="673" width="116" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
         <di:waypoint x="236" y="145" />
@@ -241,49 +256,53 @@ and the graph says why">
         <di:waypoint x="545" y="335" />
         <di:waypoint x="700" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+      <bpmndi:BPMNEdge id="Flow_2b_di" bpmnElement="Flow_2b">
         <di:waypoint x="890" y="335" />
         <di:waypoint x="950" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
         <di:waypoint x="1140" y="335" />
         <di:waypoint x="1200" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
         <di:waypoint x="1390" y="335" />
         <di:waypoint x="1450" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
         <di:waypoint x="1640" y="335" />
         <di:waypoint x="1700" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
         <di:waypoint x="1890" y="335" />
         <di:waypoint x="1950" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
-        <di:waypoint x="2000" y="335" />
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="2140" y="335" />
         <di:waypoint x="2200" y="335" />
-        <bpmndi:BPMNLabel><dc:Bounds x="2065" y="305" width="90" height="26" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="2250" y="335" />
+        <di:waypoint x="2450" y="335" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2315" y="305" width="90" height="26" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
-        <di:waypoint x="1975" y="360" />
-        <di:waypoint x="1975" y="650" />
-        <di:waypoint x="2450" y="650" />
-        <bpmndi:BPMNLabel><dc:Bounds x="1983" y="492" width="90" height="26" /></bpmndi:BPMNLabel>
+        <di:waypoint x="2225" y="360" />
+        <di:waypoint x="2225" y="650" />
+        <di:waypoint x="2700" y="650" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2233" y="492" width="90" height="26" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
-        <di:waypoint x="2295" y="385" />
-        <di:waypoint x="2295" y="525" />
-        <di:waypoint x="2450" y="525" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
-        <di:waypoint x="2640" y="525" />
+        <di:waypoint x="2545" y="385" />
+        <di:waypoint x="2545" y="525" />
         <di:waypoint x="2700" y="525" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="2890" y="525" />
+        <di:waypoint x="2950" y="525" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
-        <di:waypoint x="2640" y="650" />
-        <di:waypoint x="2700" y="650" />
+        <di:waypoint x="2890" y="650" />
+        <di:waypoint x="2950" y="650" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
