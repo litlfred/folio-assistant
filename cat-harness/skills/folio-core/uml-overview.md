@@ -23,6 +23,7 @@ while it is stale.
 |---|---|---|
 | one per harness, and one per **named sub-graph** it declares | `scripts/gen-uml-overview.ts` | `uml-overview` |
 | the harness **object model** (Actor, Role, Skill, Process, Task, Todo, Bean, Test, …) | `scripts/gen-object-model-uml.ts` | `uml-object-model` |
+| the harness **schemas**: the object model without Bean and Todo, shown at the top of the UML overview page | `scripts/gen-uml-overview.ts`, from `schemasViewPuml` in `gen-object-model-uml.ts` | `uml-overview` |
 
 **A group is a named sub-graph,** meaning one entry of a harness's declaration
 (`<instance>.json` `directories[]`), drawn as `<instance>/<entry id>`, for
@@ -67,6 +68,12 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
   linked from their harness page, because a menu listing every sub-graph would
   be too long to scan.
 - `uml/harness-object-model.puml`: the object model.
+- `uml/harness-schemas.puml` and `docs/assets/img/uml/harness-schemas.svg`:
+  the schemas view: Schema, Role, Actor, Skill, User Story, Process, Task
+  and Test. It leaves out Bean, the one class read from the `beans` CLI, so
+  unlike the full model it is checked in CI. Owner, 2026-09-23: "i just want
+  UML (with themes) showing schemas of schema, task, role, user scenario,
+  process, skill, task, test", plus Actor.
 
 **Colours are declared once, in `docs/assets/css/uml.css`**, one CSS class per
 graph kind in five families: schema, scenario, process, state and test. The
