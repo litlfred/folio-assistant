@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/crdm/crdm-requirements-workflow.md) — do not edit here.
+> Generated from [`cat-harness/skills/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-workflow.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/crdm/crdm-requirements-workflow.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-requirements-workflow.md){: .fa-edit-source }
 
 {% raw %}
 # CRDM requirements workflow

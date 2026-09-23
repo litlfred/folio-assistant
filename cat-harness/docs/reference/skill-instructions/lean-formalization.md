@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-math/lean-formalization.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-math/lean-formalization.md) — do not edit here. Typed contract: [schema reference](../skills/lean-formalization.html).
+> Generated from [`cat-harness/skills/authoring-math/lean-formalization.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-math/lean-formalization.md) — do not edit here. Typed contract: [schema reference](../skills/lean-formalization.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-math/lean-formalization.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-math/lean-formalization.md){: .fa-edit-source }
 
 {% raw %}
 # lean-formalization

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/sample-import.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/sample-import.md) — do not edit here.
+> Generated from [`cat-harness/skills/content-lifecycle/sample-import.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/sample-import.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/sample-import.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/sample-import.md){: .fa-edit-source }
 
 {% raw %}
 # Sample import

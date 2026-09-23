@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/rendering-auditor.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/rendering-auditor.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/rendering-auditor.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/rendering-auditor.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/rendering-auditor.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/rendering-auditor.md){: .fa-edit-source }
 
 {% raw %}
 # Rendering Auditor

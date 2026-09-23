@@ -1,4 +1,25 @@
 ---
+$schema: folio-fsh-guts/v1
+title: "Skill-instructions page \"root-readme\" — a generated page nothing regenerates any more"
+kind: generated-page
+movedOn: 2026-09-23
+movedFrom: "cat-harness/docs/reference/skill-instructions/root-readme.md"
+bean: folio-assistant-oe98
+summary: >-
+  A page gen-skill-docs.ts wrote before commit 258d6e0a (byql: fold detangle
+  and kg-navigation into cat-harness) and has not written since. It was no
+  longer in the skill-instructions index, --check could not see it, and both
+  of its source/edit links pointed at paths that no longer exist. Moved here
+  on the owner's choice (2026-09-23, "move to trashcan") rather than deleted;
+  the live page for any skill that still exists is regenerated from its source.
+---
+
+> **Retired 2026-09-23.** Moved here rather than deleted, per
+> `skills/folio-core/fsh-guts.md`. The original page follows verbatim,
+> including its own front matter, fenced so it is not read as this node's.
+
+````markdown
+---
 layout: default
 title: 'The root README, and the one fact it must carry'
 parent: Skill instructions
@@ -84,3 +105,4 @@ installed anyway**. The harness is installed; a missing README is a thing a
 person can fix in a second, and failing the whole initialisation over it would
 throw away the install to report a smaller problem.
 {% endraw %}
+````
