@@ -189,12 +189,27 @@ own order.
 
 ## What merged it, and what did NOT
 
-**Code-quality gates never returned a verdict on any of the four heads.**
+~~**Code-quality gates never returned a verdict on any of the four heads.**
 `get_status` read `total_count: 0` on `f5a1e1f`, `50bf8c7`, `cdb7e33` and
-`8e6eb44`. It was merged on `bun run gates` — 135/135, run on four separate
-merged trees — plus the JSON-LD drift job, which is real CI and passed on the
-exact head, plus `smart-trust:pages:check`, `ingest:ig-menu:check --source`
-and `check:kind-validators`.
+`8e6eb44`.~~ **WITHDRAWN 2026-09-23 — see the correction below.**
+
+It was merged on `bun run gates` — 135/135, run on four separate merged trees
+— plus the JSON-LD drift job, which is real CI and passed on the exact head,
+plus `smart-trust:pages:check`, `ingest:ig-menu:check --source` and
+`check:kind-validators`.
+
+### Correction — `get_status` cannot see an Actions verdict
+
+`get_status` reads the legacy commit-status API. This repository's CI is
+GitHub Actions, which writes **check runs**, not commit statuses, so it
+returns an empty list for **every** commit here regardless of what CI did.
+Proved on `90c5daf`, where `get_status` reports `total_count: 0` while Actions
+run 3070 on that exact sha reports `completed / success`.
+
+So whether gates ran on this PR's four heads is **undetermined** — not
+"never ran". I collapsed a third state into a negative, which is the one
+thing this corpus is most insistent about, and then acted on it. Bean `mc8h`
+carries the full correction.
 
 Same checks, since `gates.ts` derives its list from that very workflow file.
 **Not the same evidence**, and the distinction is recorded rather than

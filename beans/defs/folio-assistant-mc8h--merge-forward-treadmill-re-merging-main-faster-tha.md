@@ -1,7 +1,7 @@
 ---
 # folio-assistant-mc8h
 title: 'MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs'
-status: completed
+status: in-progress
 type: bug
 parent: folio-assistant-1swy
 created_at: 2026-09-23T13:25:16Z
@@ -65,3 +65,75 @@ reviewer is blocked.
 - [ ] the rule written into a skill — **not done unasked**; `continual-progress`
       or `prepare-merge` is the likely home, and which one is a judgement the
       owner should make rather than this bean assume
+
+
+---
+
+# CORRECTION, 2026-09-23 — the evidence above was an INSTRUMENT ERROR
+
+Everything in this bean that rests on *"`get_status` returned `total_count: 0`"*
+is unfounded. **`get_status` reads GitHub's legacy commit-status API. This
+repository's CI is GitHub Actions, which writes CHECK RUNS, not commit
+statuses. So it returns an empty list for every commit, always** — whether CI
+ran, passed, failed or never started.
+
+Proved on one commit, with the two instruments disagreeing about the same sha:
+
+| instrument | on `90c5daf` |
+|---|---|
+| `get_status` | `total_count: 0, statuses: []` |
+| Actions run 3070, `head_sha: 90c5daf…` | **completed, `conclusion: success`** |
+
+So the sentence this bean was built on — *"the PR merged without a
+Code-quality gates verdict ever arriving"* — is **not something I measured**.
+It is what an instrument that cannot see verdicts says about every commit in
+this repository.
+
+## What is now known, and what is not
+
+**Known.** #1090's gates run completed **success** at 13:30:35, about a minute
+after I merged it. I reported that PR as merged without a verdict; the verdict
+existed and I could not see it.
+
+**NOT known.** Whether gates ran on #1064's four heads. I did not establish it
+then and have not established it since. `undetermined` — which is the state
+this repository insists be distinguished from both "passed" and "never ran",
+and which I collapsed into the third.
+
+**Still true, independently.** `main` did absorb 31, 13, 11 and 12 commits
+under one branch in about seventy minutes; the four pushes were 3, 7, 20 and 7
+minutes apart; a gates run takes about 4 minutes once started. Those are
+measurements of git and of run durations, not of `get_status`.
+
+## Does the lesson survive?
+
+**Partly, and weaker than stated.** "Re-merging main faster than CI can answer
+means you never get an answer" is plausible on the timings alone — a push
+supersedes a queued run — but this bean claimed it was *demonstrated*, and it
+was not. What was actually demonstrated is smaller and different:
+
+> **A verdict you cannot see is not a verdict that is absent.** Four times I
+> concluded CI had produced nothing, and acted on it — merging on local gates
+> instead — when the honest reading was that I was asking the wrong endpoint.
+
+Read the conclusion from `actions_list` / `actions_get` on the run whose
+`head_sha` matches, or from a check-run API. Never from `get_status` in a
+repository whose CI is Actions.
+
+## What this cost
+
+Two beans carried the false claim onto `main` — this one and `0818`'s
+`## Summary of Changes`, both merged before the error was found. #1064 was
+merged on `bun run gates` rather than on CI, justified by a CI absence that
+was never established. That justification is withdrawn; the merge stands, and
+`bun run gates` at 135/135 across four merged trees remains real evidence —
+it is simply no longer propped up by a claim about what CI did not do.
+
+## Done when
+
+- [x] the instrument error proved on one commit, both readings side by side
+- [x] this bean's own central claim withdrawn rather than softened
+- [x] `0818`'s Summary corrected
+- [x] the surviving lesson restated at the size the evidence supports
+- [ ] a check that no tool reads `get_status` for a verdict — **not built**;
+      whether that is worth a gate is the owner's call, not this bean's
