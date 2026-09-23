@@ -13,7 +13,7 @@ parent: Skill instructions
 # Review comments — from a PR comment to a structured todo
 
 > Skill id: `review-comments` · Capability: `review` · Package: `folio-core`
-> Tool: `folio-review-comments` · Bean: `423d` · Epic: `q4jm`
+> Tools: `folio-review-comments` (ingest), `folio-review-comment-move` (record a decision) · Bean: `423d` · Epic: `q4jm`
 
 A reviewer comments on **one block** of a folio by writing an ordinary comment
 on the edit-set's pull request, starting with a tag that names the block. The
@@ -30,6 +30,7 @@ The owner decided three things on 2026-09-23, and each has a reason:
 | The channel is a **PR conversation comment tagged with the block label** | (option 1 of four) | Needs nothing installed, sits beside the approve, and is anchored by LABEL, so it survives a block moving. A line review comment is anchored to a file line and is lost when the block moves. |
 | The record is a **todo subtype declared by core, in the dynamic KG** | *"reviewers comment in dynamic KG content. folio-asst-core should declare as special type of todo. more structured."* and *"more restruicted process use"* | A board, heat map or reader that understands todos reads a review comment without knowing about review. |
 | The preview gets comments from a **file the workflow writes** | *"JSON is the todo kind? then yes do 1. make sure it is a Skill/Tool so process can be modified later."* | Works for private and public repositories, and no token ever reaches a browser. |
+| A status change is **committed to the folio's `todos/` on the edit-set's feature branch** | option 1 of three, then *"more accurate.. commit to feature branch"* | Reviewed with the edit it is about, lands on `main` only when that branch merges, and is part of the KG. |
 
 The first two rulings do not say how they fit together. Reading the PR comment
 as the **write channel** and the todo as the **canonical record** is the
@@ -151,13 +152,55 @@ would be orphaned. The block's own `renamedFrom` (bean `5xzc`, guarded by
 `id-stable`) says where it came from whatever the base. `reanchor()` over a
 ChangeSet also exists, for a caller that has only that.
 
+## Recording a decision: commit to the feature branch
+
+When an editor or adjudicator decides what happens to a comment, the
+decision is committed to the **feature branch that carries the edit-set**,
+the same branch the edits are on:
+
+```sh
+bun run folio-assistant-core/scripts/review-comment-move.ts \
+  --id review-pr7-c1 --to addressed \
+  --process Process_Review --task Task_EditorDecides \
+  --published _site/review-comments.json --commit
+```
+
+- **The move goes through `transition()`**, so `--process` and `--task` must
+  be a task allowed to make it, and `resolved` / `adjudicated` need
+  `--decision`. The command is not a back door around the table above.
+- **The file goes where the graph says.** That is the todos graph's
+  directory of kind `todo-feedback` ("todos raised against a specific block,
+  carrying the submitter's identity"), read from `todos/todos.json`. A graph
+  that declares none gets an error naming the remedy.
+- **The file IS the node**: `<feedback dir>/<id>.json`, one
+  `folio-review-comment/v1`, the same object the published file carries. It
+  is JSON, not Markdown, because the todo reader's front matter is flat and a
+  review comment has a nested `review` field.
+- **`--commit` refuses the base branch** (default `main`, change it with
+  `--base`) and a detached HEAD. The check runs before anything is written,
+  so a refused commit leaves nothing behind. A status committed straight to
+  `main` would record a review outcome that no merge ever accepted.
+- **The first move reads the published file**, where a comment first exists
+  after ingestion. Every later move reads the committed file, which is the
+  reviewed record.
+
+**How it reaches the page.** The commit is a push to the feature branch,
+which rebuilds the preview. That build's ingestion reads the committed
+comments (`--todos`) and **a committed comment wins over the previously
+published copy**. The comment-triggered refresh checks out no branch code, so
+it cannot read them and keeps what the last build published. Nothing is lost
+between the two.
+
+**What it costs.** One extra commit on the edit-set's branch per decision,
+and a PR from a fork cannot be written to by anyone but its author.
+
 ## Publication: where the file comes from, and when
 
 `folio-staging.yml` (the reusable workflow a folio calls) has two jobs:
 
 | job | runs on | blocks from | what it writes |
 |---|---|---|---|
-| `stage` | the folio's pull request | `--folio`, the checked-out PR | the site, `changeset.json`, `blocks.json`, `review-comments.json` |
+| `stage` | the folio's pull request (including a push that records a decision) | `--folio`, the checked-out feature branch; statuses from `--todos` | the site, `changeset.json`, `blocks.json`, `review-comments.json` |
 | `comments` | a new or edited PR comment containing `block:` | the published `blocks.json` | `review-comments.json` only |
 
 **The `comments` job never checks out or runs the pull request's code.**
@@ -206,18 +249,20 @@ of change goes:
 |---|---|---|
 | the tag grammar | `parseReviewTag` in `schemas/review-comment.ts` | this skill's tag table; the tests |
 | a status or who may move it | `REVIEW_COMMENT_STATUSES` / `REVIEW_TRANSITIONS` | the BPMN task it names; this skill's table |
+| where a decision is recorded | `folio-assistant-core/scripts/review-comment-move.ts` | the `folio-review-comment-move` Tool node |
 | a field on the record | `ReviewFieldsSchema` | the page, if it shows it |
 | what the ingestion does | `folio-assistant-core/scripts/review-comments.ts` | the Tool node's `io` if a flag changes |
 | when it runs | `folio-staging.yml` and `init-folio`'s caller template | the trust notes above |
 
 ## Not yet decided
 
-- **Where a status change is persisted.** The Tool keeps whatever
-  `--existing` says, and `transition()` enforces the rules. But nothing yet
-  writes a moved status back to a committed store. The candidates are the
-  folio's own `todos` graph (canonical and committed, but a CI write to a PR
-  branch) or the published file (easy, but not reviewed). This is the next
-  decision on bean `423d`.
+- **Resolving from the review page itself.** The page shows statuses; a
+  decision is recorded with `folio-review-comment-move` in the editor's
+  session. A page button would need a write path from a static page, which
+  is the problem this whole design avoids.
+- **A new folio's todos graph.** `init-folio` does not yet write a
+  `todos/todos.json` with a `todo-feedback` directory, so a new folio has to
+  declare one before its first decision is recorded. The error says so.
 - **A reviewer who edits a comment after ingest.** The edit is not re-read, so
   a record an editor has already acted on is not silently rewritten. Whether
   an edit should reopen the comment is open.

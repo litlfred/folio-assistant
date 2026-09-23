@@ -33,6 +33,17 @@
  * (`reanchorToBlocks`): a rename is followed through `renamedFrom`, and a
  * block that is gone orphans the comment rather than deleting it.
  *
+ * ## A status committed on the feature branch wins
+ *
+ * The owner ruled that a status change is COMMITTED to the folio's todos
+ * graph on the edit-set's feature branch (`review-comment-move.ts`). With
+ * `--todos <root>`, every review comment committed under the graph's
+ * `todo-feedback` directory replaces the previously published copy of that
+ * comment. The committed file is the reviewed record, and the published one
+ * is derived. The PR build passes it. The comment-triggered refresh cannot,
+ * because it checks out no feature-branch code, so it keeps the statuses the
+ * last build published. A status commit is a push, and that push rebuilds.
+ *
  * ## Comment bodies are data
  *
  * A body is parsed by `parseReviewTag` and stored as a string. It never
@@ -43,6 +54,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 import { snapshot } from "../schemas/changeset.js";
+import { feedbackDir, readCommitted } from "./review-comment-move.js";
 import {
   REVIEW_COMMENTS_FILE_SCHEMA,
   ReviewCommentsFileSchema,
@@ -100,12 +112,16 @@ export interface RunOptions {
   comments: readonly PrComment[];
   blocks: BlocksFile;
   existing?: ReviewCommentsFile;
+  /** Review comments committed on the feature branch, by id. They win over `existing`. */
+  committed?: ReadonlyMap<string, ReviewComment>;
   now?: string;
 }
 
 /** The whole ingestion, with no I/O: tested directly. */
 export function buildReviewComments(o: RunOptions): ReviewCommentsFile {
-  const previous: ReviewComment[] = o.existing?.comments ?? [];
+  const committed = o.committed ?? new Map<string, ReviewComment>();
+  const previous: ReviewComment[] = (o.existing?.comments ?? []).map((c) => committed.get(c.id) ?? c);
+  for (const [id, c] of committed) if (!previous.some((p) => p.id === id)) previous.push(c);
   const hashes = new Map(Object.entries(o.blocks).map(([label, b]) => [label, b.hash]));
   const r = ingestPrComments({ repo: o.repo, pr: o.pr, commit: o.commit, comments: o.comments, existing: previous, blocks: hashes });
   const all = reanchorToBlocks([...previous, ...r.created], new Map(Object.entries(o.blocks)));
@@ -131,6 +147,7 @@ const USAGE = `usage: bun run folio-assistant-core/scripts/review-comments.ts
   --repo <owner/name> --pr <n> --out <review-comments.json>
   (--folio <dir> [--blocks-out <blocks.json>] | --blocks <blocks.json>)
   [--existing <previous review-comments.json>] [--commit <sha>]
+  [--todos <todos graph root>]  statuses committed on the feature branch win
   [--comments <file.json>]   read comments from a file instead of GitHub (offline, tests)
 
 GITHUB_TOKEN is used when set. A public repository can be read without it.`;
@@ -178,7 +195,18 @@ if (import.meta.main) {
     ? readJson<PrComment[]>(opt("comments")!)
     : await fetchPrComments(repo, pr, process.env.GITHUB_TOKEN);
 
-  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing });
+  // A folio whose todos graph declares no feedback directory has no committed
+  // statuses to read. That is SAID, and the build goes on, because failing
+  // every preview over it would punish a folio for a graph it has not grown yet.
+  let committed: Map<string, ReviewComment> | undefined;
+  if (opt("todos")) {
+    try {
+      committed = readCommitted(feedbackDir(opt("todos")!));
+    } catch (e) {
+      console.error(`⚠ no committed review statuses read: ${(e as Error).message}`);
+    }
+  }
+  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing, committed });
   writeJson(out, file);
   const orphaned = file.comments.filter((c) => c.review.orphaned).length;
   console.error(
