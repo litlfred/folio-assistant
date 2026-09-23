@@ -124,8 +124,25 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
 </style></head><body>
   ${script}
   <div class="side-bar">
-    <div class="site-header"><a class="site-title">folio-assistant</a></div>
-    <nav class="site-nav"><a href="#">Home</a></nav>
+    <div class="site-header"><a class="site-title"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
+    <nav class="site-nav"><a href="#">Navigation link</a></nav>
+    <footer class="site-footer">
+      <div class="fa-nav-bottom__stack">
+        <details class="fa-harness-tabs" open>
+          <summary class="fa-harness-tabs__heading">Harnesses <span class="fa-harness-tabs__count">1</span></summary>
+          <ul class="fa-harness-tabs__list">
+            <li class="fa-harness-tab">
+              <a class="fa-harness-tab__body" href="#x">
+                <span class="fa-harness-tab__mark fa-harness-tab__mark--initial">W</span>
+                <span class="fa-harness-tab__label">who-iris</span>
+              </a>
+              <ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="#g">docs</a></li></ul>
+            </li>
+          </ul>
+        </details>
+      </div>
+      <a class="fa-nav-home" href="#home"><span class="fa-nav-home__mark">&#8962;</span><span class="fa-nav-home__label">Home</span></a>
+    </footer>
   </div>
   <div class="main"><div class="main-header"></div><div class="main-content">${main}</div></div>
   <script>window.jtd = { theme: "dark",
@@ -191,13 +208,46 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     const { errors } = await load(page, CUSTOM);
     expect(errors).toEqual([]);
     const todos = page.locator('.fa-nav-icons [aria-label="Todos"]');
-    await expect(todos).toHaveAttribute("href", "/todos/");
+    // WITH THE BASEURL. `#fa-navbar-row` is `jsonify`d raw, unlike
+    // `#fa-site-links`, which Liquid has already run `relative_url` over — so
+    // a site-root path arriving here is unprefixed and composing it without
+    // the base resolves against the ORIGIN. This is the THIRD family to hit
+    // that (issue #801 was the graph tiles, and the action tiles carry the
+    // rule in their own comment); the owner found it live, 2026-09-23:
+    // *"beans and todos links wrong ... https://litlfred.github.io/beans/"*.
+    //
+    // The first version of this assertion expected the UNPREFIXED value, so
+    // it agreed with the defect and passed. That is the failure
+    // `action-tiles.e2e.ts` names in full — a fixture that restates the value
+    // under test cannot catch a wrong one — arrived at from the other side:
+    // the expectation was not read from anything, it was copied off the code.
+    await expect(todos).toHaveAttribute("href", BASEURL + "/todos/");
     for (const gap of ["Beans", "Knowledge graph"]) {
       const slot = page.locator('.fa-nav-icons [aria-label="' + gap + '"]');
       await expect(slot).toHaveCount(1);
       await expect(slot).toHaveClass(/fa-nav-icon--dead/);
       expect(await slot.evaluate((n) => n.tagName)).toBe("SPAN");
       await expect(slot).toHaveAttribute("title", /declared, with no published viewer/);
+    }
+  });
+
+  test("EVERY composed href carries the baseurl — the class, not the instance", async ({ page }) => {
+    // Named as a class on purpose. Three separate tile/link families have now
+    // shipped a site-root path unprefixed, each fixed on its own, and a test
+    // per instance is what let the next one through. This asserts the property
+    // over both regions that compose from `#fa-navbar-row`, so a FOURTH
+    // consumer added to either of them cannot repeat it quietly.
+    await load(page, LIVE);
+    const hrefs = await page
+      .locator(".fa-nav-icons a[href], .fa-nav-folders a[href]")
+      .evaluateAll((ns) => ns.map((n) => n.getAttribute("href") ?? ""));
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const h of hrefs) {
+      expect(h.startsWith(BASEURL + "/")).toBe(true);
+      // ...and prefixed ONCE. Running the base over an already-composed value
+      // is the failure in the other direction, which is why the action tiles
+      // do NOT prefix inside the shared `tileLink`.
+      expect(h.indexOf(BASEURL, 1)).toBe(-1);
     }
   });
 
@@ -276,11 +326,27 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     expect(await dead.evaluate((n) => n.tagName)).toBe("SPAN");
   });
 
-  test("it arrives OPEN and folds in one click", async ({ page }) => {
+  test("it arrives CLOSED and opens in one click", async ({ page }) => {
+    // Owner, 2026-09-23: *"any indices/toc should be closed."* It arrived open
+    // until then. The count stays on the summary, so a folded block still says
+    // how many there are — folded is not hidden.
     await load(page, CUSTOM);
-    await expect(page.locator(".fa-nav-folders")).toHaveAttribute("open", "");
-    await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders")).not.toHaveAttribute("open", "");
+    // The count is read with the bar OPEN. At rest the whole block is a text
+    // region and is held invisible with the rest — see the collapsed-strip
+    // tests below — so asserting it visible here would be asserting that the
+    // strip still shows words.
+    await page.hover(".side-bar");
+    await expect(page.locator(".fa-nav-folders__count")).toBeVisible();
+    await page.locator(".fa-nav-folders__heading").click();
+    await expect(page.locator(".fa-nav-folders")).toHaveAttribute("open", "");
+  });
+
+  test("the document index arrives closed too — both, from one instruction", async ({ page }) => {
+    await load(page, CUSTOM);
+    await expect(page.locator(".fa-doc-index")).not.toHaveAttribute("open", "");
+    await page.hover(".side-bar");
+    await expect(page.locator(".fa-doc-index__count")).toBeVisible();
   });
 
   test("it DEGRADES — with no row the nav keeps its old place rather than breaking", async ({ page }) => {
@@ -338,6 +404,7 @@ test.describe("the document index — the fixed top, about the page rather than 
       expect.stringContaining("fa-nav-icons"),
       expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),
+      expect.stringContaining("site-footer"),
     ]);
   });
 
@@ -349,5 +416,131 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(errors).toEqual([]);
     await expect(page.locator(".fa-doc-index")).toHaveCount(1);
     await expect(page.locator(".fa-nav-middle > .site-nav")).toHaveCount(1);
+  });
+});
+
+/**
+ * THE COLLAPSED STRIP — marks only, and asserted as a CLASS.
+ *
+ * Owner, 2026-09-23, with a screenshot: *"looks horrible when collapsed.
+ * should only be icons/avatars so compat."* What they were looking at was
+ * `On this page` clipped to "ON" over six folder names bleeding out of a
+ * 3.5rem column.
+ *
+ * ## Why the regression happened, and what that means for this test
+ *
+ * The stylesheet hid three named regions. The round that added the document
+ * index and the folder block added two more and did not extend that list, so
+ * they were never hidden — the defect was in the ENUMERATION. A test that
+ * named the two missing regions would be the same mistake one layer up: it
+ * would pass, and the next region added would go uncovered in exactly the same
+ * way.
+ *
+ * So the assertion is a property over the whole sidebar: AT REST, NO TEXT IN
+ * IT IS VISIBLE. Effective opacity is computed by walking the ancestor chain,
+ * because `opacity` does not inherit as a computed value — an element inside
+ * an `opacity: 0` parent still reports `1` for itself, which is how an earlier
+ * probe of this page reported eight visible rows that a screenshot showed were
+ * not there.
+ */
+test.describe("at rest the strip carries marks and nothing else", () => {
+  /** Every element in the sidebar whose own text is actually rendered. */
+  const visibleText = () => {
+    const bar = document.querySelector(".side-bar")!;
+    const out: string[] = [];
+    for (const n of Array.from(bar.querySelectorAll("*"))) {
+      const own = Array.from(n.childNodes)
+        .filter((x) => x.nodeType === 3)
+        .map((x) => (x.textContent ?? "").trim())
+        .join(" ")
+        .trim();
+      if (!own) continue;
+      const r = n.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) continue;
+      // A MARK MAY BE TEXT and is not a label: `fa-harness-tab__mark--initial`
+      // renders one letter for a harness with no avatar, and `fa-nav-home__mark`
+      // is the `⌂` glyph. Both are exactly what the owner asked the strip to
+      // keep, so they are excluded by ROLE rather than by name — anything the
+      // markup calls a mark, a glyph or an icon is a picture here, whatever
+      // characters it happens to be drawn with.
+      const role = (n.className || "").toString();
+      if (/mark|glyph|icon|count/.test(role) && !/__label|__heading/.test(role)) continue;
+      // Effective opacity: the product up the chain. `opacity` is not an
+      // inherited property, so the element's own value says nothing about
+      // whether a reader can see it.
+      let op = 1;
+      for (let a: Element | null = n; a && a !== bar.parentElement; a = a.parentElement) {
+        const cs = getComputedStyle(a);
+        if (cs.visibility === "hidden" || cs.display === "none") { op = 0; break; }
+        op *= Number(cs.opacity);
+      }
+      if (op > 0.01) out.push((n.className || n.tagName).toString().split(" ")[0] + ": " + own.slice(0, 24));
+    }
+    return out;
+  };
+
+  test("NO text region is visible until the bar is opened", async ({ page }) => {
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    // The viewport is wider than the 50rem breakpoint, so the strip rules are
+    // the ones in force. Stated rather than assumed: below it the theme owns
+    // the sidebar and hides nothing, which would make this pass for the wrong
+    // reason.
+    expect(page.viewportSize()!.width).toBeGreaterThan(800);
+    expect(await page.evaluate(visibleText)).toEqual([]);
+  });
+
+  test("...and every one of them comes back on hover", async ({ page }) => {
+    // The other half, and it is not decoration: a rule that hides at rest and
+    // forgets to restore is the same defect wearing the opposite sign, and it
+    // would look correct in the screenshot that prompted this.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.waitForTimeout(250);
+    const shown = (await page.evaluate(visibleText)).join(" | ");
+    for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-folders__heading",
+                          "fa-harness-tabs__heading", "fa-harness-tab__label", "fa-nav-home__label"]) {
+      expect(shown).toContain(region);
+    }
+  });
+
+  test("the marks stay — they are what the strip is FOR", async ({ page }) => {
+    await load(page, CUSTOM);
+    // Icons and avatars, at rest, with no hover. The owner asked for exactly
+    // these two things and nothing else.
+    await expect(page.locator(".fa-nav-icons .fa-nav-icon").first()).toBeVisible();
+    await expect(page.locator(".fa-harness-tab__mark")).toBeVisible();
+    await expect(page.locator(".fa-nav-home__mark")).toBeVisible();
+  });
+
+  test("the icon row STACKS at rest and lies flat when open", async ({ page }) => {
+    // Six 36px icons are 232px wide; in a 3.5rem strip five of them are off
+    // the edge. Measured as tops rather than as a CSS property, because
+    // `flex-wrap` is the mechanism and the requirement is the layout.
+    await load(page, CUSTOM);
+    const tops = () => page.locator(".fa-nav-icons .fa-nav-icon").evaluateAll(
+      (ns) => ns.map((n) => Math.round(n.getBoundingClientRect().top)));
+    const rest = await tops();
+    expect(new Set(rest).size).toBe(rest.length);
+    await page.hover(".side-bar");
+    await page.waitForTimeout(250);
+    const open = await tops();
+    expect(new Set(open).size).toBe(1);
+  });
+
+  test("the fixed bottom stays ANCHORED to the bottom in both states", async ({ page }) => {
+    // The measurement that decided `flex-basis: 0`: with `flex: 1 1 auto` the
+    // middle started from its own 1008px of links, the column overflowed, and
+    // every region shrank proportionally — the fixed bottom to 104px, showing
+    // ONE of five harness avatars. Collapsing the middle to nothing instead
+    // floated the bottom up to meet the icons, which is the opposite failure.
+    await load(page, CUSTOM);
+    const homeBottom = async () =>
+      await page.locator(".fa-nav-home").evaluate((n) => Math.round(n.getBoundingClientRect().bottom));
+    const barBottom = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().bottom));
+    expect(barBottom - (await homeBottom())).toBeLessThan(24);
+    await page.hover(".side-bar");
+    await page.waitForTimeout(250);
+    expect(barBottom - (await homeBottom())).toBeLessThan(24);
   });
 });
