@@ -7,6 +7,8 @@ description: >
   something unexpected interrupts one. Covers what to do about notes and
   stickies you re-anchored while off-process, which leave no trace in the
   artefact.
+satisfies:
+  - "req:agent-workflow#process-is-declared"
 ---
 
 # Process state — the task you are in, inside the process you are running

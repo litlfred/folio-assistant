@@ -165,7 +165,9 @@ the pointer lives on the task.
 | a voice speaks for a role | the voice (`activeIn.roles`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
 | a lane is played by a role | the lane (`<folio:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
 | a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
-| a Tool satisfies a skill | the Tool (`satisfies`) | the skill | several Tools may satisfy one skill |
+| a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
+| a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |
+| a skill says how to read a graph kind | the skill's front matter (`graph-kinds:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
 | a test checks a skill's contract | the test run | the skill | tests come and go; the contract does not |
 
 **Prose counts.** A skill body that says *"the only step of

@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#validate-before-review"
+---
+
 # Content Validation
 
 Validate authored content against schemas, standards, and clinical accuracy.

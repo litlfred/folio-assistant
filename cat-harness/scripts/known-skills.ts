@@ -47,8 +47,8 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
  *
  * `requirements/` is the one that looks most like skills and is least like
  * them. Its entries are `{ id: "req:commit-hygiene", statements: [{ conformance:
- * "SHALL", … }], satisfiedBy: [{ kind: "skill", ref: "content-plan" }] }` — a
- * requirement points **at** a skill; it is not one. Reading the four of them as
+ * "SHALL", … }] }` — a skill points at a requirement statement it satisfies
+ * (`satisfies:`, #1168); a requirement is not a skill. Reading the four of them as
  * skills is what made `commit-hygiene`, `content-lifecycle`, `lean-verification`
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
