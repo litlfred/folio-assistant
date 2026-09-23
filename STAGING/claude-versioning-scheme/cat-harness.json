@@ -33,6 +33,14 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
       "@type": "@id"
@@ -264,11 +272,12 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:46:39.512Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e7d6e33647cde1e70eee16ec8b910e2bcdd73f33",
-  "sourceCommitSha": "e7d6e33647cde1e70eee16ec8b910e2bcdd73f33",
-  "sourceCommitAt": "2026-09-23T07:43:35Z",
+  "generatedAt": "2026-09-23T08:14:11.755Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/430201aaeac589c8876142c9b4d5ab7872dd6a0b",
+  "sourceCommitSha": "430201aaeac589c8876142c9b4d5ab7872dd6a0b",
+  "sourceCommitAt": "2026-09-23T08:07:11Z",
   "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 241,
     "Actor": 32,
@@ -280,7 +289,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 69,
-    "Schema": 96,
+    "Schema": 99,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -34821,6 +34830,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/depends-on",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "depends-on",
+      "title": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "module": "schemas/depends-on.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -35310,6 +35328,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/version-bump",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "version-bump",
+      "title": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "module": "schemas/version-bump.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/vocabulary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "vocabulary",
@@ -35437,6 +35464,15 @@
       "module": "../folio-assistant-core/schemas/materialization.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#directory/folio-assist-core-schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/review-comment",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "review-comment",
+      "title": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "module": "../folio-assistant-core/schemas/review-comment.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-comment"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-versioning-scheme/cat-harness.jsonld#schema/artifact-store",
@@ -37276,8 +37312,8 @@
   ],
   "staging": {
     "branch": "claude/versioning-scheme",
-    "sha": "c6e5b4dc518879d8612ed66ef8d6a5287d409d6d",
+    "sha": "f664d6742cf330eb1c3db55acaa8980a9d443365",
     "pr": "1018/merge",
-    "run": "35833280569"
+    "run": "35835753577"
   }
 }
