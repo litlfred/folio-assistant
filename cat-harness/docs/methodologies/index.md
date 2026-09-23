@@ -25,8 +25,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>11</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>4</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>12</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>5</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>7</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -48,6 +48,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see `kepner-tregoe… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
@@ -187,6 +188,20 @@ these.
 **No ingested source.** The origin above names one; nothing in this
 checkout holds it. `literature-search` is the skill that closes one of
 these.
+
+### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
+
+<a id="specification-compiled-agents"></a>
+
+`specification-compiled-agents` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN process, a DMN table, a pipeline someone drew — and the question is how an LLM should act inside it. It answers *where the plan comes from*, never *what the plan should be*: authoring the diagram is `bpmn-authoring`, deciding a branch from a table is `dmn`, and choosing between options is `kepner-tregoe`. Its companion is `hybrid-llm-deterministic`, and the two are the same shape at different grains: that one has the model emit a RULE that machinery validates and runs; this one has the model act inside a CONTROL GRAPH that machinery derived from a specification. Reach for this one when the artefact that constrains the model already exists as a diagram. Do NOT reach for it where no specification exists, or where the process is genuinely open-ended. The paper's own evaluation is scoped to deterministic workflows and says so; a setting with ambiguity, stochasticity or open-ended human decision-making is outside what it measured, and outside what this node claims.
+
+**Origin.** Harris Borman, Herman Wandabwa, Fusun Yu, Sandeepa Kannangara, Justin Liu, Anna Leontjeva and Ritchie Ng, "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution", Commonwealth Bank of Australia. Published as a workshop paper at SCALE, ICML 2026 (PMLR 306); arXiv:2607.14456v1 [cs.SE], 16 July 2026. Open access, ingested whole and read before this node was written. It is a SYSTEM paper reporting one implementation against a benchmark its own authors built, so what is adopted below is the METHOD, and §"Where this rendering stops" says which parts were left behind. §"What the figures say that the prose does not" carries a reading of the paper's own charts that changes how its headline numbers should be used, and it is the reason this node quotes almost none of them.
+
+**Ingested sources:**
+
+- `library/arxiv-2607.14456v1`
 
 ### SWOT — situation analysis over internal and external factors
 

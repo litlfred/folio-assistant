@@ -1,0 +1,30 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/check-l1-complete.ts",
+    "script_hash": "7089ef55779a"
+  },
+  "subject": {
+    "kind": "library-document",
+    "id": "library/arxiv-2607.14456v1"
+  },
+  "updated_at": "2026-09-23T22:08:51.149Z",
+  "families": {
+    "notDerivable": {
+      "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
+      "count": 1,
+      "entries": [
+        {
+          "requirement": "audio-transcripts",
+          "detail": "no arm builds this yet — bean 1r0p"
+        }
+      ]
+    },
+    "unmet": {
+      "summary": "L1 requirements this entry does not satisfy. A DEFECT in the entry, fixable by re-running the ingest rung that produces the artefact.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 1
+}

@@ -704,6 +704,11 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     images [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "folio-image-verdicts/v1" as cat_harness_library_folio_image_verdicts_v1 <<ts: VerdictFile>> #f4f4f1 {
+    inspected_by [1] : unknown
+    inspected_at [1] : string
+    verdicts [1] : Record<string, Record<string, Verdict>>
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
   note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_who_iris_library_library
