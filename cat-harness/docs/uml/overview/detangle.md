@@ -21,21 +21,45 @@ classDiagram
     }
   }
   namespace detangle__detangle_results {
-    class detangle_detangle_results_qa_shape["qa"] {
-      <<schema: content/pipeline/qa-witness.ts>>
+    class detangle_detangle_results_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
+      <<json: KgQaReportSchema>>
+    }
+    class detangle_detangle_results_block_qa_v1_block_qa_v1["block-qa/v1"] {
+      <<json: BlockQaReport>>
+    }
+    class detangle_detangle_results_folio_test_run_v1_folio_test_run_v1["folio-test-run/v1"] {
+      <<json: TestRunSchema>>
+    }
+    class detangle_detangle_results_qa_witness_v1["qa-witness/v1"] {
+      <<ts: QaWitness>>
+    }
+    class detangle_detangle_results_qa_results_v1["qa-results/v1"] {
+      <<ts: QaResult>>
+    }
+    class detangle_detangle_results_translation_qa_v1["translation-qa/v1"] {
+      <<ts: TranslationBlockQaReport>>
+    }
+    class detangle_detangle_results_folio_qa_index_v1["folio-qa-index/v1"] {
+      <<untyped: written by scripts/gen-docs-pages.ts>>
     }
   }
   cssClass "n_detangle_detangle_schemas_local_schemas" fa_uml_kind_schemas
   cssClass "n_detangle_detangle_schemas_local_schemas" fa_uml_undetermined
   cssClass "n_detangle_detangle_schemas_local_cat_harness" fa_uml_kind_cat_harness
   cssClass "n_detangle_detangle_schemas_local_cat_harness" fa_uml_undetermined
-  cssClass "detangle_detangle_results_qa_shape" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_block_qa_v1_block_qa_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_qa_witness_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_qa_results_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_translation_qa_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_folio_qa_index_v1" fa_uml_kind_qa
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
 | `detangle/detangle-schemas-local` | `detangle/schemas` | schemas, cat-harness | schemas: *could not determine*; cat-harness: *could not determine* |
-| `detangle/detangle-results` | `detangle/results` | qa | `schema: content/pipeline/qa-witness.ts` |
+| `detangle/detangle-results` | `detangle/results` | qa | `KgQaReportSchema`; `BlockQaReport`; `TestRunSchema`; `ts: QaWitness`; `ts: QaResult`; `ts: TranslationBlockQaReport`; `untyped: written by scripts/gen-docs-pages.ts` |
 
 ## Sub-graphs
 

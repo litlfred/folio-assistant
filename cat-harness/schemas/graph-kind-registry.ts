@@ -109,6 +109,26 @@ import { termIri } from "./namespaces";
 export type GraphLayer = "content" | "context" | "state" | "derived";
 
 /** What a declared directory's graph kind means. */
+/**
+ * Where ONE `$schema` family of a graph kind is defined. Bean `rdkm`.
+ *
+ * Three forms, because the corpus has all three and collapsing them would
+ * make two of them lie:
+ *
+ * | form | means | example |
+ * |---|---|---|
+ * | `validator` | a Zod schema, `module#Export` — runnable | `kg-qa/v1` → `KgQaReportSchema` |
+ * | `shape` | a TypeScript type, `module#Name` — readable, NOT runnable | `qa-witness/v1` → `QaWitness` |
+ * | `writtenBy` | no declared type at all; the module that writes it | `folio-qa-index/v1` |
+ *
+ * `writtenBy` is a finding recorded as data rather than a gap hidden by
+ * omission: the family exists on disk and nothing types it.
+ */
+export type NodeSchemaRef =
+  | { validator: string; shape?: never; writtenBy?: never }
+  | { shape: string; validator?: never; writtenBy?: never }
+  | { writtenBy: string; validator?: never; shape?: never };
+
 export interface GraphKindDef {
   /** The `@type` IRI this kind projects to. */
   type: string;
@@ -272,6 +292,30 @@ export interface GraphKindDef {
    * graph here.
    */
   validator?: string;
+  /**
+   * One entry per `$schema` family a node of this kind may carry, keyed by
+   * the tag. Bean `rdkm`.
+   *
+   * ## Why `validator` was not enough
+   *
+   * `validator` names ONE schema, and `qa` is the case that broke it: its
+   * directory holds seven families — `kg-qa/v1`, `qa-witness/v1`,
+   * `block-qa/v1`, `qa-results/v1`, `folio-qa-index/v1`, `translation-qa/v1`,
+   * `folio-test-run/v1`, counted 2026-09-23 — and a single pointer would have
+   * named one of them and said nothing true about the other six. A file
+   * already says which family it is (the `$schema` tag), so the tag is the key.
+   *
+   * ## A kind that declares this claims to be COMPLETE
+   *
+   * `check:kind-validators` reads every JSON node in the kind's declared
+   * directories and fails on a tag with no entry here. Declaring the map is
+   * the claim that it names every family; a family that appears later is a
+   * finding, not something to skip.
+   *
+   * When both are set, `nodeSchemas` wins for a node whose tag it names, and
+   * `validator` stays the answer for the kind as a whole.
+   */
+  nodeSchemas?: Readonly<Record<string, NodeSchemaRef>>;
   /**
    * The NESTED DECLARATION a directory of this kind carries, by filename.
    *
@@ -605,11 +649,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:
-      "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
-      "families (`block`, `kg`, `translation`), projected for the docs site from the " +
-      "verdicts that live beside their subjects. Generated; never hand-edited.",
+      "QA verdicts and their projections — kg-qa audits, block and translation QA, " +
+      "qa-witness documents for the docs site, result roll-ups and test runs; seven " +
+      "`$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
     skill: "qa-witness",
     schema: "content/pipeline/qa-witness.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      "kg-qa/v1": { validator: "schemas/kg-qa.ts#KgQaReportSchema" },
+      "block-qa/v1": { validator: "schemas/block-qa-schema/js/index.ts#BlockQaReport" },
+      "folio-test-run/v1": { validator: "schemas/test-run.ts#TestRunSchema" },
+      "qa-witness/v1": { shape: "content/pipeline/qa-witness.ts#QaWitness" },
+      "qa-results/v1": { shape: "scripts/qa-results.ts#QaResult" },
+      "translation-qa/v1": { shape: "content/pipeline/translation-block-qa.ts#TranslationBlockQaReport" },
+      // Written inline by two call sites and typed by neither — recorded,
+      // not invented. `qa-graph-index.ts` names the tag only to say it is
+      // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
+      "folio-qa-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
+    },
     // No `validator`, and that is a finding rather than an omission: the
     // module above exports TypeScript interfaces only. The largest generated
     // graph in this instance has no runtime schema, so `kg_validate` reports

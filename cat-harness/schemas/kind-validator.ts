@@ -41,11 +41,13 @@
  * @module folio-assistant/schemas/kind-validator
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
 import type { z } from "zod";
+import ts from "typescript";
 
 import { defaultGraphKinds, resolveGraphKind, type GraphKindRegistry } from "./cat-harness.js";
+import type { NodeSchemaRef } from "./graph-kind-registry.js";
 
 /** A validator reference, split from its `module#Export` form. */
 export interface ValidatorRef {
@@ -129,9 +131,22 @@ export async function resolveKindValidator(
     };
   }
 
+  return loadValidator(def.validator, canonical, instanceRoot);
+}
+
+/**
+ * Load one `module#Export` as a Zod schema. Shared by the kind-level
+ * {@link resolveKindValidator} and the per-family {@link resolveNodeSchemas},
+ * so the two cannot disagree about what "resolves" means.
+ */
+async function loadValidator(
+  validator: string,
+  canonical: string,
+  instanceRoot: string,
+): Promise<KindValidator> {
   let ref: ValidatorRef;
   try {
-    ref = parseValidatorRef(def.validator);
+    ref = parseValidatorRef(validator);
   } catch (e) {
     return {
       state: "unresolvable",
@@ -183,4 +198,96 @@ export async function resolveKindValidator(
     };
   }
   return { state: "resolved", ref, schema: exported };
+}
+
+// ── Per-family node schemas (bean `rdkm`) ────────────────────────────────
+
+/** One field of a TypeScript shape, read from source — never executed. */
+export interface ShapeField {
+  name: string;
+  optional: boolean;
+  /** The type as written in the source. */
+  type: string;
+}
+
+/**
+ * One `$schema` family of a kind, resolved. Four states, and the two in the
+ * middle are the point: a TypeScript shape is READABLE but not RUNNABLE, and
+ * an untyped family is a fact about the corpus rather than a load failure.
+ */
+export type NodeSchemaResolution =
+  | { tag: string; state: "resolved"; ref: ValidatorRef; schema: z.ZodTypeAny }
+  | { tag: string; state: "shape"; ref: ValidatorRef; fields: ShapeField[] }
+  | { tag: string; state: "untyped"; writtenBy: string }
+  | { tag: string; state: "unresolvable"; reason: string };
+
+/**
+ * Read an interface's or object type alias's fields from source.
+ *
+ * With the TypeScript parser rather than by import, because an interface does
+ * not exist at runtime — which is exactly why it cannot be a validator.
+ * Returns undefined when the module does not declare the name.
+ */
+export function readShape(instanceRoot: string, shape: string): { ref: ValidatorRef; fields: ShapeField[] } | string {
+  let ref: ValidatorRef;
+  try {
+    ref = parseValidatorRef(shape);
+  } catch (e) {
+    return e instanceof Error ? e.message : String(e);
+  }
+  const abs = resolve(join(instanceRoot, ref.module));
+  if (!existsSync(abs)) return `${ref.module} does not exist under the instance root ${instanceRoot}`;
+  const src = ts.createSourceFile(abs, readFileSync(abs, "utf8"), ts.ScriptTarget.Latest, true);
+  let members: ts.NodeArray<ts.TypeElement> | undefined;
+  src.forEachChild((n) => {
+    if (ts.isInterfaceDeclaration(n) && n.name.text === ref.exportName) members = n.members;
+    if (ts.isTypeAliasDeclaration(n) && n.name.text === ref.exportName && ts.isTypeLiteralNode(n.type)) {
+      members = n.type.members;
+    }
+  });
+  if (!members) return `${ref.module} declares no interface or object type ${ref.exportName}`;
+  const fields: ShapeField[] = [];
+  for (const m of members) {
+    if (!ts.isPropertySignature(m) || !m.name) continue;
+    fields.push({
+      name: m.name.getText(src).replace(/^["']|["']$/g, ""),
+      optional: m.questionToken !== undefined,
+      type: m.type ? m.type.getText(src).replace(/\s+/g, " ") : "any",
+    });
+  }
+  return { ref, fields };
+}
+
+/**
+ * Every `$schema` family a kind declares, resolved. Empty when the kind
+ * declares none — the caller then falls back to the kind-level validator.
+ */
+export async function resolveNodeSchemas(
+  kind: string,
+  instanceRoot: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Promise<NodeSchemaResolution[]> {
+  const canonical = resolveGraphKind(kind).kind;
+  const map = (registry.get(canonical)?.nodeSchemas ?? {}) as Record<string, NodeSchemaRef>;
+  const out: NodeSchemaResolution[] = [];
+  for (const [tag, ref] of Object.entries(map)) {
+    if (ref.validator) {
+      const v = await loadValidator(ref.validator, canonical, instanceRoot);
+      out.push(
+        v.state === "resolved"
+          ? { tag, state: "resolved", ref: v.ref, schema: v.schema }
+          : { tag, state: "unresolvable", reason: v.reason },
+      );
+    } else if (ref.shape) {
+      const r = readShape(instanceRoot, ref.shape);
+      out.push(typeof r === "string" ? { tag, state: "unresolvable", reason: r } : { tag, state: "shape", ...r });
+    } else if (ref.writtenBy) {
+      out.push(
+        existsSync(resolve(join(instanceRoot, ref.writtenBy)))
+          ? { tag, state: "untyped", writtenBy: ref.writtenBy }
+          : { tag, state: "unresolvable", reason: `${ref.writtenBy} does not exist under ${instanceRoot}` },
+      );
+    }
+  }
+  return out;
 }

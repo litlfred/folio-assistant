@@ -170,3 +170,62 @@ describe("kindForPath", () => {
       .toBeUndefined();
   });
 });
+
+describe("per-family node schemas (bean rdkm)", () => {
+  const HARNESS = resolve(import.meta.dir, "..");
+
+  test("qa names every family, and each resolves to a schema, a shape, or a recorded absence", async () => {
+    const { resolveNodeSchemas } = await import("./kind-validator");
+    const fams = await resolveNodeSchemas("qa", HARNESS);
+    expect(fams.map((f) => f.tag).sort()).toEqual([
+      "block-qa/v1", "folio-qa-index/v1", "folio-test-run/v1", "kg-qa/v1",
+      "qa-results/v1", "qa-witness/v1", "translation-qa/v1",
+    ]);
+    expect(fams.filter((f) => f.state === "unresolvable")).toEqual([]);
+    expect(fams.find((f) => f.tag === "kg-qa/v1")?.state).toBe("resolved");
+    expect(fams.find((f) => f.tag === "qa-witness/v1")?.state).toBe("shape");
+    expect(fams.find((f) => f.tag === "folio-qa-index/v1")?.state).toBe("untyped");
+  });
+
+  test("a shape is read from source, fields and optionality included", async () => {
+    const { readShape } = await import("./kind-validator");
+    const dir = mkdtempSync(join(tmpdir(), "shape-"));
+    writeFileSync(join(dir, "m.ts"), "export interface Thing { id: string; note?: number }\n");
+    const r = readShape(dir, "m.ts#Thing");
+    expect(r).toEqual({
+      ref: { module: "m.ts", exportName: "Thing" },
+      fields: [
+        { name: "id", optional: false, type: "string" },
+        { name: "note", optional: true, type: "number" },
+      ],
+    });
+    expect(typeof readShape(dir, "m.ts#Missing")).toBe("string");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("kg-validate routes a qa node by its $schema tag", async () => {
+    const { validatePath } = await import("../scripts/kg-validate");
+    const dir = join(HARNESS, "test", "results");
+    const { readdirSync, readFileSync, statSync } = await import("node:fs");
+    const find = (d: string, tag: string): string | undefined => {
+      for (const e of readdirSync(d)) {
+        const p = join(d, e);
+        if (statSync(p).isDirectory()) { const hit = find(p, tag); if (hit) return hit; continue; }
+        if (!p.endsWith(".json")) continue;
+        try {
+          if (JSON.parse(readFileSync(p, "utf8"))?.$schema === tag) return p;
+        } catch {
+          // not a node
+        }
+      }
+      return undefined;
+    };
+    const kg = find(dir, "kg-qa/v1");
+    expect(kg).toBeDefined();
+    expect((await validatePath(kg!, HARNESS)).state).toBe("valid");
+    const witness = find(dir, "qa-witness/v1");
+    expect(witness).toBeDefined();
+    const v = await validatePath(witness!, HARNESS);
+    expect(v.state).toBe("undetermined");
+  });
+});

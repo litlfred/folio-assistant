@@ -52,7 +52,7 @@ import type { ZodTypeAny } from "zod";
 
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
-import { resolveKindValidator } from "../schemas/kind-validator.js";
+import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
 const REPO = resolve(HARNESS, "..");
@@ -177,6 +177,33 @@ function decompose(
   return id;
 }
 
+/** One `$schema` family, as a class — or as the finding it is. */
+function drawFamily(
+  f: NodeSchemaResolution,
+  kind: string,
+  prefix: string,
+  acc: { classes: UmlClass[]; compositions: Composition[] },
+  section: Section,
+): void {
+  const title = f.tag;
+  if (f.state === "resolved") {
+    const json = zodToJsonSchema(f.schema as ZodTypeAny, { $refStrategy: "none" }) as Json;
+    decompose(json, title, `json: ${f.ref.exportName}`, kind, `${prefix}_${safeId(f.tag)}`, acc);
+  } else if (f.state === "shape") {
+    acc.classes.push({
+      id: safeId(`${prefix}_${f.tag}`),
+      title,
+      source: `ts: ${f.ref.exportName}`,
+      kind,
+      attrs: f.fields.map((x) => ({ name: x.name, type: x.type, mult: x.optional ? "0..1" : "1" })),
+    });
+  } else if (f.state === "untyped") {
+    acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title, source: `untyped: written by ${f.writtenBy}`, kind, attrs: [] });
+  } else {
+    section.undetermined.push({ kind: `${kind} ${f.tag}`, reason: f.reason });
+  }
+}
+
 // ── Reading the harnesses ─────────────────────────────────────────────────
 
 /**
@@ -236,6 +263,13 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
       // A base kind's validator is a path in the harness that DEFINES the
       // kind. Resolving it only against the declaring instance made every
       // downstream sub-graph — bootstrap/scenarios — unresolvable.
+      // Bean `rdkm`: a kind that names its `$schema` families is drawn one
+      // class per family — seven for `qa` — rather than as one kind-level box.
+      const families = await resolveNodeSchemas(kind, HARNESS);
+      if (families.length) {
+        for (const f of families) drawFamily(f, kind, prefix, acc, section);
+        continue;
+      }
       let v = await resolveKindValidator(kind, instanceRoot);
       if (v.state === "unresolvable" && instanceRoot !== HARNESS && BASE_GRAPH_KINDS[kind]) {
         v = await resolveKindValidator(kind, HARNESS);

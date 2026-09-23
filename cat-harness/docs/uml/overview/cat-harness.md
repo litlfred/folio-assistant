@@ -85,8 +85,26 @@ classDiagram
     }
   }
   namespace cat_harness__qa {
-    class cat_harness_qa_qa_shape["qa"] {
-      <<schema: content/pipeline/qa-witness.ts>>
+    class cat_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
+      <<json: KgQaReportSchema>>
+    }
+    class cat_harness_qa_block_qa_v1_block_qa_v1["block-qa/v1"] {
+      <<json: BlockQaReport>>
+    }
+    class cat_harness_qa_folio_test_run_v1_folio_test_run_v1["folio-test-run/v1"] {
+      <<json: TestRunSchema>>
+    }
+    class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
+      <<ts: QaWitness>>
+    }
+    class cat_harness_qa_qa_results_v1["qa-results/v1"] {
+      <<ts: QaResult>>
+    }
+    class cat_harness_qa_translation_qa_v1["translation-qa/v1"] {
+      <<ts: TranslationBlockQaReport>>
+    }
+    class cat_harness_qa_folio_qa_index_v1["folio-qa-index/v1"] {
+      <<untyped: written by scripts/gen-docs-pages.ts>>
     }
   }
   namespace cat_harness__fsh_guts {
@@ -307,7 +325,13 @@ classDiagram
   cssClass "cat_harness_methodology_crdm_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
-  cssClass "cat_harness_qa_qa_shape" fa_uml_kind_qa
+  cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_qa_witness_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_qa_index_v1" fa_uml_kind_qa
   cssClass "n_cat_harness_fsh_guts_fsh_guts" fa_uml_kind_fsh_guts
   cssClass "n_cat_harness_fsh_guts_fsh_guts" fa_uml_undetermined
   cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
@@ -401,7 +425,7 @@ classDiagram
 | `cat-harness/methodology-crdm` | `cat-harness/methodologies/crdm` | skills | skills: *could not determine* |
 | `cat-harness/methodology-crdm-processes` | `cat-harness/methodologies/crdm/processes` | processes | `ext: omg-bpmn-2.0` |
 | `cat-harness/methodologies` | `cat-harness/methodologies` | methodology | methodology: *could not determine* |
-| `cat-harness/qa` | `cat-harness/test/results` | qa | `schema: content/pipeline/qa-witness.ts` |
+| `cat-harness/qa` | `cat-harness/test/results` | qa | `KgQaReportSchema`; `BlockQaReport`; `TestRunSchema`; `ts: QaWitness`; `ts: QaResult`; `ts: TranslationBlockQaReport`; `untyped: written by scripts/gen-docs-pages.ts` |
 | `cat-harness/fsh-guts` | `cat-harness/fsh-guts` | fsh-guts | fsh-guts: *could not determine* |
 | `cat-harness/health` | `cat-harness/test/health/results` | health | `HealthReportSchema` |
 | `cat-harness/beans` | `cat-harness/beans` | beans | beans: *could not determine* |

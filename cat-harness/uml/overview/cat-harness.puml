@@ -56,7 +56,19 @@ package "cat-harness/methodologies" as pkg_cat_harness_methodologies <<methodolo
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodologies_methodology
 }
 package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
-  class "qa" as cat_harness_qa_qa_shape <<schema: content/pipeline/qa-witness.ts>> {
+  class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> {
+  }
+  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> {
+  }
+  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> {
+  }
+  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> {
+  }
+  class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> {
+  }
+  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> {
+  }
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
   }
 }
 package "cat-harness/fsh-guts" as pkg_cat_harness_fsh_guts <<fsh-guts>> {
