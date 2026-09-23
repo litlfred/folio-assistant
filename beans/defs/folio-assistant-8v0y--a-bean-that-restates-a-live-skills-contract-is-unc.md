@@ -92,6 +92,34 @@ rather than `kind: "report"`** — and a `report` registration would be wrong fo
 second reason: that kind exists for *"CI cannot obtain its input"*, and this check's
 input is the committed bean store, always present.
 
+## Reconciled against the sibling hand-check (PR #1188, bean `ekp9`) — 2026-09-23
+
+`ekp9` works a deliberate **superset**: `beans/defs/**` including `archive/`, every
+status except `scrapped`. It reports 51 at the `>=25` threshold; that recipe run with
+this session's tokeniser gives **94**, so the two tokenisers differ — which `ekp9` had
+already found against the session before it, and is the argument it makes for
+classifying by reading rather than by score.
+
+**The structure reconciles cleanly even though the counts do not:**
+
+| | |
+|---|---|
+| my 23 is a strict subset of the superset | **yes** |
+| beans in the superset but not mine | **71** |
+| …of which `completed` | **53** |
+| …of which `completed` + archived | **18** |
+| …of which `todo` / `in-progress` / `draft` | **0** |
+
+**There is no disagreement about any live bean.** The whole difference is closed
+beans, which this check ignores deliberately — `check:bean-parents` and
+`check:bean-bodies` ignore them for the same reason: a finished bean is history, and
+back-filling it changes no plan.
+
+**The open reconciliation is a false-NEGATIVE one, and it is not closable yet.** This
+rule flags 0 over all 888 beans, closed included. So if `ekp9`'s reading finds a
+restatement anywhere in its 94, this rule missed it and the rule is what gets fixed.
+`ekp9`'s classification lands in later commits and is not published yet.
+
 ## Not built, and why
 
 **No `## Done when` detector.** 607 of 888 beans carry one (180 of 254 open); it is
