@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 153,
+      "count": 154,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -233,6 +233,15 @@
       "name": "cat-harness",
       "graphNode": "schema",
       "summary": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/code-list.ts",
+      "instance": "cat-harness",
+      "name": "code-list",
+      "graphNode": "none",
+      "reason": "the node shape; the nodes are `code-lists/*.json`",
+      "summary": "A code list: a closed set of codes, each with a label, a plain-language",
       "isTest": false
     },
     {
@@ -7493,6 +7502,176 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/code-list.ts#Code",
+      "name": "Code",
+      "module": "cat-harness/schemas/code-list.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/code-list.ts#CodeList",
+      "name": "CodeList",
+      "module": "cat-harness/schemas/code-list.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/code-list.ts#CodeListSchema",
+      "name": "CodeListSchema",
+      "module": "cat-harness/schemas/code-list.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CODE_LIST_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id; what a diagram's `list=\"…\"` names."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(10)",
+          "optional": false,
+          "array": false,
+          "doc": "What question the list answers, or what set it enumerates."
+        },
+        {
+          "name": "source",
+          "type": "CodeSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "codes",
+          "type": "z.array(CodeSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/code-list.ts#CodeSchema",
+        "cat-harness/schemas/code-list.ts#CodeSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CODE_LIST_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/code-list.ts#CodeSchema",
+      "name": "CodeSchema",
+      "module": "cat-harness/schemas/code-list.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a code is lower-case kebab\")",
+          "optional": false,
+          "array": false,
+          "doc": "The token a record carries. Never renamed once used — retire it instead."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "definition",
+          "type": "z.string().min(10)",
+          "optional": false,
+          "array": false,
+          "doc": "What the code MEANS, in a sentence a reader can act on."
+        },
+        {
+          "name": "source",
+          "type": "CodeSourceSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The value the code stands for, when it stands for one — a namespace"
+        },
+        {
+          "name": "status",
+          "type": "z.enum([\"active\", \"retired\"]).default(\"active\")",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/code-list.ts#CodeSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/code-list.ts#CodeSourceSchema",
+      "name": "CodeSourceSchema",
+      "module": "cat-harness/schemas/code-list.ts",
+      "kind": "zod-object",
+      "doc": "Where a code, or a whole list, came from: a link, a ruling, or both.",
+      "fields": [
+        {
+          "name": "href",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -38034,6 +38213,30 @@
       "from": "cat-harness/schemas/cat-harness.ts#Topology",
       "to": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "via": "network",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/code-list.ts#CodeListSchema",
+      "to": "cat-harness/schemas/code-list.ts#CodeSchema",
+      "via": "codes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/code-list.ts#CodeListSchema",
+      "to": "cat-harness/schemas/code-list.ts#CodeSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/code-list.ts#CodeSchema",
+      "to": "cat-harness/schemas/code-list.ts#CodeSourceSchema",
+      "via": "source",
       "kind": "field",
       "optional": true,
       "array": false
