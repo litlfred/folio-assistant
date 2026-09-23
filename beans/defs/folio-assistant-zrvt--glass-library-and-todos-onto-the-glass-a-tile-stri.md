@@ -39,4 +39,17 @@ So the measurement below was right about the cause, and the default look is the 
 - [x] todos tile opens the todo list on the glass, each with pull-out to glass
 - [x] settings tile: theme (glass default + usability themes), avatar style, opacity
 - [x] default glass: 20% opaque, blurred; cards solid at any opacity
-- [ ] e2e specs for each, and `bun run gates` green
+- [x] e2e specs for each (`glass-tiles.e2e.ts`, 13), and `bun run gates` green (127)
+
+## Built 2026-09-23
+
+- **The earlier ruling is reversed, and the new one is recorded.** `v0jv`'s *"tiles must NOT be projected onto the glass"* is overridden by the owner's 2026-09-23 question about where the tiles on the glass's bottom edge were. `glass` is a third value in `TILE_SURFACES` on the ONE declaration, not a second list.
+- **Two tiles are chrome, not graph tiles:** Todos and Settings. They carry `data-fa-glass-chrome`, not `data-fa-tile`. When they wore the graph tiles' marker, `graph-tiles.e2e.ts` failed, and it was right to: every `data-fa-tile` opens "the declared visualisation of" something, and these two don't.
+- **Found by a gate, not by review:** the viewer's regex was mangled inside a TS template literal and shipped `/assets/library/index.json$/`, which is invalid flags. `generated-viewer-scripts.test.ts` caught it. The viewer now slices the path by length instead of using a regex.
+- **Found by a gate:** the lazy `avatars.css` link was an unchecked href. `href-safety.test.ts` caught it, and the link now goes through `safeHref`.
+- **Found by e2e:** a later `.fa-glass-sheet` rule overrode the strip's bottom padding, so the strip covered the settings panel's last control. The padding is now merged into that one rule, with `scroll-padding-bottom`.
+
+## Not done
+
+- Semantic zoom and drag on glass cards. They are still a flex row, not positioned notes. That is `pv6g`/`624f`'s part.
+- The "cats" avatar option. The existing art avatars are per-THEME sticky backdrops, not per-item pictures. "Kind avatars" is the existing set that applies to an item.

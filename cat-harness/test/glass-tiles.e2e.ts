@@ -151,8 +151,8 @@ test.describe("the tile strip along the glass's bottom edge", () => {
     await open(page);
     const strip = page.locator(".fa-glass-tiles");
     await expect(strip).toBeVisible();
-    await expect(strip.locator('[data-fa-tile="glass-todos"]')).toBeVisible();
-    await expect(strip.locator('[data-fa-tile="glass-settings"]')).toBeVisible();
+    await expect(strip.locator('[data-fa-glass-chrome="glass-todos"]')).toBeVisible();
+    await expect(strip.locator('[data-fa-glass-chrome="glass-settings"]')).toBeVisible();
     await expect(strip.locator('[data-fa-tile="fsh-guts"]')).toBeVisible();
     // Filtered to the glass surface, and the declared `todos` is not drawn twice.
     await expect(strip.locator('[data-fa-tile="board-only"]')).toHaveCount(0);
@@ -167,8 +167,8 @@ test.describe("the tile strip along the glass's bottom edge", () => {
 test.describe("todos → glass", () => {
   test("the Todos tile lists them, and one pulled out lands on the glass with a todo avatar", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-todos"]');
-    await expect(page.locator('[data-fa-tile="glass-todos"]')).toHaveAttribute("aria-expanded", "true");
+    await page.click('[data-fa-glass-chrome="glass-todos"]');
+    await expect(page.locator('[data-fa-glass-chrome="glass-todos"]')).toHaveAttribute("aria-expanded", "true");
     const row = page.locator('[data-fa-library-item="todo/t-one"]');
     await expect(row).toBeVisible();
     await row.locator(".fa-pullout").click();
@@ -181,7 +181,7 @@ test.describe("todos → glass", () => {
 
   test("Escape closes the panel first, then the glass", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-todos"]');
+    await page.click('[data-fa-glass-chrome="glass-todos"]');
     await expect(page.locator(".fa-glass-panel")).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.locator(".fa-glass-panel")).toBeHidden();
@@ -194,7 +194,7 @@ test.describe("todos → glass", () => {
 test.describe("the Settings tile", () => {
   test("a usability theme brings its own opacity, and it persists", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-settings"]');
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
     await page.check("#fa-glass-theme-contrast");
     const l = page.locator(layer);
     await expect(l).toHaveAttribute("data-fa-glass-theme", "contrast");
@@ -206,7 +206,7 @@ test.describe("the Settings tile", () => {
 
   test("opacity steps with large buttons, not only a slider", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-settings"]');
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
     await page.click('button[aria-label="More opaque"]');
     await expect(page.locator(".fa-glass-opacity-value")).toHaveText("30%");
     const bg = await page.locator(layer).evaluate((n) => getComputedStyle(n).backgroundColor);
@@ -219,7 +219,7 @@ test.describe("the Settings tile", () => {
   test("avatar style: text only removes every picture from the glass", async ({ page }) => {
     await page.click('[data-fa-library-item="who-iris/book"] .fa-pullout');
     await open(page);
-    await page.click('[data-fa-tile="glass-settings"]');
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
     await page.check("#fa-glass-avatars-text");
     await expect(page.locator(".fa-glass-asset .fa-glass-avatar")).toHaveCount(0);
     await page.check("#fa-glass-avatars-kinds");
@@ -230,7 +230,7 @@ test.describe("the Settings tile", () => {
 
   test("the default can be restored in one press", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-settings"]');
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
     await page.check("#fa-glass-theme-paper");
     await page.click(".fa-glass-reset");
     await expect(page.locator(layer)).toHaveAttribute("data-fa-glass-theme", "glass");
@@ -239,7 +239,7 @@ test.describe("the Settings tile", () => {
 
   test("closing the glass closes its panel, so it reopens clean", async ({ page }) => {
     await open(page);
-    await page.click('[data-fa-tile="glass-settings"]');
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
     await shut(page);
     await open(page);
     await expect(page.locator(".fa-glass-panel")).toBeHidden();

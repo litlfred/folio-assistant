@@ -4027,7 +4027,7 @@
     }
     document.head.appendChild(el("link", {
       rel: "stylesheet",
-      href: withBase("/assets/css/avatars.css"),
+      href: safeHref(withBase("/assets/css/avatars.css")),
       "data-fa-glass-avatars-css": "",
     }));
   }
@@ -4411,9 +4411,12 @@
     function chromeTile(id, label, glyph, title, build) {
       var b = el("button", {
         type: "button",
-        class: "fa-tile fa-glass-chrome-tile",
-        "data-fa-tile": id,
-        "data-fa-surface": "glass",
+        // NOT `data-fa-tile` and not `.fa-tile`: those mark a DECLARED graph
+        // tile, and every one of them opens "the declared visualisation of" a
+        // directory. These two are the glass's own controls, and wearing the
+        // graph tiles' marker would make them count as graph tiles.
+        class: "fa-glass-chrome-tile",
+        "data-fa-glass-chrome": id,
         "aria-expanded": "false",
         "aria-controls": "fa-glass-panel",
         "aria-label": title,

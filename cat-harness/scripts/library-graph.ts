@@ -184,7 +184,7 @@ export function avatarOf(
   libDir: string,
   instance: string,
   slug: string,
-  images: { images?: unknown[] } | null,
+  images: { images?: unknown[] } | null | undefined,
 ): LibraryAvatar | undefined {
   if (!existsSync(join(libDir, "index.html"))) return undefined;
   const at = (rel: string): string => `/library/${instance}/${rel.split("\\").join("/")}`;
