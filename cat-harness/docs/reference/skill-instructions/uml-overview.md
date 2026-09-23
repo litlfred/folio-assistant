@@ -100,7 +100,8 @@ as the default. Owner, 2026-09-23: "can we have portrait and landscape
 views?".
 
 - **The committed `.puml` is the portrait view.** The landscape view is
-  derived from it by `landscapeOf` in `gen-uml-overview.ts` and rendered to
+  derived from it by `landscapeOf` in `scripts/plantuml-render.ts`, shared with
+  every PlantUML generator, and rendered to
   `<name>.landscape.svg`. It is not committed as a second source, so the two
   views cannot say different things.
 - **ELK ignores direction.** `left to right direction` and arrow hints left

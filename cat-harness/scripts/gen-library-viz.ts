@@ -51,7 +51,9 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join, relative, sep } from "node:path";
 
-import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
+import { readLibraryGraph, type LibraryGraph,
+  readEntryBlocks,
+} from "./library-graph.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
@@ -232,6 +234,7 @@ td.lib-first { white-space:nowrap; }
 <main>
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
+  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
   <h2>Uploads — the queue feeding this</h2>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
@@ -484,6 +487,66 @@ function honourAnchor(){
     row.setAttribute("data-fa-anchored", "1");
     row.scrollIntoView({ block: "center" });
   }
+  /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
+     anchor rather than a click so a shared URL lands on the same view. */
+  loadBlocks(known.id);
+}
+
+/* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
+   Bean 7nvr.
+
+   The index carries a COUNT of blocks; this is what they are. It is a
+   separate fetch because the corpus holds 1715 blocks over about a megabyte
+   of JSON-LD against a 44 KB index, so inlining would multiply the cost of
+   the page that answers "what is in here" to serve a question asked about
+   one entry at a time.
+
+   THREE OUTCOMES, like honourAnchor above. The file loads and the blocks are
+   listed; the file loads and the entry genuinely has none, which is a
+   determined answer and says so; or the fetch fails, which is reported as a
+   failure rather than rendered as an empty document. An entry with no blocks
+   and an entry we could not read must never look the same. */
+function blocksHref(id){
+  var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
+  return dir + "entries/" + encodeURIComponent(id) + ".json";
+}
+function renderBlocks(id, data, err){
+  var el = $("blocks");
+  el.hidden = false;
+  if (err) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">Could not read the block graph for ' +
+      esc(id) + ' \u2014 ' + esc(err) + '. This is a failure to read, not an empty document.</p>';
+    return;
+  }
+  var bs = (data && data.blocks) || [];
+  if (!bs.length) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">' + esc(id) +
+      ' has no blocks. Nothing failed \u2014 the entry carries none.</p>';
+    return;
+  }
+  el.innerHTML = '<h2>Blocks \u2014 ' + esc(id) + ' <span class="note">(' + bs.length +
+    ', in page order)</span></h2><table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative</th></tr></thead><tbody>' +
+    bs.map(function(b){
+      /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
+         something without knowing our vocabulary, and showing only ours
+         would hide the half this project did not invent. */
+      var pages = b.pageStart == null ? '\u2014'
+        : (b.pageEnd != null && b.pageEnd !== b.pageStart ? b.pageStart + '\u2013' + b.pageEnd : String(b.pageStart));
+      /* A narrative state is three-valued and none of them is an error:
+         not-authored means nobody has written one, which is a fact rather
+         than a gap. Rendered as plain text for that reason. */
+      var nar = b.narrative == null ? '\u2014' : esc(b.narrative);
+      return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td>' + esc(b.title || '\u2014') +
+        '</td><td>' + nar + '</td></tr>';
+    }).join("") + '</tbody></table>';
+}
+function loadBlocks(id){
+  fetch(blocksHref(id), {cache: "no-store"})
+    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function(d){ renderBlocks(id, d, null); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
 }
 
 function setView(v){
@@ -737,6 +800,30 @@ if (import.meta.main) {
   }
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
+
+  // ── PER-ENTRY BLOCK GRAPHS (bean `7nvr`) ──────────────────────────────
+  //
+  // One file per entry, fetched only when a reader opens that entry.
+  //
+  // NOT folded into `index.json`, and the numbers are the argument: the corpus
+  // holds 1715 blocks over roughly a megabyte of JSON-LD, against a 44 KB
+  // index. Inlining them would multiply the cost of the page that answers
+  // "what is in here" by twenty-five, to serve the question "what is in THIS
+  // one" — which a reader asks about one entry at a time, if at all.
+  //
+  // The library JSON-LD is not published to the site (checked: no
+  // `library/<id>/manifest.jsonld` under the built tree), so the viewer cannot
+  // simply fetch the source. A projection is the only thing it can read.
+  for (const e of g.entries) {
+    const blocks = readEntryBlocks(join(repoRoot, e.dir));
+    // An entry with no blocks still gets a file. The alternative is a 404 the
+    // viewer has to tell apart from a network failure, and "this entry has no
+    // blocks" is a determined answer that deserves to be served as one.
+    emit(
+      join(dataDir, "entries", `${e.id}.json`),
+      JSON.stringify({ $schema: "folio-library-entry/v1", id: e.id, blocks }, null, 2) + "\n",
+    );
+  }
 
   // ── AVATARS (bean `zrvt`) ─────────────────────────────────────────────
   //

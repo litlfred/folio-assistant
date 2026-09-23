@@ -108,7 +108,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "folio", schema: t("RepoPath"), required: true, arg: { flag: "--folio" }, description: "The folio's `folio` graph directory." },
           { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write `block-qa.json`." },
-          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio repository root, where verdicts are anchored. Default `.`." },
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio's instance root, where verdicts are anchored. Default: found from `folio` exactly as the QA sweep finds it." },
         ],
         outputs: [
           { name: "block-qa", schema: t("RepoPath"), description: "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr." },
@@ -118,7 +118,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       selection: {
         when: "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
         limits:
-          "Reports the LAST sweep. A folio never swept reads unaudited throughout. Reads verdicts at the instance root and at the folio directory, because the sweep currently anchors at the swept directory (bean s3p2).",
+          "Reports the LAST sweep: in a staging build, the sweep the job ran just before it (bean tw61); otherwise the committed verdicts. A folio never swept reads unaudited throughout. The instance root is found from --folio exactly as the sweep finds it, so a folio in a subfolder is read at its own root; the folio directory is read second, for folios swept before bean s3p2's fix.",
         cost: "One text walk of the folio and one read per sidecar. No network.",
       },
       requires: { runtime: ["bun"], network: false },
@@ -957,6 +957,26 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "diagram", schema: t("RepoPath"), description: "The object-model diagram, in the instance's declared uml directory." }],
       },
       satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "content-graph-uml",
+      title: "A paper's block graph as UML",
+      description:
+        "Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.",
+      install: { none: true },
+      invoke: { shell: "bun run content:graph:uml" },
+      io: {
+        inputs: [
+          { name: "root", schema: t("RepoPath"), required: true, arg: { flag: "--root" }, description: "The folio's content directory, where the block manifests are." },
+          { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write the .puml files and their SVGs." },
+          { name: "status", schema: t("RepoPath"), required: false, arg: { flag: "--status" }, description: "proof-objects.json, for status fills. Without it every block is drawn unfilled." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if a diagram or SVG is stale or orphaned, instead of writing. Needs no Java." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "content-graph.puml and content-graph/<chapter>.puml, with portrait and landscape SVGs beside them." }],
+      },
+      satisfies: ["graph-rendering", "content-graph"],
       requires: { runtime: ["bun"], network: false },
     }),
 

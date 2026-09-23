@@ -141,9 +141,9 @@
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
       "prose_hash": "fac6dde7889f",
-      "code_hash": "b38fd96544b8",
+      "code_hash": "238cf5a0932b",
       "by": "agent",
-      "reason": "Re-read after main added five check:* lines inside the typescript job (uml-overview, methodologies:viz, external-schemas:viz, source-licence, wireframes). Task_TypeScript documents 'the repository gates …' with bun run gates deriving its list from this job, so the diagram still holds; no new job or branch to draw."
+      "reason": "Re-read the process documentation against the yml change. The change adds one step, check:code-accounting, inside the TypeScript job. The prose's claim about that box is 'TypeScript IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES' and lists their families; a thirty-first gate of the same kind is what that sentence already describes, deliberately approximately, so the box's meaning does not move. Nothing about the six-job shape, the four-hard/two-warn asymmetry, continue-on-error or the lane changes: the new step is hard-failing inside an already-hard job, so it adds no warn-only mechanism to keep apart."
     }
   ]
 }

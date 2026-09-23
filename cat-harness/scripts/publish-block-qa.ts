@@ -46,7 +46,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { existingBlockQaPath } from "../content/pipeline/qa-paths.js";
+import { existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths.js";
 import { hashBlockFiles, loadQaReport, summariseFreshness, walkBlocks } from "../content/pipeline/qa-utils.js";
 import { usesGraphHash } from "../content/pipeline/uses-graph-hash.js";
 
@@ -133,14 +133,19 @@ if (import.meta.main) {
     return i >= 0 ? args[i + 1] : undefined;
   };
   if (args.includes("--help") || !opt("folio") || !opt("out")) {
-    console.error("usage: bun run cat-harness/scripts/publish-block-qa.ts --folio <folio dir> --out <block-qa.json> [--repo <folio repo root, default .>]");
+    console.error("usage: bun run cat-harness/scripts/publish-block-qa.ts --folio <folio dir> --out <block-qa.json> [--repo <folio instance root; default: found from --folio, as the sweep finds it>]");
     process.exit(args.includes("--help") ? 0 : 2);
   }
-  const repo = resolve(opt("repo") ?? ".");
   // declared-path-literal: "folio" is the COMMAND-LINE FLAG's name, not a
   // directory. The directory is whatever the caller passes, and the staging
   // workflow passes the one the folio declares.
-  const f = publishBlockQa(repo, resolve(repo, opt("folio")!));
+  const folio = resolve(opt("folio")!);
+  // The instance root, found exactly as the sweep finds it (`s3p2`). It
+  // defaulted to ".", the repository root. A folio in a subfolder (ojcx's
+  // real run: `handbook/`) then had every block reported unaudited after a
+  // sweep that had written verdicts under `handbook/test/results/`.
+  const repo = opt("repo") ? resolve(opt("repo")!) : findContentRepoRoot(folio, process.cwd());
+  const f = publishBlockQa(repo, folio);
   mkdirSync(dirname(resolve(opt("out")!)), { recursive: true });
   writeFileSync(opt("out")!, JSON.stringify(f) + "\n");
   const c = f.counts;
