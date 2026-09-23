@@ -59,8 +59,9 @@
     <bpmn:exclusiveGateway id="GW_Agree" name="Entries agree?">
       <bpmn:documentation>Do the blind reviewers' entries agree? `no` goes to adjudication; `yes` goes to choosing a candidate.</bpmn:documentation>
     </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="Call_Adjudicate" name="Adjudication" calledElement="Process_Adjudication">
-      <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason.</bpmn:documentation>
+    <bpmn:callActivity id="Call_Adjudicate" name="Adjudication" calledElement="Process_CriterionAdjudication">
+      <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason.</bpmn:documentation>
+      <bpmn:extensionElements><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Choose" name="Choose a candidate" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost.</bpmn:documentation>
