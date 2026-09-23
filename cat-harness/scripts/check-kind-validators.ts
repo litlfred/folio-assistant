@@ -26,8 +26,8 @@ import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { directoriesForGraph } from "../schemas/cat-harness.js";
-import { resolveKindValidator, resolveNodeSchemas } from "../schemas/kind-validator.js";
+import { directoriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
+import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const instanceRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
@@ -43,6 +43,9 @@ export async function sweep(root: string): Promise<ValidatorSweep> {
   for (const kind of Object.keys(BASE_GRAPH_KINDS)) {
     const r = await resolveKindValidator(kind, root);
     if (r.state === "resolved") out.resolved.push(kind);
+    // A kind that names its `$schema` families is checked per family above,
+    // so it is not "undeclared" merely for having no kind-level validator.
+    else if (r.state === "undeclared" && BASE_GRAPH_KINDS[kind]?.nodeSchemas) out.resolved.push(`${kind} (per $schema family)`);
     else if (r.state === "undeclared") out.undeclared.push(kind);
     else out.unresolvable.push({ kind: r.kind, reason: r.reason });
   }
@@ -60,6 +63,8 @@ export interface FamilySweep {
   unresolvable: { tag: string; reason: string }[];
   /** A node that fails its family's Zod schema. */
   invalid: { file: string; issue: string }[];
+  /** No instance declares a directory of this kind — nested, or not yet present. */
+  noDirectory?: boolean;
 }
 
 function jsonFiles(dir: string): string[] {
@@ -89,7 +94,14 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
     const byTag = new Map(fams.map((f) => [f.tag, f]));
     const s: FamilySweep = { kind, counts: {}, unmapped: [], unresolvable: [], invalid: [] };
     for (const f of fams) if (f.state === "unresolvable") s.unresolvable.push({ tag: f.tag, reason: f.reason });
-    for (const dir of directoriesForGraph(root, kind)) {
+    const dirs = new Set<string>();
+    for (const inst of instanceRootsIn(join(root, ".."))) for (const d of directoriesForGraph(inst, kind)) dirs.add(d);
+    if (dirs.size === 0) {
+      s.noDirectory = true;
+      out.push(s);
+      continue;
+    }
+    for (const dir of dirs) {
       for (const file of jsonFiles(dir)) {
         let node: unknown;
         try {
@@ -100,7 +112,7 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
         const tag = (node as { $schema?: unknown } | null)?.$schema;
         if (typeof tag !== "string") continue;
         const fam = byTag.get(tag);
-        const rel = relative(root, file);
+        const rel = relative(join(root, ".."), file);
         if (!fam) {
           if (!s.unmapped.some((u) => u.tag === tag)) s.unmapped.push({ tag, example: rel });
           continue;
@@ -109,7 +121,7 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
         c.nodes++;
         if (fam.state !== "resolved") continue;
         c.checked++;
-        const r = fam.schema.safeParse(node);
+        const r = fam.schema.safeParse(stripAnnotations(node));
         if (r.success) c.parsed++;
         else s.invalid.push({ file: rel, issue: `${r.error.issues[0]?.path.join(".")}: ${r.error.issues[0]?.message}` });
       }
@@ -132,10 +144,14 @@ async function main(): Promise<number> {
           ? `  ✓ ${tag}: ${c.parsed}/${c.checked} parse`
           : c.state === "untyped"
             ? `  · ${tag}: ${c.nodes} node(s), NO declared type — could not determine`
-            : `  · ${tag}: ${c.nodes} node(s), a TypeScript shape, not runnable — could not determine`,
+            : c.state === "external"
+              ? `  · ${tag}: ${c.nodes} node(s), an external specification — named, not run here`
+              : `  · ${tag}: ${c.nodes} node(s), a TypeScript shape, not runnable — could not determine`,
       );
     }
-    if (nodes === 0) {
+    if (f.noDirectory) {
+      console.log(`  · no instance declares a ${f.kind} directory — nothing to route (a nested kind is reached through its parent)`);
+    } else if (nodes === 0) {
       console.log(`  ✗ EXAMINED NOTHING — ${f.kind} declares nodeSchemas and no node was found`);
       familyFail = true;
     }

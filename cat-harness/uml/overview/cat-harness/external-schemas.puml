@@ -9,7 +9,23 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {
-  note "external-schema: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_external_schemas_external_schema
+  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> {
+    term [1] : string
+    operative [1] : string
+  }
+  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> {
+    $schema [1] : 'folio-external-schema/v1'
+    id [1] : string
+    authority [1] : enum(7)
+    title [1] : string
+    version [1] : string
+    specUrl [1] : string<uri>
+    namespaces [0..*] : string[]
+    use [1] : conforms | reads | cites
+    usedBy [1..*] : string[]
+    note [0..1] : string
+  }
 }
 
+cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
 @enduml

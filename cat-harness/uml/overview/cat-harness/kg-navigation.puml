@@ -9,7 +9,100 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/kg-navigation" as pkg_cat_harness_kg_navigation <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_kg_navigation_skills
+  class "Source" as cat_harness_kg_navigation_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+    title [1] : string
+    instance [0..1] : string
+    libraryId [0..1] : string
+    kgRef [0..1] : string
+    url [0..1] : string<uri>
+    year [0..1] : integer
+  }
+  class "Pattern" as cat_harness_kg_navigation_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+    regex [1] : string
+    caseSensitive [0..1] : boolean
+    message [1] : string
+  }
+  class "Terminology" as cat_harness_kg_navigation_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+    correct [1] : string
+    incorrect [1] : string | string[]
+    context [0..1] : string
+  }
+  class "Rule" as cat_harness_kg_navigation_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : enum(13)
+    severity [1] : critical | major | minor
+    source [1] : object
+    judgementOnly [0..1] : boolean
+  }
+  class "folio-voice/v1" as cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+    $schema [1] : folio-voice/v1 | folio-voice-skill/v1
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    overlaySeverity [0..1] : critical | major | minor
+    appliesTo [0..*] : string[]
+    provenance [1] : assertion | evidence | house
+    extends [0..1] : object
+    activeIn [0..1] : object
+    superseded [0..1] : object
+  }
+  class "Source" as cat_harness_kg_navigation_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+    title [1] : string
+    instance [0..1] : string
+    libraryId [0..1] : string
+    kgRef [0..1] : string
+    url [0..1] : string<uri>
+    year [0..1] : integer
+  }
+  class "Pattern" as cat_harness_kg_navigation_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+    regex [1] : string
+    caseSensitive [0..1] : boolean
+    message [1] : string
+  }
+  class "Terminology" as cat_harness_kg_navigation_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+    correct [1] : string
+    incorrect [1] : string | string[]
+    context [0..1] : string
+  }
+  class "Rule" as cat_harness_kg_navigation_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : enum(13)
+    severity [1] : critical | major | minor
+    source [1] : object
+    judgementOnly [0..1] : boolean
+    counterintuitive [0..1] : boolean
+    commonError [0..1] : string
+  }
+  class "folio-voice-skill/v1" as cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+    $schema [1] : 'folio-voice-skill/v1'
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    owner [0..1] : string
+    instructions [1] : object
+    provenance [1] : assertion | evidence | house
+    overlaySeverity [0..1] : critical | major | minor
+    appliesTo [0..*] : string[]
+    activeIn [0..1] : object
+    extends [0..1] : object
+    superseded [0..1] : object
+  }
+  class "kg-qa-manifest/v1" as cat_harness_kg_navigation_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
+  }
 }
 
+cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_v1_Source : sources
+cat_harness_kg_navigation_folio_voice_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_v1_Pattern : patterns
+cat_harness_kg_navigation_folio_voice_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_v1_Terminology : terminology
+cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_v1_Rule : rules
+cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Source : sources
+cat_harness_kg_navigation_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Pattern : patterns
+cat_harness_kg_navigation_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Terminology : terminology
+cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_skill_v1_Rule : rules
 @enduml

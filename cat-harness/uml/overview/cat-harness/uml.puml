@@ -9,7 +9,8 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/uml" as pkg_cat_harness_uml <<uml>> {
-  note "uml: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_uml_uml
+  class "uml" as cat_harness_uml_uml_shape <<schema: scripts/gen-uml-overview.ts>> {
+  }
 }
 
 @enduml

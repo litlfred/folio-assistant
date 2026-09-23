@@ -83,6 +83,19 @@ classDiagram
     class detangle_detangle_results_folio_qa_index_v1["folio-qa-index/v1"] {
       <<untyped: written by scripts/gen-docs-pages.ts>>
     }
+    class detangle_detangle_results_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
+      <<ts: DetangleSidecar>>
+      $schema [1] 'folio-detangle-sidecar/v1'
+      group [1] string
+      size [1] number
+      internal [1] number
+      inbound [1] number
+      outbound [1] number
+      cohesion [1] number
+      enforcedBoundary [1] number
+      recordedBoundary [1] number
+      proseMentions [1] number
+    }
   }
   cssClass "detangle_detangle_results_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "detangle_detangle_results_block_qa_v1_block_qa_v1" fa_uml_kind_qa
@@ -91,11 +104,12 @@ classDiagram
   cssClass "detangle_detangle_results_qa_results_v1" fa_uml_kind_qa
   cssClass "detangle_detangle_results_translation_qa_v1" fa_uml_kind_qa
   cssClass "detangle_detangle_results_folio_qa_index_v1" fa_uml_kind_qa
+  cssClass "detangle_detangle_results_folio_detangle_sidecar_v1" fa_uml_kind_qa
 ```
 
 | sub-graph | directory | graph kinds | node schema |
 |---|---|---|---|
-| `detangle/detangle-results` | `detangle/results` | qa | `KgQaReportSchema`; `BlockQaReport`; `TestRunSchema`; `ts: QaWitness`; `ts: QaResult`; `ts: TranslationBlockQaReport`; `untyped: written by scripts/gen-docs-pages.ts` |
+| `detangle/detangle-results` | `detangle/results` | qa | `KgQaReportSchema`; `BlockQaReport`; `TestRunSchema`; `ts: QaWitness`; `ts: QaResult`; `ts: TranslationBlockQaReport`; `untyped: written by scripts/gen-docs-pages.ts`; `ts: DetangleSidecar` |
 
 ## Sub-graphs
 

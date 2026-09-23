@@ -9,7 +9,16 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
-  note "uploads: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_uploads_uploads
+  class "Asset" as folio_assistant_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> {
+  }
+  class "Omitted" as folio_assistant_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> {
+  }
+  class "folio-extraction/v1" as folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> {
+  }
+  class "folio-intake/v1" as folio_assistant_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> {
+  }
 }
 
+folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
+folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
 @enduml

@@ -9,7 +9,23 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
-  note "themes: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_themes_themes
+  class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> {
+    field [1] : string
+    source [1] : string
+    reason [1] : string
+  }
+  class "Theme" as who_iris_who_iris_themes_Theme <<json: ThemeSchema>> {
+    $schema [1] : 'folio-theme/v1'
+    id [1] : string
+    kind [1] : sticky | webpage | publication
+    inherits [0..1] : object
+    name [0..1] : string
+    description [0..1] : string
+    palette [0..1] : object
+    backdrop [0..1] : object
+    layouts [0..1] : object
+  }
 }
 
+who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
 @enduml

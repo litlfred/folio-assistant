@@ -197,6 +197,8 @@ function drawFamily(
       kind,
       attrs: f.fields.map((x) => ({ name: x.name, type: x.type, mult: x.optional ? "0..1" : "1" })),
     });
+  } else if (f.state === "external") {
+    acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title: f.spec, source: `ext: ${f.spec}`, kind, attrs: [] });
   } else if (f.state === "untyped") {
     acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title, source: `untyped: written by ${f.writtenBy}`, kind, attrs: [] });
   } else {
@@ -260,6 +262,11 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
     const acc = { classes: section.classes, compositions: section.compositions };
     const prefix = `${decl.name}_${entry.id}`;
     for (const kind of section.kinds) {
+      // `cat-harness` beside another kind is the umbrella, not a node kind: on
+      // `["schemas", "cat-harness"]` it says "a schema IS a knowledge-graph
+      // node" (graph-kind-registry.ts, §"`cat-harness` SURVIVES"). Drawing it
+      // as a second, undetermined box would invent a kind nobody declared.
+      if (kind === "cat-harness" && section.kinds.length > 1) continue;
       // A base kind's validator is a path in the harness that DEFINES the
       // kind. Resolving it only against the declaring instance made every
       // downstream sub-graph — bootstrap/scenarios — unresolvable.

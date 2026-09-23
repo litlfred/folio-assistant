@@ -9,8 +9,14 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "detangle/detangle-schemas-local" as pkg_detangle_detangle_schemas_local <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_detangle_detangle_schemas_local_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_detangle_detangle_schemas_local_cat_harness
+  class "JSON Schema draft-07" as detangle_detangle_schemas_local_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as detangle_detangle_schemas_local_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as detangle_detangle_schemas_local_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as detangle_detangle_schemas_local_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "detangle/detangle-results" as pkg_detangle_detangle_results <<qa>> {
   class "kg-qa/v1" as detangle_detangle_results_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> {
@@ -27,6 +33,9 @@ package "detangle/detangle-results" as pkg_detangle_detangle_results <<qa>> {
   }
   class "folio-qa-index/v1" as detangle_detangle_results_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
   }
+  class "folio-detangle-sidecar/v1" as detangle_detangle_results_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> {
+  }
 }
 
+detangle_detangle_schemas_local_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" detangle_detangle_schemas_local_folio_source_descriptor_v1_Identifier : identifiers
 @enduml

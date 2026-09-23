@@ -1,9 +1,87 @@
 classDiagram
   direction TB
   namespace who_iris__who_iris_docs {
-    class n_who_iris_who_iris_docs_docs["docs: no node schema"] {
-      <<could not determine>>
+    class who_iris_who_iris_docs_folio_todo_index_v1_Relation["Relation"] {
+      <<json: TodoIndexSchema>>
+      axis [1] string
+      label [1] string
+      href [0..1] string
+    }
+    class who_iris_who_iris_docs_folio_todo_index_v1_Item["Item"] {
+      <<json: TodoIndexSchema>>
+      id [1] string
+      summary [1] string
+      comment [1] string
+      status [1] string
+      priority [1] string
+      origin [0..1] string
+      createdAt [1] string
+      targetLabel [0..1] string
+      target [0..1] object
+      theme [0..1] string
+      tags [1] object
+      viewHref [0..1] string
+      editHref [0..1] string
+    }
+    class who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1["folio-todo-index/v1"] {
+      <<json: TodoIndexSchema>>
+      $schema [1] 'folio-todo-index/v1'
+      tile [0..1] map~object~
+      repoWeb [1] string
+      processes [1] map~string[]~
+      themeArt [1] map~map~string~~
+    }
+    class who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1["folio-semantic-zoom/v1"] {
+      <<json: SemanticZoomSchema>>
+      $schema [1] 'folio-semantic-zoom/v1'
+      belowPx [1] number
+      byKind [0..1] map~object~
+    }
+    class who_iris_who_iris_docs_folio_qa_graph_v1["folio-qa-graph/v1"] {
+      <<ts: QaGraphIndex>>
+      $schema [1] typeof QA_GRAPH_INDEX_SCHEMA
+      files [1] number
+      families [1] QaFamily[]
+      unclassified [1] number
+      unreadable [1] number
+    }
+    class who_iris_who_iris_docs_folio_translation_index_v1["folio-translation-index/v1"] {
+      <<ts: TranslationIndex>>
+      $schema [1] string
+      sourceLocale [1] string
+      locales [1] string[]
+      pages [1] Record~string, IndexedPage~
+    }
+    class who_iris_who_iris_docs_folio_bean_index_v1["folio-bean-index/v1"] {
+      <<untyped: written by scripts/gen-docs-pages.ts>>
+    }
+    class who_iris_who_iris_docs_folio_translation_status_v1["folio-translation-status/v1"] {
+      <<untyped: written by scripts/gen-translation-status.ts>>
+    }
+    class who_iris_who_iris_docs_folio_schema_graph_v1["folio-schema-graph/v1"] {
+      <<untyped: written by scripts/gen-schema-viz.ts>>
+    }
+    class who_iris_who_iris_docs_folio_library_index_v1["folio-library-index/v1"] {
+      <<untyped: written by scripts/gen-library-viz.ts>>
+    }
+    class who_iris_who_iris_docs_folio_voices_index_v1["folio-voices-index/v1"] {
+      <<untyped: written by scripts/gen-voices-viz.ts>>
+    }
+    class who_iris_who_iris_docs_folio_graph_projection_v1["folio-graph-projection/v1"] {
+      <<untyped: written by scripts/gen-folio-viz.ts>>
     }
   }
-  cssClass "n_who_iris_who_iris_docs_docs" fa_uml_kind_docs
-  cssClass "n_who_iris_who_iris_docs_docs" fa_uml_undetermined
+  who_iris_who_iris_docs_folio_todo_index_v1_Item *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Relation : relations
+  who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Item : items
+  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_Relation" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_Item" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_qa_graph_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_translation_index_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_bean_index_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_translation_status_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_schema_graph_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_library_index_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_voices_index_v1" fa_uml_kind_docs
+  cssClass "who_iris_who_iris_docs_folio_graph_projection_v1" fa_uml_kind_docs

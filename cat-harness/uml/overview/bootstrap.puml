@@ -9,10 +9,38 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/cat-harness" as pkg_bootstrap_cat_harness <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_cat_harness_skills
+  class "Source" as bootstrap_cat_harness_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as bootstrap_cat_harness_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as bootstrap_cat_harness_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as bootstrap_cat_harness_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as bootstrap_cat_harness_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as bootstrap_cat_harness_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as bootstrap_cat_harness_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as bootstrap_cat_harness_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as bootstrap_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_schemas_schemas
+  class "JSON Schema draft-07" as bootstrap_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as bootstrap_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as bootstrap_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as bootstrap_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
   class "Role" as bootstrap_scenarios_Role <<json: RoleGraphSchema>> {
@@ -27,19 +55,62 @@ package "bootstrap/processes" as pkg_bootstrap_processes <<processes>> {
   }
 }
 package "bootstrap/bootstrap-render" as pkg_bootstrap_bootstrap_render <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_bootstrap_render_skills
+  class "Source" as bootstrap_bootstrap_render_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as bootstrap_bootstrap_render_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as bootstrap_bootstrap_render_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as bootstrap_bootstrap_render_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as bootstrap_bootstrap_render_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as bootstrap_bootstrap_render_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as bootstrap_bootstrap_render_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as bootstrap_bootstrap_render_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as bootstrap_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "bootstrap/models" as pkg_bootstrap_models <<models>> {
-  note "models: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_models_models
+  class "Model" as bootstrap_models_Model <<json: ModelRegistrySchema>> {
+  }
+  class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> {
+  }
 }
 package "bootstrap/glossary" as pkg_bootstrap_glossary <<glossary>> {
-  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_glossary_glossary
+  class "folio-glossary-ledger/v1" as bootstrap_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> {
+  }
 }
 package "bootstrap/bootstrap-translations" as pkg_bootstrap_bootstrap_translations <<translation-sources>> {
   class "TranslationConfig" as bootstrap_bootstrap_translations_TranslationConfig <<json: TranslationConfigSchema>> {
   }
 }
 
+bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_v1_Source : sources
+bootstrap_cat_harness_folio_voice_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_v1_Pattern : patterns
+bootstrap_cat_harness_folio_voice_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_v1_Terminology : terminology
+bootstrap_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_v1_Rule : rules
+bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Source : sources
+bootstrap_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Pattern : patterns
+bootstrap_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_cat_harness_folio_voice_skill_v1_Terminology : terminology
+bootstrap_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" bootstrap_cat_harness_folio_voice_skill_v1_Rule : rules
+bootstrap_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" bootstrap_schemas_folio_source_descriptor_v1_Identifier : identifiers
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_v1_Source : sources
+bootstrap_bootstrap_render_folio_voice_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_v1_Pattern : patterns
+bootstrap_bootstrap_render_folio_voice_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_v1_Terminology : terminology
+bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_v1_Rule : rules
+bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Source : sources
+bootstrap_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Pattern : patterns
+bootstrap_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Terminology : terminology
+bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Rule : rules
+bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
 @enduml

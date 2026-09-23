@@ -31,7 +31,7 @@ import { relative, resolve, sep } from "node:path";
 import { readDeclaration } from "../schemas/cat-harness.js";
 import type { z } from "zod";
 
-import { resolveKindValidator, resolveNodeSchemas } from "../schemas/kind-validator.js";
+import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
 
 const instanceRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
 
@@ -114,6 +114,7 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
       const why =
         fam.state === "shape" ? "is a TypeScript shape, not a runnable schema"
         : fam.state === "untyped" ? `has no declared type (written by ${fam.writtenBy})`
+        : fam.state === "external" ? `conforms to ${fam.spec}, which nothing here runs`
         : fam.reason;
       return { path: filePath, state: "undetermined", kind, reason: `${fam.tag} ${why}` };
     }
@@ -125,7 +126,7 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
     }
     schema = v.schema;
   }
-  const parsed = schema.safeParse(data);
+  const parsed = schema.safeParse(stripAnnotations(data));
   if (parsed.success) return { path: filePath, state: "valid", kind };
   return {
     path: filePath,

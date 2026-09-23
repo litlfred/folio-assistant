@@ -9,8 +9,14 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_schemas_cat_harness
+  class "JSON Schema draft-07" as folio_assistant_core_core_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as folio_assistant_core_core_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as folio_assistant_core_core_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as folio_assistant_core_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
@@ -28,6 +34,7 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
   }
 }
 
+folio_assistant_core_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_core_core_schemas_folio_source_descriptor_v1_Identifier : identifiers
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology

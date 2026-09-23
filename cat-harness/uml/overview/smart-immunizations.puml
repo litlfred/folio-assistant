@@ -9,7 +9,19 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-immunizations/smart-immunizations-artifact-index" as pkg_smart_immunizations_smart_immunizations_artifact_index <<fhir-artifact-index>> {
-  note "fhir-artifact-index: no node schema declared\n(no validator registered: could not determine)" as n_smart_immunizations_smart_immunizations_artifact_index_fhir_artifact_index
+  class "Context" as smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context <<json: FhirArtifactIndexSchema>> {
+  }
+  class "DakUnbound" as smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound <<json: FhirArtifactIndexSchema>> {
+  }
+  class "Artifact" as smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact <<json: FhirArtifactIndexSchema>> {
+  }
+  class "folio-fhir-artifact-index/v1" as smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 <<json: FhirArtifactIndexSchema>> {
+  }
+  class "JSON Schema 2020-12" as smart_immunizations_smart_immunizations_artifact_index_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
 }
 
+smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
+smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
+smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
 @enduml

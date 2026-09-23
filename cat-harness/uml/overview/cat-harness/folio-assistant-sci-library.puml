@@ -9,7 +9,17 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  class "folio-document-images/v1" as cat_harness_folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+    $schema [1] : 'folio-document-images/v1'
+    doc_id [1] : string
+    images [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
+  class "folio-image-verdicts/v1" as cat_harness_folio_assistant_sci_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+    inspected_by [1] : unknown
+    inspected_at [1] : string
+    verdicts [1] : Record<string, Record<string, Verdict>>
+  }
 }
 
 @enduml

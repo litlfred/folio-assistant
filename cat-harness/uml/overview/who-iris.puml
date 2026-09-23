@@ -9,22 +9,109 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "who-iris/library" as pkg_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_library_library
+  class "folio-document-images/v1" as who_iris_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as who_iris_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catalogue>> {
-  note "catalogue: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_catalogue_catalogue
+  class "Value" as who_iris_who_iris_catalogue_folio_dublin_core_v1_Value <<json: DublinCoreRecordSchema>> {
+  }
+  class "Field" as who_iris_who_iris_catalogue_folio_dublin_core_v1_Field <<json: DublinCoreRecordSchema>> {
+  }
+  class "folio-dublin-core/v1" as who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 <<json: DublinCoreRecordSchema>> {
+  }
+  class "MaskedRegion" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion <<json: CatalogueNodeSchema>> {
+  }
+  class "Bitstream" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream <<json: CatalogueNodeSchema>> {
+  }
+  class "folio-catalogue-node/v1" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 <<json: CatalogueNodeSchema>> {
+  }
+  class "folio-catalogue/v1" as who_iris_who_iris_catalogue_folio_catalogue_v1_folio_catalogue_v1 <<json: CatalogueSchema>> {
+  }
 }
 package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>> {
-  note "uploads: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_uploads_uploads
+  class "Asset" as who_iris_who_iris_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> {
+  }
+  class "Omitted" as who_iris_who_iris_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> {
+  }
+  class "folio-extraction/v1" as who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> {
+  }
+  class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> {
+  }
 }
 package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_skills_skills
+  class "Source" as who_iris_who_iris_skills_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as who_iris_who_iris_skills_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as who_iris_who_iris_skills_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as who_iris_who_iris_skills_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as who_iris_who_iris_skills_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as who_iris_who_iris_skills_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as who_iris_who_iris_skills_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as who_iris_who_iris_skills_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as who_iris_who_iris_skills_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
-  note "themes: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_themes_themes
+  class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> {
+  }
+  class "Theme" as who_iris_who_iris_themes_Theme <<json: ThemeSchema>> {
+  }
 }
 package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
-  note "docs: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_docs_docs
+  class "Relation" as who_iris_who_iris_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  }
+  class "Item" as who_iris_who_iris_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  }
+  class "folio-todo-index/v1" as who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  }
+  class "folio-semantic-zoom/v1" as who_iris_who_iris_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  }
+  class "folio-qa-graph/v1" as who_iris_who_iris_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  }
+  class "folio-translation-index/v1" as who_iris_who_iris_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  }
+  class "folio-bean-index/v1" as who_iris_who_iris_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  }
+  class "folio-translation-status/v1" as who_iris_who_iris_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  }
+  class "folio-schema-graph/v1" as who_iris_who_iris_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  }
+  class "folio-library-index/v1" as who_iris_who_iris_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  }
+  class "folio-voices-index/v1" as who_iris_who_iris_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  }
+  class "folio-graph-projection/v1" as who_iris_who_iris_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  }
 }
 
+who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
+who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Field : fields
+who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream *-- "1..*" who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion : maskedRegions
+who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- "0..*" who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream : bitstreams
+who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
+who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
+who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_v1_Source : sources
+who_iris_who_iris_skills_folio_voice_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_v1_Pattern : patterns
+who_iris_who_iris_skills_folio_voice_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_v1_Terminology : terminology
+who_iris_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_v1_Rule : rules
+who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Source : sources
+who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Pattern : patterns
+who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Terminology : terminology
+who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_skill_v1_Rule : rules
+who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
+who_iris_who_iris_docs_folio_todo_index_v1_Item *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Relation : relations
+who_iris_who_iris_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" who_iris_who_iris_docs_folio_todo_index_v1_Item : items
 @enduml

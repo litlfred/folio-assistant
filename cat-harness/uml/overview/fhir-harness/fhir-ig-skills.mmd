@@ -1,9 +1,120 @@
 classDiagram
   direction TB
   namespace fhir_harness__fhir_ig_skills {
-    class n_fhir_harness_fhir_ig_skills_skills["skills: no node schema"] {
-      <<could not determine>>
+    class fhir_harness_fhir_ig_skills_folio_voice_v1_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      kgRef [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_v1_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_v1_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_v1_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      judgementOnly [0..1] boolean
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] folio-voice/v1 | folio-voice-skill/v1
+      id [1] string
+      title [1] string
+      description [1] string
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] string[]
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Source["Source"] {
+      <<json: VoiceSkillSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      kgRef [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Pattern["Pattern"] {
+      <<json: VoiceSkillSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Terminology["Terminology"] {
+      <<json: VoiceSkillSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule["Rule"] {
+      <<json: VoiceSkillSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      judgementOnly [0..1] boolean
+      counterintuitive [0..1] boolean
+      commonError [0..1] string
+    }
+    class fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
+      <<json: VoiceSkillSchema>>
+      $schema [1] 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      owner [0..1] string
+      instructions [1] object
+      provenance [1] assertion | evidence | house
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] string[]
+      activeIn [0..1] object
+      extends [0..1] object
+      superseded [0..1] object
+    }
+    class fhir_harness_fhir_ig_skills_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+      <<json: KgQaManifestSchema>>
+      $schema [1] 'kg-qa-manifest/v1'
+      auditor [1] object
     }
   }
-  cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills
-  cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_undetermined
+  fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Source : sources
+  fhir_harness_fhir_ig_skills_folio_voice_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Pattern : patterns
+  fhir_harness_fhir_ig_skills_folio_voice_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Terminology : terminology
+  fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Rule : rules
+  fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Source : sources
+  fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Pattern : patterns
+  fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Terminology : terminology
+  fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule : rules
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_v1_Source" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_v1_Pattern" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_v1_Terminology" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_v1_Rule" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Source" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
+  cssClass "fhir_harness_fhir_ig_skills_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills

@@ -9,7 +9,16 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/fsh-guts" as pkg_cat_harness_fsh_guts <<fsh-guts>> {
-  note "fsh-guts: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_fsh_guts_fsh_guts
+  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> {
+    $schema [1] : 'folio-fsh-guts/v1'
+    title [1] : string
+    kind [1] : string
+    movedOn [0..1] : string
+    movedFrom [0..1] : string
+    issue [0..1] : string | number
+    bean [0..1] : string
+    summary [0..1] : string
+  }
 }
 
 @enduml

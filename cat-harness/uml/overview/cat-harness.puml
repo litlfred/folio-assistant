@@ -15,20 +15,72 @@ package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
   }
 }
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {
-  note "external-schema: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_external_schemas_external_schema
+  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> {
+  }
+  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> {
+  }
 }
 package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "cat-harness/uml" as pkg_cat_harness_uml <<uml>> {
-  note "uml: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_uml_uml
+  class "uml" as cat_harness_uml_uml_shape <<schema: scripts/gen-uml-overview.ts>> {
+  }
 }
 package "cat-harness/bootstrap-render" as pkg_cat_harness_bootstrap_render <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_bootstrap_render_skills
+  class "Source" as cat_harness_bootstrap_render_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_bootstrap_render_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_bootstrap_render_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_bootstrap_render_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_bootstrap_render_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_bootstrap_render_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/cat-harness" as pkg_cat_harness_cat_harness <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_cat_harness_skills
+  class "Source" as cat_harness_cat_harness_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_cat_harness_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_cat_harness_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_cat_harness_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_cat_harness_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_cat_harness_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_cat_harness_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_cat_harness_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_cat_harness_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
   class "Role" as cat_harness_scenarios_Role <<json: RoleGraphSchema>> {
@@ -43,10 +95,52 @@ package "cat-harness/processes" as pkg_cat_harness_processes <<processes>> {
   }
 }
 package "cat-harness/methodology-raci" as pkg_cat_harness_methodology_raci <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodology_raci_skills
+  class "Source" as cat_harness_methodology_raci_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_methodology_raci_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_methodology_raci_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_methodology_raci_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_methodology_raci_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_methodology_raci_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_methodology_raci_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_methodology_raci_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_methodology_raci_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_methodology_raci_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_methodology_raci_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/methodology-crdm" as pkg_cat_harness_methodology_crdm <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_methodology_crdm_skills
+  class "Source" as cat_harness_methodology_crdm_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_methodology_crdm_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_methodology_crdm_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_methodology_crdm_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_methodology_crdm_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_methodology_crdm_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_methodology_crdm_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_methodology_crdm_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_methodology_crdm_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_methodology_crdm_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_methodology_crdm_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/methodology-crdm-processes" as pkg_cat_harness_methodology_crdm_processes <<processes>> {
   class "Business Process Model and Notation (BPMN)" as cat_harness_methodology_crdm_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> {
@@ -70,9 +164,12 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
   }
   class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
   }
+  class "folio-detangle-sidecar/v1" as cat_harness_qa_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> {
+  }
 }
 package "cat-harness/fsh-guts" as pkg_cat_harness_fsh_guts <<fsh-guts>> {
-  note "fsh-guts: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_fsh_guts_fsh_guts
+  class "FshGutsNode" as cat_harness_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> {
+  }
 }
 package "cat-harness/health" as pkg_cat_harness_health <<health>> {
   class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> {
@@ -87,10 +184,12 @@ package "cat-harness/health" as pkg_cat_harness_health <<health>> {
   }
 }
 package "cat-harness/beans" as pkg_cat_harness_beans <<beans>> {
-  note "beans: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_beans_beans
+  class "folio-workflow-instance/v1" as cat_harness_beans_folio_workflow_instance_v1 <<ts: InstanceState>> {
+  }
 }
 package "cat-harness/todos" as pkg_cat_harness_todos <<todos>> {
-  note "todos: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_todos_todos
+  class "folio-board/v1" as cat_harness_todos_folio_board_v1_folio_board_v1 <<json: BoardSchema>> {
+  }
 }
 package "cat-harness/memory" as pkg_cat_harness_memory <<memory, waiver>> {
   class "AlsoAbout" as cat_harness_memory_AlsoAbout <<json: MemoryNodeSchema>> {
@@ -109,22 +208,44 @@ package "cat-harness/issue-marks" as pkg_cat_harness_issue_marks <<issue-marks>>
   }
 }
 package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
-  note "uploads: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_uploads_uploads
+  class "Asset" as cat_harness_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> {
+  }
+  class "Omitted" as cat_harness_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> {
+  }
+  class "folio-extraction/v1" as cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> {
+  }
+  class "folio-intake/v1" as cat_harness_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> {
+  }
 }
 package "cat-harness/library" as pkg_cat_harness_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_library_library
+  class "folio-document-images/v1" as cat_harness_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as cat_harness_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_who_iris_library_library
+  class "folio-document-images/v1" as cat_harness_who_iris_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as cat_harness_who_iris_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "cat-harness/agent-skills-library" as pkg_cat_harness_agent_skills_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_agent_skills_library_library
+  class "folio-document-images/v1" as cat_harness_agent_skills_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as cat_harness_agent_skills_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  class "folio-document-images/v1" as cat_harness_folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as cat_harness_folio_assistant_sci_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_smart_base_library_library
+  class "folio-document-images/v1" as cat_harness_smart_base_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as cat_harness_smart_base_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> {
@@ -144,38 +265,172 @@ package "cat-harness/smart-base-processes" as pkg_cat_harness_smart_base_process
   }
 }
 package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
-  note "docs: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_docs_docs
+  class "Relation" as cat_harness_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  }
+  class "Item" as cat_harness_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  }
+  class "folio-todo-index/v1" as cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  }
+  class "folio-semantic-zoom/v1" as cat_harness_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  }
+  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  }
+  class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  }
+  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  }
+  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  }
+  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  }
+  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  }
+  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  }
+  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  }
 }
 package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
-  note "docs: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_root_docs_docs
+  class "Relation" as cat_harness_root_docs_folio_todo_index_v1_Relation <<json: TodoIndexSchema>> {
+  }
+  class "Item" as cat_harness_root_docs_folio_todo_index_v1_Item <<json: TodoIndexSchema>> {
+  }
+  class "folio-todo-index/v1" as cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 <<json: TodoIndexSchema>> {
+  }
+  class "folio-semantic-zoom/v1" as cat_harness_root_docs_folio_semantic_zoom_v1_folio_semantic_zoom_v1 <<json: SemanticZoomSchema>> {
+  }
+  class "folio-qa-graph/v1" as cat_harness_root_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> {
+  }
+  class "folio-translation-index/v1" as cat_harness_root_docs_folio_translation_index_v1 <<ts: TranslationIndex>> {
+  }
+  class "folio-bean-index/v1" as cat_harness_root_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
+  }
+  class "folio-translation-status/v1" as cat_harness_root_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> {
+  }
+  class "folio-schema-graph/v1" as cat_harness_root_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> {
+  }
+  class "folio-library-index/v1" as cat_harness_root_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> {
+  }
+  class "folio-voices-index/v1" as cat_harness_root_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> {
+  }
+  class "folio-graph-projection/v1" as cat_harness_root_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> {
+  }
 }
 package "cat-harness/folio-assist-core-schemas" as pkg_cat_harness_folio_assist_core_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_folio_assist_core_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_folio_assist_core_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_folio_assist_core_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_folio_assist_core_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_folio_assist_core_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as cat_harness_folio_assist_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "cat-harness/kg-navigation" as pkg_cat_harness_kg_navigation <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_kg_navigation_skills
+  class "Source" as cat_harness_kg_navigation_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_kg_navigation_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_kg_navigation_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_kg_navigation_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_kg_navigation_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_kg_navigation_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_kg_navigation_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_kg_navigation_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_kg_navigation_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/large-datasets-skills" as pkg_cat_harness_large_datasets_skills <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_large_datasets_skills_skills
+  class "Source" as cat_harness_large_datasets_skills_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_large_datasets_skills_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_large_datasets_skills_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_large_datasets_skills_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_large_datasets_skills_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_large_datasets_skills_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_large_datasets_skills_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_large_datasets_skills_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_large_datasets_skills_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_large_datasets_skills_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_large_datasets_skills_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/who-iris-skills" as pkg_cat_harness_who_iris_skills <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_who_iris_skills_skills
+  class "Source" as cat_harness_who_iris_skills_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as cat_harness_who_iris_skills_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as cat_harness_who_iris_skills_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as cat_harness_who_iris_skills_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as cat_harness_who_iris_skills_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as cat_harness_who_iris_skills_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as cat_harness_who_iris_skills_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as cat_harness_who_iris_skills_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as cat_harness_who_iris_skills_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as cat_harness_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as cat_harness_who_iris_skills_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "cat-harness/large-datasets-schemas" as pkg_cat_harness_large_datasets_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_large_datasets_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_large_datasets_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_large_datasets_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_large_datasets_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_large_datasets_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as cat_harness_large_datasets_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "cat-harness/detangle-schemas" as pkg_cat_harness_detangle_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_detangle_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_detangle_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_detangle_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_detangle_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_detangle_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as cat_harness_detangle_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "cat-harness/bootstrap-tools-schemas" as pkg_cat_harness_bootstrap_tools_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_bootstrap_tools_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_bootstrap_tools_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_bootstrap_tools_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_bootstrap_tools_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_bootstrap_tools_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as cat_harness_bootstrap_tools_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 package "cat-harness/glossary" as pkg_cat_harness_glossary <<glossary>> {
-  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_glossary_glossary
+  class "folio-glossary-ledger/v1" as cat_harness_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> {
+  }
 }
 package "cat-harness/cat-harness-scripts" as pkg_cat_harness_cat_harness_scripts <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_cat_harness_scripts_code
@@ -191,11 +446,79 @@ package "cat-harness/cat-harness-tests" as pkg_cat_harness_cat_harness_tests <<c
 }
 
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
+cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
+cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_schemas_folio_source_descriptor_v1_Identifier : identifiers
+cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Source : sources
+cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Pattern : patterns
+cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Terminology : terminology
+cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Rule : rules
+cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Source : sources
+cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern : patterns
+cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology : terminology
+cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Rule : rules
+cat_harness_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_cat_harness_folio_voice_v1_Source : sources
+cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Pattern : patterns
+cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Terminology : terminology
+cat_harness_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_cat_harness_folio_voice_v1_Rule : rules
+cat_harness_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_cat_harness_folio_voice_skill_v1_Source : sources
+cat_harness_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_skill_v1_Pattern : patterns
+cat_harness_cat_harness_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_skill_v1_Terminology : terminology
+cat_harness_cat_harness_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_cat_harness_folio_voice_skill_v1_Rule : rules
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
+cat_harness_methodology_raci_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_methodology_raci_folio_voice_v1_Source : sources
+cat_harness_methodology_raci_folio_voice_v1_Rule *-- "0..*" cat_harness_methodology_raci_folio_voice_v1_Pattern : patterns
+cat_harness_methodology_raci_folio_voice_v1_Rule *-- "0..*" cat_harness_methodology_raci_folio_voice_v1_Terminology : terminology
+cat_harness_methodology_raci_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_methodology_raci_folio_voice_v1_Rule : rules
+cat_harness_methodology_raci_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_methodology_raci_folio_voice_skill_v1_Source : sources
+cat_harness_methodology_raci_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_methodology_raci_folio_voice_skill_v1_Pattern : patterns
+cat_harness_methodology_raci_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_methodology_raci_folio_voice_skill_v1_Terminology : terminology
+cat_harness_methodology_raci_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_methodology_raci_folio_voice_skill_v1_Rule : rules
+cat_harness_methodology_crdm_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_methodology_crdm_folio_voice_v1_Source : sources
+cat_harness_methodology_crdm_folio_voice_v1_Rule *-- "0..*" cat_harness_methodology_crdm_folio_voice_v1_Pattern : patterns
+cat_harness_methodology_crdm_folio_voice_v1_Rule *-- "0..*" cat_harness_methodology_crdm_folio_voice_v1_Terminology : terminology
+cat_harness_methodology_crdm_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_methodology_crdm_folio_voice_v1_Rule : rules
+cat_harness_methodology_crdm_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_methodology_crdm_folio_voice_skill_v1_Source : sources
+cat_harness_methodology_crdm_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_methodology_crdm_folio_voice_skill_v1_Pattern : patterns
+cat_harness_methodology_crdm_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_methodology_crdm_folio_voice_skill_v1_Terminology : terminology
+cat_harness_methodology_crdm_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_methodology_crdm_folio_voice_skill_v1_Rule : rules
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
 cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
 cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
+cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" cat_harness_uploads_folio_extraction_v1_Asset : assets
+cat_harness_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" cat_harness_uploads_folio_extraction_v1_Omitted : omitted
+cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
+cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
+cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations
+cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Item : items
+cat_harness_folio_assist_core_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_folio_assist_core_schemas_folio_source_descriptor_v1_Identifier : identifiers
+cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_v1_Source : sources
+cat_harness_kg_navigation_folio_voice_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_v1_Pattern : patterns
+cat_harness_kg_navigation_folio_voice_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_v1_Terminology : terminology
+cat_harness_kg_navigation_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_v1_Rule : rules
+cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Source : sources
+cat_harness_kg_navigation_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Pattern : patterns
+cat_harness_kg_navigation_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_kg_navigation_folio_voice_skill_v1_Terminology : terminology
+cat_harness_kg_navigation_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_kg_navigation_folio_voice_skill_v1_Rule : rules
+cat_harness_large_datasets_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_large_datasets_skills_folio_voice_v1_Source : sources
+cat_harness_large_datasets_skills_folio_voice_v1_Rule *-- "0..*" cat_harness_large_datasets_skills_folio_voice_v1_Pattern : patterns
+cat_harness_large_datasets_skills_folio_voice_v1_Rule *-- "0..*" cat_harness_large_datasets_skills_folio_voice_v1_Terminology : terminology
+cat_harness_large_datasets_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_large_datasets_skills_folio_voice_v1_Rule : rules
+cat_harness_large_datasets_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_large_datasets_skills_folio_voice_skill_v1_Source : sources
+cat_harness_large_datasets_skills_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_large_datasets_skills_folio_voice_skill_v1_Pattern : patterns
+cat_harness_large_datasets_skills_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_large_datasets_skills_folio_voice_skill_v1_Terminology : terminology
+cat_harness_large_datasets_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_large_datasets_skills_folio_voice_skill_v1_Rule : rules
+cat_harness_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_who_iris_skills_folio_voice_v1_Source : sources
+cat_harness_who_iris_skills_folio_voice_v1_Rule *-- "0..*" cat_harness_who_iris_skills_folio_voice_v1_Pattern : patterns
+cat_harness_who_iris_skills_folio_voice_v1_Rule *-- "0..*" cat_harness_who_iris_skills_folio_voice_v1_Terminology : terminology
+cat_harness_who_iris_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_who_iris_skills_folio_voice_v1_Rule : rules
+cat_harness_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_who_iris_skills_folio_voice_skill_v1_Source : sources
+cat_harness_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_who_iris_skills_folio_voice_skill_v1_Pattern : patterns
+cat_harness_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_who_iris_skills_folio_voice_skill_v1_Terminology : terminology
+cat_harness_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_who_iris_skills_folio_voice_skill_v1_Rule : rules
+cat_harness_large_datasets_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_large_datasets_schemas_folio_source_descriptor_v1_Identifier : identifiers
+cat_harness_detangle_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_detangle_schemas_folio_source_descriptor_v1_Identifier : identifiers
+cat_harness_bootstrap_tools_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_bootstrap_tools_schemas_folio_source_descriptor_v1_Identifier : identifiers
 @enduml

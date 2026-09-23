@@ -9,8 +9,30 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_schemas_schemas
-  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_schemas_cat_harness
+  class "JSON Schema draft-07" as cat_harness_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as cat_harness_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as cat_harness_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+    name [1] : string
+    authoritative [1] : boolean
+    example [0..1] : string
+    note [0..1] : string
+  }
+  class "folio-source-descriptor/v1" as cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+    $schema [1] : 'folio-source-descriptor/v1'
+    id [1] : string
+    title [1] : string
+    system [0..1] : string
+    baseUrl [0..1] : string<uri>
+    nodeKind [1] : string
+    subsetStrategies [1..*] : list<container | identifier | facet | range | closure>
+    subsetIsSelfContained [1] : boolean
+    enumeration [1] : object
+    termsUrl [0..1] : string<uri>
+    character [1] : object
+  }
 }
 
+cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_schemas_folio_source_descriptor_v1_Identifier : identifiers
 @enduml

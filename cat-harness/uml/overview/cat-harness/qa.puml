@@ -72,6 +72,18 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
   }
   class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> {
   }
+  class "folio-detangle-sidecar/v1" as cat_harness_qa_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> {
+    $schema [1] : 'folio-detangle-sidecar/v1'
+    group [1] : string
+    size [1] : number
+    internal [1] : number
+    inbound [1] : number
+    outbound [1] : number
+    cohesion [1] : number
+    enforcedBoundary [1] : number
+    recordedBoundary [1] : number
+    proseMentions [1] : number
+  }
 }
 
 @enduml

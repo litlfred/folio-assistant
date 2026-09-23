@@ -1,9 +1,19 @@
 classDiagram
   direction TB
   namespace who_iris__library {
-    class n_who_iris_library_library["library: no node schema"] {
-      <<could not determine>>
+    class who_iris_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
+      <<json: ImagesSidecarSchema>>
+      $schema [1] 'folio-document-images/v1'
+      doc_id [1] string
+      images [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class who_iris_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
+      <<ts: VerdictFile>>
+      inspected_by [1] unknown
+      inspected_at [1] string
+      verdicts [1] Record~string, Record~string, Verdict~~
     }
   }
-  cssClass "n_who_iris_library_library" fa_uml_kind_library
-  cssClass "n_who_iris_library_library" fa_uml_undetermined
+  cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_image_verdicts_v1" fa_uml_kind_library

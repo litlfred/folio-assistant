@@ -9,7 +9,15 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap-tools/bootstrap-tools-schemas" as pkg_bootstrap_tools_bootstrap_tools_schemas <<schemas>> {
-  note "schemas: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_tools_bootstrap_tools_schemas_schemas
+  class "JSON Schema draft-07" as bootstrap_tools_bootstrap_tools_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> {
+  }
+  class "JSON Schema 2020-12" as bootstrap_tools_bootstrap_tools_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> {
+  }
+  class "Identifier" as bootstrap_tools_bootstrap_tools_schemas_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> {
+  }
+  class "folio-source-descriptor/v1" as bootstrap_tools_bootstrap_tools_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> {
+  }
 }
 
+bootstrap_tools_bootstrap_tools_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" bootstrap_tools_bootstrap_tools_schemas_folio_source_descriptor_v1_Identifier : identifiers
 @enduml

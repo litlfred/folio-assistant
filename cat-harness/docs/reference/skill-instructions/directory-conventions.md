@@ -842,8 +842,34 @@ the tag is the key. The three reference forms record three different facts:
 - **`shape`**: a TypeScript interface, `module#Name`. Its fields can be read from
   source (`readShape` in `schemas/kind-validator.ts`), but nothing can check a
   node against it.
-- **`writtenBy`**: nothing types the family. Name the module that writes it, so
-  the gap is recorded as data rather than left out.
+- **`writtenBy`**: nothing types the family. Name the module that writes it
+  (or, for an authored file, the one that consumes it), so the gap is recorded
+  as data rather than left out.
+- **`external`**: the node conforms to a specification nobody here types, such
+  as a JSON Schema document (`https://json-schema.org/draft/2020-12/schema`).
+  This is named rather than restated, and it is not a gap.
+
+**A reference may name the harness that owns the module**:
+`folio-assistant-core:schemas/catalogue.ts#CatalogueSchema`. It resolves through
+the instance that declares that name, never through `../`. An escaping path is
+still refused, because it resolves into whatever checkout sits next door. This
+is how a harness kind whose node shapes live in core (`catalogue`, `uploads`,
+`external-schema`) says so honestly.
+
+**Top-level `_` keys are annotations** (`_comment`, `_note`). The sweep drops
+them before parsing, as every loader here already does.
+
+**The kinds still without a node schema, and why**, are recorded here so the
+next agent does not re-open them:
+
+- `code`: its nodes are TypeScript source, so the language is the schema.
+- `methodology`: its nodes are Markdown prose.
+- `folio`: core's renderable kind. Its block manifests are typed by the
+  content adapters, not by the registry.
+- `bean-defs`: Markdown in the third-party `beans` CLI's layout. That CLI's own
+  GraphQL `type Bean` is drawn in `uml/harness-object-model.puml`.
+- `cat-harness`: on a directory beside another kind it is the umbrella, not a
+  node kind.
 
 **Declaring `nodeSchemas` claims the map is COMPLETE.** `check:kind-validators`
 routes every JSON node in the kind's declared directories by its tag. It fails

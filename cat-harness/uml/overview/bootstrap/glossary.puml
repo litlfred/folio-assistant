@@ -9,7 +9,11 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/glossary" as pkg_bootstrap_glossary <<glossary>> {
-  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_glossary_glossary
+  class "folio-glossary-ledger/v1" as bootstrap_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> {
+    $schema [1] : string
+    instance [1] : string
+    concepts [1] : Record<string, LedgerEntry>
+  }
 }
 
 @enduml

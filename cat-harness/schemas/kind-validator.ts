@@ -46,12 +46,29 @@ import { isAbsolute, join, resolve } from "node:path";
 import type { z } from "zod";
 import ts from "typescript";
 
-import { defaultGraphKinds, resolveGraphKind, type GraphKindRegistry } from "./cat-harness.js";
+import {
+  defaultGraphKinds,
+  instanceRootsIn,
+  readDeclaration,
+  repoRootFor,
+  resolveGraphKind,
+  type GraphKindRegistry,
+} from "./cat-harness.js";
 import type { NodeSchemaRef } from "./graph-kind-registry.js";
 
 /** A validator reference, split from its `module#Export` form. */
 export interface ValidatorRef {
-  /** Instance-relative module path. */
+  /**
+   * The instance the module belongs to, by its DECLARED NAME, when that is not
+   * the instance resolving the reference: `folio-assistant-core:schemas/x.ts#X`.
+   *
+   * By name rather than by a `../` path, because a relative path resolves into
+   * whatever checkout sits next door, and a name resolves only to the instance
+   * that declares it. Bean `quda`: a harness kind whose node shapes live in
+   * core (`catalogue`, `uploads`) had no honest way to say so.
+   */
+  instance?: string;
+  /** Module path, relative to {@link ValidatorRef.instance}'s root, or to the resolving one. */
   module: string;
   /** The exported symbol — required; see §"`module#Export`". */
   exportName: string;
@@ -81,8 +98,11 @@ export function parseValidatorRef(ref: string): ValidatorRef {
         `validating whichever export came first.`,
     );
   }
-  const module = ref.slice(0, hash).trim();
+  let module = ref.slice(0, hash).trim();
   const exportName = ref.slice(hash + 1).trim();
+  const qualified = /^([a-z][a-z0-9-]*):(.+)$/.exec(module);
+  const instance = qualified?.[1];
+  if (qualified) module = qualified[2];
   if (!module || !exportName) {
     throw new ValidatorRefError(`validator ${JSON.stringify(ref)} is not "module#Export".`);
   }
@@ -92,7 +112,7 @@ export function parseValidatorRef(ref: string): ValidatorRef {
         `or escaping path resolves into whatever checkout happens to be next door.`,
     );
   }
-  return { module, exportName };
+  return instance ? { instance, module, exportName } : { module, exportName };
 }
 
 /** Is this object a Zod schema — i.e. can a caller actually run it? */
@@ -155,7 +175,11 @@ async function loadValidator(
     };
   }
 
-  const abs = resolve(join(instanceRoot, ref.module));
+  const base = rootOf(ref.instance, instanceRoot);
+  if (base === undefined) {
+    return { state: "unresolvable", kind: canonical, ref, reason: `no instance declares the name ${ref.instance}` };
+  }
+  const abs = resolve(join(base, ref.module));
   if (!existsSync(abs)) {
     return {
       state: "unresolvable",
@@ -200,6 +224,57 @@ async function loadValidator(
   return { state: "resolved", ref, schema: exported };
 }
 
+// ── Annotations ───────────────────────────────────────────────────────────
+
+/**
+ * A node with its top-level `_`-prefixed keys removed — `_comment`, `_note`.
+ *
+ * The corpus annotates JSON with them everywhere, and every loader already
+ * drops them before parsing (`check-catalogue.ts` does it inline). A sweep
+ * that did not would fail strict schemas on a comment, and teach nothing.
+ */
+export function stripAnnotations(node: unknown): unknown {
+  if (node === null || typeof node !== "object" || Array.isArray(node)) return node;
+  return Object.fromEntries(Object.entries(node as Record<string, unknown>).filter(([k]) => !k.startsWith("_")));
+}
+
+// ── Instance-qualified references (bean `quda`) ──────────────────────────
+
+const rootsByName = new Map<string, Map<string, string>>();
+
+/**
+ * The root a reference resolves against: the named instance's, or the
+ * resolving instance's own when the reference names none. `undefined` when
+ * no instance in the checkout declares that name.
+ */
+export function rootOf(instance: string | undefined, instanceRoot: string): string | undefined {
+  if (instance === undefined) return instanceRoot;
+  const repo = repoRootFor(instanceRoot);
+  let byName = rootsByName.get(repo);
+  if (!byName) {
+    byName = new Map();
+    for (const root of instanceRootsIn(repo)) {
+      try {
+        const name = readDeclaration(root)?.name;
+        if (name) byName.set(name, root);
+      } catch {
+        // an unreadable declaration names nothing
+      }
+    }
+    rootsByName.set(repo, byName);
+  }
+  if (readDeclarationName(instanceRoot) === instance) return instanceRoot;
+  return byName.get(instance);
+}
+
+function readDeclarationName(root: string): string | undefined {
+  try {
+    return readDeclaration(root)?.name;
+  } catch {
+    return undefined;
+  }
+}
+
 // ── Per-family node schemas (bean `rdkm`) ────────────────────────────────
 
 /** One field of a TypeScript shape, read from source — never executed. */
@@ -219,6 +294,7 @@ export type NodeSchemaResolution =
   | { tag: string; state: "resolved"; ref: ValidatorRef; schema: z.ZodTypeAny }
   | { tag: string; state: "shape"; ref: ValidatorRef; fields: ShapeField[] }
   | { tag: string; state: "untyped"; writtenBy: string }
+  | { tag: string; state: "external"; spec: string }
   | { tag: string; state: "unresolvable"; reason: string };
 
 /**
@@ -235,8 +311,10 @@ export function readShape(instanceRoot: string, shape: string): { ref: Validator
   } catch (e) {
     return e instanceof Error ? e.message : String(e);
   }
-  const abs = resolve(join(instanceRoot, ref.module));
-  if (!existsSync(abs)) return `${ref.module} does not exist under the instance root ${instanceRoot}`;
+  const base = rootOf(ref.instance, instanceRoot);
+  if (base === undefined) return `no instance declares the name ${ref.instance}`;
+  const abs = resolve(join(base, ref.module));
+  if (!existsSync(abs)) return `${ref.module} does not exist under the instance root ${base}`;
   const src = ts.createSourceFile(abs, readFileSync(abs, "utf8"), ts.ScriptTarget.Latest, true);
   let members: ts.NodeArray<ts.TypeElement> | undefined;
   src.forEachChild((n) => {
@@ -281,11 +359,16 @@ export async function resolveNodeSchemas(
     } else if (ref.shape) {
       const r = readShape(instanceRoot, ref.shape);
       out.push(typeof r === "string" ? { tag, state: "unresolvable", reason: r } : { tag, state: "shape", ...r });
+    } else if (ref.external) {
+      out.push({ tag, state: "external", spec: ref.external });
     } else if (ref.writtenBy) {
+      const q = /^([a-z][a-z0-9-]*):(.+)$/.exec(ref.writtenBy);
+      const base = rootOf(q?.[1], instanceRoot);
+      const at = base === undefined ? undefined : resolve(join(base, q ? q[2] : ref.writtenBy));
       out.push(
-        existsSync(resolve(join(instanceRoot, ref.writtenBy)))
+        at !== undefined && existsSync(at)
           ? { tag, state: "untyped", writtenBy: ref.writtenBy }
-          : { tag, state: "unresolvable", reason: `${ref.writtenBy} does not exist under ${instanceRoot}` },
+          : { tag, state: "unresolvable", reason: `${ref.writtenBy} does not resolve from ${instanceRoot}` },
       );
     }
   }

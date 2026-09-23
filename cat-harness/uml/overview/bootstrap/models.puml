@@ -9,7 +9,19 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/models" as pkg_bootstrap_models <<models>> {
-  note "models: no node schema declared\n(no validator registered: could not determine)" as n_bootstrap_models_models
+  class "Model" as bootstrap_models_Model <<json: ModelRegistrySchema>> {
+    id [1] : string
+    title [1] : string
+    preferredLanguages [0..*] : string[]
+    validation [1] : unverified | self-reported | human-validated
+    validatedBy [0..1] : string
+    validatedOn [0..1] : string
+    note [0..1] : string
+  }
+  class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> {
+    $schema [1] : 'folio-model-registry/v1'
+  }
 }
 
+bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
 @enduml

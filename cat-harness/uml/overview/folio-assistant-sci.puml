@@ -9,7 +9,10 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-sci/library" as pkg_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_sci_library_library
+  class "folio-document-images/v1" as folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> {
+  }
+  class "folio-image-verdicts/v1" as folio_assistant_sci_library_folio_image_verdicts_v1 <<ts: VerdictFile>> {
+  }
 }
 package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>> {
   class "Source" as folio_assistant_sci_voices_Source <<json: VoiceProfileSchema>> {

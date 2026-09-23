@@ -9,7 +9,28 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "fhir-harness/fhir-ig-skills" as pkg_fhir_harness_fhir_ig_skills <<skills>> {
-  note "skills: no node schema declared\n(no validator registered: could not determine)" as n_fhir_harness_fhir_ig_skills_skills
+  class "Source" as fhir_harness_fhir_ig_skills_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
+  }
+  class "Pattern" as fhir_harness_fhir_ig_skills_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
+  }
+  class "Terminology" as fhir_harness_fhir_ig_skills_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
+  }
+  class "Rule" as fhir_harness_fhir_ig_skills_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
+  }
+  class "folio-voice/v1" as fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
+  }
+  class "Source" as fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
+  }
+  class "Pattern" as fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
+  }
+  class "Terminology" as fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
+  }
+  class "Rule" as fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
+  }
+  class "folio-voice-skill/v1" as fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
+  }
+  class "kg-qa-manifest/v1" as fhir_harness_fhir_ig_skills_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
+  }
 }
 package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>> {
   class "Maintain" as fhir_harness_fhir_ig_tools_Maintain <<json: ToolDefinitionSchema>> {
@@ -18,5 +39,13 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
   }
 }
 
+fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Source : sources
+fhir_harness_fhir_ig_skills_folio_voice_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Pattern : patterns
+fhir_harness_fhir_ig_skills_folio_voice_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Terminology : terminology
+fhir_harness_fhir_ig_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_v1_Rule : rules
+fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Source : sources
+fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Pattern : patterns
+fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule *-- "0..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Terminology : terminology
+fhir_harness_fhir_ig_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" fhir_harness_fhir_ig_skills_folio_voice_skill_v1_Rule : rules
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
 @enduml

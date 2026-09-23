@@ -9,7 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/todos" as pkg_cat_harness_todos <<todos>> {
-  note "todos: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_todos_todos
+  class "folio-board/v1" as cat_harness_todos_folio_board_v1_folio_board_v1 <<json: BoardSchema>> {
+    $schema [1] : 'folio-board/v1'
+    id [1] : string
+    title [1] : string
+    filter [0..1] : object
+  }
 }
 
 @enduml
