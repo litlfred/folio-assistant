@@ -87,6 +87,25 @@ colour onto each class, read from that stylesheet by `scripts/uml-palette.ts`,
 because PlantUML's SVG has no CSS hooks and ELK drops package colours. To
 recolour a kind, edit `uml.css`, never a diagram.
 
+## Portrait and landscape views
+
+Every figure is rendered twice, and the page has a **Portrait / Landscape**
+switch above it: radio buttons and CSS in `uml.css`, no script, with portrait
+as the default. Owner, 2026-09-23: "can we have portrait and landscape
+views?".
+
+- **The committed `.puml` is the portrait view.** The landscape view is
+  derived from it by `landscapeOf` in `gen-uml-overview.ts` and rendered to
+  `<name>.landscape.svg`. It is not committed as a second source, so the two
+  views cannot say different things.
+- **ELK ignores direction.** `left to right direction` and arrow hints left
+  its output byte-identical (measured). So landscape comes two ways:
+  - a grid of unconnected packages (an overview page) stays on ELK with more
+    columns. The `' grid:` comment line in the `.puml` names the packages;
+  - a diagram with edges between classes switches to Graphviz, left to
+    right, with orthogonal edges. Graphviz can route an edge across a box,
+    which is why ELK stays the portrait default.
+
 ## Regenerating
 
 ```sh
