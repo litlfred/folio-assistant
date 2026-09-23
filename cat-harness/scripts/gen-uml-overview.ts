@@ -45,7 +45,10 @@
  *
  * @module scripts/gen-uml-overview
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import type { z } from "zod";
 
@@ -54,6 +57,7 @@ import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
+import { schemasViewPuml } from "./gen-object-model-uml.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
@@ -66,9 +70,15 @@ const OWN = readDeclaration(HARNESS);
 if (!OWN) throw new Error(`${HARNESS} declares no instance — nothing to draw`);
 /** This instance's own site, where the pages are rendered. */
 const DOCS_ROOT = join(HARNESS, siteDir(OWN), "uml", "overview");
+/** The PlantUML renderings the pages show, beside the BPMN ones under assets/img/. */
+const SVG_ROOT = join(HARNESS, siteDir(OWN), "assets", "img", "uml", "overview");
+/** The schemas view, one level above the overviews in both trees. */
+const SCHEMAS_PUML = join(UML_ROOT, "..", "harness-schemas.puml");
 const REPO_URL = "https://github.com/litlfred/folio-assistant";
 const SITE_URL = OWN.canonicalUrl ?? "";
 const GENERATOR = relative(REPO, import.meta.path);
+/** The menu entry the harness pages sit under. */
+const NAV_PARENT = "UML overview";
 
 // ── The model ─────────────────────────────────────────────────────────────
 
@@ -377,6 +387,16 @@ function puml(name: string, pageUrl: string, sections: Section[], withAttrs: boo
   for (const s of sections) {
     for (const c of s.compositions) L.push(`${c.from} *-- "${c.mult}" ${c.to} : ${c.label}`);
   }
+  // A grid, not a strip. Sub-graphs share no edges, so ELK lays them all in
+  // one row (bootstrap: 3303 x 491). A hidden link from each package to the
+  // one a row below folds them into a near-square grid (1807 x 1210), which
+  // is the compact look the owner asked for, 2026-09-23: "more like the
+  // original one". Hidden, so it draws nothing and asserts no relation.
+  if (sections.length > 3) {
+    const pkgs = sections.map((s) => safeId(`pkg_${s.instance}_${s.id}`));
+    const cols = Math.ceil(Math.sqrt(pkgs.length));
+    for (let i = 0; i + cols < pkgs.length; i++) L.push(`${pkgs[i]} -[hidden]down- ${pkgs[i + cols]}`);
+  }
   L.push("@enduml");
   return L.join("\n") + "\n";
 }
@@ -430,15 +450,23 @@ function page(opts: {
   title: string;
   lead: string;
   sourceBase: string;
+  /** Site path of the PlantUML rendering, e.g. `/assets/img/uml/overview/bootstrap.svg`. */
+  svg: string;
   mermaid: string;
   sections: Section[];
   links?: { label: string; href: string }[];
+  /** A harness page sits in the menu under the index; a sub-graph page does not. */
+  inNav?: boolean;
 }): string {
   const blob = `${REPO_URL}/blob/main`;
   const L = [
     "---",
+    "layout: default",
     `title: "UML — ${opts.title}"`,
-    "nav_exclude: true",
+    // Menu: the index and one entry per harness. The ~85 sub-graph pages stay
+    // out of it and are reached from their harness page, because a menu that
+    // lists every sub-graph is a second index nobody can scan. Owner, 2026-09-23.
+    ...(opts.inNav ? [`parent: "${NAV_PARENT}"`] : ["nav_exclude: true"]),
     "---",
     "",
     `# UML — ${opts.title}`,
@@ -447,9 +475,13 @@ function page(opts: {
     "",
     `**Sources (same model):** [PlantUML](${blob}/${opts.sourceBase}.puml) · [Mermaid](${blob}/${opts.sourceBase}.mmd)`,
     "",
-    "```mermaid",
-    opts.mermaid.trimEnd(),
-    "```",
+    // The PlantUML rendering, in the same figure markup as the BPMN diagrams,
+    // so docs-ui.js gives it the same zoom and full-width controls. PlantUML
+    // with ELK is the compact layout; Mermaid's dagre drew the same model as
+    // a column three times taller. Owner, 2026-09-23.
+    `<figure class="bpmn-figure">`,
+    `  <img src="{{ '${opts.svg}' | relative_url }}" alt="UML class diagram of ${opts.title}: one package per named sub-graph, one class per node schema, with its data fields.">`,
+    "</figure>",
     "",
     "| sub-graph | directory | graph kinds | node schema |",
     "|---|---|---|---|",
@@ -463,6 +495,16 @@ function page(opts: {
     L.push("", "## Sub-graphs", "");
     for (const l of opts.links) L.push(`- [${l.label}](${l.href})`);
   }
+  L.push(
+    "",
+    "## The same model, drawn by Mermaid",
+    "",
+    "Kept so the page renders even where the PlantUML image is missing, and because Mermaid nodes carry the CSS class that colours them from `uml.css`.",
+    "",
+    "```mermaid",
+    opts.mermaid.trimEnd(),
+    "```",
+  );
   return L.join("\n") + "\n";
 }
 
@@ -479,6 +521,7 @@ async function build(): Promise<Map<string, string>> {
   instances.sort((a, b) => a.name.localeCompare(b.name));
 
   const umlRel = relative(REPO, UML_ROOT).replace(/\\/g, "/");
+  const svgSite = (base: string) => `/assets/img/uml/overview/${base}.svg`;
   for (const inst of instances) {
     const pageUrl = `${SITE_URL}/uml/overview/${inst.name}.html`;
     const overviewMmd = mmd(inst.sections, true);
@@ -490,9 +533,11 @@ async function build(): Promise<Map<string, string>> {
         title: inst.name,
         lead: `Every named sub-graph the \`${inst.name}\` harness declares, one box each, with the node schema kinds found in it.`,
         sourceBase: `${umlRel}/${inst.name}`,
+        svg: svgSite(inst.name),
         mermaid: overviewMmd,
         sections: inst.sections,
         links: inst.sections.map((s) => ({ label: `${s.instance}/${s.id}`, href: `${inst.name}/${s.id}.html` })),
+        inNav: true,
       }),
     );
     for (const s of inst.sections) {
@@ -506,6 +551,7 @@ async function build(): Promise<Map<string, string>> {
           title: `${s.instance}/${s.id}`,
           lead: `The \`${s.id}\` sub-graph of \`${inst.name}\` (\`${s.path}\`), with every attribute read from its node schema.`,
           sourceBase: `${umlRel}/${base}`,
+          svg: svgSite(base),
           mermaid: sectionMmd,
           sections: [s],
           links: [{ label: `← all of ${inst.name}`, href: `../${inst.name}.html` }],
@@ -513,13 +559,30 @@ async function build(): Promise<Map<string, string>> {
       );
     }
   }
+  files.set(SCHEMAS_PUML, schemasViewPuml(GENERATOR));
   const index = [
     "---",
-    'title: "UML overview"',
-    "nav_exclude: true",
+    "layout: default",
+    `title: "${NAV_PARENT}"`,
+    // After the numbered top-level pages (the highest is 14 today): a
+    // reference, not a first read.
+    "nav_order: 15",
+    "has_children: true",
     "---",
     "",
     "# UML overview",
+    "",
+    "## The harness schemas",
+    "",
+    "Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`.",
+    "",
+    `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model with Bean and Todo is [\`harness-object-model.puml\`](${REPO_URL}/blob/main/${relative(REPO, join(UML_ROOT, "..", "harness-object-model.puml"))}).`,
+    "",
+    `<figure class="bpmn-figure">`,
+    `  <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships.">`,
+    "</figure>",
+    "",
+    "## Per harness",
     "",
     `Generated by \`${GENERATOR}\` — do not edit. One diagram per harness and one per named sub-graph it declares. Classes are read from each graph kind's node schema; colours come from \`docs/assets/css/uml.css\`.`,
     "",
@@ -527,6 +590,87 @@ async function build(): Promise<Map<string, string>> {
   ];
   files.set(join(DOCS_ROOT, "index.md"), index.join("\n") + "\n");
   return files;
+}
+
+// ── PlantUML → SVG ────────────────────────────────────────────────────────
+//
+// The SVG is rendered from the `.puml` and STAMPED with that source's hash.
+// `--check` compares stamps and so needs no Java: font metrics differ between
+// machines, so comparing the SVG bytes would fail on a runner that renders the
+// same source a pixel differently, while a stamp says the one thing that
+// matters: this picture was drawn from the current source.
+
+const PLANTUML = {
+  version: "1.2024.7",
+  url: "https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar",
+  sha256: "cb42e3272fedecc0ed20ee0c9cef31873d1c42a489043971038631d357f467e6",
+};
+
+const sha256 = (text: string | Buffer) => createHash("sha256").update(text).digest("hex");
+const STAMP = /<!-- puml-sha256: ([0-9a-f]{64}) -->/;
+
+/** Where each `.puml` renders to: the same relative path under {@link SVG_ROOT}. */
+function svgFor(pumlPath: string): string {
+  return join(SVG_ROOT, "..", relative(join(UML_ROOT, ".."), pumlPath).replace(/\.puml$/, ".svg"));
+}
+
+function svgStamp(svgPath: string): string | null {
+  if (!existsSync(svgPath)) return null;
+  return STAMP.exec(readFileSync(svgPath, "utf8"))?.[1] ?? null;
+}
+
+/** The pinned PlantUML jar: `PLANTUML_JAR`, else a verified download into the user cache. */
+async function plantumlJar(): Promise<string | null> {
+  if (process.env.PLANTUML_JAR) return process.env.PLANTUML_JAR;
+  const jar = join(homedir(), ".cache", "folio-assistant", `plantuml-${PLANTUML.version}.jar`);
+  if (existsSync(jar)) return jar;
+  const res = await fetch(PLANTUML.url).catch(() => null);
+  if (!res?.ok) return null;
+  const bytes = Buffer.from(await res.arrayBuffer());
+  if (sha256(bytes) !== PLANTUML.sha256) throw new Error(`${PLANTUML.url}: sha256 mismatch, refusing to run it`);
+  mkdirSync(dirname(jar), { recursive: true });
+  writeFileSync(jar, bytes);
+  return jar;
+}
+
+/**
+ * Render every `.puml` whose SVG is missing or stamped from other source, in
+ * ONE JVM (a start per diagram costs ~1.5 s, and there are ~100). Each source
+ * is copied under a numbered name because PlantUML names its output after
+ * `@startuml <name>`, not after the file.
+ */
+async function renderSvgs(pumls: [string, string][]): Promise<{ rendered: number; skipped: string | null }> {
+  const todo = pumls.filter(([p, text]) => svgStamp(svgFor(p)) !== sha256(text));
+  if (todo.length === 0) return { rendered: 0, skipped: null };
+  if (spawnSync("java", ["-version"]).status !== 0) return { rendered: 0, skipped: "no java on PATH" };
+  const jar = await plantumlJar();
+  if (!jar) return { rendered: 0, skipped: `could not fetch ${PLANTUML.url}` };
+
+  const work = mkdtempSync(join(tmpdir(), "uml-svg-"));
+  try {
+    const inputs = todo.map(([, text], i) => {
+      const f = join(work, `u${i}.puml`);
+      writeFileSync(f, text.replace(/^@startuml .*$/m, `@startuml u${i}`));
+      return f;
+    });
+    const run = spawnSync("java", ["-jar", jar, "-charset", "UTF-8", "-tsvg", "-o", work, ...inputs], { encoding: "utf8" });
+    if (run.status !== 0) throw new Error(`PlantUML failed (${run.status}): ${run.stderr}`);
+    todo.forEach(([p, text], i) => {
+      const out = join(work, `u${i}.svg`);
+      if (!existsSync(out)) throw new Error(`PlantUML wrote nothing for ${relative(REPO, p)}`);
+      // After the root element's opening tag: a comment before an XML
+      // declaration is not well-formed, and docs-ui.js parses this file.
+      const svg = readFileSync(out, "utf8").replace(
+        /(<svg\b[^>]*>)/,
+        `$1<!-- GENERATED from ${relative(REPO, p)} by ${GENERATOR} (PlantUML ${PLANTUML.version}) --><!-- puml-sha256: ${sha256(text)} -->`,
+      );
+      mkdirSync(dirname(svgFor(p)), { recursive: true });
+      writeFileSync(svgFor(p), svg);
+    });
+    return { rendered: todo.length, skipped: null };
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
 }
 
 function walk(dir: string): string[] {
@@ -546,12 +690,15 @@ function walk(dir: string): string[] {
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
   const files = await build();
-  const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT)];
+  const pumls = [...files].filter(([p]) => p.endsWith(".puml"));
+  const svgs = new Set(pumls.map(([p]) => svgFor(p)));
+  const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT), ...walk(SVG_ROOT)];
   // Only this generator's own kinds of output count as orphans.
-  const orphans = existing.filter((p) => !files.has(p) && /\.(puml|mmd|md)$/.test(p));
+  const orphans = existing.filter((p) => !files.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
 
   if (check) {
     const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
+    for (const [p, text] of pumls) if (svgStamp(svgFor(p)) !== sha256(text)) stale.push(svgFor(p));
     if (stale.length || orphans.length) {
       for (const p of stale) console.error(`stale: ${relative(REPO, p)}`);
       for (const p of orphans) console.error(`orphan: ${relative(REPO, p)}`);
@@ -566,6 +713,13 @@ async function main(): Promise<void> {
       writeFileSync(p, text);
     }
     console.log(`wrote ${files.size} file(s) under ${relative(REPO, UML_ROOT)} and ${relative(REPO, DOCS_ROOT)}${orphans.length ? `; removed ${orphans.length} orphan(s)` : ""}`);
+    const r = await renderSvgs(pumls);
+    if (r.skipped) {
+      // Not a pass: the pages would show stale pictures, and --check says so.
+      console.error(`SVGs NOT rendered (${r.skipped}); set PLANTUML_JAR or install java, then re-run`);
+      process.exit(2);
+    }
+    console.log(`rendered ${r.rendered} SVG(s) under ${relative(REPO, SVG_ROOT)}`);
   }
 }
 

@@ -80,4 +80,6 @@ folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern 
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_tools
 @enduml
