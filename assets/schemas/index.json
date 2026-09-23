@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 15,
+      "count": 17,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -1150,6 +1150,23 @@
       "name": "detangle",
       "graphNode": "schema",
       "summary": "Detangling — is this candidate subgraph really a subgraph?",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/adjudication.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "adjudication.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The adjudication contract.",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "instance": "folio-assistant-core",
+      "name": "adjudication",
+      "graphNode": "schema",
+      "summary": "The adjudication contract — what a judgement is ASKED and what it ANSWERS.",
       "isTest": false
     },
     {
@@ -30623,6 +30640,268 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAsset",
+      "name": "AdjudicationAsset",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+      "name": "AdjudicationAssetSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "One thing the judge is shown.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable identifier — a bib-slug, a block id, a path."
+        },
+        {
+          "name": "state",
+          "type": "z.enum(MATERIALIZATION_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the bytes are, when they are anywhere. Required when"
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What it is, in a few words, so a reader of the record can follow it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "MATERIALIZATION_STATES"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcome",
+      "name": "AdjudicationOutcome",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema",
+      "name": "AdjudicationOutcomeSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "What a judge answers.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ADJUDICATION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "request",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The request this answers."
+        },
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The chosen code. Must be one of `codes`."
+        },
+        {
+          "name": "codes",
+          "type": "z.array(z.string().min(1)).min(2)",
+          "optional": false,
+          "array": true,
+          "doc": "The enum in force when this was judged."
+        },
+        {
+          "name": "reasoning",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why, as markdown. REQUIRED, and never empty."
+        },
+        {
+          "name": "by",
+          "type": "z .object({ id: z.string().min(1), kind: z.enum(ADJUDICATOR_KINDS), /** An `agent` judge must name its model, so a verd…",
+          "optional": false,
+          "array": false,
+          "doc": "Who judged, and of which kind. An outcome with no judge is"
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ADJUDICATION_SCHEMA_TAG",
+        "ADJUDICATOR_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequest",
+      "name": "AdjudicationRequest",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "name": "AdjudicationRequestSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "What a judge is given.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ADJUDICATION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id, so an outcome can point back at the exact question asked."
+        },
+        {
+          "name": "assets",
+          "type": "z.array(AdjudicationAssetSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Everything the judge is shown, and **nothing else is**."
+        },
+        {
+          "name": "prompt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The question, as markdown."
+        },
+        {
+          "name": "codes",
+          "type": "z.array(JudgementCodeSchema).min(2, \"a single permitted answer is assent, not a judgement\")",
+          "optional": false,
+          "array": true,
+          "doc": "The permitted answers — the owner's *\"list of judgement codes\"*."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+        "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ADJUDICATION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicatorKind",
+      "name": "AdjudicatorKind",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#JudgementCode",
+      "name": "JudgementCode",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema",
+      "name": "JudgementCodeSchema",
+      "module": "folio-assistant-core/schemas/adjudication.ts",
+      "kind": "zod-object",
+      "doc": "One answer the judge is allowed to give.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "means",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What choosing this code means. Required — see the type docstring."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/catalogue.ts#Bitstream",
       "name": "Bitstream",
       "module": "folio-assistant-core/schemas/catalogue.ts",
@@ -38264,6 +38543,22 @@
       "from": "detangle/schemas/detangle.ts#DetangleMetrics",
       "to": "detangle/schemas/detangle.ts#DetangleEdge",
       "via": "worklist",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "to": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",
+      "to": "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema",
+      "via": "codes",
       "kind": "field",
       "optional": false,
       "array": true

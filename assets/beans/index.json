@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 565,
+      "count": 566,
       "unit": "beans"
     }
   },
@@ -1275,14 +1275,14 @@
     {
       "id": "folio-assistant-5vo9",
       "title": "ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T06:15:42Z",
-      "updatedAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T07:30:16Z",
       "preview": "Formalize 'use judgement' as a declared subprocess with a typed I/O contract, so a non-deterministic step is marked as one rather than left implicit. Owner's spec 2026-09-23. A CONCRETE INSTANCE ALREADY EXISTS (processes/adjudication.bpmn) — this generalises it rather than starting over.\n\n## The owner's specification, 2026-09-23, verbatim in substance\n\n> need formalized adjudication process so the",
       "file": "beans/defs/folio-assistant-5vo9--adjudication-as-a-typed-subprocess-one-judgement-c.md"
     },
@@ -2533,6 +2533,20 @@
       "updatedAt": "2026-09-21T22:20:00Z",
       "preview": "R19's second clause, open since #796 and reported as open in the design record\nrather than filled with a plausible sentence: *\"OR use theme/avatars as\nappropriate\"* — when is a thing on the folio a tile, and when its own avatar?\n\nFour options were put to the owner with their costs. They chose **declaration\nownership**.\n\n## The rule\n\n> **A tile is what the HARNESS declares. An avatar is what the FO",
       "file": "beans/defs/folio-assistant-augv--f7-settled-a-tile-is-what-the-harness-declares-an.md"
+    },
+    {
+      "id": "folio-assistant-ay3x",
+      "title": "VECTOR FIGURE ARM: render vector drawings, and the role threshold nobody may pick from this corpus",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2yyh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T07:19:35Z",
+      "updatedAt": "2026-09-23T07:19:35Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/877 — the deferred\nhalf of the owner's 2026-09-23 ruling on `m4xy`: **captions now, arm later.**\nThe caption half shipped in #1012.\n\n## What is deferred, and what is NOT\n\n**Deferred:** an arm that renders vector drawing groups to raster so a reader\ngets the figure itself rather than a description of it.\n\n**Not deferred, and already done:** ",
+      "file": "beans/defs/folio-assistant-ay3x--vector-figure-arm-render-vector-drawings-and-the-r.md"
     },
     {
       "id": "folio-assistant-b11x",
@@ -4243,14 +4257,14 @@
     {
       "id": "folio-assistant-jo87",
       "title": "QUEUED STREAM A: INGEST — uploads/ to a complete L1 library (slw1, 13 open beans)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:29:28Z",
-      "updatedAt": "2026-09-22T18:29:28Z",
+      "updatedAt": "2026-09-23T06:49:25Z",
       "preview": "## What this is\n\nA **queued** stream: not claimed, not started. The owner asked on 2026-09-22\nthat as one active stream ends, the next be launched rather than leaving an\nagent idle — this is one of three such queue entries covering the 49 beans the\nthree-GOAL split parked.\n\nStatus is `todo` **deliberately**. It becomes `in-progress` when a session is\nactually launched against it, because the whole",
       "file": "beans/defs/folio-assistant-jo87--queued-stream-a-ingest-uploads-to-a-complete-l1-li.md"
     },
