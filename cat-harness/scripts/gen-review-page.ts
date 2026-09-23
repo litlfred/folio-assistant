@@ -70,6 +70,22 @@
  * both themes, and every cell also shows its number, so colour never carries
  * meaning alone. Each row's header moves focus to that section in the list.
  *
+ * ## Finding your way: outline, breadcrumb, minimap (bean `eb4l`)
+ *
+ * A navigation pane sits beside the list, or above it on a narrow screen:
+ * - the **outline** of each document, in manifest order, from the preview's
+ *   `outline.json`, with word badges per section;
+ * - the **minimap**: one cell per block, a single tab stop, arrow keys to
+ *   move, Enter to jump.
+ *
+ * Moving to an item announces where it is (document, chapter, section,
+ * block) in the live status line. `n` and `p` jump to the next and previous
+ * block with open comments, each with a button twin. "Next unreviewed" is NOT
+ * offered: nothing records a review verdict yet (bean `en2d`), and a button
+ * that guessed would send a reviewer past blocks nobody has looked at. The
+ * pieces are `scripts/review-nav.ts`, embedded with `toString()`. The owner's
+ * ruling puts the outline here and nowhere else.
+ *
  * ## Accessibility is not a finish
  *
  * - Every change kind is a WORD, never a colour alone.
@@ -84,12 +100,25 @@
 import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
 import { cleanRendered, renderInline, renderSideBySide, renderWordDiff } from "./review-renderers.js";
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
+import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
 import { wordDiff } from "./word-diff.js";
 
 const STYLE = `
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #d8d8d4; }
   @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; } }
-  body { margin: 0 auto; max-width: 52rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  body { margin: 0 auto; max-width: 78rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  .layout { display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 2rem; align-items: start; }
+  .layout > aside { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; font-size: .95rem; }
+  @media (max-width: 62rem) { .layout { grid-template-columns: 1fr; } .layout > aside { position: static; max-height: none; } }
+  .outline ol { list-style: none; padding-left: .75rem; margin: .25rem 0; }
+  .outline > ol { padding-left: 0; }
+  .ol-doc { font-weight: 600; } .ol-ch { font-weight: 600; margin-top: .4rem; }
+  .outline li { border: 0; padding: .1rem 0; }
+  .badges { color: var(--muted); font-size: .9rem; }
+  .minimap ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+  .minimap li { border: 0; padding: 0; }
+  .minimap .cell { display: block; width: 100%; min-height: 1.4rem; padding: 0 .4rem; text-align: left; font-size: .8rem; line-height: 1.4rem; border: 1px solid var(--rule); border-radius: .2rem; }
+  .minimap .cell:focus-visible { outline: 3px solid var(--link); outline-offset: 1px; }
   a { color: var(--link); }
   a:focus-visible, button:focus-visible, li:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   .nav { display: flex; gap: .5rem; margin: 1rem 0; flex-wrap: wrap; align-items: center; }
@@ -160,15 +189,33 @@ const SCRIPT = `
     var words = { renamed: "renamed", prose: "reworded", manifest: "edited", moved: "moved" };
     return c.aspects.map(function (a) { return words[a] || a; });
   }
+  var OUTLINE = null;
   function focusItem(i) {
     if (!items.length) return;
     at = (i + items.length) % items.length;
     items[at].focus();
-    status.textContent = "Item " + (at + 1) + " of " + items.length;
+    // Where am I (eb4l): the breadcrumb goes into the one live region.
+    var sec = items[at].getAttribute("data-section");
+    var crumb = sec ? crumbFor(OUTLINE, sec) : null;
+    var label = items[at].getAttribute("data-label");
+    status.textContent = "Item " + (at + 1) + " of " + items.length + (crumb ? ": " + crumb : "") + (label ? " \u203a " + label : "");
+  }
+  // Next / previous item with open comments (eb4l), wrapping.
+  function focusCommented(step) {
+    var n = items.length;
+    // Before anything is focused, "next" starts at the top and "previous" at the bottom.
+    var start = at < 0 ? (step > 0 ? -1 : 0) : at;
+    for (var k = 1; k <= n; k++) {
+      var j = (((start + step * k) % n) + n) % n;
+      if (Number(items[j].getAttribute("data-open") || 0) > 0) { focusItem(j); return; }
+    }
+    status.textContent = "No block has open comments.";
   }
 
   document.getElementById("next").addEventListener("click", function () { focusItem(at + 1); });
   document.getElementById("prev").addEventListener("click", function () { focusItem(at - 1); });
+  document.getElementById("nextc").addEventListener("click", function () { focusCommented(1); });
+  document.getElementById("prevc").addEventListener("click", function () { focusCommented(-1); });
   document.addEventListener("keydown", function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     // A letter typed into a selector picks an option; it is not navigation.
@@ -176,6 +223,8 @@ const SCRIPT = `
     if (tag === "SELECT" || tag === "INPUT" || tag === "TEXTAREA") return;
     if (e.key === "j") { focusItem(at + 1); e.preventDefault(); }
     else if (e.key === "k") { focusItem(at - 1); e.preventDefault(); }
+    else if (e.key === "n") { focusCommented(1); e.preventDefault(); }
+    else if (e.key === "p") { focusCommented(-1); e.preventDefault(); }
   });
 
   // One comment as a line of words: kind, status, who, what — never colour alone.
@@ -201,7 +250,14 @@ const SCRIPT = `
     if (key) h.setAttribute("data-section", key);
     list.appendChild(h);
     var ul = el("ul");
-    nodes.forEach(function (n) { var li = el("li"); li.tabIndex = -1; li.appendChild(n); ul.appendChild(li); items.push(li); });
+    nodes.forEach(function (n) {
+      var li = el("li");
+      li.tabIndex = -1;
+      ["data-label", "data-section", "data-open"].forEach(function (a) { if (n.getAttribute(a)) li.setAttribute(a, n.getAttribute(a)); });
+      li.appendChild(n);
+      ul.appendChild(li);
+      items.push(li);
+    });
     list.appendChild(ul);
   }
 
@@ -300,7 +356,9 @@ const SCRIPT = `
       get("../changeset-text.json").catch(function () { return null; }),
       get("../blocks.json").catch(function () { return null; }),
       get("../block-qa.json").catch(function () { return null; }),
+      get("../outline.json").catch(function () { return null; }),
     ]).then(function (both) {
+      OUTLINE = both[5];
       var blocksFile = both[3];
       var qaFile = both[4];
       var st = both[0];
@@ -343,6 +401,9 @@ const SCRIPT = `
         groups[where].forEach(function (c) {
           var li = el("li");
           li.tabIndex = -1;
+          li.setAttribute("data-label", c.label);
+          li.setAttribute("data-section", where);
+          li.setAttribute("data-open", String((byLabel[c.label] || []).filter(function (x) { return x.status === "open" || x.status === "addressed"; }).length));
           li.appendChild(el("span", kindWords(c).join(", "), "kind"));
           li.appendChild(el("span", c.label, "label"));
           if (c.from) li.appendChild(el("span", " (was " + c.from + ")", "muted"));
@@ -381,6 +442,10 @@ const SCRIPT = `
         Object.keys(byLabel).forEach(function (label) {
           if (shown[label]) return;
           var d = el("div");
+          d.setAttribute("data-label", label);
+          var bs = blocksFile && blocksFile[label] && blocksFile[label].section;
+          if (bs) d.setAttribute("data-section", bs);
+          d.setAttribute("data-open", String(byLabel[label].filter(function (x) { return x.status === "open" || x.status === "addressed"; }).length));
           d.appendChild(el("span", label, "label"));
           d.appendChild(commentList(byLabel[label]));
           elsewhere.push(d);
@@ -409,7 +474,35 @@ const SCRIPT = `
         }));
         wrap.appendChild(el("p", "Review coverage is not measured yet: it needs a per-block reviewer verdict, which nothing records until the review process does, and resolved comments are not approval. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
       }
-      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
+      // Navigation pane (eb4l): outline and minimap, when the build published an outline.
+      var navPane = document.getElementById("navpane");
+      function jumpSection(key) {
+        var t = list.querySelector('h2[data-section="' + (window.CSS && CSS.escape ? CSS.escape(key) : key) + '"]') ||
+          list.querySelector('h2[data-section="(unchanged)"]');
+        if (t) { t.focus(); t.scrollIntoView({ block: "start" }); }
+      }
+      if (OUTLINE && OUTLINE.documents) {
+        var rowBy = {};
+        heat.rows.forEach(function (r) { rowBy[r.section] = r; });
+        navPane.appendChild(renderOutline(document, OUTLINE, function (key) {
+          var r = rowBy[key];
+          return r ? { changed: r.changed, open: r.open, qaFailing: r.qaFailing } : null;
+        }, jumpSection));
+        var changeOf = {};
+        cs.changes.forEach(function (c) { if (c.change !== "removed") changeOf[c.label] = c.change === "added" ? "added" : "changed"; });
+        navPane.appendChild(renderMinimap(document, OUTLINE, function (label) {
+          var open = (byLabel[label] || []).filter(function (x) { return x.status === "open" || x.status === "addressed"; }).length;
+          var q = qaFile && qaFile.blocks ? qaFile.blocks[label] : null;
+          return { change: changeOf[label] || null, open: open, qaFailing: !!(q && q.state === "failing") };
+        }, function (label, page) {
+          for (var i = 0; i < items.length; i++) if (items[i].getAttribute("data-label") === label) { focusItem(i); items[i].scrollIntoView({ block: "center" }); return; }
+          // Nothing to review here: open the block where it is published.
+          window.location.href = "../" + page + "#" + encodeURIComponent(label);
+        }));
+      } else {
+        navPane.appendChild(el("p", "No outline on this build: the folio's build did not publish outline.json. Use Next and Previous.", "muted"));
+      }
+      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous, n or p for the next or previous with open comments.";
     });
   }).catch(function () {
     status.textContent =
@@ -430,6 +523,8 @@ export function reviewPageHtml(): string {
 <style>${STYLE}</style>
 </head>
 <body>
+<div class="layout">
+<aside id="navpane" aria-label="Navigation"></aside>
 <main>
 <h1>What changed</h1>
 <p id="summary" class="muted"></p>
@@ -437,12 +532,15 @@ export function reviewPageHtml(): string {
 <div class="nav">
   <button type="button" id="prev">Previous (k)</button>
   <button type="button" id="next">Next (j)</button>
+  <button type="button" id="prevc">Previous with comments (p)</button>
+  <button type="button" id="nextc">Next with comments (n)</button>
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
 <div id="heat" class="heatwrap"></div>
 <div id="changes"></div>
 </main>
+</div>
 <script>
 var RENDERERS = ${JSON.stringify(DIFF_RENDERERS).replace(/</g, "\\u003c")};
 var wordDiff = ${wordDiff.toString()};
@@ -453,6 +551,9 @@ var renderSideBySide = ${renderSideBySide.toString()};
 var computeHeat = ${computeHeat.toString()};
 var heatBucket = ${heatBucket.toString()};
 var renderHeat = ${renderHeat.toString()};
+var crumbFor = ${crumbFor.toString()};
+var renderOutline = ${renderOutline.toString()};
+var renderMinimap = ${renderMinimap.toString()};
 </script>
 <script>${SCRIPT}</script>
 </body>

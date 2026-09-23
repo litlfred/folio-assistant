@@ -349,6 +349,42 @@ When an author has made content changes on a feature branch:
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
 
+### Finding your way on the review page (bean `eb4l`)
+
+A 300-page review needs to know where it is, and to move in one key or one
+click. The review page has a navigation pane, beside the list on a wide
+screen and above it on a narrow one:
+
+- **Outline.** Each document's chapters and sections, in manifest order,
+  from the `outline.json` the folio's site build writes.
+  - A section with something to review is a button that moves focus to it,
+    with word badges ("2 changed, 1 comment, QA failing").
+  - Any other section links to its published page.
+  - By the owner's ruling it is **on the review page only**. The "no toc"
+    ruling for normal pages stands.
+- **Minimap.** One cell per block, in order. It is **one tab stop**: Up and
+  Down move, Home and End jump to either end, and Enter opens the block.
+  Each cell is labelled in words and marked with glyphs (Δ changed, + added,
+  ● open comments, ! QA failing), so colour is never the only signal.
+- **Where am I.** Every move announces "document › chapter › section ›
+  block" in the page's one live status line.
+
+**Keys, each with a visible button twin:**
+
+| key | button | goes to |
+|---|---|---|
+| `j` | Next | the next item |
+| `k` | Previous | the previous item |
+| `n` | Next with comments | the next block with open comments |
+| `p` | Previous with comments | the previous block with open comments |
+
+**"Next unreviewed" is deliberately absent.** Nothing records a review
+verdict yet (bean `en2d`), and a guess would skip blocks nobody has read.
+Typing into a selector is never navigation.
+
+**Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
+keyboard alone. It uses no mouse, no click and no hover.
+
 ### The review page, and choosing how to see a change
 
 A folio's preview carries `review/index.html`: every changed block, grouped by

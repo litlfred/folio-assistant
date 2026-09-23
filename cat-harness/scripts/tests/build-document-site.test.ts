@@ -9,7 +9,8 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from "node
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { buildDocumentSite, documentManifests } from "../build-document-site.js";
+import { buildDocumentSite, documentManifests, type Outline } from "../build-document-site.js";
+import { readPositions } from "../../../folio-assistant-core/schemas/changeset.js";
 import { initFolio } from "../init-folio.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "../../..");
@@ -41,6 +42,19 @@ describe("build-document-site", () => {
     expect(html).toContain('<a id="prose:overview"></a>');
     expect(html).toContain('<a id="chap:introduction"></a>');
     expect(readFileSync(join(out, "index.html"), "utf-8")).toContain('href="handbook/index.html"');
+  });
+
+  test("outline.json lists sections in manifest order, keyed exactly as the ChangeSet keys them (eb4l)", async () => {
+    const d = scaffold();
+    const out = join(d, "_site");
+    await buildDocumentSite(d, out);
+    const outline = JSON.parse(readFileSync(join(out, "outline.json"), "utf-8")) as Outline;
+    expect(outline.$schema).toBe("folio-outline/v1");
+    const sections = outline.documents.flatMap((doc) => doc.chapters.flatMap((c) => c.sections));
+    expect(sections.map((s) => s.blocks)).toEqual([["prose:overview"]]);
+    // The join the review page relies on: every section the ChangeSet can name is in the outline.
+    const csKeys = new Set([...readPositions(join(d, "folio")).values()].map((p) => p.section));
+    expect(new Set(sections.map((s) => s.key))).toEqual(csKeys);
   });
 
   test("a folio with no document is an error, not an empty site", async () => {
