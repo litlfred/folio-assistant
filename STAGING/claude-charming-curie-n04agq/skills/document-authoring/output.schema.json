@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/skills/document-authoring/output.schema.json",
+  "title": "Document Authoring Output",
+  "type": "object",
+  "required": [
+    "label",
+    "filesWritten",
+    "listedInSection"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "filesWritten": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Repo-relative paths written (.ts and .md)."
+    },
+    "listedInSection": {
+      "type": "boolean",
+      "description": "Whether the block root was added to a section's blocks[]. False means the block renders nowhere — the most common way authored work disappears."
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        },
+        "profileViolations": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/charming-curie-n04agq",
+    "sha": "2dc5ca149564795e2961359fea4945aa90b85651",
+    "pr": "1085/merge",
+    "run": "35861544942"
+  }
+}
