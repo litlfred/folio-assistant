@@ -13,7 +13,11 @@ import { describe, expect, test } from "bun:test";
 import {
   CsvwTableSchema,
   TabularCsvwSchema,
-  csvwOnly,
+  CSVW_CONTEXT,
+  CSVW_KEYS,
+  TABULAR_CSVW_FILENAME,
+  TABULAR_CSVW_SCHEMA_ID,
+  toCsvw,
   stubsIn,
 } from "../../schemas/tabular-csvw.ts";
 import { CONTENT_CONTEXT } from "../../schemas/jsonld.ts";
@@ -39,14 +43,48 @@ const table = (over: Record<string, unknown> = {}) => ({
 });
 
 describe("CSVW is annotated, never replaced", () => {
-  test("a CSVW-ONLY reader still gets a valid table — the whole reason to adopt a standard", () => {
-    // The single property that justifies annotating a standard instead of
-    // inventing a schema, so it is exercised rather than asserted in prose.
-    const bare = csvwOnly(CsvwTableSchema.parse(table()));
-    expect(Object.keys(bare)).toEqual(["url", "tableSchema"]);
-    expect(Object.keys(bare).some((k) => k.startsWith("fac:"))).toBe(false);
-    // And what remains is the part CSVW defines: url + tableSchema.columns.
-    expect((bare.tableSchema as { columns: unknown[] }).columns).toHaveLength(1);
+  test("a CSVW reader is handed a real CSVW document — context and all", () => {
+    // Bean `792y`. The helper this replaced stripped our keys and called the
+    // rest CSVW, but never added the context, so a CSVW parser would have
+    // rejected every document it produced. The context is what makes it CSVW.
+    const doc = TabularCsvwSchema.parse({ $schema: TABULAR_CSVW_SCHEMA_ID, doc_id: "d", tables: [table()] });
+    const csvw = toCsvw(doc);
+    expect(csvw["@context"]).toBe(CSVW_CONTEXT);
+    expect(CSVW_CONTEXT).toBe("http://www.w3.org/ns/csvw");
+    const tables = csvw.tables as { tableSchema: { columns: unknown[] } }[];
+    expect(tables).toHaveLength(1);
+    expect(tables[0]!.tableSchema.columns).toHaveLength(1);
+  });
+
+  test("…and it carries NO key of ours, at ANY level", () => {
+    // `csvwOnly` stripped `fac:` keys at the table level and left
+    // `datatypeSource` on every column. So the check walks the whole tree.
+    const doc = TabularCsvwSchema.parse({
+      $schema: TABULAR_CSVW_SCHEMA_ID,
+      doc_id: "d",
+      tables: [table(), table({ tableSchema: { columns: [] }, "fac:stub": { tool: "t", reason: "r", since: "2026-09-23" } })],
+    });
+    const seen: string[] = [];
+    const walk = (o: unknown): void => {
+      if (Array.isArray(o)) return void o.forEach(walk);
+      if (!o || typeof o !== "object") return;
+      for (const [k, v] of Object.entries(o)) {
+        seen.push(k);
+        walk(v);
+      }
+    };
+    walk(toCsvw(doc));
+    expect(seen.length).toBeGreaterThan(0); // not vacuous
+    expect(seen.filter((k) => !CSVW_KEYS.has(k))).toEqual([]);
+    expect(seen).not.toContain("datatypeSource");
+    expect(seen).not.toContain("$schema");
+  });
+
+  test("the record is plain JSON — its filename does not claim JSON-LD", () => {
+    // A `.jsonld` name invites a processor to read `fac:anchor` as a compact
+    // IRI in a URI scheme called `fac`. In a `.json` file it is only a name.
+    expect(TABULAR_CSVW_FILENAME).toBe("tabular.csvw.json");
+    expect(TABULAR_CSVW_FILENAME.endsWith(".jsonld")).toBe(false);
   });
 
   test("`csvw:` is in the published @context, beside the other eight", () => {
