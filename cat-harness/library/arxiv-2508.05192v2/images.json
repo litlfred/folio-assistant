@@ -1,0 +1,48 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "arxiv-2508.05192v2",
+  "images": [
+    {
+      "id": "img-p003-1",
+      "file": "images/img-p003-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "geometry",
+        "coverage": 0.044642,
+        "imagesOnPage": 2,
+        "page": 3
+      },
+      "narrative": {
+        "text": "Figure 1 \u2014 a JSON Schema rendered as a class diagram, generated from the natural-language prompt quoted beside it. Four boxes: `root` holding `experiments: object[]`; an `experiments entry` with `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` and `product_purity: boolean`; and TWO separate leaf definitions, `metalSalt` and `ligand`, each carrying an identical `name`/`mass`/`inchi` triple. That duplication is the point of the figure \u2014 it is what the next prompt asks to be removed.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p003-2",
+      "file": "images/img-p003-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "geometry",
+        "coverage": 0.045493,
+        "imagesOnPage": 2,
+        "page": 3
+      },
+      "narrative": {
+        "text": "Figure 2 \u2014 the same schema after a natural-language modification request. The two identical leaf definitions of Figure 1 have collapsed into ONE `compound` class carrying `name`/`mass`/`inchi`, and both `metal_salt` and `ligand` on the `experiments entry` now refer to it. The pair Fig. 1 \u2192 Fig. 2 is the paper's demonstration that a refactor can be requested in prose and applied to a validated model.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    }
+  ]
+}

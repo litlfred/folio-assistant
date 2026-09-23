@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2508.05192v2/blocks/figure-img-p003-1",
+  "@type": [
+    "folio:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p003-1.png",
+  "pageStart": 3,
+  "pageEnd": 3,
+  "narrative": {
+    "text": "Figure 1 — a JSON Schema rendered as a class diagram, generated from the natural-language prompt quoted beside it. Four boxes: `root` holding `experiments: object[]`; an `experiments entry` with `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` and `product_purity: boolean`; and TWO separate leaf definitions, `metalSalt` and `ligand`, each carrying an identical `name`/`mass`/`inchi` triple. That duplication is the point of the figure — it is what the next prompt asks to be removed.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude-code",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2508.05192v2/sections/sec-006",
+  "sourceDocument": "library/arxiv-2508.05192v2/manifest",
+  "provenance": "ingested"
+}

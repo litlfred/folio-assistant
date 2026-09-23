@@ -57,6 +57,9 @@ describe("the rule", () => {
     accountable: ["a-role"],
     consulted: [],
     informed: [],
+    supportive: [],
+    unknown: [],
+    vocabulary: "raci",
     ...over,
   });
 
@@ -132,6 +135,9 @@ describe("breaches carry the kind kg-audit partitions on", () => {
     accountable: ["a-role"],
     consulted: [],
     informed: [],
+    supportive: [],
+    unknown: [],
+    vocabulary: "raci",
     ...o,
   });
 
@@ -141,16 +147,18 @@ describe("breaches carry the kind kg-audit partitions on", () => {
       ...raciBreaches([row({ accountable: ["a-role", "b-role"] })], roles),
       ...raciBreaches([row({ informed: ["nope"] })], roles),
       ...raciBreaches([row({ consulted: ["a-role"] })], roles),
+      ...raciBreaches([row({ unknown: [{ role: "a-role", involvement: "supportive" }] })], roles),
     ];
-    expect(breaches.length, "the four shapes below produce no breaches — this is vacuous").toBe(4);
+    expect(breaches.length, "the five shapes below produce no breaches — this is vacuous").toBe(5);
 
     const registered = new Set(KG_CRITERIA.filter((c) => c.id.startsWith("raci-")).map((c) => c.id));
-    expect(registered.size, "kg-qa registers no raci criteria").toBe(3);
+    expect(registered.size, "kg-qa registers no raci criteria").toBe(4);
 
     const criterionFor: Record<RaciBreachKind, string> = {
       "accountable-count": "raci-single-accountable",
       "role-undeclared": "raci-role-resolves",
       "accountable-also-consulted": "raci-accountable-not-consulted",
+      "involvement-unknown": "raci-involvement-vocabulary",
     };
     for (const b of breaches) {
       expect(b.kind, `untagged breach: ${b.detail}`).toBeTruthy();
