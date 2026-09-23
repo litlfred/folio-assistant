@@ -1,0 +1,256 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2508.05192v2",
+ "source": {
+  "file": "neubauer-2025-ai-assisted-schema-creation.pdf",
+  "sha256": "13728ff160553b85006566c9a2312fd0ace858ec1e5a504eab35140170460e47",
+  "bytes": 313153,
+  "pages": 5,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-23T06:11:40Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2508.05192",
+   "version": "2",
+   "primary_class": "cs.SE",
+   "stamp_date": "16 Jan 2026"
+  },
+  "doi": null,
+  "title": "AI-assisted JSON Schema Creation and Mapping 1st Felix Neubauer , 3rd Benjamin Uekermann",
+  "authors_raw": "Institute for Parallel and Distributed Systems",
+  "title_lines": [
+   "AI-assisted JSON Schema Creation and Mapping",
+   "1st Felix Neubauer",
+   "3rd Benjamin Uekermann"
+  ],
+  "abstract": "Model-Driven Engineering (MDE) places models at the core of system and data engineering processes. In the context of research data, these models are typically expressed as schemas that define the structure and semantics of datasets. However, many domains still lack standardized models, and creating them remains a significant barrier, especially for non- experts. We present a hybrid approach that combines large language models (LLMs) with deterministic techniques to enable JSON Schema creation, modification, and schema mapping based on natural language inputs by the user. These capabilities are integrated into the open-source tool MetaConfigurator, which already provides visual model editing, validation, code gener- ation, and form generation from models. For data integration, we generate schema mappings from heterogeneous JSON, CSV, XML, and YAML data using LLMs, while ensuring scalability and reliability through deterministic execution of generated mapping rules. The applicability of our work is demonstrated in an application example in the field of chemistry. By combining natural language interaction with deterministic safeguards, this work significantly lowers the barrier to structured data modeling and data integration for non-experts. Index Terms\u2014rdm, research data management, mde, model driven engineering, json, yaml, configuration, schema, data, model, editor, gui, tool, ai, llm, mapping, matching I. INTRODUCTION Model-Driven Engineering (MDE) emphasizes the central role of models in the design, development, and operation of systems [1]. In the context of research data management [2]\u2013 [4], models are typically expressed as schemas, which define the structure and semantics of datasets. These models enable key functionalities such as instance validation, transformation, code generation, and visualization, and are essential for ensur- ing data quality, interoperability, and reusability. Despite their importance, many scientific domains still lack standardized da",
+  "docinfo": {
+   "Title": "AI-assisted JSON Schema Creation and Mapping",
+   "Author": "Felix Neubauer; J\u00fcrgen Pleiss; Benjamin Uekermann",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:57610bf)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Background and Related Work",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "JSON and JSON Schema",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "JSON Schema Creation",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Schema Matching and Mapping",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Large Language Models (LLMs) and Prompt Engineering",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Design and Implementation",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "AI-assisted JSON Schema Creation",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "AI-assisted Schema Matching and Mapping",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Application Example",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-000-json-schema-creation",
+   "number": null,
+   "title": "JSON Schema Creation",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1800,
+   "n_words": 233
+  },
+  {
+   "id": "sec-001-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 3261,
+   "n_words": 432
+  },
+  {
+   "id": "sec-002-background-and-related-work",
+   "number": null,
+   "title": "Background and Related Work",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 243,
+   "n_words": 27
+  },
+  {
+   "id": "sec-003-json-and-json-schema",
+   "number": null,
+   "title": "JSON and JSON Schema",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 2354,
+   "n_words": 360
+  },
+  {
+   "id": "sec-004-schema-matching-and-mapping",
+   "number": null,
+   "title": "Schema Matching and Mapping",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1710,
+   "n_words": 238
+  },
+  {
+   "id": "sec-005-large-language-models-llms-and-prompt-engineerin",
+   "number": null,
+   "title": "Large Language Models (LLMs) and Prompt Engineering",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 945,
+   "n_words": 142
+  },
+  {
+   "id": "sec-006-design-and-implementation",
+   "number": null,
+   "title": "Design and Implementation",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 1050,
+   "n_words": 144
+  },
+  {
+   "id": "sec-007-ai-assisted-json-schema-creation",
+   "number": null,
+   "title": "AI-assisted JSON Schema Creation",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1938,
+   "n_words": 280
+  },
+  {
+   "id": "sec-008-ai-assisted-schema-matching-and-mapping",
+   "number": null,
+   "title": "AI-assisted Schema Matching and Mapping",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 4208,
+   "n_words": 651
+  },
+  {
+   "id": "sec-009-application-example",
+   "number": null,
+   "title": "Application Example",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 3100,
+   "n_words": 469
+  },
+  {
+   "id": "sec-010-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 1527,
+   "n_words": 189
+  },
+  {
+   "id": "sec-011-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 7506,
+   "n_words": 1117
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 12,
+  "toc_inferred_entries": 0,
+  "sections": 12,
+  "chars_total": 29642
+ }
+}

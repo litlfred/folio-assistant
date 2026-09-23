@@ -9,7 +9,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { BLOCK_HEADING, inspect, scan } from "../check-bean-blocks.ts";
+import { BLOCK_HEADING, BASELINE_FILE, inspect, scan } from "../check-bean-blocks.ts";
 import { readBeans, type BeanNode } from "../beans.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
 import "../../schemas/folio-graph-kind.js";
@@ -101,8 +101,26 @@ describe("the real corpus", () => {
     expect(found.filter((b) => b.verdict === "ok").length).toBeGreaterThan(0);
   });
 
-  test("every structured block in the store is complete", () => {
-    expect(found.filter((b) => b.verdict === "incomplete")).toEqual([]);
+  test("every structured block in the store is complete, or baselined by id", () => {
+    /* NOT `toEqual([])`. This asserted an empty set against a LIVE corpus, so
+     * it was a test of the store rather than of the check — and the store is
+     * written by other sessions. It went red the first time a bean declaring a
+     * block landed on `main` from somewhere else, which is `10uc` and `w0cr`,
+     * the stream 2 and stream 3 claims (issue #956).
+     *
+     * What the gate promises is that the count cannot GROW, so that is what is
+     * asserted: anything incomplete is named in the baseline. The baseline is
+     * read here rather than restated, so the two cannot drift, and it can only
+     * shrink — `check-bean-blocks.ts` fails a baseline entry that matches
+     * nothing. */
+    const baseline = new Set(
+      (JSON.parse(readFileSync(join(REPO, BASELINE_FILE), "utf-8")) as { outstanding: string[] })
+        .outstanding,
+    );
+    const unbaselined = found
+      .filter((b) => b.verdict === "incomplete")
+      .filter((b) => !baseline.has(`${b.verdict}:${b.id}`));
+    expect(unbaselined).toEqual([]);
   });
 
   test("...and every complete one names a REVIEW date, not a takeover date", () => {

@@ -1,0 +1,117 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Business Process Workflow (DAK) API",
+    "description": "Logical Model for representing Generic Business Processes and Workflows from a DAK. A business process is a set of related activities or tasks performed together to achieve the objectives of the health programme area.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-BusinessProcessWorkflow.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-BusinessProcessWorkflow",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-BusinessProcessWorkflow.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-BusinessProcessWorkflow",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-BusinessProcessWorkflow.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-BusinessProcessWorkflow": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-BusinessProcessWorkflow.schema.json",
+        "title": "Business Process Workflow (DAK)",
+        "description": "Logical Model for representing Generic Business Processes and Workflows from a DAK. A business process is a set of related activities or tasks performed together to achieve the objectives of the health programme area.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "BusinessProcessWorkflow",
+            "description": "Resource type identifier for BusinessProcessWorkflow logical model"
+          },
+          "id": {
+            "type": "object",
+            "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+          },
+          "description[x]": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "description": "Description of the business process - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+          },
+          "source": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to a BPMN file containing the workflow definition. Source URI could be absolute or relative to the root of the DAK"
+          },
+          "scenario": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "References to user scenario IDs related to this workflow"
+          },
+          "objectives": {
+            "type": "string",
+            "description": "Description of the objectives of the workflow"
+          },
+          "task": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR BackboneElement"
+            },
+            "description": "Tasks within the business process workflow"
+          },
+          "modifierExtension": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR Extension"
+            },
+            "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+          },
+          "identifier": {
+            "type": "string",
+            "description": "Identifier for the task"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the task"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what the task involves"
+          }
+        },
+        "required": [
+          "resourceType",
+          "id",
+          "source",
+          "objectives",
+          "identifier",
+          "name",
+          "description"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/BusinessProcessWorkflow",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}

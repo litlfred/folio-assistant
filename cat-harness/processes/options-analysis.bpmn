@@ -24,6 +24,7 @@ WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-of
         <bpmn:flowNodeRef>A_Frame</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Trigger</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Select</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_CheckEvidence</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Apply</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Record</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Process_OptionsAnalysis</bpmn:flowNodeRef>
@@ -50,6 +51,18 @@ by context">
 The declared set is the contents of the `methodology` graph. Ask for it; do not remember it.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
+    <bpmn:task id="A_CheckEvidence" name="Check the selected&#10;methodology&apos;s evidence base">
+      <bpmn:documentation>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else&apos;s named, external work; this step checks that the `origin` it cites resolves to a source in a declared library, and reads the `methodology-evidence` QA sidecar for it.
+
+WHY THE CHECK IS HERE AND NOT AT ADOPTION. Adoption happens once; selection happens every time a decision is made. A source that was reachable when the methodology was adopted can stop being so, and a methodology adopted before this axis existed was never checked at all. Measured 2026-09-22: six methodologies cited an origin and NONE had that source in any library, so every selection made until then rested on an unverifiable citation.
+
+WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, and this step has no branch that stops the process — that would make a documentation gap into an outage, and the owner decides whether an unbacked methodology may still be used. It does two things: it runs `literature-search` to try to close the gap, and it puts the evidence state into the record `A_Record` writes, so a reader can tell a decision made on a verified method from one made on a citation nobody could follow.
+
+The third state is the one that matters. &quot;Source ingested&quot;, &quot;source located but unreachable from here&quot; and &quot;no source found&quot; are three different facts, and `literature-search` exists largely to stop the middle one being reported as the last.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="literature-search"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="A_Apply" name="Apply it, and state
 each option's trade-offs">
       <bpmn:documentation>Follow the selected methodology as written — adopted whole, not blended with another. At least two real options: one option is not a choice, and a straw option is worse than a short list because it makes the analysis look thorough while narrowing it.
@@ -75,17 +88,18 @@ In a bean context the form is MADR's. Which methodology was followed is named he
     <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_2" sourceRef="A_Frame" targetRef="GW_Trigger"/>
     <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_2b" name="yes" sourceRef="GW_Trigger" targetRef="A_Select"/>
     <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_2c" name="no" sourceRef="GW_Trigger" targetRef="End_TriggerNotMet"/>
-    <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_3" sourceRef="A_Select" targetRef="A_Apply"/>
+    <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_3" sourceRef="A_Select" targetRef="A_CheckEvidence"/>
+    <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_3b" sourceRef="A_CheckEvidence" targetRef="A_Apply"/>
     <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_4" sourceRef="A_Apply" targetRef="A_Record"/>
     <bpmn:sequenceFlow id="SF_Process_OptionsAnalysis_5" sourceRef="A_Record" targetRef="End_Process_OptionsAnalysis"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_OptionsAnalysis">
     <bpmndi:BPMNPlane id="Plane_Process_OptionsAnalysis" bpmnElement="Collaboration_Process_OptionsAnalysis">
       <bpmndi:BPMNShape id="Shape_Participant_Process_OptionsAnalysis" bpmnElement="Participant_Process_OptionsAnalysis" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="1020" height="200" />
+        <dc:Bounds x="160" y="80" width="1180" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_BusinessAnalyst" bpmnElement="Lane_BusinessAnalyst" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="990" height="200" />
+        <dc:Bounds x="190" y="80" width="1150" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Process_OptionsAnalysis" bpmnElement="Start_Process_OptionsAnalysis">
         <dc:Bounds x="232" y="162" width="36" height="36" />
@@ -102,14 +116,17 @@ In a bean context the form is MADR's. Which methodology was followed is named he
       <bpmndi:BPMNShape id="Shape_A_Select" bpmnElement="A_Select">
         <dc:Bounds x="560" y="140" width="120" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Apply" bpmnElement="A_Apply">
+      <bpmndi:BPMNShape id="Shape_A_CheckEvidence" bpmnElement="A_CheckEvidence">
         <dc:Bounds x="720" y="140" width="120" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_A_Record" bpmnElement="A_Record">
+      <bpmndi:BPMNShape id="Shape_A_Apply" bpmnElement="A_Apply">
         <dc:Bounds x="880" y="140" width="120" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Record" bpmnElement="A_Record">
+        <dc:Bounds x="1040" y="140" width="120" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Process_OptionsAnalysis" bpmnElement="End_Process_OptionsAnalysis">
-        <dc:Bounds x="1080" y="162" width="36" height="36" />
+        <dc:Bounds x="1240" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_1" bpmnElement="SF_Process_OptionsAnalysis_1">
         <di:waypoint x="268" y="180" /><di:waypoint x="320" y="180" />
@@ -126,11 +143,14 @@ In a bean context the form is MADR's. Which methodology was followed is named he
       <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_3" bpmnElement="SF_Process_OptionsAnalysis_3">
         <di:waypoint x="680" y="180" /><di:waypoint x="720" y="180" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_4" bpmnElement="SF_Process_OptionsAnalysis_4">
+      <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_3b" bpmnElement="SF_Process_OptionsAnalysis_3b">
         <di:waypoint x="840" y="180" /><di:waypoint x="880" y="180" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_4" bpmnElement="SF_Process_OptionsAnalysis_4">
+        <di:waypoint x="1000" y="180" /><di:waypoint x="1040" y="180" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_OptionsAnalysis_5" bpmnElement="SF_Process_OptionsAnalysis_5">
-        <di:waypoint x="1000" y="180" /><di:waypoint x="1080" y="180" />
+        <di:waypoint x="1160" y="180" /><di:waypoint x="1240" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

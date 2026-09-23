@@ -20,13 +20,16 @@
       "description": "What is here, what is only referenced, and how to tell."
     }
   ],
-  "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse \u2014 board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
+  "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse — board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
   "folioMount": {
-    "roots": ["library/", "docs/"],
+    "roots": [
+      "library/",
+      "docs/"
+    ],
     "exempt": [
       {
         "path": "uploads/",
-        "reason": "captured IRIS source \u2014 the artefact ingestion exists to preserve, not a page this repository authors"
+        "reason": "captured IRIS source — the artefact ingestion exists to preserve, not a page this repository authors"
       }
     ]
   },
@@ -81,6 +84,7 @@
         "uploads"
       ],
       "coverage": {
+        "_visualiser_comment": "SHARED WITH THE `library` ENTRY, AND THAT IS DELIBERATE — recorded 2026-09-23 (issue #1009) because it was not. The library viewer carries an uploads SECTION scoped to the same subject (`G.uploads.filter(inScope)` in `gen-library-viz.ts`), so one page answers both graphs for this instance and there is no `uploads/who-iris/` page to point at. An unavoidable duplicate is fine; an UNCHECKED one is not, which is the rule the sibling `catalogue` entry's own ref comment exists to satisfy. The visible cost of the silence: the harness rail shows `library` and `uploads` as two entries resolving to one URL, and nothing said why. If an `uploads/<instance>/` viewer is ever generated for who-iris — `folio-assistant` already has one — this should point at it instead.",
         "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "library-ingestion"
@@ -123,5 +127,23 @@
       },
       "description": "The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory IS mounted verbatim at `/docs/who-iris/` as well, and the two are different things: the mount is a byte-for-byte copy of the directory, this is an index OF it. The rail links here, which is what `visualiserHref` exists to make happen."
     }
-  ]
+  ],
+  "_icon_comment": "THE INSTANCE'S MARK, copied OUT of uploads/ rather than referenced there. `10s1`: a materialised copy of somebody else's artefact is read-only and the copy-out is step one — so `docs/assets/img/who-emblem.svg` is this instance's own asset, and the capture under `uploads/wpr-rdo-2020-003-eng/iris-capture/` stays untouched as the record of what was ingested. OWNER'S CHOICE, 2026-09-22, made against a stated alternative: this is the WHO emblem and wordmark, NOT the blue `iris.` wordmark the IRIS repository uses as its own brand. Swapping it is one `src` and one re-measured `avatarRegion`.",
+  "images": [
+    {
+      "id": "who-emblem",
+      "src": "docs/assets/img/who-emblem.svg",
+      "title": "WHO emblem",
+      "description": "The World Health Organization emblem — the rod of Asclepius over a globe in an olive-branch wreath — beside the words World Health Organization, in the organisation's blue (#0093D5). 580.8x178 as authored; declared 581x178 because the schema takes integers and the 0.2px is below anything the squareness check resolves.",
+      "width": 581,
+      "height": 178,
+      "avatarRegion": {
+        "x": 0,
+        "y": 0,
+        "w": 0.3064,
+        "h": 1
+      }
+    }
+  ],
+  "_icon_removed_comment": "NO `icon` ON PURPOSE. Owner, 2026-09-23: *\"no logo on who-iris icon (for now). just WHO blue\"* \u2014 reversing their 2026-09-22 choice of the WHO emblem, recorded above. The mark now comes from `schemas/avatars.ts`\u2019s `who-iris` entry: hue 199, measured from the #0093D5 this file already names, drawn as an open book rather than the emblem. THE IMAGE STAYS DECLARED and is still this instance\u2019s own asset; only the pointer is gone, so restoring the logo is one field. `for now` is the owner\u2019s word and is why nothing was deleted."
 }

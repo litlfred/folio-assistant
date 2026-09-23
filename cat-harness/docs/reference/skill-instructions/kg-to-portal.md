@@ -32,7 +32,7 @@ Owner, 2026-09-20:
 
 `PUBLICATION_HOSTS` in `schemas/cat-harness.ts` is `github-pages`,
 `local-server`, `jurisdiction-endpoint`, `none` — axis 3 of
-[`deployment-topologies`](../../../fsh-guts/proposals/deployment-topologies.md).
+[`deployment-topologies`](../../docs/proposals/deployment-topologies.md).
 Every value answers *what serves the rendering*. A CDN answers a different
 question: *what stands between the server and the reader*. jsDelivr in front of
 raw GitHub, Cloudflare in front of an origin, an institutional cache in front
@@ -234,9 +234,20 @@ above, and it is the one that decides stage 4.
 - Bean `xies` — the **publication** gates: (chief) editor signoff → merge →
   human eyes on the rendered artefact → publish. This skill is what is being
   published; that bean is who says it may be.
-- [`deployment-topologies`](../../../fsh-guts/proposals/deployment-topologies.md)
+- [`deployment-topologies`](../../docs/proposals/deployment-topologies.md)
   — the ten axes, four of them declared, and why absent is a third state.
 - [`asset-extraction`](asset-extraction.md) §"Derived renderings" — what a
   package may contain that the source never supplied, and how it must say so.
 - `who-iris/` — the worked example, with its own page under `who-iris/docs/`.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[KG to public portal](../../processes/kg-to-portal.html)**.
+
+<img src="../../assets/img/workflows/kg-to-portal.svg" alt="BPMN diagram: KG to public portal" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | State the constraints, with denominators; Decide what may leave the repository; Cut the subgraph that leaves; Package: files plus a manifest of digests; Sign the package and/or each asset; Publish to the origin (a cache may front it); Verify what arrived against what was signed |
+

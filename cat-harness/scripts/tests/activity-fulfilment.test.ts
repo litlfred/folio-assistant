@@ -115,3 +115,17 @@ describe("<folio:fulfilment/>", () => {
     await expect(load("task", `<folio:fulfilment reason="why" />`)).rejects.toThrow(/names no kinds/);
   });
 });
+
+// `<folio:no-call reason>` (bean `ooq3`) follows the same load-time rule: it
+// silences `activity-calls-skill-process`, so it must not arrive reasonless.
+describe("<folio:no-call reason>", () => {
+  test("a stated reason is carried on the node", async () => {
+    const m = await load("task", `<folio:no-call reason="one check out of a larger review." />`);
+    expect(m.nodes.get("T")!.noCallReason).toBe("one check out of a larger review.");
+  });
+
+  test("a reasonless declaration does not load", async () => {
+    await expect(load("task", `<folio:no-call />`)).rejects.toThrow(/no-call\/> carries no reason/);
+    await expect(load("task", `<folio:no-call reason="  " />`)).rejects.toThrow(/carries no reason/);
+  });
+});

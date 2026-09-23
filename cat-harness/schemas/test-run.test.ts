@@ -90,7 +90,7 @@ describe("criterion 1 — both hashes, neither derivable from the other", () => 
       root: ROOT,
       subject: "crdm-detect phrase signals against the issue corpus",
       dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
-      processInputs: ["scripts/eval-crdm-detect.ts", "methodologies/crdm/crdm-detect.md"],
+      processInputs: ["scripts/eval-crdm-detect.ts", "skills/crdm/crdm-detect.md"],
       outcome: {},
     });
     expect(run.data.hash).not.toBe(UNKNOWN_HASH);

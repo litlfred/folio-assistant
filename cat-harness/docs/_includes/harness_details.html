@@ -29,7 +29,7 @@
   </p>
   {%- for t in instantiated -%}
   <section class="fa-harness-section" id="harness-{{ t.name }}"
-           style="--fa-tile-tone: {{ t.tone }}">
+           style="--fa-tile-tone: {{ t.tone }}; --fa-tile-on: {% if t.genericAvatar %}0{% else %}1{% endif %}">
     <h3 class="fa-harness-section__title" id="harness-{{ t.name }}-heading">
       {%- if t.href -%}
       <a href="{{ t.href | relative_url }}">{{ t.label | default: t.title }}</a>

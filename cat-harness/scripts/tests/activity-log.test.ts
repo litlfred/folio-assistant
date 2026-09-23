@@ -111,7 +111,14 @@ describe("persistence is off by default in the repository too", () => {
     // relocation into a disappearance, which is the opposite of its purpose.
     const ignore = readFileSync(join(repoRootFor(ROOT), ".gitignore"), "utf8");
     expect(ignore).not.toMatch(/^fsh-guts\/\s*$/m);
-    expect(existsSync(join(repoRootFor(ROOT), "fsh-guts/proposals"))).toBe(true);
+    // WITNESS CHANGED 2026-09-23, not the property. This named
+    // `fsh-guts/proposals` until the owner moved the proposals to the `docs/`
+    // of the stub that needs them — *"proposals not in fsh-guts but docs/ for
+    // needed <stub>"*. The claim being tested is that the trashcan is still
+    // COMMITTED rather than ignored wholesale; `retired/` witnesses it just as
+    // well and is the population that is actually retired material, which
+    // `proposals/` never was.
+    expect(existsSync(join(repoRootFor(ROOT), "fsh-guts/retired"))).toBe(true);
   });
 });
 

@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-21T21:55:16Z
-updated_at: 2026-09-22T10:01:35Z
+updated_at: 2026-09-22T10:46:09Z
 parent: folio-assistant-3x2n
 ---
 
@@ -235,3 +235,20 @@ and hid three install steps that never pinned at all. Its "1 of 28 at an exact
 version" was the ROOT manifest alone; across all five manifests carrying
 dependencies it is 40. A ratio picks its own denominator — `w4tq`'s lesson,
 twice in one bean.
+
+---
+
+### Independently re-derived 2026-09-22, and it agreed
+
+A separate session reached this bean through `health`'s
+`bean-self-declared-done` finding and re-derived it from scratch, not knowing
+#893 had landed. Same verdict, by a different route: `check:lockfile-pinning`
+registered in `package.json:96` AND `code-quality-gates.yml:813`;
+`check:dependency-advisories` in `package.json:80` and at `:1155`/`:1184`;
+`.github/dependabot.yml` present. Registration was checked in **both** places
+deliberately — a gate in `package.json` alone is the failure `tyyc` was closed
+for.
+
+Worth one line because the two passes were independent: this bean's own
+`## CORRECTION` is what made it read as trustworthy on the second pass, which
+is the argument for recording a correction rather than quietly fixing it.

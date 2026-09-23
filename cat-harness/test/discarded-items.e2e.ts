@@ -46,7 +46,7 @@ const DOCUMENT = {
       "@id": DOC_URL + "#a",
       name: "Deployment topologies and operating modes",
       nodeKind: "proposal",
-      sourcePath: "fsh-guts/proposals/deployment-topologies.md",
+      sourcePath: "cat-harness/docs/proposals/deployment-topologies.md",
       movedFrom: "docs/folio-assistant/proposals/deployment-topologies.md",
       movedOn: "2026-09-19",
       issue: "363",

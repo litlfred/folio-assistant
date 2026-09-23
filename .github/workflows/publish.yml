@@ -565,10 +565,10 @@ jobs:
           bun-version: latest
 
       - name: TypeDoc generate
-        working-directory: folio-assistant
+        working-directory: cat-harness
         run: |
           bun install || npm install
-          npx typedoc --out ../schema-docs \
+          npx --yes typedoc@0.28.20 --out ../schema-docs \
             --entryPointStrategy expand \
             --readme none --hideGenerator \
             schemas/ adapters/paper/schemas/ 2>&1 | tail -10

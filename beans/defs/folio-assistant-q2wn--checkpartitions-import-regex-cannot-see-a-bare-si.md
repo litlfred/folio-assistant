@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q2wn
 title: check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T22:20:00Z
-updated_at: 2026-09-21T23:05:00Z
+updated_at: 2026-09-22T10:28:50Z
 parent: folio-assistant-vke6
 ---
 
@@ -133,15 +133,68 @@ become an edge it never saw.
 
 ## Done when
 
-- [ ] `IMPORT_RE` matches the bare side-effect form, with a test carrying the
-      two-imports-within-400-characters case. **Blocked on the decision below,
-      not on effort** — landing it alone reds the gate.
+- [x] `IMPORT_RE` matches the bare side-effect form, with a test carrying the
+      two-imports-within-400-characters case. Shipped in #840; the "blocked"
+      note is kept because the block was real and was lifted by the decision
+      below landing in the SAME change, not by being waived.
 - [x] Measured, before and after: **+75 edges, +25 cross-boundary**, all
       `harness → core` to `folio-graph-kind.ts`.
-- [ ] **A decision on whether a side-effect import counts as a layer
+- [x] **A decision on whether a side-effect import counts as a layer
       dependency**, now with the consequence attached: counting it makes 25
       currently-invisible edges violations. The options are an `allowed` edge
       for registration, a third classification beside `cross` and
       `declined-to-judge`, or moving the registration so the harness need not
       reach for it — and the third contradicts what `folio-graph-kind.ts`
       exists to defend.
+
+---
+
+## RESOLVED by #840 — and the bean was never ticked, which is the second finding
+
+Closed 2026-09-22 on evidence, not on a green light. `29091ab35d` is #840,
+titled *"q2wn: the partition could not see a bare side-effect import, and the
+graph-kind registry moves to a leaf"* — so this bean's own fix landed a day
+after it was written, and the checklist sat unticked through every session
+since. Re-opening it cost a full measurement pass to establish that there was
+nothing to do.
+
+### The decision that was blocking: option three, taken
+
+The bean named three ways out and expected the third to be the worst:
+
+> *"...or moving the registration so the harness need not reach for it — and
+> the third contradicts what `folio-graph-kind.ts` exists to defend."*
+
+#840 took exactly that one, by moving the registry to a **leaf** and putting
+the trigger at the foot of `cat-harness.ts`. The predicted contradiction did
+not materialise, because the move was not "stop registering" — registration
+became a **precondition of loading a reader**, which is a stronger guarantee
+than the import edge it replaced, not a weaker one. `z9ax` (`a335b7cb7b`) then
+removed the 74 registration imports #840 had made no-ops and **kept the 2 that
+are the mechanism** — the distinction that makes this a relocation rather than
+a deletion.
+
+### Measured today, all three Done-whens against the current tree
+
+| claim | measurement |
+|---|---|
+| `IMPORT_RE` sees the bare form | three alternatives, bare-side-effect **first**; `extractSpecifiers` exported for its tests |
+| the two-imports-within-400-chars case is tested | `scripts/tests/partition-imports.test.ts`, three cases (with `;`, without, and three-in-a-row) |
+| the 25 cross-edges are gone | `check:partition` → **0 wrong-direction edges, 0 unassigned**, over 910 modules / 2019 edges |
+
+**Why zero rather than 25**, checked rather than assumed: of the 22 modules
+importing `folio-graph-kind`, 11 sit in `schemas/` itself — same layer, so no
+edge crosses — and every `scripts/` importer outside the test material is a
+composition root (`kg-export`, `engine`, `check-image-roles`,
+`render-pipeline`, `declared-dirs`). `isCompositionRoot` exempts the direction
+rule while `totalEdges` still counts the edge, so these are **exempt and
+visible**, which is the outcome the bean asked for in its own words: *"an edge
+it cannot judge should not silently become an edge it never saw."*
+
+### The finding that outlives the fix
+
+This is the second bean this session found **done but open** (`chq5` is the
+other). A bean whose work has landed and whose box is unticked is
+indistinguishable from one nobody has started — the `dh4f` shape at the work-
+plan level, where the reader is the next agent. The cost is not hypothetical:
+it is the measurement pass above, paid twice.

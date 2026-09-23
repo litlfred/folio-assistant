@@ -3,10 +3,10 @@
 title: 'CACHING + on-demand subgraph materialization, post-bootstrap'
 status: todo
 type: task
-parent: folio-assistant-kupb
+parent: folio-assistant-5a3l
 priority: high
 created_at: 2026-09-20T00:00:00Z
-updated_at: 2026-09-20T00:00:00Z
+updated_at: 2026-09-23T02:45:00Z
 ---
 
 Owner, 2026-09-20:
@@ -64,3 +64,18 @@ whether the documentation reads for an agent that has just bootstrapped and
 does not know what a knowledge graph is, is its own question and its own bean.
 Folding them here would make this item about documentation and it is about a
 cache.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `5a3l`.** Caching and on-demand materialisation are operating-mode concerns; the catalogue is one consumer of them, not their subject.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

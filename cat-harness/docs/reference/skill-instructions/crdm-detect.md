@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-detect.md) — do not edit here.
+> Generated from [`skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/crdm/crdm-detect.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-detect.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/crdm/crdm-detect.md){: .fa-edit-source }
 
 {% raw %}
 # Feature-request detection (CRDM trigger)
@@ -237,3 +237,10 @@ Nor does it mean stopping work to do paperwork first. `continual-progress`
 still holds — branch, commit, push, open the PR from commit #1. The point is
 that the *record* is collaborative, not that the *work* pauses.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM requirements](../../processes/crdm-requirements.html) | Detect feature request (crdm-detect skill) |
+

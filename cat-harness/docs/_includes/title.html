@@ -74,7 +74,37 @@
   ABSENT IS A REAL STATE, the same rule `mark-dark` follows: an instance that
   declares no mask falls through to the pair, and nothing changes for it.
 {%- endcomment -%}
-{%- if h.icon.src -%}
+{%- comment -%}
+  THE THEME AVATAR FIRST — owner, 2026-09-22: *"use theme avatar not the purply
+  thing"*. The `@` mark below is the purply thing; this is the instance's own
+  theme art, clipped to the cat.
+
+  IT IS THE SAME CROP THE RAIL USES. `603s` measured `avatarRegion` per image
+  and shipped it with no consumer; `sync-docs-harness.ts` now solves it into
+  the four CSS values, and `navbar.ts`'s `mark()` does the identical sum for a
+  mounted page. One declaration, two renderers, no second formula.
+
+  THE CARD LAYOUT, not laptop or mobile. It is the square one (1254x1254), and
+  `KgImageSchema` refuses a non-square `avatarRegion` in PIXELS — equal
+  fractions on a landscape crop are a box 1.78x wider than tall, and the clip
+  scales width and height separately, so a landscape layout would stretch the
+  cat by exactly that factor.
+
+  THE MARK IS NOT DELETED. An instance with no theme art, or a theme whose art
+  declares no crop, falls through to the pair below and nothing changes for it
+  — the same "absent is a real state" rule `mark-dark` already follows here.
+  Rendering the whole 1254px composition in a 2rem frame instead would be
+  `603s`'s "grey mush", which is why the fallback is the mark rather than the
+  uncropped card.
+{%- endcomment -%}
+{%- assign card = h.landing.card -%}
+{%- if card.avatar -%}
+  <span class="fa-site-mark fa-site-mark--avatar" aria-hidden="true">
+    <img src="{{ card.src | relative_url }}" alt=""
+         style="width: {{ card.avatar.width }}%; height: {{ card.avatar.height }}%;
+                left: {{ card.avatar.left }}%; top: {{ card.avatar.top }}%">
+  </span>
+{%- elsif h.icon.src -%}
   {%- if h.iconMask.src -%}
   <span class="fa-site-mark fa-site-mark--masked" aria-hidden="true"
         style="--fa-site-mark-src: url('{{ h.iconMask.src | relative_url }}')"></span>

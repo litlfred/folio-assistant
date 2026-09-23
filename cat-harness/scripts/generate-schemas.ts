@@ -9,7 +9,7 @@
  * Usage: npx ts-node cat-harness/scripts/generate-schemas.ts
  */
 
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { namedJsonSchema } from "../schemas/to-json-schema.ts";
 import { writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -66,10 +66,7 @@ const schemas = {
 console.log("Generating JSON Schemas...\n");
 
 for (const [name, schema] of Object.entries(schemas)) {
-  const jsonSchema = zodToJsonSchema(schema, {
-    name,
-    $refStrategy: "none",
-  });
+  const jsonSchema = namedJsonSchema(schema, name);
 
   const filePath = join(outDir, `${name}.schema.json`);
   writeFileSync(filePath, JSON.stringify(jsonSchema, null, 2) + "\n");

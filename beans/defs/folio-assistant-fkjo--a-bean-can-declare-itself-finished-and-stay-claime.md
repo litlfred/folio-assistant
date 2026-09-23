@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fkjo
 title: 'A bean can declare itself finished and stay claimed: 6 in-progress beans with every Done-when box ticked'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T22:16:09Z
-updated_at: 2026-09-21T22:16:40Z
+updated_at: 2026-09-22T10:46:09Z
 parent: folio-assistant-ahvw
 ---
 
@@ -162,3 +162,24 @@ the PR is open.
 Recorded because the check reporting its own author is the cheapest possible
 demonstration of the boundary.
 
+
+---
+
+## RE-DERIVED 2026-09-22 — closed on evidence, and it closed itself
+
+This bean predicted its own closure. Its §"A limitation the check found by
+reporting its own author" says the check cannot separate *work done but not
+merged* from *work landed*, and that the right action is to RE-DERIVE — "which
+for this bean means noticing the PR is open".
+
+The PR is no longer open. Everything it asked for is on `main`:
+
+| claim | measurement |
+|---|---|
+| the finding exists | `bean-self-declared-done` declared at `test/health/checks.ts:1026`, computed at `:1153`, emitted at `:1245` |
+| four states, `unreadable` outranking `all-ticked` | `doneWhenState` in `test/health/probes.ts` |
+| both third states counted, neither folded into the pass | `bean-claimed-criteria-absent` and `bean-claimed-criteria-unreadable`, asserted at `checks.test.ts:712-713` |
+| falsification by planting | `checks.test.ts:670`, `:690`, `:705` — planted `all-ticked`, `absent` and `unreadable` beans |
+| it reports rather than closes | a live `bun run health` names **5** beans and closes none |
+
+Closed as part of the sweep it asked for, by the check it built.

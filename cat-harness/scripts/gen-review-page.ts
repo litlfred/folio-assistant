@@ -1,0 +1,273 @@
+/**
+ * The `review/` page of a folio's preview site: what changed from `main`,
+ * block by block. Bean `txut`, epic `q4jm`.
+ *
+ * ## One static page that reads its data when it is opened
+ *
+ * `folio-staging.yml` builds the site FIRST and computes the ChangeSet AFTER
+ * it, into `<site>/changeset.json`, and the banner step writes
+ * `<site>/staging.json`. A page generated at build time would therefore never
+ * see the ChangeSet. So this page carries no data. It fetches
+ * `../changeset.json` and `../staging.json` in the reader's browser, which
+ * also makes the same file correct on every build.
+ *
+ * ## The three states, each said in words
+ *
+ * - **A ChangeSet with changes.** The list, grouped by section.
+ * - **A ChangeSet with none.** "No block changed," with the count of blocks
+ *   compared. A determined empty.
+ * - **No ChangeSet.** On `main`, or on any build that is not a preview. The
+ *   page says there is nothing to compare against, instead of showing an
+ *   empty list that would read as "nothing changed".
+ *
+ * ## Each change is a before/after pair
+ *
+ * A changed block links to its anchor on this preview AND to the same anchor
+ * on `main` (`staging.json`'s `mainSite`). An added block has only the
+ * preview link, and a removed block only the `main` link. Anchors are the
+ * block labels that `build-document-site` writes, which the `id-unique` and
+ * `id-stable` QA criteria guard.
+ *
+ * ## Review comments (bean `423d`)
+ *
+ * `../review-comments.json` is the `folio-review-comments` Tool's output:
+ * `folio-review-comment/v1` todos, one per tagged PR comment. The page lists
+ * each block's comments under it. It gives three more groups their own
+ * headings, because each would otherwise vanish:
+ * - comments on blocks this PR did not change;
+ * - ORPHANED comments, whose block is gone;
+ * - tags nobody could read.
+ *
+ * Every changed block also shows the `block: <label>` line to start a new
+ * comment with, and links to the PR, since GitHub cannot pre-fill a comment
+ * box. No file at all is SAID, never shown as an empty list: "no comment
+ * data" and "nobody commented" are different facts. The skill that governs
+ * all of this is `review-comments`.
+ *
+ * ## Accessibility is not a finish
+ *
+ * - Every change kind is a WORD, never a colour alone.
+ * - `j` and `k` move to the next and previous change, and each has a visible
+ *   button twin, so one key or one click does it.
+ * - Focus is always visible.
+ * - The status line is `aria-live`.
+ * - The list is built with DOM APIs, never `innerHTML`: a block label is folio
+ *   content and must not be able to become markup.
+ */
+
+const STYLE = `
+  :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #d8d8d4; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; } }
+  body { margin: 0 auto; max-width: 52rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  a { color: var(--link); }
+  a:focus-visible, button:focus-visible, li:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+  .nav { display: flex; gap: .5rem; margin: 1rem 0; flex-wrap: wrap; align-items: center; }
+  button { font: inherit; padding: .5rem 1rem; min-height: 2.75rem; border: 1px solid var(--muted); border-radius: .4rem; background: transparent; color: var(--fg); cursor: pointer; }
+  h2 { font-size: 1.05rem; margin-top: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
+  ul { list-style: none; padding: 0; }
+  li { padding: .5rem .25rem; border-bottom: 1px solid var(--rule); }
+  .kind { font-weight: 600; margin-right: .5rem; }
+  .label { font-family: ui-monospace, monospace; }
+  .links a { margin-right: 1rem; }
+  .muted { color: var(--muted); }
+  .comments { margin: .25rem 0 0 1rem; padding-left: .75rem; border-left: 3px solid var(--rule); }
+  .comment { padding: .15rem 0; }
+  .tagline { font-family: ui-monospace, monospace; font-size: .9rem; }
+`;
+
+const SCRIPT = `
+(function () {
+  var status = document.getElementById("status");
+  var summary = document.getElementById("summary");
+  var list = document.getElementById("changes");
+  var items = [];
+  var at = -1;
+
+  function el(tag, text, cls) {
+    var e = document.createElement(tag);
+    if (text != null) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+  // The document a block belongs to is its manifest's first path segment,
+  // which is the page build-document-site writes. Kept to one safe segment.
+  function docOf(at) {
+    var seg = String((at && at.file) || "").split("/")[0];
+    return /^[A-Za-z0-9._-]+$/.test(seg) ? seg : null;
+  }
+  function href(base, at, label) {
+    var doc = docOf(at);
+    return doc == null ? null : base + doc + "/index.html#" + encodeURIComponent(label);
+  }
+  function kindWords(c) {
+    if (c.change === "added") return ["added"];
+    if (c.change === "removed") return ["removed"];
+    var words = { renamed: "renamed", prose: "reworded", manifest: "edited", moved: "moved" };
+    return c.aspects.map(function (a) { return words[a] || a; });
+  }
+  function focusItem(i) {
+    if (!items.length) return;
+    at = (i + items.length) % items.length;
+    items[at].focus();
+    status.textContent = "Item " + (at + 1) + " of " + items.length;
+  }
+
+  document.getElementById("next").addEventListener("click", function () { focusItem(at + 1); });
+  document.getElementById("prev").addEventListener("click", function () { focusItem(at - 1); });
+  document.addEventListener("keydown", function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === "j") { focusItem(at + 1); e.preventDefault(); }
+    else if (e.key === "k") { focusItem(at - 1); e.preventDefault(); }
+  });
+
+  // One comment as a line of words: kind, status, who, what — never colour alone.
+  function commentEl(c) {
+    var d = el("div", null, "comment");
+    var r = c.review || {};
+    d.appendChild(el("span", (r.kind || "comment") + ", " + c.status, "kind"));
+    d.appendChild(el("span", (r.reviewer || "?") + " as " + (r.role || "reviewer") + ": "));
+    d.appendChild(el("span", c.summary));
+    if (r.anchoredFrom && r.anchoredFrom.length) d.appendChild(el("span", " (made on " + r.anchoredFrom.join(", ") + ")", "muted"));
+    if (r.commentUrl) { d.appendChild(el("span", " ")); var a = el("a", "read on the pull request"); a.href = r.commentUrl; d.appendChild(a); }
+    return d;
+  }
+  function commentList(cs) {
+    var box = el("div", null, "comments");
+    cs.forEach(function (c) { box.appendChild(commentEl(c)); });
+    return box;
+  }
+  function section(title, nodes) {
+    if (!nodes.length) return;
+    list.appendChild(el("h2", title));
+    var ul = el("ul");
+    nodes.forEach(function (n) { var li = el("li"); li.tabIndex = -1; li.appendChild(n); ul.appendChild(li); items.push(li); });
+    list.appendChild(ul);
+  }
+
+  function get(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
+  }
+
+  get("../changeset.json").then(function (cs) {
+    return Promise.all([
+      get("../staging.json").catch(function () { return {}; }),
+      get("../review-comments.json").catch(function () { return null; }),
+    ]).then(function (both) {
+      var st = both[0];
+      var rc = both[1];
+      var byLabel = {};
+      var shown = {};
+      ((rc && rc.comments) || []).forEach(function (c) {
+        if (c.review && c.review.orphaned) return;
+        (byLabel[c.targetLabel] = byLabel[c.targetLabel] || []).push(c);
+      });
+      var main = st.mainSite ? String(st.mainSite).replace(/\\/?$/, "/") : null;
+      var s = cs.summary;
+      // The head is "worktree" in CI (the checkout under review), which names
+      // nothing a reader recognises; the banner's staging.json has the branch.
+      var headName = cs.head.ref === "worktree" && st.branch ? st.branch : cs.head.ref;
+      summary.textContent =
+        cs.base.ref + " \\u2192 " + headName + ": " +
+        s.added + " added, " + s.removed + " removed, " + s.changed + " changed (" +
+        s.prose + " reworded, " + s.moved + " moved, " + s.renamed + " renamed, " + s.manifest + " edited), " +
+        s.unchanged + " unchanged.";
+      if (!rc) summary.textContent += " No comment data on this build.";
+      else summary.textContent += " " + rc.comments.length + " review comment(s).";
+      if (!cs.changes.length) {
+        status.textContent = "No block changed. " + s.unchanged + " block(s) compared.";
+      }
+      var groups = {};
+      var order = [];
+      cs.changes.forEach(function (c) {
+        var where = (c.head || c.base || {}).section || "(listed in no section)";
+        if (!groups[where]) { groups[where] = []; order.push(where); }
+        groups[where].push(c);
+      });
+      order.forEach(function (where) {
+        list.appendChild(el("h2", where.replace("::", " \\u203a ")));
+        var ul = el("ul");
+        groups[where].forEach(function (c) {
+          var li = el("li");
+          li.tabIndex = -1;
+          li.appendChild(el("span", kindWords(c).join(", "), "kind"));
+          li.appendChild(el("span", c.label, "label"));
+          if (c.from) li.appendChild(el("span", " (was " + c.from + ")", "muted"));
+          var links = el("div", null, "links");
+          var after = c.change !== "removed" ? href("../", c.head, c.label) : null;
+          var before = c.change !== "added" && main ? href(main, c.base, c.from || c.label) : null;
+          if (after) { var a = el("a", "view on this preview"); a.href = after; links.appendChild(a); }
+          if (before) { var b = el("a", "view on main"); b.href = before; links.appendChild(b); }
+          if (!after && !before) links.appendChild(el("span", "no page to link to", "muted"));
+          li.appendChild(links);
+          var mine = byLabel[c.label] || [];
+          shown[c.label] = true;
+          if (mine.length) li.appendChild(commentList(mine));
+          if (c.change !== "removed") {
+            var t = el("div", null, "muted");
+            t.appendChild(el("span", "To comment, start a pull-request comment with "));
+            t.appendChild(el("code", "block: " + c.label, "tagline"));
+            if (st.prUrl) { t.appendChild(el("span", " ")); var p = el("a", "open the pull request"); p.href = st.prUrl; t.appendChild(p); }
+            li.appendChild(t);
+          }
+          ul.appendChild(li);
+          items.push(li);
+        });
+        list.appendChild(ul);
+      });
+      if (rc) {
+        var elsewhere = [];
+        Object.keys(byLabel).forEach(function (label) {
+          if (shown[label]) return;
+          var d = el("div");
+          d.appendChild(el("span", label, "label"));
+          d.appendChild(commentList(byLabel[label]));
+          elsewhere.push(d);
+        });
+        section("Comments on blocks this pull request did not change", elsewhere);
+        section("Orphaned: the block these were made on is gone", rc.comments
+          .filter(function (c) { return c.review && c.review.orphaned; })
+          .map(function (c) { var d = el("div"); d.appendChild(el("span", c.targetLabel, "label")); d.appendChild(commentList([c])); return d; }));
+        section("Comments whose tag could not be read", rc.malformed.map(function (m) {
+          var d = el("div");
+          d.appendChild(el("span", m.error + " "));
+          var a = el("a", "fix it on the pull request"); a.href = m.url; d.appendChild(a);
+          return d;
+        }));
+      }
+      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
+    });
+  }).catch(function () {
+    status.textContent =
+      "No ChangeSet on this build, so there is nothing to compare against main. " +
+      "It appears on a staging preview, built for a pull request.";
+  });
+})();
+`;
+
+/** The review page. Static: all of its data is fetched when it is opened. */
+export function reviewPageHtml(): string {
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review: what changed</title>
+<style>${STYLE}</style>
+</head>
+<body>
+<main>
+<h1>What changed</h1>
+<p id="summary" class="muted"></p>
+<p id="status" role="status" aria-live="polite">Loading the ChangeSet…</p>
+<div class="nav">
+  <button type="button" id="prev">Previous (k)</button>
+  <button type="button" id="next">Next (j)</button>
+  <a href="../index.html">All documents</a>
+</div>
+<div id="changes"></div>
+</main>
+<script>${SCRIPT}</script>
+</body>
+</html>
+`;
+}

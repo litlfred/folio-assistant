@@ -1,0 +1,116 @@
+---
+doc_id: dusengumuremyi-2026-ai-mediated-raci
+doc_title: "dusengumuremyi-2026-ai-mediated-raci"
+section_id: page-003
+section_title: "Page 3"
+pages: 3-3
+pdf_page: 3
+source_pdf: dusengumuremyi-2026-ai-mediated-raci.pdf
+source_sha256: cc0ba9bcddc1348e
+text_source: ocr
+granularity: page
+---
+Journal of International Business Studies 2026, 01, 02. D Anathole
+
+inevitable. Prior literature has identified the "RACI
+gap" as a primary source of inter-departmental
+friction and strategic drift (Kendrick, 2015). This
+paper argues that in the AI era, a human-only RACI
+
+is not a solution but a risk window.
+
+2.2. AlI-Mediated Sensemaking and Real-Time
+Operational Efficiency
+
+Sensemaking, the process of interpreting ambiguous
+cues to create actionable meaning (Weick, 1995),is
+computationally limited in human cognition. AI-
+mediated sensemaking,
+
+using natural language
+
+processing (NLP) and real-time data fusion,
+eliminates interpretive latency and bias (Pavlou & El
+Sawy, 2018). Real-time operational efficiency,
+defined as the ratio of value-added output to process
+input (Neely, 2019), is transformed when AI can
+instantly verify task completion, flag deviations, and
+reassign responsibilities before a loss door opens.
+Proposition 1 (P1): Al-mediated RACI will
+significantly reduce decision-to-action latency
+compared to human-mediated RACI.
+
+Proposition 2 (P2): AI-mediated RACI will achieve
+
+near-zero error rates in accountability tracking.
+
+2.3. Organizational Defensibility: Ex-Ante Risk
+Closure vs. Ex-Post Dispute Resolution
+Organizational defensibility is defined here as the
+structural capacity to identify and neutralize risk
+windows, disputes, shortcomings, vulnerability gates,
+and loss doors before they generate operational or
+reputational damage. This moves beyond traditional
+risk management to a pre-emptive engineering
+mindset (Dusengumuremyi, under review). The AI-
+Mediated RACI Matrix operationalizes defensibility
+by embedding real-time verification, predictive
+conflict detection, and automated reallocation
+protocols.
+
+Proposition 3 (P3): Al-mediated RACI will enable
+detection of over 75% of potential vulnerability gates
+
+prior to materialization.
+
+2.4. The Sub-Saharan African Context: A
+Mandatory Technological Imperative
+The author's direct observation confirms:
+
+sub-
+Saharan African organizations remain at a "shameful
+stage" of operational governance, not due to lack of
+talent but due to failure in adopting structured
+accountability tools, first the manual RACI, now the
+Al-Mediated RACI. This paper rejects simplified
+solutions and argues for a mandatory leapfrog to AI-
+
+augmented governance to overcome systemic self-
+
+hindering patterns.
+
+3. Methodology
+
+3.1. Research Design: Single, Revelatory Case
+Study
+
+Given the novelty of the Al-Mediated RACI
+framework, a single-case study design (Yin, 2018)
+was selected. The case is revelatory (Yin, 2018)
+because the author had unique, privileged access to
+both pre- and post-AI implementation data within an
+anonymous multinational organization ("The
+Organization"), operating across four sub-Saharan
+African countries with dual headquarters in Europe
+and the Russian Federation. The author served in a
+mid-level strategic operations role for 36 months
+(2021-2024), with an additional 12 months of post-
+
+implementation observation.
+
+3.2. Anonymity and Ethical Compliance
+
+Due to a mandatory non-disclosure agreement, the
+organization's name, specific industry (beyond "high-
+complexity logistics and infrastructure"), and precise
+location are anonymized, complying with ethical
+
+obligations (Bell & Bryman, 2007).
+
+3.3. Implementation Timeline
+Phase 1 (Months 1-12): Baseline human-mediated
+RACI. Data: 647 strategic decisions, 42 boardroom
+
+meetings.
+
+© 2026 by the author. D. Anathole

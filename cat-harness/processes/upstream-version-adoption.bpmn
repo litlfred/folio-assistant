@@ -64,7 +64,7 @@ For the theme: `docs/assets/js/docs-ui.js` MOVES the theme's own search markup i
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Mvp" name="MVP: build the candidate&#10;on a staging branch">
       <bpmn:documentation>An MVP is a DEPLOYED BUILD, not a description of one. The pin is moved on a branch and `feature-staging.yml` publishes it under `STAGING/&lt;branch-slug&gt;/`, so the reviewer looks at the artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="feature-staging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="feature-staging"/><folio:no-call reason="Moving the pin on a branch is the step; CI stages it on the pull_request event. A call activity would claim the engine drives CI."/></bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Gates" name="Run the row's gates&#10;tests &#183; e2e &#183; site-links">
       <bpmn:documentation>The `mvp` commands declared for this tenant. For the theme: `bun test`, `CI=1 bunx playwright test` (a11y, action tiles, sidebar panels, QA panel) and `scripts/site-links.ts --site ./_site`, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already.

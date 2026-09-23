@@ -51,9 +51,10 @@
 
 import { z } from "zod";
 
-import { ThemedTodoFieldsSchema } from "./theme.js";
+import { nodeKind } from "./node-kind.js";
+import { ThemedKind } from "./theme.js";
 import {
-  CarriedNoteSchema,
+  CarriedNoteKind,
   NoteTagsSchema,
   type NoteTags,
 } from "./carried-note.js";
@@ -177,28 +178,13 @@ export function danglingTags(resolved: ResolvedTag[]): ResolvedTag[] {
 /**
  * A todo — one person's outstanding work.
  *
- * Extends {@link CarriedNoteSchema} with the three fields that are the HUMAN
+ * Extends {@link CarriedNoteKind} (and the `themed` mixin) with the three fields that are the HUMAN
  * half specifically: a lifecycle (`status`), how urgent (`priority`) and where
  * it came from (`origin`). Agent memory has none of those — a TRAP is not
  * "open", and marking one "done" would say the failure it records has stopped
  * being possible.
  */
-export const TodoNodeSchema = CarriedNoteSchema.extend({
-  /**
-   * The theme this todo's sticky renders with — an id from `THEMES`.
-   *
-   * `ThemedTodoFieldsSchema` in `theme.ts` has declared this shape all along
-   * and nothing merged it in, so the field was authorable in principle and
-   * dropped in practice. Bean `5y4b`.
-   *
-   * **Absent means nobody has chosen**, which is a statement about an author
-   * rather than a lookup that failed — the todo then takes the graph's
-   * `defaultTheme`, and a flat card if the graph declares none.
-   *
-   * Reused from `ThemedTodoFieldsSchema` rather than restated, because two
-   * spellings of one field is the drift this repository keeps paying for.
-   */
-  ...ThemedTodoFieldsSchema.shape,
+export const TodoNodeKind = nodeKind("folio-todo/v1", [CarriedNoteKind, ThemedKind], {
   /** `TodoStatus` from `types.ts`, not re-enumerated here. */
   status: z.string().min(1),
   /** `TodoPriority` from `types.ts`. */
@@ -216,6 +202,22 @@ export const TodoNodeSchema = CarriedNoteSchema.extend({
    */
   $schema: z.literal("folio-todo/v1"),
 });
+
+/**
+ * The composed schema: carried note, then themed, then the todo's own fields.
+ *
+ * `theme` arrives from the `themed` parent rather than a spread. It was a
+ * spread until bean `a1lq`, and a spread is last-writer-wins with no record
+ * that two parents were composed at all. The parents are now declared, and
+ * the composition is the one walk instances use.
+ *
+ * `theme` — the id of the theme this todo's sticky renders with — was declared
+ * by `ThemedTodoFieldsSchema` all along and merged in by nothing, so it was
+ * authorable in principle and dropped in practice (bean `5y4b`). Absent means
+ * nobody has chosen: the todo takes the graph's `defaultTheme`, else a flat
+ * card.
+ */
+export const TodoNodeSchema = TodoNodeKind.schema;
 export type TodoNode = z.infer<typeof TodoNodeSchema>;
 
 /** The `$schema` tag every todo file carries. */

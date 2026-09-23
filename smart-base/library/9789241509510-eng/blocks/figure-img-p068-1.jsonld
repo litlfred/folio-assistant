@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/9789241509510-eng/blocks/figure-img-p068-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p068-1.png",
+  "pageStart": 68,
+  "pageEnd": 68,
+  "narrative": {
+    "text": "A screenshot of API documentation for a facility registry. It shows a section on the internal system id with an example 'id:' value and a note that the API does not enforce a specific ID format; a URL section giving an example REST endpoint for a facility resource (http://facilityregistry.org/api/v1/facilities/...); and an 'External Facility Identifiers' section explaining that each external identifier consists of an agency (who created the code), a context (the system in which the agency uses the code, e.g. HMIS, DHIS2, HR) and an id, followed by an example JSON array of identifier objects.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude-code",
+      "model": "claude-sonnet-5"
+    },
+    "drafted_at": "2026-09-22T08:53:47Z"
+  },
+  "derivedFrom": "library/9789241509510-eng/sections/page-068",
+  "sourceDocument": "library/9789241509510-eng/manifest",
+  "provenance": "ingested"
+}

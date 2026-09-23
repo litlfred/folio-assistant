@@ -52,6 +52,15 @@
  * @module scripts/lib/navbar
  */
 
+import {
+  NAV_COLLAPSED_PX,
+  NAV_MARK_PX as NAV_GLYPH_PX,
+  NAV_OPEN_PX,
+  NAV_OPEN_WIDE_PX,
+  NAV_PAD_PX,
+  NAV_WIDE_MQ_PX,
+} from "./navbar-geometry.js";
+
 /** One destination. */
 export interface NavItem {
   /** Where it goes, already relative to the page being rendered. */
@@ -60,12 +69,57 @@ export interface NavItem {
   label: string;
   /** A single character or short glyph, shown while the navbar rests. */
   icon?: string;
-  /** An image to use instead of `icon` — the harness's avatar, when it has one. */
-  avatar?: { src: string; title?: string };
+  /**
+   * An image to use instead of `icon` — the harness's avatar, when it has one.
+   *
+   * `region` is the image's declared `avatarRegion` (`603s`), as fractions of
+   * the image: the part of the art that IS the avatar. Optional, because most
+   * marks are already a mark — an icon that fills its own frame needs no crop,
+   * and cropping one would be inventing a box nobody measured.
+   */
+  avatar?: { src: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
   /** A hue for the item's mark, 0–360. `603s`'s `tone`. */
   tone?: number;
   /** True for the route the current page belongs to. */
   current?: boolean;
+  /**
+   * Nesting under the item above it — 0 or absent for a top-level row.
+   *
+   * Only the document index uses it today. It is on `NavItem` rather than in
+   * that function because a *rendered* indent is the renderer's business: a
+   * caller that returned pre-indented labels would be composing markup, which
+   * is the thing this module exists to stop callers doing.
+   */
+  depth?: number;
+  /**
+   * WHY this row does not open, shown as text beside the label.
+   *
+   * Only meaningful with no {@link href} — a row that opens owes no
+   * explanation — and the wording is the CALLER's, because only the caller
+   * knows which of the several reasons applies. `harness-tiles` separates
+   * four of them (`HarnessVisualisation.note`) and this renderer picks none
+   * of them.
+   *
+   * ## Why text, and not `title` or `aria-disabled`
+   *
+   * The Jekyll sidebar reached this row first and said it with
+   * `title="declared, with no published viewer"` on a `<span>`. A `<span>` is
+   * not focusable, so that label has NO KEYBOARD PATH at all, and `title` on
+   * a non-interactive element is not reliably announced — so the surface that
+   * did say it said it to a pointer and to nothing else. This rail said
+   * nothing whatever: `opacity:.55` and no words, which is state carried by
+   * contrast alone. Both are `gjli`.
+   *
+   * Real text has neither problem and needs no ARIA to fix: it is in the
+   * accessibility tree because it is content, it survives a stylesheet that
+   * does not load, and it is not a second signal that can disagree with the
+   * first. `aria-disabled` was the other candidate and is wrong here for a
+   * plainer reason — nothing is disabled. There is no control. A `<span>`
+   * marked `aria-disabled` announces a disabled widget that does not exist,
+   * which is the "inert row reading as a control" failure rather than a fix
+   * for it.
+   */
+  note?: string;
 }
 
 /** A labelled group of items, which may be collapsed behind a disclosure. */
@@ -134,23 +188,25 @@ export interface NavbarModel {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** Gutter either side of the glyph column. */
-export const NAV_PAD_PX = 10;
-/** The glyph column itself. */
-export const NAV_GLYPH_PX = 20;
 /**
- * Width at rest — the icon strip at the far left.
+ * THE GEOMETRY IS NOT DECIDED HERE ANY MORE.
  *
- * DERIVED from the glyph column and its two gutters, so the strip is exactly
- * the icon and nothing else. **Closed is not gone**: asked to "have it start
- * hidden" I once removed the strip entirely, and the owner's correction —
- * *"clicking it away completelt disappeared … i expected … that it slides to
- * the far left, icon width thick"* — is the whole of why this constant exists
- * rather than a `visibility: hidden`.
+ * It was, and `docs-ui.css` decided it again, separately — 40px against 56px
+ * at rest and 232px against 248px open, on two navbars the owner had asked to
+ * be "presented same way". `lib/navbar-geometry.ts` is the single record and
+ * carries the whole argument for whose numbers won.
+ *
+ * `NAV_GLYPH_PX` is kept as the name callers already import; the record calls
+ * the same column `markPx`, because it holds an avatar as often as a glyph.
  */
-export const NAV_COLLAPSED_PX = NAV_PAD_PX * 2 + NAV_GLYPH_PX;
-/** Width while open. Overlays rather than reflowing. */
-export const NAV_OPEN_PX = 232;
+export {
+  NAV_COLLAPSED_PX,
+  NAV_OPEN_PX,
+  NAV_OPEN_WIDE_PX,
+  NAV_PAD_PX,
+  NAV_WIDE_MQ_PX,
+} from "./navbar-geometry.js";
+export { NAV_MARK_PX as NAV_GLYPH_PX } from "./navbar-geometry.js";
 
 /**
  * The navbar's stylesheet, scoped to `.fa-nav` so a host page keeps its own.
@@ -175,6 +231,13 @@ export function navbarCss(): string {
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
     `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+    // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
+    // The rail has no such floor and would simply stay narrower -- which is
+    // the same navbar at two widths on one screen size, the defect this
+    // whole module exists to have ended.
+    `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
+    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
+    `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
     `.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}`,
     // THE THREE REGIONS. `min-height:0` on the middle is not optional: a flex
     // child defaults to `min-height:auto`, which refuses to shrink below its
@@ -188,6 +251,11 @@ export function navbarCss(): string {
     `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
     `.fa-nav-glyph{flex:0 0 ${NAV_GLYPH_PX}px;text-align:center;font-size:16px}`,
     `.fa-nav-glyph img{width:${NAV_GLYPH_PX}px;height:${NAV_GLYPH_PX}px;display:block}`,
+    // A CROPPED mark: the frame clips and the image is positioned inside it.
+    // The `img` rule above sizes an UNCROPPED avatar; a cropped one carries
+    // its own width/height inline, so this resets the two that would fight it.
+    `.fa-nav-crop{position:relative;overflow:hidden;height:${NAV_GLYPH_PX}px}`,
+    `.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}`,
     `.fa-nav-name{font-weight:600}`,
     `.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
     `color:#e6edf3;text-decoration:none;white-space:nowrap}`,
@@ -195,7 +263,21 @@ export function navbarCss(): string {
     `.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}`,
     // An item with nowhere to go is NOT a link -- `pb04`: a dead link is worse
     // than no link, because it invites a click and then reads as broken.
-    `.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;opacity:.55}`,
+    // THE DIM STAYS, AND IT WAS NEVER THE PROBLEM. `opacity:.55` over
+    // `#1f2328` composites `#e6edf3` to `(140,146,152)`, which is 5.03:1 --
+    // measured, and clear of 4.5:1. The first version of this comment claimed
+    // it failed; it does not, and the fault is the other one: the dim was the
+    // ONLY signal, so "declared and not built" was carried by contrast alone
+    // with no words anywhere on this surface. `.fa-nav-note` is the words.
+    // `cursor:default` so the pointer does not promise a click either.
+    `.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
+    `opacity:.55;cursor:default}`,
+    // The reason sits BESIDE the label, not under it: the strip is one row per
+    // item, and a second line would make these the only rows in the navbar
+    // with a different height. At 11px it is small text, so it needs 4.5:1 in
+    // its own right -- which it has, being the same composited ink as the
+    // label it sits next to.
+    `.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}`,
     // THE EXPLODING MENU. `<details>` so it is keyboard-operable and announces
     // its own state with no script.
     `.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
@@ -230,9 +312,30 @@ export function navbarCss(): string {
 function mark(i: NavItem): string {
   const tone = i.tone ? ` style="background:hsl(${i.tone} 45% 28%)"` : "";
   if (i.avatar) {
+    const t = i.avatar.title ? ` title="${esc(i.avatar.title)}"` : "";
+    const r = i.avatar.region;
+    if (!r) {
+      return (
+        `<span class="fa-nav-glyph fa-nav-tone"${tone}>` +
+        `<img src="${esc(i.avatar.src)}" alt=""${t}></span>`
+      );
+    }
+    // THE CROP, and the arithmetic is `603s`'s. The frame shows `r` scaled to
+    // fill it, so the IMAGE is scaled by `1/w` and `1/h` and then offset by
+    // `-x` and `-y` OF THE SCALED image — which is why the offsets divide by
+    // the same fractions. Percentages rather than pixels so the mark resizes
+    // with `NAV_GLYPH_PX` and this never has to agree with a number again.
+    //
+    // `1/w` and `1/h` are applied SEPARATELY, which is exactly why
+    // `KgImageSchema` refuses a non-square box in PIXELS: on a landscape image
+    // equal fractions are not a square region, and the two scales then stretch
+    // the art by `w/h`. The schema is the guard; this is the code it guards.
+    const pct = (n: number) => `${+(n * 100).toFixed(4)}%`;
     return (
-      `<span class="fa-nav-glyph fa-nav-tone"${tone}>` +
-      `<img src="${esc(i.avatar.src)}" alt=""${i.avatar.title ? ` title="${esc(i.avatar.title)}"` : ""}></span>`
+      `<span class="fa-nav-glyph fa-nav-tone fa-nav-crop"${tone}>` +
+      `<img src="${esc(i.avatar.src)}" alt=""${t} style="` +
+      `width:${pct(1 / r.w)};height:${pct(1 / r.h)};` +
+      `left:${pct(-r.x / r.w)};top:${pct(-r.y / r.h)}"></span>`
     );
   }
   // An initial, not a question mark. `603s` reports "no avatar declared" as a
@@ -243,8 +346,18 @@ function mark(i: NavItem): string {
 
 function itemHtml(i: NavItem): string {
   const body = `${mark(i)}<span class="fa-nav-label">${esc(i.label)}</span>`;
-  if (i.href === undefined) return `<span class="fa-nav-dead">${body}</span>`;
-  return `<a href="${esc(i.href)}"${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
+  // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
+  // the document index a different shape from every other group here, and the
+  // rows are links either way.
+  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
+  if (i.href === undefined) {
+    // The note is part of the row's TEXT, inside the same element, so an
+    // assistive technology reads "catalogue, no viewer yet" as one thing
+    // rather than as a label and a detached aside.
+    const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
+    return `<span class="fa-nav-dead"${d}>${body}${note}</span>`;
+  }
+  return `<a href="${esc(i.href)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
 }
 
 function groupHtml(g: NavGroup): string {
@@ -298,4 +411,66 @@ export function injectNavbar(html: string, m: NavbarModel): string | undefined {
   if (!body) return undefined;
   const at = body.index + body[0].length;
   return html.slice(0, at) + `<style>${navbarCss()}</style>` + navbarHtml(m) + html.slice(at);
+}
+
+/**
+ * The open document's own index, read off the page it is being injected into.
+ *
+ * Owner, 2026-09-21: *"when a document or other indexed object is opened, the
+ * document index/idices are shown in a navbar tab/menu."* `NavbarModel` has
+ * carried `documentIndex` since it was written; **nothing supplied one** — a
+ * repo-wide search on 2026-09-22 found the type, the render branch and a
+ * single test, so the sentence was unbuilt on both surfaces.
+ *
+ * ## Only headings the page can actually be scrolled to
+ *
+ * A heading with no `id` is not a destination, and a fragment link to one goes
+ * nowhere. So the `id` is the filter, not the heading level — that is the same
+ * `pb04` rule the rest of this module follows: a dead link invites a click and
+ * then reads as a broken site. It is also what makes this safe on a document
+ * the harness does not control; those pages are copied verbatim and their
+ * heading ids are whatever their own generator assigned.
+ *
+ * ## `h2` and `h3` only
+ *
+ * `h1` is the document's title, which the reader is already looking at, and
+ * the navbar names the instance directly above. Below `h3` an index stops
+ * being a way in and becomes the document again — and this region is in the
+ * FIXED top, so every row it takes is a row the scrollable middle does not
+ * get.
+ *
+ * `h3`s are nested under the `h2` they follow, which is why they carry
+ * `depth`. A flat list of eleven rows where three are subsections of the first
+ * is a list that lies about the document's shape.
+ *
+ * ## Regex rather than a DOM
+ *
+ * This runs over hundreds of copied files during a mount, and the alternative
+ * is a parser dependency in a script whose whole job is string injection. The
+ * cost is that it sees `<h2 id>` in a comment or a `<pre>`; the consequence of
+ * that is one extra row in a menu, which is why it is an acceptable trade
+ * here and would not be in a validator.
+ */
+export function documentIndexOf(html: string, label = "Contents"): NavGroup | undefined {
+  const items: NavItem[] = [];
+  const re = /<(h2|h3)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi;
+  for (const m of html.matchAll(re)) {
+    const text = m[3]
+      .replace(/<[^>]*>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) continue;
+    items.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+  }
+  // ABSENT rather than empty, and rather than a one-item index. An empty
+  // disclosure invites a click that does nothing -- the rule this module
+  // already applies to the harnesses region -- and a "Contents" holding the
+  // single section the reader is looking at is the same defect with a row in
+  // it.
+  if (items.length < 2) return undefined;
+  return { label, icon: "≡", items, collapsible: true };
 }

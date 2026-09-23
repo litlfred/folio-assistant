@@ -99,6 +99,31 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
+  // WHO BLUE, AND NO EMBLEM. Owner, 2026-09-23: *"no logo on who-iris icon
+  // (for now). just WHO blue"* — reversing their own choice of 2026-09-22,
+  // which had the WHO emblem-and-wordmark cropped to the emblem. The image
+  // stays declared in `who-iris.json`; only the `icon` pointer to it is gone,
+  // so restoring it is one field rather than a re-ingest.
+  //
+  // 199 is MEASURED from #0093D5, the organisation's blue as `who-iris.json`
+  // already records it: rgb(0,147,213), max channel blue, so the hue is
+  // 4 + (0-147)/213 sixths of a turn = 198.6°, rounded. Written as an angle
+  // rather than as the hex because that is what this table holds and what the
+  // stylesheet builds both schemes from — a literal colour here would be
+  // legible in one mode and not the other, which is the `y8cm` failure.
+  //
+  // Without this entry `avatarFor("who-iris")` falls to GENERIC, so the tile
+  // would have taken the generic hue and reported a finding — "no avatar
+  // declared" is true of an instance nobody has decided about, and this one
+  // has been decided about twice.
+  "who-iris": {
+    // An open book with a band across it — a repository of published
+    // documents, which is what IRIS is. Deliberately NOT the emblem: the
+    // owner asked for the colour without the logo.
+    glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
+    tone: 199,
+    reads: "an open book — a repository of published documents, in WHO blue",
+  },
   // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
   //
   // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
@@ -270,6 +295,24 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",
     tone: 4,
     reads: "a trace — the repository's own vital signs, over time",
+  },
+  // A clipboard with a tick and a cross: a run REPORTING on itself, carrying
+  // both outcomes. Deliberately not the `qa` mark and not `health`'s trace —
+  // the three are different subjects (an artefact, a repository, an execution)
+  // and an avatar that borrowed either would say they are the same question.
+  // Angle brackets around a caret: source, as the thing that is written rather
+  // than the thing that runs. Deliberately not a terminal prompt or a gear --
+  // both read as EXECUTION, and this kind is about code as authored content,
+  // which is exactly the distinction `holds: "content"` records.
+  code: {
+    glyph: "M8 7l-5 5 5 5m8-10l5 5-5 5M13 5l-2 14",
+    tone: 268,
+    reads: "angle brackets around a slash — source as something written, not something running",
+  },
+  "qa-report": {
+    glyph: "M9 4h6v3H9zM7 6h2m6 0h2a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V7a1 1 0 011-1zm1.5 7l1.5 1.5L13 11m1 5l3 3m0-3l-3 3",
+    tone: 168,
+    reads: "a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet",
   },
   uploads: {
     glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",

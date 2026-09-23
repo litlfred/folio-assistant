@@ -259,6 +259,22 @@
   panel (the owner asked for it as an icon, not a header), and the URL is
   resolved from the git remote instead of written down twice.
 -->
+<!--
+  THE NAVBAR ICON ROW — which icons this instance shows, and where each goes.
+
+  `null` when the instance has not decided, and that is NOT the same as an
+  empty list: `navbarIcons` absent means "inherit, and nothing up the chain has
+  said either", while `[]` means the instance chose to show none. docs-ui.js
+  reads the two apart, and `jsonify` emits `null` for the first exactly as the
+  translations block above relies on.
+
+  Resolved in `sync-docs-harness.ts`: the icon list walks `needs` with the site
+  owner as the floor, and the hrefs come from this instance's own declared
+  visualisations plus `siteLinks`. Nothing about the row is decided in Liquid
+  or in JavaScript.
+-->
+<script type="application/json" id="fa-navbar-row">{{ site.data.harness.navbar | jsonify }}</script>
+
 <script type="application/json" id="fa-site-links">{
 {%- assign sep = "" -%}
 {%- for l in site.data.harness.links -%}
