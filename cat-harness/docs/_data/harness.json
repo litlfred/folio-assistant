@@ -76,6 +76,7 @@
     "beans",
     "cat-harness",
     "code",
+    "code-list",
     "docs",
     "external-schema",
     "folio",
@@ -145,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 671,
+      "count": 672,
       "unit": "beans"
     },
     {
@@ -1439,12 +1440,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 40
+          "value": 41
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 26
+          "value": 27
         },
         {
           "id": "views",
@@ -1463,6 +1464,10 @@
         },
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code-list",
           "note": "no viewer yet"
         },
         {
@@ -1560,7 +1565,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1705,6 +1710,10 @@
       },
       {
         "kind": "code",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "code-list",
         "note": "no viewer yet"
       },
       {
@@ -2530,7 +2539,7 @@
           },
           {
             "key": "directories",
-            "summary": "40: tools, external-schemas, schemas, uml, cat-harness, scenarios, policies, processes, metho…"
+            "summary": "41: tools, external-schemas, code-lists, schemas, uml, cat-harness, scenarios, policies, proc…"
           },
           {
             "key": "associatedHarnesses",
