@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pdf-structure-schema/skills/content-validate/output.schema.json",
+  "title": "Content Validate Output",
+  "description": "Output schema for content validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "results"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "status"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/pdf-structure-schema",
+    "sha": "671896c51f8f1d3d301cfdd50b168ce3e40c53f9",
+    "pr": "1113/merge",
+    "run": "35890398284"
+  }
+}
