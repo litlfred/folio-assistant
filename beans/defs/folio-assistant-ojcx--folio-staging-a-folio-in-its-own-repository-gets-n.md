@@ -1,7 +1,7 @@
 ---
 # folio-assistant-ojcx
 title: 'FOLIO STAGING: a folio in its own repository gets no STAGING build — feature-staging is not reusable and init-folio never writes it'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:04:36Z
@@ -19,7 +19,7 @@ So STAGING, and with it every before/after in this epic, exists only for the pla
 **What.** Make the staging workflow reusable (`workflow_call` with inputs for the build command and the publish ref), and have `init-folio` / `folio_init` write the caller workflow into a new folio. Coordinate with lx2s (issue #215), which owns the mechanism, and with g196 / oz5w / 1lfx, which own its open defects. This bean adds the cross-repo reach only.
 
 ## Done when
-- [ ] feature-staging is callable from another repository, tested with a scratch folio. **Done differently: a NEW reusable `folio-staging.yml`**, not feature-staging made reusable (see round 1). It is callable, but **not yet run from a real folio repo**, and that run is the test still owed
+- [x] feature-staging is callable from another repository, tested with a scratch folio. **Done differently: a NEW reusable `folio-staging.yml`**, not feature-staging made reusable (see round 1). It is callable, but **not yet run from a real folio repo**, and that run is the test still owed **Run for real on 2026-09-23**: litlfred/folio-test#5 and #6, both green.
 - [x] `init-folio` writes the caller (`.github/workflows/staging.yml`), OFF until the author sets `build_command`. Whether `readme:sync` lists it is not checked
 - [x] the ChangeSet (jwox) is emitted by the reusable workflow as `<preview>/changeset.json`, with its summary in the PR comment
 
@@ -48,3 +48,26 @@ The ChangeSet CLI exists (#981): `bun run folio-assistant-core/schemas/changeset
 ## From fyu2 (2026-09-23)
 
 The workflow's steps were rehearsed locally on an init-folio-scaffolded document folio: build, ChangeSet and banner all pass. What remains unexercised is the gh-pages push and a real GitHub Actions run, which needs a folio repository.
+
+## The real run — 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE)
+
+The owner chose `litlfred/folio-test`, with a document folio beside its paper. `handbook/` was scaffolded by `init-folio`, and a root caller of `folio-staging.yml@main` was added. Two PRs ran:
+- **#5**: the scaffold into `main`. The ChangeSet shows 2 added.
+- **#6**: stacked on #5, rewording a paragraph and changing one table row. The ChangeSet shows 2 changed (2 reworded).
+
+**Both Actions runs succeeded.** Each published `STAGING/<slug>/` on `gh-pages` with:
+- the site, `changeset.json` and `changeset-text.json`;
+- `blocks.json`, `block-qa.json`, `review-comments.json` and `outline.json`;
+- `review/`;
+- `visual-diff.json` and `visual/`.
+
+Opened from those published files, the review page showed the banner, outline, minimap, heat map ("0 of 2 reviewed", "2 unaudited"), the inline diff of the reworded paragraph, and the table on the pictures renderer.
+
+**What the run found** (each is beaned; none blocks the mechanism):
+- `fz39`: Markdown tables render as raw pipe text. `build-document-site` has no GitHub-flavoured Markdown.
+- `5uuf`: no main-site publish exists, so before pictures and "view on main" are empty. A stacked PR's pictures also compare with main instead of its base.
+- `zdfa`: `--link sibling` writes `platform_dir: ../platform`, which is outside the Actions checkout. A subfolder folio's workflow lands in `<sub>/.github`, where GitHub never reads it.
+- Fixed in the next folio-assistant PR: with one side only, the pictures view opens on the side that has NO picture, and the heat map's QA column clips at 1000 px.
+- `tw61` (owner ask): QA on init. The preview's QA column reads "unaudited" throughout, because a new folio does not sweep.
+
+GitHub Pages is not switched on for folio-test, so the previews exist on `gh-pages` but are not served. That setting is the owner's.
