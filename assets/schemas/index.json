@@ -6,11 +6,11 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 156,
+      "count": 157,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 20,
+      "count": 22,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -443,6 +443,14 @@
       "name": "fsh-guts",
       "graphNode": "schema",
       "summary": "A node of the trashcan — what `fsh-guts/` holds, and what may leave it.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/glossary-graph-kind.ts",
+      "instance": "cat-harness",
+      "name": "glossary-graph-kind",
+      "graphNode": "schema",
+      "summary": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
       "isTest": false
     },
     {
@@ -1403,6 +1411,22 @@
       "name": "fhir-artifact-index",
       "graphNode": "schema",
       "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary.test",
+      "graphNode": "undeclared",
+      "summary": "folio-glossary/v1 and its SKOS: the three states hold, references resolve,",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary",
+      "graphNode": "schema",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
       "isTest": false
     },
     {
@@ -35641,6 +35665,288 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/glossary.ts#Glossary",
+      "name": "Glossary",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
+      "name": "GlossarySchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(GLOSSARY_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(LOCAL_ID)",
+          "optional": false,
+          "array": false,
+          "doc": "The scheme's local id: the tail of its IRI."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "hasVersion",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "dcterms:hasVersion."
+        },
+        {
+          "name": "modified",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "dcterms:modified, a date."
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "dcterms:source: what the terms were drawn from."
+        },
+        {
+          "name": "license",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The licence the terms are published under: an SPDX id or a URL."
+        },
+        {
+          "name": "terms",
+          "type": "z.array(TermSchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "members",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "External concept IRIs this glossary lists without copying: a `skos:Collection`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary.ts#Iri",
+        "folio-assistant-core/schemas/glossary.ts#TermSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GLOSSARY_SCHEMA_ID",
+        "LOCAL_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "name": "Iri",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-scalar",
+      "doc": "An absolute IRI: an external concept, a source, a scheme.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#LangText",
+      "name": "LangText",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+      "name": "LangTextSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-union",
+      "doc": "Text in one language, or per language (BCP 47 keys). SKOS's multilingual",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#Term",
+      "name": "Term",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "name": "TermSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(LOCAL_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prefLabel",
+          "type": "LangTextSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "altLabel",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "definition",
+          "type": "LangTextSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "notation",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The code. SKOS's own word for it."
+        },
+        {
+          "name": "scopeNote",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "broader",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Local term ids or absolute IRIs."
+        },
+        {
+          "name": "related",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "exactMatch",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "closeMatch",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "broadMatch",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "narrowMatch",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the term came from: a repository path (with #anchor) or an IRI."
+        },
+        {
+          "name": "status",
+          "type": "z.enum(TERM_STATUSES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Required for `could-not-extract`: a person must be able to act on it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary.ts#Iri",
+        "folio-assistant-core/schemas/glossary.ts#LangTextSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "LOCAL_ID",
+        "TERM_STATUSES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TermStatus",
+      "name": "TermStatus",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/library-ref.ts#LibraryRef",
       "name": "LibraryRef",
       "module": "folio-assistant-core/schemas/library-ref.ts",
@@ -42324,6 +42630,70 @@
       "via": "xml",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "members",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "via": "terms",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "broadMatch",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "closeMatch",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "exactMatch",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "narrowMatch",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+      "via": "definition",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+      "via": "prefLabel",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

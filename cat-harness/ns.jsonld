@@ -404,21 +404,6 @@
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:GlossaryGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "GlossaryGraph",
-      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "prefLabel": "GlossaryGraph",
-      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "notation": "cat-harness:GlossaryGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
       "@id": "cat-harness:HealthGraph",
       "@type": [
         "rdfs:Class",
@@ -609,6 +594,21 @@
       "prefLabel": "SkillGraph",
       "definition": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
       "notation": "cat-harness:SkillGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:SwimlaneGlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SwimlaneGlossaryGraph",
+      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "prefLabel": "SwimlaneGlossaryGraph",
+      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "notation": "cat-harness:SwimlaneGlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

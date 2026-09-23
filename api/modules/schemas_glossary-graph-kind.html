@@ -1,0 +1,71 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>schemas/glossary-graph-kind | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">schemas/glossary-graph-kind</a></li></ul>
+<h1>Module schemas/glossary-graph-kind</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>The <code>glossary</code> graph kind — registered by <strong>core</strong>, not declared by the harness.</p>
+<p>Owner, 2026-09-23: <em>&quot;put glossary into folio-assistant-core&quot;</em>, <em>&quot;it should be
+part of general pracice w/ glossary/ page&quot;</em>, <em>&quot;can glossary be refefences to
+external skos schema?&quot;</em> (yes), and, on the clash with the harness's own
+swimlane ledger: <em>&quot;Rename harness one&quot;</em>. So the harness's kind is now
+<code>swimlane-glossary</code>, and this name belongs to core.</p>
+<p>A <code>glossary</code> directory holds <code>folio-glossary/v1</code> documents (schema and SKOS
+emitter: <code>folio-assistant-core/schemas/glossary.ts</code>): local SKOS terms, each
+<code>authored</code>, <code>candidate</code> or <code>could-not-extract</code> (bean <code>lqo9</code>'s three states),
+linked to EXTERNAL SKOS concepts by <code>exactMatch</code> / <code>closeMatch</code>, and
+<code>members</code> that reference external concepts without copying them. A whole
+external scheme is referenced through the declaration's <code>remoteGraphs</code> with
+<code>graphKinds: [&quot;glossary&quot;]</code>.</p>
+<h2 id="why-this-module-sits-in" class="tsd-anchor-link">Why this module sits in <code>cat-harness/schemas/</code><a href="#why-this-module-sits-in" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>For the reason <code>folio-graph-kind.ts</code> does, and <code>graph-kind-registry.ts</code>
+records it: <em>&quot;The harness must not reach up into core … the kind moves to
+core with its schema … the <code>folio</code> kind is the worked example, registered by
+core through a load-time side effect.&quot;</em> The declaration reader in
+<code>cat-harness.ts</code> must know the kind to resolve a directory declaring it, and
+it may not import from <code>folio-assistant-core/</code>. So the one line that names
+the kind lives beside <code>folio</code>'s, and is classified core in
+<code>scripts/partition/instance-rules.ts</code>; everything else is in core's tree.
+No <code>validator</code> path, for the same reason <code>fhir-artifact-index</code> has none:
+it resolves under the DECLARING instance's root. <code>check:glossary</code> validates
+instead.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-graphNode">
+<h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p>
+</div></div></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="variables">Variables<a href="#variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="glossary_graph_kind"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_glossary-graph-kind.GLOSSARY_GRAPH_KIND.html">GLOSSARY_GRAPH_KIND</a><a href="#glossary_graph_kind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="registerglossarygraphkind"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_glossary-graph-kind.registerGlossaryGraphKind.html">registerGlossaryGraphKind</a><a href="#registerglossarygraphkind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-this-module-sits-in"><span>Why this module sits in </span></a>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Variables</summary>
+<div><a href="#glossary_graph_kind"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>GLOSSARY_<wbr/>GRAPH_<wbr/>KIND</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#registerglossarygraphkind"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>register<wbr/>Glossary<wbr/>Graph<wbr/>Kind</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

@@ -402,6 +402,21 @@
       "seeAlso": "https://litlfred.github.io/content-types.html"
     },
     {
+      "@id": "folio-assistant-core:GlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "GlossaryGraph",
+      "comment": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "prefLabel": "GlossaryGraph",
+      "definition": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "notation": "folio-assistant-core:GlossaryGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
+    },
+    {
       "@id": "folio-assistant-core:PreviewGraph",
       "@type": [
         "rdfs:Class",
@@ -592,21 +607,6 @@
       "prefLabel": "FshGutsGraph",
       "definition": "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the rendered site. The destination for anything that would otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
       "notation": "cat-harness:FshGutsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:GlossaryGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "GlossaryGraph",
-      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "prefLabel": "GlossaryGraph",
-      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "notation": "cat-harness:GlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -862,6 +862,21 @@
       "prefLabel": "SkillGraph",
       "definition": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
       "notation": "cat-harness:SkillGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:SwimlaneGlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SwimlaneGlossaryGraph",
+      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "prefLabel": "SwimlaneGlossaryGraph",
+      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "notation": "cat-harness:SwimlaneGlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
