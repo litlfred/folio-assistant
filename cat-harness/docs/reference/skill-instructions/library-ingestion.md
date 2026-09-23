@@ -395,6 +395,28 @@ an image the sidecar does not have — still fails, in either mode.
 
 Every narrative it writes lands as `draft`. Only a person confirms one.
 
+#### Reading a figure: the text layer is not the figure
+
+Two findings from `xeg6`, both of which would have shipped as descriptions:
+
+**A diverging axis's SIGN cannot be read from the text layer.** `get_text`
+returned `0.2 0.4 0.6` below the zero of a `Delta Pass Rate` bar with **no
+sign at any codepoint** — matplotlib draws U+2212 as a vector path, so the
+minus exists in the rendering and not in the text. Rendering the region showed
+`-0.2 -0.4 -0.6` plainly. A verdict trusting the extraction would have called
+a `-0.6` endpoint `+0.6`.
+
+**And the direction is a fact about the axis, not about the colours.** The
+recorded inspection said a bar ran *"blue low to red high"*. Its ticks said
+`Pass Rate`, `1.0` at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — **worse than no
+description**, because a missing one is visibly missing.
+
+So: render the region and read the ticks. Two images that look alike need the
+same check each — the same record called three bars one repeated legend when
+the third was a different, signed scale, and it had the disconfirming datum
+(5188 bytes against 5167 twice) already written down beside the claim.
+
 ### An `.xlsx` IS a zip, and that broke the archive routing
 
 The magic bytes of an OOXML or ODF document say `application/zip`, which is
