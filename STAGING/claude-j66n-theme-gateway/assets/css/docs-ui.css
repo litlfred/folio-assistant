@@ -4797,14 +4797,39 @@ a.fa-harness-tab__body:focus-visible {
   text-decoration: underline;
 }
 
-/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`. Marked
- * with a rule rather than only by opacity, because opacity alone is the same
- * signal this file already uses for "quiet" and would make "declared but
- * unbuilt" indistinguishable from "just a sub-item". */
+/* A KIND WITH NO PUBLISHED VIEWER is shown and is not a link — `pb04`.
+ *
+ * The comment here used to argue that opacity alone would make "declared but
+ * unbuilt" indistinguishable from "just a sub-item", and answered it with a
+ * `line-through`. The argument was right and the answer was not: a struck-out
+ * label means REMOVED, and a graph whose viewer has not been built yet has
+ * not been removed from anything. It is now `.fa-harness-graph__note`, which
+ * says which of the four reasons applies in words — a signal that is neither
+ * colour nor typographic convention, and the only one of the three a screen
+ * reader gets for free.
+ *
+ * `cursor: help` went with the `title` it promised. With no tooltip left to
+ * reveal, a help cursor is a promise the row cannot keep.
+ *
+ * NO RATIO IS CLAIMED FOR THE DIM, because none can be: the ink is
+ * `inherit`ed from the theme and this file does not own either end of the
+ * pair. That is the whole reason the state is not left to the dim — 0.45 of
+ * an unknown ink is unmeasurable, so it is decoration here and never the
+ * signal. It is raised to 0.6 so the note beside it stays readable, still
+ * below the 0.72 a live row carries. */
 .fa-harness-graph__link--unlinked {
-  opacity: 0.45;
-  text-decoration: line-through;
-  cursor: help;
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* THE REASON, beside the kind. Its own element so it can be quieter than the
+ * label without the label having to carry two opacities, and inline so the
+ * row keeps the one-line shape every other row in this list has. */
+.fa-harness-graph__note {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+  font-style: italic;
+  opacity: 0.6;
 }
 
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════

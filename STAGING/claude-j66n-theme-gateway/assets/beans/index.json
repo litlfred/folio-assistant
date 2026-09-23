@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 553,
+      "count": 555,
       "unit": "beans"
     }
   },
@@ -3439,6 +3439,20 @@
       "file": "beans/defs/folio-assistant-fvnw--graph-layer-document-every-declared-graph-as-conte.md"
     },
     {
+      "id": "folio-assistant-fyu2",
+      "title": "DOCUMENT FOLIO SITE BUILD: the platform defines no command that builds a document folio's site, so staging has nothing to publish",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T23:35:05Z",
+      "updatedAt": "2026-09-22T23:35:05Z",
+      "preview": "Found 2026-09-22 building ojcx (folio staging).\n\n**The gap.** `publish.yml` is the platform's reusable build for folios, and it builds a PAPER: LaTeX, then PDF and blueprint HTML. The document adapter's `document_render_md` / `document_render_pdf` (pandoc) produce single documents, not a browsable site. Nothing produces a document folio's SITE, which is the thing a staging preview publishes and th",
+      "file": "beans/defs/folio-assistant-fyu2--document-folio-site-build-the-platform-defines-no.md"
+    },
+    {
       "id": "folio-assistant-g196",
       "title": "Every preview stores a full copy of the site because per-preview facts are baked into every page",
       "status": "in-progress",
@@ -5055,14 +5069,14 @@
     {
       "id": "folio-assistant-ojcx",
       "title": "FOLIO STAGING: a folio in its own repository gets no STAGING build — feature-staging is not reusable and init-folio never writes it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:04:36Z",
-      "updatedAt": "2026-09-22T21:04:36Z",
+      "updatedAt": "2026-09-22T23:19:42Z",
       "preview": "Epic q4jm roast, finding R1, measured 2026-09-22.\n\n- `.github/workflows/feature-staging.yml` triggers on `pull_request`, `pull_request_target` and `workflow_dispatch`. There is **no `workflow_call`**, so a folio repository cannot reuse it.\n- `cat-harness/scripts/init-folio.ts` mentions staging **0** times.\n\nSo STAGING, and with it every before/after in this epic, exists only for the platform's own",
       "file": "beans/defs/folio-assistant-ojcx--folio-staging-a-folio-in-its-own-repository-gets-n.md"
     },
@@ -5235,6 +5249,20 @@
       "updatedAt": "2026-09-20T11:31:01Z",
       "preview": "Group 5 of 13 in `d308`. **24 files, 5 entry points.**\n\n`pot-extract`, `po-inject`, `po-resolve`, `translation-index`,\n`translation-block-qa`, `translation-qa-sweep`, `translation-roundtrip`,\n`bpmn-translate`, `translate-bpmn`, `translate-kg-viewer`, `check-l1-complete`, and\n`scripts/translation/` (13 files).\n\n**BPMN:** `human-translation-workflow · Task_ExtractPOT · Task_InjectPO ·\nTask_RoundTrip",
       "file": "beans/defs/folio-assistant-pha7--tool-513-task-extractpotinjectporoundtripqa-transl.md"
+    },
+    {
+      "id": "folio-assistant-pk2s",
+      "title": "NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T05:12:12Z",
+      "updatedAt": "2026-09-23T05:12:12Z",
+      "preview": "Found while executing #956's empty-graph ruling (PR #996), by rendering the\nsite and running the mount step rather than by reading a diff. It is NOT that\nPR's defect and was deliberately not widened into it: that ruling is about a\nrow's LABEL, this is about a row's LINK.\n\n## Measured, 2026-09-23\n\nOn who-iris's mounted rail, four of six graph rows draw inert. Two of them —\n`catalogue` and `uploads`",
+      "file": "beans/defs/folio-assistant-pk2s--navbar-the-rail-greys-rows-the-tile-generator-says.md"
     },
     {
       "id": "folio-assistant-pn6j",
