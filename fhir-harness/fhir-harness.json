@@ -51,5 +51,6 @@
     "folio-assistant-core"
   ],
   "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, NOT a FHIR canonical: this layer publishes no FHIR artefacts, it publishes a Tool graph. It exists because a Tool node's I/O type IRIs are minted against it at load and Zod refuses a relative one. Stated rather than left blank so nobody reads it as a claim that fhir-harness is an IG.",
-  "canonicalUrl": "https://litlfred.github.io/folio-assistant/fhir-harness"
+  "canonicalUrl": "https://litlfred.github.io/folio-assistant/fhir-harness",
+  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. `fhir-harness` is DECLARED here and is not instantiated: instantiation is a `<name>.config.json` at the REPOSITORY root (`harness-tiles`, bean `6n23`), and there is no `fhir-harness.config.json`. It also declares no `coverage.visualiser` on either directory, so by the tile rule it owes no tile and gets none — making it, measured 2026-09-23, the least harness-like thing in this repository that carries the word in its name. That is not a defect: this repository stages future instances as siblings, and `description` above says so (\"What a non-WHO implementation guide instantiates\") — a downstream IG instantiates it, this checkout does not. Written down because the name says otherwise to anyone who has not read the declaration, and `check:harness-claims` reports the pairing rather than leaving the next reader to re-derive it."
 }
