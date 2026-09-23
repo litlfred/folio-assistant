@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>70</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>51</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>52</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>71</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>52</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>53</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 52 |
+| <span class="tg-tag tg-shell">shell</span> | 53 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 65 |
+| `none` | 66 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **51** skills named across **70** tools resolve to a
+Yes — all **52** skills named across **71** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -121,6 +121,7 @@ tool advertising a capability the graph cannot locate.
 | `translation-signoff`<br>Sign off a translation | Record a translation as official — who signed off, when, and the hash of the source it was signed against, so a later source edit is detectable. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `decision-audit`<br>`translation-manager` | 4 in / 1 out |
 | `translation-status`<br>Translation coverage | Per-locale translation coverage, computed from the .po files under the translations directory. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 1 in / 1 out |
 | `translation-validate`<br>Validate a translation | Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
+| `wireframe-check`<br>Wireframe check at web and mobile viewports | Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail. | <span class="tg-tag tg-shell">shell</span> | `wireframe-design-review` | 2 in / 1 out |
 | `work-plan-prime`<br>Prime the work plan | Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `bean-coordination`<br>`pending-show`<br>`session-intent`<br>`todo-manager` | 0 in / 1 out |
 | `workflow-complete`<br>Complete a step | Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `bean-coordination`<br>`process-state` | 6 in / 1 out |
 | `workflow-gate`<br>May this step be performed? | Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `process-state` | 2 in / 1 out |

@@ -346,7 +346,7 @@ import {
   ownDirectories,
   instanceRootsIn,
   readDeclaration,
-  repoRootFor,
+  siblingScopeFor,
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
@@ -661,7 +661,12 @@ export function dependenciesFromNeeds(instanceRoot: string): {
   }
   if (needs.length === 0) return { dependencies: [], unresolved: [] };
 
-  const repoRoot = repoRootFor(abs);
+  // `siblingScopeFor`, NOT `repoRootFor`: this is a lookup of SIBLINGS by
+  // name, and `repoRootFor` is `dirname`, which climbs out of the checkout for
+  // the one instance declared at the repository root. That made the root
+  // instance's `needs` derive nothing while its authored edge still resolved —
+  // an overlay that looked like it worked and held one entry.
+  const repoRoot = siblingScopeFor(abs);
   const byName = new Map<string, string>();
   for (const root of instanceRootsIn(repoRoot)) {
     try {
@@ -752,7 +757,34 @@ export function resolveInstanceGraph(folioRoot: string): InstanceGraph {
     // a git URL, a version, a `provides` narrowing — so letting derivation
     // override it would silently widen a deliberately narrowed edge.
     const authoredNames = new Set(authored.map((d) => d.name));
-    const derived = dependenciesFromNeeds(at).dependencies.filter((d) => !authoredNames.has(d.name));
+    const fromNeeds = dependenciesFromNeeds(at);
+    const derived = fromNeeds.dependencies.filter((d) => !authoredNames.has(d.name));
+
+    // A `needs` NAME THAT RESOLVED TO NOTHING IS A PROBLEM, not an absence.
+    //
+    // `dependenciesFromNeeds` returns these in `unresolved` precisely so a
+    // caller can report them — its docblock says *"A name that resolves to
+    // nothing is REPORTED, never dropped"* — and this function used to throw
+    // the array away. The cost was measured on `main` at `80c18ac`: the
+    // repository root's `needs: ["folio-assistant-core"]` resolved to nothing,
+    // `problems` came back `[]`, and `check:instance-graph` printed *"19
+    // instance(s): every dependency resolves, no cycle"*. A gate asserting the
+    // opposite of the fact it was written to catch.
+    //
+    // Reported as `missing`, the same kind an unresolvable authored dependency
+    // gets, because the consequence is identical: that layer is absent from
+    // every overlay. An entry already named by `authored` is not reported —
+    // the config supplies what the name could not, which is the division of
+    // labour `dependenciesFromNeeds` documents.
+    for (const name of fromNeeds.unresolved) {
+      if (authoredNames.has(name)) continue;
+      problems.push({
+        kind: "missing",
+        from: at,
+        name,
+        detail: `\`${name}\`, named in ${at}'s \`needs\`, matches no instance in this checkout — its layer is absent from every overlay`,
+      });
+    }
 
     for (const dep of [...derived, ...authored]) {
       const found = resolveDependencyPath(at, dep);

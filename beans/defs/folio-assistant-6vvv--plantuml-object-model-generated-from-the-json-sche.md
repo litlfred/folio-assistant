@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6vvv
 title: PlantUML object model generated from the JSON Schemas
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T23:25:34Z
-updated_at: 2026-09-22T23:31:21Z
+updated_at: 2026-09-23T09:46:50Z
 parent: folio-assistant-zzmr
 ---
 
@@ -15,4 +15,8 @@ Generate a .puml of the harness object model (deck slide 3: schema, scenario, pr
 - [x] generator script
 - [x] generated .puml committed
 - [x] gates green
-- [ ] PR
+- [x] PR
+
+## Summary of Changes
+
+Landed in litlfred/folio-assistant#991 (merge 0bcf94bd), merged on the owner's instruction with CI green on 5b1aa15f.

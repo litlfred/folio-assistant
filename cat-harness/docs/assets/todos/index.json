@@ -232,7 +232,9 @@
       "Process_Review",
       "Process_ThemeUIReview"
     ],
-    "Process_CRDM_Issue": [],
+    "Process_CRDM_Issue": [
+      "Process_RelatedWork"
+    ],
     "Process_CRDM_Needs": [],
     "Process_CRDM_Requirements": [],
     "Process_CRDM": [
@@ -278,12 +280,17 @@
     "Process_L2Dak": [],
     "Process_L3Fhir": [],
     "Process_MaterializeRemote": [],
+    "Process_MethodologyFromSource": [
+      "Process_Ingestion",
+      "Process_RelatedWork"
+    ],
     "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [],
     "Process_QaReportSigning": [],
     "Process_RefreshMaterialized": [
       "Process_Adjudication"
     ],
+    "Process_RelatedWork": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
     "Process_NarrativeReview": [
@@ -309,6 +316,10 @@
     ],
     "Process_VoiceReview": [
       "Process_Adjudication"
+    ],
+    "Process_WireframeDesignReview": [
+      "Process_Adjudication",
+      "Process_OptionsAnalysis"
     ],
     "Process_DIIG": []
   },
