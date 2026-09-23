@@ -556,6 +556,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "consultation, and it is how `consulted` quietly becomes a formality.",
   },
   {
+    id: "raci-involvement-vocabulary",
+    applies: ["process"],
+    // `major`, matching its two neighbours above, and the reasoning is the
+    // same: every role named exists, so this is not a dangling reference. It
+    // is a modelling error — a letter the process's chosen vocabulary does
+    // not admit, which until 2026-09-23 was discarded during parsing with
+    // nothing reporting it, so the chart read as complete while an
+    // involvement somebody wrote had simply evaporated.
+    severity: "major",
+    summary:
+      "A `<folio:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
+      "`supportive` where only RACI's four letters are in force. The value is neither coerced to a " +
+      "neighbouring letter nor silently dropped; a process opts in to the fifth letter with " +
+      "`<folio:involvement vocabulary=\"rasci\"/>`.",
+  },
+  {
     id: "activity-fulfilment-kind",
     applies: ["process"],
     // `major`. Nothing dangles — both ends of this join resolve — so it is not
