@@ -76,6 +76,7 @@
     "beans",
     "cat-harness",
     "code",
+    "code-list",
     "docs",
     "external-schema",
     "folio",
@@ -87,6 +88,7 @@
     "library",
     "memory",
     "methodology",
+    "policies",
     "processes",
     "qa",
     "scenarios",
@@ -144,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 666,
+      "count": 672,
       "unit": "beans"
     },
     {
@@ -1454,12 +1456,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 43
+          "value": 45
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 27
         },
         {
           "id": "views",
@@ -1478,6 +1480,10 @@
         },
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code-list",
           "note": "no viewer yet"
         },
         {
@@ -1526,6 +1532,10 @@
           "path": "/methodologies/"
         },
         {
+          "kind": "policies",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "processes",
           "path": "/processes/"
         },
@@ -1571,7 +1581,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1719,6 +1729,10 @@
         "note": "no viewer yet"
       },
       {
+        "kind": "code-list",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "docs",
         "path": "/cat-harness/docs-auto/index/docs/docs/"
       },
@@ -1762,6 +1776,10 @@
       {
         "kind": "methodology",
         "path": "/methodologies/"
+      },
+      {
+        "kind": "policies",
+        "note": "no viewer yet"
       },
       {
         "kind": "processes",
@@ -2537,7 +2555,7 @@
           },
           {
             "key": "directories",
-            "summary": "43: tools, external-schemas, schemas, uml, cat-harness, scenarios, processes, methodologies, …"
+            "summary": "45: tools, external-schemas, code-lists, schemas, uml, cat-harness, scenarios, policies, proc…"
           },
           {
             "key": "associatedHarnesses",

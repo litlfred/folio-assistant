@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 666,
+      "count": 672,
       "unit": "beans"
     }
   },
@@ -303,6 +303,20 @@
       "updatedAt": "2026-09-23T16:28:23Z",
       "preview": "Child of d903 (renderer 5 of the five it listed).\n\nNeeds, before it can be built:\n- screenshots of each changed block on both sides, taken in the staging job (Chromium is available there), cropped to the block's anchor;\n- a pixel-compare library (pixelmatch or similar): a DEPENDENCY decision, with NOTICE / THIRD-PARTY-NOTICES to follow; the owner decides;\n- a registry entry with a new `needs` inpu",
       "file": "beans/defs/folio-assistant-0rxe--diff-renderer-visual-pixel-diff-beforeafter-screen.md"
+    },
+    {
+      "id": "folio-assistant-0ytk",
+      "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:29:49Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
+      "preview": "Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagrams as bare strings: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset. can we use existing tools for new Skills?\" Chosen: all of adjudication answers, JSON-LD namespaces (2j09), our own namespaces; published through the exi",
+      "file": "beans/defs/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md"
     },
     {
       "id": "folio-assistant-10s1",
@@ -631,14 +645,14 @@
     {
       "id": "folio-assistant-2j09",
       "title": "The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T11:48:29Z",
-      "updatedAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
       "preview": "Split out of the 2026-09-22 fix to `external-schemas.ts`, deliberately not taken there because it is a much larger decision than the bug beside it.\n\n## The fix that was taken\n\n`unusedNamespaces` was reporting Dublin Core — 43 real uses, live in the glossary's own `@context` — as *\"a record outliving its dependency\"*, because `namespacesInUse()` reads **only** `processes/*.bpmn|dmn`. A vocabulary c",
       "file": "beans/defs/folio-assistant-2j09--the-undeclared-namespace-check-reads-only-bpmn-xml.md"
     },
@@ -1093,7 +1107,7 @@
     {
       "id": "folio-assistant-4d22",
       "title": "A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-ahvw",
@@ -1303,14 +1317,14 @@
     {
       "id": "folio-assistant-54rk",
       "title": "CACHING + on-demand subgraph materialization, post-bootstrap",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T00:00:00Z",
-      "updatedAt": "2026-09-23T02:45:00Z",
+      "updatedAt": "2026-09-23T20:03:59Z",
       "preview": "Owner, 2026-09-20:\n\n> *\"some of this is post-inintation of a harness. user can ask (as they come in\n> need to use) if they want to material parts of subgraphs. need tools skills\n> around cahcing. bean up todo. but stub in process in cat-harness bootstrap\n> insitation steps.\"*\n\n## The shape\n\nBootstrap brings an agent to a working harness. It does **not** bring the\ncorpus — and it should not: `who-i",
       "file": "beans/defs/folio-assistant-54rk--caching-on-demand-subgraph-materialization-post-bo.md"
     },
@@ -1667,15 +1681,15 @@
     {
       "id": "folio-assistant-6hf2",
       "title": "A: data-modelling guidance — dependents point at the general node; references are typed KG refs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T19:53:34Z",
-      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [ ] gates green, PR open",
+      "updatedAt": "2026-09-23T20:12:11Z",
+      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [x] gates green, PR open\n\n## Summary of Changes\n\nMerged in #1172 (aabdc87): data-modelling.md steps 8 (dependents point at the general node; the g",
       "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
     },
     {
@@ -2171,6 +2185,20 @@
       "file": "beans/defs/folio-assistant-7uff--logging-agents-log-task-startend-to-fsh-gutslogs-o.md"
     },
     {
+      "id": "folio-assistant-7umv",
+      "title": "ORPHAN CLEANUP: the finding's action names the label first, and the label provably cannot reach an orphan",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:59:52Z",
+      "updatedAt": "2026-09-23T21:01:56Z",
+      "preview": "The owner applied `staging:cleanup` to both orphaned slugs, as\n`staging-preview-orphans` told them to. **Nothing happened.** 201.2 MB stayed\nexactly where it was.\n\n## Why the label cannot work, in the workflow's own words\n\n`feature-staging.yml`, on its dispatch inputs:\n\n> the label path cannot reach the previews the health sweep reports: `cleanup`\n> below fires on `pull_request_target: closed`, an",
+      "file": "beans/defs/folio-assistant-7umv--orphan-cleanup-the-findings-action-names-the-label.md"
+    },
+    {
       "id": "folio-assistant-7vhe",
       "title": "FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog",
       "status": "completed",
@@ -2183,6 +2211,20 @@
       "updatedAt": "2026-09-23T16:34:05Z",
       "preview": "Owner, 2026-09-19:\n\n> only available under settings at dead fish icon. opening it shows a list of\n> all the nodes in fsh-guts/ (has counter on icon) and use can open dialog to\n> select and display them. can be webpages, todos, whaeber.\n\n## What to build\n\n- a **dead fish icon** in the settings area of the docs site\n- a **counter** on the icon — how many nodes `fsh-guts/` holds\n- clicking opens a **",
       "file": "beans/defs/folio-assistant-7vhe--fsh-guts-viewer-dead-fish-icon-under-settings-with.md"
+    },
+    {
+      "id": "folio-assistant-7wgs",
+      "title": "Record when a materialized copy is last READ, so cache:index can rank eviction by use",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:03:49Z",
+      "updatedAt": "2026-09-23T20:03:49Z",
+      "preview": "Follow-up from bean `54rk`. `cache:index` has a last-read column and it says `not recorded` for all 276 copies, because nothing records reads.\n\nOwner, 2026-09-23, choosing among \"say not recorded\", \"add a lastReadAt field\" and \"use the file's access time\": **say not recorded**, and open this bean for recording reads later.\n\n**Why not file access time:** it is disabled on many mounts (noatime) and ",
+      "file": "beans/defs/folio-assistant-7wgs--record-when-a-materialized-copy-is-last-read-so-ca.md"
     },
     {
       "id": "folio-assistant-7x7g",
@@ -2535,6 +2577,20 @@
       "file": "beans/defs/folio-assistant-9791--qa-summary-passing-counts-only-script-checkable-cr.md"
     },
     {
+      "id": "folio-assistant-99zv",
+      "title": "RENDERED VERIFICATION: the skill says to read layout off the staging preview and never says how — plus a check that passed over a page with no stylesheets",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:47:12Z",
+      "updatedAt": "2026-09-23T20:12:24Z",
+      "preview": "Owner, 2026-09-23: *\"playright skills update to check intended UI (also need\nusabuility check)\"*.\n\n`rendered-verification` already existed and already covered the ground — build\nthe site, drive it with Playwright, measure computed style rather than reading\nthe stylesheet. So this **extends it** rather than adding a ninth skill beside\neight that overlap.\n\n## The gap\n\nThe skill said, correctly:\n\n> *",
+      "file": "beans/defs/folio-assistant-99zv--rendered-verification-the-skill-says-to-read-layou.md"
+    },
+    {
       "id": "folio-assistant-9c34",
       "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
       "status": "completed",
@@ -2645,6 +2701,20 @@
       "updatedAt": "2026-09-20T11:24:49Z",
       "preview": "`ec24133a` (\"excise directoryForGraph — and it took a silently-dead CI gate\nwith it\") removed this, on the owner's instruction \"excise singulsar\":\n\n```ts\nexport function directoryForGraph(root, graph, registry = defaultGraphKinds) {\n  return resolveDirectories([{ name: \"(local)\", root, own: true }], registry)\n    .find((d) => d.graphs.includes(graph))?.absPath;\n}\n```\n\n## Correction: `[0]` was DELI",
       "file": "beans/defs/folio-assistant-a02m--sole-directory-excising-directoryforgraph-relocate.md"
+    },
+    {
+      "id": "folio-assistant-a0s3",
+      "title": "B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:12:05Z",
+      "updatedAt": "2026-09-23T21:12:05Z",
+      "preview": "Mechanical sweep from the string-to-reference analysis (#1168 comment 5803006038). SkillNameSchema / ProcessIdSchema / TaskRefSchema / BeanIdSchema / BLOCK_KINDS enum / ThemeRefSchema / KgRefSchema on the listed fields; kg-export ActorDef.roles and role toJsonLd skills as @id links; resolve memory roles/agents. Delete SkillDefinition.roles (inverse of RoleDef.skills, 0 instances) and skill front-m",
+      "file": "beans/defs/folio-assistant-a0s3--b8-1168-string-to-reference-sweep-typed-refs-on-25.md"
     },
     {
       "id": "folio-assistant-a1lq",
@@ -3209,7 +3279,7 @@
     {
       "id": "folio-assistant-byql",
       "title": "Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
@@ -4281,7 +4351,7 @@
     {
       "id": "folio-assistant-gpdo",
       "title": "COMPILED-ARTEFACT CACHING: .olean for mathlib, and the same shape for sushi/FHIR -> AST",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-5a3l",
@@ -5189,7 +5259,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
       "updatedAt": "2026-09-22T19:54:07Z",
-      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\nOwner: *\"i want to slowly get rid of IG publisher in the publication/iteration\npahse… we can use this for iterative delta's (if we dont care about\nindexing/versioning so much in STAGING, we need full IG AST rereun)\"*, and on\nsmart-immunizations: *",
+      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\n## The plan is the SKILL. This bean is the work-plan entry.\n\n> [`fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md`](../../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md)\n\nRead it before starting any phase and before claiming ",
       "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
     },
     {
@@ -7047,14 +7117,14 @@
     {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T20:12:11Z",
       "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
       "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
     },
@@ -8087,14 +8157,14 @@
     {
       "id": "folio-assistant-vigi",
       "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:50:21Z",
-      "updatedAt": "2026-09-22T08:50:42Z",
+      "updatedAt": "2026-09-23T21:29:14Z",
       "preview": "Found 2026-09-22 while answering ruling 2 on #596 — the owner asked what is\nJSON-LD-centric in this ecosystem and what has pre-existing wrappers. The\nanswer to the second is **nothing**, and that turns out to matter beyond the\nquestion that produced it.\n\n## Measured\n\n**28 dependencies, and not one is an RDF, JSON-LD, SPARQL or FHIR library.**\n\nEvery JSON-LD document this repository publishes — the",
       "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
     },
@@ -8127,6 +8197,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Issue #223 — cut this repo into layers that can depend on each other without\ncycles.\n\n`zlmp` is the gate: a lower layer importing from a higher one becomes a circular\ndependency BETWEEN REPOSITORIES the moment the cut happens, so that count has to\nreach zero before anything else here is safe. `x4a6` is a worked example of what\nblocks until it does — `docs/` cannot be declared because `folio` is co",
       "file": "beans/defs/folio-assistant-vke6--split-223-cut-this-repo-into-layers-that-can-depen.md"
+    },
+    {
+      "id": "folio-assistant-vkm0",
+      "title": "GENERALISE THE FIX, THEN ATTACK IT: a fix scoped to the wrong thing, and the adversarial pass that catches it",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:13:37Z",
+      "updatedAt": "2026-09-23T20:26:56Z",
+      "preview": "Owner, 2026-09-23: *\"schema modeling/paper writting/software big fixing skill\nupdate: try to generalize pattern of a fix. adversarty skill, did you\ngenrealize too much... are you picking up unindeneded things.\"*\n\n## One skill, not two\n\nThe adversary has **no subject until a generalisation exists** — \"did you\ngeneralise too much\" cannot be asked of nothing. So they are two moves in one\nfile, in ord",
+      "file": "beans/defs/folio-assistant-vkm0--generalise-the-fix-then-attack-it-a-fix-scoped-to.md"
     },
     {
       "id": "folio-assistant-vlhk",

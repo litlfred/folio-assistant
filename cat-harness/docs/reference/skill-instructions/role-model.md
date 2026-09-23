@@ -25,7 +25,7 @@ Four objects, each with a home:
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
 | **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
-| **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
+| **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -274,20 +274,50 @@ be wrong, the lane may be wrong, or the step may really admit that kind — and
 only the third is a `<folio:fulfilment/>`. Reaching for the exemption first is
 how it becomes a rubber stamp.
 
-## An actor has three lists, and they answer three different questions
+## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
+// .claude/skills/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
-  "permissions":  ["admin-settings", "role-management", "release-authorization"],
   "capabilities": ["git-push"] }
+
+// policies/folio-defaults.jsonld: a W3C ODRL 2.2 Set
+{ "permission": [ { "assignee": "admin", "action": "role-management" }, … ] }
 ```
 
-| field | question | scope |
+| question | answered by | scope |
 |---|---|---|
-| `roles` | what may it act **AS**? | per lane |
-| `permissions` | what may it **DO**? | every lane |
-| `capabilities` | what does its **machine have**? | the environment |
+| what may it act **AS**? | `roles` on the actor | per lane |
+| what may it **DO**? | ODRL rules in `policies/` naming it as `assignee` | everywhere, or as narrow as a rule's `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints |
+| what does its **machine have**? | `capabilities` on the actor | the environment |
+
+**What an actor may DO moved off the actor on 2026-09-23** (issue #1180; owner:
+*"W3C ODRL 2.2 and W3C PROV-O for logging"*). Every `permissions` list became
+one ODRL rule per action, and `schemas/odrl.test.ts` pins that nobody lost or gained
+one. What this buys:
+
+- **Inheritance.** Each action in `permissions.json` says which broader actions
+  it is `includedIn`, ending at ODRL's own (`odrl:display`, `odrl:modify`,
+  `odrl:execute`, …). A grant of a broader action permits everything included
+  in it. The graph need not be a tree and may have cycles.
+- **Scope.** A rule may be limited to a Process, a Task or a Role. No
+  constraint means everywhere.
+- **One question, three answers.** `permits()` in `schemas/odrl.ts` returns
+  `permit`, `deny` or `unknown`, and `unknown` is never permit. Performing a
+  task in a lane needs the permission **and** the lane's role, so eligibility
+  (`roles`) and permission stay separate, as below.
+- **Anyone.** `cat-harness:anyone` is an unauthenticated reader. The owner's floor:
+  it may `visualize` and `render`, and nothing else.
+
+**Identity is not here.** Which login is which actor is the data store's to
+know (owner, 2026-09-23). No actor file and no policy carries a login.
+
+**Adding a permission:** declare the action in `permissions.json` with its
+`includedIn`, then add a rule to a policy in `policies/`. Never add a
+`permissions` list to an actor file: the audit reads it (an unmigrated
+downstream registry still works), but a list there is invisible to every
+scoped decision.
 
 **These were one field until 2026-09** (bean `ind9`), and the conflation meant
 nothing could resolve any of them: 27 claims across 19 names pointed at a
@@ -307,8 +337,9 @@ The line that does hold: **a skill answers what the performer of this task needs
 to KNOW, and belongs to the lane. A permission answers what this participant may
 DO, and travels with the participant through every lane it enters.**
 
-Both are audited and both are `critical` — `actor-permissions-resolve` and
-`actor-capabilities-resolve`. The latter was `major` only while the field was
+Both are audited and both are `critical` — `actor-permissions-resolve` (which
+also checks that every policy rule names a declared action and a declared actor
+or `cat-harness:anyone`) and `actor-capabilities-resolve`. The latter was `major` only while the field was
 overloaded, carrying entries no vocabulary could ever resolve.
 
 **Three names were neither**: `cql-authoring`, `data-dictionary-authoring` and
@@ -385,23 +416,13 @@ editor)", "Review Committee"); three of *the work plan*. Nothing joined any of
 them to anything, so "which skills does this task's performer have" had no
 answer and an undefined lane was a silence rather than a finding.
 
-A role therefore declares the lane names it **binds**:
-
-```jsonc
-{
-  "id": "reviewer",
-  "name": "Reviewer / SME",
-  "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane.",
-  "actorKind": "person",
-  "lanes": ["Reviewer / SME", "Reviewer (SME or editor)", "Review Committee"],
-  "skills": ["content-review", "content-feedback"],
-  "inherits": ["viewer"]
-}
-```
-
-That resolved the whole existing corpus without editing a single `.bpmn`.
-
-**A new diagram should not add a name here.** Bind the lane explicitly:
+The first fix had each role declare the lane names it bound, a `lanes[]` of
+exact strings. That resolved the corpus without editing a `.bpmn`, but it put
+the pointer on the wrong node: a role is the general node, a lane the dependent
+one, and a general node never names its users (`data-modelling` step 8; owner,
+2026-09-23, #1168). So every one of the ~140 lanes that bound by name was given
+an explicit reference, and `lanes[]` was removed. **A lane binds its role
+itself, and only this way:**
 
 ```xml
 <bpmn:lane id="Lane_Reviewer" name="Reviewer">
@@ -576,8 +597,10 @@ uniquely was had no picture.
    > instruction type-checks, parses, and silently loses the field. That is
    > bean `zdrf`'s failure class, and it happened — the three roles added in
    > #453 each carry a `summary` that reaches no graph.
-2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
-   existing name you are not renaming.
+2. Bind its lanes: each lane that this role plays carries
+   `<folio:role ref="<role id>">`. The role lists no lanes, since a role is the
+   general node and a lane the dependent one (`data-modelling` step 8, #1168).
+   A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
 4. `bun run kg:audit` and commit the sidecars.

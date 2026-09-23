@@ -38,11 +38,37 @@ That is the `dh4f` shape pointed the other way: not a clean report over somethin
 unlooked-at, but a finding phrased as a fact about the corpus when it is a fact
 about the walk.
 
+## UPDATED 2026-09-23, same evening: the evidence changed and the defect got QUIETER
+
+#1168 landed on main and inverted the lane/role relation — a lane names its
+role with `<folio:role ref>`, and a role no longer carries `lanes[]`, because a
+general node never names its users. `deep-researcher`'s `lanes` entry was
+dropped in the merge (it had existed for about an hour).
+
+**So the DANGLING line above no longer prints.** What `glossary-export` now says
+about this role is only:
+
+```
+12 declared role(s) no swimlane draws: librarian, deep-researcher, log, …
+```
+
+That is **worse for a reader, not better**. The DANGLING line at least named the
+lane it could not find, which is what made the scope question visible in the
+first place. Now a role whose lane IS drawn — in `folio-assistant-core`, bound
+by an explicit `<folio:role ref>` — sits in an undifferentiated list beside
+eleven roles no diagram anywhere draws, and nothing distinguishes the two cases.
+
+The finding is unchanged in substance and the fix options below still stand;
+only option 1 needs restating, because the wording to fix is now the
+no-swimlane list rather than the DANGLING line.
+
 ## Worked around, visibly
 
-`deep-researcher`'s description in `scenarios/roles.json` now names the diagram and
-says not to "fix" the dangling by deleting the `lanes` entry — which would make a
-drawn lane look undrawn. A comment is not a fix.
+`deep-researcher`'s description in `scenarios/roles.json` names the diagram its
+lane is drawn in, and records that the binding is stated once, on the lane. That
+sentence originally warned against deleting the `lanes` entry; #1168 deleted the
+FIELD, so the warning was rewritten rather than left describing a field that no
+longer exists. A comment is not a fix either way.
 
 ## Options, NOT decided
 

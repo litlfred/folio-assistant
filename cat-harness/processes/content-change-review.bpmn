@@ -20,6 +20,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     <bpmn:laneSet id="LaneSet_ContentChangeReview">
       <bpmn:lane id="Lane_Author" name="Content Author">
         <bpmn:documentation>Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Author</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewStaging</bpmn:flowNodeRef>
@@ -30,6 +31,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Folio-Assistant Agent">
         <bpmn:documentation>Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Agent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DetectScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CreateBranch</bpmn:flowNodeRef>
@@ -43,6 +45,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Review Committee">
         <bpmn:documentation>Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, "Approve and merge", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Reviewer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CompareBeforeAfter</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_ReviewSlices</bpmn:flowNodeRef>
@@ -59,6 +62,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Runs build, stage, comment and watch once per push, re-entering from Task_Iterate on every later revision rather than only the first. GW_Merged sits downstream of Task_Approve in the Reviewer's lane, so it is checking whether that approval actually resulted in a merge rather than deciding whether to approve one, and a "No" ends the pipeline quietly instead of looping back into review.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Pipeline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DeployStaging</bpmn:flowNodeRef>
@@ -73,6 +77,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Coordinator" name="Review Coordinator">
         <bpmn:documentation>Organises a review large enough to need organising, and decides nothing about the content: ingests the reviewers' tagged comments, slices the change into pieces a reviewer can hold, assigns each slice to a review lane, and watches coverage until every changed block has a verdict or a reasoned waiver. A separate role from the editor on the owner's ruling of 2026-09-23 (bean en2d): organising a review and deciding its outcome are different accountabilities, and a process where one lane did both could not say which it was doing.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="review-coordinator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_IngestComments</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SliceAndAssign</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Covered</bpmn:flowNodeRef>
@@ -357,7 +362,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="adjudication" />
-        <folio:adjudication codes="stands withdrawn"/>
+        <folio:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>
         <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
       </bpmn:extensionElements>
       <bpmn:incoming>c7</bpmn:incoming>

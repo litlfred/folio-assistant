@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:acefbb4ccf164b8b453971044d4a0fbf86926f7cc96304ccb0bd364227402b0f",
+  "source_hash": "sha256:3d6aa92bfcd60e90cce2a7e852f50c75d2e60dd7ce75c4350593317aba3d982c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -105,9 +105,9 @@
     }
   },
   "totals": {
-    "pass": 16,
+    "pass": 17,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   },
   "pair_attestations": [
@@ -115,8 +115,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/docs-site-publish.bpmn",
       "code": ".github/workflows/docs-site.yml",
-      "prose_hash": "acefbb4ccf16",
-      "code_hash": "771f7cf73311",
+      "prose_hash": "3d6aa92bfcd6",
+      "code_hash": "b9ce5edee4e4",
       "by": "baseline"
     }
   ]

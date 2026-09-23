@@ -5,7 +5,7 @@
     "id": "proof-review-agent",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:756db3d3fad4297e63faf6d40069252adb6e15b600f2684b78306776f83a3b7f",
+  "source_hash": "sha256:df648e0b8f092faf115ed1aac51661d0fe0d1b0491197fb6cda076b3c0259e50",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -20,7 +20,7 @@
       "findings": [
         {
           "where": "proof-review-agent",
-          "detail": "role \"proof-review-agent\" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead."
+          "detail": "role \"proof-review-agent\" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
         }
       ]
     },

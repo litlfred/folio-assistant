@@ -47,6 +47,24 @@ package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<ext
     note [0..1] : string
   }
 }
+package "cat-harness/code-lists" as pkg_cat_harness_code_lists <<code-list>> {
+  class "Code" as cat_harness_code_lists_Code <<json: CodeListSchema>> #f4f4f1 {
+    code [1] : string
+    label [1] : string
+    definition [1] : string
+    source [0..1] : object
+    value [0..1] : string
+    status [0..1] : active | retired
+  }
+  class "CodeList" as cat_harness_code_lists_CodeList <<json: CodeListSchema>> #f4f4f1 {
+    $schema [1] : 'folio-code-list/v1'
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    source [1] : object
+    codes [1..*] : Code[]
+  }
+}
 package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>> {
   class "BPMN Authoring Input" as cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input <<schema: skills/bpmn-authoring/input.schema.json>> #e9edf3 {
     processName [1] : string
@@ -459,7 +477,6 @@ package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
-    lanes [0..*] : string[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -476,6 +493,36 @@ package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
     name [1] : string
     roles [0..*] : Role[]
     actors [0..*] : Actor[]
+  }
+}
+package "cat-harness/policies" as pkg_cat_harness_policies <<policies>> {
+  class "Constraint" as cat_harness_policies_Constraint <<json: OdrlPolicySchema>> #f4f4f1 {
+    leftOperand [1] : cat-harness:process | cat-harness:task | cat-harness:role
+    operator [1] : odrl:eq | odrl:neq | odrl:isAnyOf | odrl:isNoneOf
+    rightOperand [1] : string | string[]
+  }
+  class "Permission" as cat_harness_policies_Permission <<json: OdrlPolicySchema>> #f4f4f1 {
+    assignee [1] : string
+    action [1] : string
+    target [0..1] : string
+    constraint [0..*] : Constraint[]
+  }
+  class "Prohibition" as cat_harness_policies_Prohibition <<json: OdrlPolicySchema>> #f4f4f1 {
+    assignee [1] : string
+    action [1] : string
+    target [0..1] : string
+    constraint [0..*] : Constraint[]
+  }
+  class "OdrlPolicy" as cat_harness_policies_OdrlPolicy <<json: OdrlPolicySchema>> #f4f4f1 {
+    @context [1] : string | any[] | map<any>
+    @type [1] : Set | Offer | Agreement
+    uid [1] : string
+    profile [1] : string
+    inheritFrom [0..*] : string[]
+    conflict [0..1] : odrl:perm | odrl:prohibit | odrl:invalid
+    assigner [0..1] : string
+    permission [0..*] : Permission[]
+    prohibition [0..*] : Prohibition[]
   }
 }
 package "cat-harness/processes" as pkg_cat_harness_processes <<processes>> {
@@ -978,6 +1025,7 @@ package "cat-harness/folio-assistant-core-processes" as pkg_cat_harness_folio_as
 
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
 cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
+cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
 cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
 cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
 cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems
@@ -1000,6 +1048,10 @@ cat_harness_schemas_skills_quality_control_output_schema_json_Quality_Control_Ou
 cat_harness_schemas_skills_terminology_management_output_schema_json_Terminology_Management_Output *-- "0..*" cat_harness_schemas_skills_terminology_management_output_schema_json_Resource : resources
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
+cat_harness_policies_Permission *-- "0..*" cat_harness_policies_Constraint : constraint
+cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : permission
+cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
+cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
 cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
@@ -1010,13 +1062,15 @@ cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations
 cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Item : items
-' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_cat_harness pkg_cat_harness_scenarios pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_fsh_guts pkg_cat_harness_health pkg_cat_harness_beans pkg_cat_harness_todos pkg_cat_harness_memory pkg_cat_harness_interaction pkg_cat_harness_issue_marks pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_who_iris_library pkg_cat_harness_agent_skills_library pkg_cat_harness_folio_assistant_sci_library pkg_cat_harness_folio_assistant_core_library pkg_cat_harness_smart_base_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_smart_kg_methodologies pkg_cat_harness_smart_base_methodologies pkg_cat_harness_folio_assistant_core_methodologies pkg_cat_harness_folio_assistant_core_skills pkg_cat_harness_smart_base_processes pkg_cat_harness_docs pkg_cat_harness_root_docs pkg_cat_harness_folio_assist_core_schemas pkg_cat_harness_large_datasets_skills pkg_cat_harness_who_iris_skills pkg_cat_harness_large_datasets_schemas pkg_cat_harness_bootstrap_tools_schemas pkg_cat_harness_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_assistant_core_processes
-pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_scenarios
-pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_processes
-pkg_cat_harness_schemas -[hidden]down- pkg_cat_harness_methodologies
-pkg_cat_harness_uml -[hidden]down- pkg_cat_harness_qa
-pkg_cat_harness_cat_harness -[hidden]down- pkg_cat_harness_fsh_guts
-pkg_cat_harness_scenarios -[hidden]down- pkg_cat_harness_health
+' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_code_lists pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_cat_harness pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_fsh_guts pkg_cat_harness_health pkg_cat_harness_beans pkg_cat_harness_todos pkg_cat_harness_memory pkg_cat_harness_interaction pkg_cat_harness_issue_marks pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_who_iris_library pkg_cat_harness_agent_skills_library pkg_cat_harness_folio_assistant_sci_library pkg_cat_harness_folio_assistant_core_library pkg_cat_harness_smart_base_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_smart_kg_methodologies pkg_cat_harness_smart_base_methodologies pkg_cat_harness_folio_assistant_core_methodologies pkg_cat_harness_folio_assistant_core_skills pkg_cat_harness_smart_base_processes pkg_cat_harness_docs pkg_cat_harness_root_docs pkg_cat_harness_folio_assist_core_schemas pkg_cat_harness_large_datasets_skills pkg_cat_harness_who_iris_skills pkg_cat_harness_large_datasets_schemas pkg_cat_harness_bootstrap_tools_schemas pkg_cat_harness_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_assistant_core_processes
+pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_cat_harness
+pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_scenarios
+pkg_cat_harness_code_lists -[hidden]down- pkg_cat_harness_policies
+pkg_cat_harness_schemas -[hidden]down- pkg_cat_harness_processes
+pkg_cat_harness_uml -[hidden]down- pkg_cat_harness_methodologies
+pkg_cat_harness_cat_harness -[hidden]down- pkg_cat_harness_qa
+pkg_cat_harness_scenarios -[hidden]down- pkg_cat_harness_fsh_guts
+pkg_cat_harness_policies -[hidden]down- pkg_cat_harness_health
 pkg_cat_harness_processes -[hidden]down- pkg_cat_harness_beans
 pkg_cat_harness_methodologies -[hidden]down- pkg_cat_harness_todos
 pkg_cat_harness_qa -[hidden]down- pkg_cat_harness_memory

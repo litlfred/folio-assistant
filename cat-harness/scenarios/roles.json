@@ -9,12 +9,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "User (person)",
-        "Contributor (human or agent)",
-        "Log operator (human)",
-        "Human actor"
-      ],
       "skills": [
         "adjudication",
         "dispatch-agent",
@@ -37,13 +31,6 @@
       "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Author (person)",
-        "Author (source content)",
-        "Author / guideline developer (person)",
-        "Content Author",
-        "Editor / author (person)"
       ],
       "skills": [
         "content-author",
@@ -70,9 +57,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Editors + authoring agents"
-      ],
       "inherits": [
         "author"
       ],
@@ -96,16 +80,6 @@
       "actorKinds": [
         "person",
         "agent"
-      ],
-      "lanes": [
-        "Reviewer / SME",
-        "Reviewer / subject-matter expert",
-        "Reviewer (SME or editor)",
-        "Review team and SMEs",
-        "Review team (content · QC · technical officer)",
-        "Review Committee",
-        "Subject-Matter Expert / Reviewer",
-        "Non-mechanical validation (review agent or SME)"
       ],
       "skills": [
         "adjudication",
@@ -140,9 +114,6 @@
         "person",
         "agent"
       ],
-      "lanes": [
-        "Review Coordinator"
-      ],
       "skills": [
         "review-comments",
         "review-heatmap",
@@ -163,9 +134,6 @@
       "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Narrative reviewer"
       ],
       "skills": [
         "adjudication",
@@ -193,9 +161,6 @@
         "person",
         "agent"
       ],
-      "lanes": [
-        "Code reviewer"
-      ],
       "skills": [
         "code-node-review",
         "covered-is-not-reachable",
@@ -218,10 +183,6 @@
       "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "QC reviewer",
-        "PR reviewer / QC reviewer"
       ],
       "inherits": [
         "reviewer"
@@ -247,10 +208,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Clinical SME",
-        "Clinical / scientific SMEs"
-      ],
       "inherits": [
         "reviewer"
       ],
@@ -269,9 +226,6 @@
       "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Administrator"
       ],
       "skills": [
         "role-model",
@@ -293,11 +247,6 @@
       "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Programme manager",
-        "Programme manager (release authority)",
-        "Programme manager / technical officer"
       ],
       "skills": [
         "content-plan",
@@ -321,17 +270,13 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Publication manager",
-        "Publication manager — deploy and seed",
-        "Human signer"
-      ],
       "skills": [
         "content-publish",
         "content-review",
         "ig-publication",
         "decision-audit",
-        "qa-report-signing"
+        "qa-report-signing",
+        "publish-verification"
       ],
       "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them.",
       "voice": "Release-shaped: what ships, what is held, what authorised it. Dates and refs, not adjectives.",
@@ -347,10 +292,6 @@
       "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Business analyst",
-        "BA / Feature Requestor"
       ],
       "skills": [
         "bpmn-authoring",
@@ -377,9 +318,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Terminologist"
-      ],
       "skills": [
         "terminology-management"
       ],
@@ -397,10 +335,6 @@
       "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "FHIR modeller",
-        "FHIR modeller / PR author (person + authoring agent)"
       ],
       "skills": [
         "l3-fhir-authoring"
@@ -420,9 +354,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Translation Coordinator"
-      ],
       "skills": [
         "translation-manager"
       ],
@@ -441,9 +372,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Human Translator"
-      ],
       "skills": [
         "translation-manager"
       ],
@@ -461,9 +389,6 @@
       "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "actorKinds": [
         "person"
-      ],
-      "lanes": [
-        "Human reviewer / adjudicator"
       ],
       "inherits": [
         "adjudicator"
@@ -486,9 +411,6 @@
       "actorKinds": [
         "person",
         "agent"
-      ],
-      "lanes": [
-        "Adjudicator"
       ],
       "inherits": [
         "reviewer"
@@ -515,9 +437,6 @@
         "agent",
         "system"
       ],
-      "lanes": [
-        "Feedback provider"
-      ],
       "skills": [
         "content-feedback",
         "todo-review",
@@ -538,9 +457,6 @@
       "actorKinds": [
         "person"
       ],
-      "lanes": [
-        "Stakeholders"
-      ],
       "judgementOnly": true,
       "skills": [],
       "persona": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history.",
@@ -557,14 +473,6 @@
       "description": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
       "actorKinds": [
         "agent"
-      ],
-      "lanes": [
-        "Authoring agent (system)",
-        "Folio-Assistant Agent",
-        "Agent",
-        "Agent (this session)",
-        "Agent / platform (automated)",
-        "Agent (playing the machine)"
       ],
       "skills": [
         "adopt-methodology-from-source",
@@ -622,9 +530,6 @@
       "actorKinds": [
         "agent"
       ],
-      "lanes": [
-        "Onboarding agent (system)"
-      ],
       "inherits": [
         "authoring-agent"
       ],
@@ -649,9 +554,6 @@
       "actorKinds": [
         "agent"
       ],
-      "lanes": [
-        "Ingestion Engine (agent, runs unattended)"
-      ],
       "skills": [
         "document-intake",
         "library-ingestion",
@@ -675,10 +577,6 @@
         "person",
         "agent"
       ],
-      "lanes": [
-        "Contributor",
-        "Agent"
-      ],
       "skills": [
         "filing-dublin-core",
         "archiving-web-pages",
@@ -698,13 +596,10 @@
     {
       "id": "deep-researcher",
       "title": "Deep researcher",
-      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE \u2014 `folio-assistant-core/processes/deep-document-research.bpmn`, whose `Deep researcher` lane carries it. `glossary-export` walks THIS instance\u2019s diagrams, so it reports the binding as dangling, and that report is correct about what it can see rather than wrong about the corpus. Do not \u201cfix\u201d it by deleting the `lanes` entry: that would make a drawn lane look undrawn, which is the one thing the dangling line exists to surface.",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE \u2014 the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
       "actorKinds": [
         "person",
         "agent"
-      ],
-      "lanes": [
-        "Deep researcher"
       ],
       "skills": [
         "deep-document-research"
@@ -725,9 +620,6 @@
       "actorKinds": [
         "agent"
       ],
-      "lanes": [
-        "Evidence agent (system)"
-      ],
       "skills": [
         "document-intake"
       ],
@@ -745,9 +637,6 @@
       "description": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
       "actorKinds": [
         "agent"
-      ],
-      "lanes": [
-        "Sibling session or human (not yours to close)"
       ],
       "skills": [
         "bean-coordination"
@@ -767,21 +656,13 @@
       "actorKinds": [
         "system"
       ],
-      "lanes": [
-        "Build pipeline — validate · render · publish",
-        "Build pipeline — SUSHI · validator · IG Publisher",
-        "Corpus + build pipeline (system)",
-        "Incremental build (system)",
-        "CI/CD Pipeline",
-        "Automated Pipeline",
-        "Scheduled log sweep"
-      ],
       "skills": [
         "content-publish",
         "content-test",
         "content-validate",
         "document-publishing",
         "feature-staging",
+        "publish-verification",
         "fhir-validation",
         "ig-publication",
         "l3-fhir-authoring",
@@ -805,9 +686,6 @@
       "actorKinds": [
         "system"
       ],
-      "lanes": [
-        "Board renderer"
-      ],
       "skills": [
         "board-windows",
         "board-diagram-interchange",
@@ -822,11 +700,6 @@
       "actorKinds": [
         "system"
       ],
-      "lanes": [
-        "HCI validation pipeline (system)",
-        "Mechanical validation (system)",
-        "Validation and QA (mechanical + agents)"
-      ],
       "skills": [
         "content-test",
         "content-validate"
@@ -840,9 +713,6 @@
         "system"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Publish — GitHub Pages"
-      ],
       "skills": [
         "getting-started"
       ]
@@ -853,9 +723,6 @@
       "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
       "actorKinds": [
         "system"
-      ],
-      "lanes": [
-        "Lean toolchain (lean-mcp)"
       ],
       "skills": [
         "lean-formalization",
@@ -869,9 +736,6 @@
       "actorKinds": [
         "system"
       ],
-      "lanes": [
-        "Publisher + validator services (JVM)"
-      ],
       "skills": [
         "fhir-validation",
         "ig-publication"
@@ -883,9 +747,6 @@
       "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
       "actorKinds": [
         "system"
-      ],
-      "lanes": [
-        "Attestation service (API)"
       ],
       "skills": [
         "qa-report-signing"
@@ -899,11 +760,6 @@
         "system"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Work plan — beans (shared by humans and agents)",
-        "Work plan — beans (shared)",
-        "Work plan (beans)"
-      ],
       "skills": [
         "todo-manager",
         "content-feedback"
@@ -917,10 +773,6 @@
         "system"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Corpus — L1 source knowledge graph",
-        "Corpus (versioned store)"
-      ],
       "skills": [
         "document-intake",
         "materialize-remote"
@@ -934,9 +786,6 @@
         "external"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Trusted registries and observatories (external)"
-      ],
       "skills": []
     },
     {
@@ -947,9 +796,6 @@
         "system"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Activity log"
-      ],
       "skills": [
         "activity-log"
       ]
@@ -962,9 +808,6 @@
         "system"
       ],
       "actedUpon": true,
-      "lanes": [
-        "Session record"
-      ],
       "skills": [
         "session-context"
       ]
