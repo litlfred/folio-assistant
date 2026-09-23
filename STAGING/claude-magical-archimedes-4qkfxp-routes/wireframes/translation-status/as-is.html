@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: translations — status</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  /* The real page is light-on-dark unless something sets data-fa-scheme="light";
+     drawn inverted, still monochrome. */
+  body { background: #111; color: #fff; }
+  .wf-meta { color: #ddd; border-color: #ddd; }
+  main { max-width: 60rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 24px; margin: 16px 0 4px; }
+  .sub { color: #ccc; margin: 0 0 20px; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border-bottom: 1px solid #555; padding: 8px 10px; text-align: right; vertical-align: top; }
+  th[scope="row"], thead th:first-child { text-align: left; }
+  thead th { font-size: 13px; color: #ccc; }
+  .d { color: #ccc; font-size: 12px; }
+  .ts-note { color: #ccc; font-size: 14px; margin-top: 20px; }
+  .wf-note { border-left-color: #fff; color: #eee; }
+  .clip { width: 100%; }
+  @media (max-width: 700px) {
+    .clip { overflow: hidden; border-right: 3px dashed #fff; }
+    .clip table { width: 493px; }
+  }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+<div class="wf-meta">As-is wireframe · translation-status · covers: cat-harness/docs/translation-status/index.html</div>
+<main>
+  <h1>translations — status</h1>
+  <p class="sub">The gettext side of the <code>translation-sources</code> graph, measured from the files in <code>cat-harness/translations</code>. Every number here is derived on each run; none is written down. These numbers last <strong>changed</strong> on 2026-09-22.</p>
+
+  <p class="wf-note wf-mobile-only">At 390 px the table is wider than the screen (page 509 px): the page scrolls sideways and <b>fuzzy</b> and <b>untranslated</b> start off-screen (the dashed edge).</p>
+  <div class="clip">
+  <table aria-label="Translation status by locale">
+    <thead><tr><th scope="col">locale</th><th scope="col">catalogues / templates</th><th scope="col">entries</th><th scope="col">translated</th><th scope="col">fuzzy</th><th scope="col">untranslated</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>ar</code></th><td>4 / 63<br><span class="d">6.3%</span></td><td>168</td><td>124<br><span class="d">73.8%</span></td><td>0</td><td>44</td></tr>
+      <tr><th scope="row"><code>es</code></th><td>3 / 63<br><span class="d">4.8%</span></td><td>85</td><td>41<br><span class="d">48.2%</span></td><td>0</td><td>44</td></tr>
+      <tr><th scope="row"><code>fr</code></th><td>5 / 66<br><span class="d">7.6%</span></td><td>171</td><td>60<br><span class="d">35.1%</span></td><td>0</td><td>111</td></tr>
+      <tr><th scope="row"><code>ru</code></th><td>4 / 63<br><span class="d">6.3%</span></td><td>168</td><td>124<br><span class="d">73.8%</span></td><td>0</td><td>44</td></tr>
+      <tr><th scope="row"><code>zh</code></th><td>3 / 63<br><span class="d">4.8%</span></td><td>85</td><td>41<br><span class="d">48.2%</span></td><td>0</td><td>44</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="ts-note"><strong>Two questions, not one.</strong> <em>catalogues / templates</em> asks whether a <code>.po</code> exists at all for each extractable <code>.pot</code>; the string columns ask how much of the catalogues that DO exist is done.</p>
+  <p class="ts-note"><strong>“no basis” is not zero.</strong> A share over an empty denominator is undefined, and rendering it as 0% would report a measurement this run did not make.</p>
+  <p class="ts-note"><strong>One directory, named above.</strong> <code>translation-sources</code> is a graph KIND, and more than one instance may declare it; this page measures the one directory named in the subtitle.</p>
+  <p class="ts-note"><strong>Fuzzy is counted apart from translated.</strong> A fuzzy entry has a translation and needs review.</p>
+  <p class="wf-note">No navigation, no folio mount, no script: the page is rendered server-side and stands alone.</p>
+</main>
+</body>
+</html>

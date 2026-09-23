@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-routes/skills/terminology-management/output.schema.json",
+  "title": "Terminology Management Output",
+  "description": "Output schema for terminology management operations.",
+  "type": "object",
+  "required": [
+    "resources"
+  ],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string",
+            "enum": [
+              "CodeSystem",
+              "ValueSet",
+              "ConceptMap"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "conceptCount": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "unmappedConcepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Concepts that could not be mapped to the target standard."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-routes",
+    "sha": "ac5f0ae14601e9af9c3e9baf21b3ce4f7ea78985",
+    "pr": "1135/merge",
+    "run": "35897545323"
+  }
+}

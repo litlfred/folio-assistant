@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-routes/skills/content-feedback/input.schema.json",
+  "title": "Content Feedback Input",
+  "description": "Input schema for feedback collection and triage.",
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "github-issues",
+        "survey",
+        "implementation-report",
+        "clinical-review"
+      ],
+      "description": "Source of feedback."
+    },
+    "publishedVersion": {
+      "type": "string",
+      "description": "Version the feedback relates to."
+    },
+    "feedbackItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "enhancement"
+            ]
+          },
+          "component": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-routes",
+    "sha": "ac5f0ae14601e9af9c3e9baf21b3ce4f7ea78985",
+    "pr": "1135/merge",
+    "run": "35897545323"
+  }
+}
