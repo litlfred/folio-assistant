@@ -181,6 +181,7 @@ catalogue, and `bootstrap` fetching a harness and landing it locally, with
 | `materialize-remote.bpmn` | May we hold a local copy, what does holding it cost, and for what purpose — `working` or `archival`? Five gates, three states, and a refusal leaves the node `referenced` rather than failing |
 | `refresh-materialized.bpmn` | What changed upstream, what changed locally, and what to do when both. An **archival** copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead |
 | `copy-out-materialized.bpmn` | Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own `folio/` that records, in `provenance.local`, which original it came out of — the edge nothing downstream can reconstruct once it is missing |
+| `sample-import.bpmn` | Try a sample of a remote source before committing to it: scope it (which items, which store, **permanent or trial?**), let `materialize-remote` gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls `refresh-materialized` for permanent samples only |
 
 **Post-MVP review** — what the delivered thing actually looks like, once
 stakeholders have accepted it and there is a render to judge:
