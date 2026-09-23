@@ -72,7 +72,7 @@ type NavbarRow = {
   icons: string[];
   hrefs: Record<string, string>;
   notes?: Record<string, string>;
-  folders: { kind: string; path?: string; note?: string }[];
+  folders: { kind: string; path?: string; note?: string; stagingOnly?: true }[];
 };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: NavbarRow | null;
@@ -101,6 +101,10 @@ const CUSTOM: NavbarRow = {
   folders: [
     { kind: "library", path: "/library/" },
     { kind: "memory", note: "no viewer by design" },
+    // A PATH THAT RESOLVES AND A PAGE THAT IS NOT THERE — the staging-only
+    // case, which had no fixture and no live case until `fsh-guts` was swept
+    // out of a canonical build.
+    { kind: "fsh-guts", path: "/fsh-guts/", stagingOnly: true },
     // NO NOTE AT ALL — data older than the note being carried. Not a fourth
     // state, and the page must not invent one for it.
     { kind: "scenarios" },
@@ -115,7 +119,7 @@ const HEADINGS =
   "<h2>Unlinkable</h2>" +
   '<h4 id="deep">Too deep</h4>';
 
-function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADINGS): string {
+function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADINGS, staging = ""): string {
   const script =
     row === "absent"
       ? ""
@@ -124,6 +128,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
         "<\/script>";
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <meta name="fa-baseurl" content="${BASEURL}">
+  <meta name="fa-staging" content="${staging}">
   <style>
   body { margin: 0; }
   .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
@@ -188,6 +193,7 @@ async function load(
   p: import("@playwright/test").Page,
   row: NavbarRow | null | "absent" | "broken",
   main?: string,
+  staging = "",
 ): Promise<{ errors: string[]; console: string[] }> {
   const errors: string[] = [];
   const logs: string[] = [];
@@ -200,7 +206,7 @@ async function load(
   // it passed. `route` + `goto` gives a real `http://` origin and costs one
   // handler.
   await p.route("http://navbar.fixture/**", (r) =>
-    r.fulfill({ contentType: "text/html", body: page(row, main) }),
+    r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
   return { errors, console: logs };
@@ -367,7 +373,10 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       BASEURL + "/library/",
     );
     const dead = page.locator(".fa-nav-folders__link--dead");
-    await expect(dead).toHaveCount(2);
+    // THREE: `memory` has no viewer, `scenarios` has no recorded reason, and
+    // `fsh-guts` has a page that is withheld from this deploy. Three different
+    // facts, all inert — which is the point of the note beside each.
+    await expect(dead).toHaveCount(3);
     expect(await dead.first().evaluate((n) => n.tagName)).toBe("SPAN");
   });
 
@@ -897,5 +906,63 @@ test.describe("the navbar can be closed, and it stays closed", () => {
     await page.hover(".side-bar");
     await page.locator(".fa-nav-close").click();
     expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
+  });
+});
+
+/**
+ * A PATH THAT RESOLVES AND A PAGE THAT IS NOT THERE.
+ *
+ * `compose-docs.ts` lays a `publish: "staging-only"` page into the site only
+ * under `--staging`, and `harness-tiles.ts` resolves `path` against the SOURCE
+ * tree — so on the canonical deploy the path is present, correct and dead.
+ *
+ * Measured 2026-09-23 by sweeping a canonical-shaped local build: `fsh-guts`,
+ * reached from two places in this sidebar. The graph TILE has skipped such a
+ * page since it was written — *"Conflating them would let 'show hidden'
+ * resurrect a link to a 404"* — and neither navbar surface did, because
+ * `stagingOnly` did not reach them.
+ *
+ * SHOWN, not skipped, unlike the tile: the owner's ruling on #1036 is that a
+ * graph a reader cannot open is rendered inert and labelled, and this list is
+ * the one surface that enumerates every declared kind.
+ */
+test.describe("a page withheld from this deploy is not linked", () => {
+  test("on the canonical deploy it is INERT and says why", async ({ page }) => {
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const row = page.locator(".fa-nav-folders__item", { hasText: "fsh-guts" });
+    await expect(row.locator("a[href]")).toHaveCount(0);
+    await expect(row.locator(".fa-nav-folders__note")).toHaveText("staging only");
+  });
+
+  test("...and NOT confused with a kind that has no viewer at all", async ({ page }) => {
+    // `flh4` again: withheld-on-purpose and never-built are different facts
+    // with different remedies, and `inertNote` words them differently. Until
+    // now the `staging-only` bucket had no live case, so this is the first
+    // time the two can be seen apart on a page.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    // OPENED FIRST. `innerText` is "" for an element inside a collapsed
+    // `<details>`, so comparing two of them there compares "" with "" and
+    // passes whatever the notes say — which is how the first version of this
+    // test passed while asserting nothing.
+    await page.locator(".fa-nav-folders__heading").click();
+    await page.waitForTimeout(200);
+    const note = (kind: string) =>
+      page.locator(".fa-nav-folders__item", { hasText: kind }).locator(".fa-nav-folders__note");
+    const withheld = await note("fsh-guts").innerText();
+    const never = await note("memory").innerText();
+    expect(withheld).not.toBe("");
+    expect(withheld).not.toBe(never);
+  });
+
+  test("ON A STAGING PREVIEW the same row IS a link", async ({ page }) => {
+    // The other half, and the one that proves the guard is about the DEPLOY
+    // rather than about the row: staging is where that page is published, and
+    // withholding the link there would hide a working viewer.
+    await load(page, CUSTOM, undefined, "claude-some-branch");
+    await page.hover(".side-bar");
+    const row = page.locator(".fa-nav-folders__item", { hasText: "fsh-guts" });
+    await expect(row.locator("a[href]")).toHaveAttribute("href", BASEURL + "/fsh-guts/");
   });
 });
