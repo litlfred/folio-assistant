@@ -1,11 +1,12 @@
 ---
 # folio-assistant-zw4a
 title: 'PROCESS VIEWER: show the skills bound to each role/swimlane, not just the lane name'
-status: todo
-parent: folio-assistant-o3xy
+status: completed
 type: feature
+priority: normal
 created_at: 2026-09-23T05:59:29Z
-updated_at: 2026-09-23T05:59:29Z
+updated_at: 2026-09-23T11:00:13Z
+parent: folio-assistant-o3xy
 ---
 
 The process viewer renders BPMN lanes but does not surface what the KG already knows about each lane: the role it binds, and that role's skills. Owner's request 2026-09-23.
@@ -44,9 +45,68 @@ graph can already give the lane's role and that role's skills.
 
 ## Done when
 
-- [ ] A lane in the rendered process shows its bound role and that role's skills.
-- [ ] Unresolvable role / determined-zero / has-skills are three visibly
-      different states.
-- [ ] The traversal reuses `kg:audit`'s resolution rather than restating it.
-- [ ] Decided and recorded: role-declared skills, activity-named skills, or both
-      distinguished.
+- [x] A lane in the rendered process shows its bound role and that role's skills.
+- [x] Unresolvable role / determined-zero / has-skills are visibly different
+      states — **five of them**, not three. See below.
+- [x] The traversal reuses `kg:audit`'s resolution rather than restating it.
+- [x] Decided and recorded: **both, distinguished**.
+
+## Summary of Changes — 2026-09-23
+
+`ProcessRow.laneDetails` carried `{id, name, roleRef, documentation}`. It now
+carries the binding verdict, the resolved role, **the role's skills closed over
+inheritance with provenance**, and **the activity-named skills scoped to that
+lane** — `scripts/gen-processes-viz.ts`, with `laneDetail()` extracted and
+tested.
+
+### It was three states. It is five, and they are not mine
+
+`role-graph.ts` already had `laneBinding`, whose docstring says it exists for
+*"the consumer that has to JUDGE the binding rather than use it"* — which is
+what a viewer is. Five kinds: `bound`, `dangling`, `variable`,
+`contradictory`, `unbound`.
+
+This file first grew its own four-state enum. It was a worse second answer,
+missing `variable` (a lane whose performer varies BY DESIGN — bean `ug4r`,
+where reporting it as a defect for ever is the failure the flag prevents) and
+`contradictory` (a lane declaring both a ref and `variable`). Deleted in favour
+of the existing type.
+
+### Three hand-rolled resolutions, all wrong, all caught by the corpus
+
+Worth recording because the pattern is the same each time and **the types were
+happy in all three**:
+
+1. **Reading `RoleDef.skills`.** Documented "before inheritance". Under-reports
+   every inheriting role — `adjudication.bpmn`'s `Adjudicator` resolves 14
+   skills, with `content-block-review` and `content-feedback` arriving via
+   `reviewer`. `resolveRoleSkills` is the resolver; provenance (`via`, `depth`)
+   is kept so a reader sees which ancestor supplied each.
+2. **Matching only the explicit `<folio:role ref>`.** Reported **140 of 184
+   lanes as unbound**. A role also binds lane NAMES (`RoleDef.lanes`), which
+   `roleForLane` handles and `laneBinding` calls. Real figure: **183 bound, 1
+   variable, 0 unbound, 0 dangling.**
+3. **The four-state enum**, above.
+
+Each was found by running the thing against the corpus and disbelieving the
+output, not by the compiler.
+
+### Both lists, distinguished — the fourth done-when
+
+`roleSkills` and `activitySkills` are separate and neither contains the other.
+Concretely, `adjudication.bpmn`'s `Adjudicator`: **14 role skills, 2 named by
+its activities.** A single list would assert an agreement nothing checks.
+**Which they are is `kg:audit`'s question** — this renders both and grades
+neither.
+
+### A defect found and NOT fixed here
+
+Bean `7go7`. `laneBinding` with no graph reports every ref-bearing lane
+`dangling`, so one unreadable role graph renders as a corpus of dangling
+references — the `dh4f` shape. Found by a test of mine whose expectation was
+wrong, written on the strength of a comment of mine that was false; both
+corrected. Left as-is rather than guarded locally, because `kg:audit` and
+`glossary-export` share that resolver and a viewer disagreeing with the audit
+about whether a lane is bound would be worse than the shape.
+
+14 tests. `bun run gates` — 135/135.

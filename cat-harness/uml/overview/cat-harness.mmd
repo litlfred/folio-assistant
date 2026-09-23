@@ -123,6 +123,16 @@ classDiagram
     }
   }
   namespace cat_harness__qa {
+    class cat_harness_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
+      <<json: KgQaReportSchema>>
+      kind [1] implements | co-located
+      prose [1] string
+      code [1] string
+      prose_hash [1] string
+      code_hash [1] string
+      by [1] baseline | agent | human
+      reason [0..1] string
+    }
     class cat_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -610,6 +620,8 @@ classDiagram
   cssClass "cat_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
+  cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+  cssClass "cat_harness_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa

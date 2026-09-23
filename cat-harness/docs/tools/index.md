@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>71</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>52</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>53</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>72</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>53</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>54</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 53 |
+| <span class="tg-tag tg-shell">shell</span> | 54 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 66 |
+| `none` | 67 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **52** skills named across **71** tools resolve to a
+Yes — all **53** skills named across **72** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -71,6 +71,7 @@ tool advertising a capability the graph cannot locate.
 | `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | `feature-staging` | 3 in / 1 out |
+| `folio-block-qa-summary`<br>Folio block QA summary | Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict. | <span class="tg-tag tg-shell">shell</span> | `review-heatmap` | 3 in / 1 out |
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `getting-started`<br>`repo-conversion` | 9 in / 1 out |
 | `fsh-cone`<br>FSH dependency cone | Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything. | <span class="tg-tag tg-shell">shell</span> | `fhir-validation` | 4 in / 1 out |
 | `gates`<br>The platform's quality gates | Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces. | <span class="tg-tag tg-shell">shell</span> | `continual-progress`<br>`platform-gates`<br>`prepare-merge` | 2 in / 1 out |

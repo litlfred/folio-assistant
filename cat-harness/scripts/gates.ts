@@ -460,6 +460,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
   },
   {
+    // The same reason again (bean `qbfi`): the block QA summary reads a
+    // FOLIO's committed verdicts, in that folio's staging job. The platform
+    // has no folio. Its logic is covered by `publish-block-qa.test.ts` and
+    // the heat map's unit and Playwright tests, in the gate set.
+    match: "publish-block-qa.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's committed QA verdicts; the platform carries no folio. " +
+      "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:

@@ -22,12 +22,26 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 5,
     "fail": 0,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-core/corpus-grep.md",
+      "code": "cat-harness/skills/folio-core/corpus-grep.ts",
+      "prose_hash": "fed1c8ac505b",
+      "code_hash": "6451ba7eb789",
+      "by": "baseline"
+    }
+  ]
 }
