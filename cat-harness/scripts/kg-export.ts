@@ -47,6 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
+import { readPolicyGrants } from "../schemas/odrl.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
@@ -268,8 +269,11 @@ export function buildContext(): Record<string, unknown> {
     // off five skill modules onto the one capability it describes.
     fallbackToCapability: { "@id": termIri("fallbackToCapability"), ...link },
     satisfies: { "@id": termIri("satisfies"), ...link },
-    // The role REGISTRY's own two edges, as against the lane-derived view.
-    // `hasSkill` is what the role knows; `bindsLane` is where it is bound.
+    // The role REGISTRY's edge, and the lane's edge to it. `hasSkill` is what
+    // the role knows; `bindsRole` is on the LANE, naming the role it binds
+    // (its `<folio:role ref>`). It was `bindsLane` on the role until #1168: a
+    // role is the general node and must not name its lanes (data-modelling
+    // step 8).
     //
     // REUSED, not coined. `schemas/role-graph.ts`'s own JSON-LD projection
     // already publishes exactly these two relations under these two IRIs, so
@@ -281,7 +285,7 @@ export function buildContext(): Record<string, unknown> {
     // Links for `partOf`'s reason: a bare name leaves a consumer to re-derive
     // the IRI this document already minted.
     hasSkill: { "@id": termIri("hasSkill"), ...link },
-    bindsLane: { "@id": termIri("bindsLane"), ...link },
+    bindsRole: { "@id": termIri("bindsRole"), ...link },
     // A LINK: the artefact's published URL, which dereferences. Undeclared it
     // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
     // property names were used in `@graph` and absent from `@context`, so the
@@ -1011,6 +1015,11 @@ function registryFields(
 
 function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
+  // What an actor may do lives in the ODRL policies since issue #1180, not on
+  // the actor file. Restored here so `permissionName` still says what it held.
+  // declared-path-literal: the convention home of the policies graph kind,
+  // resolved beside the actor registry this function already reads by path.
+  const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
     const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
     if (!existsSync(abs)) continue;
@@ -1019,6 +1028,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
       try {
         const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
         const id = String(d.id ?? d.name ?? f.slice(0, -5));
+        if (group === "actors" && d.permissions === undefined && grants.has(id)) d.permissions = grants.get(id);
 
         // The registry files carry `id` and `type` of their own, and spreading
         // them verbatim put BOTH a keyword and its alias on 71 nodes: `id`
@@ -1462,7 +1472,7 @@ async function collectProcesses(
       // to name. An `actedUpon` lane holds no activities by construction — it
       // is written to and never acts — so deriving lanes from node references
       // drops exactly the lanes whose emptiness is the point. Measured: the
-      // `log` role's `bindsLane` was the one dangling link in the graph.
+      // `log` lane's link to its role was the one dangling link in the graph.
       for (const lane of m.lanes) {
         const name = lane.name ?? lane.id;
         if (lanes.has(name)) continue;
@@ -1475,6 +1485,8 @@ async function collectProcesses(
           // and this is a provenance KIND. One term over both would assert
           // that `bpmn-lane` is a path.
           sourceKind: "bpmn-lane",
+          // The lane's own ref: the join from the lane view to the registry.
+          bindsRole: lane.roleRef === undefined ? undefined : makeIri(doc, "role", lane.roleRef),
         });
       }
       for (const n of m.nodes.values()) {
@@ -1695,8 +1707,8 @@ function collectSchemas(doc: string, base: string): Node[] {
  * because some other diagram gave its lane an activity.
  *
  * Lane-derived nodes are kept as they were — they are keyed by lane name and
- * other links point at them — and a declared role that claims a lane links
- * to it with `bindsLane`, so the two views join rather than compete.
+ * other links point at them — and each lane links to the declared role it
+ * binds with `bindsRole`, so the two views join rather than compete.
  */
 function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
@@ -1726,7 +1738,6 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
     judgementOnly: r.judgementOnly,
     // Links, so a consumer can walk role -> skill without string surgery.
     hasSkill: (r.skills ?? []).map((n) => makeIri(doc, "skill", n)),
-    bindsLane: (r.lanes ?? []).map((l) => makeIri(doc, "role", l)),
   }));
 }
 
@@ -1876,7 +1887,7 @@ const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage", "inSubgraph",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
-  "hasSkill", "bindsLane",
+  "hasSkill", "bindsRole",
 ] as const;
 
 /**

@@ -494,16 +494,32 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     // Actors, the Roles they take, and the User Stories those Roles serve.
     //
-    // NAMED FOR WHAT IT WILL HOLD, and one third of that is not declared yet:
-    // a Role carries `useCases` as free-text strings, so a User Story cannot
-    // be pointed at or traced to the Workflow it justifies. Naming the kind
-    // now is what gives that gap somewhere to be fixed; calling it `roles`
-    // would have to be renamed the moment it was.
+    // `roles.json` and `stories.json`. A User Story points at its Role
+    // (#1168); it was `Role.useCases`, free text on the role, until then —
+    // the gap this kind was named ahead of, so that fixing it needed no rename.
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     validator: "schemas/role-graph.ts#RoleGraphSchema",
     summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
+  },
+  // ── What an Actor may do: W3C ODRL 2.2 policies — issue #1180 ──────────
+  //
+  // Owner, 2026-09-23: permissions are *"W3C ODRL 2.2"*, and policies are
+  // their own graph kind rather than a file inside `scenarios`. A policy is
+  // authored, and is true whether or not anything reads it, so it `holds`
+  // content like the role graph beside it: it owes no viewer.
+  policies: {
+    type: termIri("PolicyGraph"),
+    renderable: false,
+    holds: "content",
+    skill: "role-model",
+    schema: "schemas/odrl.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/odrl.ts#OdrlPolicySchema",
+    summary:
+      "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role " +
+      "constraints. Actions are the folio profile in skills/permissions/permissions.json.",
   },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
   //
@@ -639,6 +655,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
       "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+  },
+  // Code lists — a closed set of codes, each with a label, a definition and a
+  // source, published as a SKOS concept scheme (schemas/code-list.ts). Owner,
+  // 2026-09-23: "list of codes and corresponding narrative desc and source
+  // should be part of a node/asset". `content`, by the same argument
+  // `external-schema` makes: the subject matter is a DECISION — which answers
+  // an adjudication may give, which namespaces are ours — and a person makes
+  // it. Diagrams and `schemas/namespaces.ts` READ these; nothing writes them.
+  "code-list": {
+    type: termIri("CodeListGraph"),
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/code-list.ts#CodeListSchema",
+    summary:
+      "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
+      "per list, every code carrying its definition and source, published as SKOS.",
   },
   schemas: {
     type: termIri("SchemaGraph"),

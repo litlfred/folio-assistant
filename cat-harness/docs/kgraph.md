@@ -256,10 +256,10 @@ be followed mechanically rather than inferred:
 |---|---|---|
 | Actor | `roles` | Role |
 | Role | `skills` | Skill |
-| Role | `lanes` | a BPMN lane, by name |
-| Role | `voice` | Voice |
+| Voice | `activeIn.roles` | Role |
+| User Story | `role` | Role |
 | Workflow activity | `<folio:skill ref>` | Skill |
-| Workflow lane | lane binding | Role |
+| Workflow lane | `<folio:role ref>` | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Test | exercises | Skill |
@@ -293,13 +293,12 @@ graph is a defect, not an update. This is the edge that makes a Context Overlay
 possible at all: if a run could mutate its own conditions, replaying it under
 the same conditions would not be a thing you could ask for.
 
-The one edge that does **not** work this way today is **User Story**. CRDM
-produces Workflows, User Stories and Roles, and Scenarios is where the User
-Stories belong — but a Role's `useCases` is an array of free-text strings, not
-references to nodes. So a User Story cannot be pointed at, counted, or traced
-to the Workflow it justifies. It is described here as the taxonomy intends and
-flagged in the next section as not yet declared, because a page that showed it
-as an edge would be describing a graph the registry cannot produce.
+**User Story** works this way too, as of #1168. CRDM produces Workflows, User
+Stories and Roles, and Scenarios is where the User Stories belong. Until then a
+Role carried its stories as `useCases`, free-text strings that could not be
+pointed at, counted, or traced to a Workflow. Each story is now a node in
+`scenarios/stories.json` that names its role, and the role names none — the
+same direction as a voice, which points at the role it addresses.
 
 ## Repositories — four classes, three relations
 {: #repositories data-fa-label="sec:kgraph-repositories" }
@@ -449,9 +448,8 @@ process index reported it as an **orphan** rather than quietly indexing eight
 fewer diagrams — which is the whole argument for a generator that names what it
 pruned.
 
-**Two gaps remain**, both already named above:
+**One gap remains**, already named above:
 
-- **User Stories are not nodes.** A Role's `useCases` is an array of strings.
 - **`fsh-guts` is registered `context`**, though it is topically Dynamic State.
   Both readings are defensible — it is read by processes and not written by
   them, which is what `context` asserts — but the two axes disagree here, and a

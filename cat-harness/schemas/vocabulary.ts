@@ -346,6 +346,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   issue: { gloss: "The issue that superseded this node, or that it was written for." },
   bean: { gloss: "The work-plan item a node was written under, where there is one." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
+  layer: {
+    gloss:
+      "Which layer of the platform mints a term — bootstrap, harness or core. Declared so a JSON-LD " +
+      "processor keeps it: undeclared, it was silently dropped from all 159 vocabulary terms (bean vigi).",
+  },
+  skipped: { gloss: "A file an exporter looked at and left out, with the reason — so a short output is never mistaken for a small input." },
   flowCount: { gloss: "How many sequence flows a process carries." },
 
   // ── Actors, roles, skills ────────────────────────────────────────────
@@ -372,7 +378,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
-  bindsLane: { gloss: "A BPMN lane this role is bound to." },
+  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <folio:role ref>. On the lane, never on the role (#1168)." },
   hasLaneUsage: {
     gloss:
       "One appearance of this glossary concept as a swimlane in one process. " +

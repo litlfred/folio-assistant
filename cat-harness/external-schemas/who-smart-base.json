@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-external-schema/v1",
+  "id": "who-smart-base",
+  "authority": "other",
+  "title": "WHO SMART Guidelines base IG",
+  "version": "unpinned",
+  "specUrl": "https://smart.who.int/base/",
+  "namespaces": [
+    "http://smart.who.int/base/StructureDefinition/"
+  ],
+  "use": "reads",
+  "usedBy": [
+    "cat-harness/schemas/jsonld.ts"
+  ],
+  "terms": [],
+  "note": "Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them."
+}

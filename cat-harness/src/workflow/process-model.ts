@@ -36,6 +36,8 @@ import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decis
 import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
 import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../schemas/convention.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
+import { activeCodes, codeListDirs, loadCodeLists, type CodeList } from "../../schemas/code-list.js";
+import { findInstanceRoot } from "../../schemas/cat-harness.js";
 
 /** Element types the interpreter can walk faithfully. */
 const ACTIVITY_TYPES = [
@@ -264,7 +266,7 @@ export interface ProcessNode {
    * contract is `folio-assistant-core/schemas/adjudication.ts`; see
    * {@link adjudicationOf} for why the two are not one import.
    */
-  adjudication?: { codes: string[] };
+  adjudication?: { codes: string[]; list?: string };
   /**
    * `<folio:adjudication accepts="…"/>` — on a CALL ACTIVITY: the answers this
    * caller can act on, checked against the adjudicator inside the process it calls.
@@ -671,7 +673,7 @@ const ADJUDICATION_ATTRS = {
    * on, or `defers="caller"` — an adjudication whose enum belongs to whoever
    * asked.
    */
-  node: ["codes", "accepts", "defers"],
+  node: ["codes", "accepts", "defers", "list"],
   /** On a sequence flow: the one answer that selects this branch. */
   flow: ["code"],
 } as const;
@@ -695,13 +697,14 @@ function adjudicationDeclOf(
   ext: { $type: string }[],
   elId: string,
   where: keyof typeof ADJUDICATION_ATTRS = "node",
-): { codes?: string; code?: string; accepts?: string; defers?: string } | undefined {
+): { codes?: string; code?: string; accepts?: string; defers?: string; list?: string } | undefined {
   const decl = ext.find((v) => v.$type === "folio:adjudication") as
     | (Record<string, unknown> & {
         codes?: string;
         code?: string;
         accepts?: string;
         defers?: string;
+        list?: string;
       })
     | undefined;
   if (!decl) return undefined;
@@ -717,6 +720,14 @@ function adjudicationDeclOf(
         `which the engine does not read on a ${where}. Here the attribute(s) are ` +
         `${allowed.map((a) => `\`${a}\``).join(", ")} — and each one's ABSENCE ` +
         `means something, so a misspelling reads as a deliberate abstention.`,
+    );
+  }
+  if (decl.list !== undefined && decl.codes === undefined) {
+    // `list` names where the codes are DEFINED; it is only meaningful beside
+    // the codes it defines. On `accepts` the callee's list already governs.
+    throw new Error(
+      `${elId}: <folio:adjudication list="${decl.list}"/> without \`codes\`. A code list ` +
+        `defines the answers a judgement declares; with no \`codes\` there is nothing it defines.`,
     );
   }
   if (decl.codes !== undefined && decl.accepts !== undefined) {
@@ -744,6 +755,43 @@ function codeList(raw: string | undefined, elId: string, attr: string, why: stri
     );
   }
   return codes;
+}
+
+/** Code lists by instance root — loaded once, since every diagram of an instance shares them. */
+const codeListCache = new Map<string, Promise<Map<string, CodeList>>>();
+
+async function checkCodeLists(nodes: Map<string, ProcessNode>, bpmnPath: string): Promise<void> {
+  const named = [...nodes.values()].filter((n) => n.adjudication?.list !== undefined);
+  if (named.length === 0) return;
+  const root = findInstanceRoot(dirname(bpmnPath));
+  if (root === undefined) {
+    throw new Error(`${basename(bpmnPath)}: names a code list, but no instance declaration owns this diagram`);
+  }
+  let pending = codeListCache.get(root);
+  if (!pending) {
+    pending = codeListDirs(root).then(loadCodeLists);
+    codeListCache.set(root, pending);
+  }
+  const lists = await pending;
+  for (const n of named) {
+    const { list: id, codes } = n.adjudication!;
+    const list = lists.get(id!);
+    if (!list) {
+      throw new Error(
+        `${basename(bpmnPath)}: ${n.id} names code list "${id}", which no declared code-list ` +
+          `directory of this instance or its dependencies defines (have: ${[...lists.keys()].sort().join(", ") || "none"}).`,
+      );
+    }
+    const defined = [...activeCodes(list)].sort();
+    const declared = [...codes].sort();
+    if (defined.join("\u0000") !== declared.join("\u0000")) {
+      throw new Error(
+        `${basename(bpmnPath)}: ${n.id} declares codes (${declared.join(", ")}) but code list ` +
+          `"${id}" defines (${defined.join(", ")}). The list is where each answer is defined and ` +
+          `sourced; the diagram may not add one the list does not define, or drop one it does.`,
+      );
+    }
+  }
 }
 
 /**
@@ -823,8 +871,8 @@ function adjudicationOf(
   ext: { $type: string; codes?: string }[],
   el: { id: string; $type: string },
   fulfilment: { kinds: ActorKind[]; reason: string } | undefined,
-  decl: { codes?: string; accepts?: string } | undefined,
-): { codes: string[] } | undefined {
+  decl: { codes?: string; accepts?: string; list?: string } | undefined,
+): { codes: string[]; list?: string } | undefined {
   if (!decl || decl.codes === undefined) return undefined;
   if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
     throw new Error(
@@ -840,7 +888,7 @@ function adjudicationOf(
       `it a judgement would give a rubber stamp a decision's authority.`,
   );
   requireAdjudicatorKinds(el.id, fulfilment);
-  return { codes };
+  return { codes, ...(decl.list !== undefined ? { list: decl.list.trim() } : {}) };
 }
 
 /**
@@ -1353,6 +1401,15 @@ export async function loadProcessModel(
     }
     seenIds.add(p.id);
   }
+
+  // An adjudication naming a CODE LIST must declare exactly that list's active
+  // codes. Owner, 2026-09-23: the codes are a node with a definition and a
+  // source each, not strings in an attribute — so the attribute is checked
+  // against the node, and a code nobody defined, or a defined one the diagram
+  // forgot, is refused here rather than discovered when an outcome is recorded.
+  // Codes WITHOUT a list are still accepted (a folio may not have written one
+  // yet); `check:workflow-refs` reports them.
+  await checkCodeLists(nodes, bpmnPath);
 
   // An adjudicated activity's declared codes must match the branches out of the
   // gateway it feeds — bean `5vo9`.

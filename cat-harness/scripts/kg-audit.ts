@@ -85,6 +85,7 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
+import { ANYONE, ODRL_ACTIONS, readPolicies, readPolicyGrants } from "../schemas/odrl.js";
 import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
@@ -100,6 +101,7 @@ import {
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
+import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
 const ENGINE_VERSION = "1";
 
@@ -163,6 +165,9 @@ const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
 // reasoning as `WORKFLOW_DIR` — the role graph moved out of the skills tree
 // on 2026-09-21 and a path-less subject needs a sidecar home.
 const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
+// declared-path-literal: the convention fallback, at the call site, as for
+// `SCENARIO_DIR`. The ODRL policies (issue #1180) are their own graph kind.
+const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -1048,15 +1053,21 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  storiesPath: string,
 ): KgQaReport[] {
-  const hash = sha256(readFileSync(graphPath, "utf-8"));
+  // Both files: `role-has-story` reads the stories, which point at the role
+  // (#1168), so a story added or removed changes a role's verdict without
+  // touching roles.json.
+  const hash = sha256(
+    readFileSync(graphPath, "utf-8") + (existsSync(storiesPath) ? readFileSync(storiesPath, "utf-8") : ""),
+  );
+  const toldAs = new Set((stories?.stories ?? []).filter((s) => s.role.instance === undefined).map((s) => s.role.role));
   const rel = relative(root, graphPath);
 
-  const corpusLanes = new Set<string>();
   const explicitRefs = new Set<string>();
   for (const p of processes) {
     for (const lane of p.model?.lanes ?? []) {
-      if (lane.name) corpusLanes.add(lane.name);
       if (lane.roleRef) explicitRefs.add(lane.roleRef);
     }
   }
@@ -1070,11 +1081,12 @@ function auditRoles(
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
-    const usedLanes = r.lanes.filter((l) => corpusLanes.has(l));
-    const bindsSomething = usedLanes.length > 0 || explicitRefs.has(r.id);
+    // A lane binds a role by its own `<folio:role ref>`; the role lists no lanes
+    // (data-modelling step 8, #1168).
+    const bindsSomething = explicitRefs.has(r.id);
     const laneFindings: KgFinding[] = bindsSomething
       ? []
-      : [{ where: r.id, detail: `role "${r.id}" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead.` }];
+      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
 
     const criteria: Record<string, KgCriterionEntry> = {
       "role-skills-resolve": entry(badSkills),
@@ -1088,19 +1100,16 @@ function auditRoles(
               ? []
               : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
           ),
-      "role-declares-voice": !readsProse(r)
+      // No `role-declares-voice`: a voice points at the role it addresses
+      // (`activeIn.roles`), and the voices graph is a DEPENDENT instance's, so
+      // this instance cannot see it — `check:voices` reports which roles no
+      // voice addresses, from the side that can (#1168, B2).
+      "role-has-story": !readsProse(r)
         ? entry([], false)
         : entry(
-            r.voice && r.voice.trim().length > 0
+            toldAs.has(r.id)
               ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
-          ),
-      "role-has-use-cases": !readsProse(r)
-        ? entry([], false)
-        : entry(
-            (r.useCases ?? []).length > 0
-              ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+              : [{ where: r.id, detail: `no user story in scenarios/stories.json is told as role "${r.id}" — nothing says what this reader came to do.` }],
           ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
@@ -1469,6 +1478,7 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -1575,6 +1585,27 @@ function auditGraph(
 
   const declaredPerms = new Set((readPermissions(KG_ROOT)?.permissions ?? []).map((p) => p.id));
   const badPerms: KgFinding[] = [];
+  // The ODRL side (issue #1180): every rule's action is declared (or ODRL's
+  // own), and every assignee is an actor or `folio:anyone`. A rule naming an
+  // actor that does not exist grants nothing, silently; a rule naming an
+  // undeclared action cannot be placed in the includedIn graph at all.
+  const actorIds = new Set(actors.map((a) => a.id));
+  for (const policy of readPolicies(POLICY_DIR).values()) {
+    for (const rule of [...policy.permission, ...policy.prohibition]) {
+      if (!declaredPerms.has(rule.action) && !(rule.action in ODRL_ACTIONS)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} names action "${rule.action}", which skills/permissions/permissions.json does not declare.`,
+        });
+      }
+      if (rule.assignee !== ANYONE && !actorIds.has(rule.assignee)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} assigns "${rule.action}" to "${rule.assignee}", which is not a declared actor.`,
+        });
+      }
+    }
+  }
   for (const a of actors) {
     for (const perm of a.permissions ?? []) {
       if (!declaredPerms.has(perm)) {
@@ -1682,6 +1713,19 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      // A story points at its role (#1168); a story whose role is not declared
+      // is told as nobody. Only this instance's roles are judged — see
+      // `danglingStoryRoles`.
+      "story-role-resolves": !stories
+        ? entry([], false)
+        : graph
+        ? entry(
+            danglingStoryRoles(stories, graph).map((st) => ({
+              where: st.id,
+              detail: `user story "${st.id}" is told as role "${st.role.role}", which the role graph does not declare.`,
+            })),
+          )
+        : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve story roles against." }] },
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
@@ -1732,7 +1776,7 @@ const asJson = args.includes("--json");
 
 const auditorHash = sha256(readFileSync(join(root, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root);
-const actors = readActors(ACTOR_DIR);
+const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
@@ -1773,12 +1817,21 @@ const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.fil
 const docs = docsSurface();
 for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
+const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
+let stories: UserStoryGraph | undefined;
+try {
+  stories = readUserStories(SCENARIO_DIR);
+} catch (e) {
+  console.error(`Could not read the user stories: ${e instanceof Error ? e.message : String(e)}`);
+  console.error("This is NOT a pass. Nothing was audited against stories.");
+  process.exit(2);
+}
 if (graph) {
-  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills, stories, storiesPath));
 }
 reports.push(...auditRequirements(readRequirements(), skills, actors));
 reports.push(...auditSkills());
-reports.push(auditGraph(graph, processes, actors, skills));
+reports.push(auditGraph(graph, processes, actors, skills, stories));
 reports.push(...auditTools());
 
 // Write or compare.

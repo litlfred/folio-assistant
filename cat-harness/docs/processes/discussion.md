@@ -24,8 +24,8 @@ THE SECOND PROCESS IN CAT_BOOTSTRAP, and an exception to bootstrap holding as li
 
 | lane | role | what it does here |
 |---|---|---|
-| Bootstrapping Agent | — | Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either. |
-| Requestor | — | Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess. |
+| Bootstrapping Agent | `bootstrapping-agent` | Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either. |
+| Requestor | `requestor` | Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess. |
 
 ## Steps
 

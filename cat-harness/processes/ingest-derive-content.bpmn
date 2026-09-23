@@ -37,6 +37,7 @@
     <bpmn:laneSet id="Process_DeriveContent_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Assets</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Fan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Archive</bpmn:flowNodeRef>

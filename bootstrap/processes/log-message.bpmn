@@ -38,6 +38,7 @@ NO folio:bean, and isExecutable is false, for the same reasons as initialize-har
       </bpmn:lane>
       <bpmn:lane id="Lane_Logger" name="Logger">
         <bpmn:documentation>Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="logger"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Record</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

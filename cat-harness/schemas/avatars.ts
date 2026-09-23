@@ -175,6 +175,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "two figures — the Actors and the Roles they take on",
   },
+  policies: {
+    // A shield with a tick: what is permitted, and to whom. ODRL policies,
+    // issue #1180.
+    glyph: "M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zm-3.5 9l2.5 2.5 4.5-4.5",
+    tone: 304,
+    reads: "a shield with a tick — what each Actor is permitted to do",
+  },
   // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
   //
   // Owner, reporting it: *"folio assistant icon is messed up still. I want
@@ -315,6 +322,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h7v12H4zM13 6h7v12h-7zM11 9h2M11 12h2M11 15h2",
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
+  },
+  // A LIST OF ENTRIES, each a short code tag beside a longer line: a code and
+  // what it means, which is the whole of a code list. Deliberately not the
+  // glossary's book — a book is looked up; a code list is CHOSEN from, closed,
+  // and every entry carries its definition. `tone: 180` is unused and sits
+  // between the reference tones and `external-schema`'s 208.
+  "code-list": {
+    glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
+    tone: 180,
+    reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
   },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"

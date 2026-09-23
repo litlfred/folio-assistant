@@ -52,9 +52,8 @@ process index reported it as an **orphan** rather than quietly indexing eight
 fewer diagrams — which is the whole argument for a generator that names what it
 pruned.
 
-**Two gaps remain**, both already named above:
+**One gap remains**, already named above:
 
-- **User Stories are not nodes.** A Role's `useCases` is an array of strings.
 - **`fsh-guts` is registered `context`**, though it is topically Dynamic State.
   Both readings are defensible — it is read by processes and not written by
   them, which is what `context` asserts — but the two axes disagree here, and a

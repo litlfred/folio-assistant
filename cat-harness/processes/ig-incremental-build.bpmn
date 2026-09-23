@@ -45,6 +45,7 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_IgIncremental_LaneSet">
       <bpmn:lane id="Lane_Author" name="FHIR modeller / PR author (person + authoring agent)">
+        <bpmn:extensionElements><folio:role ref="fhir-modeller"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_SourceChanged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Findings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_FindingsQc</bpmn:flowNodeRef>
@@ -52,12 +53,14 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_LogFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_QcBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_LogEnvError</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Incremental build (system)">
         <bpmn:documentation>Owns everything that stays inside the cone: restore the cache, compute the cone, check it out, compile and re-render only that slice, then merge and rebuild the aggregates — Task_Index never re-derives an artefact on its own, so a missing record is a miss rather than a silent rebuild. What needs the JVM's warm state, it hands to Lane_Services rather than running itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Cone</bpmn:flowNodeRef>
@@ -70,6 +73,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Services" name="Publisher + validator services (JVM)">
         <bpmn:documentation>Two separate duties rather than one: Task_FullBuild is the complete fallback the diagram takes when Gateway_Restore finds the cache unusable, bypassing the cone machinery and reaching Task_Qa on its own. Task_ContextLoad and Task_Validate are the other duty — holding the loaded dependency packages and expansions warm across runs is what makes validating a handful of cone files cheap, and losing that warm state is the same cache miss that routes to the fallback instead.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ig-publisher-service"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_FullBuild</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ContextLoad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
@@ -77,6 +81,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="PR reviewer / QC reviewer">
         <bpmn:documentation>Sees the change's shape before the build finishes — Task_ConeReport names what will rebuild and whether a shared hub is touched, posted while the checkout is still running — then gates on Task_Qa by reading the cone's own rows in the aggregate first. On a PR branch it also deploys the preview itself, but never seeds the shared cache: that stays Lane_PubMgr's, reached only past Gateway_Path on main or a release.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="qc-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ConeReport</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Qa</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_QcPass</bpmn:flowNodeRef>
@@ -85,6 +90,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager — deploy and seed">
         <bpmn:documentation>Reached only past Gateway_Path's main-or-release branch, never for a PR preview — which is what makes this the one lane allowed to touch the shared cache. Task_Seed does not seed on a green build alone: it writes to a -test branch and verifies a restore from a clean clone before promoting, so what licenses the shared cache is the verified restore, not the deploy that came before it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_Path</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Deploy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Seed</bpmn:flowNodeRef>
