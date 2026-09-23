@@ -802,6 +802,7 @@ export const RULES: Rule[] = [
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
+      "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",

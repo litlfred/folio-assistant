@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 669,
+      "count": 670,
       "unit": "beans"
     }
   },
@@ -1093,7 +1093,7 @@
     {
       "id": "folio-assistant-4d22",
       "title": "A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-ahvw",
@@ -2171,6 +2171,20 @@
       "file": "beans/defs/folio-assistant-7uff--logging-agents-log-task-startend-to-fsh-gutslogs-o.md"
     },
     {
+      "id": "folio-assistant-7umv",
+      "title": "ORPHAN CLEANUP: the finding's action names the label first, and the label provably cannot reach an orphan",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:59:52Z",
+      "updatedAt": "2026-09-23T21:01:56Z",
+      "preview": "The owner applied `staging:cleanup` to both orphaned slugs, as\n`staging-preview-orphans` told them to. **Nothing happened.** 201.2 MB stayed\nexactly where it was.\n\n## Why the label cannot work, in the workflow's own words\n\n`feature-staging.yml`, on its dispatch inputs:\n\n> the label path cannot reach the previews the health sweep reports: `cleanup`\n> below fires on `pull_request_target: closed`, an",
+      "file": "beans/defs/folio-assistant-7umv--orphan-cleanup-the-findings-action-names-the-label.md"
+    },
+    {
       "id": "folio-assistant-7vhe",
       "title": "FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog",
       "status": "completed",
@@ -3237,7 +3251,7 @@
     {
       "id": "folio-assistant-byql",
       "title": "Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
