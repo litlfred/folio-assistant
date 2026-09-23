@@ -1,11 +1,11 @@
 ---
 # folio-assistant-423d
 title: 'REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-23T06:15:45Z
+updated_at: 2026-09-23T07:10:03Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -88,7 +88,54 @@ Owner, verbatim: *"reviewers comment in dynamic KG content. folio-asst-core shou
 **How it fits the earlier ruling (the PR comment).** The PR conversation comment stays the WRITE channel a reviewer uses: it needs nothing installed, and it sits beside the approve. The review process INGESTS each tagged comment into a review-comment todo, and the todo is the canonical, structured record that the review page and heat map read. **This reconciliation is the agent's reading of two rulings, not a third ruling. Correct it if wrong.**
 
 **Revised Done when:**
-- [ ] `folio-review-comment/v1` is declared in folio-assistant-core/schemas, extending `TodoNodeSchema`, with the required fields above
-- [ ] the lifecycle is closed, and a transition made outside a review-process task is refused (test)
-- [ ] a tagged PR comment is ingested into a review-comment todo, idempotently (re-ingest makes no duplicate)
-- [ ] a comment whose block was removed is kept and shown as orphaned; a renamed block's comments follow `renamedFrom`
+- [x] `folio-review-comment/v1` is declared in folio-assistant-core/schemas, extending `TodoNodeSchema`, with the required fields above
+- [x] the lifecycle is closed, and a transition made outside a review-process task is refused (test)
+- [x] a tagged PR comment is ingested into a review-comment todo, idempotently (re-ingest makes no duplicate)
+- [x] a comment whose block was removed is kept and shown as orphaned; a renamed block's comments follow `renamedFrom`
+
+## Built 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): the kind, with no wiring yet
+
+`folio-assistant-core/schemas/review-comment.ts`, with 15 tests:
+
+- **The kind.** `ReviewCommentKind = nodeKind("folio-review-comment/v1",
+  [TodoNodeKind], …)`. It declares overrides on `$schema`, `targetLabel`
+  (now required) and `status` (now a closed enum). Everything specific to
+  review sits under ONE field, `review`, so nothing here can collide with a
+  field a parent adds later. A todo-only reader still parses a review
+  comment (tested).
+- **The lifecycle.** open → addressed → resolved | adjudicated | withdrawn,
+  plus send-back. `transition(c, to, {process, task})` refuses any move not
+  in `REVIEW_TRANSITIONS`. Closing needs a Decision, and both the
+  transition and the schema check that.
+  - Existing tasks are used where they already exist:
+    `Process_Review#Task_EditorDecides` and
+    `Process_Adjudication#A_RecordEntry`.
+  - `ingest` and `withdraw` point at
+    `Process_LargeDocumentReview#Task_IngestComments` and
+    `#Task_WithdrawComment` with `awaits: "en2d"`. A test holds every other
+    entry to a task that exists in its BPMN.
+- **The tag grammar**, which the bean had left open. Header lines at the
+  very top: `block:` (required, the rest of the line, since labels contain
+  colons), `kind:` (question | defect | suggestion | editorial, default
+  question) and `role:` (default reviewer). A comment without `block:` is
+  conversation and is left alone. A bad tag is reported as `malformed`,
+  never dropped.
+- **Ingest.** The id is `review-pr<N>-c<commentId>`, so a re-run creates
+  nothing (tested). A comment on a block not in the head is kept, orphaned
+  from the start.
+- **`reanchor(comments, changeset.changes)`** follows a rename (keeping the
+  old label in `review.anchoredFrom`) and marks a removed block's comments
+  `orphaned`. It never changes status.
+
+The first original done-when ("stored as Findings") is superseded by the
+owner's refinement: the record is a todo subtype, and its Decision link is
+the 9gyz tie.
+
+**Not yet:**
+- a CLI or step that fetches a PR's comments and writes the todos under
+  `todos/items/`;
+- how a PRIVATE repository's review page reads comments;
+- the review page listing, filtering and resolving comments (the original
+  second done-when).
+
+These stay open on this bean.
