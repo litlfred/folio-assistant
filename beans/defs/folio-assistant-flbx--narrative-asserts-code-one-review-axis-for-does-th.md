@@ -2,9 +2,10 @@
 # folio-assistant-flbx
 title: 'NARRATIVE-ASSERTS-CODE: one review axis for ''does the prose say what the artefact does'', with Lean as a specialisation'
 status: in-progress
-type: task
+type: feature
+priority: normal
 created_at: 2026-09-23T09:55:39Z
-updated_at: 2026-09-23T09:55:39Z
+updated_at: 2026-09-23T10:38:11Z
 parent: folio-assistant-1swy
 ---
 
@@ -22,6 +23,6 @@ skill text vs code it describes; docs pages vs code; BPMN documentation vs the w
 A checker that greps English cries wolf and gets switched off. Anchor on resolvable things (symbols, paths, if: conditions, exit codes); the rest goes to a reviewer, and disagreement goes to the adjudication process.
 
 ## Done when
-- [ ] Phase 1: needs statement posted on the issue and confirmed by the owner
-- [ ] Phase 2-4: requirements + impact, options compared, approved
-- [ ] Phase 5: sign-off, implementation beans created
+- [x] Phase 1: needs statement posted on the issue and confirmed by the owner
+- [x] Phase 2-4: requirements + impact, options compared, approved
+- [x] Phase 5: sign-off (option D, B first), implementation beans cuxx (B), ca4a (A), chhd (C)

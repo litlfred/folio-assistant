@@ -22,12 +22,26 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 5,
     "fail": 0,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/proof-simplifier.md",
+      "code": "cat-harness/skills/folio-paper-adapter/proof-simplifier.ts",
+      "prose_hash": "aa9ec8da93b8",
+      "code_hash": "b4a18c47751b",
+      "by": "baseline"
+    }
+  ]
 }
