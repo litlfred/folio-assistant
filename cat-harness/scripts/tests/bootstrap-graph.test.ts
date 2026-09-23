@@ -380,6 +380,19 @@ describe("the document has a schema, and both builds satisfy it (bean n350)", ()
     expect(r.success ? [] : r.error.issues).toEqual([]);
   });
 
+  test("the published copy carries provenance; the @graph carries none (hwzu)", async () => {
+    // Owner, 2026-09-23: every published graph carries PROV provenance. The
+    // emission skill's rule is narrowed to the nodes: no node may carry a
+    // build timestamp or commit, so two builds of one tree agree on the graph.
+    const doc = publishedDocument(await buildExport({ instanceRoot: CAT_BOOTSTRAP })) as Record<string, unknown>;
+    expect("generatedAt" in doc).toBe(true);
+    expect("sourceCommit" in doc || "sourceCommitUnavailable" in doc).toBe(true);
+    const graph = JSON.stringify(doc["@graph"]);
+    for (const key of ["generatedAt", "sourceCommit", "sourceCommitSha", "sourceCommitAt"]) {
+      expect(graph.includes(`"${key}"`)).toBe(false);
+    }
+  });
+
   test("the generator the four properties are tested against parses too", async () => {
     const r = BootstrapGraphDocumentSchema.safeParse(await buildCatBootstrapDocument());
     expect(r.success ? [] : r.error.issues).toEqual([]);

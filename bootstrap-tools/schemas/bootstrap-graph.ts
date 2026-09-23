@@ -19,13 +19,12 @@
  *
  * The one that is PUBLISHED, which is `kg-export --instance ./bootstrap` (the
  * sole publisher since bean `dyd3`), not `gen-bootstrap-graph.ts`, which still
- * runs as a test subject but publishes nothing. The two differ in one way that
- * matters, and it is recorded rather than smoothed over: the published
- * document carries `generatedAt` and `sourceCommit*`, while
- * `bootstrap-graph-emission` says the document has "no timestamp, no commit
- * SHA". Those fields are therefore OPTIONAL here, so both documents parse. That
- * the skill and the publisher disagree is a finding (see bean `n350`), not
- * something this schema is entitled to settle.
+ * runs as a test subject but publishes nothing. The two differ in one way:
+ * the published document carries PROV provenance (`generatedAt`,
+ * `sourceCommit*`, or `sourceCommitUnavailable`), and the generator's does not.
+ * Owner, 2026-09-23 (bean `hwzu`): every published graph carries it, and the
+ * emission skill's "no timestamp, no commit SHA" is narrowed to the `@graph`
+ * itself. So the fields are optional here, and both documents parse.
  */
 
 import { z } from "zod";
@@ -55,13 +54,15 @@ export const BootstrapGraphDocumentSchema = z
     /** Sources that could not be read, counted rather than silently dropped. */
     problems: z.array(z.string()).optional(),
     counts: z.record(z.string(), z.number().int().nonnegative()).optional(),
-    // Provenance the publisher adds and the emission skill says the document
-    // must not carry. Optional, so both documents parse; see the module doc.
+    // PROV provenance, added by the publisher and absent from the generator's
+    // build. Optional, so both documents parse; see the module doc.
     generatedAt: z.string().optional(),
     sourceCommit: z.string().url().optional(),
     sourceCommitSha: z.string().optional(),
     sourceCommitAt: z.string().optional(),
     sourceTreeDirty: z.boolean().optional(),
+    /** Said instead of `sourceCommit*` when the build could not read git. */
+    sourceCommitUnavailable: z.unknown().optional(),
     "@graph": z.array(BootstrapGraphNodeSchema),
   })
   .passthrough();

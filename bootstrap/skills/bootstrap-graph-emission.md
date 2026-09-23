@@ -58,8 +58,36 @@ asserted against `buildCatBootstrapDocument()` rather than against bytes:
 |---|---|
 | **pure** — two builds byte-identical | a `--check` that fails on an untouched tree is switched off within a week |
 | **ordered** — `@graph` sorted by `@id` | collectors walk directories, so node order was `readdirSync` order: stable on the container that wrote it, different in CI. A build compared against itself in one process cannot fail on ordering at all, so the ORDER is asserted directly |
-| **no timestamp, no commit SHA** | a generated file cannot name its own commit; the best it could name is the one before it, which is wrong by construction |
+| **no timestamp, no commit SHA in the GRAPH** — provenance sits beside it, at the top level, and only in the published copy | see §"Provenance: narrowed, not dropped" below |
 | **no absolute path from the build machine** | caught before shipping once: the "no `.bpmn` directory" problem string embedded an absolute root, so CI — a different checkout path — would have failed on a tree nobody touched, and the obvious "fix" would have been to delete the gate |
+
+### Provenance: narrowed, not dropped
+
+This row used to say the document carries **no timestamp and no commit SHA**,
+because *a generated file cannot name its own commit*: the best it could name is
+the one before it. That was true while the document was **committed**. It
+stopped being true on 2026-09-20, when the document became a build output
+published by `kg-export` and was no longer committed (see
+[`bootstrap-graph-publication`](bootstrap-graph-publication.md)).
+
+A published build does not name its OWN commit. It names the commit it was
+**derived from**, as PROV: `generatedAt` (`prov:generatedAtTime`) and
+`sourceCommit` (`prov:wasDerivedFrom`), plus `sourceCommitSha`, `sourceCommitAt`
+and `sourceTreeDirty`. Or it says `sourceCommitUnavailable`. That is correct by
+construction, and it is what lets a reader tell which tree a published graph
+describes.
+
+The owner ruled 2026-09-23 (bean `hwzu`) that every published graph carries this
+provenance. So the rule is narrowed to what still holds:
+
+- the **`@graph`**, the nodes themselves, carries no timestamp and no SHA, so two
+  builds of one tree agree on every node;
+- **provenance is top-level only**, and the publisher adds it. The generator
+  `buildCatBootstrapDocument()` does not, which is why the purity row above is
+  asserted against it and not against the published bytes.
+
+`BootstrapGraphDocumentSchema` reflects this: the provenance fields are optional,
+because one document carries them and the other does not.
 
 **Counts are deliberately not asserted.** `Skill: 2` was pinned and broke the
 moment `log-message` landed; `Process: 1` was pinned and broke on
