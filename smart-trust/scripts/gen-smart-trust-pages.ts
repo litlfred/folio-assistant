@@ -186,15 +186,58 @@ const CSS = `
  * `description` are the index's own, never typed here, which is the same rule
  * the rest of this generator follows.
  */
-function shell(title: string, description: string, body: string, depth = 0): string {
+/**
+ * Where a page sits in the LEFT-HAND NAV — three roles, not a depth number.
+ *
+ * It was `depth = 0 | 1`, and one number was carrying two different facts: a
+ * CATEGORY page and an ARTEFACT page both passed `1`, so the `nav_exclude`
+ * written for the 674 leaves swept out the 7 category pages with them. The
+ * sidebar showed exactly ONE smart-trust row — the index — and the structure
+ * this index is grouped by was invisible in the one place a reader navigates
+ * from.
+ *
+ * The comment that justified it was right about the leaves and wrong about the
+ * sections: *"674 artefacts would bury the sidebar's real structure"* — the
+ * categories ARE that structure. Two facts, two values, so the next person
+ * cannot accidentally exclude one by describing the other.
+ */
+type NavRole =
+  /** The front door. Carries the children. */
+  | { kind: "index" }
+  /** One of the 7 categories — a listed child of the index. */
+  | { kind: "section"; order: number }
+  /** One of the 674 artefacts. Excluded: a leaf per artefact buries the rest. */
+  | { kind: "leaf" };
+
+/**
+ * The index page's title, and the string a section names as its `parent`.
+ *
+ * just-the-docs matches a child to its parent BY TITLE, so these two cannot be
+ * written independently — one constant, referenced twice, or a re-titled index
+ * silently orphans all 7 sections and the sidebar quietly flattens.
+ */
+const INDEX_TITLE = "WHO SMART Trust — artefact index";
+
+function navFrontMatter(nav: NavRole): string[] {
+  switch (nav.kind) {
+    case "index":
+      return ["has_children: true"];
+    case "section":
+      return [`parent: ${yamlScalar(INDEX_TITLE)}`, `nav_order: ${nav.order}`];
+    case "leaf":
+      // Still excluded, and for the reason the original comment gave: 674
+      // leaves would bury the sidebar. Unchanged behaviour, now stated of the
+      // case it was actually meant for.
+      return ["nav_exclude: true"];
+  }
+}
+
+function shell(title: string, description: string, body: string, nav: NavRole = { kind: "index" }): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
     `description: ${yamlScalar(description)}`,
-    // `nav_exclude` on the artefact pages: 674 artefacts would bury the
-    // sidebar's real structure under one instance's leaves. The index page is
-    // the front door and stays listed.
-    ...(depth === 0 ? [] : ["nav_exclude: true"]),
+    ...navFrontMatter(nav),
     "---",
     "",
   ].join("\n");
@@ -335,7 +378,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   ].join("\n");
 
   return shell(
-    "WHO SMART Trust — artefact index",
+    INDEX_TITLE,
     `All ${ix.count} artefacts of the WHO SMART Trust IG ${ix.version ?? ""}, reconstructed from its published output.`,
     body,
   );
@@ -389,7 +432,13 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
  * reader to go to the IG's own `artifacts.html` — a sentence that was true
  * only while those artefacts had no pages here.
  */
-function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[]): string {
+/**
+ * `order` is the category's position in `byCategory`, passed in rather than
+ * derived here: the index page already iterates that map to build its own
+ * sections, so the sidebar and the page body are ordered by ONE traversal and
+ * cannot disagree about which category comes first.
+ */
+function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
   const name = label ?? "Other";
   const body = [
     `[← all ${ix.count} artefacts](../)`,
@@ -407,7 +456,7 @@ function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: Fh
     `${name} — WHO SMART Trust`,
     `The ${list.length} WHO SMART Trust artefacts in the ${name} category, with canonical URLs and published representations.`,
     body,
-    1,
+    { kind: "section", order },
   );
 }
 
@@ -500,7 +549,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     `${name} — WHO SMART Trust artefact`,
     `${a.key} in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.`,
     body,
-    1,
+    { kind: "leaf" },
   );
 }
 
@@ -541,9 +590,11 @@ for (const a of ix.artifacts) {
 // A page for each category too large to inline, so "too many to list here"
 // points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
 // makes — one threshold, read twice, rather than two that can disagree.
+let sectionOrder = 0;
 for (const [label, list] of byCategory(ix.artifacts)) {
   if (list.length > INLINE_LIMIT) {
-    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list));
+    sectionOrder += 1;
+    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list, sectionOrder));
   }
 }
 
