@@ -133,7 +133,12 @@
     <span class="fa-sticky-panel__count" data-fa-sticky-count="{{ stickies.size }}">{{ stickies.size }}</span>
   </summary>
   <div class="fa-sticky-panel__body">
-  <div class="fa-sticky-board fa-landing-board">
+  {%- comment -%}
+    A HOME PANEL (bean `pv6g`, owner 2026-09-23: the home is "the panel it
+    came from"). Each cell is a slot, so a landing sticky pinned onto the
+    glass knows where closing it returns it.
+  {%- endcomment -%}
+  <div class="fa-sticky-board fa-landing-board" data-fa-home-panel="landing">
   {%- for st in stickies -%}
   {%- assign has_art = false -%}
   {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
@@ -174,7 +179,7 @@
     the aspect ratio, so the sticky keeps its declared shape and the caption
     adds its own height below rather than eating into the art.
   {%- endcomment -%}
-  <div class="fa-sticky-cell">
+  <div class="fa-sticky-cell" data-fa-home-slot="{{ st.id }}">
   <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop fa-landing-sticky--fixed{% endif %}"
            data-fa-sticky-theme="{{ st.theme }}"
            {%- if has_art %} data-fa-shape="{{ st.shape }}" style="
