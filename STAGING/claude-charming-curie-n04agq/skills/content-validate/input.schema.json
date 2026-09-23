@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "claude/charming-curie-n04agq",
+    "sha": "c47046fb8b01601c71f1a9743d01a437abcdc138",
+    "pr": "1153/merge",
+    "run": "35905252598"
+  }
+}

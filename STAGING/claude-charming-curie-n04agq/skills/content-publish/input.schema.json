@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": [
+    "versionIncrement"
+  ],
+  "properties": {
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "github-release",
+        "npm",
+        "fhir-registry",
+        "arxiv"
+      ],
+      "description": "Publication target."
+    }
+  },
+  "staging": {
+    "branch": "claude/charming-curie-n04agq",
+    "sha": "c47046fb8b01601c71f1a9743d01a437abcdc138",
+    "pr": "1153/merge",
+    "run": "35905252598"
+  }
+}
