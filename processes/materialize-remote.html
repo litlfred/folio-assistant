@@ -435,28 +435,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790189644">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790190120">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790189644">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790190120">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790189644">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790190120">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790189644">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790190120">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790189644">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790190120">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -473,7 +473,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790189644" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790190120" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -721,7 +721,7 @@
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_MaterializeRemote</code> · strict · 9 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_MaterializeRemote</code> · strict · 10 step(s)</p>
 
 <p>One process, called wherever remote content is landed locally. The owner, 2026-09-20: “so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness… it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)… similar, should share common subprocess.” Two callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one’s refresh and names itself neither. STRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so. The three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.</p>
 
@@ -767,7 +767,7 @@
     <tr>
       <td>Ingestion Engine (agent, runs unattended)</td>
       <td>—</td>
-      <td>Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused — size, restrictions, copyright, retention, source loss — so this lane’s job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: <code class="language-plaintext highlighter-rouge">unknown</code> on any single gate is enough to keep the node <code class="language-plaintext highlighter-rouge">referenced</code> rather than <code class="language-plaintext highlighter-rouge">materialized</code>.</td>
+      <td>Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused. Before the first gate it resolves the request against the source DESCRIPTOR (Task_Enumerate), because the size being gated is the closure’s, not the request’s — size, restrictions, copyright, retention, source loss — so this lane’s job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: <code class="language-plaintext highlighter-rouge">unknown</code> on any single gate is enough to keep the node <code class="language-plaintext highlighter-rouge">referenced</code> rather than <code class="language-plaintext highlighter-rouge">materialized</code>.</td>
     </tr>
     <tr>
       <td>Corpus — L1 source knowledge graph</td>
@@ -785,7 +785,7 @@
 </h2>
     
 
-<p>Every one of the 9 step(s) is documented.</p>
+<p>Every one of the 10 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -802,6 +802,12 @@
       <td>Contributor (human or agent)</td>
       <td><a href="../reference/skill-instructions/materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote</code></a></td>
       <td>working or archival, and it is asked FIRST because three of the five gates mean different things under each. An archival copy keeps the original bytes, never expires, requires fixity, and is the only thing that discharges sourceLoss; a working copy keeps derived content and discharges none of that. A process that gated first and asked afterwards would be judging a copy whose obligations it did not yet know.</td>
+    </tr>
+    <tr>
+      <td><strong>ENUMERATE + SUBSET against the source descriptor</strong><br /><code class="language-plaintext highlighter-rouge">Task_Enumerate</code></td>
+      <td>Ingestion Engine (agent, runs unattended)</td>
+      <td><a href="../reference/skill-instructions/materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote</code></a></td>
+      <td>Resolve the request against the source’s descriptor (large-datasets/schemas/source-descriptor.ts, one file per source under large-datasets/sources/) BEFORE any gate. Three things come from it and none may be guessed. (1) Which subset strategies the source supports — supportsSubset(). (2) Whether a subset stands on its own: when subsetIsSelfContained is false (mathlib), the request is closed over its dependencies here, and every gate after this one is asked about the CLOSURE, because a subset that omits what its members depend on is not a smaller corpus, it is one that does not build. (3) What enumerating the whole costs — enumerationCost(), which is undefined when the descriptor has no measured denominator; SIZE then refuses rather than estimates. A source with no descriptor is not an error here: it is an unknown, and SIZE refuses on it. Bean w5bn: the descriptor is CALLED here rather than restated.</td>
     </tr>
     <tr>
       <td><strong>SIZE what fraction, and what the whole would cost</strong><br /><code class="language-plaintext highlighter-rouge">Task_Size</code></td>
@@ -1071,7 +1077,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35905503204"><code>798aa58</code></a> &middot; 2026-09-23T18:53:59Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35906397731"><code>3cc0c6d</code></a> &middot; 2026-09-23T19:01:49Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "large-datasets-schemas": {
-      "count": 2,
+      "count": 3,
       "unit": "modules"
     }
   },
@@ -1380,6 +1380,15 @@
       "graphNode": "schema",
       "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
       "isTest": false
+    },
+    {
+      "module": "large-datasets/schemas/source-descriptor.test.ts",
+      "instance": "large-datasets",
+      "name": "source-descriptor.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "Every descriptor in the declared `sources/` directory parses — bean `w5bn`.",
+      "isTest": true
     },
     {
       "module": "large-datasets/schemas/source-descriptor.ts",
@@ -35568,6 +35577,13 @@
           "optional": false,
           "array": false,
           "doc": "Whether a subset chosen by the strategies above stands on its own."
+        },
+        {
+          "name": "subsetBasis",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why `subsetIsSelfContained` has the value it has. Optional, because a"
         },
         {
           "name": "identifiers",
