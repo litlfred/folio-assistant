@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "deployment-auth",
-    "path": "skills/folio-core/deployment-auth.md"
+    "id": "task-authorization",
+    "path": "skills/folio-core/task-authorization.md"
   },
-  "source_hash": "23ea65601202",
+  "source_hash": "c4fb6c2ae4eb",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -24,7 +24,7 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "prose-claims-resolve": {
@@ -33,19 +33,9 @@
     }
   },
   "totals": {
-    "pass": 5,
+    "pass": 4,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "co-located",
-      "prose": "cat-harness/skills/folio-core/deployment-auth.md",
-      "code": "cat-harness/skills/folio-core/deployment-auth.ts",
-      "prose_hash": "23ea65601202",
-      "code_hash": "3e7b08507041",
-      "by": "baseline"
-    }
-  ]
+  }
 }

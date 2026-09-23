@@ -32,8 +32,8 @@ function ctxWith(permission: unknown[], prohibition: unknown[] = []): AccessCont
     prohibition,
   });
   const actors = new Map<string, LoadedActor>([
-    ["ed", { id: "ed", title: "Ed", kind: "person", roles: ["editor"], path: "ed.json" } as LoadedActor],
-    ["any", { id: "any", title: "Any", kind: "agent", roles: [], path: "any.json" } as LoadedActor],
+    ["ed", { id: "ed", title: "Ed", kind: "person", roles: ["editor"], path: "ed.json", looksLikeRole: false } as LoadedActor],
+    ["any", { id: "any", title: "Any", kind: "agent", roles: [], path: "any.json", looksLikeRole: false } as LoadedActor],
   ]);
   return {
     policies: new Map([[p.uid, p]]),
