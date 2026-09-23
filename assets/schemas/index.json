@@ -6,11 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 141,
-      "unit": "modules"
-    },
-    "detangle-schemas": {
-      "count": 2,
+      "count": 145,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -25,7 +21,6 @@
   "roots": [
     "bootstrap-tools/schemas",
     "cat-harness/schemas",
-    "detangle/schemas",
     "folio-assistant-core/schemas",
     "large-datasets/schemas"
   ],
@@ -354,6 +349,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/detangle-sidecar.ts",
+      "instance": "cat-harness",
+      "name": "detangle-sidecar",
+      "graphNode": "schema",
+      "summary": "The durable record of a detangle measurement — what is pinned, and what is not.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/detangle.ts",
+      "instance": "cat-harness",
+      "name": "detangle",
+      "graphNode": "schema",
+      "summary": "Detangling — is this candidate subgraph really a subgraph?",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/diff-renderers.ts",
       "instance": "cat-harness",
       "name": "diff-renderers",
@@ -544,6 +555,24 @@
       "name": "landing-sticky",
       "graphNode": "schema",
       "summary": "The landing page, as a board of sticky notes.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/layer-direction.test.ts",
+      "instance": "cat-harness",
+      "name": "layer-direction.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "One wrong-direction verdict for `check:partition` and `kg-detangle` — bean `j79e`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/layer-direction.ts",
+      "instance": "cat-harness",
+      "name": "layer-direction",
+      "graphNode": "none",
+      "reason": "a classification function: it defines no schema",
+      "summary": "layer-direction.ts — is this edge pointing the way its layers allow?",
       "isTest": false
     },
     {
@@ -1190,22 +1219,6 @@
       "name": "window-stack",
       "graphNode": "schema",
       "summary": "Which cards are OPEN on a board, and in what order they stack.",
-      "isTest": false
-    },
-    {
-      "module": "detangle/schemas/detangle-sidecar.ts",
-      "instance": "detangle",
-      "name": "detangle-sidecar",
-      "graphNode": "schema",
-      "summary": "The durable record of a detangle measurement — what is pinned, and what is not.",
-      "isTest": false
-    },
-    {
-      "module": "detangle/schemas/detangle.ts",
-      "instance": "detangle",
-      "name": "detangle",
-      "graphNode": "schema",
-      "summary": "Detangling — is this candidate subgraph really a subgraph?",
       "isTest": false
     },
     {
@@ -10783,6 +10796,443 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar",
+      "name": "DetangleSidecar",
+      "module": "cat-harness/schemas/detangle-sidecar.ts",
+      "kind": "interface",
+      "doc": "The pinned measurement for one candidate group.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "\"folio-detangle-sidecar/v1\"",
+          "optional": false,
+          "array": false,
+          "doc": "The schema tag, so the file declares what it is rather than being identified by shape."
+        },
+        {
+          "name": "group",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The group this measures — the same string `measure()` takes."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Node count."
+        },
+        {
+          "name": "internal",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges with both ends inside."
+        },
+        {
+          "name": "inbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from outside in."
+        },
+        {
+          "name": "outbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from inside out."
+        },
+        {
+          "name": "cohesion",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`internal / (internal + inbound + outbound)`, rounded — see {@link COHESION_DP}."
+        },
+        {
+          "name": "enforcedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FACT."
+        },
+        {
+          "name": "recordedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a FILING DECISION — symmetric coupling."
+        },
+        {
+          "name": "proseMentions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Cross-group prose mentions. Neither a dependency nor a coupling."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#BoundaryRole",
+      "name": "BoundaryRole",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "type-alias",
+      "doc": "Which way a group's boundary edges point.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "sink",
+        "source",
+        "tangled",
+        "isolated",
+        "undetermined"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#ClassifiedEdge",
+      "name": "ClassifiedEdge",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "CutKind",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Why it was classified so. A classification with no basis is an assertion."
+        }
+      ],
+      "extendsNames": [
+        "DetangleEdge"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/detangle.ts#CutKind",
+        "cat-harness/schemas/detangle.ts#DetangleEdge"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#CutKind",
+      "name": "CutKind",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#DetangleEdge",
+      "name": "DetangleEdge",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "interface",
+      "doc": "A directed edge. `from` depends on / references `to`.",
+      "fields": [
+        {
+          "name": "from",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "via",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "How the edge was found, e.g. `md-link`, `bpmn-skill`, `ts-import`. Provenance, so a surprising edge can be re-checked rather than argued with."
+        },
+        {
+          "name": "authority",
+          "type": "EdgeAuthority",
+          "optional": false,
+          "array": false,
+          "doc": "Whether {@link EdgeAuthority the direction} may be trusted."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/detangle.ts#EdgeAuthority"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#DetangleFinding",
+      "name": "DetangleFinding",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "interface",
+      "doc": "A finding this scanner raises, in the shape `schemas/qa-review.ts` defines.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Unique within the sweep."
+        },
+        {
+          "name": "subject",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate group."
+        },
+        {
+          "name": "criterion",
+          "type": "\"size\" | \"cohesion\" | \"directionality\" | \"reach\"",
+          "optional": false,
+          "array": false,
+          "doc": "Which clause of the criterion produced it."
+        },
+        {
+          "name": "reviewer",
+          "type": "{ kind: \"script\"; id: string }",
+          "optional": false,
+          "array": false,
+          "doc": "Always `script` here: this module computes and never judges."
+        },
+        {
+          "name": "severity",
+          "type": "\"major\"",
+          "optional": false,
+          "array": false,
+          "doc": "The machine axis. `major` throughout: a failing clause is a reason to look, not a reason to stop."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "metrics",
+          "type": "DetangleMetrics",
+          "optional": false,
+          "array": false,
+          "doc": "The numbers behind it, so an adjudicator argues with evidence rather than with a verdict."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/detangle.ts#DetangleMetrics"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#DetangleMetrics",
+      "name": "DetangleMetrics",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "group",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "internal",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges with both ends inside the group."
+        },
+        {
+          "name": "inbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from outside INTO the group. High is good."
+        },
+        {
+          "name": "outbound",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Edges from the group OUT. Must be near zero; each is a worklist item."
+        },
+        {
+          "name": "cohesion",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "internal / (internal + inbound + outbound). Zero when the group has no edges at all — which is a folder, not a subgraph."
+        },
+        {
+          "name": "oneWayness",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "inbound / (inbound + outbound). Reported with the raw counts, never instead of them."
+        },
+        {
+          "name": "directionality",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "How one-way the boundary is, REGARDLESS of which way it points:"
+        },
+        {
+          "name": "role",
+          "type": "BoundaryRole",
+          "optional": false,
+          "array": false,
+          "doc": "Which way the arrows point. See {@link BoundaryRole}."
+        },
+        {
+          "name": "enforcedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a fact. `role` is read off these ALONE."
+        },
+        {
+          "name": "recordedBoundary",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Boundary edges whose direction is a filing decision. Reported as SYMMETRIC"
+        },
+        {
+          "name": "proseMentions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Cross-group PROSE MENTIONS. Not a dependency and not a coupling: a count of"
+        },
+        {
+          "name": "distinctTargets",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count."
+        },
+        {
+          "name": "distinctTargetGroups",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Distinct groups outside that are referenced. What a declared dependency list would actually hold."
+        },
+        {
+          "name": "worklist",
+          "type": "DetangleEdge[]",
+          "optional": false,
+          "array": true,
+          "doc": "The outbound edges themselves — the detangling worklist."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/detangle.ts#BoundaryRole",
+        "cat-harness/schemas/detangle.ts#DetangleEdge"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#DetangleNode",
+      "name": "DetangleNode",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "interface",
+      "doc": "A node in whatever graph is being detangled. Deliberately not a file: modules, skills, blocks and Lean declarations are all nodes.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "group",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate grouping under test — a directory, a package, a proposed repo."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#EdgeAuthority",
+      "name": "EdgeAuthority",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "type-alias",
+      "doc": "Whether an edge's DIRECTION is a fact or a filing decision.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "enforced",
+        "recorded",
+        "prose"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/detangle.ts#Thresholds",
+      "name": "Thresholds",
+      "module": "cat-harness/schemas/detangle.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/diff-renderers.ts#DIFF_RENDERERS",
       "name": "DIFF_RENDERERS",
       "module": "cat-harness/schemas/diff-renderers.ts",
@@ -16095,6 +16545,81 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/sticky-contribution.ts#Initiation"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/layer-direction.ts#DirectionPermit",
+      "name": "DirectionPermit",
+      "module": "cat-harness/schemas/layer-direction.ts",
+      "kind": "interface",
+      "doc": "An exception to the direction rule. The reason is required: a permit with no reason is a hole.",
+      "fields": [
+        {
+          "name": "from",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/layer-direction.ts#DirectionVerdict",
+      "name": "DirectionVerdict",
+      "module": "cat-harness/schemas/layer-direction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/layer-direction.ts#LayerRule",
+      "name": "LayerRule",
+      "module": "cat-harness/schemas/layer-direction.ts",
+      "kind": "interface",
+      "doc": "The declared direction rule.",
+      "fields": [
+        {
+          "name": "allowed",
+          "type": "ReadonlyMap<string, ReadonlySet<string>>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "permits",
+          "type": "readonly DirectionPermit[]",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/layer-direction.ts#DirectionPermit"
       ],
       "unresolved": [],
       "external": [],
@@ -31291,443 +31816,6 @@
       "exported": true
     },
     {
-      "id": "detangle/schemas/detangle-sidecar.ts#DetangleSidecar",
-      "name": "DetangleSidecar",
-      "module": "detangle/schemas/detangle-sidecar.ts",
-      "kind": "interface",
-      "doc": "The pinned measurement for one candidate group.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "\"folio-detangle-sidecar/v1\"",
-          "optional": false,
-          "array": false,
-          "doc": "The schema tag, so the file declares what it is rather than being identified by shape."
-        },
-        {
-          "name": "group",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The group this measures — the same string `measure()` takes."
-        },
-        {
-          "name": "size",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Node count."
-        },
-        {
-          "name": "internal",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges with both ends inside."
-        },
-        {
-          "name": "inbound",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges from outside in."
-        },
-        {
-          "name": "outbound",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges from inside out."
-        },
-        {
-          "name": "cohesion",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "`internal / (internal + inbound + outbound)`, rounded — see {@link COHESION_DP}."
-        },
-        {
-          "name": "enforcedBoundary",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Boundary edges whose direction is a FACT."
-        },
-        {
-          "name": "recordedBoundary",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Boundary edges whose direction is a FILING DECISION — symmetric coupling."
-        },
-        {
-          "name": "proseMentions",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Cross-group prose mentions. Neither a dependency nor a coupling."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#BoundaryRole",
-      "name": "BoundaryRole",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "type-alias",
-      "doc": "Which way a group's boundary edges point.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "sink",
-        "source",
-        "tangled",
-        "isolated",
-        "undetermined"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#ClassifiedEdge",
-      "name": "ClassifiedEdge",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "CutKind",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "basis",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Why it was classified so. A classification with no basis is an assertion."
-        }
-      ],
-      "extendsNames": [
-        "DetangleEdge"
-      ],
-      "values": [],
-      "refs": [
-        "detangle/schemas/detangle.ts#CutKind",
-        "detangle/schemas/detangle.ts#DetangleEdge"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#CutKind",
-      "name": "CutKind",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#DetangleEdge",
-      "name": "DetangleEdge",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "interface",
-      "doc": "A directed edge. `from` depends on / references `to`.",
-      "fields": [
-        {
-          "name": "from",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "to",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "via",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "How the edge was found, e.g. `md-link`, `bpmn-skill`, `ts-import`. Provenance, so a surprising edge can be re-checked rather than argued with."
-        },
-        {
-          "name": "authority",
-          "type": "EdgeAuthority",
-          "optional": false,
-          "array": false,
-          "doc": "Whether {@link EdgeAuthority the direction} may be trusted."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "detangle/schemas/detangle.ts#EdgeAuthority"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#DetangleFinding",
-      "name": "DetangleFinding",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "interface",
-      "doc": "A finding this scanner raises, in the shape `schemas/qa-review.ts` defines.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Unique within the sweep."
-        },
-        {
-          "name": "subject",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The candidate group."
-        },
-        {
-          "name": "criterion",
-          "type": "\"size\" | \"cohesion\" | \"directionality\" | \"reach\"",
-          "optional": false,
-          "array": false,
-          "doc": "Which clause of the criterion produced it."
-        },
-        {
-          "name": "reviewer",
-          "type": "{ kind: \"script\"; id: string }",
-          "optional": false,
-          "array": false,
-          "doc": "Always `script` here: this module computes and never judges."
-        },
-        {
-          "name": "severity",
-          "type": "\"major\"",
-          "optional": false,
-          "array": false,
-          "doc": "The machine axis. `major` throughout: a failing clause is a reason to look, not a reason to stop."
-        },
-        {
-          "name": "detail",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "metrics",
-          "type": "DetangleMetrics",
-          "optional": false,
-          "array": false,
-          "doc": "The numbers behind it, so an adjudicator argues with evidence rather than with a verdict."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "detangle/schemas/detangle.ts#DetangleMetrics"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#DetangleMetrics",
-      "name": "DetangleMetrics",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "group",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "size",
-          "type": "number",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "internal",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges with both ends inside the group."
-        },
-        {
-          "name": "inbound",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges from outside INTO the group. High is good."
-        },
-        {
-          "name": "outbound",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Edges from the group OUT. Must be near zero; each is a worklist item."
-        },
-        {
-          "name": "cohesion",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "internal / (internal + inbound + outbound). Zero when the group has no edges at all — which is a folder, not a subgraph."
-        },
-        {
-          "name": "oneWayness",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "inbound / (inbound + outbound). Reported with the raw counts, never instead of them."
-        },
-        {
-          "name": "directionality",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "How one-way the boundary is, REGARDLESS of which way it points:"
-        },
-        {
-          "name": "role",
-          "type": "BoundaryRole",
-          "optional": false,
-          "array": false,
-          "doc": "Which way the arrows point. See {@link BoundaryRole}."
-        },
-        {
-          "name": "enforcedBoundary",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Boundary edges whose direction is a fact. `role` is read off these ALONE."
-        },
-        {
-          "name": "recordedBoundary",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Boundary edges whose direction is a filing decision. Reported as SYMMETRIC"
-        },
-        {
-          "name": "proseMentions",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Cross-group PROSE MENTIONS. Not a dependency and not a coupling: a count of"
-        },
-        {
-          "name": "distinctTargets",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count."
-        },
-        {
-          "name": "distinctTargetGroups",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Distinct groups outside that are referenced. What a declared dependency list would actually hold."
-        },
-        {
-          "name": "worklist",
-          "type": "DetangleEdge[]",
-          "optional": false,
-          "array": true,
-          "doc": "The outbound edges themselves — the detangling worklist."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "detangle/schemas/detangle.ts#BoundaryRole",
-        "detangle/schemas/detangle.ts#DetangleEdge"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#DetangleNode",
-      "name": "DetangleNode",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "interface",
-      "doc": "A node in whatever graph is being detangled. Deliberately not a file: modules, skills, blocks and Lean declarations are all nodes.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "group",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The candidate grouping under test — a directory, a package, a proposed repo."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#EdgeAuthority",
-      "name": "EdgeAuthority",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "type-alias",
-      "doc": "Whether an edge's DIRECTION is a fact or a filing decision.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "enforced",
-        "recorded",
-        "prose"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "detangle/schemas/detangle.ts#Thresholds",
-      "name": "Thresholds",
-      "module": "detangle/schemas/detangle.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAsset",
       "name": "AdjudicationAsset",
       "module": "folio-assistant-core/schemas/adjudication.ts",
@@ -37232,6 +37320,54 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/detangle.ts#ClassifiedEdge",
+      "to": "cat-harness/schemas/detangle.ts#CutKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#ClassifiedEdge",
+      "to": "cat-harness/schemas/detangle.ts#DetangleEdge",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#DetangleEdge",
+      "to": "cat-harness/schemas/detangle.ts#EdgeAuthority",
+      "via": "authority",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#DetangleFinding",
+      "to": "cat-harness/schemas/detangle.ts#DetangleMetrics",
+      "via": "metrics",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#DetangleMetrics",
+      "to": "cat-harness/schemas/detangle.ts#BoundaryRole",
+      "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#DetangleMetrics",
+      "to": "cat-harness/schemas/detangle.ts#DetangleEdge",
+      "via": "worklist",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -38011,6 +38147,14 @@
       "from": "cat-harness/schemas/landing-sticky.ts#StickyBuildContext",
       "to": "cat-harness/schemas/sticky-contribution.ts#Initiation",
       "via": "initiation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/layer-direction.ts#LayerRule",
+      "to": "cat-harness/schemas/layer-direction.ts#DirectionPermit",
+      "via": "permits",
       "kind": "field",
       "optional": true,
       "array": false
@@ -40038,54 +40182,6 @@
       "kind": "field",
       "optional": true,
       "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#ClassifiedEdge",
-      "to": "detangle/schemas/detangle.ts#CutKind",
-      "via": "kind",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#ClassifiedEdge",
-      "to": "detangle/schemas/detangle.ts#DetangleEdge",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#DetangleEdge",
-      "to": "detangle/schemas/detangle.ts#EdgeAuthority",
-      "via": "authority",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#DetangleFinding",
-      "to": "detangle/schemas/detangle.ts#DetangleMetrics",
-      "via": "metrics",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#DetangleMetrics",
-      "to": "detangle/schemas/detangle.ts#BoundaryRole",
-      "via": "role",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "detangle/schemas/detangle.ts#DetangleMetrics",
-      "to": "detangle/schemas/detangle.ts#DetangleEdge",
-      "via": "worklist",
-      "kind": "field",
-      "optional": false,
-      "array": true
     },
     {
       "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",

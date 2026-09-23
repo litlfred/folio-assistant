@@ -1,0 +1,116 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>schemas/detangle-sidecar | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">schemas/detangle-sidecar</a></li></ul>
+<h1>Module schemas/detangle-sidecar</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>The durable record of a detangle measurement — what is pinned, and what is not.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-graphNode">
+<h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p>
+<h2 id="why-a-committed-file-rather-than-a-console-report" class="tsd-anchor-link">Why a committed file rather than a console report<a href="#why-a-committed-file-rather-than-a-console-report" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>kg-detangle</code> computes the arrow-direction model and, until 2026-09-21,
+nothing recorded its output: no npm script, no gate, no workflow (bean
+<code>sb6z</code>). So a regression in the authority map, the boundary arithmetic or
+the cohesion computation was invisible until somebody happened to run it by
+hand AND happened to remember what the numbers were last time.</p>
+<p>That last clause is the real gap. A printed verdict is gone the moment the
+terminal scrolls, which makes &quot;this has been wrong since it was written&quot; and
+&quot;this broke in the commit under review&quot; indistinguishable — the same
+argument <code>kg:audit</code> records for writing sidecars instead of printing.</p>
+<h2 id="what-is-pinned-and-the-owners-ruling-on-it" class="tsd-anchor-link">WHAT IS PINNED, and the owner's ruling on it<a href="#what-is-pinned-and-the-owners-ruling-on-it" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Owner, 2026-09-21: <em>&quot;pin size, cohesion, authority counts. not verdict&quot;</em>.</p>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>pinned</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>size</code></td>
+<td>yes</td>
+<td>a derived fact about the node set</td>
+</tr>
+<tr>
+<td><code>internal</code>, <code>inbound</code>, <code>outbound</code></td>
+<td>yes</td>
+<td>see below — a ratio never travels alone</td>
+</tr>
+<tr>
+<td><code>cohesion</code></td>
+<td>yes</td>
+<td>a derived fact</td>
+</tr>
+<tr>
+<td><code>enforcedBoundary</code>, <code>recordedBoundary</code>, <code>proseMentions</code></td>
+<td>yes</td>
+<td>the authority counts</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><strong>no</strong></td>
+<td>derived from the counts above; pinning it duplicates them</td>
+</tr>
+<tr>
+<td><code>verdict</code>, <code>clauses</code></td>
+<td><strong>no</strong></td>
+<td>the ruling's explicit exclusion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why <code>verdict</code> is excluded is worth keeping.</strong> It is the field a reviewer
+most wants pinned and the one most likely to churn on unrelated edits: it is
+a threshold comparison, so a group sitting near a boundary flips on a change
+that moved nothing about that group. A sidecar that churns is a sidecar
+people stop reading, and then the staleness check is noise rather than a
+signal.</p>
+<p><strong>The raw counts ride with <code>cohesion</code> because this package says they must.</strong>
+<code>detangle.ts</code> on <code>oneWayness</code>: <em>&quot;Reported with the raw counts, never instead
+of them.&quot;</em> <code>cohesion</code> is <code>internal / (internal + inbound + outbound)</code>, so
+pinning the ratio alone would let a change that preserves it — three edges
+becoming thirty, say — pass unrecorded. That is not a widening of the
+ruling; it is what pinning <code>cohesion</code> MEANS under this package's own rule.</p>
+</div></div></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="interfaces">Interfaces<a href="#interfaces" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="detanglesidecar"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../assets/icons.svg#icon-256"></use></svg><a href="../interfaces/schemas_detangle-sidecar.DetangleSidecar.html">DetangleSidecar</a><a href="#detanglesidecar" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="variables">Variables<a href="#variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="cohesion_dp"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_detangle-sidecar.COHESION_DP.html">COHESION_DP</a><a href="#cohesion_dp" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="pinned_fields"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_detangle-sidecar.PINNED_FIELDS.html">PINNED_FIELDS</a><a href="#pinned_fields" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="sidecarfor"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_detangle-sidecar.sidecarFor.html">sidecarFor</a><a href="#sidecarfor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="sidecarpathfor"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_detangle-sidecar.sidecarPathFor.html">sidecarPathFor</a><a href="#sidecarpathfor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="stalefields"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_detangle-sidecar.staleFields.html">staleFields</a><a href="#stalefields" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-a-committed-file-rather-than-a-console-report"><span>Why a committed file rather than a console report</span></a><a href="#what-is-pinned-and-the-owners-ruling-on-it"><span>WHAT <wbr/>IS <wbr/>PINNED, and the owner&#39;s ruling on it</span></a>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Interfaces</summary>
+<div><a href="#detanglesidecar"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../assets/icons.svg#icon-256"></use></svg><span>Detangle<wbr/>Sidecar</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Variables</summary>
+<div><a href="#cohesion_dp"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>COHESION_<wbr/>DP</span></a><a href="#pinned_fields"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>PINNED_<wbr/>FIELDS</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#sidecarfor"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>sidecar<wbr/>For</span></a><a href="#sidecarpathfor"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>sidecar<wbr/>Path<wbr/>For</span></a><a href="#stalefields"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>stale<wbr/>Fields</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>
