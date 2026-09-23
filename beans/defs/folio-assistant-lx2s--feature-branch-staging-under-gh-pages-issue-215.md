@@ -49,7 +49,7 @@ does the change merge and publication begin.
 
 ## Todo
 - [ ] establish what "all rendered content is stamped" covers beyond the HTML banner
-- [ ] BPMN for the feature-branch review SOP
+- [x] BPMN for the feature-branch review SOP: `content-change-review.bpmn`, extended by bean `en2d` (2026-09-23) with the review coordinator lane, sliced review, withdrawal, adjudication and a DMN coverage gate
 - [ ] walk the issue's immunization-schedule scenario end to end and record where it breaks
 
 ## Done when
@@ -167,7 +167,7 @@ already landed", and this bean is the worked example it cites.
 Three items remain open and none is mechanical:
 
 - [ ] establish what *"all rendered content is stamped"* covers beyond the HTML banner
-- [ ] BPMN for the feature-branch review SOP
+- [x] BPMN for the feature-branch review SOP: `content-change-review.bpmn`, extended by bean `en2d` (2026-09-23) with the review coordinator lane, sliced review, withdrawal, adjudication and a DMN coverage gate
 - [ ] walk issue #215's immunization-schedule scenario end to end and record where it breaks
 
 The mechanism runs — `feature-staging.yml` deploys previews, and it did so for

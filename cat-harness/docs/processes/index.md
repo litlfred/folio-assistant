@@ -38,7 +38,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Code change and review](code-change-review.html) | 11 | — |
 | [The gates a change must pass before it can merge](code-quality-gates.html) | 6 | — |
 | [Content acquisition](content-acquisition.html) | 6 | — |
-| [Content Change and Review](content-change-review.html) | 23 | — |
+| [Content Change and Review](content-change-review.html) | 29 | — |
 | [Content lifecycle](content-lifecycle.html) | 8 | — |
 | [Copy out materialized content — to work on somebody else's bytes](copy-out-materialized.html) | 5 | — |
 | [CRDM close-out](crdm-close.html) | 3 | — |
@@ -95,12 +95,16 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**92** distinct skill(s) are named by an activity.
+**94** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
 | `activity-log` | `activity-log.bpmn` |
+<<<<<<< HEAD
 | `adjudication` | `adjudication.bpmn`, `criterion-adjudication.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
+=======
+| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
+>>>>>>> origin/main
 | `adopt-methodology-from-source` | `methodology-from-source.bpmn` |
 | `bean-blocking` | `kg-to-portal.bpmn` |
 | `bean-coordination` | `bean-lifecycle.bpmn`, `code-change-review.bpmn` |
@@ -162,7 +166,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `opening-brief` | `graph-detanglement.bpmn`, `options-analysis.bpmn` |
 | `placement` | `crdm-signoff.bpmn` |
 | `platform-gates` | `code-change-review.bpmn`, `code-quality-gates.bpmn` |
-| `prepare-merge` | `actor-role-administration.bpmn`, `code-change-review.bpmn`, `crdm-deliver.bpmn`, `upstream-version-adoption.bpmn` |
+| `prepare-merge` | `actor-role-administration.bpmn`, `code-change-review.bpmn`, `content-change-review.bpmn`, `crdm-deliver.bpmn`, `upstream-version-adoption.bpmn` |
 | `prepare-merge-auto` | `content-change-review.bpmn` |
 | `proof-verification` | `authoring-a-paper.bpmn` |
 | `qa-report-signing` | `qa-report-signing.bpmn` |
@@ -170,6 +174,8 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `related-work-coordination` | `related-work.bpmn` |
 | `render-logging` | `feature-staging.bpmn`, `staging-render-log.bpmn` |
 | `repo-conversion` | `getting-started.bpmn` |
+| `review-comments` | `content-change-review.bpmn` |
+| `review-heatmap` | `content-change-review.bpmn` |
 | `role-model` | `actor-role-administration.bpmn` |
 | `root-readme` | `initialize-harness.bpmn` |
 | `semantic-review-scoping` | `content-change-review.bpmn`, `review-task.bpmn` |
@@ -196,7 +202,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 
 A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty lanes spell two dozen positions — so `<folio:role ref>` is the join that does not depend on spelling, and it is reported separately below rather than merged into the name.
 
-**103** distinct lane name(s).
+**104** distinct lane name(s).
 
 | lane | in |
 |---|---|
@@ -285,6 +291,7 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | QC reviewer | 1 |
 | Reader (any actor) | 1 |
 | Review Committee | 1 |
+| Review Coordinator | 1 |
 | Review team (content · QC · technical officer) | 1 |
 | Review team and SMEs | 1 |
 | Reviewer | 1 |

@@ -100,20 +100,21 @@ only along a row of `REVIEW_TRANSITIONS`. Anything else throws.
 
 | move | from | to | by (BPMN task) | needs a Decision |
 |---|---|---|---|---|
-| ingest | — | open | `Process_LargeDocumentReview#Task_IngestComments` *(awaits `en2d`)* | |
+| ingest | — | open | `Process_ContentChangeReview#Task_IngestComments` | |
 | address | open | addressed | `Process_Review#Task_EditorDecides` | |
 | send back | addressed | open | `Process_Review#Task_EditorDecides` | |
 | resolve | addressed | resolved | `Process_Review#Task_EditorDecides` | yes |
 | adjudicate | open, addressed | adjudicated | `Process_Adjudication#A_RecordEntry` | yes |
-| withdraw | open, addressed | withdrawn | `Process_LargeDocumentReview#Task_WithdrawComment` *(awaits `en2d`)* | |
+| withdraw | open, addressed | withdrawn | `Process_ContentChangeReview#Task_WithdrawComment` | |
 
 **Why so strict.** A comment's status is what the coverage gate will count.
 A comment closed by hand, outside the process, would count as reviewed when
 nobody in a review lane decided anything.
 
-Two rows name a diagram bean `en2d` has not authored yet, and say so in
-`awaits` rather than pointing at a task that is not there. A test holds
-every other row to a task that exists in its `.bpmn`.
+A test holds every row to a task that exists in its `.bpmn`. Ingestion is
+the review coordinator's first step in `content-change-review.bpmn`.
+Withdrawal is the reviewer's step after the slices come back. Bean `en2d`
+added both there, rather than in a separate large-document diagram.
 
 ## Ingestion: the Tool
 

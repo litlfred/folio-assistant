@@ -91,7 +91,7 @@ are good.
 
 | process | step(s) that name it |
 |---|---|
-| [Content Change and Review](../../processes/content-change-review.html) | Approve and merge |
+| [Content Change and Review](../../processes/content-change-review.html) | Approve |
 | [CRDM close-out](../../processes/crdm-close.html) | Confirm all criteria met |
 | [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Sign off on requirements |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Review the findings; Record the decision and its audit note |

@@ -379,6 +379,7 @@ jobs:
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
+            **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
             ${summary}

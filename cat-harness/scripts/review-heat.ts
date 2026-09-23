@@ -9,7 +9,7 @@
  * | changed | blocks in the section the ChangeSet lists | how much text changed; a one-word edit counts 1 |
  * | open | review comments not yet closed (`open` or `addressed`); defects counted apart | how bad the section is; one comment may cover a whole section |
  * | stale | open comments whose block changed AFTER the comment was made | wrong; it means "re-read before replying" |
- * | coverage | NOT MEASURED YET | "every comment resolved". Coverage needs a per-block reviewer verdict, which nothing records until bean en2d's process does. Resolved comments are not approval. |
+ * | coverage | NOT MEASURED YET | "every comment resolved". Coverage needs a per-block reviewer verdict, which nothing records yet (bean px0t); the process's coverage gate needs it. Resolved comments are not approval. |
  * | qa | the section's blocks whose latest QA verdicts FAIL, and those whose verdicts are STALE (older than the block), from `block-qa.json` | a pass when it is empty of failures: stale and unaudited blocks are counted and said, never read as passing |
  *
  * A column with no data is SAID, per row, never shown as 0 or blank. Zero
@@ -186,7 +186,7 @@ export function renderHeat(
     } else {
       tr.appendChild(cell("no data", 0, "Needs review-comments.json and blocks.json", true));
     }
-    tr.appendChild(cell("not measured yet", 0, "Coverage needs a per-block reviewer verdict, which nothing records yet (bean en2d). Resolved comments are not approval.", true));
+    tr.appendChild(cell("not measured yet", 0, "Coverage needs a per-block reviewer verdict, which nothing records yet (bean px0t). Resolved comments are not approval.", true));
     if (!h.hasQa) {
       tr.appendChild(cell("not published", 0, "This build published no block-qa.json (or no blocks.json to place it by section)", true));
     } else {
