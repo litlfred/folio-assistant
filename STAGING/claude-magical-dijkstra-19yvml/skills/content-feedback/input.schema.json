@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/content-feedback/input.schema.json",
+  "title": "Content Feedback Input",
+  "description": "Input schema for feedback collection and triage.",
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "github-issues",
+        "survey",
+        "implementation-report",
+        "clinical-review"
+      ],
+      "description": "Source of feedback."
+    },
+    "publishedVersion": {
+      "type": "string",
+      "description": "Version the feedback relates to."
+    },
+    "feedbackItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "enhancement"
+            ]
+          },
+          "component": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": [
+    "versionIncrement"
+  ],
+  "properties": {
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "github-release",
+        "npm",
+        "fhir-registry",
+        "arxiv"
+      ],
+      "description": "Publication target."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

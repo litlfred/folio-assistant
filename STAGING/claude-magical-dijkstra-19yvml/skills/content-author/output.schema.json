@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/content-author/output.schema.json",
+  "title": "Content Author Output",
+  "description": "Output schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "artifacts"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready-for-validation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

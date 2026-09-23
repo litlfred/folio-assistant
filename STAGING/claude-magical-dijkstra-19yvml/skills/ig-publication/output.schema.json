@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/ig-publication/output.schema.json",
+  "title": "IG Publication Output",
+  "description": "Output schema for FHIR IG publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "publishedUrl"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    },
+    "releaseBranch": {
+      "type": "string"
+    },
+    "publicationRequestPath": {
+      "type": "string"
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed"
+      ]
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

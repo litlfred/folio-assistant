@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/bpmn-authoring/input.schema.json",
+  "title": "BPMN Authoring Input",
+  "description": "Input schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "processName"
+  ],
+  "properties": {
+    "processName": {
+      "type": "string",
+      "description": "Name of the business process to model."
+    },
+    "sourceWorkflow": {
+      "type": "string",
+      "description": "Textual description or reference to the workflow to model."
+    },
+    "existingBpmn": {
+      "type": "string",
+      "description": "Path to existing BPMN file to update."
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Actor/participant IDs involved in the process."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

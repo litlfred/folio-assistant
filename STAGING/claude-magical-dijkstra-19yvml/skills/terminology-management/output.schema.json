@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/terminology-management/output.schema.json",
+  "title": "Terminology Management Output",
+  "description": "Output schema for terminology management operations.",
+  "type": "object",
+  "required": [
+    "resources"
+  ],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string",
+            "enum": [
+              "CodeSystem",
+              "ValueSet",
+              "ConceptMap"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "conceptCount": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "unmappedConcepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Concepts that could not be mapped to the target standard."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}

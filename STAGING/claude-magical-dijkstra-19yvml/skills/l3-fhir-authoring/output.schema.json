@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/l3-fhir-authoring/output.schema.json",
+  "title": "L3 FHIR Authoring Output",
+  "description": "Output schema for L3 FHIR IG authoring.",
+  "type": "object",
+  "required": [
+    "fshFiles",
+    "sushiResult"
+  ],
+  "properties": {
+    "fshFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "warnings",
+            "errors"
+          ]
+        },
+        "resourceCount": {
+          "type": "integer"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "generatedResources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "6b6229cc090a6c96640c8ebfd98641cd28ad7c1b",
+    "pr": "1026/merge",
+    "run": "35839042709"
+  }
+}
