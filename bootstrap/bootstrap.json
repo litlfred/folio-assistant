@@ -125,8 +125,8 @@
     ],
     "reason": "bootstrap is what an agent reads before it knows what a repository is, with nothing installed: no Skills beyond its own, no Knowledge Graph loaded, no server and no Tools. So it renders nothing for a person to browse.",
     "owes": "Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
-    "reachableAt": "cat-harness/docs/bootstrap/initialization.md",
-    "_reachableAt_comment": "Where a person is sent to read about bootstrap, since bootstrap renders no pages of its own. The page lives with the Harness that publishes bootstrap. Whether bootstrap should point there at all is an open question for the owner (bean iwtn)."
+    "reachableAt": "README.md",
+    "_reachableAt_comment": "Where a person is sent to read about bootstrap, since bootstrap renders no pages of its own: its own README, relative to this directory. The site build publishes bootstrap's files as they sit, with each `.md` also rendered as `.html`, so the link stays inside bootstrap."
   },
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. An EMPTY list is an assertion that this instance sits on nothing — the floor — while an ABSENT one means nobody has said, and the two are different answers.",
   "needs": []

@@ -5,7 +5,7 @@
  * workflow runs works on what that folio starts as.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
+import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -42,6 +42,17 @@ describe("build-document-site", () => {
     expect(html).toContain('<a id="prose:overview"></a>');
     expect(html).toContain('<a id="chap:introduction"></a>');
     expect(readFileSync(join(out, "index.html"), "utf-8")).toContain('href="handbook/index.html"');
+  });
+
+  test("a Markdown table in a block renders as a <table>, not raw pipes (fz39)", async () => {
+    const d = scaffold();
+    appendFileSync(join(d, "folio", "handbook", "introduction", "overview.md"), "\n\n| Role | who |\n|---|---|\n| Initiator | you |\n");
+    const out = join(d, "_site");
+    await buildDocumentSite(d, out);
+    const html = readFileSync(join(out, "handbook", "index.html"), "utf-8");
+    expect(html).toContain("<table>");
+    expect(html).toContain("<td>Initiator</td>");
+    expect(html).not.toContain("| Initiator |");
   });
 
   test("outline.json lists sections in manifest order, keyed exactly as the ChangeSet keys them (eb4l)", async () => {

@@ -88,7 +88,6 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
   const PENDING = [
-    'bootstrap.json: "reachableAt": "cat-harness/docs/bootstrap/initialization.md",',
     "schemas/model-registry.ts: * would otherwise answer**. A model registry in cat-harness would be",
   ];
   const files: string[] = [];

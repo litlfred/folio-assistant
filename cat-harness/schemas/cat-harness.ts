@@ -1944,8 +1944,15 @@ export interface RenderExemption {
   /**
    * Where the instance IS reachable, since it renders nothing of its own.
    *
-   * Repository-relative, under the site-owning harness's site directory —
-   * the same shape `coverage.visualiser` and `coverage.docs` use.
+   * One of the instance's OWN files, relative to its own directory and
+   * inside it — e.g. `README.md`. The site build publishes the instance's
+   * files at `<base>/<stub>/` (`publish-instance-files.ts`), rendering `.md`
+   * as `.html`, and the tab links there.
+   *
+   * It was repository-relative, under the site-owning harness's site
+   * directory, until 2026-09-23. That made bootstrap, the floor of the stack,
+   * point at a page in the layer above it. Owner (bean iwtn): *"bootstrap is
+   * bootstrap"*.
    *
    * ## Why an exemption needs this at all
    *
