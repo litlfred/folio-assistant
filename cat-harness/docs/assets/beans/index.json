@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 624,
+      "count": 625,
       "unit": "beans"
     }
   },
@@ -125,7 +125,7 @@
     {
       "id": "folio-assistant-0818",
       "title": "SMART-TRUST LHS NAV: the IG harvest dropped the menu AND the narrative pages — 0 of 12 menu labels resolve against 674 artefacts",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-yj32",
@@ -1317,14 +1317,14 @@
     {
       "id": "folio-assistant-589f",
       "title": "TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T11:57:40Z",
-      "updatedAt": "2026-09-23T11:57:40Z",
+      "updatedAt": "2026-09-23T13:24:28Z",
       "preview": "Found by `yh6u` while declaring `file` (2026-09-23).\n\n## What is wrong\n\n`CONTENT_CONTEXT` declares `text: {\"@id\": \"folio-assistant-core:text\", \"@type\": \"@id\"}`. Prose blocks write `text: \"../sections/sec-001-introduction.md\"` — a path RELATIVE TO THE BLOCK. Under `@id` coercion a JSON-LD processor resolves it against the context's `@base` (`https://litlfred.github.io/folio/`), giving `https://litl",
       "file": "beans/defs/folio-assistant-589f--text-links-resolve-wrong-text-is-coerced-to-id-so.md"
     },
@@ -3097,15 +3097,15 @@
     {
       "id": "folio-assistant-ca4a",
       "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T11:21:05Z",
-      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape",
+      "updatedAt": "2026-09-23T12:19:15Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape\n\n## Summary of Changes\n\nPR #1072, merged 2026-09-23 on the ow",
       "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
     },
     {
@@ -3167,15 +3167,15 @@
     {
       "id": "folio-assistant-chhd",
       "title": "flbx stage C: review-task branch for prose and the code it describes, calling adjudication",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
-      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [ ] stages B and A merged\n- [ ] review-task gains the branch; skill written; Lean skill re-pointed\n- [ ] kg:audit, render and gates green",
+      "updatedAt": "2026-09-23T13:31:33Z",
+      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [x] stages B and A merged (#1065, #1072)\n- [x] review-task gains the branch; skill written; Lean skill re-pointed\n- [x] kg:audit, render and gates gree",
       "file": "beans/defs/folio-assistant-chhd--flbx-stage-c-review-task-branch-for-prose-and-the.md"
     },
     {
@@ -3805,14 +3805,14 @@
     {
       "id": "folio-assistant-flbx",
       "title": "NARRATIVE-ASSERTS-CODE: one review axis for 'does the prose say what the artefact does', with Lean as a specialisation",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:55:39Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T13:31:33Z",
       "preview": "The open item from bean 7pdi (its unchecked 'narrative-asserts-code axis' Done-when). Owner 2026-09-23 chose it as next work (session_01SiFEMuTciyB681XP5WfcbB). CRDM: this bean starts at Phase 1 (needs) — nothing built before the needs statement is confirmed.\n\n## Existing partial answers (measured 2026-09-23)\n- proof-narrative-lean-equivalence (agent skill): paper prose vs .lean. Lean only; nrv8 f",
       "file": "beans/defs/folio-assistant-flbx--narrative-asserts-code-one-review-axis-for-does-th.md"
     },
@@ -5247,6 +5247,20 @@
       "updatedAt": "2026-09-22T07:24:28Z",
       "preview": "Found 2026-09-21 while merging `main` into the `lnur` branch. `j28g` moved the\nworkflow templates for diagrams cat-harness does not own out of\n`cat-harness/translations/` and into `bootstrap/translations/` — correctly, the\ntemplates now sit beside the instance that owns the diagrams. The half that did\nnot move is the DECLARATION.\n\n## The finding\n\n`bootstrap/bootstrap.json` declares four directorie",
       "file": "beans/defs/folio-assistant-m9zz--translations-bootstraptranslations-holds-15-pot-fi.md"
+    },
+    {
+      "id": "folio-assistant-mc8h",
+      "title": "MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:25:16Z",
+      "updatedAt": "2026-09-23T13:25:16Z",
+      "preview": "Found by getting it wrong on [#1064](https://github.com/litlfred/folio-assistant/pull/1064),\nand written down because the mistake is cheap to repeat.\n\n## What happened\n\n`main` absorbed **31, 13, 11 and 12** commits under one branch in about\nseventy minutes. Each time, the PR went `dirty`, and each time the response\nwas: merge `origin/main`, resolve, `bun run gates`, push. Four rounds.\n\n**`get_stat",
+      "file": "beans/defs/folio-assistant-mc8h--merge-forward-treadmill-re-merging-main-faster-tha.md"
     },
     {
       "id": "folio-assistant-mgdg",

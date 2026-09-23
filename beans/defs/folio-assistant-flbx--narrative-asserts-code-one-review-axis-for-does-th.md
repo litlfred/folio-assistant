@@ -1,11 +1,11 @@
 ---
 # folio-assistant-flbx
 title: 'NARRATIVE-ASSERTS-CODE: one review axis for ''does the prose say what the artefact does'', with Lean as a specialisation'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T09:55:39Z
-updated_at: 2026-09-23T10:38:11Z
+updated_at: 2026-09-23T13:31:33Z
 parent: folio-assistant-1swy
 ---
 
@@ -26,3 +26,15 @@ A checker that greps English cries wolf and gets switched off. Anchor on resolva
 - [x] Phase 1: needs statement posted on the issue and confirmed by the owner
 - [x] Phase 2-4: requirements + impact, options compared, approved
 - [x] Phase 5: sign-off (option D, B first), implementation beans cuxx (B), ca4a (A), chhd (C)
+
+## Summary of Changes
+
+Issue #1042, all three signed-off stages built:
+- B — cuxx, PR #1065: prose-reviewed-since-code-changed over 32 declared
+  pairs, attestations in the kg-qa sidecar, `pairs:attest`.
+- A — ca4a, PR #1072: prose-claims-resolve (holds / false / undetermined),
+  `pairs:claims`; fixed test-engineer.md's stale test-types.ts path.
+- C — chhd, PR #1086: the review branch, narrative-code-review.bpmn, the
+  narrative-asserts-code skill, and the exclusive-gateway wording fix.
+Requirements page: docs/proposals/narrative-asserts-code.md. Closing the
+issue is the owner's call.
