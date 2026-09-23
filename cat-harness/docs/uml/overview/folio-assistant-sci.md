@@ -1,6 +1,6 @@
 ---
 title: "UML — folio-assistant-sci"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — folio-assistant-sci

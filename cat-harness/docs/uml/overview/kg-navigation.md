@@ -1,6 +1,6 @@
 ---
 title: "UML — kg-navigation"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — kg-navigation

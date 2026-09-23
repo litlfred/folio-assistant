@@ -1,6 +1,6 @@
 ---
 title: "UML — fhir-harness"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — fhir-harness

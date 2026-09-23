@@ -1,6 +1,6 @@
 ---
 title: "UML — smart-immunizations"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — smart-immunizations

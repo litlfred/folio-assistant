@@ -1,6 +1,6 @@
 ---
 title: "UML — smart-trust"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — smart-trust

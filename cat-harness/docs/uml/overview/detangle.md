@@ -1,6 +1,6 @@
 ---
 title: "UML — detangle"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — detangle

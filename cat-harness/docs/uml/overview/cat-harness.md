@@ -1,6 +1,6 @@
 ---
 title: "UML — cat-harness"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — cat-harness

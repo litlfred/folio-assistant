@@ -1,6 +1,6 @@
 ---
 title: "UML — agent-skills"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — agent-skills

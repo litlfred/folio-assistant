@@ -1,6 +1,6 @@
 ---
 title: "UML — bootstrap"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — bootstrap

@@ -1,6 +1,6 @@
 ---
 title: "UML — smart-base"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — smart-base

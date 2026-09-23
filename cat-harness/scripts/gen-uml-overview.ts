@@ -69,6 +69,8 @@ const DOCS_ROOT = join(HARNESS, siteDir(OWN), "uml", "overview");
 const REPO_URL = "https://github.com/litlfred/folio-assistant";
 const SITE_URL = OWN.canonicalUrl ?? "";
 const GENERATOR = relative(REPO, import.meta.path);
+/** The menu entry the harness pages sit under. */
+const NAV_PARENT = "UML overview";
 
 // ── The model ─────────────────────────────────────────────────────────────
 
@@ -433,12 +435,17 @@ function page(opts: {
   mermaid: string;
   sections: Section[];
   links?: { label: string; href: string }[];
+  /** A harness page sits in the menu under the index; a sub-graph page does not. */
+  inNav?: boolean;
 }): string {
   const blob = `${REPO_URL}/blob/main`;
   const L = [
     "---",
     `title: "UML — ${opts.title}"`,
-    "nav_exclude: true",
+    // Menu: the index and one entry per harness. The ~85 sub-graph pages stay
+    // out of it and are reached from their harness page, because a menu that
+    // lists every sub-graph is a second index nobody can scan. Owner, 2026-09-23.
+    ...(opts.inNav ? [`parent: "${NAV_PARENT}"`] : ["nav_exclude: true"]),
     "---",
     "",
     `# UML — ${opts.title}`,
@@ -493,6 +500,7 @@ async function build(): Promise<Map<string, string>> {
         mermaid: overviewMmd,
         sections: inst.sections,
         links: inst.sections.map((s) => ({ label: `${s.instance}/${s.id}`, href: `${inst.name}/${s.id}.html` })),
+        inNav: true,
       }),
     );
     for (const s of inst.sections) {
@@ -515,8 +523,11 @@ async function build(): Promise<Map<string, string>> {
   }
   const index = [
     "---",
-    'title: "UML overview"',
-    "nav_exclude: true",
+    `title: "${NAV_PARENT}"`,
+    // After the numbered top-level pages (the highest is 14 today): a
+    // reference, not a first read.
+    "nav_order: 15",
+    "has_children: true",
     "---",
     "",
     "# UML overview",

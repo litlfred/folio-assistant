@@ -1,6 +1,6 @@
 ---
 title: "UML — folio-assistant-core"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — folio-assistant-core

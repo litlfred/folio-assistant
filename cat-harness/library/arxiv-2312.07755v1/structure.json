@@ -1,0 +1,441 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2312.07755v1",
+ "source": {
+  "file": "feng-2023-designing-with-language.pdf",
+  "sha256": "663850eb153e604dd193c4e6b7f3174509d0f0bcdef0c27ed478f5a8b2e37c8a",
+  "bytes": 8470733,
+  "pages": 21,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-23T09:12:52Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2312.07755",
+   "version": "1",
+   "primary_class": "cs.HC",
+   "stamp_date": "12 Dec 2023"
+  },
+  "doi": null,
+  "title": "Designing with Language: Wireframing UI Design Intent with Generative Large",
+  "authors_raw": "Language Models",
+  "title_lines": [
+   "Designing with Language: Wireframing UI Design Intent with Generative Large"
+  ],
+  "abstract": null,
+  "docinfo": {
+   "Title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+   "Producer": "pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) kpathsea version 6.3.5",
+   "Creator": "LaTeX with acmart 2022/10/24 v1.88 Typesetting articles for the Association for Computing Machinery and hyperref 2023-04-22 v7.00x Hypertext links for LaTeX",
+   "CreationDate": "D:20231214015521Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 3,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 2,
+   "title": "Mobile UI Wireframe",
+   "page": 3,
+   "source": "outline",
+   "number": "2.1"
+  },
+  {
+   "level": 2,
+   "title": "Designing with Natural Language",
+   "page": 4,
+   "source": "outline",
+   "number": "2.2"
+  },
+  {
+   "level": 2,
+   "title": "Prompting Large Language Models",
+   "page": 4,
+   "source": "outline",
+   "number": "2.3"
+  },
+  {
+   "level": 1,
+   "title": "Approach",
+   "page": 5,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 2,
+   "title": "Prepare Dataset of UI Wireframes and Descriptions",
+   "page": 5,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 2,
+   "title": "Fine-tune Large Language Models with Best Practice",
+   "page": 8,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 2,
+   "title": "Transform Raw Generation into Beautiful UI Wireframe",
+   "page": 9,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 1,
+   "title": "Evaluation",
+   "page": 11,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 2,
+   "title": "Research Questions",
+   "page": 11,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 2,
+   "title": "Testing Data",
+   "page": 11,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 2,
+   "title": "Annotation Methodology",
+   "page": 12,
+   "source": "outline",
+   "number": "4.3"
+  },
+  {
+   "level": 2,
+   "title": "RQ1: Performance of Fine-tuning",
+   "page": 12,
+   "source": "outline",
+   "number": "4.4"
+  },
+  {
+   "level": 2,
+   "title": "RQ2: Performance of Variations",
+   "page": 14,
+   "source": "outline",
+   "number": "4.5"
+  },
+  {
+   "level": 1,
+   "title": "User Study",
+   "page": 14,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 2,
+   "title": "Participants",
+   "page": 14,
+   "source": "outline",
+   "number": "5.1"
+  },
+  {
+   "level": 2,
+   "title": "Procedure",
+   "page": 14,
+   "source": "outline",
+   "number": "5.2"
+  },
+  {
+   "level": 2,
+   "title": "Results",
+   "page": 15,
+   "source": "outline",
+   "number": "5.3"
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 17,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 18,
+   "source": "outline",
+   "number": "7"
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1722,
+   "n_words": 233
+  },
+  {
+   "id": "sec-000-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 3,
+   "n_chars": 5418,
+   "n_words": 817
+  },
+  {
+   "id": "sec-001-2-related-work",
+   "number": "2",
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 118,
+   "n_words": 18
+  },
+  {
+   "id": "sec-002-21-mobile-ui-wireframe",
+   "number": "2.1",
+   "title": "Mobile UI Wireframe",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-003-22-designing-with-natural-language",
+   "number": "2.2",
+   "title": "Designing with Natural Language",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 382,
+   "n_words": 57
+  },
+  {
+   "id": "sec-004-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 2268,
+   "n_words": 336
+  },
+  {
+   "id": "sec-005-3-approach",
+   "number": "3",
+   "title": "Approach",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 5389,
+   "n_words": 787
+  },
+  {
+   "id": "sec-006-31-prepare-dataset-of-ui-wireframes-and-descript",
+   "number": "3.1",
+   "title": "Prepare Dataset of UI Wireframes and Descriptions",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 8,
+   "n_chars": 7161,
+   "n_words": 1100
+  },
+  {
+   "id": "sec-007-32-fine-tune-large-language-models-with-best-pra",
+   "number": "3.2",
+   "title": "Fine-tune Large Language Models with Best Practice",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 4603,
+   "n_words": 721
+  },
+  {
+   "id": "sec-008-33-transform-raw-generation-into-beautiful-ui-wi",
+   "number": "3.3",
+   "title": "Transform Raw Generation into Beautiful UI Wireframe",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 11,
+   "n_chars": 7114,
+   "n_words": 1154
+  },
+  {
+   "id": "sec-009-4-evaluation",
+   "number": "4",
+   "title": "Evaluation",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 142,
+   "n_words": 21
+  },
+  {
+   "id": "sec-010-41-research-questions",
+   "number": "4.1",
+   "title": "Research Questions",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 537,
+   "n_words": 78
+  },
+  {
+   "id": "sec-011-42-testing-data",
+   "number": "4.2",
+   "title": "Testing Data",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 684,
+   "n_words": 110
+  },
+  {
+   "id": "sec-012-43-annotation-methodology",
+   "number": "4.3",
+   "title": "Annotation Methodology",
+   "level": 2,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 774,
+   "n_words": 129
+  },
+  {
+   "id": "sec-013-44-rq1-performance-of-fine-tuning",
+   "number": "4.4",
+   "title": "RQ1: Performance of Fine-tuning",
+   "level": 2,
+   "page_start": 12,
+   "page_end": 14,
+   "n_chars": 3128,
+   "n_words": 493
+  },
+  {
+   "id": "sec-014-45-rq2-performance-of-variations",
+   "number": "4.5",
+   "title": "RQ2: Performance of Variations",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 382,
+   "n_words": 62
+  },
+  {
+   "id": "sec-015-53-results",
+   "number": "5.3",
+   "title": "Results",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 1347,
+   "n_words": 216
+  },
+  {
+   "id": "sec-016-5-user-study",
+   "number": "5",
+   "title": "User Study",
+   "level": 1,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 234,
+   "n_words": 39
+  },
+  {
+   "id": "sec-017-51-participants",
+   "number": "5.1",
+   "title": "Participants",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 855,
+   "n_words": 130
+  },
+  {
+   "id": "sec-018-52-procedure",
+   "number": "5.2",
+   "title": "Procedure",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 17,
+   "n_chars": 8688,
+   "n_words": 1363
+  },
+  {
+   "id": "sec-019-6-discussion",
+   "number": "6",
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 3199,
+   "n_words": 477
+  },
+  {
+   "id": "sec-020-7-conclusion",
+   "number": "7",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 18,
+   "page_end": 18,
+   "n_chars": 1050,
+   "n_words": 154
+  },
+  {
+   "id": "sec-021-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 18,
+   "page_end": 21,
+   "n_chars": 16801,
+   "n_words": 2304
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 23,
+  "toc_inferred_entries": 0,
+  "sections": 23,
+  "chars_total": 71996
+ }
+}

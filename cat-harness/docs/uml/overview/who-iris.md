@@ -1,6 +1,6 @@
 ---
 title: "UML — who-iris"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — who-iris

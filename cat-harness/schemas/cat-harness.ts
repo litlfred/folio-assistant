@@ -2405,6 +2405,58 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
+ * the instance root IS the repository root.
+ *
+ * ## Why {@link repoRootFor} is not enough, and is not wrong either
+ *
+ * `repoRootFor` is `dirname`, and says so. Its contract assumes an instance
+ * nested one level under the repository, which every instance here satisfies
+ * but one: **`folio-assistant` is declared AT the repository root.** For that
+ * one, `dirname` climbs out of the checkout, and a name lookup built on it
+ * sees no siblings at all.
+ *
+ * Measured on `main` at `80c18ac`, before this existed:
+ *
+ * ```
+ * repoRootFor("/home/user/folio-assistant")  -> "/home/user"
+ * instanceRootsIn("/home/user")              -> 1   (only folio-assistant)
+ * ```
+ *
+ * so the root instance's `needs: ["folio-assistant-core"]` derived **nothing**,
+ * and its overlay held one directory — the authored config edge, which does not
+ * go through the derivation. A broken resolver that returns one plausible entry
+ * is worse than one that returns none: it reads as a working overlay.
+ *
+ * ## The discriminator is "does this directory CONTAIN other instances"
+ *
+ * Asked in this module's own vocabulary rather than by probing for `.git`, for
+ * two reasons. A `.git` probe answers a question about version control when
+ * the question is about instance scope — a repository is not the only thing
+ * that can hold instances, and `init-folio` already builds trees that have no
+ * `.git` yet. And it keeps this testable over the throwaway trees the
+ * cross-instance tests use, which is where the sibling rules are falsified.
+ *
+ * So: if scanning `instanceRoot` finds an instance OTHER than itself, it is a
+ * container and it is the scope. Otherwise it is a leaf and its siblings live
+ * one level up, which is exactly {@link repoRootFor}'s assumption.
+ *
+ * **This does NOT replace `repoRootFor`.** That function answers "where does
+ * the REPOSITORY's own furniture live" — `.github/`, `package.json`, `beans/`
+ * — and for a nested instance the two agree. This one answers "where do I look
+ * up a sibling by name", and they differ only for the instance that is also
+ * the root. Collapsing them would make the repository-furniture question
+ * wrong for that same instance, in the other direction.
+ */
+export function siblingScopeFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  for (const found of instanceRootsIn(abs)) {
+    if (resolve(found) !== abs) return abs;
+  }
+  return repoRootFor(abs);
+}
+
+/**
  * Resolve a `coverage.visualiser` / `coverage.docs` value to an absolute path.
  *
  * **The base is the REPOSITORY root, and the owner ruled it so on 2026-09-21**

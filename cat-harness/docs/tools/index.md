@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>72</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>52</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>54</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>73</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>53</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>55</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 54 |
+| <span class="tg-tag tg-shell">shell</span> | 55 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 67 |
+| `none` | 68 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **52** skills named across **72** tools resolve to a
+Yes — all **53** skills named across **73** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -123,6 +123,7 @@ tool advertising a capability the graph cannot locate.
 | `translation-validate`<br>Validate a translation | Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `uml-object-model`<br>Harness object model as PlantUML | Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
 | `uml-overview`<br>UML overview per named sub-graph | Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema. A kind with none is drawn as could-not-determine, never as an empty box. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
+| `wireframe-check`<br>Wireframe check at web and mobile viewports | Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail. | <span class="tg-tag tg-shell">shell</span> | `wireframe-design-review` | 2 in / 1 out |
 | `work-plan-prime`<br>Prime the work plan | Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `bean-coordination`<br>`pending-show`<br>`session-intent`<br>`todo-manager` | 0 in / 1 out |
 | `workflow-complete`<br>Complete a step | Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `bean-coordination`<br>`process-state` | 6 in / 1 out |
 | `workflow-gate`<br>May this step be performed? | Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `process-state` | 2 in / 1 out |

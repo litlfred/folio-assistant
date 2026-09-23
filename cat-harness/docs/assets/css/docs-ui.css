@@ -4784,10 +4784,53 @@ a.fa-nav-folders__link:focus-visible {
 /* Declared, with no published viewer. Struck through rather than hidden, the
  * same way the harness tabs' graph list marks one: a gap a reader can see is a
  * gap somebody can close. */
+/* AN INERT ROW, AND THE WORDS ARE THE STATE.
+ *
+ * Owner ruling on #1036: a declared graph with no viewer is shown, inert and
+ * LABELLED. `gjli` is the constraint that decides how: the state must not be
+ * carried by colour alone, and it must not read as a control.
+ *
+ * So this rule only DE-EMPHASISES; it no longer has to carry the meaning,
+ * because `.fa-nav-folders__note` beside it says which of the four inert
+ * states this is. `line-through` is gone with the same reasoning — on a row
+ * that now reads `code  no viewer yet` it struck through the kind's own name,
+ * which says "removed" rather than "not built", and struck text is harder to
+ * read for exactly the audience this rule is for.
+ *
+ * `opacity` raised from 0.45 to 0.7, and BOTH numbers are measured in a
+ * browser rather than reasoned about: composited over this panel the row
+ * cleared **3.56:1** at 0.45 and clears **6.48:1** at 0.7. The first is under
+ * the 4.5:1 a label this size owes; dimmer than a link and still legible is
+ * the whole requirement. (An earlier draft of this comment guessed "about
+ * 2.4:1" — wrong, and wrong in the direction that oversells the fix.) */
 .fa-nav-folders__link--dead {
   cursor: default;
-  opacity: 0.45;
-  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* The reason, in the same shape the harness tabs already use for theirs —
+ * `.fa-harness-graph__note`. One appearance for one meaning across the two
+ * surfaces, rather than a second look a reader has to learn. */
+.fa-nav-folders__note {
+  margin-left: 0.4em;
+  /* THE ROW'S OWN SIZE, not 0.75em of it. The folders block is already
+   * 0.75rem, so a further 0.75em put the reason at **9px** — measured, not
+   * estimated. `.fa-harness-graph__note` can afford that shrink because its
+   * row is larger; this one cannot, and the reason is the part of the row a
+   * reader most needs. Italic carries the de-emphasis on its own.
+   *
+   * This instance's declared interaction profile is low-dexterity
+   * (`interaction/interaction.json`), and `ui-accessibility` is explicit that
+   * density is cheaper than a missed target; the same argument applies to a
+   * label nobody can read. */
+  font-style: italic;
+  /* NO OPACITY OF ITS OWN, unlike `.fa-harness-graph__note`, and the
+   * difference is not an oversight. That note sits on a row at full strength;
+   * this one sits INSIDE `--dead`, which is already at 0.7, and opacity
+   * multiplies — 0.7 x 0.75 put the reason at roughly 4.3:1 while the kind
+   * beside it sat at 6.48. The reason is the part a reader needs most and it
+   * would have been the least legible thing in the row. Italic and 0.75em
+   * carry the de-emphasis without touching contrast. */
 }
 
 /* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════

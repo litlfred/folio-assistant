@@ -1,6 +1,7 @@
 ---
 title: "UML overview"
-nav_exclude: true
+nav_order: 15
+has_children: true
 ---
 
 # UML overview

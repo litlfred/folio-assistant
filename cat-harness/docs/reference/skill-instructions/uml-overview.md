@@ -53,7 +53,10 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
 - `docs/uml/overview/…`: the pages. They render the Mermaid through
   just-the-docs and link both source files. Published at
   `<site>/uml/overview/<instance>.html`; the index is
-  `<site>/uml/overview/index.html`.
+  `<site>/uml/overview/index.html`. The site menu has a **UML overview** entry
+  with one child per harness. The sub-graph pages stay out of the menu and are
+  linked from their harness page, because a menu listing every sub-graph would
+  be too long to scan.
 - `uml/harness-object-model.puml`: the object model.
 
 **Colours are declared once, in `docs/assets/css/uml.css`**, one CSS class per

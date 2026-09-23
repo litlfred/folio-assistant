@@ -25,8 +25,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>9</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>3</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>10</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>4</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>6</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -48,6 +48,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -186,6 +187,20 @@ these.
 
 - `library/gurel-tat-2017-swot-analysis`
 - `library/sammut-bonnici-galea-2015-swot-analysis`
+
+### WireGen: wireframing from a written design intent
+
+<a id="wiregen"></a>
+
+`wiregen` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be reviewed and, when reviewers disagree, adjudicated. It is a design-generation and design-evaluation method. It does not choose between non-UI options (use the decision-analysis methodology) or grade evidence. It does not by itself settle a disagreement: that is `adjudication`.
+
+**Origin.** Sidong Feng, Mingyue Yuan, Jieshan Chen, Zhenchang Xing and Chunyang Chen, "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models", arXiv:2312.07755v1 [cs.HC], 12 Dec 2023. Ingested in full at `cat-harness/library/arxiv-2312.07755v1/`. The source states no licence, and its licence could not be established (see `check:source-licence`). Section numbers below are the paper's.
+
+**Ingested sources:**
+
+- `library/arxiv-2312.07755v1`
 
 ## Files in the graph that are not methodology nodes
 

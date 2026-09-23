@@ -1,6 +1,6 @@
 ---
 title: "UML — who-style-guide"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — who-style-guide

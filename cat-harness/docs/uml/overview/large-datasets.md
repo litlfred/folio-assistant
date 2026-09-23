@@ -1,6 +1,6 @@
 ---
 title: "UML — large-datasets"
-nav_exclude: true
+parent: "UML overview"
 ---
 
 # UML — large-datasets

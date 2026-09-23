@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: uploads — the intake queue</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  main { max-width: 70rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 24px; margin: 16px 0 4px; }
+  .sub { color: var(--mute); margin: 0 0 16px; }
+  .badges { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 20px; }
+  .badge { border: 1px solid var(--line); background: var(--fill); padding: 8px 14px; min-width: 7rem; }
+  .badge b { display: block; font-size: 26px; line-height: 1.1; }
+  .badge span { color: var(--mute); font-size: 13px; }
+  .badge.lead { border: 2px solid var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { white-space: nowrap; color: var(--mute); }
+  td.num, th.num { text-align: right; }
+  .pill { display: inline-block; border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; font-weight: 700; }
+  .pill.waiting { border-style: dashed; }
+  .k { color: var(--mute); font-size: 12px; }
+  .gap td { text-align: left; color: var(--mute); font-size: 13px; background: var(--fill); }
+  .clip { width: 100%; }
+  @media (max-width: 700px) {
+    .badge { flex: 1 1 40%; }
+    .clip { overflow: hidden; border-right: 3px dashed var(--ink); }
+    .clip table { width: 537px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · uploads · covers: cat-harness/docs/cat-harness/uploads/index.html</div>
+<main>
+  <h1>uploads — the intake queue</h1>
+  <p class="sub">Raw files as dropped, before ingestion. A source here is <strong>not</strong> reachable by the corpus checklist, which searches <code>library/</code> only — so a file waiting here makes a clean grep read as “nobody has done this”.</p>
+
+  <div class="badges">
+    <div class="badge lead"><b>22</b><span>waiting to be ingested</span></div>
+    <div class="badge"><b>17</b><span>ingested into library/</span></div>
+    <div class="badge"><b>39</b><span>queued units</span></div>
+    <div class="badge"><b>3</b><span>queue(s)</span></div>
+  </div>
+
+  <p class="wf-note wf-mobile-only">At 390 px the table is 537 px wide: the page scrolls sideways and <b>Type</b>, <b>Size</b> and <b>Queue</b> start off-screen (the dashed edge).</p>
+  <div class="clip">
+  <table aria-label="Intake queue">
+    <thead><tr><th>File</th><th>Unit</th><th>State ▴</th><th>Type</th><th class="num">Size</th><th>Queue</th></tr></thead>
+    <tbody>
+      <tr><td>gurel-tat-2017-swot-analysis.pdf</td><td class="k">file</td><td><span class="pill">ingested</span> <span class="k">gurel-tat-2017-swot-analysis</span></td><td><code>pdf</code></td><td class="num">1.4 MB</td><td>cat-harness</td></tr>
+      <tr><td>milnorlink.pdf</td><td class="k">file</td><td><span class="pill">ingested</span> <span class="k">milnorlink</span></td><td><code>pdf</code></td><td class="num">1.4 MB</td><td>cat-harness</td></tr>
+      <tr><td>sammut-bonnici-galea-2015-swot-analysis.pdf</td><td class="k">file</td><td><span class="pill">ingested</span> <span class="k">sammut-bonnici-galea-2015-swot-analysis</span></td><td><code>pdf</code></td><td class="num">646 KB</td><td>cat-harness</td></tr>
+      <tr><td>2607.25032v1.pdf</td><td class="k">file</td><td><span class="pill">ingested</span> <span class="k">arxiv-2607.25032v1</span></td><td><code>pdf</code></td><td class="num">362 KB</td><td>folio-assistant</td></tr>
+      <tr><td>2608.08453v1.pdf</td><td class="k">file</td><td><span class="pill">ingested</span> <span class="k">arxiv-2608.08453v1</span></td><td><code>pdf</code></td><td class="num">587 KB</td><td>folio-assistant</td></tr>
+      <tr class="gap"><td colspan="6">11 more ingested rows not drawn</td></tr>
+      <tr><td>wpr-rdo-2020-003-eng<br><span class="k">Publication and information products style guide</span></td><td class="k">intake · 5 file(s)</td><td><span class="pill">ingested</span> <span class="k">wpr-rdo-2020-003-eng</span></td><td class="k">—</td><td class="num">4.4 MB</td><td>who-iris</td></tr>
+      <tr><td>adr-madr-2026-09-22.zip</td><td class="k">file</td><td><span class="pill waiting">waiting</span></td><td><code>zip</code></td><td class="num">10 KB</td><td>cat-harness</td></tr>
+      <tr><td>2602.12670v4.pdf</td><td class="k">file</td><td><span class="pill waiting">waiting</span></td><td><code>pdf</code></td><td class="num">1.7 MB</td><td>folio-assistant</td></tr>
+      <tr><td>Agent Skill best practices - Gemini CLI.pdf</td><td class="k">file</td><td><span class="pill waiting">waiting</span></td><td><code>pdf</code></td><td class="num">332 KB</td><td>folio-assistant</td></tr>
+      <tr class="gap"><td colspan="6">18 more waiting rows not drawn</td></tr>
+      <tr><td>iris-home<br><span class="k">IRIS Home</span></td><td class="k">intake · 1 file(s)</td><td><span class="pill waiting">waiting</span></td><td class="k">—</td><td class="num">1.5 MB</td><td>who-iris</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="wf-note">Default sort is <b>State ▴</b> (ascending), so all 17 <i>ingested</i> rows come first and the 22 <i>waiting</i> ones, which the lead badge counts, start below the fold. Headers sort on mouse click only.</p>
+</main>
+</body>
+</html>
