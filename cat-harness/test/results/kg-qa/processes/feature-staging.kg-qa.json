@@ -138,8 +138,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/feature-staging.yml",
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -147,8 +152,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 14,
+    "fail": 3,
     "n/a": 7,
     "unknown": 0
   },

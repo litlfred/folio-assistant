@@ -658,6 +658,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The specifications this instance depends on — one record per specification, pinning the " +
       "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
   },
+  // Code lists — a closed set of codes, each with a label, a definition and a
+  // source, published as a SKOS concept scheme (schemas/code-list.ts). Owner,
+  // 2026-09-23: "list of codes and corresponding narrative desc and source
+  // should be part of a node/asset". `content`, by the same argument
+  // `external-schema` makes: the subject matter is a DECISION — which answers
+  // an adjudication may give, which namespaces are ours — and a person makes
+  // it. Diagrams and `schemas/namespaces.ts` READ these; nothing writes them.
+  "code-list": {
+    type: termIri("CodeListGraph"),
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/code-list.ts#CodeListSchema",
+    summary:
+      "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
+      "per list, every code carrying its definition and source, published as SKOS.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,

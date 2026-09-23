@@ -192,6 +192,38 @@ An **unclaimed** bean is fair game for any session; a claimed one is not.
 Respect sibling claims. Agents create and set `in-progress`; they do not take
 over the work another session is mid-flight on.
 
+### Complete it in the PR's own last commit (bean `4d22`)
+
+**Mark the bean `completed` in the last commit of the PR that does its work.**
+Do not wait for the merge.
+
+The natural order loses it. The PR merges, the agent then commits the bean's
+completion to the branch, then re-branches from the new `main`
+(`git checkout -B <branch> origin/main`). That completion commit was never in
+any PR, so it is orphaned: the bean still reads open on `main`, and the next
+session's ready-list offers finished work. Measured twice on 2026-09-22
+(`ebvl`, `7ofc`), each caught only because somebody noticed.
+
+The completion cannot ride its own PR *after* the merge, because then there is
+no PR left to carry it. So it rides the PR *before*, as its last commit,
+asserting `completed` a few minutes before the merge makes it true. That is the
+lesser error: if the PR is abandoned, the bean reads done on a branch that never
+lands, and `main` never saw it. Practised on 2026-09-23 for eight beans in a
+row with no orphan.
+
+Two things that follow:
+
+- The `## Done when` items are ticked in that same commit, with the evidence,
+  so the bean on `main` shows *why* it is complete, not just that it is.
+- A bean whose Done-when is not yet all met **stays open** in that commit, with
+  a note saying what is left. Completing it to avoid an orphan would be the
+  opposite error.
+
+`bun run beans:landed` reports what slipped through: open, non-epic beans named
+in a merged PR's title on `main`, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.
+
 ## Closing a bean whose work has already landed (STRICT)
 
 The sentence above used to end *"they do not resolve another session's
