@@ -3,12 +3,12 @@
   "name": "bootstrap",
   "roles": [
     {
-      "id": "initiator",
-      "title": "Initiator",
+      "id": "bootstrapping-agent",
+      "title": "Bootstrapping Agent",
       "lanes": [
-        "Initiator"
+        "Bootstrapping Agent"
       ],
-      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
       "actorKinds": [
         "agent"
       ],
@@ -40,7 +40,7 @@
       "lanes": [
         "Requestor"
       ],
-      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
       "actorKinds": [
         "person"
       ],

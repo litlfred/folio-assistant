@@ -227,10 +227,10 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | Author (person) | 2 |
 | Authoring agent | 2 |
 | Board renderer | 2 |
+| Bootstrapping Agent | 2 |
 | Build pipeline — validate · render · publish | 2 |
 | Code reviewer | 2 |
 | Human actor | 2 |
-| Initiator | 2 |
 | Narrative reviewer | 2 |
 | Programme manager | 2 |
 | Reader | 2 |

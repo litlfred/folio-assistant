@@ -7,7 +7,7 @@
  *
  * ## Why the source and the output are in different instances
  *
- * `bootstrap/README.md` promises an Initiator **no harness, no server, no
+ * `bootstrap/README.md` promises a Bootstrapping Agent **no harness, no server, no
  * tools and no work plan**, and that what it reads is "a file you read, not
  * something you run". That directory holds `.md`, `.json` and `.bpmn` and no
  * executable code. So the Zod lives in `bootstrap-tools/` and the JSON
@@ -99,7 +99,7 @@ const TARGETS = [
     id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
     title: "Discussion Input",
     description:
-      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — an Initiator has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
+      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
     schema: DiscussionInputSchema,
     conditionals: [] as readonly unknown[],
     terms: {} as Readonly<Record<string, string>>,

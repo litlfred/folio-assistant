@@ -1,5 +1,5 @@
 {
-  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. An Initiator that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
+  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
   "name": "bootstrap",
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
   "title": "Bootstrap",
@@ -75,7 +75,7 @@
       "id": "scenarios",
       "path": "scenarios/",
       "dependents": "reproduce",
-      "description": "bootstrap's four Roles: Initiator, Requestor, Knowledge Graph Data Store and Logger.",
+      "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
       "graphKinds": [
         "scenarios"
       ]

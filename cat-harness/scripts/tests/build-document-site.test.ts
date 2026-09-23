@@ -46,13 +46,13 @@ describe("build-document-site", () => {
 
   test("a Markdown table in a block renders as a <table>, not raw pipes (fz39)", async () => {
     const d = scaffold();
-    appendFileSync(join(d, "folio", "handbook", "introduction", "overview.md"), "\n\n| Role | who |\n|---|---|\n| Initiator | you |\n");
+    appendFileSync(join(d, "folio", "handbook", "introduction", "overview.md"), "\n\n| Role | who |\n|---|---|\n| Bootstrapping Agent | you |\n");
     const out = join(d, "_site");
     await buildDocumentSite(d, out);
     const html = readFileSync(join(out, "handbook", "index.html"), "utf-8");
     expect(html).toContain("<table>");
-    expect(html).toContain("<td>Initiator</td>");
-    expect(html).not.toContain("| Initiator |");
+    expect(html).toContain("<td>Bootstrapping Agent</td>");
+    expect(html).not.toContain("| Bootstrapping Agent |");
   });
 
   test("outline.json lists sections in manifest order, keyed exactly as the ChangeSet keys them (eb4l)", async () => {
