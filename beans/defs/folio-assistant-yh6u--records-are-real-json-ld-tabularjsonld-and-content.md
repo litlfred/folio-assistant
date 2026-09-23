@@ -1,10 +1,11 @@
 ---
 # folio-assistant-yh6u
 title: 'RECORDS ARE REAL JSON-LD: tabular.jsonld and contents.jsonld carry no @context, and 392 figure narratives use undeclared keys'
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-23T11:55:23Z
-updated_at: 2026-09-23T11:55:23Z
+updated_at: 2026-09-23T12:13:09Z
 parent: folio-assistant-slw1
 ---
 
@@ -40,3 +41,15 @@ Chosen over renaming to `.json` (option 1/2). Design:
 ## Done when
 
 Every key in every committed content-context document is a declared term, and both writers emit documents a JSON-LD processor keeps whole.
+
+## Summary of Changes
+
+PR #1079, merged on the owner's "merge it" (2026-09-23). Issue #1078.
+
+- `tabular.jsonld` and `contents.jsonld` are real JSON-LD: both Python arms emit the published content `@context`, from one shared `scripts/_content_context.py` pinned to `CONTENT_CONTEXT_URL` by a test. The schemas accept an optional `@context` (older folio records) and reject any other.
+- `CONTENT_CONTEXT` declares every key those records write: queryable facts as real terms (`dcterms:conformsTo`, `dcterms:format`, integer counts, `header_vocabulary` as a set, `headers` as a list); our nested structures (`narrative`, `sheets`, `entries`, technical metadata) as `@json`, so their three-state nulls survive.
+- The same declarations fixed **392 committed figure blocks** whose narratives were being dropped; `file` declared as a LITERAL (block-relative path).
+- New gate `checkDeclaredKeys` in `check:context-emission`: every plain key in a content-context document is a declared term. 2,926 documents, 0 undeclared. Falsified both ways.
+- Skills `library-ingestion` and `kg-export`; Tool node `context-prefixes`.
+
+Filed, not fixed: `589f` — `text` on prose blocks resolves against `@base` to the wrong location.
