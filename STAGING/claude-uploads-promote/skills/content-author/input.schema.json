@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-uploads-promote/skills/content-author/input.schema.json",
+  "title": "Content Author Input",
+  "description": "Input schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "contentType"
+  ],
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "document",
+        "fhir-ig",
+        "lean-proof",
+        "bpmn",
+        "data-dictionary"
+      ],
+      "description": "Type of content to author."
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Reference to source material."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Output directory for authored content."
+    }
+  },
+  "staging": {
+    "branch": "claude/uploads-promote",
+    "sha": "05327c7ba27fc50ff481d6a8a49fd77f844b96b8",
+    "pr": "1150/merge",
+    "run": "35904105701"
+  }
+}
