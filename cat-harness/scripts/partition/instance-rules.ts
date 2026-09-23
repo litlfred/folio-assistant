@@ -141,6 +141,10 @@ export const RULES: Rule[] = [
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
+      // HARNESS: the review page is rendered surface, which the harness owns
+      // (bean txut; 7ofc's ruling for the folio visualiser). It imports
+      // nothing; build-document-site (core) calls it, core -> harness.
+      "scripts/gen-review-page.ts",
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is

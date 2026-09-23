@@ -1,11 +1,11 @@
 ---
 # folio-assistant-txut
 title: 'REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:04:44Z
+updated_at: 2026-09-23T06:02:50Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -33,7 +33,27 @@ folio and from the STAGING banner. It reads the ChangeSet (child 02) and shows:
 - sjic: the navbar component.
 
 ## Done when
-- [ ] the page renders for a folio on STAGING with a non-empty ChangeSet, and on MAIN with an empty one ("nothing changed", not blank)
-- [ ] it is declared, and `graph-tiles` lists it without an undeclared-projection finding
-- [ ] it is keyboard-operable end to end (see child 06)
-- [ ] rendered and inspected in a browser: `preview:site` plus a screenshot on the PR
+- [x] the page renders for a folio on STAGING with a non-empty ChangeSet, and on MAIN with an explicit message rather than a blank list. MAIN has NO ChangeSet, so it says "nothing to compare against main". A ChangeSet with zero changes says "No block changed" with the count compared
+- [ ] it is declared, and `graph-tiles` lists it without an undeclared-projection finding. **Does not apply as written** (see round 1): the page lives in a FOLIO's preview site, and graph-tiles lists the platform's own declared visualisers. It is linked from the folio site's index. Whether a folio should declare it as a visualiser is open
+- [x] it is keyboard-operable end to end: `j`/`k` plus button twins, Tab through plain links, visible focus, and a live status. Verified in Chromium keyboard-only. The full keyboard map is eb4l
+- [x] rendered and inspected in a browser: Chromium, light and dark, on a scaffolded folio's preview (not `preview:site`, which builds the platform's docs). Screenshots were given to the owner in the session
+
+## Round 1: 2026-09-23
+
+**Built.** `cat-harness/scripts/gen-review-page.ts` is a static page that fetches `../changeset.json` and `../staging.json` when opened, because in `folio-staging.yml` the ChangeSet is computed AFTER the site build. `build-document-site` writes it to `<site>/review/index.html` and links it from the index. The generator is harness (rendered surface; 7ofc's ruling), and it is called from core, which is the allowed direction.
+
+**What it shows.**
+- The summary: base → branch, with counts per kind.
+- Changes grouped by section, each a WORD (added, removed, reworded, edited, moved, renamed; "was X" for a rename).
+- A before/after pair per changed block: a preview link, plus a `main` link built from `staging.json`'s `mainSite`. An added block gets only the preview link; a removed block only the main link.
+
+The list is built with DOM APIs only, so a block label can never become markup.
+
+**Verified in Chromium** on an init-folio-scaffolded document folio, with one block added and one reworded. That run covered the site build, the ChangeSet, the banner, and a static serve:
+- both changes listed with word labels;
+- `j`,`j` reached change 2 of 2, and the status announced it;
+- the preview link returned 200 with the `prose:scope` anchor present;
+- a build with no ChangeSet shows the explanatory message;
+- light and dark screenshots were checked, and the button row and branch naming were fixed after looking at them.
+
+**Not here:** renderer choice (d903), heat map (qbfi), comments (423d), outline and minimap (eb4l).
