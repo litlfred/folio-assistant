@@ -75,3 +75,71 @@ The decision rules are a SKILL, per the owner: skills/folio-core/library-ingesti
 Two things the gates caught in my own work, both the same defect as the bean-store one earlier today: I hardcoded '-o library' four times (check:declared-paths refused it; now read via directoryForGraph from harness.json), and I reimplemented slugify in TypeScript (it got WPR-RDO-2020-003-eng wrong; scripts/_pdf_doc_id.py is the one definition, and bean rlp5 records that three copies already existed and drifted -- mine would have been a fourth).
 
 NOT done: --dry-run cannot be verified end-to-end here without a PDF backend, and no upload was actually re-ingested (all four already have entries). 12 tests cover the decision against fixtures.
+
+---
+
+*2026-09-23* — **VERIFIED END TO END. The bean's own "NOT done" is now done,
+and following its output found a defect.**
+
+The note above says *"--dry-run cannot be verified end-to-end here without a
+PDF backend"*. That was a fact about **that container**, not a standing one:
+`pymupdf` is declared in `requirements.txt` (bean `68dt`, whose comment calls
+it *"the single most load-bearing dependency here"*), it installs in one
+command, and everything then works.
+
+**The rung decision is right across six real documents**, which is the first
+time it has been exercised on anything but fixtures:
+
+| document | rung | evidence the tool gave |
+|---|---|---|
+| 5 browser prints (Antigravity, Gemini CLI, Anthropic, Claude Docs, OpenAI) | `pdf-pages` | no outline, 1 640–33 036 chars of text layer |
+| `2602.12670v4` (arXiv) | `pdf-structure` | **81 of 81** outline entries can carry a chapter |
+
+**The missing-backend path is not a gap either**, and I checked by
+uninstalling `pymupdf` rather than by reading the code: it reports `no PDF
+backend: No module named 'pymupdf'` and ingests nothing. It does not conflate
+that with an unprobeable PDF. My hypothesis that it did was wrong.
+
+## The defect: a fixed code path does not fix the prose beside it
+
+The staged output prints *"Next: run the remaining arms with -o
+`<staging>/<slug>`"*. **That is the entry directory, and every arm's `-o` is
+the library ROOT** — `pdf-images.py --help` says so outright: *"library root;
+the sidecar lands in `<out>/<doc-id>/`"*.
+
+Following it produced `ingest-staging/<slug>/<slug>/images.json` while the
+entry's own `images.json` stayed absent. Which is **exactly** the failure the
+comment above `stagingRoot` already records from #495:
+
+> `checkEntry` read an empty parent and reported EVERY requirement unmet — a
+> refusal that looked exactly like a correct one.
+
+That bug was fixed in the CODE (`planFor(pdf, undefined, stagingRoot)`) and a
+test guards it. **The printed instruction was never fixed and never tested**,
+so an agent following the tool's own next-step reproduced the defect by hand.
+Fixed, with the missing assertion added and proved non-vacuous by reverting
+the line and watching the test fail.
+
+## Point 3 of the 2026-09-19 note is now STALE — the harm is live
+
+It recorded *"all four uploads have library slugs… the RISK the bean describes
+is real; the instance is not."* Re-measured today with
+`derive_doc_id_from_pdf` over all five declared `*/library` directories:
+**19 PDFs in `uploads/`, 11 with a library entry, 8 without.** Seven of the
+eight are `r8br`'s browser prints. So the corpus-grep harm this bean was
+opened for is **no longer hypothetical**.
+
+I got that measurement wrong once first: a bare `python3 _pdf_doc_id.py FILE`
+prints nothing (it is a module, and the caller's own comment warns that
+`derive_doc_id` is the wrong function), so every row read "NO LIBRARY ENTRY".
+An empty slug column made a false negative look like a finding — the same
+shape as the retracted note in this bean's own history.
+
+## What is still NOT done
+
+`ingest` sequences **one** rung and then hands off. The done-when asks for one
+command that takes a file to `library/<slug>/` *with structure, derived
+content, the Dublin Core record and the manifest* — and blocks, manifest and
+images are still run by hand before `--promote`. Staging one document leaves
+**4 requirements unmet**, named by the tool. So this bean stays open: the
+entry point is real and verified, but it is not yet the whole path.
