@@ -96,15 +96,72 @@ like one that does not.
 
 ### P3 is BLOCKED on more than a fork
 
-Measured, from `nsbb`: nothing in the Publisher's current exports carries
-dependencies among Libraries, PlanDefinitions or Measures — **458 artefacts,
-61 % of smart-immunizations**, the CQL and decision-logic core, with no
-dependency edges at all. An AST that stops at terminology cannot support
-iterative deltas over the part of an IG that actually changes.
+Measured, from `nsbb`, re-derived 2026-09-23 and it **holds exactly**: nothing in
+the Publisher's current exports carries dependencies among Libraries,
+PlanDefinitions or Measures — **458 artefacts, 61 % of smart-immunizations**
+(Library 279 + PlanDefinition 138 + Measure 41 of 748), the CQL and
+decision-logic core, with no dependency edges at all. The index's field set is
+`canonical, category, dak, description, id, key, materialization, name,
+published, resourceType, title, version` — there is **no edge field**, so this
+is not "edges are missing" but "this export has nowhere to put one", and the
+exit criterion is **unsatisfiable** against it rather than merely hard (`kn0t`).
+An AST that stops at terminology cannot support iterative deltas over the part
+of an IG that actually changes. Re-derive that 61 % before quoting it.
 
-So P3 depends on [`ig-publisher-fork`](ig-publisher-fork.md) delivering the
-logic-layer edges, not merely on a dump existing. Re-derive that 61 % before
-quoting it.
+#### There is a second route to the edges, and it needs no fork
+
+`content/pipeline/fsh-cone.ts` (merged, from `267x`) builds the same IG's graph
+from **source** — `.fsh` + `.cql` — where the export side is the Publisher's
+output. Both are true at once: 2,478 source edges, 0 export edges. Measured on
+smart-immunizations 2026-09-23 (`f4gj`, reproduce with
+`scripts/measure-logic-layer-edges.ts`):
+
+- The 458 map onto FSH source **1:1, zero unmatched ids**.
+- **The edges are there.** After FSH `RuleSet` parameter substitution — what
+  SUSHI does before the Publisher sees a resource — **458 of 458** logic
+  artefacts carry an edge to another logic artefact, reaching 458 distinct
+  targets.
+
+**So the blocker is real but this section's inference was too strong.** P3 does
+not depend on a fork for the *existence* of logic-layer edges; those are in the
+IG source at full per-artefact resolution. What the fork uniquely delivers is
+**resolved, version-pinned, cross-package** edges.
+
+#### ...and it is not a route today
+
+`fsh-cone` **as merged** extracts none of them. For all 458 artefacts it reaches
+**8 distinct targets, every one a shared `RuleSet`** — **0 logic→logic edges**.
+Aggregate "coverage" reads 99.8 %, which is boilerplate: every Library's mean
+out-degree is exactly **1.00** and all 279 point at the same node, so the graph
+cannot tell one Library from another. Both staleness directions are wrong — a
+change to a Library's own CQL marks **nothing** stale; a change to
+`LogicLibrary.fsh` marks **all 279**. **Break any such number down by resource
+type**; the aggregate hid this.
+
+Two separable causes: **(a)** `fsh-cone`'s `Library ↔ cql (by name)` edge is
+guarded on `node.id`, and all 279 Library instances omit `Id:` and rely on
+SUSHI's name→id default, so the edge fires 0 times; **(b)** PlanDefinition and
+Measure write their library edge *inside a parameterised RuleSet*
+(`* library = Canonical({library}Logic)`), which needs SUSHI's substitution to
+recover.
+
+#### What a source edge still cannot carry
+
+Even with (a) and (b), the second route answers *which artefact* is stale, not
+*what a reader must be told*. It cannot carry **version pinning** (`resolveRef`
+strips `|version`, and `PlanDefMain` takes `library` and `version` as separate
+parameters that are never associated), **cross-package references** (dropped by
+design — `InstanceOf` contributes 3 edges across the whole IG because 179 of the
+458 are `InstanceOf:` a cpg/cqfmeasures profile URL), or **post-SUSHI
+expansion** except by reimplementing SUSHI, where one silently wrong edge is
+precisely what the staleness contract forbids. Rendering-time coupling is
+invisible to it too; a cone is a **lower bound**.
+
+So: the second route can supply the **dependency-edge** third of P3's visible
+mark and the rebuild set behind it, the **index** third only as a lower bound,
+and the **version** third not at all. [`ig-publisher-fork`](ig-publisher-fork.md)
+is still what closes P3 — for versions and package closure, not for the
+existence of logic-layer edges.
 
 ## What is NOT settled, and must not be decided by drift
 
