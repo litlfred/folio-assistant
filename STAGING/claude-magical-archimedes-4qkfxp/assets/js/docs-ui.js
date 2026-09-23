@@ -1162,8 +1162,22 @@
   // A three-by-three of rounded squares: the launcher. It says "there are
   // several things here" without naming one of them, which the gear and the
   // globe both did while standing for the whole row.
+  // `fill="currentColor"` ON THE GROUP, and its absence was a live defect.
+  //
+  // Owner, 2026-09-23, with a screenshot of the dark-mode navbar: *"exploding
+  // icon hard to see in dark mode"*. It was not hard to see — it was BLACK.
+  // An SVG shape with no `fill` paints with the initial value, which is black,
+  // and `color` never reaches it. On this panel (rgb(39,38,43)) that is about
+  // **1.4:1** — measured by walking the rendered shapes, which is the only way
+  // it shows: the element's own `color` computes to a perfectly good
+  // rgb(230,225,232) and a contrast check that reads THAT reports 7.99:1 on an
+  // invisible icon.
+  //
+  // The siblings escaped because they are strokes: every other glyph in this
+  // row wraps its shapes in `fill="none" stroke="currentColor"`. These two are
+  // the only FILLED ones, which is why they were the only two wrong.
   var TILES_GLYPH =
-    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">' +
     '<rect x="3" y="3" width="6" height="6" rx="1.4"/>' +
     '<rect x="15" y="3" width="6" height="6" rx="1.4"/>' +
     '<rect x="3" y="15" width="6" height="6" rx="1.4"/>' +
@@ -1178,9 +1192,13 @@
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
     '<path d="M12 4.5 5 9.5M12 4.5l7 5M5 9.5l3.5 8M19 9.5l-3.5 8M8.5 17.5h7M5 9.5h14" ' +
     'fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    // FILLED NODES, so they need the colour said explicitly — the edges above
+    // are strokes and already carry it. See TILES_GLYPH for what their absence
+    // looked like: five black dots on a dark panel.
+    '<g fill="currentColor">' +
     '<circle cx="12" cy="4.5" r="2.1"/><circle cx="5" cy="9.5" r="2.1"/>' +
     '<circle cx="19" cy="9.5" r="2.1"/><circle cx="8.5" cy="17.5" r="2.1"/>' +
-    '<circle cx="15.5" cy="17.5" r="2.1"/>' +
+    '<circle cx="15.5" cy="17.5" r="2.1"/></g>' +
     "</svg>";
 
   // Angle brackets and a slash: the source.
@@ -7742,6 +7760,96 @@
     middle.appendChild(nav);
   }
 
+  /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## The bar had ONE state bit and needed two
+   *
+   * `#fa-nav-open` is checked (pinned open) or clear (default). It ALSO opens
+   * on hover and on focus, and `[x]` was shown only while pinned — so a bar
+   * opened by a pointer had no control, and a touch reader, who has no
+   * pointer to move away, had no way at all. Nothing persisted either: every
+   * navigation started over.
+   *
+   * The owner chose the three-state answer over the two smaller ones:
+   * pinned-open, default peek, and STAY CLOSED — remembered across pages.
+   *
+   * ## `[x]` cannot just be a label in the hover case
+   *
+   * It is a `<label for="fa-nav-open">` and a label TOGGLES. Pinned, that is
+   * right and works with no script — a property this file protects. Open by
+   * hover the checkbox is already clear, so the same click would CHECK it and
+   * pin the bar open: the opposite of what the control says. So that click is
+   * intercepted here, and the stylesheet only offers `[x]` in the hover case
+   * when `.fa-nav-js` says this ran.
+   *
+   * ## What is stored, and what happens when it cannot be
+   *
+   * One key, one of two values, per browser. `localStorage` throws in a
+   * private window and in previews, so every read and write is guarded and a
+   * failure degrades to the previous behaviour rather than to a broken
+   * navbar — the preference is a convenience, not state anything else needs.
+   */
+  var NAV_PREF_KEY = "fa-nav";
+
+  function readNavPref() {
+    try {
+      return window.localStorage.getItem(NAV_PREF_KEY);
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function writeNavPref(value) {
+    try {
+      if (value === null) window.localStorage.removeItem(NAV_PREF_KEY);
+      else window.localStorage.setItem(NAV_PREF_KEY, value);
+    } catch (_e) {
+      // A reader in a private window still gets the close, for this page.
+    }
+  }
+
+  function applyNavPref(value) {
+    if (value === "closed") document.documentElement.setAttribute("data-fa-nav", "closed");
+    else document.documentElement.removeAttribute("data-fa-nav");
+  }
+
+  function mountNavPreference() {
+    var bar = document.querySelector(".side-bar");
+    if (!bar) return;
+    // The class the stylesheet keys the hover-case `[x]` on. Set FIRST, so a
+    // control that needs this handler never appears without it.
+    bar.classList.add("fa-nav-js");
+    applyNavPref(readNavPref());
+
+    var box = document.getElementById("fa-nav-open");
+    var close = document.querySelector(".fa-nav-close");
+    var open = document.querySelector(".fa-nav-toggle");
+
+    if (close) {
+      close.addEventListener("click", function (e) {
+        // Pinned: let the label do its own work — that is the no-script path
+        // and it is already correct. Not pinned: the label would CHECK the box
+        // and pin the bar open, so the default is refused.
+        if (box && !box.checked) e.preventDefault();
+        writeNavPref("closed");
+        applyNavPref("closed");
+      });
+    }
+
+    if (open) {
+      // `☰` is how the preference is LIFTED. A control whose inverse is not
+      // reachable is not a toggle (`l4zi`), and without this the bar could be
+      // closed and never peek again.
+      open.addEventListener("click", function () {
+        writeNavPref(null);
+        applyNavPref(null);
+      });
+    }
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -7753,6 +7861,10 @@
       document.documentElement.setAttribute("lang", pageLang);
     }
 
+    // BEFORE the tiles and the rows: it adds the class the stylesheet keys the
+    // close control on, and a control offered before its handler exists is a
+    // control that does the wrong thing if pressed in that window.
+    mountNavPreference();
     mountActionTiles();
     // AFTER the tiles: the row's launcher proxies that panel's button, so the
     // button has to exist before anything can click it.
