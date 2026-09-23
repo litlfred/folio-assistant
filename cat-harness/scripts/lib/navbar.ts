@@ -91,6 +91,35 @@ export interface NavItem {
    * is the thing this module exists to stop callers doing.
    */
   depth?: number;
+  /**
+   * WHY this row does not open, shown as text beside the label.
+   *
+   * Only meaningful with no {@link href} — a row that opens owes no
+   * explanation — and the wording is the CALLER's, because only the caller
+   * knows which of the several reasons applies. `harness-tiles` separates
+   * four of them (`HarnessVisualisation.note`) and this renderer picks none
+   * of them.
+   *
+   * ## Why text, and not `title` or `aria-disabled`
+   *
+   * The Jekyll sidebar reached this row first and said it with
+   * `title="declared, with no published viewer"` on a `<span>`. A `<span>` is
+   * not focusable, so that label has NO KEYBOARD PATH at all, and `title` on
+   * a non-interactive element is not reliably announced — so the surface that
+   * did say it said it to a pointer and to nothing else. This rail said
+   * nothing whatever: `opacity:.55` and no words, which is state carried by
+   * contrast alone. Both are `gjli`.
+   *
+   * Real text has neither problem and needs no ARIA to fix: it is in the
+   * accessibility tree because it is content, it survives a stylesheet that
+   * does not load, and it is not a second signal that can disagree with the
+   * first. `aria-disabled` was the other candidate and is wrong here for a
+   * plainer reason — nothing is disabled. There is no control. A `<span>`
+   * marked `aria-disabled` announces a disabled widget that does not exist,
+   * which is the "inert row reading as a control" failure rather than a fix
+   * for it.
+   */
+  note?: string;
 }
 
 /** A labelled group of items, which may be collapsed behind a disclosure. */
@@ -234,7 +263,21 @@ export function navbarCss(): string {
     `.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}`,
     // An item with nowhere to go is NOT a link -- `pb04`: a dead link is worse
     // than no link, because it invites a click and then reads as broken.
-    `.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;opacity:.55}`,
+    // THE DIM STAYS, AND IT WAS NEVER THE PROBLEM. `opacity:.55` over
+    // `#1f2328` composites `#e6edf3` to `(140,146,152)`, which is 5.03:1 --
+    // measured, and clear of 4.5:1. The first version of this comment claimed
+    // it failed; it does not, and the fault is the other one: the dim was the
+    // ONLY signal, so "declared and not built" was carried by contrast alone
+    // with no words anywhere on this surface. `.fa-nav-note` is the words.
+    // `cursor:default` so the pointer does not promise a click either.
+    `.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
+    `opacity:.55;cursor:default}`,
+    // The reason sits BESIDE the label, not under it: the strip is one row per
+    // item, and a second line would make these the only rows in the navbar
+    // with a different height. At 11px it is small text, so it needs 4.5:1 in
+    // its own right -- which it has, being the same composited ink as the
+    // label it sits next to.
+    `.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}`,
     // THE EXPLODING MENU. `<details>` so it is keyboard-operable and announces
     // its own state with no script.
     `.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
@@ -307,7 +350,13 @@ function itemHtml(i: NavItem): string {
   // the document index a different shape from every other group here, and the
   // rows are links either way.
   const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
-  if (i.href === undefined) return `<span class="fa-nav-dead"${d}>${body}</span>`;
+  if (i.href === undefined) {
+    // The note is part of the row's TEXT, inside the same element, so an
+    // assistive technology reads "catalogue, no viewer yet" as one thing
+    // rather than as a label and a detached aside.
+    const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
+    return `<span class="fa-nav-dead"${d}>${body}${note}</span>`;
+  }
   return `<a href="${esc(i.href)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
 }
 

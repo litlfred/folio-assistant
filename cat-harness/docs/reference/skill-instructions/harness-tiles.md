@@ -91,6 +91,51 @@ Both are the third state, and they are DIFFERENT findings:
   tile may claim to show — but staying silent would hide a working viewer
   behind a rule, and the remedy is one line in a declaration.
 
+## An inert row SAYS why, and "no viewer" is four answers
+
+A declared graph with no published viewer appears in the navbar as a row that
+does not open. **Drawing it grey is not saying it.** Until 2026-09-23 the two
+navbar surfaces disagreed about whether it was said at all: the Jekyll sidebar
+carried `title="declared, with no published viewer"` on a `<span>`, and the
+mounted rail carried `opacity:.55` and no words.
+
+Both are `gjli`, for different reasons, and both are worth recognising
+elsewhere:
+
+- **A `title` on a non-focusable element is a label for a pointer and for
+  nothing else** — no keyboard path, and not reliably announced. It is not the
+  accessible name it looks like.
+- **Dimming alone is state carried by contrast.** The dim was not even a
+  contrast failure here — measured, `opacity:.55` over `#1f2328` composites to
+  5.03:1 — which is the point: it passed the ratio and still said nothing.
+
+The fix is that the reason is **content**: real text in the row. It is in the
+accessibility tree because it is text, it survives a stylesheet that does not
+load, and it cannot disagree with a second signal because there is no second
+signal. `aria-disabled` is the wrong reach — **nothing is disabled, because
+nothing is a control**, and marking a `<span>` disabled announces a widget that
+does not exist.
+
+**And the wording is not one wording.** "No viewer" is four states, and
+`inertNote` (`harness-tiles.ts`) is where they are told apart, because that is
+where the four *findings* were already worded:
+
+| state | the row says | is it a gap? |
+|---|---|---|
+| declared `publish: "staging-only"` | staging only | **no** — withheld on purpose |
+| instance declares `renderExemption.of: ["visualiser"]` | no viewer by design | **no** — the owner's 2026-09-20 ruling |
+| a viewer exists off the conventional path | viewer not published | yes, and a different one |
+| nothing declares a viewer | no viewer yet | yes |
+
+One wording for all four was wrong for two of them — and labelling an intended
+state a gap is the same disease as hiding a real gap, which this generator's
+own comments say twice about exactly these two cases.
+
+**Neither navbar picks the words.** They render what the generator gave them,
+which is what keeps them one navbar rather than two that agree by maintenance.
+A kind the generator said nothing about renders with no claim about why: the
+third state, and honest — it is the state both surfaces were in before.
+
 ## A tile, or an avatar? WHO DECLARED IT (settled 2026-09-21)
 
 The question this skill left open, in the owner's words: *"use same SQUARE
