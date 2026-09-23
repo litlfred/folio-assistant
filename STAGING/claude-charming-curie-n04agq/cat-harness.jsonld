@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T20:38:01.388Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c87a8e5e66fd7db266287378d467b304ce3f73b7",
-  "sourceCommitSha": "c87a8e5e66fd7db266287378d467b304ce3f73b7",
-  "sourceCommitAt": "2026-09-23T20:35:52Z",
+  "generatedAt": "2026-09-23T20:49:26.618Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0ed3254056c8c85406d4dc93aebe0c1433d161a6",
+  "sourceCommitSha": "0ed3254056c8c85406d4dc93aebe0c1433d161a6",
+  "sourceCommitAt": "2026-09-23T20:47:01Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -289,7 +289,7 @@
     "Role": 146,
     "ProcessNode": 833,
     "Tool": 77,
-    "Schema": 106,
+    "Schema": 107,
     "GraphKind": 30,
     "Directory": 38,
     "Asset": 3
@@ -777,7 +777,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 124,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -38147,6 +38147,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/health-report"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/ig-chrome",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "ig-chrome",
+      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
+      "module": "schemas/ig-chrome.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/ig-menu",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "ig-menu",
@@ -40608,8 +40617,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "44093c33b49da86901922bef080d40f3f496a625",
+    "sha": "335690c9065c12df5a48814372c380aee0f12e4f",
     "pr": "1175/merge",
-    "run": "35917035297"
+    "run": "35918262728"
   }
 }
