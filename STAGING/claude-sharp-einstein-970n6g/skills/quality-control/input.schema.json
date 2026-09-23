@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/skills/quality-control/input.schema.json",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-einstein-970n6g",
+    "sha": "1704a7fb88fbfde8b57bc70b13e61d0a93539176",
+    "pr": "1087/merge",
+    "run": "35861742379"
+  }
+}
