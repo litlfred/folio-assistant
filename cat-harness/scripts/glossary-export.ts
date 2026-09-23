@@ -125,6 +125,8 @@ import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGr
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
+import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
+import { buildCodeListsDoc } from "./code-lists.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SKOS = "http://www.w3.org/2004/02/skos/core#";
@@ -657,6 +659,21 @@ if (import.meta.main) {
 
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(doc, null, 2)}\n`);
+
+  // The instance's CODE LISTS, as SKOS, beside the glossary — the same run and
+  // the same predicates (owner, 2026-09-23: use the existing SKOS tooling).
+  // A separate document because this one IS the swimlane scheme; code lists
+  // are schemes of their own. Written only when the instance can see a list.
+  const lists = [...loadCodeLists(await codeListDirs(instanceDir)).values()];
+  if (lists.length > 0) {
+    // Named and addressed BESIDE the glossary — derived from its path and
+    // `@id`, so wherever a workflow's `--out` puts one, the other follows.
+    const sibling = (s: string) => s.replace(/-glossary\.jsonld$/, "-code-lists.jsonld");
+    const clOut = out.endsWith("-glossary.jsonld") ? sibling(out) : join(dirname(out), `${ledger.instance}-code-lists.jsonld`);
+    const clIri = sibling(doc["@id"] as string);
+    writeFileSync(clOut, `${JSON.stringify(buildCodeListsDoc(lists, clIri), null, 2)}\n`);
+    console.log(`  code lists → ${relative(repoRootFor(ROOT), clOut)} (${lists.length})`);
+  }
   const lp = ledgerPath(instanceDir);
   mkdirSync(dirname(lp), { recursive: true });
   writeFileSync(lp, `${JSON.stringify(ledger, null, 2)}\n`);

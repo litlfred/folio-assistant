@@ -1,0 +1,22 @@
+{
+  "$schema": "folio-code-list/v1",
+  "id": "adjudication-translation-drift",
+  "title": "Round-trip drift outcomes",
+  "description": "The answers an adjudicator may give when round-trip translation QA flags a passage whose back-translation differs from the source. A machine can detect that two readings differ; which one is right is a human call.",
+  "source": {
+    "href": "https://github.com/litlfred/folio-assistant/issues/1073",
+    "note": "bean bvuk; owner approved the answer set 2026-09-23"
+  },
+  "codes": [
+    {
+      "code": "drift",
+      "label": "Real drift",
+      "definition": "The translation lost or changed the meaning of the source, or used the wrong term; the passage needs correcting."
+    },
+    {
+      "code": "false-positive",
+      "label": "False positive",
+      "definition": "The two readings say the same thing; the flag was a difference in wording, not in meaning."
+    }
+  ]
+}

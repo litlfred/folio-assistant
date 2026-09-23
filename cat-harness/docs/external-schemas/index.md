@@ -24,9 +24,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>4</b><span>specifications</span></div>
-<div class="xs-stat"><b>53</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>14</b><span>declared dependents</span></div>
+<div class="xs-stat"><b>15</b><span>specifications</span></div>
+<div class="xs-stat"><b>79</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>33</b><span>declared dependents</span></div>
 <div class="xs-stat"><b>0</b><span>dependents that no longer resolve</span></div>
 </div>
 
@@ -35,9 +35,20 @@ depends on it**, and **which of its terms this repository branches on**.
 | specification | authority | edition | how it is used |
 |---|---|---|---|
 | **[DCMI Metadata Terms](#dcmi-terms)**<br>`dcmi-terms` | DCMI | [2020-01-20](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/) | `reads` — this repository parses documents written in it |
+| **[HL7 FHIR](#hl7-fhir)**<br>`hl7-fhir` | HL7 | [unpinned](https://hl7.org/fhir/) | `reads` — this repository parses documents written in it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
+| **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
+| **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
+| **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
+| **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
+| **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
+| **[RDF 1.1 Concepts and Abstract Syntax](#w3c-rdf)**<br>`w3c-rdf` | W3C | [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) | `conforms` — this repository's artefacts are valid against it |
+| **[RDF Schema 1.1](#w3c-rdfs)**<br>`w3c-rdfs` | W3C | [2014-02-25](https://www.w3.org/TR/rdf-schema/) | `conforms` — this repository's artefacts are valid against it |
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
+| **[Web Annotation Vocabulary](#w3c-web-annotation)**<br>`w3c-web-annotation` | W3C | [2017-02-23](https://www.w3.org/TR/annotation-vocab/) | `conforms` — this repository's artefacts are valid against it |
+| **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
+| **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [unpinned](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
 ## Does every declared dependent still exist?
 
@@ -50,7 +61,7 @@ the same way a dangling citation does one graph over.
 a note after it names something this cannot open and is written that way on
 purpose; reporting it as broken would teach a reader to ignore the column.
 
-Every one of the **8** entries spelled as a path
+Every one of the **27** entries spelled as a path
 resolves in this checkout. **6** name a set or
 carry a note and were not checked.
 
@@ -65,13 +76,26 @@ repository writes and has said nothing about.
 
 - `https://litlfred.github.io/folio-assistant/bpmn`
 
-**3 declared and not in use.** Not a defect on its own: a
+**16 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
+- `http://hl7.org/fhir/`
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
+- `http://purl.org/spar/cito/`
+- `http://purl.org/spar/deo/`
+- `http://purl.org/spar/doco/`
+- `http://smart.who.int/base/StructureDefinition/`
+- `http://www.w3.org/1999/02/22-rdf-syntax-ns#`
+- `http://www.w3.org/2000/01/rdf-schema#`
+- `http://www.w3.org/2001/XMLSchema#`
+- `http://www.w3.org/2002/07/owl#`
 - `http://www.w3.org/2004/02/skos/core#`
+- `http://www.w3.org/ns/csvw#`
+- `http://www.w3.org/ns/oa#`
+- `http://www.w3.org/ns/prov#`
+- `https://schema.org/`
 
 ## Each specification
 
@@ -124,6 +148,32 @@ a subset of the edition rather than a transcription of it.
 | `dc.title.release` | derived from the corpus; what this repository does with it is not yet described |
 | `dc.type` | derived from the corpus; what this repository does with it is not yet described |
 | `who.relation.languageVersion` | derived from the corpus; what this repository does with it is not yet described |
+
+### HL7 FHIR
+
+<a id="hl7-fhir"></a>
+
+`hl7-fhir` — HL7, edition [unpinned](https://hl7.org/fhir/) — `reads`, meaning this repository parses documents written in it.
+
+**Namespaces.**
+
+- `http://hl7.org/fhir/`
+
+**Note.** No FHIR version is declared anywhere in this repository (measured 2026-09-23), and the namespace is version-independent. `reads`: the platform parses FHIR artefacts other instances ingest; it does not claim its own documents are FHIR resources.
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (1).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `fhir:ValueSet` | derived from the corpus; what this repository does with it is not yet described |
 
 ### Business Process Model and Notation (BPMN)
 
@@ -199,6 +249,205 @@ a subset of the edition rather than a transcription of it.
 without branching on any of its terms, so none is materialised into the
 graph. That is a determined zero, not an unfilled field.
 
+### Schema.org
+
+<a id="schema-org"></a>
+
+`schema-org` — other, edition [unpinned](https://schema.org/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://schema.org/`
+
+**Note.** No release is pinned: schema.org publishes continuously under one namespace. Used for one property in kg-export. Recorded 2026-09-23 (bean 2j09).
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (4).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `schema:WebPage` | derived from the corpus; what this repository does with it is not yet described |
+| `schema:codeRepository` | derived from the corpus; what this repository does with it is not yet described |
+| `schema:softwareVersion` | derived from the corpus; what this repository does with it is not yet described |
+| `schema:text` | derived from the corpus; what this repository does with it is not yet described |
+
+### SPAR Ontologies: DoCO, DEO and CiTO
+
+<a id="spar-doco-deo-cito"></a>
+
+`spar-doco-deo-cito` — other, edition [unpinned](http://www.sparontologies.net/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://purl.org/spar/doco/`
+- `http://purl.org/spar/deo/`
+- `http://purl.org/spar/cito/`
+
+**Note.** No edition is pinned: each namespace is a purl.org redirect to the ontology's current release. Recorded 2026-09-23 (bean 2j09) so the dependency is named; pinning an edition is a later decision.
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (7).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `cito:cites` | derived from the corpus; what this repository does with it is not yet described |
+| `deo:Conclusion` | derived from the corpus; what this repository does with it is not yet described |
+| `deo:Introduction` | derived from the corpus; what this repository does with it is not yet described |
+| `doco:Figure` | derived from the corpus; what this repository does with it is not yet described |
+| `doco:Formula` | derived from the corpus; what this repository does with it is not yet described |
+| `doco:Section` | derived from the corpus; what this repository does with it is not yet described |
+| `doco:Table` | derived from the corpus; what this repository does with it is not yet described |
+
+### Metadata Vocabulary for Tabular Data
+
+<a id="w3c-csvw"></a>
+
+`w3c-csvw` — W3C, edition [2015-12-17](https://www.w3.org/TR/tabular-metadata/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/csvw#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (1).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
+
+### OWL 2 Web Ontology Language Document Overview (Second Edition)
+
+<a id="w3c-owl2"></a>
+
+`w3c-owl2` — W3C, edition [2012-12-11](https://www.w3.org/TR/owl2-overview/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2002/07/owl#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/scripts/code-lists.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/glossary-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (3).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `owl:Ontology` | derived from the corpus; what this repository does with it is not yet described |
+| `owl:deprecated` | derived from the corpus; what this repository does with it is not yet described |
+| `owl:sameAs` | derived from the corpus; what this repository does with it is not yet described |
+
+### PROV-O: The PROV Ontology
+
+<a id="w3c-prov-o"></a>
+
+`w3c-prov-o` — W3C, edition [2013-04-30](https://www.w3.org/TR/prov-o/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/prov#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/gen-bootstrap-graph.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (3).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `prov:Entity` | derived from the corpus; what this repository does with it is not yet described |
+| `prov:alternateOf` | derived from the corpus; what this repository does with it is not yet described |
+| `prov:wasDerivedFrom` | derived from the corpus; what this repository does with it is not yet described |
+
+### RDF 1.1 Concepts and Abstract Syntax
+
+<a id="w3c-rdf"></a>
+
+`w3c-rdf` — W3C, edition [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/1999/02/22-rdf-syntax-ns#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/scripts/code-lists.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (2).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `rdf:JSON` | derived from the corpus; what this repository does with it is not yet described |
+| `rdf:Property` | derived from the corpus; what this repository does with it is not yet described |
+
+### RDF Schema 1.1
+
+<a id="w3c-rdfs"></a>
+
+`w3c-rdfs` — W3C, edition [2014-02-25](https://www.w3.org/TR/rdf-schema/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2000/01/rdf-schema#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/scripts/glossary-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (5).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `rdfs:Class` | derived from the corpus; what this repository does with it is not yet described |
+| `rdfs:comment` | derived from the corpus; what this repository does with it is not yet described |
+| `rdfs:isDefinedBy` | derived from the corpus; what this repository does with it is not yet described |
+| `rdfs:label` | derived from the corpus; what this repository does with it is not yet described |
+| `rdfs:seeAlso` | derived from the corpus; what this repository does with it is not yet described |
+
 ### SKOS Simple Knowledge Organization System Reference
 
 <a id="w3c-skos"></a>
@@ -235,3 +484,66 @@ a subset of the edition rather than a transcription of it.
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |
 | `skos:scopeNote` | What a lane is accountable for IN ONE PROCESS. Carried on the LaneUsage node, never the concept: of 26 lane names appearing in more than one diagram, 26 of 26 document themselves differently per occurrence, so ten unattributed notes on one concept would read as ten contradictions. Stored verbatim, because the note is a `.pot` msgid. |
+
+### Web Annotation Vocabulary
+
+<a id="w3c-web-annotation"></a>
+
+`w3c-web-annotation` — W3C, edition [2017-02-23](https://www.w3.org/TR/annotation-vocab/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/oa#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes
+
+<a id="w3c-xsd11-datatypes"></a>
+
+`w3c-xsd11-datatypes` — W3C, edition [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2001/XMLSchema#`
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### WHO SMART Guidelines base IG
+
+<a id="who-smart-base"></a>
+
+`who-smart-base` — other, edition [unpinned](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
+
+**Namespaces.**
+
+- `http://smart.who.int/base/StructureDefinition/`
+
+**Note.** Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them.
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.

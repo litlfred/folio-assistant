@@ -83,7 +83,7 @@ flagged passage">
       <bpmn:extensionElements>
         <folio:skill ref="document-intake"/>
         <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="drift false-positive"/>
+        <folio:adjudication codes="drift false-positive" list="adjudication-translation-drift"/>
         <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
       </bpmn:extensionElements>
 
