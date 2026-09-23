@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: critical
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-20T09:01:32Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-zzmr
 ---
 
 Owner, 2026-09-20, generalising away from IRIS:
@@ -35,3 +35,18 @@ MEASURED, why subsetting is the only option: IRIS is 1,057,223 files and 361.55 
 - A SOURCE DESCRIPTOR schema: how to enumerate, how to subset, what identifiers the source mints, and what it costs to ask.
 - IRIS is ONE worked descriptor, not the model. mathlib is the second, and it must be written before the abstraction is believed — one example is a special case with an interface drawn round it.
 - `materialize-remote` CALLS this rather than restating it: enumerate/subset is upstream of the five gates.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `zzmr`.** Taking a SUBSET of a corpus you do not own is a KG-structure skill family. IRIS is the worked example, not the subject.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

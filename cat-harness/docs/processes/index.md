@@ -101,7 +101,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `staging-review` | `content-change-review.bpmn`, `feature-staging.bpmn`, `upstream-version-adoption.bpmn` |
 | `swot-analysis` | `swot-analysis.bpmn` |
 | `terminology-management` | `l2-dak-authoring.bpmn` |
-| `theme-art-intake` | `ingest-theme.bpmn` |
+| `theme-art-intake` | `document-ingestion.bpmn`, `ingest-theme.bpmn` |
 | `theme-ui-review` | `ingest-theme.bpmn`, `theme-ui-review.bpmn` |
 | `todo-manager` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `bean-lifecycle.bpmn`, `code-change-review.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `crdm-signoff.bpmn`, `document-ingestion.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `evidence-retrieval.bpmn`, `getting-started.bpmn`, `ig-incremental-build.bpmn`, `l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` |
 | `translation-manager` | `human-translation-workflow.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn` |
