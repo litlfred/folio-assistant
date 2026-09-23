@@ -7,7 +7,7 @@ pages: 2-2
 pdf_page: 2
 source_pdf: 9789241511766-eng.pdf
 source_sha256: 934bdf1193c16ee5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Monitoring and evaluating digital health interventions: a practical guide to conducting research and assessment 

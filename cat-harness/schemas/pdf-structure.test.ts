@@ -74,13 +74,13 @@ describe("pdf-structure/v1", () => {
       expect(PdfStructureSchema.safeParse({ ...minimal(), toc_source: t }).success).toBe(true);
   });
 
-  test("the two text-origin spellings are each accepted only where they are written", () => {
+  test("the text origin has one field and one vocabulary (issue #1121)", () => {
     const d = minimal();
-    expect(PdfStructureSchema.safeParse({ ...d, text_source: "text-layer" }).success).toBe(true);
-    expect(PdfStructureSchema.safeParse({ ...d, text_source: "embedded" }).success).toBe(false);
-    const src = { ...(d.source as object), text_source: "embedded" };
-    expect(PdfStructureSchema.safeParse({ ...d, source: src }).success).toBe(true);
-    expect(PdfStructureSchema.safeParse({ ...d, source: { ...src, text_source: "text-layer" } }).success).toBe(false);
+    for (const v of ["embedded", "ocr"])
+      expect(PdfStructureSchema.safeParse({ ...d, source: { ...(d.source as object), text_source: v } }).success).toBe(true);
+    // The retired spellings: pdf-pages.py's old value, and its old top-level field.
+    expect(PdfStructureSchema.safeParse({ ...d, source: { ...(d.source as object), text_source: "text-layer" } }).success).toBe(false);
+    expect(PdfStructureSchema.safeParse({ ...d, text_source: "ocr" }).success).toBe(false);
   });
 
   test("an unrecognised mimetype is null with its reason, never guessed", () => {

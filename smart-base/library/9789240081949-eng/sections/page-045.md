@@ -7,7 +7,7 @@ pages: 45-45
 pdf_page: 45
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 The  digital health interventions for Data Services  are described below. 
