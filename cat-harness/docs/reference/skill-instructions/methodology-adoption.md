@@ -125,6 +125,38 @@ adopt?" got an answer that omitted one they had just used.
    document, never a missing one — and the node keeps its `origin` with no
    `evidence` until somebody closes the gap.
 
+## Extract the PROCESS, not the paper's tools
+
+**A source that presents a method through an implementation is presenting two
+things, and only one of them is the methodology.** The owner, 2026-09-23, on
+ingesting a tool paper:
+
+> do not need to match tools in paper, start with process, determine most
+> appropriate tools (known or which can be added)
+
+So the order is: render the method, *then* ask what this platform should use to
+perform it. A node that adopted the source's tool stack would be adopting an
+implementation and calling it a method — and it would be unfalsifiable in the
+worst way, because the tools would work and the method would never be examined.
+
+`hybrid-llm-deterministic` is the worked case. Its source demonstrates the
+method in one tool with one model and one expression language; the node renders
+the rule/result inversion, the five safeguards and the bounded-truncation
+technique, and §"Where this rendering stops" names every tool it declined to
+adopt and why. The method survives replacing all of them, which is the test of
+whether you extracted a method at all.
+
+**Ask it as: what would still be true if they had built it differently?** What
+survives is the methodology. What does not is their engineering, and it belongs
+in the skill if anywhere — where this platform's own tool choices already live.
+
+**And say what the source does NOT establish.** A demonstration is not an
+evaluation. Where a paper shows an approach working once, with no baseline and
+no measurement, the node records that no performance claim rests on it. Doing
+otherwise manufactures a finding the authors did not make — the same failure as
+§"Never quantify a judgement to make it look measured", arriving through a
+citation instead.
+
 ## An origin nobody can open is not evidence
 
 **Measured 2026-09-22: six methodologies cited an origin and not one of those
