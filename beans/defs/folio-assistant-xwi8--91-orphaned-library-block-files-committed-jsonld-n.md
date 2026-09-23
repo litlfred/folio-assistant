@@ -47,7 +47,8 @@ copy of every prose block.
 - [x] `l1-blocks.ts` imports the generator's `blockId()` + `sectionKey()` — one naming rule, for blocks and for the manifest's section refs
 - [x] test runs BOTH writers on one staged entry and asks the generator's own `orphanedBlocks()`; falsified against the old writer (3/3 fail)
 - [x] bun run gates green (135/135); issue #1066; PR opened
-- [ ] owner decides: prune the 91 existing duplicates, or keep
+- [x] owner decided (2026-09-23): delete the 91 in #1067. Deleted with `git rm` from a computed list — NOT `--prune`, which by then would have removed 113 (see below). Each file re-checked identical to its twin immediately before deletion; the four documents now report 0 orphans; gates 135/135.
+- [ ] owner decides: the 22 further duplicates in `cat-harness/library/arxiv-2312.07755v1`, which appeared on main after the 91 were measured — same pattern, all identical twins, NOT covered by the approval
 
 ## Done when
 
