@@ -2,7 +2,7 @@
   "$schema": "folio-graph-projection/v1",
   "tile": {
     "folio": {
-      "count": 4,
+      "count": 5,
       "unit": "stickies"
     }
   },
@@ -10,7 +10,7 @@
     {
       "dir": "cat-harness/folio",
       "present": true,
-      "nodes": 4
+      "nodes": 5
     }
   ],
   "nodes": [
@@ -102,6 +102,16 @@
       ],
       "chars": 812,
       "file": "cat-harness/folio/folio-assist-core.json"
+    },
+    {
+      "id": "folio-assistant",
+      "summary": "The repository, acting as an initialized instance",
+      "theme": "engineer",
+      "anchor": "page:index",
+      "declaredIn": "folio-assistant.json",
+      "links": [],
+      "chars": 466,
+      "file": "cat-harness/folio/folio-assistant.json"
     },
     {
       "id": "smart-trust",
