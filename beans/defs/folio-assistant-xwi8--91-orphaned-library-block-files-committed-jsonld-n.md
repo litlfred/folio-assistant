@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xwi8
 title: '91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T07:30:19Z
-updated_at: 2026-09-23T07:34:11Z
+updated_at: 2026-09-23T11:16:01Z
 parent: folio-assistant-slw1
 ---
 
@@ -22,10 +22,32 @@ About 364 KB total; last touched 2026-09-22/23.
 
 `zaqn` REWROTE their `folio:` terms in place (owner's choice, 2026-09-23) so the prefix gate passes — it did not delete them. Deleting is a person's decision (deletion-requires-confirmation).
 
+## Root cause (measured 2026-09-23)
+
+**Two writers, two naming rules for one block.** `scripts/l1-blocks.ts` minted
+`prose-${section id}` (`prose-sec-001-introduction`); `gen-library-jsonld.ts`
+mints `prose-sec-001` via `sectionKey()`, and only the generator's names are
+referenced by a section node. Every document run through both carried a second
+copy of every prose block.
+
+- **All 91 of 91** orphans are byte-identical to their referenced twin apart
+  from the last `@id` segment (same `library/<doc>/` prefix, same title, pages,
+  and `text` link to the section `.md`, which resolves).
+- **Nothing references them**: no long id appears anywhere outside `blocks/`,
+  and none appears inside `blocks/` beyond its own `@id`.
+- The arm's manifest also listed section nodes by the long id
+  (`sections/sec-001-introduction`), which the generator overwrote.
+- History: smart-base's long names landed at `56bf8b77` (wkt1), the short ones
+  nine minutes later at `a8ef9fd7` (7mi0); arxiv-2508 got both in #989.
+- #1050 wires `l1-blocks.ts` into `ingest` itself, so without this fix the
+  duplicates would appear on EVERY ingest.
+
 ## Todo
 
-- [ ] find why each document's sections stopped referencing them (re-ingest? section split changed?)
-- [ ] owner decides: prune, or restore the references
+- [x] `l1-blocks.ts` imports the generator's `blockId()` + `sectionKey()` — one naming rule, for blocks and for the manifest's section refs
+- [x] test runs BOTH writers on one staged entry and asks the generator's own `orphanedBlocks()`; falsified against the old writer (3/3 fail)
+- [x] bun run gates green (135/135); issue #1066; PR opened
+- [ ] owner decides: prune the 91 existing duplicates, or keep
 
 ## Done when
 
