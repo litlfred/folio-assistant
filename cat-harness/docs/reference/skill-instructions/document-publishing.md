@@ -87,3 +87,10 @@ Publication authorisation is the base process's, not this skill's:
 review, then take the release decision through the workflow —
 `workflow_next` will tell you what is enabled.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 7 · Render MD / HTML / PDF |
+

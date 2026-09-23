@@ -94,7 +94,7 @@ since">
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_Adjudicate" name="Adjudicate the conflict">
+    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate the conflict">
       <bpmn:documentation>A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
@@ -102,7 +102,7 @@ since">
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
-    </bpmn:userTask>
+    </bpmn:callActivity>
     <bpmn:serviceTask id="Task_Apply" name="Re-materialize, re-asking the five gates
 — and record the new fixity">
       <bpmn:documentation>The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to.

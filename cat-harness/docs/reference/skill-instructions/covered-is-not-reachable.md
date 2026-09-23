@@ -263,3 +263,10 @@ from a pass into a fail — *"At this length it is a document."* The audit was
 right, and the remedy for a skill that has grown a second subject is to split it,
 not to quiet the finding. Same move as the three-way split of `todo-manager`.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code node review](../../processes/review-code.html) | Review the Tool node |
+

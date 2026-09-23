@@ -181,3 +181,11 @@ instructions an agent follows, not the implementation. A skill and the code it
 describes are different node kinds, and moving code to sit beside its
 documentation is how a partition stops meaning anything.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Ingest the theme (calls a sub-process) |
+| [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Read the served stylesheet's declarations; Read the guide's own stated rules; Map values onto the shared palette ROLES; Record contradictions IN the source |
+

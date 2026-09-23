@@ -237,3 +237,10 @@ Nor does it mean stopping work to do paperwork first. `continual-progress`
 still holds — branch, commit, push, open the PR from commit #1. The point is
 that the *record* is collaborative, not that the *work* pauses.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM requirements](../../processes/crdm-requirements.html) | Detect feature request (crdm-detect skill) |
+

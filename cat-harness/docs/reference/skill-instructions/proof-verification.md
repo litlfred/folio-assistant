@@ -74,3 +74,10 @@ the toolchain's call — it belongs to the editor, at
 `editing-hci-validation.bpmn`'s `Task_ReviewFindings`, which is marked
 `relaxable="false"` precisely so that no policy can route around it.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 5 · Formalise in Lean |
+

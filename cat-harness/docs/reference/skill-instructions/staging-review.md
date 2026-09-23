@@ -511,3 +511,12 @@ so a failed fetch is not evidence either way.
 Full rule and the measured failure:
 [`github-state-inspection`](github-state-inspection.md).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
+

@@ -202,3 +202,12 @@ while resting on nothing, which is the failure this whole section is about.
   second-hand. See [`literature-search`](literature-search.md) §"Never fill the
   gap with recall".
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Options analysis](../../processes/options-analysis.html) | Select the methodology by context; Apply it, and state each option's trade-offs |
+| [SWOT situation analysis](../../processes/swot-analysis.html) | Hand the candidates to a decision methodology |
+| [DIIG — from a health system bottleneck to a costed implementation plan](../../processes/diig-investment-path.html) | Form the team and establish goals; Map the current state and confirm bottlenecks; Prioritize, and map to health system challenges; Determine appropriate digital health interventions; Plan the implementation; Link to the enterprise architecture; Develop a budget; Monitor, and use data effectively; Make the value proposition and set next steps |
+

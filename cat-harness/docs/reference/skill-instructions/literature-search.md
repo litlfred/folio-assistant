@@ -156,3 +156,10 @@ repeating the usual story as fact.
 - [`bean-blocking`](bean-blocking.md) — recording outcome 2 so it does not read
   as abandoned
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Options analysis](../../processes/options-analysis.html) | Check the selected methodology's evidence base |
+
