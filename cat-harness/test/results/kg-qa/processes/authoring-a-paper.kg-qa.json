@@ -5,7 +5,7 @@
     "id": "Process_PaperAuthoring",
     "path": "processes/authoring-a-paper.bpmn"
   },
-  "source_hash": "sha256:773f8e0f4056300447b90fd82d2b6320ab5527cb403e9e8a0be3be28427f362b",
+  "source_hash": "sha256:c7efc2e4dda31ba1af8fc4f373be2e8c1540b89d2bb222be7df0dffb1f48081e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,17 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_LeanGreen",
-          "detail": "\"Build green, no sorries?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_ReviewOutcome",
-          "detail": "\"Ready to publish?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -106,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

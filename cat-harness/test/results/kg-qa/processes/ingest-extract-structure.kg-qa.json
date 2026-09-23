@@ -5,7 +5,7 @@
     "id": "Process_ExtractStructure",
     "path": "processes/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:df064d3b797a40b053b32fa51ff6d6a4a57fc40ac9e958e41807247b772b51aa",
+  "source_hash": "sha256:89a860d749f09b95618551a97cc1d49df6f7df8b102635d60489ff2593a63bd4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,13 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_HasText",
-          "detail": "\"Embedded text layer?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

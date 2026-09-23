@@ -40,10 +40,10 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Drift or bad terminology?**<br>`Gateway_Drift` | — | **drift** → Adjudicate the flagged passage<br>**clean** → Record the L1 completeness verdict |
+| **Drift or bad terminology?**<br>`Gateway_Drift` | Answered by the round-trip translation QA: did it flag semantic drift or a terminology miss? `drift` sends the passage to a person to adjudicate, since which reading is right is a human call; `clean` records the verdict directly. | **drift** → Adjudicate the flagged passage<br>**clean** → Record the L1 completeness verdict |
 
 {% endraw %}

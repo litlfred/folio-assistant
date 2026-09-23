@@ -48,10 +48,10 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **More content?**<br>`Gateway_NextCycle` | — | **yes** → Editing and HCI validation<br>**no** → Retire or archive |
+| **More content?**<br>`Gateway_NextCycle` | Asked after feedback is filed as beans: is there more content to write for this folio? `yes` returns to editing and HCI validation; `no` retires or archives it. | **yes** → Editing and HCI validation<br>**no** → Retire or archive |
 
 {% endraw %}

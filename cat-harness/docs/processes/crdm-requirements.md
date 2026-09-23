@@ -45,10 +45,10 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Feature?**<br>`GW_Feature` | — | **no** → Continue authoring<br>**yes** → Link the work to an issue |
+| **Feature?**<br>`GW_Feature` | Answered by crdm-detect: is this request a feature request, a change to the platform, rather than content work? `no` continues authoring; `yes` enters CRDM, starting by linking the work to an issue. | **no** → Continue authoring<br>**yes** → Link the work to an issue |
 
 {% endraw %}

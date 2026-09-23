@@ -69,6 +69,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         <bpmn:flowNodeRef>Task_RebuildMain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_WatchMainCI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Pipeline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotMerged</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Coordinator" name="Review Coordinator">
         <bpmn:documentation>Organises a review large enough to need organising, and decides nothing about the content: ingests the reviewers' tagged comments, slices the change into pieces a reviewer can hold, assigns each slice to a review lane, and watches coverage until every changed block has a verdict or a reasoned waiver. A separate role from the editor on the owner's ruling of 2026-09-23 (bean en2d): organising a review and deciding its outcome are different accountabilities, and a process where one lane did both could not say which it was doing.</bpmn:documentation>
@@ -110,6 +111,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_AuthorSatisfied" name="Satisfied with changes?">
+      <bpmn:documentation>The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee.</bpmn:documentation>
       <bpmn:incoming>f3</bpmn:incoming>
       <bpmn:outgoing>f4</bpmn:outgoing>
       <bpmn:outgoing>f6</bpmn:outgoing>
@@ -326,6 +328,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:callActivity>
 
     <bpmn:exclusiveGateway id="GW_Withdraw" name="A comment withdrawn?">
+      <bpmn:documentation>Asked after the slices are reviewed: did a reviewer withdraw a comment? `Yes` records the withdrawal first; either way the flow then asks whether a finding is disputed.</bpmn:documentation>
       <bpmn:incoming>c3</bpmn:incoming>
       <bpmn:outgoing>c4</bpmn:outgoing>
       <bpmn:outgoing>c5</bpmn:outgoing>
@@ -341,6 +344,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Disputed" name="A finding disputed?">
+      <bpmn:documentation>Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed.</bpmn:documentation>
       <bpmn:incoming>c5</bpmn:incoming>
       <bpmn:incoming>c6</bpmn:incoming>
       <bpmn:outgoing>c7</bpmn:outgoing>
@@ -383,6 +387,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Approved" name="Changes approved?">
+      <bpmn:documentation>The committee's decision on the impact assessment. `No` requests changes; `Yes` approves.</bpmn:documentation>
       <bpmn:incoming>r3</bpmn:incoming>
       <bpmn:outgoing>r4</bpmn:outgoing>
       <bpmn:outgoing>r6</bpmn:outgoing>
@@ -515,6 +520,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:outgoing>p4b</bpmn:outgoing>
     </bpmn:task>
 <bpmn:exclusiveGateway id="GW_Merged" name="PR merged?">
+  <bpmn:documentation>Was the PR merged? `Yes` removes the STAGING/&lt;slug&gt;/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run.</bpmn:documentation>
       <bpmn:incoming>flow_approve_to_pipeline</bpmn:incoming>
       <bpmn:outgoing>p5</bpmn:outgoing>
       <bpmn:outgoing>p8</bpmn:outgoing>
@@ -573,6 +579,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 <bpmn:endEvent id="End_Pipeline" name="Deployment complete">
       <bpmn:incoming>p7b</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_NotMerged" name="Not merged: preview kept">
+      <bpmn:documentation>The approval did not end in a merge. Nothing is deployed and STAGING/&lt;slug&gt;/ is left up; a later push to the branch starts a new run of this process.</bpmn:documentation>
       <bpmn:incoming>p8</bpmn:incoming>
     </bpmn:endEvent>
 
@@ -624,7 +633,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:sequenceFlow id="p6" sourceRef="Task_CleanupStaging" targetRef="Task_RebuildMain" />
     <bpmn:sequenceFlow id="p7" sourceRef="Task_RebuildMain" targetRef="Task_WatchMainCI" />
     <bpmn:sequenceFlow id="p7b" sourceRef="Task_WatchMainCI" targetRef="End_Pipeline" />
-    <bpmn:sequenceFlow id="p8" name="No (iterate)" sourceRef="GW_Merged" targetRef="End_Pipeline" />
+    <bpmn:sequenceFlow id="p8" name="No" sourceRef="GW_Merged" targetRef="End_NotMerged" />
   </bpmn:process>
 
   <bpmndi:BPMNDiagram id="BPMNDiagram_ContentChangeReview">
@@ -777,6 +786,12 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_RebuildMain_di" bpmnElement="Task_RebuildMain">
         <dc:Bounds x="5640" y="740" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_NotMerged_di" bpmnElement="End_NotMerged">
+        <dc:Bounds x="5412" y="832" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5454" y="836" width="150" height="28" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Pipeline_di" bpmnElement="End_Pipeline">
         <dc:Bounds x="6040" y="762" width="36" height="36" />
@@ -961,10 +976,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmndi:BPMNEdge id="p8_di" bpmnElement="p8">
         <di:waypoint x="5350" y="805" />
         <di:waypoint x="5350" y="850" />
-        <di:waypoint x="6058" y="850" />
-        <di:waypoint x="6058" y="798" />
+        <di:waypoint x="5412" y="850" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="5360" y="825" width="70" height="14" />
+          <dc:Bounds x="5358" y="828" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Lane_Coordinator_di" bpmnElement="Lane_Coordinator" isHorizontal="true">

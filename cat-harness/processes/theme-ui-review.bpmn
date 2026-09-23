@@ -53,7 +53,9 @@
         <folio:no-skill reason="A person exercising judgement over a rendered artefact. The skill governs what the agent PREPARES and measures for them, which is the four steps before this one."/>
       </bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Findings" name="Findings?"/>
+    <bpmn:exclusiveGateway id="GW_Findings" name="Findings?">
+      <bpmn:documentation>The reviewer's judgement of the rendered result. `yes` raises findings against the authoring; `none` ends reviewed.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="A_RaiseFindings" name="Raise findings&#10;against the authoring">
       <bpmn:documentation>Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>

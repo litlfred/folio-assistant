@@ -50,11 +50,11 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Findings we can fix?**<br>`GW_Findings` | — | **yes** → Impact analysis what of ours binds it<br>**no** → Options analysis adopt · hold · decline |
-| **Adopt?**<br>`GW_Adopt` | — | **yes** → Move the pin and open the PR<br>**no** → Record the hold or the decline |
+| **Findings we can fix?**<br>`GW_Findings` | The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline). | **yes** → Impact analysis what of ours binds it<br>**no** → Options analysis adopt · hold · decline |
+| **Adopt?**<br>`GW_Adopt` | The project manager's decision. `yes` moves the pin and opens the PR; `no` records the hold or the decline. | **yes** → Move the pin and open the PR<br>**no** → Record the hold or the decline |
 
 {% endraw %}

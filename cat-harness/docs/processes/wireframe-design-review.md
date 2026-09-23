@@ -44,12 +44,12 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Checks pass?**<br>`GW_Checks` | — | **yes** → Blind review per criterion<br>**no** → Produce >= 2 candidates, web + mobile |
-| **Entries agree?**<br>`GW_Agree` | — | **no** → Adjudication<br>**yes** → Choose a candidate |
-| **Revise the intent?**<br>`GW_Iterate` | — | **yes** → Write the design intent<br>**no** → Wireframe accepted |
+| **Checks pass?**<br>`GW_Checks` | Answered by the mechanical checks at both viewports. `yes` goes to blind review; `no` returns to producing candidates. | **yes** → Blind review per criterion<br>**no** → Produce >= 2 candidates, web + mobile |
+| **Entries agree?**<br>`GW_Agree` | Do the blind reviewers' entries agree? `no` goes to adjudication; `yes` goes to choosing a candidate. | **no** → Adjudication<br>**yes** → Choose a candidate |
+| **Revise the intent?**<br>`GW_Iterate` | Asked after a candidate is chosen: should the design intent be revised? `yes` rewrites the intent and starts again; `no` accepts the wireframe. | **yes** → Write the design intent<br>**no** → Wireframe accepted |
 
 {% endraw %}

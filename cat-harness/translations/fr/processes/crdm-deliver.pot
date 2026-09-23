@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-deliver\n"
-"POT-Creation-Date: 2026-09-22T21:11:01.593Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.846Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/crdm-deliver.bpmn:135
+#: processes/crdm-deliver.bpmn:141
 #. Diagram label
 msgid "accepted"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:109
+#: processes/crdm-deliver.bpmn:113
 #. Diagram label
 msgid "Accepted?"
 msgstr ""
@@ -32,6 +32,11 @@ msgstr ""
 #: processes/crdm-deliver.bpmn:73
 #. Diagram element documentation
 msgid "An MVP is shared AS A STAGING DEPLOY, not as a description of one. `feature-staging.yml` publishes the branch under `STAGING/<branch-slug>/` on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work. Measured in this repo on 2026-09-16: holding a rendered change back for assessment made assessment harder, not safer."
+msgstr ""
+
+#: processes/crdm-deliver.bpmn:100
+#. Diagram element documentation
+msgid "Asked after an increment passes: is the whole MVP ready for stakeholders? `not yet` implements the next increment; `yes` deploys the MVP to staging."
 msgstr ""
 
 #: processes/crdm-deliver.bpmn:61
@@ -69,7 +74,7 @@ msgstr ""
 msgid "Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:133
+#: processes/crdm-deliver.bpmn:139
 #. Diagram label
 msgid "findings"
 msgstr ""
@@ -89,17 +94,17 @@ msgstr ""
 msgid "Meets criteria?"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:96
+#: processes/crdm-deliver.bpmn:98
 #. Diagram label
 msgid "MVP ready for stakeholders?"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:126
+#: processes/crdm-deliver.bpmn:132
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:128
+#: processes/crdm-deliver.bpmn:134
 #. Diagram label
 msgid "not yet"
 msgstr ""
@@ -109,7 +114,7 @@ msgstr ""
 msgid "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `folio:bean op=\"claim\"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:117
+#: processes/crdm-deliver.bpmn:123
 #. Diagram element documentation
 msgid "On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale."
 msgstr ""
@@ -124,7 +129,7 @@ msgstr ""
 msgid "Options analysis how to implement"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:100
+#: processes/crdm-deliver.bpmn:104
 #. Diagram element documentation
 msgid "Outer loop: the BA presents the accumulated increments to stakeholders as a testable MVP. Staging URL, demo, or walkthrough."
 msgstr ""
@@ -139,7 +144,7 @@ msgstr ""
 msgid "Phase begins"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:119
+#: processes/crdm-deliver.bpmn:125
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
@@ -149,7 +154,7 @@ msgstr ""
 msgid "Post summary to issue"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:116
+#: processes/crdm-deliver.bpmn:122
 #. Diagram label
 msgid "Post-MVP theme + UI review"
 msgstr ""
@@ -159,7 +164,7 @@ msgstr ""
 msgid "Review increment (test behaviour)"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:98
+#: processes/crdm-deliver.bpmn:102
 #. Diagram label
 msgid "Share MVP with stakeholders"
 msgstr ""
@@ -169,12 +174,12 @@ msgstr ""
 msgid "Stakeholders"
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:106
+#: processes/crdm-deliver.bpmn:110
 #. Diagram element documentation
 msgid "Stakeholders test the delivered feature in their own workflow, with their own data. They report what works and what does not."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:104
+#: processes/crdm-deliver.bpmn:108
 #. Diagram label
 msgid "Test MVP in own context"
 msgstr ""
@@ -184,12 +189,22 @@ msgstr ""
 msgid "Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:112
+#: processes/crdm-deliver.bpmn:118
 #. Diagram element documentation
 msgid "The BA translates stakeholder findings into actionable direction: new beans or bean updates for the agent."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:110
+#: processes/crdm-deliver.bpmn:96
+#. Diagram element documentation
+msgid "The BA's result from testing the increment's behaviour. `no` returns to implementation; `yes` asks whether the MVP is ready for stakeholders."
+msgstr ""
+
+#: processes/crdm-deliver.bpmn:114
+#. Diagram element documentation
+msgid "The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review."
+msgstr ""
+
+#: processes/crdm-deliver.bpmn:116
 #. Diagram label
 msgid "Translate feedback into agent direction"
 msgstr ""
@@ -199,7 +214,7 @@ msgstr ""
 msgid "What was accomplished, what remains, and links to the updated content for review."
 msgstr ""
 
-#: processes/crdm-deliver.bpmn:127
+#: processes/crdm-deliver.bpmn:133
 #. Diagram label
 msgid "yes"
 msgstr ""

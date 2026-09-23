@@ -208,6 +208,7 @@
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Verified" name="Verifies?">
+      <bpmn:documentation>Answered by verifying what arrived against what was signed. `signature and digests match` serves the bytes; `mismatch` rejects them and keeps serving the previous version.</bpmn:documentation>
       <bpmn:incoming>F15</bpmn:incoming>
       <bpmn:outgoing>F16</bpmn:outgoing>
       <bpmn:outgoing>F17</bpmn:outgoing>

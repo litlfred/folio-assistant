@@ -36,10 +36,10 @@ Every one of the 1 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Did anything&#10;change?**<br>`GW_Drift` | — | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+| **Did anything&#10;change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating the context, block, library and site graphs. No difference ends clean; any difference ends the job red, because a committed file is stale against its source. | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
 
 {% endraw %}
