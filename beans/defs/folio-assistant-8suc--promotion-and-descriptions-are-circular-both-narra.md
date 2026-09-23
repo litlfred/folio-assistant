@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8suc
 title: 'PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T13:54:54Z
-updated_at: 2026-09-23T14:51:12Z
+updated_at: 2026-09-23T16:44:46Z
 parent: folio-assistant-slw1
 ---
 
