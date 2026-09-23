@@ -113,8 +113,10 @@ overlay, and each names the declaration RACI must not be mistaken for:
 **Not an approval mechanism.** Gates are BPMN — a `userTask` in a lane, with
 the `fulfilmentKindsForBpmnType` rule that a system actor cannot fill one.
 
-**Not permissions.** What an actor may DO is
-`skills/permissions/permissions.json` and cross-cuts roles.
+**Not permissions.** What an actor may DO is an ODRL rule in `policies/`
+(actions in `skills/permissions/permissions.json`), and cross-cuts roles.
+Being R for a task says who is expected to do it; performing it also needs a
+rule that permits `perform-task` there (issue #1180).
 
 **Not a substitute for the lane.** If the chart and the lane disagree about who
 performs something, the lane is right and the chart is stale — which is why R

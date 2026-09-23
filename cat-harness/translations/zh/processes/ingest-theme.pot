@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-theme\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.934Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.133Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ingest-theme.bpmn:101
+#: processes/ingest-theme.bpmn:102
 #. Diagram element documentation
 msgid "A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:121
+#: processes/ingest-theme.bpmn:122
 #. Diagram element documentation
 msgid "A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (\"Never red with green, never blue with yellow\")."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:108
+#: processes/ingest-theme.bpmn:109
 #. Diagram label
 msgid "Every layout present?"
 msgstr ""
@@ -39,7 +39,7 @@ msgstr ""
 msgid "folio-assistant — Ingestion subprocess — ingest a theme. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/. Bean j66n. One Theme node with kind sticky | webpage | publication, not three node kinds: the palette vocabulary is shared and only the GEOMETRY varies."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:82
+#: processes/ingest-theme.bpmn:83
 #. Diagram element documentation
 msgid "From the INGESTED document's sections, not from a screenshot and not inferred from a site that happens to use the brand. Units stay as the source gives them: rewriting 29.7cm as millimetres is a conversion nobody asked for and a chance to be wrong."
 msgstr ""
@@ -54,92 +54,92 @@ msgstr ""
 msgid "Ingestion subprocess — ingest a theme"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:110
+#: processes/ingest-theme.bpmn:111
 #. Diagram element documentation
 msgid "Is every layout the theme must cover present in the source? `yes` goes on to the contrast and non-colour review; `no` refuses the theme as incomplete rather than filling the gap by guessing."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:116
+#: processes/ingest-theme.bpmn:117
 #. Diagram element documentation
 msgid "j66n's fourth clause: every layout still required, and a missing one stays INVALID rather than degraded. Three viewports for a screen theme, three print formats for a publication one. A theme that quietly dropped a layout would render correctly everywhere the missing one is not used, which is the state this refusal exists to prevent."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:89
+#: processes/ingest-theme.bpmn:90
 #. Diagram label
 msgid "Map values onto the shared palette ROLES"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:139
+#: processes/ingest-theme.bpmn:140
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:80
+#: processes/ingest-theme.bpmn:81
 #. Diagram label
 msgid "Read the guide's own stated rules"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:73
+#: processes/ingest-theme.bpmn:74
 #. Diagram element documentation
 msgid "Read the ROLE, never the prettiest value. Bootstrap's --blue is a scale entry and --primary is the role; DSpace sets them differently, and taking the brand-looking one is the hardcoding schemas/theme.ts exists to end. Column widths come from declared columns, never from breakpoints: a breakpoint is a viewport."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:71
+#: processes/ingest-theme.bpmn:72
 #. Diagram label
 msgid "Read the served stylesheet's declarations"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:99
+#: processes/ingest-theme.bpmn:100
 #. Diagram label
 msgid "Record contradictions IN the source"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:115
+#: processes/ingest-theme.bpmn:116
 #. Diagram label
 msgid "Refused — incomplete"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:119
+#: processes/ingest-theme.bpmn:120
 #. Diagram label
 msgid "Review contrast and non-colour signal"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:132
+#: processes/ingest-theme.bpmn:133
 #. Diagram label
 msgid "served — a deployment"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:64
+#: processes/ingest-theme.bpmn:65
 #. Diagram label
 msgid "Served, or stated?"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:133
+#: processes/ingest-theme.bpmn:134
 #. Diagram label
 msgid "stated — a style guide"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:91
+#: processes/ingest-theme.bpmn:92
 #. Diagram element documentation
 msgid "surface / ink / edge / accent, shared across every kind. A palette per kind would be three spellings of \"accent colour\", free to disagree about what an accent IS. Where the source is SILENT on a role, say so and mark the value a choice rather than dressing an invention as a measurement."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:66
+#: processes/ingest-theme.bpmn:67
 #. Diagram element documentation
 msgid "The ONE difference between the two paths. A deployed site SERVES its theme as a compiled stylesheet; a style guide STATES its rules as prose and swatches. Everything after the join is shared."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:128
+#: processes/ingest-theme.bpmn:129
 #. Diagram label
 msgid "Theme node"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:61
+#: processes/ingest-theme.bpmn:62
 #. Diagram label
 msgid "Theme source in hand"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:138
+#: processes/ingest-theme.bpmn:139
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -24,6 +24,7 @@
     <bpmn:laneSet id="LaneSet_Process_RepoHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
         <bpmn:documentation>The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while "could not tell" is the only outcome that turns the job RED and leaves that issue deliberately untouched.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
