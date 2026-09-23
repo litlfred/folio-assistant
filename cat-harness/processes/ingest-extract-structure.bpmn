@@ -57,6 +57,7 @@ text layer?">
       <bpmn:outgoing>Flow_e3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_ExtractText" name="Extract the text layer">
+      <bpmn:documentation>The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="document-intake" />
       </bpmn:extensionElements>
@@ -83,6 +84,7 @@ with doc_brief front-matter">
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Structure" name="Write structure.json
 (TOC, page ranges, metadata)">
+      <bpmn:documentation>Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="document-intake" />
       </bpmn:extensionElements>

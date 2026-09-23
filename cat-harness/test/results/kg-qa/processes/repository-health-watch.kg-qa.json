@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "processes/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:c53305bcea55d04b0ad107a4a45f297d70c1fe7e5c84cd4fa4d9b5c616c3ebed",
+  "source_hash": "sha256:a81280594a5382fbf5847e0d640e3a2c36f06f453f9d484b514ae509227b2048",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -89,25 +89,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "\"Run the health checks,&#10;keeping the report either way\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Label",
-          "detail": "\"Ensure the tracking&#10;label exists\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "\"Close the&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "\"Open or EDIT the one&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -115,8 +98,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

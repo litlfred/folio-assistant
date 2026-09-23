@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:363a0d0c5cde3d861d61cb91467b559b10f2653b7373e4389f04095d2ab9bbc4",
+  "source_hash": "sha256:ab2a96ba1dee915b565dc32ce1c52a7d322c5e7169d9a7110d1097cd52629a4f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -114,29 +114,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Build",
-          "detail": "\"Build the docs site Jekyll · TypeDoc · KG export\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Comment",
-          "detail": "\"Comment the preview URL on the PR\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Slug",
-          "detail": "\"Derive the slug from the head ref\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Notice",
-          "detail": "\"Post the retention notice on the PR\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_RemoveDisp",
-          "detail": "\"Remove it AND append `removed` — one commit\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -144,8 +123,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 3,
+    "pass": 9,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   }

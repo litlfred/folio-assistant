@@ -141,6 +141,84 @@ describe("it belongs on an activity", () => {
   });
 });
 
+/** A judge feeding a gateway, with whatever codes each side declares. */
+function branched(declared: string, branchCodes: (string | null)[]): string {
+  const dir = mkdtempSync(join(tmpdir(), "adjudication-br-"));
+  const p = join(dir, "p.bpmn");
+  const flows = branchCodes
+    .map((c, i) =>
+      c === null
+        ? `<bpmn:sequenceFlow id="F_b${i}" sourceRef="GW_T" targetRef="End_T"/>`
+        : `<bpmn:sequenceFlow id="F_b${i}" sourceRef="GW_T" targetRef="End_T">` +
+          `<bpmn:extensionElements><folio:adjudication code="${c}"/></bpmn:extensionElements>` +
+          `</bpmn:sequenceFlow>`,
+    )
+    .join("\n    ");
+  writeFileSync(
+    p,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  targetNamespace="urn:t">
+  <bpmn:process id="Process_T" name="T" isExecutable="false">
+    <bpmn:startEvent id="Start_T" name="Start"/>
+    <bpmn:task id="A_T" name="Judge it">
+      <bpmn:extensionElements><folio:adjudication codes="${declared}"/>${JUDGE}</bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_T" name="which?"/>
+    <bpmn:endEvent id="End_T" name="done"/>
+    <bpmn:sequenceFlow id="F_s" sourceRef="Start_T" targetRef="A_T"/>
+    <bpmn:sequenceFlow id="F_j" sourceRef="A_T" targetRef="GW_T"/>
+    ${flows}
+  </bpmn:process>
+</bpmn:definitions>
+`,
+  );
+  return p;
+}
+
+describe("the declared codes and the gateway's branches are ONE fact", () => {
+  test("accepts the matching case", async () => {
+    const m = await loadProcessModel(branched("a b", ["a", "b"]));
+    expect(m.nodes.get("A_T")!.adjudication!.codes).toEqual(["a", "b"]);
+  });
+
+  test("REFUSES a branch naming a code the judge does not permit", async () => {
+    // Otherwise a recorded outcome could name an answer the process cannot
+    // take, and nothing would have said so.
+    await expect(loadProcessModel(branched("a b", ["a", "c"]))).rejects.toThrow(
+      /must be the same set/,
+    );
+  });
+
+  test("REFUSES a declared code no branch acts on", async () => {
+    await expect(loadProcessModel(branched("a b c", ["a", "b"]))).rejects.toThrow(
+      /must be the same set/,
+    );
+  });
+
+  test("REFUSES a PARTLY coded gateway — it reads as complete", async () => {
+    // The dangerous shape: two branches coded, one not. The set comparison
+    // alone would pass if the coded ones happened to match.
+    await expect(loadProcessModel(branched("a b", ["a", "b", null]))).rejects.toThrow(
+      /partly-coded gateway/,
+    );
+  });
+
+  test("a gateway that codes NOTHING opts out rather than failing", async () => {
+    // Inertness. Every gateway in the corpus predates the element, so an
+    // all-uncoded gateway must stay legal or the marker could not be adopted
+    // one diagram at a time.
+    const m = await loadProcessModel(branched("a b", [null, null]));
+    expect(m.nodes.get("A_T")!.adjudication!.codes).toEqual(["a", "b"]);
+  });
+
+  test("ORDER does not matter — a set, not a sequence", async () => {
+    const m = await loadProcessModel(branched("b a", ["a", "b"]));
+    expect(m.nodes.get("A_T")!.adjudication).toBeDefined();
+  });
+});
+
 describe("absence stays absence", () => {
   test("an activity with no marker has no adjudication, and still loads", async () => {
     // Most activities are not judgements. The marker must be opt-in, or every
@@ -149,9 +227,10 @@ describe("absence stays absence", () => {
     expect(m.nodes.get("A_T")!.adjudication).toBeUndefined();
   });
 
-  test("the real corpus still loads — nothing existing declares one yet", async () => {
-    // Inertness, checked rather than asserted. If this ever fails, a diagram
-    // has taken up the marker and its refusals now apply to it.
+  test("the real corpus still loads, adjudication.bpmn included", async () => {
+    // adjudication.bpmn now DOES declare the marker — this is what proves the
+    // contract expresses the diagram that motivated it, rather than only the
+    // fixtures above.
     const { loadProcessModel: load } = await import("../../src/workflow/process-model.js");
     const { readdirSync } = await import("node:fs");
     const dir = join(import.meta.dir, "../../processes");

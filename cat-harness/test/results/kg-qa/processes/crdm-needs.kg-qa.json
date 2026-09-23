@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Needs",
     "path": "processes/crdm-needs.bpmn"
   },
-  "source_hash": "sha256:e8c8237eb046472804d20e491d98d70d839b2d501a729cd14c396ad926025dc5",
+  "source_hash": "sha256:b9984a170a265437dd1bf6164f56cc7a015a0728937900ae3ded9a6460166feb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,17 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Synthesise",
-          "detail": "\"Phase 1: Synthesise needs from sources\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "S_ConfirmNeeds",
-          "detail": "\"Confirm needs statement\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -90,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

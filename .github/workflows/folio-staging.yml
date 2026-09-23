@@ -86,6 +86,14 @@ on:
         required: false
         default: folio-assistant
         type: string
+      todos_dir:
+        description: >
+          The folio's todos graph root. Review-comment statuses committed on the
+          feature branch under its `todo-feedback` directory win over the
+          previously published ones (bean `423d`). Absent is fine.
+        required: false
+        default: todos
+        type: string
       platform_ref:
         description: The platform ref to check out when the folio does not carry it.
         required: false
@@ -256,11 +264,15 @@ jobs:
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           PR: ${{ github.event.pull_request.number }}
+          TODOS_DIR: ${{ inputs.todos_dir }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -eu
           case "$STAGING_SLUG" in ""|.|..|*/*) echo "::error::unsafe slug '$STAGING_SLUG'"; exit 1 ;; esac
-          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/review-comments.ts" \
+          # Statuses committed on the feature branch (review-comment-move) win.
+          TODOS_ARGS=()
+          if [ -f "$TODOS_DIR/todos.json" ]; then TODOS_ARGS=(--todos "$TODOS_DIR"); fi
+          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/review-comments.ts" "${TODOS_ARGS[@]}" \
             --repo "$GITHUB_REPOSITORY" --pr "$PR" --commit "$GITHUB_SHA" \
             --folio "$FOLIO_DIR" --blocks-out "$SITE_DIR/blocks.json" \
             --existing "pages/STAGING/$STAGING_SLUG/review-comments.json" \

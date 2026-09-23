@@ -277,7 +277,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // declaration decides. If this goes red the change is a behaviour break.
     //
     // The subject was `src/skills/` until #760 removed it, then
-    // `bootstrap/tools/` until 2026-09-22. A title naming the expected STRING
+    // `bootstrap/tools/` until bean `n350` (2026-09-23) folded its two skills
+    // into `bootstrap/skills/` and removed the directory. A title naming the expected STRING
     // goes stale on a move that is not a behaviour change; one naming the RULE
     // does not — which is why only the subject moves.
     //
@@ -300,9 +301,9 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
 
     // AND NOTHING WAS DROPPED, which is the half worth asserting: the failure
     // mode this naming rule exists against is a second directory being found
-    // and then silently losing its key — the `dh4f` shape one layer up. Rule 3
-    // gives `bootstrap/tools/` its own basename, so both remain reachable.
-    expect(live["tools"]).toContain("bootstrap/tools");
+    // and then silently losing its key — the `dh4f` shape one layer up.
+    // `bootstrap/tools/` no longer exists (n350), so no key may point at it.
+    expect(Object.values(live).some((p) => p.includes("bootstrap/tools"))).toBe(false);
     const paths = Object.values(live);
     expect(paths.length).toBe(new Set(paths).size);
   });

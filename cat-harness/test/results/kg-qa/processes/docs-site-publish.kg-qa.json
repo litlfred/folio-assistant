@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:2cdc6abd973b4d4d617f82f90b71dbc887c87c45cf02bbabd91384150c7601c5",
+  "source_hash": "sha256:f7c95b60249ce25081c7888796ee978c159290ee9b84e4b18803f55f03a1ec47",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,29 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Regenerate",
-          "detail": "\"Regenerate every derived&#10;reference from its source\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Build",
-          "detail": "\"Build the Jekyll site&#10;and the API reference\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Export",
-          "detail": "\"Export the knowledge graph&#10;and its schema\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Restore",
-          "detail": "\"Restore the OPEN PRs'&#10;staging previews\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Publish",
-          "detail": "\"Publish to gh-pages&#10;(FULL REPLACE)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -102,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

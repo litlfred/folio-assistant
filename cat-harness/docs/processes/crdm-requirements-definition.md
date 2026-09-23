@@ -30,7 +30,7 @@ Map the current workflow, then define the requirements and the impact they carry
 
 ## Steps
 
-**1** of 5 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -38,6 +38,6 @@ Map the current workflow, then define the requirements and the impact they carry
 | **Phases 3–4: Define requirements + impact**<br>`A_DefineReqs` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html)<br>[`content-graph`](../reference/skill-instructions/content-graph.html) | Two skills, because this step is two things: the requirements come from the CRDM process, the impact half is a dependency question the content graph answers. |
 | **Phase 4a: Compare the viable options**<br>`A_CompareOptions` | Agent | [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | Phase 4 often ends with a CHOICE rather than a plan, and this is the step that hands it over. Per option: what it does, its pro, its con, what it changes DOWNSTREAM, and how reversible it is — laid out where the rows can be read against each other, then one recommendation and a stated default. A step of its own rather than a line inside A_DefineReqs, because it has a different output and a different reader: the impact analysis is for the record, the comparison is the thing the BA answers from. Folding it in is how it gets skipped — the analysis feels finished, so the options go over as a list of names. Skipped legitimately when the analysis yields ONE viable approach. Do not manufacture alternatives to fill a table. |
 | **Review requirements and impact analysis**<br>`BA_ReviewReqs` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA reviews the formal requirements and the impact analysis the agent produced. |
-| **Approve requirements**<br>`S_ApproveReqs` | Stakeholders | — | — |
+| **Approve requirements**<br>`S_ApproveReqs` | Stakeholders | — | Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf. |
 
 {% endraw %}

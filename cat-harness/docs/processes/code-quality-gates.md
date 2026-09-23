@@ -28,15 +28,15 @@ SIX INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`.
 
 ## Steps
 
-**5** of 6 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 6 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Lean: no bare&#10;`import Mathlib` (HARD)**<br>`Task_Lean` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | — |
-| **Python: unused and&#10;wildcard imports (HARD)**<br>`Task_Python` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | — |
-| **TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)**<br>`Task_TypeScript` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | — |
-| **End-to-end +&#10;accessibility (HARD)**<br>`Task_E2E` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | — |
-| **Rust wildcard imports&#10;(WARN-ONLY)**<br>`Task_Rust` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | — |
+| **Lean: no bare&#10;`import Mathlib` (HARD)**<br>`Task_Lean` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently. |
+| **Python: unused and&#10;wildcard imports (HARD)**<br>`Task_Python` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass. |
+| **TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)**<br>`Task_TypeScript` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing. |
+| **End-to-end +&#10;accessibility (HARD)**<br>`Task_E2E` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. |
+| **Rust wildcard imports&#10;(WARN-ONLY)**<br>`Task_Rust` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs. |
 | **Dependency advisories&#10;(WARN-ONLY)**<br>`Task_Advisories` | CI/CD Pipeline | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule. |
 
 {% endraw %}

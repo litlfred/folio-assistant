@@ -64,6 +64,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Manifest" name="Write manifest.jsonld
 referencing it">
+      <bpmn:documentation>Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="document-intake"/>
       </bpmn:extensionElements>
@@ -83,6 +84,7 @@ local path or remote URL">
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Bind" name="Bind the folder name
 to the bibliography slug">
+      <bpmn:documentation>Bind the folder name to the document's bibliography slug, so library/&lt;bib-slug&gt;/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="document-intake"/>
       </bpmn:extensionElements>

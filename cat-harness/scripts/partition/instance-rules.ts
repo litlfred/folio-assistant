@@ -271,6 +271,9 @@ export const RULES: Rule[] = [
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
+      "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
+      "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -571,6 +574,10 @@ export const RULES: Rule[] = [
       // itself. Its node list and its evidence join both come from
       // `check-methodology-evidence.ts` rather than a second walk.
       "scripts/gen-methodologies-viz.ts",
+      // The external-schema registry → projection + viewer, plus the one join
+      // nothing else makes: whether each record's `usedBy` path still exists.
+      // CORE beside `external-schemas.ts` itself, which is already here.
+      "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
