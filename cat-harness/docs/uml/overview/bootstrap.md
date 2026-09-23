@@ -128,7 +128,6 @@ classDiagram
       title [1] string
       description [1] string
       actorKinds [1..*] list~person | agent | system | external~
-      lanes [0..*] string[]
       skills [0..*] string[]
       inherits [0..*] string[]
       actedUpon [0..1] boolean

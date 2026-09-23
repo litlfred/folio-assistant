@@ -43,6 +43,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
     <bpmn:laneSet id="LaneSet_Review">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">
         <bpmn:documentation>Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ChangeToReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ClassifyChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Kind</bpmn:flowNodeRef>
@@ -55,6 +56,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
       </bpmn:lane>
       <bpmn:lane id="Lane_EditorDecides" name="Editors + authoring agents">
         <bpmn:documentation>Kept a separate lane on purpose, holding the one activity this diagram gives it: the reviewer who classified and judged the change is never the party that accepts it, so consolidated findings cross a lane boundary before anything is decided on them.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_EditorDecides</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

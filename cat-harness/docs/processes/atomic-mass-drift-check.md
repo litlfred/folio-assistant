@@ -24,7 +24,7 @@ THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `Atomic
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not. |
+| CI/CD Pipeline | `build-pipeline` | The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not. |
 
 ## Steps
 

@@ -26,7 +26,7 @@ A SUB-PROCESS, never an entry point. Nobody starts here; it is reached by a call
 | lane | role | what it does here |
 |---|---|---|
 | Actor | — | Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all. |
-| Logger | — | Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in. |
+| Logger | `logger` | Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in. |
 
 ## Steps
 

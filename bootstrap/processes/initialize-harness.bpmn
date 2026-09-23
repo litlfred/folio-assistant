@@ -29,6 +29,7 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
     <bpmn:laneSet id="LaneSet_Process_InitializeHarness">
       <bpmn:lane id="Lane_Initiator" name="Initiator">
         <bpmn:documentation>Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="initiator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_InitializeHarness</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListHarnesses</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListLocations</bpmn:flowNodeRef>
@@ -44,10 +45,12 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
       </bpmn:lane>
       <bpmn:lane id="Lane_Requestor" name="Requestor">
         <bpmn:documentation>The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Initiator's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Initiator may not break that tie itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="requestor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_ConfirmHarness</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
         <bpmn:documentation>Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Initiator writes anything.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="knowledge-graph-data-store"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_ReadLocation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ReadDeclaration</bpmn:flowNodeRef>
       </bpmn:lane>
