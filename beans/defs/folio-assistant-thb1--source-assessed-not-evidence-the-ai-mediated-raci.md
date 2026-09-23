@@ -1,11 +1,12 @@
 ---
 # folio-assistant-thb1
 title: 'SOURCE ASSESSED AND SPLIT: the AI-Mediated RACI preprint backs the four letters, not one empirical claim'
-status: in-progress
-parent: folio-assistant-slw1
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T05:37:58Z
-updated_at: 2026-09-23T05:37:58Z
+updated_at: 2026-09-23T14:44:38Z
+parent: folio-assistant-slw1
 ---
 
 An SSRN preprint was uploaded 2026-09-23 and ingested to `library/dusengumuremyi-2026-ai-mediated-raci/` (rung `pdf-ocr+pdf-pages`, 6 pages, no text layer, sha256 cc0ba9bc…). On the owner's ruling the same day it IS cited as `evidence` on `methodologies/raci.md` — but for ONE paragraph only, its §2.1 rendering of the four roles. Every empirical claim in it is rejected, for the reasons below. This bean holds that split so nobody re-reads the paper and reaches a different line through it in either direction.
@@ -156,3 +157,12 @@ four-letter definition on page 2. It backs **RACI**. RASCI stays unbacked.
 what RACI achieves** — only for the four-letter structure. If a future node,
 skill or QA axis wants a number out of this paper, the answer is no, and this
 bean is why.
+
+## Closed with evidence — 2026-09-23
+
+Re-derived against `main` at `948afb5`.
+
+- `folio-assistant-core/schemas/library-ref.test.ts` green
+- `bun run gates` — 135 of 135, and `gates --all` 139 of 139 on this tree
+
+No open pull request mentions this bean and it has no children.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-en2d
 title: 'PROCESS: large-document-review.bpmn composing staging, review-task, adjudication and a coverage gate — and whether editor already is the coordinator'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-23T11:42:28Z
+updated_at: 2026-09-23T14:44:37Z
 parent: folio-assistant-q4jm
 ---
 
@@ -80,3 +80,18 @@ Author them with these ids, or rename both sides together. Then remove
    document into slices, assigns them and watches coverage. The editor still
    decides. The owner chose this over reusing `editor`, so that organising the
    review is separated from deciding its outcome.
+
+## Closed with evidence — 2026-09-23
+
+Not on the ticks: each Done-when item was re-derived against `main` at
+`948afb5`, because a tick records what an author believed and this records what
+is there.
+
+- the diagram renders: `bun run render:bpmn:check` green across every `.svg`
+- it runs on a fixture: `cat-harness/scripts/tests/content-change-review.test.ts` green
+- the DMN-backed gateway is at `cat-harness/processes/decisions/review-coverage-gate.dmn`
+  — note the path, one level deeper than the Done-when line spelled it
+- `px0t` has landed, so `uncoveredBlocks` is now computable, which was the one
+  dependency this item named as outstanding
+
+No open pull request mentions this bean and it has no children.

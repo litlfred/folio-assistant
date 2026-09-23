@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fyu2
 title: 'DOCUMENT FOLIO SITE BUILD: the platform defines no command that builds a document folio''s site, so staging has nothing to publish'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T23:35:05Z
-updated_at: 2026-09-23T05:29:21Z
+updated_at: 2026-09-23T14:44:37Z
 parent: folio-assistant-q4jm
 ---
 
@@ -41,3 +41,12 @@ Found 2026-09-22 building ojcx (folio staging).
 The only step not exercised is the push to gh-pages.
 
 **`init-folio`** now writes the staging caller **on** for document folios, and adds `_site/` to `.gitignore`, which the rehearsal found missing. **Paper folios stay off**: they build through `publish.yml`, and their site is the folio's to name.
+
+## Closed with evidence — 2026-09-23
+
+Re-derived against `main` at `948afb5` rather than read off the ticks.
+
+- `cat-harness/scripts/build-document-site.ts` exists and is the one command
+- `cat-harness/scripts/tests/build-document-site.test.ts` green
+
+No open pull request mentions this bean and it has no children.
