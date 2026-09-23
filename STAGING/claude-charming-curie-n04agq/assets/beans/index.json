@@ -1317,14 +1317,14 @@
     {
       "id": "folio-assistant-589f",
       "title": "TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T11:57:40Z",
-      "updatedAt": "2026-09-23T12:29:57Z",
+      "updatedAt": "2026-09-23T13:24:28Z",
       "preview": "Found by `yh6u` while declaring `file` (2026-09-23).\n\n## What is wrong\n\n`CONTENT_CONTEXT` declares `text: {\"@id\": \"folio-assistant-core:text\", \"@type\": \"@id\"}`. Prose blocks write `text: \"../sections/sec-001-introduction.md\"` — a path RELATIVE TO THE BLOCK. Under `@id` coercion a JSON-LD processor resolves it against the context's `@base` (`https://litlfred.github.io/folio/`), giving `https://litl",
       "file": "beans/defs/folio-assistant-589f--text-links-resolve-wrong-text-is-coerced-to-id-so.md"
     },
