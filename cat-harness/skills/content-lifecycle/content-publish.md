@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#publish-authorized"
+---
+
 # Content Publication
 
 Package, version, and publish approved content.

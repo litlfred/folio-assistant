@@ -12,10 +12,6 @@
     { "ref": "fhir-validation", "kind": "skill", "conformance": "SHALL" },
     { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/ig-publisher-build.sh", "runtime": "bash", "phase": "execute" },
-    { "path": "scripts/create-release.sh", "runtime": "bash", "phase": "post" }
-  ],
   "routingPatterns": ["publish IG", "release", "version", "deploy"],
   "tags": ["smart-guidelines", "fhir", "publication"],
   "package": "authoring-who-smart-guidelines",

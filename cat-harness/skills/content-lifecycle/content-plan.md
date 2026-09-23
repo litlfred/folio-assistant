@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#plan-before-author"
+---
+
 # Content Planning
 
 Plan content development by defining scope, team, timeline, and sprint cadence.

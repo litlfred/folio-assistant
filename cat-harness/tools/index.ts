@@ -1714,8 +1714,147 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "issues", schema: t("Text"), description: "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid." },
         ],
       },
-      satisfies: ["content-validate"],
+      satisfies: ["content-validate", "content-validation"],
       requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── Scripts a skill used to list as its own (#1168, B3) ─────────────────
+    //
+    // Until B3 a skill named its scripts (`SkillDefinition.scripts`), which is
+    // the general node pointing at its dependents: every new script meant an
+    // edit to the skill. Each script that exists is now a Tool that names the
+    // skill it `satisfies`; the entries naming a script that does not exist
+    // (eleven, e.g. `scripts/verify-proofs.sh`) were dropped rather than
+    // modelled, since a Tool whose command is missing is a false claim.
+    defineTool({
+      id: "content-graph-analysis",
+      title: "Editorial content-graph analysis",
+      description:
+        "Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.",
+      install: { none: true },
+      invoke: { shell: "python3 cat-harness/content/pipeline/content-graph-analysis.py" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly." },
+          { name: "chapter", schema: t("Slug"), required: false, arg: { flag: "--chapter" }, description: "Restrict the analysis to one chapter directory." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit the whole graph as JSON on stdout and exit." },
+          { name: "md", schema: t("Flag"), required: false, arg: { flag: "--md" }, description: "Write the report to /tmp/content-graph-report.md." },
+          { name: "visualise", schema: t("Flag"), required: false, arg: { flag: "--visualise" }, description: "Render the Graphviz SVGs (needs graphviz)." },
+          { name: "proposals", schema: t("Flag"), required: false, arg: { flag: "--proposals" }, description: "Write concrete reorganisation proposals to /tmp/content-graph-proposals.md." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "The ranked findings, or the graph as JSON with `--json`." },
+        ],
+      },
+      satisfies: ["content-graph"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "paper-latex-build",
+      title: "Paper build to LaTeX chapters",
+      description:
+        "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/build.ts" },
+      io: {
+        inputs: [
+          { name: "paperManifest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "The paper's `<paper>.ts` manifest; absent, the folio's single paper." },
+          { name: "outDir", schema: t("RepoPath"), required: false, arg: { flag: "--out-dir" }, description: "Where to write the chapters; absent, `chapters/` at the content root." },
+        ],
+        outputs: [
+          { name: "chapters", schema: t("RepoPath"), description: "One `.tex` per chapter under the output directory." },
+        ],
+      },
+      satisfies: ["content-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "pages-index",
+      title: "Published-paper index page",
+      description:
+        "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/generate-index.py" },
+      io: {
+        inputs: [
+          { name: "outputHtml", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "Where to write index.html." },
+          { name: "paperEmbed", schema: t("RepoPath"), required: true, arg: { positional: 1 }, description: "The file the Paper tab embeds, typically the PDF." },
+          { name: "pdf", schema: t("RepoPath"), required: true, arg: { flag: "--pdf" }, description: "The PDF filename used in download links." },
+          { name: "md", schema: t("RepoPath"), required: false, arg: { flag: "--md" }, description: "A Markdown rendering to link, when there is one." },
+          { name: "visualizer", schema: t("RepoPath"), required: false, arg: { flag: "--visualizer" }, description: "The visualizer page for the second tab." },
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--branch" }, description: "The branch the build is from." },
+          { name: "repo", schema: t("RepoFullName"), required: false, arg: { flag: "--repo" }, description: "owner/repo, for links back to the source." },
+          { name: "sha", schema: t("CommitSha"), required: false, arg: { flag: "--sha" }, description: "The commit the build is from." },
+        ],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "The written index.html." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-dependency-graph",
+      title: "Proof dependency graph",
+      description:
+        "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/generate_dependency_graph.py" },
+      io: {
+        inputs: [
+          { name: "manifest", schema: t("RepoPath"), required: false, arg: { flag: "--manifest" }, description: "The proof-objects.json to read." },
+          { name: "output", schema: t("RepoPath"), required: false, arg: { flag: "--output" }, description: "Where to write the SVG." },
+          { name: "pdfBaseUrl", schema: t("Url"), required: false, arg: { flag: "--pdf-base-url" }, description: "The published PDF, for the anchor links." },
+          { name: "dotOnly", schema: t("Flag"), required: false, arg: { flag: "--dot-only" }, description: "Write DOT source instead of rendering." },
+        ],
+        outputs: [
+          { name: "graph", schema: t("RepoPath"), description: "The SVG, or DOT with `--dot-only`." },
+        ],
+      },
+      satisfies: ["docs-generation", "proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-objects-extract",
+      title: "Proof-object extraction",
+      description:
+        "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/extract_proof_objects.py" },
+      io: {
+        inputs: [
+          { name: "output", schema: t("RepoPath"), required: false, arg: { flag: "--output" }, description: "Where to write proof-objects.json." },
+        ],
+        outputs: [
+          { name: "manifest", schema: t("RepoPath"), description: "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty." },
+        ],
+      },
+      satisfies: ["proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-status-update",
+      title: "Proof status from a Lean build",
+      description:
+        "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/update_proof_status.py" },
+      io: {
+        inputs: [
+          { name: "manifest", schema: t("RepoPath"), required: false, arg: { flag: "--manifest" }, description: "The proof-objects.json to update." },
+          { name: "buildLog", schema: t("RepoPath"), required: false, arg: { flag: "--build-log" }, description: "The Lean build log; stdin when absent." },
+        ],
+        outputs: [
+          { name: "manifest", schema: t("RepoPath"), description: "proof-objects.json with statuses updated in place." },
+        ],
+      },
+      satisfies: ["proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
     }),
 
     // ── The evidence path, and the check that is NOT a computation ────────

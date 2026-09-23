@@ -7,6 +7,8 @@ description: >
   waived and the rules that cannot, why every waiver carries an expiry, and the
   one thing an agent may never do: grant itself one.
 allowed-tools: Read Grep Glob Bash
+graph-kinds:
+  - waiver
 ---
 
 # A confirmation can be waived — by the person who is owed it

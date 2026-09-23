@@ -14,8 +14,7 @@
  *
  *   - `md-link`       a relative markdown link between two graph files
  *   - `bpmn-skill`    `<folio:skill ref="…">` on an activity
- *   - `json-skill`    a skill name in `roles.json`, a package manifest, or a
- *                     requirement's `satisfiedBy`
+ *   - `json-skill`    a skill name in `roles.json` or a package manifest
  *   - `ts-import`     a relative import between schema modules
  *
  * There is deliberately NO full-text extractor. A skill that merely MENTIONS

@@ -1,39 +1,43 @@
 {
   "$schema": "kg-qa/v1",
   "subject": {
-    "kind": "skill",
-    "id": "confirmation-waiver",
-    "path": "skills/folio-core/confirmation-waiver.md"
+    "kind": "tool",
+    "id": "proof-status-update",
+    "path": null
   },
-  "source_hash": "5ee888af5861",
+  "source_hash": "a236bc07d98b",
   "criteria": {
-    "skill-is-a-stub": {
+    "tool-invoke-path-resolves": {
       "result": "pass",
       "findings": []
     },
-    "skill-is-brief": {
+    "tool-satisfies-resolves": {
       "result": "pass",
       "findings": []
     },
-    "skill-not-a-document": {
+    "tool-satisfies-contract-met": {
       "result": "pass",
       "findings": []
     },
-    "skill-no-repeated-heading": {
+    "tool-io-types-declared": {
       "result": "pass",
       "findings": []
     },
-    "prose-reviewed-since-code-changed": {
+    "tool-args-shell-safe": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-alternative-resolves": {
       "result": "n/a",
       "findings": []
     },
-    "prose-claims-resolve": {
+    "tool-maintains-in-tree": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 5,
     "fail": 0,
     "n/a": 2,
     "unknown": 0
