@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-methodology-evidence.ts",
-    "script_hash": "bb11995d0d26"
+    "script_hash": "477374f26438"
   },
   "subject": {
     "kind": "corpus",
     "id": "methodologies"
   },
-  "updated_at": "2026-09-22T22:35:29.767Z",
+  "updated_at": "2026-09-23T07:31:39.280Z",
   "families": {
     "evidence-unresolved": {
       "summary": "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: it reads as an ingested source in every listing, so a reader who does not open it is told the citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer is not an open question about whether to adopt something.",
@@ -22,7 +22,7 @@
     },
     "no-evidence-declared": {
       "summary": "A valid methodology citing an origin, with no `evidence:` pointing at an ingested source. THE FINDING THIS AXIS WAS BUILT FOR: on 2026-09-22 this was six of six. Reported, never gated — whether a methodology whose source nobody can open may still be used is the owner's call, and a gate failing on the whole corpus at once is one somebody switches off. `literature-search` is the skill that closes one of these.",
-      "count": 5,
+      "count": 6,
       "entries": [
         {
           "node": "methodologies/dmn.md",
@@ -38,6 +38,11 @@
           "node": "methodologies/madr.md",
           "name": "madr",
           "detail": "cites an origin (Michael Nygard, \"Documenting Architecture Decisions\" (2011), for the ADR form; MADR (githu…) with no ingested source"
+        },
+        {
+          "node": "methodologies/rasci.md",
+          "name": "rasci",
+          "detail": "cites an origin (**NOT ESTABLISHED FROM ANY SOURCE HELD HERE, and that is stated rather than guessed.** RAS…) with no ingested source"
         },
         {
           "node": "../smart-base/methodologies/diig.md",
@@ -57,5 +62,5 @@
       "entries": []
     }
   },
-  "total": 5
+  "total": 6
 }

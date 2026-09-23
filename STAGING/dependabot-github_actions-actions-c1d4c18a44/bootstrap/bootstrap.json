@@ -33,6 +33,14 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
       "@type": "@id"
@@ -270,11 +278,12 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T07:02:05.195Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c11b4b973d5ca9506cbbdb443cdfbc5f5bb73e54",
-  "sourceCommitSha": "c11b4b973d5ca9506cbbdb443cdfbc5f5bb73e54",
-  "sourceCommitAt": "2026-09-23T07:00:17Z",
+  "generatedAt": "2026-09-23T08:34:20.648Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2263de575ed72f8f2f7b732afefa0ed79f1aceee",
+  "sourceCommitSha": "2263de575ed72f8f2f7b732afefa0ed79f1aceee",
+  "sourceCommitAt": "2026-09-23T08:32:07Z",
   "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 7,
     "Process": 3,
@@ -1609,8 +1618,8 @@
   ],
   "staging": {
     "branch": "dependabot/github_actions/actions-c1d4c18a44",
-    "sha": "552aa5288b0ceff3eb90a402e2731ac469c6c093",
+    "sha": "2b3d18f9757694f7c2d3c8cda0bc39bfa05eaccf",
     "pr": "915/merge",
-    "run": "35829461095"
+    "run": "35837678324"
   }
 }
